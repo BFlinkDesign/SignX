@@ -11,6 +11,7 @@ jobs:
   analyze:
     name: Analyze with SonarCloud
     runs-on: ubuntu-latest
+    if: ${{ secrets.SONAR_TOKEN != '' }}
 
     permissions:
       contents: read
@@ -49,4 +50,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
+  note_missing_secret:
+    name: SonarCloud (waiting for SONAR_TOKEN)
+    runs-on: ubuntu-latest
+    if: ${{ secrets.SONAR_TOKEN == '' }}
+    steps:
+      - name: Explain how to add SONAR_TOKEN
+        run: |
+          echo "::warning::SONAR_TOKEN is not set. Add it under GitHub -> Settings -> Secrets and variables -> Actions -> New repository secret (name: SONAR_TOKEN)."
+          echo "1) In SonarCloud: Avatar -> My Account -> Security -> Generate token"
+          echo "2) In GitHub repo: Settings -> Secrets and variables -> Actions -> New repository secret -> Name SONAR_TOKEN -> Paste token"
+          echo "Re-run the workflow after adding the secret."
 
