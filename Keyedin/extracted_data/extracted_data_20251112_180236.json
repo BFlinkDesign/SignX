@@ -1,0 +1,2499 @@
+{
+  "menu": {
+    "menu": [
+      {
+        "type": "menuHeader",
+        "text": "Favorites",
+        "submenu": [
+          {
+            "type": "menuItem",
+            "text": "Contact Management",
+            "menuID": "FAVORITES.STD",
+            "process": "CRM.CONTACT.MGT",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "(BI) - Open Sales Order Audit Report",
+            "menuID": "FAVORITES.STD",
+            "process": "OPEN.SO",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Reset Quote Expiration Date",
+            "menuID": "FAVORITES.STD",
+            "process": "EST.RESET.EXP.DATE",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Purchase Order Entry",
+            "menuID": "FAVORITES.STD",
+            "process": "PURCHASE",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Reset Proposal Expiration Date",
+            "menuID": "FAVORITES.STD",
+            "process": "EST.PROP.RESET.DATE",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Part Pricing Maintenance",
+            "menuID": "FAVORITES.STD",
+            "process": "PART.PRICES",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Cost Summary Report",
+            "menuID": "FAVORITES.STD",
+            "process": "SO.CONTRACT",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Part Status Inquiry",
+            "menuID": "FAVORITES.STD",
+            "process": "STOCK",
+            "extURL": ""
+          }
+        ]
+      },
+      {
+        "type": "menuHeader",
+        "text": "CRM",
+        "submenu": [
+          {
+            "type": "menuItem",
+            "text": "Contact Management",
+            "menuID": "CRM.STD",
+            "process": "CRM.CONTACT.MGT",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Change Account on Service Call",
+            "menuID": "CRM.STD",
+            "process": "CHANGE.SC.ACCOUNT",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "(BI) - Service Call Status Report",
+            "menuID": "CRM.STD",
+            "process": "SERVICE.CALL.STATUS.REPORT",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "CRM Notes Report",
+            "menuID": "CRM.STD",
+            "process": "CRM.NOTES.REPORT",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Batch CRM Attachment Delete",
+            "menuID": "CRM.STD",
+            "process": "CRM.ATTACHMENTS.DELETE",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Import CRM",
+            "menuID": "CRM.STD",
+            "process": "IMPORT.CRM.NEW",
+            "extURL": ""
+          },
+          {
+            "type": "menuHeader",
+            "text": "Reports and Inquiries",
+            "submenu": [
+              {
+                "type": "menuItem",
+                "text": "Account Type Code Listing",
+                "menuID": "CRM.RPTS.STD",
+                "process": "ACCOUNT.TYPE.CODE.LISTING",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Call Method Codes Listing",
+                "menuID": "CRM.RPTS.STD",
+                "process": "CALL.METHOD.CODES.LISTING",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Call Type Codes Listing",
+                "menuID": "CRM.RPTS.STD",
+                "process": "CALL.TYPE.CODES.LISTING",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Lead Source Event Listing",
+                "menuID": "CRM.RPTS.STD",
+                "process": "LEAD.SOURCE.EVENT.LISTING",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Service Call Status Code Listing",
+                "menuID": "CRM.RPTS.STD",
+                "process": "SERVICE.CALL.STATUS.CODE.LISTING",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Solution File Listing",
+                "menuID": "CRM.RPTS.STD",
+                "process": "CRM.SOLUTIONS.LISTING",
+                "extURL": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "menuHeader",
+        "text": "Project Management",
+        "submenu": [
+          {
+            "type": "menuItem",
+            "text": "Project Listings - Search",
+            "menuID": "PROJECT.STD",
+            "process": "#PROJECT.LISTING",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Project Status Listing - BI",
+            "menuID": "PROJECT.STD",
+            "process": "",
+            "extURL": "HTTPS://EAGLESIGN.KEYEDINSIGN.COM:8443/eaglesign/sso?u=BRADYF&t=0do0law03kwgedgtez0uyafe&initialAction.action=ReportRun&remoteId=7831576"
+          },
+          {
+            "type": "menuItem",
+            "text": "Project Summary and Setup",
+            "menuID": "PROJECT.STD",
+            "process": "#PROJECT.DETAILS",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Project Milestone Tracking",
+            "menuID": "PROJECT.STD",
+            "process": "#PROJECT.MILESTONE.TRACKING",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Project Quotes",
+            "menuID": "PROJECT.STD",
+            "process": "#PROJECT.QUOTES",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Project Locations",
+            "menuID": "PROJECT.STD",
+            "process": "#PROJECT.LOCATIONS",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Project Proposals",
+            "menuID": "PROJECT.STD",
+            "process": "#PROJECT.PROPOSALS",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Project Sales Orders",
+            "menuID": "PROJECT.STD",
+            "process": "#PROJECT.SALES.ORDERS",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Project Work Orders",
+            "menuID": "PROJECT.STD",
+            "process": "#PROJECT.WORK.ORDERS",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Project Purchase Orders",
+            "menuID": "PROJECT.STD",
+            "process": "#PROJECT.POS",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Project Shipments",
+            "menuID": "PROJECT.STD",
+            "process": "#PROJECT.SHIPMENTS",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Project Contacts",
+            "menuID": "PROJECT.STD",
+            "process": "#PROJECT.CONTACTS",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Project Vendors",
+            "menuID": "PROJECT.STD",
+            "process": "#PROJECT.VENDORS",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Project Notes",
+            "menuID": "PROJECT.STD",
+            "process": "#PROJECT.NOTES",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Project Attachments",
+            "menuID": "PROJECT.STD",
+            "process": "#PROJECT.ATTACHMENTS",
+            "extURL": ""
+          },
+          {
+            "type": "menuHeader",
+            "text": "Reports and Inquiries",
+            "submenu": [
+              {
+                "type": "menuItem",
+                "text": "Vendor Certificate of Insurance Listing",
+                "menuID": "PROJECT.RPTS.STD",
+                "process": "PM.INSURANCE.LISTING",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Landlord Mall Tenant Coord Listing",
+                "menuID": "PROJECT.RPTS.STD",
+                "process": "LANDLORD.MALL.TC.LISTING",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Project Milestone Codes Listing",
+                "menuID": "PROJECT.RPTS.STD",
+                "process": "PROJECT.MILESTONE.CODES.LISTING",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Project Status Codes Listing",
+                "menuID": "PROJECT.RPTS.STD",
+                "process": "PROJECT.STATUS.CODES.LISTING",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Project Type Codes Listing",
+                "menuID": "PROJECT.RPTS.STD",
+                "process": "PROJECT.TYPE.CODES.LISTING",
+                "extURL": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "menuHeader",
+        "text": "Estimating and Proposals",
+        "submenu": [
+          {
+            "type": "menuItem",
+            "text": "Estimating Maintenance",
+            "menuID": "EST.STD",
+            "process": "EST.QUOTE.ENTRY",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Estimating Maintenance Limited",
+            "menuID": "EST.STD",
+            "process": "QUOTE.ENTRY.LIMITED",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Reset Quote Expiration Date",
+            "menuID": "EST.STD",
+            "process": "EST.RESET.EXP.DATE",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Change Account Id on a Quote",
+            "menuID": "EST.STD",
+            "process": "EST.CHANGE.ACCTID",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Print an Estimate (Quote)",
+            "menuID": "EST.STD",
+            "process": "EST.QUOTE.PRINT",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Copy an Estimate (Quote)",
+            "menuID": "EST.STD",
+            "process": "EST.QUOTE.COPY",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Create a Proposal",
+            "menuID": "EST.STD",
+            "process": "EST.PROP.PRINT",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Proposal Reprint",
+            "menuID": "EST.STD",
+            "process": "EST.PROP.REPRINT",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Reset Proposal Expiration Date",
+            "menuID": "EST.STD",
+            "process": "EST.PROP.RESET.DATE",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Delete a Proposal",
+            "menuID": "EST.STD",
+            "process": "EST.PROP.DELETE",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "(BI) - Status of all Quotes",
+            "menuID": "EST.STD",
+            "process": "EST.QUOTE.STATUS",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Quote Pipeline Report",
+            "menuID": "EST.STD",
+            "process": "QUOTE.PIPELINE.REPORT",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Sign Template Maintenance",
+            "menuID": "EST.STD",
+            "process": "EST.SIGN.TEMPLATE.MAINT",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Batch Change Quotes to Inactive",
+            "menuID": "EST.STD",
+            "process": "EST.BATCH.INACTIVE",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Import Sign Template",
+            "menuID": "EST.STD",
+            "process": "IMPORT.SIGN.TEMPLATE",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Quote Mass Update",
+            "menuID": "EST.STD",
+            "process": "QUOTE.MASS.UPDATE",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Mass Quote Copy",
+            "menuID": "EST.STD",
+            "process": "QUOTE.MASS.COPY",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Convert Quote to Manufactured Part",
+            "menuID": "EST.STD",
+            "process": "CONVERT.QUOTE.TO.MFG",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Mass Delete Inactive Quotes",
+            "menuID": "EST.STD",
+            "process": "QUOTE.MASS.DELETE",
+            "extURL": ""
+          },
+          {
+            "type": "menuHeader",
+            "text": "Reports and Inquiries",
+            "submenu": [
+              {
+                "type": "menuItem",
+                "text": "(BI) - Quote Listing",
+                "menuID": "EST.RPTS.STD",
+                "process": "QUOTE.LISTING",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Sign Template Listing",
+                "menuID": "EST.RPTS.STD",
+                "process": "SIGN.TEMPLATE.LISTING",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Sign Template Print",
+                "menuID": "EST.RPTS.STD",
+                "process": "EST.TEMPLATE.PRINT",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "(BI) - Proposal Status Report",
+                "menuID": "EST.RPTS.STD",
+                "process": "EST.PROPOSAL.STATUS",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Quote Status Codes List",
+                "menuID": "EST.RPTS.STD",
+                "process": "EST.QUOTE.STATUS.CODE.LIST",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Work Dept Code List",
+                "menuID": "EST.RPTS.STD",
+                "process": "WORK.DEPT.LIST",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Work Code List",
+                "menuID": "EST.RPTS.STD",
+                "process": "WORK.CODE.LIST",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Sign Type Codes List",
+                "menuID": "EST.RPTS.STD",
+                "process": "SIGN.TYPE.CODES.LISTING",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Quote Sales Stage Code Listing",
+                "menuID": "EST.RPTS.STD",
+                "process": "QUOTE.SALES.STAGE.CODE.LISTING",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Pre-Planning Requirements Report",
+                "menuID": "EST.RPTS.STD",
+                "process": "PREPLAN.REPORT",
+                "extURL": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "menuHeader",
+        "text": "Sales Order Entry",
+        "submenu": [
+          {
+            "type": "menuItem",
+            "text": "Sales Orders Entry",
+            "menuID": "SALES.STD",
+            "process": "ORDER.ENTRY",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Create Sales Order From Proposal",
+            "menuID": "SALES.STD",
+            "process": "EST.CREATE.SO",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Print Sales Order",
+            "menuID": "SALES.STD",
+            "process": "SO.PRINT",
+            "extURL": ""
+          },
+          {
+            "type": "menuHeader",
+            "text": "Reports and Inquiries",
+            "submenu": [
+              {
+                "type": "menuItem",
+                "text": "(BI) - Sales Orders by Customer P.O.",
+                "menuID": "SALES.RPTS.STD",
+                "process": "LSO",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Sales Order Display",
+                "menuID": "SALES.RPTS.STD",
+                "process": "LOOK.SO",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "(BI) - Daily Sales Report",
+                "menuID": "SALES.RPTS.STD",
+                "process": "DAY.SALES",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "(BI) - Open Sales Order Audit Report",
+                "menuID": "SALES.RPTS.STD",
+                "process": "OPEN.SO",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "(BI) - Sales Order Commitments - By Customer",
+                "menuID": "SALES.RPTS.STD",
+                "process": "SO.COMMIT",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Extra Charge Codes List",
+                "menuID": "SALES.RPTS.STD",
+                "process": "EXTRA.CHARGES.LIST",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Order Class Codes List",
+                "menuID": "SALES.RPTS.STD",
+                "process": "ORDER.CLASSES.LIST",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Order Type Codes List",
+                "menuID": "SALES.RPTS.STD",
+                "process": "ORDER.TYPES.LIST",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Price Class Code Listing",
+                "menuID": "SALES.RPTS.STD",
+                "process": "PRICE.CLASS.CODE.LIST",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Price Codes List",
+                "menuID": "SALES.RPTS.STD",
+                "process": "PRICE.CODES.LIST",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "A/R Reason Codes List",
+                "menuID": "SALES.RPTS.STD",
+                "process": "REASON.CODES.LIST",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Sales Product Codes List",
+                "menuID": "SALES.RPTS.STD",
+                "process": "SALES.CODES.LIST",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Sales Person Codes List",
+                "menuID": "SALES.RPTS.STD",
+                "process": "SALESPERSONS.LIST",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Sales Tax Codes List",
+                "menuID": "SALES.RPTS.STD",
+                "process": "SALES.TAXES.LIST",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Sales Territory Codes List",
+                "menuID": "SALES.RPTS.STD",
+                "process": "TERRITORY.CODES.LIST",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "State Codes List",
+                "menuID": "SALES.RPTS.STD",
+                "process": "STATES.LIST",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Country Codes List",
+                "menuID": "SALES.RPTS.STD",
+                "process": "COUNTRY.LIST",
+                "extURL": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "menuHeader",
+        "text": "Shipping Tracking",
+        "submenu": [
+          {
+            "type": "menuItem",
+            "text": "Create Shiplists",
+            "menuID": "SHIPPING.STD",
+            "process": "SHIPLISTS",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Record Shipment Information",
+            "menuID": "SHIPPING.STD",
+            "process": "SHIPMENTS",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Enter Shipment Tracking Information",
+            "menuID": "SHIPPING.STD",
+            "process": "SHIPMENTS.TRACKING",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "(BI) - Daily Shipments",
+            "menuID": "SHIPPING.STD",
+            "process": "DAILY.SHIP.REPORT",
+            "extURL": ""
+          }
+        ]
+      },
+      {
+        "type": "menuHeader",
+        "text": "Sales Analysis",
+        "submenu": [
+          {
+            "type": "menuItem",
+            "text": "(BI) - Sales by Product Code",
+            "menuID": "SA.STD",
+            "process": "PROD.SUM",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "(BI) - Sales by Customer",
+            "menuID": "SA.STD",
+            "process": "CUST.SUM",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "(BI) - Sales by Customer by Product Code",
+            "menuID": "SA.STD",
+            "process": "CUST.PROD",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "(BI) - Sales by Customer by Product - Export",
+            "menuID": "SA.STD",
+            "process": "CUST.PROD.EXPORT",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "(BI) - Gross Margin by Product Code",
+            "menuID": "SA.STD",
+            "process": "GM.BY.PROD",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "(BI) - Gross Margin by Invoice Number",
+            "menuID": "SA.STD",
+            "process": "GM.BY.INV",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "(BI) - Gross Margin by Invoice Export",
+            "menuID": "SA.STD",
+            "process": "GM.BY.INV.EXPORT",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "(BI) - Sales, GM by Product Code and Customer",
+            "menuID": "SA.STD",
+            "process": "PROD.CUST",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "(BI) - Sales By State By City",
+            "menuID": "SA.STD",
+            "process": "SA.BY.STATE",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "(BI) - GM By Salesperson By Product Code",
+            "menuID": "SA.STD",
+            "process": "SLSPER.PROD",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "(BI) - GM By Salesperson - Export",
+            "menuID": "SA.STD",
+            "process": "SLSPER.PROD.EXPORT",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "(BI) - Tax Report by Jurisdiction State",
+            "menuID": "SA.STD",
+            "process": "TAX.BY.TYPE.REPORT",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Quote Price to Sales Price Comparison",
+            "menuID": "SA.STD",
+            "process": "QUOTE.SALES.DIFFS",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "(BI) - Sales By Territory",
+            "menuID": "SA.STD",
+            "process": "SALES.TERRITORY",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "(BI) - Sales, GM by Sales Code with Cost Analysis",
+            "menuID": "SA.STD",
+            "process": "GM.DET.PROD.PART",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "GM By Project",
+            "menuID": "SA.STD",
+            "process": "GM.PROJECT",
+            "extURL": ""
+          }
+        ]
+      },
+      {
+        "type": "menuHeader",
+        "text": "Purchasing",
+        "submenu": [
+          {
+            "type": "menuItem",
+            "text": "Purchase Order Entry",
+            "menuID": "PUR.STD",
+            "process": "PURCHASE",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Last Purchased Price Lookup",
+            "menuID": "PUR.STD",
+            "process": "QV.PRINT",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Change Vendor or Work Order on a PO",
+            "menuID": "PUR.STD",
+            "process": "PO.CHANGE",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Print Purchase Orders",
+            "menuID": "PUR.STD",
+            "process": "PUR.PRINT",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Receive P.O. Items ",
+            "menuID": "PUR.STD",
+            "process": "PO.RECEIPTS",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Close Purchase Orders by Line Item",
+            "menuID": "PUR.STD",
+            "process": "PO.CLOSE",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Purchase Demand Planning",
+            "menuID": "PUR.STD",
+            "process": "PO.ACTIONS",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Create PO from Purchase Demands",
+            "menuID": "PUR.STD",
+            "process": "PO.ACTION.RELEASE",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Create PO from PO Requisitions",
+            "menuID": "PUR.STD",
+            "process": "PO.REQ.RELEASE",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Delete PO Requisitions",
+            "menuID": "PUR.STD",
+            "process": "PO.REQ.DELETE",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Vendor Master Maintenance",
+            "menuID": "PUR.STD",
+            "process": "VENDORS",
+            "extURL": ""
+          },
+          {
+            "type": "menuHeader",
+            "text": "Reports and Inquiries",
+            "submenu": [
+              {
+                "type": "menuItem",
+                "text": "Purchase Order Display",
+                "menuID": "PUR.RPTS.STD",
+                "process": "SHOW.PO",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "(BI) - Purchase Order History",
+                "menuID": "PUR.RPTS.STD",
+                "process": "PUR.HISTORY",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Open PO's for a Work Order",
+                "menuID": "PUR.RPTS.STD",
+                "process": "WO.OPEN.PO",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Buyer Codes Listing",
+                "menuID": "PUR.RPTS.STD",
+                "process": "SHOW.BUYERS",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Purchase Demand Planning",
+                "menuID": "PUR.RPTS.STD",
+                "process": "PO.ACTIONS",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "(BI) - Purchase Order Inquiry",
+                "menuID": "PUR.RPTS.STD",
+                "process": "PO.INQUIRY",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Purchase Order Commitments",
+                "menuID": "PUR.RPTS.STD",
+                "process": "PUR.COMMIT",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "(BI) - Purchased Variance Report",
+                "menuID": "PUR.RPTS.STD",
+                "process": "PUR.PART.VAR",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Purchase Order Delivery Analysis",
+                "menuID": "PUR.RPTS.STD",
+                "process": "PUR.PO.DEL.ANALYSIS",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "(BI) - Purchase Order Schedule Analysis",
+                "menuID": "PUR.RPTS.STD",
+                "process": "PUR.PO.SCHED.ANALYSIS",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "(BI) - Purchase Order Receipt Analysis",
+                "menuID": "PUR.RPTS.STD",
+                "process": "PUR.PO.VAR.ANALYSIS",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "WSA Purchase Report",
+                "menuID": "PUR.RPTS.STD",
+                "process": "WSA.PURCHASE.REPORT",
+                "extURL": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "menuHeader",
+        "text": "Inventory and Parts",
+        "submenu": [
+          {
+            "type": "menuItem",
+            "text": "Work Order Issue",
+            "menuID": "INV.STD",
+            "process": "FIRST.ISSUE",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Part Issue",
+            "menuID": "INV.STD",
+            "process": "ISSUE",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Purchased Part Maintenance",
+            "menuID": "INV.STD",
+            "process": "RAW.MATL.MAINT",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Manufactured Part Maintenance",
+            "menuID": "INV.STD",
+            "process": "ASSEMBLY.MAINT",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "WIP Receipts",
+            "menuID": "INV.STD",
+            "process": "WIP.RECEIPTS",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Adjust Inventory On Hand",
+            "menuID": "INV.STD",
+            "process": "ADJUST",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Transfer Between Warehouses",
+            "menuID": "INV.STD",
+            "process": "TRANSFER",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Bill of Material Maintenance",
+            "menuID": "INV.STD",
+            "process": "BOM",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Bill of Material Copy",
+            "menuID": "INV.STD",
+            "process": "COPY.BILL",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Bill of Material Delete",
+            "menuID": "INV.STD",
+            "process": "BOM.DELETE",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Show Product Structure or Where-Used",
+            "menuID": "INV.STD",
+            "process": "SHOW.PS",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Part/Standard Routing Maintenance",
+            "menuID": "INV.STD",
+            "process": "ROUTING.MAINT",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Inventory Cost Maintenance",
+            "menuID": "INV.STD",
+            "process": "CHG.VALUE",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Product Cost Posting",
+            "menuID": "INV.STD",
+            "process": "COST.POST",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Part Pricing Maintenance",
+            "menuID": "INV.STD",
+            "process": "PART.PRICES",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Part Cost Maintenance",
+            "menuID": "INV.STD",
+            "process": "PART.COSTS",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Part Price Maintenance by Customer",
+            "menuID": "INV.STD",
+            "process": "CUST.PRICE.MAINT",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Change Part's Accounting Status",
+            "menuID": "INV.STD",
+            "process": "OBSOLETE",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Import Bill of Materials",
+            "menuID": "INV.STD",
+            "process": "IMPORT.BOM",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Import Routing",
+            "menuID": "INV.STD",
+            "process": "IMPORT.ROUTING",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Import Parts",
+            "menuID": "INV.STD",
+            "process": "IMPORT.PARTS",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Convert Quote to Manufactured Part",
+            "menuID": "INV.STD",
+            "process": "CONVERT.QUOTE.TO.MFG",
+            "extURL": ""
+          },
+          {
+            "type": "menuHeader",
+            "text": "Reports and Inquiries",
+            "submenu": [
+              {
+                "type": "menuItem",
+                "text": "Check Issue",
+                "menuID": "INV.RPTS.STD",
+                "process": "CHECK.ISSUE",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "(BI) - Inventory History",
+                "menuID": "INV.RPTS.STD",
+                "process": "IT.HISTORY",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Part Status Inquiry",
+                "menuID": "INV.RPTS.STD",
+                "process": "STOCK",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "(BI) - Planned Part Activity",
+                "menuID": "INV.RPTS.STD",
+                "process": "SHOW.ACTIVITY",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Inventory Adjust Codes Inquiry",
+                "menuID": "INV.RPTS.STD",
+                "process": "SHOW.ADJUST.CODE",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Show Issue Reason codes",
+                "menuID": "INV.RPTS.STD",
+                "process": "SHOW.ISSUE.REASON.CODES",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "(BI) - PO Receipts for a Date Range",
+                "menuID": "INV.RPTS.STD",
+                "process": "MATL.RECEIVED",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "(BI) - Material Issues for a Date Range",
+                "menuID": "INV.RPTS.STD",
+                "process": "MATL.ISSUED",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Part Usage Export",
+                "menuID": "INV.RPTS.STD",
+                "process": "USAGE.ANAL.FILE",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Engineering Status Codes List",
+                "menuID": "INV.RPTS.STD",
+                "process": "SHOW.ENGR.STATUS.CODES",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Inventory Type Codes List",
+                "menuID": "INV.RPTS.STD",
+                "process": "SHOW.INV.TYPES",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Unit of Measure Codes List",
+                "menuID": "INV.RPTS.STD",
+                "process": "SHOW.UM.CODES",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Routing Inquiry",
+                "menuID": "INV.RPTS.STD",
+                "process": "PRINT.RT",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Bills of Materials Compare",
+                "menuID": "INV.RPTS.STD",
+                "process": "BILL.COMPARE",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Bill of Materials Audit Report",
+                "menuID": "INV.RPTS.STD",
+                "process": "COMPLETE.BILL",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Where-Used Audit Report",
+                "menuID": "INV.RPTS.STD",
+                "process": "COMPLETE.WU",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "(BI) - Part Listing",
+                "menuID": "INV.RPTS.STD",
+                "process": "ITEM.MASTER.LIST",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Summarized Bill of Material",
+                "menuID": "INV.RPTS.STD",
+                "process": "SUM.BILL",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Work Code Where-Used",
+                "menuID": "INV.RPTS.STD",
+                "process": "COMPLETE.WC.WU",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Part or Standard Routing Index",
+                "menuID": "INV.RPTS.STD",
+                "process": "COMPLETE.RT",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Routing Index by Department",
+                "menuID": "INV.RPTS.STD",
+                "process": "COMPLETE.GROUP",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Tool/Tape Usage List",
+                "menuID": "INV.RPTS.STD",
+                "process": "COMPLETE.TOOL.LIST",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Stock Status ",
+                "menuID": "INV.RPTS.STD",
+                "process": "STOCK.STATUS",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "(BI) - Purchased Variance Report",
+                "menuID": "INV.RPTS.STD",
+                "process": "PUR.PART.VAR",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Part Cost Listing ",
+                "menuID": "INV.RPTS.STD",
+                "process": "PART.COST.LIST",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Part Price Listing ",
+                "menuID": "INV.RPTS.STD",
+                "process": "PART.PRICE.LIST",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Part Cost",
+                "menuID": "INV.RPTS.STD",
+                "process": "COST.INQ",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Part Pricing",
+                "menuID": "INV.RPTS.STD",
+                "process": "SHOW.PART.PRICES",
+                "extURL": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "menuHeader",
+        "text": "Job Cost",
+        "submenu": [
+          {
+            "type": "menuHeader",
+            "text": "Processes",
+            "submenu": [
+              {
+                "type": "menuItem",
+                "text": "T&M Price Calculation",
+                "menuID": "JCOST.PROC.STD",
+                "process": "WO.PRICE.CALC",
+                "extURL": ""
+              }
+            ]
+          },
+          {
+            "type": "menuHeader",
+            "text": "Inquiries",
+            "submenu": [
+              {
+                "type": "menuItem",
+                "text": "Work Order Cost History",
+                "menuID": "JCOST.INQ.STD",
+                "process": "WO.HISTORY",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Costing - Summary",
+                "menuID": "JCOST.INQ.STD",
+                "process": "WO.STATUS.SUM",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Costing - Material",
+                "menuID": "JCOST.INQ.STD",
+                "process": "WO.STATUS.MATL",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Costing - Labor",
+                "menuID": "JCOST.INQ.STD",
+                "process": "WO.STATUS.LABR",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Costing - Labor Details",
+                "menuID": "JCOST.INQ.STD",
+                "process": "WO.STATUS.LDTL",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Costing - Labor Detail Limited",
+                "menuID": "JCOST.INQ.STD",
+                "process": "WO.STATUS.LDTL.LIMITED",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Costing - Direct Outplant",
+                "menuID": "JCOST.INQ.STD",
+                "process": "WO.STATUS.OUTP",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Costing - Direct Material",
+                "menuID": "JCOST.INQ.STD",
+                "process": "WO.STATUS.MATDIR",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Costing - Billing",
+                "menuID": "JCOST.INQ.STD",
+                "process": "WO.STATUS.BILL",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Costing - GL Transaction",
+                "menuID": "JCOST.INQ.STD",
+                "process": "WO.STATUS.GLTRANS",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Work Order Group Analysis",
+                "menuID": "JCOST.INQ.STD",
+                "process": "WO.GROUP.ANALYSIS",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "T&M Price Calculation Display",
+                "menuID": "JCOST.INQ.STD",
+                "process": "SHOW.WO.PRICE.CALC",
+                "extURL": ""
+              }
+            ]
+          },
+          {
+            "type": "menuHeader",
+            "text": "Reports",
+            "submenu": [
+              {
+                "type": "menuItem",
+                "text": "(BI) - WIP Total Value Details",
+                "menuID": "JCOST.RPT.STD",
+                "process": "WIP.RETRO",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Cost Summary Report",
+                "menuID": "JCOST.RPT.STD",
+                "process": "SO.CONTRACT",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "WO Labor Analysis - (Estimate vs Actual)",
+                "menuID": "JCOST.RPT.STD",
+                "process": "EXPORT.WO.LABOR.ANALYSIS",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "WIP Open or Closed Summary Export",
+                "menuID": "JCOST.RPT.STD",
+                "process": "EXPORT.WIP.SUMMARY",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Cost Summary by Dept Report",
+                "menuID": "JCOST.RPT.STD",
+                "process": "JOB.COST.DEPT.SUMMARY",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Cost Summary Report - Limited",
+                "menuID": "JCOST.RPT.STD",
+                "process": "JOB.COST.SUMMARY.LIMITED",
+                "extURL": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "menuHeader",
+        "text": "Material Requirements Planning",
+        "submenu": [
+          {
+            "type": "menuHeader",
+            "text": "MRP Processing",
+            "submenu": [
+              {
+                "type": "menuItem",
+                "text": "Parts MRP",
+                "menuID": "MRP.PROC.STD",
+                "process": "PARTS.MRP",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "MRP Planned Order Calculation",
+                "menuID": "MRP.PROC.STD",
+                "process": "MRP.CALC",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "(BI) - Planned Part Activity",
+                "menuID": "MRP.PROC.STD",
+                "process": "SHOW.ACTIVITY",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "List Planned Orders",
+                "menuID": "MRP.PROC.STD",
+                "process": "LIST.PLAN",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Planned Order Information",
+                "menuID": "MRP.PROC.STD",
+                "process": "LOOK.PLAN",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Planned Order Maintenance",
+                "menuID": "MRP.PROC.STD",
+                "process": "PLAN.MAINT",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Planned Order BOM",
+                "menuID": "MRP.PROC.STD",
+                "process": "PLAN.BOM",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Planned Order Routing",
+                "menuID": "MRP.PROC.STD",
+                "process": "PLAN.ROUTE",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Planned Order Component Availability",
+                "menuID": "MRP.PROC.STD",
+                "process": "CHECK.AVAIL",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Open Planned Order",
+                "menuID": "MRP.PROC.STD",
+                "process": "WO.OPEN",
+                "extURL": ""
+              }
+            ]
+          },
+          {
+            "type": "menuHeader",
+            "text": "MRP Displays and Inquiries",
+            "submenu": [
+              {
+                "type": "menuItem",
+                "text": "Planned Order Information",
+                "menuID": "MRP.INQ.STD",
+                "process": "LOOK.PLAN",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Material Requirements Plan",
+                "menuID": "MRP.INQ.STD",
+                "process": "SHOW.MRP",
+                "extURL": ""
+              }
+            ]
+          },
+          {
+            "type": "menuHeader",
+            "text": "Material Requirements Reporting",
+            "submenu": [
+              {
+                "type": "menuItem",
+                "text": "(BI) - Planned Part Activity",
+                "menuID": "MRP.RPT.STD",
+                "process": "SHOW.ACTIVITY",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Bin Item Requirements",
+                "menuID": "MRP.RPT.STD",
+                "process": "BIN.ITEM.REQ",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Safety Stock Valuation",
+                "menuID": "MRP.RPT.STD",
+                "process": "SS.VALUE",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Print Planned WIP Orders to Start ",
+                "menuID": "MRP.RPT.STD",
+                "process": "WO.TO.START",
+                "extURL": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "menuHeader",
+        "text": "Production (Shop Floor Control)",
+        "submenu": [
+          {
+            "type": "menuItem",
+            "text": "WO Release and Print",
+            "menuID": "PRODUCTION.STD",
+            "process": "WO.PRINT",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "WO Production Summary Print",
+            "menuID": "PRODUCTION.STD",
+            "process": "WO.PRODUCTION.SUMMARY",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "(BI) - Work Department Load Listing",
+            "menuID": "PRODUCTION.STD",
+            "process": "WORK.DEPT.LOAD",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Work Order Completion Listing",
+            "menuID": "PRODUCTION.STD",
+            "process": "WO.COMPLETION.INQUIRY",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "(BI) - Work Order Listing",
+            "menuID": "PRODUCTION.STD",
+            "process": "WO.INQUIRY",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "(BI) - Production Calendar Inquiry",
+            "menuID": "PRODUCTION.STD",
+            "process": "PROD.CALENDAR",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Work Order Change",
+            "menuID": "PRODUCTION.STD",
+            "process": "WO.CHANGE",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Work Order Comments Maintenance",
+            "menuID": "PRODUCTION.STD",
+            "process": "WO.COMMENTS.MAINT",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Work Order Parts List",
+            "menuID": "PRODUCTION.STD",
+            "process": "ALLOCATE",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Work Order Routing Maintenance",
+            "menuID": "PRODUCTION.STD",
+            "process": "WO.ROUTING.MAINT",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Work Order Operation Update",
+            "menuID": "PRODUCTION.STD",
+            "process": "WO.OP.STATUS",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Kill (Delete) Work Order",
+            "menuID": "PRODUCTION.STD",
+            "process": "KILL.WO.RELEASE",
+            "extURL": ""
+          },
+          {
+            "type": "menuHeader",
+            "text": "Reports and Inquiries",
+            "submenu": [
+              {
+                "type": "menuItem",
+                "text": "Operation Status Codes List",
+                "menuID": "PRODUCTION.RPTS.STD",
+                "process": "SHOW.OP.STATUS",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Labor Tasks By Work Department",
+                "menuID": "PRODUCTION.RPTS.STD",
+                "process": "LABOR.TASK.BY.DEPARTMENT",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Work Order Comments Inquiry",
+                "menuID": "PRODUCTION.RPTS.STD",
+                "process": "SHOW.WO.COMMENTS",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Work Order Operation Inquiry",
+                "menuID": "PRODUCTION.RPTS.STD",
+                "process": "SHOW.WO.OPS",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Work Order Materials Inquiry",
+                "menuID": "PRODUCTION.RPTS.STD",
+                "process": "SHOW.WO.MATL",
+                "extURL": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "menuHeader",
+        "text": "Resource Scheduling",
+        "submenu": [
+          {
+            "type": "menuItem",
+            "text": "Resource Schedule List",
+            "menuID": "RSC.STD",
+            "process": "RESOURCE.LIST",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Resource Schedule Details",
+            "menuID": "RSC.STD",
+            "process": "RESOURCE.INQUIRY",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Work Order Completion Listing",
+            "menuID": "RSC.STD",
+            "process": "WO.COMPLETION.INQUIRY",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "(BI) - Production Calendar Inquiry",
+            "menuID": "RSC.STD",
+            "process": "PROD.CALENDAR",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Work Dept Code List",
+            "menuID": "RSC.STD",
+            "process": "WORK.DEPT.LIST",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Work Code List",
+            "menuID": "RSC.STD",
+            "process": "WORK.CODE.LIST",
+            "extURL": ""
+          }
+        ]
+      },
+      {
+        "type": "menuHeader",
+        "text": "Labor and Payroll Processing",
+        "submenu": [
+          {
+            "type": "menuHeader",
+            "text": "Reports and Inquiries",
+            "submenu": [
+              {
+                "type": "menuItem",
+                "text": "Employee Hours by Work Code",
+                "menuID": "PAY.RPTS.STD",
+                "process": "EMP.HOURS.BY.OP",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Employee Hours by Date Range",
+                "menuID": "PAY.RPTS.STD",
+                "process": "EMP.HOURS.BY.DATE",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Employee Hours by Pay Period",
+                "menuID": "PAY.RPTS.STD",
+                "process": "EMP.HOURS.BY.PAY.PERIOD",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Employee Efficiency",
+                "menuID": "PAY.RPTS.STD",
+                "process": "EMP.EFF",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Department Efficiency",
+                "menuID": "PAY.RPTS.STD",
+                "process": "SUM.DEPT.EFF",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Work Center Efficiency",
+                "menuID": "PAY.RPTS.STD",
+                "process": "SUM.WC.EFF",
+                "extURL": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "menuHeader",
+        "text": "Accounts Payable",
+        "submenu": [
+          {
+            "type": "menuHeader",
+            "text": "Vendor Maintenance and Reporting",
+            "submenu": [
+              {
+                "type": "menuItem",
+                "text": "Vendor Master Maintenance",
+                "menuID": "AP.VEND.STD",
+                "process": "VENDORS",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "(BI) - Vendor Master Listing",
+                "menuID": "AP.VEND.STD",
+                "process": "VM.INQUIRY",
+                "extURL": ""
+              }
+            ]
+          },
+          {
+            "type": "menuHeader",
+            "text": "Inquiries",
+            "submenu": [
+              {
+                "type": "menuItem",
+                "text": "(BI) - AP Invoice Listing",
+                "menuID": "AP.INQ.STD",
+                "process": "LIST.AP.DET",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "A/P Invoice Details",
+                "menuID": "AP.INQ.STD",
+                "process": "AP.DETAIL",
+                "extURL": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "menuHeader",
+        "text": "Accounts Receivable",
+        "submenu": [
+          {
+            "type": "menuHeader",
+            "text": "Customers",
+            "submenu": [
+              {
+                "type": "menuItem",
+                "text": "Customer Master Maintenance",
+                "menuID": "AR.CUST.STD",
+                "process": "CUSTOMERS",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Customer Alternate Bill To Maintenance",
+                "menuID": "AR.CUST.STD",
+                "process": "BILL.TO",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Customer Location Maintenance",
+                "menuID": "AR.CUST.STD",
+                "process": "SHIP.TO",
+                "extURL": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "menuHeader",
+        "text": "Report Administration",
+        "submenu": [
+          {
+            "type": "menuItem",
+            "text": "Browse Spooled Reports",
+            "menuID": "RPT.STD",
+            "process": "REPORT.VIEW.INDEX",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Browse Recently Archived Forms",
+            "menuID": "RPT.STD",
+            "process": "VIEW.TRANSMITTED.FORMS",
+            "extURL": ""
+          }
+        ]
+      },
+      {
+        "type": "menuHeader",
+        "text": "Administration",
+        "submenu": [
+          {
+            "type": "menuItem",
+            "text": "Change your Password",
+            "menuID": "ADMIN.STD",
+            "process": "CHANGE.PASSWORD",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "Clear My Locks",
+            "menuID": "ADMIN.STD",
+            "process": "CLEAR.ME",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "User Logoff",
+            "menuID": "ADMIN.STD",
+            "process": "USER.LOGOFF",
+            "extURL": ""
+          },
+          {
+            "type": "menuItem",
+            "text": "My Profile",
+            "menuID": "ADMIN.STD",
+            "process": "MY.PROFILE.MAINT",
+            "extURL": ""
+          }
+        ]
+      },
+      {
+        "type": "menuHeader",
+        "text": "System Management ",
+        "submenu": [
+          {
+            "type": "menuHeader",
+            "text": "Codes and Setup Maintenance",
+            "submenu": [
+              {
+                "type": "menuItem",
+                "text": "Buyer Code Setup",
+                "menuID": "SYS.SETUP.STD",
+                "process": "BUYERS",
+                "extURL": ""
+              }
+            ]
+          },
+          {
+            "type": "menuHeader",
+            "text": "Transition Processes",
+            "submenu": [
+              {
+                "type": "menuItem",
+                "text": "Import Parts",
+                "menuID": "SYS.INIT.STD",
+                "process": "IMPORT.PARTS",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Import Bill of Materials",
+                "menuID": "SYS.INIT.STD",
+                "process": "IMPORT.BOM",
+                "extURL": ""
+              },
+              {
+                "type": "menuItem",
+                "text": "Import Routing",
+                "menuID": "SYS.INIT.STD",
+                "process": "IMPORT.ROUTING",
+                "extURL": ""
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "work_orders": {
+    "WO Inquiry Form": {
+      "status": 200,
+      "length": 1213,
+      "tables": 1,
+      "forms": 1,
+      "input_fields": 0,
+      "url": "/cgi-bin/mvi.exe/WO.INQUIRY",
+      "content_preview": "<html>\r\n<head>\r\n<title>Work Order Listing</title>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\r\n<meta http-equiv=\"Pragma\" content=\"no-cache\">\r\n<link rel=\"stylesheet\" href=\"/general-style.css\">\r\n<script language=\"JavaScript\">\r\n<!--Hard coded SCRIPTs start here-->\r\nvar f = \"\"; //Will become f=document.forms[0]\r\nvar d = \"\"; //Will become d=document.all\r\n\r\nfunction doThingsOnLoad(){\r\n   f=document.forms[0]\r\n   d=document.all\r\n}\r\n<!--Hard coded SCRIPTs end here-->\r\n\r\n\r\n</",
+      "table_data": [
+        {
+          "table_index": 0,
+          "rows": [
+            [
+              "Work Order Listing"
+            ]
+          ],
+          "row_count": 1
+        }
+      ],
+      "form_fields": [
+        {
+          "action": "[ACTION]",
+          "method": "get",
+          "fields": []
+        }
+      ]
+    },
+    "WO History": {
+      "status": 200,
+      "length": 5255,
+      "tables": 4,
+      "forms": 1,
+      "input_fields": 6,
+      "url": "/cgi-bin/mvi.exe/WO.HISTORY",
+      "content_preview": "<html>\r\n<head>\r\n<title>Cost History by Part</title>\r\n\r\n<link rel=\"stylesheet\" href=\"/general-style.css\">\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\r\n<meta http-equiv=\"Pragma\" content=\"no-cache\">\r\n</head>\r\n<script language=\"javascript\">\r\n\r\nfunction linkWoStatus(wono) {\r\n   url=\"WO.STATUS.SUM\"\r\n   url+=\"?WONO=\"+wono\r\n   url+=\"&OPENED_BY_OTHER_PROGRAM=Y\"\r\n\r\n   winOptions=\"width=900,height=500,resizable=yes,scrollbars=yes\"\r\n   window.open(url,\"Help\",winOptions);\r\n}\r\n\r\n",
+      "table_data": [
+        {
+          "table_index": 0,
+          "rows": [
+            [
+              "Work Order Cost History"
+            ]
+          ],
+          "row_count": 1
+        },
+        {
+          "table_index": 1,
+          "rows": [
+            [
+              "",
+              ""
+            ],
+            [
+              "Part Number",
+              ""
+            ],
+            [
+              "Description",
+              ""
+            ]
+          ],
+          "row_count": 3
+        },
+        {
+          "table_index": 2,
+          "rows": [
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "WorkOrder",
+              "DateComplete",
+              "Quantityto Mfgr",
+              "QuantityComplete",
+              "LaborHours",
+              "MaterialEach",
+              "LaborEach",
+              "BurdenEach",
+              "OutplantEach",
+              "TotalEach",
+              "SellingPrice",
+              "GrossMargin",
+              ""
+            ]
+          ],
+          "row_count": 2
+        }
+      ],
+      "form_fields": [
+        {
+          "action": "WO.HISTORY",
+          "method": "post",
+          "fields": [
+            {
+              "name": "PROGNAME",
+              "type": "hidden",
+              "id": null,
+              "value": "WOC140W"
+            },
+            {
+              "name": "Loaded",
+              "type": "hidden",
+              "id": null,
+              "value": "0"
+            },
+            {
+              "name": "PARTNO",
+              "type": "text",
+              "id": "PARTNO",
+              "value": ""
+            },
+            {
+              "name": "go",
+              "type": "button",
+              "id": null,
+              "value": " Go "
+            },
+            {
+              "name": "PART_DESC",
+              "type": "text",
+              "id": "PART_DESC",
+              "value": ""
+            },
+            {
+              "name": "search",
+              "type": "button",
+              "id": null,
+              "value": "Search"
+            }
+          ]
+        }
+      ]
+    },
+    "WO Cost Summary": {
+      "status": 200,
+      "length": 466,
+      "tables": 0,
+      "forms": 0,
+      "input_fields": 0,
+      "url": "/cgi-bin/mvi.exe/WO.COST.SUMMARY",
+      "content_preview": "<html>\r\n<head>\r\n<title>Invalid User</title>\r\n\r\n<link rel=\"stylesheet\" href=\"/general-style.css\">\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\r\n<meta http-equiv=\"Pragma\" content=\"no-cache\">\r\n<style>\r\n</style>\r\n<!--SCRIPT-->\r\n<!--SCRIPT2-->\r\n<script language=\"javascript\">\r\n</script>\r\n</head>\r\n<body class=\"workingforms\">\r\n<br>\r\n<center>\r\n<h2 class=\"color\">You are not authorized to run this program!</h2>\r\n</center> \r\n</body>\r\n</html>\r\n\r\n"
+    },
+    "WO Completion Inquiry": {
+      "status": 200,
+      "length": 1261,
+      "tables": 1,
+      "forms": 1,
+      "input_fields": 0,
+      "url": "/cgi-bin/mvi.exe/WO.COMPLETION.INQUIRY",
+      "content_preview": "<html>\r\n<head>\r\n<title>Work Order Completion Inquiry</title>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\r\n<meta http-equiv=\"Pragma\" content=\"no-cache\">\r\n<link rel=\"stylesheet\" href=\"/general-style.css\">\r\n<script language=\"JavaScript\">\r\n<!--Hard coded SCRIPTs start here-->\r\nvar f = \"\"; //Will become f=document.forms[0]\r\nvar d = \"\"; //Will become d=document.all\r\n\r\nfunction doThingsOnLoad(){\r\n   f=document.forms[0]\r\n   d=document.all\r\n}\r\n<!--Hard coded SCRIPTs end here",
+      "table_data": [
+        {
+          "table_index": 0,
+          "rows": [
+            [
+              "Work Order Completion Inquiry"
+            ]
+          ],
+          "row_count": 1
+        }
+      ],
+      "form_fields": [
+        {
+          "action": "[ACTION]",
+          "method": "get",
+          "fields": []
+        }
+      ]
+    },
+    "WO Group Analysis": {
+      "status": 200,
+      "length": 7754,
+      "tables": 5,
+      "forms": 1,
+      "input_fields": 4,
+      "url": "/cgi-bin/mvi.exe/WO.GROUP.ANALYSIS",
+      "content_preview": "<html>\r\n<head>\r\n<title>Work Order Cost - Group Analysis</title>\r\n\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\r\n<meta http-equiv=\"Pragma\" content=\"no-cache\">\r\n<link rel=\"stylesheet\" href=\"/general-style.css\">\r\n<script langauge=JavaScript>\r\n<!--Hard coded SCRIPTs start here-->\r\nvar f = \"\"; //Will become f=document.forms[0]\r\nvar d = \"\"; //Will become d=document.all\r\n\r\nfunction doThingsOnLoad(){\r\n   f=document.forms[0]\r\n   d=document.all\r\n}\r\n\r\nfunction validateEntry(){\r",
+      "table_data": [
+        {
+          "table_index": 0,
+          "rows": [
+            [
+              "Work Order Group Analysis"
+            ]
+          ],
+          "row_count": 1
+        },
+        {
+          "table_index": 1,
+          "rows": [
+            [
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "Work Order:",
+              ""
+            ],
+            [
+              "Cust Location:",
+              "",
+              "Item Number:",
+              ""
+            ]
+          ],
+          "row_count": 3
+        },
+        {
+          "table_index": 2,
+          "rows": [
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              ""
+            ],
+            [
+              "WONumber",
+              "PartNumber",
+              "Req'sQty",
+              "WIPQty",
+              "CF",
+              "TotalLabor",
+              "TotalMaterial",
+              "TotalOutplant",
+              "TotalIncrement",
+              "Subassemat Std",
+              "TotalCosts",
+              "StandardDlrs Comp",
+              "JobVariance"
+            ],
+            [
+              ""
+            ]
+          ],
+          "row_count": 4
+        }
+      ],
+      "form_fields": [
+        {
+          "action": "WO.GROUP.ANALYSIS",
+          "method": "post",
+          "fields": [
+            {
+              "name": "WONO",
+              "type": "text",
+              "id": null,
+              "value": ""
+            },
+            {
+              "name": "GO",
+              "type": "button",
+              "id": null,
+              "value": " Go "
+            },
+            {
+              "name": "CUST_LOCATION",
+              "type": "text",
+              "id": null,
+              "value": ""
+            },
+            {
+              "name": "SEARCH_CUST_LOCATION",
+              "type": "button",
+              "id": null,
+              "value": "Search"
+            }
+          ]
+        }
+      ]
+    },
+    "Work Order List": {
+      "status": 200,
+      "length": 1755,
+      "tables": 2,
+      "forms": 0,
+      "input_fields": 0,
+      "url": "/cgi-bin/mvi.exe/WORKORDER.LIST",
+      "content_preview": "<html>\r\n<head>\r\n<title>MVI Error</title>\r\n<link rel=\"stylesheet\" href=\"/general-style.css\" type=\"text/css\">\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\r\n<meta http-equiv=\"Pragma\" content=\"no-cache\">\r\n<script language=javascript>\r\n<!--SCRIPT-->\r\n\r\n<!--Hard coded SCRIPTs start Here-->\r\n</script>\r\n</head>\r\n<body class=workingForms onLoad=\"\">\r\n<br><br>\r\n<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"430\" align=\"center\">\r\n <tr>\r\n   <td bgcolor=\"#696969\">\r\n     ",
+      "table_data": [
+        {
+          "table_index": 0,
+          "rows": [
+            [
+              "KeyedInSign v2.1Error Occurred While Processing Request.MVI Version:3.0Error Code:2002Description:WORKORDER.LIST is not defined in the VOC file.",
+              "KeyedInSign v2.1",
+              "Error Occurred While Processing Request.",
+              "MVI Version:",
+              "3.0",
+              "Error Code:",
+              "2002",
+              "Description:",
+              "WORKORDER.LIST is not defined in the VOC file."
+            ],
+            [
+              "KeyedInSign v2.1"
+            ],
+            [
+              "Error Occurred While Processing Request."
+            ],
+            [
+              "MVI Version:",
+              "3.0"
+            ],
+            [
+              "Error Code:",
+              "2002"
+            ],
+            [
+              "Description:",
+              "WORKORDER.LIST is not defined in the VOC file."
+            ]
+          ],
+          "row_count": 6
+        },
+        {
+          "table_index": 1,
+          "rows": [
+            [
+              "KeyedInSign v2.1"
+            ],
+            [
+              "Error Occurred While Processing Request."
+            ],
+            [
+              "MVI Version:",
+              "3.0"
+            ],
+            [
+              "Error Code:",
+              "2002"
+            ],
+            [
+              "Description:",
+              "WORKORDER.LIST is not defined in the VOC file."
+            ]
+          ],
+          "row_count": 5
+        }
+      ]
+    }
+  },
+  "service_calls": {
+    "Service Call List": {
+      "type": "html",
+      "length": 1758,
+      "tables": 2,
+      "status": 200,
+      "content_preview": "<html>\r\n<head>\r\n<title>MVI Error</title>\r\n<link rel=\"stylesheet\" href=\"/general-style.css\" type=\"text/css\">\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\r\n<meta http-equiv=\"Pragma\" content=\"no-cache\">\r\n<script language=javascript>\r\n<!--SCRIPT-->\r\n\r\n<!--Hard coded SCRIPTs start Here-->\r\n</script>\r\n</head>\r\n<body class=workingForms onLoad=\"\">\r\n<br><br>\r\n<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"430\" align=\"center\">\r\n <tr>\r\n   <td bgcolor=\"#696969\">\r\n     "
+    },
+    "Assigned Service Calls": {
+      "type": "html",
+      "length": 357,
+      "tables": 1,
+      "status": 200,
+      "content_preview": "<table border=\"0\" width=\"100%\"><tr class=\"table-rows\"><td style=\"vertical-align:bottom;font-weight:bold;width:20%\">Date</td><td style=\"vertical-align:bottom;font-weight:bold;width:20%\">SC #</td><td style=\"vertical-align:bottom;font-weight:bold;width:60%\">Customer/Location</td></tr><tr><td colspan=\"3\">No Service Calls currently assigned to you.</td></tr>\r\n"
+    }
+  },
+  "widgets": {
+    "Assigned Milestones": {
+      "type": "text",
+      "length": 425,
+      "status": 200,
+      "content": "<table border=\"0\" width=\"100%\"><tr class=\"table-rows\"><td style=\"vertical-align:bottom;font-weight:bold;width:17%\">Start</td><td style=\"vertical-align:bottom;font-weight:bold;width:17%\">Due</td><td style=\"vertical-align:bottom;font-weight:bold;width:15%\">Project&nbsp;</td><td style=\"vertical-align:bottom;font-weight:bold;width:51%\">Milestone</td></tr><tr><td colspan=\"4\">No Milestones currently assigned to you.</td></tr>\r\n"
+    },
+    "CRM Tasks": {
+      "type": "text",
+      "length": 336,
+      "status": 200,
+      "content": "<table border=\"0\" width=\"100%\"><tr class=\"table-rows\"><td style=\"vertical-align:bottom;font-weight:bold;width:20%\">Date</td><td style=\"vertical-align:bottom;font-weight:bold;width:20%\">Acct</td><td style=\"vertical-align:bottom;font-weight:bold;width:60%\">Task</td></tr><tr><td colspan=\"3\">No Tasks currently assigned to you.</td></tr>\r\n"
+    },
+    "FYI Widget": {
+      "type": "text",
+      "length": 0,
+      "status": 200,
+      "content": ""
+    }
+  },
+  "main_pages": {
+    "Main Page": {
+      "length": 1745,
+      "tables": 2,
+      "forms": 0,
+      "links": 0,
+      "status": 200,
+      "title": "MVI Error"
+    },
+    "Home": {
+      "length": 1745,
+      "tables": 2,
+      "forms": 0,
+      "links": 0,
+      "status": 200,
+      "title": "MVI Error"
+    }
+  }
+}

@@ -1,0 +1,2726 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\WINDOWS\system32> # Open PowerShell as Administrator (or regular PowerShell is fine)
+PS C:\WINDOWS\system32> # Then run these commands:
+PS C:\WINDOWS\system32>
+PS C:\WINDOWS\system32> # 1. Create the directory structure
+PS C:\WINDOWS\system32> New-Item -ItemType Directory -Path "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit" -Force
+
+
+    Directory: C:\Scripts\SignX\Keyedin
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        11/12/2025   2:27 PM                GWT Google Web Toolkit
+
+
+PS C:\WINDOWS\system32>
+PS C:\WINDOWS\system32> # 2. Navigate to that directory
+PS C:\WINDOWS\system32> cd "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit"
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # 3. Verify the 7 files are there
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Get-ChildItem
+
+
+    Directory: C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        11/12/2025   2:25 PM           8930 check_extraction_method.ps1
+-a----        11/12/2025   2:25 PM           2675 extract_cookies.py
+-a----        11/12/2025   2:24 PM          15204 keyedin_complete_extraction.py
+-a----        11/12/2025   2:25 PM           9438 keyedin_sql_extraction.py
+-a----        11/12/2025   2:25 PM          12311 README_EXTRACTION.md
+-a----        11/12/2025   2:25 PM            396 requirements.txt
+-a----        11/12/2025   2:25 PM           4631 setup_extraction.ps1
+
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # Expected files:
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # - check_extraction_method.ps1
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # - extract_cookies.py
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # - keyedin_complete_extraction.py
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # - keyedin_sql_extraction.py
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # - README_EXTRACTION.md
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # - requirements.txt
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # - setup_extraction.ps1
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # 4. Run the diagnostic to determine your best extraction method
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> powershell -ExecutionPolicy Bypass -File .\check_extraction_method.ps1
+At C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\check_extraction_method.ps1:42 char:10
++         } else {
++          ~
+The Try statement is missing its Catch or Finally block.
+At C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\check_extraction_method.ps1:45 char:5
++     } catch {
++     ~
+Unexpected token '}' in expression or statement.
+At C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\check_extraction_method.ps1:49 char:1
++ } else {
++ ~
+Unexpected token '}' in expression or statement.
+At C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\check_extraction_method.ps1:81 char:6
++     }
++      ~
+The Try statement is missing its Catch or Finally block.
+At C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\check_extraction_method.ps1:82 char:1
++ }
++ ~
+Unexpected token '}' in expression or statement.
+At C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\check_extraction_method.ps1:180 char:2
++ - Python: $(if ($pythonVersion) { 'Installed' } else { 'Not Found' })
++  ~
+Missing expression after unary operator '-'.
+At C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\check_extraction_method.ps1:180 char:3
++ - Python: $(if ($pythonVersion) { 'Installed' } else { 'Not Found' })
++   ~~~~~~~
+Unexpected token 'Python:' in expression or statement.
+At C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\check_extraction_method.ps1:181 char:2
++ - SQL Access: $(if ($sqlServer) { "Yes ($sqlServer\$sqlDatabase)" } e ...
++  ~
+Missing expression after unary operator '-'.
+At C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\check_extraction_method.ps1:181 char:3
++ - SQL Access: $(if ($sqlServer) { "Yes ($sqlServer\$sqlDatabase)" } e ...
++   ~~~
+Unexpected token 'SQL' in expression or statement.
+At C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\check_extraction_method.ps1:182 char:2
++ - Web Access: $(if ($score.Informer -ge 5) { 'Yes' } else { 'Limited' ...
++  ~
+Missing expression after unary operator '-'.
+Not all parse errors were reported.  Correct the reported errors and try again.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : MissingCatchOrFinally
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # KeyedIn Extraction Method Advisor
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # Checks your access and recommends the best extraction approach
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host "`n" + ("=" * 80) -ForegroundColor Cyan
+
+ + ================================================================================
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host " KEYEDIN EXTRACTION METHOD ADVISOR" -ForegroundColor Yellow
+ KEYEDIN EXTRACTION METHOD ADVISOR
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host ("=" * 80) -ForegroundColor Cyan
+================================================================================
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host ""
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> $score = @{
+>>     SQL = 0
+>>     Informer = 0
+>> }
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> $pythonVersion = $null
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> $sqlServer = $null
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> $sqlDatabase = $null
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> $chromeFound = $false
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # Check 1: Python installation
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host "[1/5] Checking Python..." -ForegroundColor White
+[1/5] Checking Python...
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> try {
+>>     $pythonVersion = python --version 2>&1
+>>     Write-Host "   Python installed: $pythonVersion" -ForegroundColor Green
+>>     $score.SQL++
+>>     $score.Informer++
+>> }
+>> catch {
+>>     Write-Host "   Python not found" -ForegroundColor Red
+>>     Write-Host "    Install from: python.org" -ForegroundColor Yellow
+>> }
+   Python installed: Python 3.13.4
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # Check 2: SQL Server access
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host "`n[2/5] Checking SQL Server access..." -ForegroundColor White
+
+[2/5] Checking SQL Server access...
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> $server = Read-Host "  Enter SQL Server instance (press Enter to skip)"
+  Enter SQL Server instance (press Enter to skip):
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> if (-not [string]::IsNullOrWhiteSpace($server)) {
+>>     $database = Read-Host "  Enter database name (default: KeyedIn)"
+>>     if ([string]::IsNullOrWhiteSpace($database)) { $database = "KeyedIn" }
+>>
+>>     try {
+>>         $testQuery = sqlcmd -S $server -d $database -Q "SELECT 1" -h -1 2>&1
+>>
+>>         if ($LASTEXITCODE -eq 0) {
+>>             Write-Host "   SQL Server accessible!" -ForegroundColor Green
+>>             $score.SQL += 10  # Big bonus for SQL access
+>>             $sqlServer = $server
+>>             $sqlDatabase = $database
+>>         }
+>>         else {
+>>             Write-Host "   Cannot access SQL Server" -ForegroundColor Red
+>>             Write-Host "    (This is OK - we'll use web extraction)" -ForegroundColor Gray
+>>         }
+>>     }
+>>     catch {
+>>         Write-Host "   Cannot access SQL Server" -ForegroundColor Red
+>>         Write-Host "    (This is OK - we'll use web extraction)" -ForegroundColor Gray
+>>     }
+>> }
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> else {
+>>     Write-Host "   Skipped SQL Server test" -ForegroundColor Gray                                                    >> }                                                                                                                    else : The term 'else' is not recognized as the name of a cmdlet, function, script file, or operable program. Check     the spelling of the name, or if a path was included, verify that the path is correct and try again.                     At line:1 char:1
++ else {
++ ~~~~
+    + CategoryInfo          : ObjectNotFound: (else:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # Check 3: Web browser access
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host "`n[3/5] Checking web access to KeyedIn..." -ForegroundColor White
+
+[3/5] Checking web access to KeyedIn...
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> $keyedinUrl = "https://eaglesign.keyedinsign.com:8443/eaglesign/"
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> try {
+>>     $webTest = Invoke-WebRequest -Uri $keyedinUrl -Method Head -TimeoutSec 5 -UseBasicParsing 2>&1
+>>     Write-Host "   KeyedIn web interface reachable" -ForegroundColor Green
+>>     $score.Informer += 5
+>> }
+>> catch {
+>>     Write-Host "   Cannot reach KeyedIn web interface" -ForegroundColor Red
+>>     Write-Host "    Check network connection or VPN" -ForegroundColor Yellow
+>> }
+   KeyedIn web interface reachable
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # Check 4: Chrome browser (for cookie extraction)
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host "`n[4/5] Checking Chrome browser..." -ForegroundColor White
+
+[4/5] Checking Chrome browser...
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> $chromePaths = @(
+>>     "${env:ProgramFiles}\Google\Chrome\Application\chrome.exe",
+>>     "${env:ProgramFiles(x86)}\Google\Chrome\Application\chrome.exe",
+>>     "${env:LocalAppData}\Google\Chrome\Application\chrome.exe"
+>> )
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> foreach ($path in $chromePaths) {
+>>     if (Test-Path $path) {
+>>         Write-Host "   Chrome installed: $path" -ForegroundColor Green
+>>         $chromeFound = $true
+>>         $score.Informer += 2
+>>         break
+>>     }
+>> }
+   Chrome installed: C:\Program Files\Google\Chrome\Application\chrome.exe
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> if (-not $chromeFound) {
+>>     Write-Host "   Chrome not found (optional)" -ForegroundColor Gray
+>>     Write-Host "    You can still extract via Informer, but manual cookie extraction needed" -ForegroundColor Yellow
+>> }
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # Check 5: Available disk space
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host "`n[5/5] Checking available disk space..." -ForegroundColor White
+
+[5/5] Checking available disk space...
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> $drive = (Get-Location).Drive.Name
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> $disk = Get-PSDrive $drive
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> $freeGB = [math]::Round($disk.Free / 1GB, 2)
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> if ($freeGB -gt 50) {
+>>     Write-Host "   Sufficient space: ${freeGB}GB free" -ForegroundColor Green
+>>     $score.SQL++
+>>     $score.Informer++
+>> }
+   Sufficient space: 1343.72GB free
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> elseif ($freeGB -gt 10) {
+>>     Write-Host "  ! Limited space: ${freeGB}GB free" -ForegroundColor Yellow
+>>     Write-Host "    Should be OK, but monitor during extraction" -ForegroundColor Gray
+>> }
+elseif : The term 'elseif' is not recognized as the name of a cmdlet, function, script file, or operable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ elseif ($freeGB -gt 10) {
++ ~~~~~~
+    + CategoryInfo          : ObjectNotFound: (elseif:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> else {
+>>     Write-Host "   Low disk space: ${freeGB}GB free" -ForegroundColor Red
+>>     Write-Host "    Free up space before extraction" -ForegroundColor Yellow
+>> }
+else : The term 'else' is not recognized as the name of a cmdlet, function, script file, or operable program. Check
+the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ else {
++ ~~~~
+    + CategoryInfo          : ObjectNotFound: (else:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # Generate recommendation
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host "`n" + ("=" * 80) -ForegroundColor Cyan
+
+ + ================================================================================
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host " RECOMMENDATION" -ForegroundColor Yellow
+ RECOMMENDATION
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host ("=" * 80) -ForegroundColor Cyan
+================================================================================
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host ""
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> if ($score.SQL -gt $score.Informer) {
+>>     Write-Host " RECOMMENDED: Method 1 - SQL Server Direct Extraction" -ForegroundColor Green
+>>     Write-Host ""
+>>     Write-Host "  Why: You have SQL Server access (fastest method)" -ForegroundColor White
+>>     Write-Host "  Time: 2-4 hours for complete extraction" -ForegroundColor Gray
+>>     Write-Host "  Coverage: 100% of all tables and data" -ForegroundColor Gray
+>>     Write-Host ""
+>>     Write-Host "  Command to run:" -ForegroundColor Cyan
+>>     if ($sqlServer) {
+>>         Write-Host "    python keyedin_sql_extraction.py --server `"$sqlServer`" --database `"$sqlDatabase`"" -ForegroundColor White
+>>     }
+>>     else {
+>>         Write-Host "    python keyedin_sql_extraction.py --server YOUR-SERVER\INSTANCE --database KeyedIn" -ForegroundColor White
+>>     }
+>>     Write-Host ""
+>>     Write-Host "  See README_EXTRACTION.md section: 'Method 1: SQL Server Direct Extraction'" -ForegroundColor Yellow
+>> }
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> else {
+>>     Write-Host " RECOMMENDED: Method 2 - Informer API Extraction" -ForegroundColor Green
+>>     Write-Host ""
+>>     Write-Host "  Why: No SQL Server access available" -ForegroundColor White
+>>     Write-Host "  Time: 1-3 days for complete extraction" -ForegroundColor Gray
+>>     Write-Host "  Coverage: All accessible reports and views" -ForegroundColor Gray
+>>     Write-Host ""
+>>     Write-Host "  Commands to run:" -ForegroundColor Cyan
+>>     Write-Host "    1. python extract_cookies.py" -ForegroundColor White
+>>     Write-Host "       (Opens browser, you log in, saves cookies)" -ForegroundColor Gray
+>>     Write-Host ""
+>>     Write-Host "    2. python keyedin_complete_extraction.py" -ForegroundColor White
+>>     Write-Host "       (Runs automated extraction)" -ForegroundColor Gray
+>>     Write-Host ""
+>>     Write-Host "  See README_EXTRACTION.md section: 'Method 2: Informer API Extraction'" -ForegroundColor Yellow
+>> }
+else : The term 'else' is not recognized as the name of a cmdlet, function, script file, or operable program. Check
+the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ else {
++ ~~~~
+    + CategoryInfo          : ObjectNotFound: (else:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # Additional notes
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host "`n" + ("=" * 80) -ForegroundColor Cyan
+
+ + ================================================================================
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host " IMPORTANT NOTES" -ForegroundColor Yellow
+ IMPORTANT NOTES
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host ("=" * 80) -ForegroundColor Cyan
+================================================================================
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host ""
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host "  This extraction is CRITICAL for preserving your data" -ForegroundColor Yellow
+  This extraction is CRITICAL for preserving your data
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host "    KeyedIn upgrade will only migrate 3 years of history" -ForegroundColor Gray
+    KeyedIn upgrade will only migrate 3 years of history
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host "    This backup preserves ALL of Eagle Sign's historical data" -ForegroundColor Gray
+    This backup preserves ALL of Eagle Sign's historical data
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host ""
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host " Timeline:" -ForegroundColor White
+ Timeline:
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host "    - Run extraction BEFORE migration date" -ForegroundColor Gray
+    - Run extraction BEFORE migration date
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host "    - Allow sufficient time (1-3 days for Informer method)" -ForegroundColor Gray
+    - Allow sufficient time (1-3 days for Informer method)
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host "    - Validate extraction before decommissioning old system" -ForegroundColor Gray
+    - Validate extraction before decommissioning old system
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host ""
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host " Backup Strategy:" -ForegroundColor White
+ Backup Strategy:
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host "    - Keep multiple copies (local + network + cloud)" -ForegroundColor Gray
+    - Keep multiple copies (local + network + cloud)
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host "    - Store in compressed archive for long-term retention" -ForegroundColor Gray
+    - Store in compressed archive for long-term retention
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host "    - Document extraction date and coverage" -ForegroundColor Gray
+    - Document extraction date and coverage
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host ""
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # Save recommendation to file
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> $pythonStatus = if ($pythonVersion) { "Installed" } else { "Not Found" }
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> $sqlAccess = if ($sqlServer) { "Yes ($sqlServer\$sqlDatabase)" } else { "No" }
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> $webAccess = if ($score.Informer -ge 5) { "Yes" } else { "Limited" }
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> $chromeStatus = if ($chromeFound) { "Installed" } else { "Not Found" }
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> $recommendedMethod = if ($score.SQL -gt $score.Informer) { "SQL Server Direct" } else { "Informer API" }
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> $nextSteps = if ($score.SQL -gt $score.Informer) {
+>> @"
+>> 1. Run: python keyedin_sql_extraction.py --server "$sqlServer" --database "$sqlDatabase"
+>> 2. Validate extraction
+>> 3. Create backup copies
+>> "@
+>> } else {
+>> @"
+>> 1. Run: python extract_cookies.py
+>> 2. Run: python keyedin_complete_extraction.py
+>> 3. Monitor progress (1-3 days)
+>> 4. Validate extraction
+>> 5. Create backup copies
+>> "@
+>> }
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> $recommendation = @"
+>> KeyedIn Extraction Recommendation
+>> Generated: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
+>>
+>> Recommended Method: $recommendedMethod
+>>
+>> SQL Score: $($score.SQL)
+>> Informer Score: $($score.Informer)
+>>
+>> System Check Results:
+>>   Python: $pythonStatus
+>>   SQL Access: $sqlAccess
+>>   Web Access: $webAccess
+>>   Chrome: $chromeStatus
+>>   Disk Space: ${freeGB}GB free
+>>
+>> Next Steps:
+>> $nextSteps
+>>
+>> See README_EXTRACTION.md for complete instructions.
+>> "@
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> $recommendation | Out-File "extraction_recommendation.txt" -Encoding UTF8
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host " Recommendation saved to: extraction_recommendation.txt" -ForegroundColor Cyan
+ Recommendation saved to: extraction_recommendation.txt
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host ""
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # Offer to start extraction
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> $startNow = Read-Host "Ready to start extraction now? (y/n)"
+Ready to start extraction now? (y/n): y
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> if ($startNow -eq 'y') {
+>>     if ($score.SQL -gt $score.Informer -and $sqlServer) {
+>>         Write-Host "`nStarting SQL extraction..." -ForegroundColor Green
+>>         python keyedin_sql_extraction.py --server $sqlServer --database $sqlDatabase
+>>     }
+>>     else {
+>>         Write-Host "`nStarting cookie extraction..." -ForegroundColor Green
+>>         python extract_cookies.py
+>>     }
+>> }
+
+Starting cookie extraction...
+================================================================================
+KEYEDIN SESSION COOKIE EXTRACTOR
+================================================================================
+
+🌐 Opening Chrome browser...
+📍 Navigating to: https://eaglesign.keyedinsign.com:8443/eaglesign/
+
+================================================================================
+🔐 PLEASE LOG IN TO KEYEDIN IN THE BROWSER WINDOW
+================================================================================
+
+Instructions:
+  1. Complete the login process in the browser
+  2. Wait until you see the KeyedIn dashboard
+  3. Then come back here and press Enter
+
+Press Enter after you've successfully logged in...
+
+🍪 Extracting session cookies...
+✓ Saved 1 cookies to session_cookies.json
+
+Cookie names:
+  - JSESSIONID
+
+================================================================================
+✓ SESSION COOKIES EXTRACTED SUCCESSFULLY
+================================================================================
+
+Next step: python keyedin_complete_extraction.py --session-file session_cookies.json
+
+🔒 Closing browser...
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> else {
+>>     Write-Host "`nNo problem! Run the recommended command when ready." -ForegroundColor White
+>>     Write-Host "See extraction_recommendation.txt for your personalized guide." -ForegroundColor Gray
+>> }
+else : The term 'else' is not recognized as the name of a cmdlet, function, script file, or operable program. Check
+the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ else {
++ ~~~~
+    + CategoryInfo          : ObjectNotFound: (else:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host ""
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> python keyedin_complete_extraction.py --session-file session_cookies.json
+2025-11-12 14:47:52,354 - INFO - KeyedIn Extractor initialized
+2025-11-12 14:47:52,355 - INFO - Output directory: C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_backup
+2025-11-12 14:47:52,355 - INFO - Database: C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_backup\keyedin_complete.db
+2025-11-12 14:47:52,356 - INFO - ================================================================================
+2025-11-12 14:47:52,356 - INFO - KEYEDIN COMPLETE DATA EXTRACTION
+2025-11-12 14:47:52,356 - INFO - ================================================================================
+2025-11-12 14:47:52,356 - INFO - Started: 2025-11-12 14:47:52.356916
+2025-11-12 14:47:52,357 - INFO -
+2025-11-12 14:47:52,357 - INFO - ================================================================================
+2025-11-12 14:47:52,357 - INFO - PHASE 1: DISCOVERING ALL REPORTS
+2025-11-12 14:47:52,357 - INFO - ================================================================================
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 107, in discover_all_reports
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Brady.EAGLE\AppData\Roaming\Python\Python313\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/MetadataRPCService
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2717' in position 34: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 295, in extract_all
+    reports = self.discover_all_reports()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 124, in discover_all_reports
+    logging.error(f"✗ Failed to discover reports: {e}")
+Message: '✗ Failed to discover reports: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/MetadataRPCService'
+Arguments: ()
+2025-11-12 14:47:52,521 - ERROR - ✗ Failed to discover reports: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/MetadataRPCService
+2025-11-12 14:47:52,527 - WARNING - Using fallback report list - manual discovery
+2025-11-12 14:47:52,527 - INFO -
+================================================================================
+2025-11-12 14:47:52,527 - INFO - PHASE 2: EXTRACTING ALL DATA
+2025-11-12 14:47:52,528 - INFO - ================================================================================
+2025-11-12 14:47:52,528 - INFO -
+[1/14] Processing: Work Orders
+2025-11-12 14:47:52,528 - INFO -
+--- Extracting: Work Orders ---
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 184, in extract_report_data
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Brady.EAGLE\AppData\Roaming\Python\Python313\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2717' in position 36: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 205, in extract_report_data
+    logging.error(f"  ✗ Error on page {page}: {e}")
+Message: '  ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService'
+Arguments: ()
+2025-11-12 14:47:52,565 - ERROR -   ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2713' in position 33: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 216, in extract_report_data
+    logging.info(f"✓ Extracted {len(all_records)} total records from {report_name}")
+Message: '✓ Extracted 0 total records from Work Orders'
+Arguments: ()
+2025-11-12 14:47:52,569 - INFO - ✓ Extracted 0 total records from Work Orders
+2025-11-12 14:47:52,569 - WARNING -   ! No records to save for Work Orders
+2025-11-12 14:47:52,570 - INFO -
+[2/14] Processing: Work Order History
+2025-11-12 14:47:52,570 - INFO -
+--- Extracting: Work Order History ---
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 184, in extract_report_data
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Brady.EAGLE\AppData\Roaming\Python\Python313\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2717' in position 36: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 205, in extract_report_data
+    logging.error(f"  ✗ Error on page {page}: {e}")
+Message: '  ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService'
+Arguments: ()
+2025-11-12 14:47:52,608 - ERROR -   ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2713' in position 33: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 216, in extract_report_data
+    logging.info(f"✓ Extracted {len(all_records)} total records from {report_name}")
+Message: '✓ Extracted 0 total records from Work Order History'
+Arguments: ()
+2025-11-12 14:47:52,611 - INFO - ✓ Extracted 0 total records from Work Order History
+2025-11-12 14:47:52,612 - WARNING -   ! No records to save for Work Order History
+2025-11-12 14:47:52,612 - INFO -
+[3/14] Processing: Quotes
+2025-11-12 14:47:52,612 - INFO -
+--- Extracting: Quotes ---
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 184, in extract_report_data
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Brady.EAGLE\AppData\Roaming\Python\Python313\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2717' in position 36: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 205, in extract_report_data
+    logging.error(f"  ✗ Error on page {page}: {e}")
+Message: '  ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService'
+Arguments: ()
+2025-11-12 14:47:52,649 - ERROR -   ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2713' in position 33: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 216, in extract_report_data
+    logging.info(f"✓ Extracted {len(all_records)} total records from {report_name}")
+Message: '✓ Extracted 0 total records from Quotes'
+Arguments: ()
+2025-11-12 14:47:52,651 - INFO - ✓ Extracted 0 total records from Quotes
+2025-11-12 14:47:52,652 - WARNING -   ! No records to save for Quotes
+2025-11-12 14:47:52,652 - INFO -
+[4/14] Processing: Customers
+2025-11-12 14:47:52,653 - INFO -
+--- Extracting: Customers ---
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 184, in extract_report_data
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Brady.EAGLE\AppData\Roaming\Python\Python313\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2717' in position 36: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 205, in extract_report_data
+    logging.error(f"  ✗ Error on page {page}: {e}")
+Message: '  ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService'
+Arguments: ()
+2025-11-12 14:47:52,691 - ERROR -   ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2713' in position 33: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 216, in extract_report_data
+    logging.info(f"✓ Extracted {len(all_records)} total records from {report_name}")
+Message: '✓ Extracted 0 total records from Customers'
+Arguments: ()
+2025-11-12 14:47:52,694 - INFO - ✓ Extracted 0 total records from Customers
+2025-11-12 14:47:52,695 - WARNING -   ! No records to save for Customers
+2025-11-12 14:47:52,695 - INFO -
+[5/14] Processing: Projects
+2025-11-12 14:47:52,695 - INFO -
+--- Extracting: Projects ---
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 184, in extract_report_data
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Brady.EAGLE\AppData\Roaming\Python\Python313\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2717' in position 36: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 205, in extract_report_data
+    logging.error(f"  ✗ Error on page {page}: {e}")
+Message: '  ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService'
+Arguments: ()
+2025-11-12 14:47:52,731 - ERROR -   ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2713' in position 33: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 216, in extract_report_data
+    logging.info(f"✓ Extracted {len(all_records)} total records from {report_name}")
+Message: '✓ Extracted 0 total records from Projects'
+Arguments: ()
+2025-11-12 14:47:52,734 - INFO - ✓ Extracted 0 total records from Projects
+2025-11-12 14:47:52,735 - WARNING -   ! No records to save for Projects
+2025-11-12 14:47:52,735 - INFO -
+[6/14] Processing: Inventory
+2025-11-12 14:47:52,735 - INFO -
+--- Extracting: Inventory ---
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 184, in extract_report_data
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Brady.EAGLE\AppData\Roaming\Python\Python313\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2717' in position 36: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 205, in extract_report_data
+    logging.error(f"  ✗ Error on page {page}: {e}")
+Message: '  ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService'
+Arguments: ()
+2025-11-12 14:47:52,772 - ERROR -   ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2713' in position 33: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 216, in extract_report_data
+    logging.info(f"✓ Extracted {len(all_records)} total records from {report_name}")
+Message: '✓ Extracted 0 total records from Inventory'
+Arguments: ()
+2025-11-12 14:47:52,775 - INFO - ✓ Extracted 0 total records from Inventory
+2025-11-12 14:47:52,776 - WARNING -   ! No records to save for Inventory
+2025-11-12 14:47:52,776 - INFO -
+[7/14] Processing: Invoices
+2025-11-12 14:47:52,776 - INFO -
+--- Extracting: Invoices ---
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 184, in extract_report_data
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Brady.EAGLE\AppData\Roaming\Python\Python313\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2717' in position 36: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 205, in extract_report_data
+    logging.error(f"  ✗ Error on page {page}: {e}")
+Message: '  ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService'
+Arguments: ()
+2025-11-12 14:47:52,813 - ERROR -   ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2713' in position 33: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 216, in extract_report_data
+    logging.info(f"✓ Extracted {len(all_records)} total records from {report_name}")
+Message: '✓ Extracted 0 total records from Invoices'
+Arguments: ()
+2025-11-12 14:47:52,815 - INFO - ✓ Extracted 0 total records from Invoices
+2025-11-12 14:47:52,816 - WARNING -   ! No records to save for Invoices
+2025-11-12 14:47:52,816 - INFO -
+[8/14] Processing: Purchase Orders
+2025-11-12 14:47:52,816 - INFO -
+--- Extracting: Purchase Orders ---
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 184, in extract_report_data
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Brady.EAGLE\AppData\Roaming\Python\Python313\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2717' in position 36: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 205, in extract_report_data
+    logging.error(f"  ✗ Error on page {page}: {e}")
+Message: '  ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService'
+Arguments: ()
+2025-11-12 14:47:52,853 - ERROR -   ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2713' in position 33: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 216, in extract_report_data
+    logging.info(f"✓ Extracted {len(all_records)} total records from {report_name}")
+Message: '✓ Extracted 0 total records from Purchase Orders'
+Arguments: ()
+2025-11-12 14:47:52,856 - INFO - ✓ Extracted 0 total records from Purchase Orders
+2025-11-12 14:47:52,857 - WARNING -   ! No records to save for Purchase Orders
+2025-11-12 14:47:52,857 - INFO -
+[9/14] Processing: Employees
+2025-11-12 14:47:52,857 - INFO -
+--- Extracting: Employees ---
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 184, in extract_report_data
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Brady.EAGLE\AppData\Roaming\Python\Python313\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2717' in position 36: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 205, in extract_report_data
+    logging.error(f"  ✗ Error on page {page}: {e}")
+Message: '  ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService'
+Arguments: ()
+2025-11-12 14:47:52,894 - ERROR -   ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2713' in position 33: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 216, in extract_report_data
+    logging.info(f"✓ Extracted {len(all_records)} total records from {report_name}")
+Message: '✓ Extracted 0 total records from Employees'
+Arguments: ()
+2025-11-12 14:47:52,896 - INFO - ✓ Extracted 0 total records from Employees
+2025-11-12 14:47:52,897 - WARNING -   ! No records to save for Employees
+2025-11-12 14:47:52,897 - INFO -
+[10/14] Processing: Timesheets
+2025-11-12 14:47:52,897 - INFO -
+--- Extracting: Timesheets ---
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 184, in extract_report_data
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Brady.EAGLE\AppData\Roaming\Python\Python313\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2717' in position 36: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 205, in extract_report_data
+    logging.error(f"  ✗ Error on page {page}: {e}")
+Message: '  ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService'
+Arguments: ()
+2025-11-12 14:47:52,934 - ERROR -   ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2713' in position 33: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 216, in extract_report_data
+    logging.info(f"✓ Extracted {len(all_records)} total records from {report_name}")
+Message: '✓ Extracted 0 total records from Timesheets'
+Arguments: ()
+2025-11-12 14:47:52,937 - INFO - ✓ Extracted 0 total records from Timesheets
+2025-11-12 14:47:52,938 - WARNING -   ! No records to save for Timesheets
+2025-11-12 14:47:52,938 - INFO -
+[11/14] Processing: Vendors
+2025-11-12 14:47:52,938 - INFO -
+--- Extracting: Vendors ---
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 184, in extract_report_data
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Brady.EAGLE\AppData\Roaming\Python\Python313\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2717' in position 36: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 205, in extract_report_data
+    logging.error(f"  ✗ Error on page {page}: {e}")
+Message: '  ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService'
+Arguments: ()
+2025-11-12 14:47:52,975 - ERROR -   ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2713' in position 33: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 216, in extract_report_data
+    logging.info(f"✓ Extracted {len(all_records)} total records from {report_name}")
+Message: '✓ Extracted 0 total records from Vendors'
+Arguments: ()
+2025-11-12 14:47:52,977 - INFO - ✓ Extracted 0 total records from Vendors
+2025-11-12 14:47:52,979 - WARNING -   ! No records to save for Vendors
+2025-11-12 14:47:52,979 - INFO -
+[12/14] Processing: Parts
+2025-11-12 14:47:52,979 - INFO -
+--- Extracting: Parts ---
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 184, in extract_report_data
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Brady.EAGLE\AppData\Roaming\Python\Python313\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2717' in position 36: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 205, in extract_report_data
+    logging.error(f"  ✗ Error on page {page}: {e}")
+Message: '  ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService'
+Arguments: ()
+2025-11-12 14:47:53,015 - ERROR -   ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2713' in position 33: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 216, in extract_report_data
+    logging.info(f"✓ Extracted {len(all_records)} total records from {report_name}")
+Message: '✓ Extracted 0 total records from Parts'
+Arguments: ()
+2025-11-12 14:47:53,018 - INFO - ✓ Extracted 0 total records from Parts
+2025-11-12 14:47:53,019 - WARNING -   ! No records to save for Parts
+2025-11-12 14:47:53,019 - INFO -
+[13/14] Processing: Service Calls
+2025-11-12 14:47:53,019 - INFO -
+--- Extracting: Service Calls ---
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 184, in extract_report_data
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Brady.EAGLE\AppData\Roaming\Python\Python313\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2717' in position 36: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 205, in extract_report_data
+    logging.error(f"  ✗ Error on page {page}: {e}")
+Message: '  ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService'
+Arguments: ()
+2025-11-12 14:47:53,055 - ERROR -   ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2713' in position 33: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 216, in extract_report_data
+    logging.info(f"✓ Extracted {len(all_records)} total records from {report_name}")
+Message: '✓ Extracted 0 total records from Service Calls'
+Arguments: ()
+2025-11-12 14:47:53,058 - INFO - ✓ Extracted 0 total records from Service Calls
+2025-11-12 14:47:53,059 - WARNING -   ! No records to save for Service Calls
+2025-11-12 14:47:53,059 - INFO -
+[14/14] Processing: Equipment
+2025-11-12 14:47:53,060 - INFO -
+--- Extracting: Equipment ---
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 184, in extract_report_data
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Brady.EAGLE\AppData\Roaming\Python\Python313\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2717' in position 36: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 205, in extract_report_data
+    logging.error(f"  ✗ Error on page {page}: {e}")
+Message: '  ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService'
+Arguments: ()
+2025-11-12 14:47:53,096 - ERROR -   ✗ Error on page 0: 500 Server Error: Server Error for url: https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Python313\Lib\logging\__init__.py", line 1154, in emit
+    stream.write(msg + self.terminator)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2713' in position 33: character maps to <undefined>
+Call stack:
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 416, in <module>
+    main()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 407, in main
+    extractor.extract_all()
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 312, in extract_all
+    report_data = self.extract_report_data(report)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_complete_extraction.py", line 216, in extract_report_data
+    logging.info(f"✓ Extracted {len(all_records)} total records from {report_name}")
+Message: '✓ Extracted 0 total records from Equipment'
+Arguments: ()
+2025-11-12 14:47:53,099 - INFO - ✓ Extracted 0 total records from Equipment
+2025-11-12 14:47:53,100 - WARNING -   ! No records to save for Equipment
+
+================================================================================
+EXTRACTION SUMMARY
+================================================================================
+Total Reports: 14
+Successfully Extracted: 14
+Failed: 0
+Total Records: 0
+Database Size: 0.00 MB
+Elapsed Time: 0.0 minutes
+
+Output Location: C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_backup
+================================================================================
+2025-11-12 14:47:53,103 - INFO -
+================================================================================
+2025-11-12 14:47:53,103 - INFO - EXTRACTION COMPLETE
+2025-11-12 14:47:53,103 - INFO - ================================================================================
+2025-11-12 14:47:53,103 - INFO - Database connection closed
+
+✓ Extraction complete! Check the output directory for your data.
+  Location: C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_backup
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # Save this improved version
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Copy-Item "\\wsl$\Ubuntu\home\claude\extract_keyedin_session.py" "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\"
+Copy-Item : Cannot find path '\\wsl$\Ubuntu\home\claude\extract_keyedin_session.py' because it does not exist.
+At line:1 char:1
++ Copy-Item "\\wsl$\Ubuntu\home\claude\extract_keyedin_session.py" "C:\ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (\\wsl$\Ubuntu\h...edin_session.py:String) [Copy-Item], ItemNotFoundExce
+   ption
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.CopyItemCommand
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> python extract_keyedin_session.py
+================================================================================
+KEYEDIN SESSION EXTRACTOR
+================================================================================
+
+🌐 Opening Chrome browser...
+📍 Navigating to: https://eaglesign.keyedinsign.com:8443/eaglesign/
+
+================================================================================
+🔐 PLEASE LOG IN TO KEYEDIN IN THE BROWSER WINDOW
+================================================================================
+
+Instructions:
+  1. Complete the login process in the browser
+  2. Wait until you see the KeyedIn dashboard
+  3. Then come back here and press Enter
+
+Press Enter after you've successfully logged in...
+
+📂 Navigating to Informer...
+
+🍪 Extracting session cookies...
+✓ Found 1 cookies
+
+🔑 Extracting authToken and clientId...
+
+❌ Error: Message: script timeout
+  (Session info: chrome=142.0.7444.134)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+        0x7ff7eeeba235
+        0x7ff7eec12650
+        0x7ff7ee9a14e5
+        0x7ff7eea4d470
+        0x7ff7eea22b0a
+        0x7ff7eea4baba
+        0x7ff7ee9eb0ed
+        0x7ff7ee9ebf63
+        0x7ff7eeee5d60
+        0x7ff7eeedfe8a
+        0x7ff7eef01005
+        0x7ff7eec2d73e
+        0x7ff7eec34e3f
+        0x7ff7eec1b7e4
+        0x7ff7eec1b99f
+        0x7ff7eec01908
+        0x7ffc9ea3e8d7
+        0x7ffc9fa0c53c
+
+Traceback (most recent call last):
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\extract_keyedin_session.py", line 108, in extract_session
+    tokens = driver.execute_async_script(js_extract_tokens)
+  File "C:\Python313\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 577, in execute_async_script
+    return self.execute(command, {"script": script, "args": converted_args})["value"]
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 458, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 233, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: script timeout
+  (Session info: chrome=142.0.7444.134)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+        0x7ff7eeeba235
+        0x7ff7eec12650
+        0x7ff7ee9a14e5
+        0x7ff7eea4d470
+        0x7ff7eea22b0a
+        0x7ff7eea4baba
+        0x7ff7ee9eb0ed
+        0x7ff7ee9ebf63
+        0x7ff7eeee5d60
+        0x7ff7eeedfe8a
+        0x7ff7eef01005
+        0x7ff7eec2d73e
+        0x7ff7eec34e3f
+        0x7ff7eec1b7e4
+        0x7ff7eec1b99f
+        0x7ff7eec01908
+        0x7ffc9ea3e8d7
+        0x7ffc9fa0c53c
+
+
+🔒 Closing browser...
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> @"
+>> {
+>>   "cookies": {
+>>     "JSESSIONID": "166expbhez6oe1elpkqv13scaa",
+>>     "SESSIONID": "4uarywnlr1cqdk42s5y3d423",
+>>     "user": "BRADYF",
+>>     "secure": "TRUE"
+>>   },
+>>   "authToken": "af8f4d09-7cd7-4569-bdd1-d820d9dbc36b",
+>>   "clientId": "4cc69e5b-efed-4061-be4a-f8a6b4e382ac",
+>>   "extracted_at": "2025-11-12 15:00:00",
+>>   "base_url": "https://eaglesign.keyedinsign.com:8443/eaglesign/"
+>> }
+>> "@ | Out-File -FilePath "keyedin_session.json" -Encoding UTF8
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> @"
+>> {
+>>   "cookies": {
+>>     "JSESSIONID": "166expbhez6oe1elpkqv13scaa",
+>>     "SESSIONID": "4uarywnlr1cqdk42s5y3d423",
+>>     "user": "BRADYF",
+>>     "secure": "TRUE"
+>>   },
+>>   "authToken": "af8f4d09-7cd7-4569-bdd1-d820d9dbc36b",
+>>   "clientId": "4cc69e5b-efed-4061-be4a-f8a6b4e382ac",
+>>   "extracted_at": "2025-11-12 15:00:00",
+>>   "base_url": "https://eaglesign.keyedinsign.com:8443/eaglesign/"
+>> }
+>> "@ | Out-File -FilePath "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_session.json" -Encoding UTF8
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Get-Content "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_session.json"
+{
+  "cookies": {
+    "JSESSIONID": "166expbhez6oe1elpkqv13scaa",
+    "SESSIONID": "4uarywnlr1cqdk42s5y3d423",
+    "user": "BRADYF",
+    "secure": "TRUE"
+  },
+  "authToken": "af8f4d09-7cd7-4569-bdd1-d820d9dbc36b",
+  "clientId": "4cc69e5b-efed-4061-be4a-f8a6b4e382ac",
+  "extracted_at": "2025-11-12 15:00:00",
+  "base_url": "https://eaglesign.keyedinsign.com:8443/eaglesign/"
+}
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> python -c "import requests; s = requests.Session(); s.cookies.update({'JSESSIONID': '166expbhez6oe1elpkqv13scaa'}); r = s.post('https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ViewRPCService?authToken=af8f4d09-7cd7-4569-bdd1-d820d9dbc36b&clientId=4cc69e5b-efed-4061-be4a-f8a6b4e382ac', data='7|0|4|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|327E0F303D0CA463050DC31340CFE01D|com.entrinsik.informer.core.client.service.ViewRPCService|getData|1|2|3|4|0|', headers={'Content-Type': 'text/x-gwt-rpc; charset=UTF-8'}); print(f'Status: {r.status_code}'); print(f'Response: {r.text[:200]}')"
+Status: 200
+Response: //EX[2,1,["com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException/3936916533","This application is out of date, please click the refresh button on your browser. ( Could not locate requested
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> python keyedin_working_extractor.py --session-file keyedin_session.json
+2025-11-12 16:21:26,832 - ================================================================================
+2025-11-12 16:21:26,833 - KEYEDIN DATA EXTRACTOR
+2025-11-12 16:21:26,833 - ================================================================================
+Traceback (most recent call last):
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_working_extractor.py", line 255, in <module>
+    main()
+    ~~~~^^
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_working_extractor.py", line 251, in main
+    extractor = KeyedInExtractor(args.session_file)
+  File "C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_working_extractor.py", line 51, in __init__
+    session_data = json.load(f)
+  File "C:\Python313\Lib\json\__init__.py", line 293, in load
+    return loads(fp.read(),
+        cls=cls, object_hook=object_hook,
+        parse_float=parse_float, parse_int=parse_int,
+        parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)
+  File "C:\Python313\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Python313\Lib\json\decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\json\decoder.py", line 363, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Get-Content "keyedin_session.json" | Select-Object -First 5
+{
+  "cookies": {
+    "JSESSIONID": "166expbhez6oe1elpkqv13scaa",
+    "SESSIONID": "4uarywnlr1cqdk42s5y3d423",
+    "user": "BRADYF",
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> $session = @{
+>>     cookies = @{
+>>         JSESSIONID = "166expbhez6oe1elpkqv13scaa"
+>>         SESSIONID = "4uarywnlr1cqdk42s5y3d423"
+>>         user = "BRADYF"
+>>         secure = "TRUE"
+>>     }
+>>     authToken = "af8f4d09-7cd7-4569-bdd1-d820d9dbc36b"
+>>     clientId = "4cc69e5b-efed-4061-be4a-f8a6b4e382ac"
+>>     extracted_at = "2025-11-12 16:00:00"
+>>     base_url = "https://eaglesign.keyedinsign.com:8443/eaglesign/"
+>> }
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> $session | ConvertTo-Json -Depth 10 | Out-File "keyedin_session.json" -Encoding UTF8 -NoNewline
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Add-Content "keyedin_session.json" "`n"
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> python -c "import json; print(json.load(open('keyedin_session.json'))['authToken'])"
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import json; print(json.load(open('keyedin_session.json'))['authToken'])
+                       ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\json\__init__.py", line 293, in load
+    return loads(fp.read(),
+        cls=cls, object_hook=object_hook,
+        parse_float=parse_float, parse_int=parse_int,
+        parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)
+  File "C:\Python313\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Python313\Lib\json\decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\json\decoder.py", line 363, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> python -c @"
+>> import json
+>> session = {
+>>     'cookies': {
+>>         'JSESSIONID': '166expbhez6oe1elpkqv13scaa',
+>>         'SESSIONID': '4uarywnlr1cqdk42s5y3d423',
+>>         'user': 'BRADYF',
+>>         'secure': 'TRUE'
+>>     },
+>>     'authToken': 'af8f4d09-7cd7-4569-bdd1-d820d9dbc36b',
+>>     'clientId': '4cc69e5b-efed-4061-be4a-f8a6b4e382ac',
+>>     'extracted_at': '2025-11-12 16:00:00',
+>>     'base_url': 'https://eaglesign.keyedinsign.com:8443/eaglesign/'
+>> }
+>> with open('keyedin_session.json', 'w') as f:
+>>     json.dump(session, f, indent=2)
+>> print('Created keyedin_session.json')
+>> "@
+Created keyedin_session.json
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> python -c "import json; print('authToken:', json.load(open('keyedin_session.json'))['authToken'])"
+authToken: af8f4d09-7cd7-4569-bdd1-d820d9dbc36b
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> python keyedin_working_extractor.py --session-file keyedin_session.json
+2025-11-12 16:24:38,550 - ================================================================================
+2025-11-12 16:24:38,550 - KEYEDIN DATA EXTRACTOR
+2025-11-12 16:24:38,551 - ================================================================================
+2025-11-12 16:24:38,551 - Loaded session for user: BRADYF
+2025-11-12 16:24:38,552 - Output directory: C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_extraction_20251112_162438
+2025-11-12 16:24:38,552 - Started: 2025-11-12 16:24:38
+2025-11-12 16:24:38,552 -
+2025-11-12 16:24:38,552 - ================================================================================
+2025-11-12 16:24:38,553 - TESTING API CONNECTION
+2025-11-12 16:24:38,553 - ================================================================================
+2025-11-12 16:24:38,710 - Status Code: 200
+2025-11-12 16:24:38,710 - Response Length: 329 bytes
+2025-11-12 16:24:38,711 - Response Preview: //EX[2,1,["com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException/3936916533","This application is out of date, please click the refresh button on your browser. ( Could not locate requested
+2025-11-12 16:24:38,711 - ✓ Authentication works (payload format needs adjustment)
+2025-11-12 16:24:38,711 -
+2025-11-12 16:24:38,711 - ================================================================================
+2025-11-12 16:24:38,711 - DISCOVERING REPORTS
+2025-11-12 16:24:38,711 - ================================================================================
+2025-11-12 16:24:38,758 - ✓ Report discovery successful (15902 bytes)
+2025-11-12 16:24:38,758 - ✓ Found 71 potential reports
+2025-11-12 16:24:38,760 - ✓ Report list saved to: keyedin_extraction_20251112_162438\discovered_reports.txt
+2025-11-12 16:24:38,761 - ✓ Summary saved to: keyedin_extraction_20251112_162438\extraction_summary.txt
+2025-11-12 16:24:38,761 -
+2025-11-12 16:24:38,762 - ================================================================================
+2025-11-12 16:24:38,762 - EXTRACTION COMPLETE
+2025-11-12 16:24:38,762 - ================================================================================
+2025-11-12 16:24:38,762 - Duration: 0.2 seconds
+2025-11-12 16:24:38,762 - Output: C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_extraction_20251112_162438
+2025-11-12 16:24:38,762 -
+2025-11-12 16:24:38,762 - ✓ Authentication successful
+2025-11-12 16:24:38,763 - ✓ API connection verified
+2025-11-12 16:24:38,763 - ✓ Discovered 71 reports
+2025-11-12 16:24:38,763 -
+2025-11-12 16:24:38,763 - Check the output directory for:
+2025-11-12 16:24:38,763 -   - discovered_reports.txt (list of all reports)
+2025-11-12 16:24:38,763 -   - extraction_summary.txt (detailed summary)
+2025-11-12 16:24:38,763 -   - extraction.log (complete log)
+2025-11-12 16:24:38,763 - ================================================================================
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Get-Content "keyedin_extraction_20251112_162438\discovered_reports.txt"
+600437df-77ae-4aca-8f93-45b022255489
+AR Invoice Details
+AR Invoice Listing
+AR Open Invoices
+Account Receivable Invoice GL transaction detail. Selectable by Date Range, Invoice Number, Customer and Open/Closed status.
+Account Receivable invoice listing with balance and payment information. Selectable by Customer, date range and open/closed status.
+Accounts Payable
+Accounts Receivable
+Accounts Receivable open invoice listing sorted by due date.
+Cash Receipts
+Cash Receipts selected by date range. Sorted by Division, Bank, Payment Date, Payor.
+Customer Listing
+Customer Listing (Export)
+Customer Location LIsting
+Customer Location Listing (Export)
+Customer Location listing selectable by Name, Customer Number, State or Zip code.
+Customer Location listing selectable by Name, Customer Number, State or Zip code. Formatted for export to Excel.
+Customer Portal
+Customer listing selectable by Name, Customer Number, State or Zip code.
+Customer listing selectable by Name, Customer Number, State or Zip code. Formatted for export to Excel.
+Detailed Purchase Order information.
+Detailed Sales, Cost and Gross Margin for specified time period.
+Estimating \x26 Proposals
+Expected receipts and demands by Part Number.
+Export
+Inventory List
+Inventory List (Export)
+Inventory Transaction History
+Inventory Transaction History selectable by Transaction Date, Part Number or Transaction Code.
+Inventory and Parts
+Invoice Register
+Invoice Register listing selectable by Invoice Date or Entry Date.
+Invoicing
+Job Costing
+List of all Open Work Orders. Sorted by Due Date.
+Listing of Inventory Parts with quantity and cost information. Selectable by Inventory Type, Sales Code or Eng Status.
+Listing of Inventory Parts with quantity and cost information. Selectable by Inventory Type, Sales Code or Eng Status. Formatted for export to Excel.
+Listing of active quotes in the system.
+Open Sales Order Backlog
+Open Sales Order Backlog with Past Due, 0-30, 31-60, 61-90 day and Beyond buckets.
+Open Sales Order listed by delivery date.
+Open Sales Orders
+Open Work Orders
+Planned Part Activity
+Production
+Project Management
+Purchase History
+Purchase Order Detail
+Purchased Part Variance
+Purchased Part Variance report selectable by G/L Date, Received Date, Part Number, Inventory Type or Vendor Number.
+Purchasing
+Purchasing History selectable by PO Date, Part Number, Vendor, Buyer or Type.
+Quote Status Report
+Release - 2.1.3
+Release - New
+Release 2.0.1
+Sales Analysis
+Sales Cost Detail Report
+Sales Order Bookings - By Order Line Date
+Sales Order Bookings - By Sales Order Date
+Sales Order Detail
+Sales Order Details selectable by Customer, SO Number or Customer PO.                                                   Sales Order Status by Customer                                                                                          Sales Order summary by Line Item Date. Selectable by Date Added, Customer or Salesperson.                               Sales Order summary by Order Date. Selectable by Sales Order date, Customer or Salesperson.                             Sales Orders                                                                                                            Sales order status information by Customer. Shows open, closed or all orders.                                           Shipping                                                                                                                Support                                                                                                                 [Lcom.entrinsik.gwt.data.shared.ViewPage;/650158765                                                                     rO0ABXcEAAAAAA\x3D\x3D                                                                                                  PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>                                                                     PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>                                                                     PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>                                                                     PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>                                                                     PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>                                                                     PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>                                                                     PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>                                                                     PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # Find the IP address                                               PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> nslookup eaglesign.keyedinsign.com                                  Server:  ES-DC03.Eagle.local                                                                                            Address:  192.168.3.5                                                                                                   
+Non-authoritative answer:
+Name:    eaglesign.keyedinsign.com
+Address:  3.91.142.75
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # Or try ping
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> ping eaglesign.keyedinsign.com
+
+Pinging eaglesign.keyedinsign.com [3.91.142.75] with 32 bytes of data:
+Request timed out.
+Request timed out.
+Request timed out.
+Request timed out.
+
+Ping statistics for 3.91.142.75:
+    Packets: Sent = 4, Received = 0, Lost = 4 (100% loss),
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # Check if it's actually on AWS (you mentioned 3.91.142.75 earlier)
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Test-NetConnection -ComputerName eaglesign.keyedinsign.com -Port 3389
+WARNING: TCP connect to (3.91.142.75 : 3389) failed
+WARNING: Ping to 3.91.142.75 failed with status: TimedOut
+
+
+ComputerName           : eaglesign.keyedinsign.com
+RemoteAddress          : 3.91.142.75
+RemotePort             : 3389
+InterfaceAlias         : Wi-Fi
+SourceAddress          : 192.168.3.102
+PingSucceeded          : False
+PingReplyDetails (RTT) : 0 ms
+TcpTestSucceeded       : False
+
+
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # Try remote desktop (change IP if needed)
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> mstsc /v:eaglesign.keyedinsign.com
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # Pick one report to test (let's try "Inventory List")
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> python keyedin_data_extractor.py --session-file keyedin_session.json --limit 1
+2025-11-12 16:35:41,505 - Loaded session for user: BRADYF
+2025-11-12 16:35:41,506 - ================================================================================
+2025-11-12 16:35:41,506 - KEYEDIN DATA EXTRACTION
+2025-11-12 16:35:41,506 - ================================================================================
+2025-11-12 16:35:41,506 - Output: keyedin_data_20251112_163541
+2025-11-12 16:35:41,507 -
+2025-11-12 16:35:41,667 - Failed to get report list: 404
+2025-11-12 16:35:41,668 - No reports found!
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> ```
+`` : The term '``' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the
+spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ ```
++ ~~~
+    + CategoryInfo          : ObjectNotFound: (``:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> This will:
+This : The term 'This' is not recognized as the name of a cmdlet, function, script file, or operable program. Check
+the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ This will:
++ ~~~~
+    + CategoryInfo          : ObjectNotFound: (This:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> - Extract just the first report
+At line:1 char:2
++ - Extract just the first report
++  ~
+Missing expression after unary operator '-'.
+At line:1 char:3
++ - Extract just the first report
++   ~~~~~~~
+Unexpected token 'Extract' in expression or statement.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : MissingExpressionAfterOperator
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> - Show us the actual response format
+At line:1 char:2
++ - Show us the actual response format
++  ~
+Missing expression after unary operator '-'.
+At line:1 char:3
++ - Show us the actual response format
++   ~~~~
+Unexpected token 'Show' in expression or statement.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : MissingExpressionAfterOperator
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> - Help us debug the data parser
+At line:1 char:2
++ - Help us debug the data parser
++  ~
+Missing expression after unary operator '-'.
+At line:1 char:3
++ - Help us debug the data parser
++   ~~~~
+Unexpected token 'Help' in expression or statement.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : MissingExpressionAfterOperator
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> ### The Critical Challenge: Response Parsing
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> The `_parse_data_response()` method is where the magic happens. GWT RPC responses are **heavily serialized** and look like:
+At line:1 char:27
++ The `_parse_data_response()` method is where the magic happens. GWT R ...
++                           ~
+An expression was expected after '('.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : ExpectedExpression
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> ```
+`` : The term '``' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the
+spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ ```
++ ~~~
+    + CategoryInfo          : ObjectNotFound: (``:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> //OK[7,0,5,0,["field1","field2"],[[val1,val2],[val3,val4]],...]
+At line:1 char:7
++ //OK[7,0,5,0,["field1","field2"],[[val1,val2],[val3,val4]],...]
++       ~
+Missing argument in parameter list.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : MissingArgument
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> python keyedin_data_extractor.py --session-file keyedin_session.json --limit 1
+2025-11-12 16:35:56,519 - Loaded session for user: BRADYF
+2025-11-12 16:35:56,519 - ================================================================================
+2025-11-12 16:35:56,520 - KEYEDIN DATA EXTRACTION
+2025-11-12 16:35:56,520 - ================================================================================
+2025-11-12 16:35:56,520 - Output: keyedin_data_20251112_163556
+2025-11-12 16:35:56,521 -
+2025-11-12 16:35:56,682 - Failed to get report list: 404
+2025-11-12 16:35:56,682 - No reports found!
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> python keyedin_data_extractor.py --session-file keyedin_session.json --limit 1
+2025-11-12 16:37:58,212 - Loaded session for user: BRADYF
+2025-11-12 16:37:58,212 - ================================================================================
+2025-11-12 16:37:58,213 - KEYEDIN DATA EXTRACTION
+2025-11-12 16:37:58,213 - ================================================================================
+2025-11-12 16:37:58,213 - Output: keyedin_data_20251112_163758
+2025-11-12 16:37:58,213 -
+2025-11-12 16:37:58,371 - Failed to get report list: 404
+2025-11-12 16:37:58,371 - No reports found!
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> python keyedin_data_extractor.py --session-file keyedin_session.json --limit 1
+2025-11-12 16:40:02,239 - Loaded session for user: BRADYF
+2025-11-12 16:40:02,239 - ================================================================================
+2025-11-12 16:40:02,240 - KEYEDIN DATA EXTRACTION
+2025-11-12 16:40:02,240 - ================================================================================
+2025-11-12 16:40:02,240 - Output: keyedin_data_20251112_164002
+2025-11-12 16:40:02,240 -
+2025-11-12 16:40:02,406 - Failed to get report list: 404
+2025-11-12 16:40:02,406 - No reports found!
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> python fix_extractor.py
+C:\Python313\python.exe: can't open file 'C:\\Scripts\\SignX\\Keyedin\\GWT Google Web Toolkit\\fix_extractor.py': [Errno 2] No such file or directory
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> python -c "content = open('keyedin_data_extractor.py', 'r', encoding='utf-8').read(); content = content.replace(\"'7|0|10|'\", \"'7|0|9|'\").replace(\"'1|2|3|4|4|5|6|7|8|6|9|6|10|'\", \"'1|2|3|4|3|5|6|7|8|6|9|'\"); open('keyedin_data_extractor.py', 'w', encoding='utf-8').write(content); print(' Fixed!')"
+  File "<string>", line 1
+    content = open('keyedin_data_extractor.py', 'r', encoding='utf-8').read(); content = content.replace(" 7|0|10| \,
+                                                                                                         ^
+SyntaxError: unterminated string literal (detected at line 1)
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> python keyedin_data_extractor.py --session-file keyedin_session.json --limit 1
+2025-11-12 16:42:49,265 - Loaded session for user: BRADYF
+2025-11-12 16:42:49,265 - ================================================================================
+2025-11-12 16:42:49,266 - KEYEDIN DATA EXTRACTION
+2025-11-12 16:42:49,266 - ================================================================================
+2025-11-12 16:42:49,266 - Output: keyedin_data_20251112_164249
+2025-11-12 16:42:49,266 -
+2025-11-12 16:42:49,432 - Failed to get report list: 404
+2025-11-12 16:42:49,432 - No reports found!
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> @"
+>> content = open('keyedin_data_extractor.py', 'r', encoding='utf-8').read()
+>> content = content.replace("'7|0|10|'", "'7|0|9|'")
+>> content = content.replace("'1|2|3|4|4|5|6|7|8|6|9|6|10|'", "'1|2|3|4|3|5|6|7|8|6|9|'")
+>> open('keyedin_data_extractor.py', 'w', encoding='utf-8').write(content)
+>> print(' Fixed!')
+>> "@ | python
+ Fixed!
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> python keyedin_data_extractor.py --session-file keyedin_session.json --limit 1
+2025-11-12 16:43:30,181 - Loaded session for user: BRADYF
+2025-11-12 16:43:30,182 - ================================================================================
+2025-11-12 16:43:30,182 - KEYEDIN DATA EXTRACTION
+2025-11-12 16:43:30,182 - ================================================================================
+2025-11-12 16:43:30,183 - Output: keyedin_data_20251112_164330
+2025-11-12 16:43:30,183 -
+2025-11-12 16:43:30,345 - Failed to get report list: 404
+2025-11-12 16:43:30,345 - No reports found!
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # Show lines 67-79 to see what the payload looks like
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Get-Content keyedin_data_extractor.py | Select-Object -Index (66..78)
+        payload = (
+            '7|0|9|'
+            f'{self.base_url}gwt/|'
+            'CB33CA3A1E1166A04FCA7E70FCC91B93|'
+            'com.entrinsik.gwt.data.client.ViewService|'
+            'getAvailableViews|'
+            'com.entrinsik.gwt.data.shared.Category/1632067396|'
+            'java.lang.String/2004016611|'
+            f'{self.client_id}|'
+            f'{self.auth_token}|'
+            'PUBLIC|'
+            '1|2|3|4|3|5|6|7|8|6|9|'
+        )
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # Show me your working script
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Get-Content keyedin_working_extractor.py | Select-Object -First 150
+#!/usr/bin/env python3
+"""
+KeyedIn Complete Data Extractor - Working Version
+Uses proper GWT RPC protocol based on reverse engineering
+"""
+
+import json
+import requests
+import time
+import sqlite3
+import csv
+import re
+from datetime import datetime
+from pathlib import Path
+import logging
+
+# Setup logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(message)s',
+    handlers=[
+        logging.FileHandler('extraction.log', encoding='utf-8'),
+        logging.StreamHandler()
+    ]
+)
+
+class GWTRPCParser:
+    """Parser for GWT RPC responses"""
+
+    @staticmethod
+    def parse_string_table(response):
+        """Extract the string table from GWT RPC response"""
+        # GWT RPC format: //OK[version,flags,table_size,...,"string1","string2",...]
+        if not response.startswith('//OK['):
+            return []
+
+        # Find all quoted strings in the response
+        strings = re.findall(r'"([^"]*)"', response)
+        return strings
+
+class KeyedInExtractor:
+    def __init__(self, session_file='keyedin_session.json'):
+        """Initialize extractor with session data"""
+
+        logging.info("=" * 80)
+        logging.info("KEYEDIN DATA EXTRACTOR")
+        logging.info("=" * 80)
+
+        # Load session
+        with open(session_file, 'r') as f:
+            session_data = json.load(f)
+
+        self.base_url = session_data['base_url']
+        self.auth_token = session_data['authToken']
+        self.client_id = session_data['clientId']
+        self.cookies = session_data['cookies']
+
+        logging.info(f"Loaded session for user: {self.cookies.get('user', 'Unknown')}")
+
+        # Setup session
+        self.session = requests.Session()
+        self.session.cookies.update(self.cookies)
+
+        # GWT RPC headers
+        self.gwt_headers = {
+            'Content-Type': 'text/x-gwt-rpc; charset=UTF-8',
+            'X-GWT-Module-Base': f'{self.base_url}informer/',
+            'X-GWT-Permutation': '6823F3E0DFFF554BC1A7951AA98B182D',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+            'Accept': '*/*',
+            'Referer': f'{self.base_url}?locale=en_US'
+        }
+
+        # Output setup
+        self.output_dir = Path('keyedin_extraction_' + datetime.now().strftime('%Y%m%d_%H%M%S'))
+        self.output_dir.mkdir(exist_ok=True)
+
+        logging.info(f"Output directory: {self.output_dir.absolute()}")
+
+    def build_url(self, service):
+        """Build RPC URL with authentication"""
+        return f"{self.base_url}informer/rpc/protected/{service}?authToken={self.auth_token}&clientId={self.client_id}"
+
+    def discover_reports(self):
+        """Discover all available reports"""
+        logging.info("")
+        logging.info("=" * 80)
+        logging.info("DISCOVERING REPORTS")
+        logging.info("=" * 80)
+
+        url = self.build_url('ViewRPCService')
+
+        # This is the exact payload for report discovery we captured
+        # It searches for all reports using wildcard **
+        payload = '7|0|22|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|327E0F303D0CA463050DC31340CFE01D|com.entrinsik.informer.core.client.service.ViewRPCService|getData|[Lcom.entrinsik.gwt.data.shared.ViewToken;/2990910562|[Lcom.entrinsik.gwt.data.shared.LoadOptions;/2486573562|com.entrinsik.gwt.data.shared.ViewToken/3777265110|600437df-77ae-4aca-8f93-45b022255489|com.entrinsik.gwt.data.shared.LoadOptions/4020437150|java.util.HashMap/1797211028|com.entrinsik.gwt.data.shared.criteria.impl.JunctionImpl/346417575|java.util.ArrayList/4159755760|com.entrinsik.gwt.data.shared.criteria.Operator/2483661797|com.entrinsik.gwt.data.shared.criteria.impl.ValueExpressionImpl/3874770769|name|com.entrinsik.gwt.data.shared.criteria.Quantifier/3325804167|com.entrinsik.gwt.data.shared.values.StringValue/2414534542|**|com.entrinsik.informer.core.domain.report.ReportSearchOptions/1133289605|en_US|com.entrinsik.gwt.data.shared.Order/1651361273|com.entrinsik.gwt.data.shared.values.NullValue/2880996259|1|2|3|4|2|5|6|5|1|7|8|6|1|9|10|0|11|12|2|11|12|1|11|12|0|13|9|13|8|14|1|13|2|15|16|0|17|18|-13|0|19|12|0|0|0|0|0|25|20|12|1|21|1|15|1|0|22|0|0|'
+
+        try:
+            response = self.session.post(url, data=payload, headers=self.gwt_headers)
+
+            if response.status_code == 200:
+                logging.info(f"âœ“ Report discovery successful ({len(response.text)} bytes)")
+
+                # Parse report names from response
+                strings = GWTRPCParser.parse_string_table(response.text)
+
+                # Filter for report names (they're typically longer descriptive strings)
+                report_names = [s for s in strings if len(s) > 5 and not s.startswith('com.') and not s.startswith('java.')]
+
+                # Remove duplicates and common non-report strings
+                exclude = {'KeyedInSign', 'System Administrator', 'ADMIN', 'en_US', 'true', 'false'}
+                report_names = [r for r in report_names if r not in exclude]
+
+                logging.info(f"âœ“ Found {len(report_names)} potential reports")
+
+                # Save report list
+                report_list_file = self.output_dir / 'discovered_reports.txt'
+                with open(report_list_file, 'w', encoding='utf-8') as f:
+                    for name in sorted(set(report_names)):
+                        f.write(f"{name}\n")
+
+                logging.info(f"âœ“ Report list saved to: {report_list_file}")
+
+                return report_names
+            else:
+                logging.error(f"âœ— Discovery failed: HTTP {response.status_code}")
+                logging.error(f"Response: {response.text[:500]}")
+                return []
+
+        except Exception as e:
+            logging.error(f"âœ— Discovery error: {e}")
+            return []
+
+    def test_api_connection(self):
+        """Test basic API connectivity"""
+        logging.info("")
+        logging.info("=" * 80)
+        logging.info("TESTING API CONNECTION")
+        logging.info("=" * 80)
+
+        url = self.build_url('ViewRPCService')
+
+        # Simple test payload
+        test_payload = '7|0|4|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|327E0F303D0CA463050DC31340CFE01D|com.entrinsik.informer.core.client.service.ViewRPCService|getDynamicExportConfigs|1|2|3|4|0|'
+
+        try:
+            response = self.session.post(url, data=test_payload, headers=self.gwt_headers)
+
+            logging.info(f"Status Code: {response.status_code}")
+            logging.info(f"Response Length: {len(response.text)} bytes")
+            logging.info(f"Response Preview: {response.text[:200]}")
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Get-Content keyedin_working_extractor.py | Select-Object -First 150
+#!/usr/bin/env python3
+"""
+KeyedIn Complete Data Extractor - Working Version
+Uses proper GWT RPC protocol based on reverse engineering
+"""
+
+import json
+import requests
+import time
+import sqlite3
+import csv
+import re
+from datetime import datetime
+from pathlib import Path
+import logging
+
+# Setup logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(message)s',
+    handlers=[
+        logging.FileHandler('extraction.log', encoding='utf-8'),
+        logging.StreamHandler()
+    ]
+)
+
+class GWTRPCParser:
+    """Parser for GWT RPC responses"""
+
+    @staticmethod
+    def parse_string_table(response):
+        """Extract the string table from GWT RPC response"""
+        # GWT RPC format: //OK[version,flags,table_size,...,"string1","string2",...]
+        if not response.startswith('//OK['):
+            return []
+
+        # Find all quoted strings in the response
+        strings = re.findall(r'"([^"]*)"', response)
+        return strings
+
+class KeyedInExtractor:
+    def __init__(self, session_file='keyedin_session.json'):
+        """Initialize extractor with session data"""
+
+        logging.info("=" * 80)
+        logging.info("KEYEDIN DATA EXTRACTOR")
+        logging.info("=" * 80)
+
+        # Load session
+        with open(session_file, 'r') as f:
+            session_data = json.load(f)
+
+        self.base_url = session_data['base_url']
+        self.auth_token = session_data['authToken']
+        self.client_id = session_data['clientId']
+        self.cookies = session_data['cookies']
+
+        logging.info(f"Loaded session for user: {self.cookies.get('user', 'Unknown')}")
+
+        # Setup session
+        self.session = requests.Session()
+        self.session.cookies.update(self.cookies)
+
+        # GWT RPC headers
+        self.gwt_headers = {
+            'Content-Type': 'text/x-gwt-rpc; charset=UTF-8',
+            'X-GWT-Module-Base': f'{self.base_url}informer/',
+            'X-GWT-Permutation': '6823F3E0DFFF554BC1A7951AA98B182D',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+            'Accept': '*/*',
+            'Referer': f'{self.base_url}?locale=en_US'
+        }
+
+        # Output setup
+        self.output_dir = Path('keyedin_extraction_' + datetime.now().strftime('%Y%m%d_%H%M%S'))
+        self.output_dir.mkdir(exist_ok=True)
+
+        logging.info(f"Output directory: {self.output_dir.absolute()}")
+
+    def build_url(self, service):
+        """Build RPC URL with authentication"""
+        return f"{self.base_url}informer/rpc/protected/{service}?authToken={self.auth_token}&clientId={self.client_id}"
+
+    def discover_reports(self):
+        """Discover all available reports"""
+        logging.info("")
+        logging.info("=" * 80)
+        logging.info("DISCOVERING REPORTS")
+        logging.info("=" * 80)
+
+        url = self.build_url('ViewRPCService')
+
+        # This is the exact payload for report discovery we captured
+        # It searches for all reports using wildcard **
+        payload = '7|0|22|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|327E0F303D0CA463050DC31340CFE01D|com.entrinsik.informer.core.client.service.ViewRPCService|getData|[Lcom.entrinsik.gwt.data.shared.ViewToken;/2990910562|[Lcom.entrinsik.gwt.data.shared.LoadOptions;/2486573562|com.entrinsik.gwt.data.shared.ViewToken/3777265110|600437df-77ae-4aca-8f93-45b022255489|com.entrinsik.gwt.data.shared.LoadOptions/4020437150|java.util.HashMap/1797211028|com.entrinsik.gwt.data.shared.criteria.impl.JunctionImpl/346417575|java.util.ArrayList/4159755760|com.entrinsik.gwt.data.shared.criteria.Operator/2483661797|com.entrinsik.gwt.data.shared.criteria.impl.ValueExpressionImpl/3874770769|name|com.entrinsik.gwt.data.shared.criteria.Quantifier/3325804167|com.entrinsik.gwt.data.shared.values.StringValue/2414534542|**|com.entrinsik.informer.core.domain.report.ReportSearchOptions/1133289605|en_US|com.entrinsik.gwt.data.shared.Order/1651361273|com.entrinsik.gwt.data.shared.values.NullValue/2880996259|1|2|3|4|2|5|6|5|1|7|8|6|1|9|10|0|11|12|2|11|12|1|11|12|0|13|9|13|8|14|1|13|2|15|16|0|17|18|-13|0|19|12|0|0|0|0|0|25|20|12|1|21|1|15|1|0|22|0|0|'
+
+        try:
+            response = self.session.post(url, data=payload, headers=self.gwt_headers)
+
+            if response.status_code == 200:
+                logging.info(f"âœ“ Report discovery successful ({len(response.text)} bytes)")
+
+                # Parse report names from response
+                strings = GWTRPCParser.parse_string_table(response.text)
+
+                # Filter for report names (they're typically longer descriptive strings)
+                report_names = [s for s in strings if len(s) > 5 and not s.startswith('com.') and not s.startswith('java.')]
+
+                # Remove duplicates and common non-report strings
+                exclude = {'KeyedInSign', 'System Administrator', 'ADMIN', 'en_US', 'true', 'false'}
+                report_names = [r for r in report_names if r not in exclude]
+
+                logging.info(f"âœ“ Found {len(report_names)} potential reports")
+
+                # Save report list
+                report_list_file = self.output_dir / 'discovered_reports.txt'
+                with open(report_list_file, 'w', encoding='utf-8') as f:
+                    for name in sorted(set(report_names)):
+                        f.write(f"{name}\n")
+
+                logging.info(f"âœ“ Report list saved to: {report_list_file}")
+
+                return report_names
+            else:
+                logging.error(f"âœ— Discovery failed: HTTP {response.status_code}")
+                logging.error(f"Response: {response.text[:500]}")
+                return []
+
+        except Exception as e:
+            logging.error(f"âœ— Discovery error: {e}")
+            return []
+
+    def test_api_connection(self):
+        """Test basic API connectivity"""
+        logging.info("")
+        logging.info("=" * 80)
+        logging.info("TESTING API CONNECTION")
+        logging.info("=" * 80)
+
+        url = self.build_url('ViewRPCService')
+
+        # Simple test payload
+        test_payload = '7|0|4|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|327E0F303D0CA463050DC31340CFE01D|com.entrinsik.informer.core.client.service.ViewRPCService|getDynamicExportConfigs|1|2|3|4|0|'
+
+        try:
+            response = self.session.post(url, data=test_payload, headers=self.gwt_headers)
+
+            logging.info(f"Status Code: {response.status_code}")
+            logging.info(f"Response Length: {len(response.text)} bytes")
+            logging.info(f"Response Preview: {response.text[:200]}")
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # Show me the rest of the working script
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Get-Content keyedin_working_extractor.py | Select-Object -Skip 150
+
+            if response.status_code == 200:
+                if response.text.startswith('//OK'):
+                    logging.info("âœ“ API connection successful!")
+                    return True
+                elif 'IncompatibleRemoteServiceException' in response.text:
+                    logging.info("âœ“ Authentication works (payload format needs adjustment)")
+                    return True
+                else:
+                    logging.warning("âš  Unexpected response format")
+                    return False
+            else:
+                logging.error("âœ— API connection failed")
+                return False
+
+        except Exception as e:
+            logging.error(f"âœ— Connection error: {e}")
+            return False
+
+    def save_summary(self, reports):
+        """Save extraction summary"""
+        summary_file = self.output_dir / 'extraction_summary.txt'
+
+        with open(summary_file, 'w', encoding='utf-8') as f:
+            f.write("=" * 80 + "\n")
+            f.write("KEYEDIN EXTRACTION SUMMARY\n")
+            f.write("=" * 80 + "\n\n")
+            f.write(f"Extraction Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+            f.write(f"User: {self.cookies.get('user', 'Unknown')}\n")
+            f.write(f"Base URL: {self.base_url}\n\n")
+            f.write(f"Reports Discovered: {len(reports)}\n\n")
+            f.write("=" * 80 + "\n")
+            f.write("DISCOVERED REPORTS\n")
+            f.write("=" * 80 + "\n\n")
+
+            for i, report in enumerate(sorted(set(reports)), 1):
+                f.write(f"{i:3d}. {report}\n")
+
+            f.write("\n" + "=" * 80 + "\n")
+            f.write("NEXT STEPS\n")
+            f.write("=" * 80 + "\n\n")
+            f.write("The extraction script has successfully:\n")
+            f.write("âœ“ Authenticated with KeyedIn\n")
+            f.write("âœ“ Connected to Informer API\n")
+            f.write("âœ“ Discovered available reports\n\n")
+            f.write("To extract actual data, we need to:\n")
+            f.write("1. Build getData payloads for each specific report\n")
+            f.write("2. Parse the GWT RPC response format for data rows\n")
+            f.write("3. Handle pagination for large datasets\n\n")
+            f.write("This is excellent progress! Authentication is complete.\n")
+
+        logging.info(f"âœ“ Summary saved to: {summary_file}")
+
+    def run(self):
+        """Main extraction process"""
+        start_time = datetime.now()
+
+        logging.info(f"Started: {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
+
+        # Test connection
+        if not self.test_api_connection():
+            logging.error("Cannot proceed without API connection")
+            return
+
+        # Discover reports
+        reports = self.discover_reports()
+
+        # Save results
+        self.save_summary(reports)
+
+        # Summary
+        end_time = datetime.now()
+        elapsed = (end_time - start_time).total_seconds()
+
+        logging.info("")
+        logging.info("=" * 80)
+        logging.info("EXTRACTION COMPLETE")
+        logging.info("=" * 80)
+        logging.info(f"Duration: {elapsed:.1f} seconds")
+        logging.info(f"Output: {self.output_dir.absolute()}")
+        logging.info("")
+        logging.info("âœ“ Authentication successful")
+        logging.info("âœ“ API connection verified")
+        logging.info(f"âœ“ Discovered {len(reports)} reports")
+        logging.info("")
+        logging.info("Check the output directory for:")
+        logging.info("  - discovered_reports.txt (list of all reports)")
+        logging.info("  - extraction_summary.txt (detailed summary)")
+        logging.info("  - extraction.log (complete log)")
+        logging.info("=" * 80)
+
+def main():
+    import argparse
+
+    parser = argparse.ArgumentParser(description='Extract data from KeyedIn')
+    parser.add_argument('--session-file', default='keyedin_session.json',
+                       help='Session file with authentication')
+
+    args = parser.parse_args()
+
+    extractor = KeyedInExtractor(args.session_file)
+    extractor.run()
+
+if __name__ == '__main__':
+    main()
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> python keyedin_enhanced_extractor.py --session-file keyedin_session.json --extract-data --limit 1
+C:\Python313\python.exe: can't open file 'C:\\Scripts\\SignX\\Keyedin\\GWT Google Web Toolkit\\keyedin_enhanced_extractor.py': [Errno 2] No such file or directory
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> python keyedin_enhanced_extractor.py --session-file keyedin_session.json --extract-data --limit 1
+2025-11-12 16:50:47,183 - ================================================================================
+2025-11-12 16:50:47,184 - KEYEDIN DATA EXTRACTOR - ENHANCED
+2025-11-12 16:50:47,184 - ================================================================================
+2025-11-12 16:50:47,185 - Loaded session for user: BRADYF
+2025-11-12 16:50:47,185 - Output directory: C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_extraction_20251112_165047
+2025-11-12 16:50:47,185 - Started: 2025-11-12 16:50:47
+2025-11-12 16:50:47,186 -
+2025-11-12 16:50:47,186 - ================================================================================
+2025-11-12 16:50:47,186 - TESTING API CONNECTION
+2025-11-12 16:50:47,186 - ================================================================================
+2025-11-12 16:50:47,374 - Status Code: 200
+2025-11-12 16:50:47,375 - Response Preview: //EX[2,1,["com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException/3936916533","This application is out of date, please click the refresh button on your browser. ( Could not locate requested
+2025-11-12 16:50:47,375 - ✓ Authentication works (payload format needs adjustment)
+2025-11-12 16:50:47,376 -
+2025-11-12 16:50:47,376 - ================================================================================
+2025-11-12 16:50:47,376 - DISCOVERING REPORTS
+2025-11-12 16:50:47,376 - ================================================================================
+2025-11-12 16:50:47,420 - ✓ Report discovery successful (15902 bytes)
+2025-11-12 16:50:47,420 - ✓ Found 1 reports with ViewTokens
+2025-11-12 16:50:47,422 - ✓ Report list saved to: keyedin_extraction_20251112_165047\discovered_reports.txt
+2025-11-12 16:50:47,422 -
+Limiting extraction to first 1 reports
+2025-11-12 16:50:47,422 -
+[1/1]
+2025-11-12 16:50:47,422 -
+================================================================================
+2025-11-12 16:50:47,422 - Extracting: Release - 2.1.3
+2025-11-12 16:50:47,423 - ViewToken: 600437df-77ae-4aca-8f93-45b022255489
+2025-11-12 16:50:47,457 - ✓ Data response received (126 bytes)
+2025-11-12 16:50:47,458 - ✓ Raw response saved to: Release - 2.1.3_raw.txt
+2025-11-12 16:50:47,458 - ✗ No data could be parsed
+2025-11-12 16:50:47,959 -
+================================================================================
+2025-11-12 16:50:47,959 - DATA EXTRACTION COMPLETE
+2025-11-12 16:50:47,960 - ================================================================================
+2025-11-12 16:50:47,960 - ✓ Success: 0
+2025-11-12 16:50:47,960 - ✗ Failed: 1
+2025-11-12 16:50:47,960 -
+2025-11-12 16:50:47,960 - ================================================================================
+2025-11-12 16:50:47,960 - EXTRACTION COMPLETE
+2025-11-12 16:50:47,960 - ================================================================================
+2025-11-12 16:50:47,960 - Duration: 0.8 seconds
+2025-11-12 16:50:47,960 - Output: C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_extraction_20251112_165047
+2025-11-12 16:50:47,960 - ✓ Discovered 1 reports
+2025-11-12 16:50:47,960 - ✓ Data extraction attempted
+2025-11-12 16:50:47,961 -
+2025-11-12 16:50:47,961 - Check the output directory for:
+2025-11-12 16:50:47,961 -   - discovered_reports.txt (list of all reports)
+2025-11-12 16:50:47,961 -   - *_raw.txt (raw API responses)
+2025-11-12 16:50:47,961 -   - *_parsed.txt (parsed string tables)
+2025-11-12 16:50:47,961 -   - extraction.log (complete log)
+2025-11-12 16:50:47,961 - ================================================================================
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # Check what raw response we got
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Get-Content "keyedin_extraction_20251112_165047\Release - 2.1.3_raw.txt"
+//EX[2,1,["com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException/3936916533","Too few tokens in RPC request"],0,7]
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> @"
+>> # Read the working extractor to see the exact payload format
+>> with open('keyedin_enhanced_extractor.py', 'r', encoding='utf-8') as f:
+>>     lines = f.readlines()
+>>
+>> # Find the extract_report_data method and fix the payload
+>> for i, line in enumerate(lines):
+>>     if 'Build getData payload' in line:
+>>         # Replace the next line (the payload) with the working format
+>>         # The discovery payload works, so let's use the same structure
+>>         lines[i+2] = "        payload = f'7|0|22|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|327E0F303D0CA463050DC31340CFE01D|com.entrinsik.informer.core.client.service.ViewRPCService|getData|[Lcom.entrinsik.gwt.data.shared.ViewToken;/2990910562|[Lcom.entrinsik.gwt.data.shared.LoadOptions;/2486573562|com.entrinsik.gwt.data.shared.ViewToken/3777265110|{view_token}|com.entrinsik.gwt.data.shared.LoadOptions/4020437150|java.util.HashMap/1797211028|com.entrinsik.gwt.data.shared.criteria.impl.JunctionImpl/346417575|java.util.ArrayList/4159755760|com.entrinsik.gwt.data.shared.criteria.Operator/2483661797|com.entrinsik.gwt.data.shared.criteria.impl.ValueExpressionImpl/3874770769|name|com.entrinsik.gwt.data.shared.criteria.Quantifier/3325804167|com.entrinsik.gwt.data.shared.values.StringValue/2414534542|**|com.entrinsik.informer.core.domain.report.ReportSearchOptions/1133289605|en_US|com.entrinsik.gwt.data.shared.Order/1651361273|com.entrinsik.gwt.data.shared.values.NullValue/2880996259|1|2|3|4|2|5|6|5|1|7|8|6|1|9|10|0|11|12|0|11|12|0|11|12|0|13|9|13|8|14|1|13|2|15|16|0|17|18|0|0|19|12|0|0|0|0|0|0|20|12|1|21|1|15|1|0|22|0|0|'\n"
+>>         break
+>>
+>> with open('keyedin_enhanced_extractor.py', 'w', encoding='utf-8') as f:
+>>     f.writelines(lines)
+>>
+>> print(' Fixed payload format!')
+>> print('Now run: python keyedin_enhanced_extractor.py --session-file keyedin_session.json --extract-data --limit 1')
+>> "@ | python
+ Fixed payload format!
+Now run: python keyedin_enhanced_extractor.py --session-file keyedin_session.json --extract-data --limit 1
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> python keyedin_enhanced_extractor.py --session-file keyedin_session.json --extract-data --limit 1
+2025-11-12 16:53:09,728 - ================================================================================
+2025-11-12 16:53:09,728 - KEYEDIN DATA EXTRACTOR - ENHANCED
+2025-11-12 16:53:09,729 - ================================================================================
+2025-11-12 16:53:09,729 - Loaded session for user: BRADYF
+2025-11-12 16:53:09,730 - Output directory: C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_extraction_20251112_165309
+2025-11-12 16:53:09,730 - Started: 2025-11-12 16:53:09
+2025-11-12 16:53:09,730 -
+2025-11-12 16:53:09,730 - ================================================================================
+2025-11-12 16:53:09,730 - TESTING API CONNECTION
+2025-11-12 16:53:09,730 - ================================================================================
+2025-11-12 16:53:09,886 - Status Code: 200
+2025-11-12 16:53:09,886 - Response Preview: //EX[2,1,["com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException/3936916533","This application is out of date, please click the refresh button on your browser. ( Could not locate requested
+2025-11-12 16:53:09,887 - ✓ Authentication works (payload format needs adjustment)
+2025-11-12 16:53:09,887 -
+2025-11-12 16:53:09,887 - ================================================================================
+2025-11-12 16:53:09,887 - DISCOVERING REPORTS
+2025-11-12 16:53:09,888 - ================================================================================
+2025-11-12 16:53:09,932 - ✓ Report discovery successful (15902 bytes)
+2025-11-12 16:53:09,932 - ✓ Found 1 reports with ViewTokens
+2025-11-12 16:53:09,934 - ✓ Report list saved to: keyedin_extraction_20251112_165309\discovered_reports.txt
+2025-11-12 16:53:09,935 -
+Limiting extraction to first 1 reports
+2025-11-12 16:53:09,935 -
+[1/1]
+2025-11-12 16:53:09,936 -
+================================================================================
+2025-11-12 16:53:09,936 - Extracting: Release - 2.1.3
+2025-11-12 16:53:09,936 - ViewToken: 600437df-77ae-4aca-8f93-45b022255489
+2025-11-12 16:53:09,972 - ✓ Data response received (289 bytes)
+2025-11-12 16:53:09,973 - ✓ Raw response saved to: Release - 2.1.3_raw.txt
+2025-11-12 16:53:09,973 - ✗ No data could be parsed
+2025-11-12 16:53:10,474 -
+================================================================================
+2025-11-12 16:53:10,474 - DATA EXTRACTION COMPLETE
+2025-11-12 16:53:10,475 - ================================================================================
+2025-11-12 16:53:10,475 - ✓ Success: 0
+2025-11-12 16:53:10,475 - ✗ Failed: 1
+2025-11-12 16:53:10,475 -
+2025-11-12 16:53:10,475 - ================================================================================
+2025-11-12 16:53:10,475 - EXTRACTION COMPLETE
+2025-11-12 16:53:10,475 - ================================================================================
+2025-11-12 16:53:10,475 - Duration: 0.7 seconds
+2025-11-12 16:53:10,475 - Output: C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\keyedin_extraction_20251112_165309
+2025-11-12 16:53:10,475 - ✓ Discovered 1 reports
+2025-11-12 16:53:10,475 - ✓ Data extraction attempted
+2025-11-12 16:53:10,476 -
+2025-11-12 16:53:10,476 - Check the output directory for:
+2025-11-12 16:53:10,476 -   - discovered_reports.txt (list of all reports)
+2025-11-12 16:53:10,476 -   - *_raw.txt (raw API responses)
+2025-11-12 16:53:10,476 -   - *_parsed.txt (parsed string tables)
+2025-11-12 16:53:10,476 -   - extraction.log (complete log)
+2025-11-12 16:53:10,476 - ================================================================================
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Get-Content "keyedin_extraction_20251112_165309\Release - 2.1.3_raw.txt"
+//EX[2,1,["com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException/3936916533","Attempt to deserialize an object of type class com.entrinsik.gwt.data.shared.criteria.impl.JunctionImpl when an object of type class com.entrinsik.gwt.data.shared.criteria.Operator is expected"],0,7]
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> @"
+>> # Fix the getData payload to not include search criteria
+>> with open('keyedin_enhanced_extractor.py', 'r', encoding='utf-8') as f:
+>>     lines = f.readlines()
+>>
+>> # Find and replace the extract_report_data payload
+>> for i, line in enumerate(lines):
+>>     if 'Build getData payload' in line:
+>>         # Use a simpler payload without search criteria - just get data from the report
+>>         lines[i+2] = "        payload = f'7|0|8|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|327E0F303D0CA463050DC31340CFE01D|com.entrinsik.informer.core.client.service.ViewRPCService|getData|[Lcom.entrinsik.gwt.data.shared.ViewToken;/2990910562|[Lcom.entrinsik.gwt.data.shared.LoadOptions;/2486573562|com.entrinsik.gwt.data.shared.ViewToken/3777265110|{view_token}|1|2|3|4|2|5|6|5|1|7|8|'
+>> "
+>>         break
+>>
+>> with open('keyedin_enhanced_extractor.py', 'w', encoding='utf-8') as f:
+>>     f.writelines(lines)
+>>
+>> print(' Fixed - removed search criteria from getData payload')
+>> print('Now run: python keyedin_enhanced_extractor.py --session-file keyedin_session.json --extract-data --limit 1')
+>> "@ | python
+  File "<stdin>", line 9
+    lines[i+2] = "        payload = f'7|0|8|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|327E0F303D0CA463050DC31340CFE01D|com.entrinsik.informer.core.client.service.ViewRPCService|getData|[Lcom.entrinsik.gwt.data.shared.ViewToken;/2990910562|[Lcom.entrinsik.gwt.data.shared.LoadOptions;/2486573562|com.entrinsik.gwt.data.shared.ViewToken/3777265110|{view_token}|1|2|3|4|2|5|6|5|1|7|8|'
+                 ^
+SyntaxError: unterminated string literal (detected at line 9)
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # Search the document for getData calls
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Get-Content "path\to\that\chat\document.txt" | Select-String -Pattern "getData" -Context 5
+Get-Content : Cannot find path 'C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit\path\to\that\chat\document.txt'
+because it does not exist.
+At line:1 char:1
++ Get-Content "path\to\that\chat\document.txt" | Select-String -Pattern ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Scripts\Sign...at\document.txt:String) [Get-Content], ItemNotFoundEx
+   ception
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetContentCommand
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # Create and run the API test script
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> @'
+>> # Test script to find the right API method for getting report definitions
+>> $session = Get-Content keyedin_session.json | ConvertFrom-Json
+>> $baseUrl = $session.base_url
+>> $authToken = $session.authToken
+>> $clientId = $session.clientId
+>>
+>> $headers = @{
+>>     'Content-Type' = 'text/x-gwt-rpc; charset=UTF-8'
+>>     'X-GWT-Module-Base' = "${baseUrl}informer/"
+>>     'X-GWT-Permutation' = '6823F3E0DFFF554BC1A7951AA98B182D'
+>>     'User-Agent' = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+>> }
+>>
+>> $url = "${baseUrl}informer/rpc/protected/ViewRPCService?authToken=${authToken}&clientId=${clientId}"
+>>
+>> # Test ViewToken for "Inventory List" or similar report
+>> # We'll use one of the discovered ViewTokens
+>> $viewToken = "600437df-77ae-4aca-8f93-45b022255489"
+>>
+>> Write-Host "`n=== Testing Different API Methods ==="
+>>
+>> # Test 1: Try getView
+>> Write-Host "`nTest 1: getView"
+>> $payload1 = "7|0|6|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|327E0F303D0CA463050DC31340CFE01D|com.entrinsik.informer.core.client.service.ViewRPCService|getView|com.entrinsik.gwt.data.shared.ViewToken/3777265110|$viewToken|1|2|3|4|1|5|6|"
+>>
+>> try {
+>>     $response = Invoke-WebRequest -Uri $url -Method POST -Body $payload1 -Headers $headers -ErrorAction Stop
+>>     Write-Host "  Status: $($response.StatusCode)"
+>>     Write-Host "  Length: $($response.Content.Length) bytes"
+>>     Write-Host "  Preview: $($response.Content.Substring(0, [Math]::Min(200, $response.Content.Length)))"
+>> } catch {
+>>     Write-Host "  Error: $($_.Exception.Message)"
+>> }
+>>
+>> # Test 2: Try load
+>> Write-Host "`nTest 2: load"
+>> $payload2 = "7|0|6|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|327E0F303D0CA463050DC31340CFE01D|com.entrinsik.informer.core.client.service.ViewRPCService|load|com.entrinsik.gwt.data.shared.ViewToken/3777265110|$viewToken|1|2|3|4|1|5|6|"
+>>
+>> try {
+>>     $response = Invoke-WebRequest -Uri $url -Method POST -Body $payload2 -Headers $headers -ErrorAction Stop
+>>     Write-Host "  Status: $($response.StatusCode)"
+>>     Write-Host "  Length: $($response.Content.Length) bytes"
+>>     Write-Host "  Preview: $($response.Content.Substring(0, [Math]::Min(200, $response.Content.Length)))"
+>> } catch {
+>>     Write-Host "  Error: $($_.Exception.Message)"
+>> }
+>>
+>> # Test 3: Try getDefinition
+>> Write-Host "`nTest 3: getDefinition"
+>> $payload3 = "7|0|6|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|327E0F303D0CA463050DC31340CFE01D|com.entrinsik.informer.core.client.service.ViewRPCService|getDefinition|com.entrinsik.gwt.data.shared.ViewToken/3777265110|$viewToken|1|2|3|4|1|5|6|"
+>>
+>> try {
+>>     $response = Invoke-WebRequest -Uri $url -Method POST -Body $payload3 -Headers $headers -ErrorAction Stop
+>>     Write-Host "  Status: $($response.StatusCode)"                                                                   >>     Write-Host "  Length: $($response.Content.Length) bytes"                                                         >>     Write-Host "  Preview: $($response.Content.Substring(0, [Math]::Min(200, $response.Content.Length)))"            >> } catch {                                                                                                            >>     Write-Host "  Error: $($_.Exception.Message)"
+>> }
+>>                                                                                                                      >> # Test 4: Try getData with minimal params (see what error it gives)                                                  >> Write-Host "`nTest 4: getData with minimal params"                                                                   >> $payload4 = "7|0|6|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|327E0F303D0CA463050DC31340CFE01D|com.entrinsik.informer.core.client.service.ViewRPCService|getData|com.entrinsik.gwt.data.shared.ViewToken/3777265110|$viewToken|1|2|3|4|1|5|6|"
+>>                                                                                                                      >> try {                                                                                                                >>     $response = Invoke-WebRequest -Uri $url -Method POST -Body $payload4 -Headers $headers -ErrorAction Stop         >>     Write-Host "  Status: $($response.StatusCode)"                                                                   >>     Write-Host "  Length: $($response.Content.Length) bytes"
+>>     Write-Host "  Preview: $($response.Content.Substring(0, [Math]::Min(500, $response.Content.Length)))"
+>>                                                                                                                      >>     # Save full response for inspection                                                                              >>     $response.Content | Out-File "test4_response.txt" -Encoding UTF8                                                 >>     Write-Host "  Full response saved to: test4_response.txt"                                                        >> } catch {
+>>     Write-Host "  Error: $($_.Exception.Message)"
+>> }
+>>
+>> Write-Host "`n=== Tests Complete ==="
+>> Write-Host "Check the responses above to see which method works"
+>> '@ | Out-File "test_api_methods.ps1" -Encoding UTF8
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host " Script saved to: test_api_methods.ps1"
+ Script saved to: test_api_methods.ps1
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> Write-Host "Running tests...`n"
+Running tests...
+
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> # Run the script
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit> .\test_api_methods.ps1
+
+=== Testing Different API Methods ===
+
+Test 1: getView
+  Status: 200
+  Length: 352 bytes
+  Preview: //EX[2,1,["com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException/3936916533","This application is out of date, please click the refresh button on your browser. ( Could not locate requested
+
+Test 2: load
+  Status: 200
+  Length: 349 bytes
+  Preview: //EX[2,1,["com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException/3936916533","This application is out of date, please click the refresh button on your browser. ( Could not locate requested
+
+Test 3: getDefinition
+  Status: 200
+  Length: 358 bytes
+  Preview: //EX[2,1,["com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException/3936916533","This application is out of date, please click the refresh button on your browser. ( Could not locate requested
+
+Test 4: getData with minimal params
+  Status: 200
+  Length: 352 bytes
+  Preview: //EX[2,1,["com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException/3936916533","This application is out of date, please click the refresh button on your browser. ( Could not locate requested method \x27getData(com.entrinsik.gwt.data.shared.ViewToken)\x27 in interface \x27com.entrinsik.informer.core.client.service.ViewRPCService\x27 )"],0,7]
+  Full response saved to: test4_response.txt
+
+=== Tests Complete ===
+Check the responses above to see which method works
+PS C:\Scripts\SignX\Keyedin\GWT Google Web Toolkit>

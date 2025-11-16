@@ -1,0 +1,196 @@
+{
+  "total_requests": 11,
+  "api_requests": [],
+  "data_requests": [
+    {
+      "method": "GET",
+      "url": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/LOGIN.START"
+    },
+    {
+      "method": "GET",
+      "url": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/WEB.MENU?USERNAME=BRADYF"
+    },
+    {
+      "method": "GET",
+      "url": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/WIDGET.FYI?ACTION=AJAX&_=1762755070994"
+    },
+    {
+      "method": "GET",
+      "url": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/WIDGET.CRM.TASKS?ACTION=AJAX&_=1762755071852"
+    },
+    {
+      "method": "GET",
+      "url": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/WIDGET.ASSIGNED.MILESTONES?ACTION=AJAX&_=1762755072381"
+    },
+    {
+      "method": "GET",
+      "url": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/WIDGET.ASSIGNED.SERVICE.CALLS?ACTION=AJAX&_=1762755072928"
+    },
+    {
+      "method": "GET",
+      "url": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/CHECK.IS.USER.LOGGED.IN?ACTION=AJAX&_=1762755373466"
+    },
+    {
+      "method": "GET",
+      "url": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/CHECK.IS.USER.LOGGED.IN?ACTION=AJAX&_=1762755673469"
+    }
+  ],
+  "other_requests": [
+    {
+      "method": "GET",
+      "url": "https://eaglesign.keyedinsign.com/"
+    },
+    {
+      "method": "GET",
+      "url": "https://privacy-policy.truste.com/privacy-seal/KeyedIn-Solutions/asc?rid=69b59efa-c423-4933-8a2f-bc8a6e289b81"
+    }
+  ],
+  "all_requests": [
+    {
+      "url": "https://eaglesign.keyedinsign.com/",
+      "method": "GET",
+      "headers": {
+        "Upgrade-Insecure-Requests": "1",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "sec-ch-ua": "\"Chromium\";v=\"142\", \"Google Chrome\";v=\"142\", \"Not_A Brand\";v=\"99\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"Windows\""
+      },
+      "postData": null
+    },
+    {
+      "url": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/LOGIN.START",
+      "method": "GET",
+      "headers": {
+        "Upgrade-Insecure-Requests": "1",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "sec-ch-ua": "\"Chromium\";v=\"142\", \"Google Chrome\";v=\"142\", \"Not_A Brand\";v=\"99\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"Windows\""
+      },
+      "postData": null
+    },
+    {
+      "url": "https://privacy-policy.truste.com/privacy-seal/KeyedIn-Solutions/asc?rid=69b59efa-c423-4933-8a2f-bc8a6e289b81",
+      "method": "GET",
+      "headers": {
+        "Referer": "https://eaglesign.keyedinsign.com/",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "sec-ch-ua": "\"Chromium\";v=\"142\", \"Google Chrome\";v=\"142\", \"Not_A Brand\";v=\"99\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"Windows\""
+      },
+      "postData": null
+    },
+    {
+      "url": "https://eaglesign.keyedinsign.com/assets_client/logo.jpg",
+      "method": "GET",
+      "headers": {
+        "Referer": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/LOGIN.START",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "sec-ch-ua": "\"Chromium\";v=\"142\", \"Google Chrome\";v=\"142\", \"Not_A Brand\";v=\"99\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"Windows\""
+      },
+      "postData": null
+    },
+    {
+      "url": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/WEB.MENU?USERNAME=BRADYF",
+      "method": "GET",
+      "headers": {
+        "Accept": "application/json, text/javascript, */*; q=0.01",
+        "Referer": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/LOGIN.START",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "X-Requested-With": "XMLHttpRequest",
+        "sec-ch-ua": "\"Chromium\";v=\"142\", \"Google Chrome\";v=\"142\", \"Not_A Brand\";v=\"99\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"Windows\""
+      },
+      "postData": null
+    },
+    {
+      "url": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/WIDGET.FYI?ACTION=AJAX&_=1762755070994",
+      "method": "GET",
+      "headers": {
+        "Accept": "text/html, */*; q=0.01",
+        "Referer": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/LOGIN.START",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "X-Requested-With": "XMLHttpRequest",
+        "sec-ch-ua": "\"Chromium\";v=\"142\", \"Google Chrome\";v=\"142\", \"Not_A Brand\";v=\"99\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"Windows\""
+      },
+      "postData": null
+    },
+    {
+      "url": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/WIDGET.CRM.TASKS?ACTION=AJAX&_=1762755071852",
+      "method": "GET",
+      "headers": {
+        "Accept": "text/html, */*; q=0.01",
+        "Referer": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/LOGIN.START",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "X-Requested-With": "XMLHttpRequest",
+        "sec-ch-ua": "\"Chromium\";v=\"142\", \"Google Chrome\";v=\"142\", \"Not_A Brand\";v=\"99\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"Windows\""
+      },
+      "postData": null
+    },
+    {
+      "url": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/WIDGET.ASSIGNED.MILESTONES?ACTION=AJAX&_=1762755072381",
+      "method": "GET",
+      "headers": {
+        "Accept": "text/html, */*; q=0.01",
+        "Referer": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/LOGIN.START",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "X-Requested-With": "XMLHttpRequest",
+        "sec-ch-ua": "\"Chromium\";v=\"142\", \"Google Chrome\";v=\"142\", \"Not_A Brand\";v=\"99\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"Windows\""
+      },
+      "postData": null
+    },
+    {
+      "url": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/WIDGET.ASSIGNED.SERVICE.CALLS?ACTION=AJAX&_=1762755072928",
+      "method": "GET",
+      "headers": {
+        "Accept": "text/html, */*; q=0.01",
+        "Referer": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/LOGIN.START",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "X-Requested-With": "XMLHttpRequest",
+        "sec-ch-ua": "\"Chromium\";v=\"142\", \"Google Chrome\";v=\"142\", \"Not_A Brand\";v=\"99\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"Windows\""
+      },
+      "postData": null
+    },
+    {
+      "url": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/CHECK.IS.USER.LOGGED.IN?ACTION=AJAX&_=1762755373466",
+      "method": "GET",
+      "headers": {
+        "Accept": "text/plain, */*; q=0.01",
+        "Referer": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/LOGIN.START",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "X-Requested-With": "XMLHttpRequest",
+        "sec-ch-ua": "\"Chromium\";v=\"142\", \"Google Chrome\";v=\"142\", \"Not_A Brand\";v=\"99\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"Windows\""
+      },
+      "postData": null
+    },
+    {
+      "url": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/CHECK.IS.USER.LOGGED.IN?ACTION=AJAX&_=1762755673469",
+      "method": "GET",
+      "headers": {
+        "Accept": "text/plain, */*; q=0.01",
+        "Referer": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/LOGIN.START",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+        "X-Requested-With": "XMLHttpRequest",
+        "sec-ch-ua": "\"Chromium\";v=\"142\", \"Google Chrome\";v=\"142\", \"Not_A Brand\";v=\"99\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"Windows\""
+      },
+      "postData": null
+    }
+  ]
+}

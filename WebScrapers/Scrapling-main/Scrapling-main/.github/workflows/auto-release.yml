@@ -1,0 +1,53 @@
+name: Create Release
+# Creates a GitHub release when a PR is merged to main, using the PR title as the version (must start with 'v') and PR body as release notes.
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+jobs:
+  create-release:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get PR title
+        id: pr_title
+        run: echo "title=${{ github.event.pull_request.title }}" >> $GITHUB_OUTPUT
+
+      - name: Save PR body to file
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            fs.writeFileSync('pr_body.md', context.payload.pull_request.body || '');
+
+      - name: Extract version
+        id: extract_version
+        run: |
+          PR_TITLE="${{ steps.pr_title.outputs.title }}"
+          if [[ $PR_TITLE =~ ^v ]]; then
+            echo "version=$PR_TITLE" >> $GITHUB_OUTPUT
+            echo "Valid version format found in PR title: $PR_TITLE"
+          else
+            echo "Error: PR title '$PR_TITLE' must start with 'v' (e.g., 'v1.0.0') to create a release."
+            exit 1
+          fi
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.extract_version.outputs.version }}
+          name: Release ${{ steps.extract_version.outputs.version }}
+          body_path: pr_body.md
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

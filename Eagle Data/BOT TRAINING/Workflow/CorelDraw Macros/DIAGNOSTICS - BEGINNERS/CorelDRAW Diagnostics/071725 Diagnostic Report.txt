@@ -1,0 +1,80 @@
+CORELDRAW DIAGNOSTIC REPORT
+Generated: 7/17/2025 12:35:36 PM
+Computer: CNC-1
+User: Brady
+================================================================================
+
+1. APPLICATION INFORMATION
+================================================================================
+
+CorelDRAW Version: Version 23.1.0.389
+Installation Path: C:\Program Files\Corel\CorelDRAW Graphics Suite 2021\Draw\
+2. SYSTEM CONFIGURATION
+================================================================================
+
+Windows Version: Windows_NT
+Computer Name: CNC-1
+User Name: Brady
+User Domain: EAGLE
+Processor: Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+Number of Processors: 32
+System Architecture: AMD64
+Temp Folder: C:\Users\BRADY~1.EAG\AppData\Local\Temp
+3. DOCUMENT ANALYSIS
+================================================================================
+
+Active Document: Untitled-1
+File Path: 
+Pages: 1
+Active Page: Page 1
+Unit: 1
+Resolution: 300 DPI
+Modified: No
+Total Objects: 0
+4. PRINTER CONFIGURATION
+================================================================================
+
+
+Available Printers:
+5. COLOR MANAGEMENT
+================================================================================
+
+Rendering Intent: 0
+6. FONT INFORMATION
+================================================================================
+
+Total Fonts Installed: 383
+
+Sample Fonts (first 20):
+  1. Arial
+  2. SimSun
+  3. @SimSun
+  4. MS Gothic
+  5. @MS Gothic
+  6. Segoe UI
+  7. Adobe Arabic
+  8. Adobe Fan Heiti Std B
+  9. @Adobe Fan Heiti Std B
+  10. Adobe Gothic Std B
+  11. @Adobe Gothic Std B
+  12. Adobe Hebrew
+  13. Adobe Heiti Std R
+  14. @Adobe Heiti Std R
+  15. Adobe Ming Std L
+  16. @Adobe Ming Std L
+  17. Adobe Myungjo Std M
+  18. @Adobe Myungjo Std M
+  19. Adobe Pi Std
+  20. Adobe Song Std L
+  ... and 363 more fonts
+7. WORKSPACE SETTINGS
+================================================================================
+
+UI Language: 1033
+Window State: 3
+Zoom Level: 4.1%
+8. RECENT FILES
+================================================================================
+
+Recent Files:
+

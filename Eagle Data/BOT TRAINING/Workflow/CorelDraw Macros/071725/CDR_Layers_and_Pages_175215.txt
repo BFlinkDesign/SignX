@@ -1,0 +1,20 @@
+LAYERS AND PAGES CHECK
+==================================================
+
+PAGES IN DOCUMENT: 1
+Current page: #1
+
+LAYERS ON CURRENT PAGE:
+• Guides [Special] (0 shapes)
+• Layer 1 (12 shapes)
+
+CREATING NEW LAYER...
+Created layer: 'Demo Layer'
+Added yellow rectangle to new layer
+
+LAYER OPERATIONS:
+• Create: ActivePage.CreateLayer(name)
+• Activate: Layer.Activate
+• Hide/Show: Layer.Visible = True/False
+• Lock/Unlock: Layer.Editable = True/False
+

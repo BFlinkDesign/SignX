@@ -1,0 +1,18 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "identifier": "fs",
+  "description": "Filesystem access for user documents and app data.",
+  "permissions": [
+    { "identifier": "fs:default" },
+    { "identifier": "fs:allow-read-dir",  "allow": ["$APP/*", "$HOME/*", "$DESKTOP/*", "$DOCUMENT/*", "$DOWNLOAD/*"] },
+    { "identifier": "fs:allow-read-file", "allow": ["$APP/*", "$HOME/*", "$DESKTOP/*", "$DOCUMENT/*", "$DOWNLOAD/*"] },
+    { "identifier": "fs:allow-write-file", "allow": ["$APP/*", "$HOME/*", "$DESKTOP/*", "$DOCUMENT/*", "$DOWNLOAD/*"] },
+    { "identifier": "fs:allow-create",      "allow": ["$APP/*", "$HOME/*", "$DESKTOP/*", "$DOCUMENT/*", "$DOWNLOAD/*"] },
+    { "identifier": "fs:allow-remove",      "allow": ["$APP/*", "$HOME/*", "$DESKTOP/*", "$DOCUMENT/*", "$DOWNLOAD/*"] },
+    { "identifier": "fs:allow-rename",      "allow": ["$APP/*", "$HOME/*", "$DESKTOP/*", "$DOCUMENT/*", "$DOWNLOAD/*"] },
+    { "identifier": "fs:allow-watch",       "allow": ["$APP/*", "$HOME/*", "$DESKTOP/*", "$DOCUMENT/*", "$DOWNLOAD/*"] },
+    { "identifier": "fs:allow-unwatch" }
+  ]
+}
+
+

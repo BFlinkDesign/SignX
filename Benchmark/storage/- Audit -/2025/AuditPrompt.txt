@@ -1,0 +1,81 @@
+**COST SUMMARY AUDIT PROMPT**
+
+**Context:**
+I am an estimator for Eagle Sign Company in Grimes, Iowa working on a national account program. I need to audit and adjust pricing as it has been over 1 year since the last pricing adjustment for material and labor costs. Sales commission is 4% of the final sale price.
+
+**What I'm uploading:**
+Cost summaries from the last 5 completed jobs for [Product Name - Part #XXX-XXXX]. These jobs are identical in materials/specifications—only labor and material costs may have changed.
+
+**PRODUCT-SPECIFIC SHIPPING QUANTITIES:**
+- **Standard 5x20 Signs, Hurricane 5x20 Signs, High Wind 5x20 Signs, Intercom Signs:** 1 unit (crated)
+- **All Poles (Standard, High Wind, Hurricane - both intercom and non-intercom):** 1 unit each
+- **5x20 Faces:** Sold as sets (1 Enter + 1 Do Not Enter face) for field replacements
+- **Intercom Sign Faces:** 2 faces per sign (1 Guarantee/rear + 1 Instruction/front)
+- **5x20 NRG LED Conversion Kit:** 20 units per pallet
+- **Intercom Sign NRG LED Conversion Kit:** 70 units per pallet
+
+**IMPORTANT ANALYSIS NOTES:**
+- **Always use job actuals for material costs** - ignore any mention of "updated system pricing"
+- **Minimum Shipment Quantity:** [State specific quantity based on product type above]
+
+**What I need you to analyze:**
+
+**Labor Audit:**
+- Extract actual labor hours by work code for each job
+- Calculate labor hours per unit across all jobs
+- Identify all work codes used and flag any unusual/unexpected codes
+- Determine if there are learning curve effects or efficiency trends
+- Flag any outliers for my review and guidance on how to proceed
+- Recommend new labor standards based on actual performance (use worst-case for shipping/crating codes)
+
+**Material Cost Analysis:**
+- Extract material qty and cost per unit for each job using actual job costs only
+- Identify any price changes or variances between jobs
+- Calculate weighted average material cost per unit based on actual job performance
+- Include all shipping/packaging materials allocated per minimum shipment quantity
+- Note any changes in burden rates between jobs and recommend standard burden percentage
+
+**Single-Shipment Protection:**
+- Base all calculations on stated minimum shipment quantity
+- Ensure shipping materials (lumber, boxes, wrap, etc.) are fully allocated per minimum shipment
+- Use worst-case labor cycles, not averages, for shipping/crating work codes
+
+**Discrepancy Handling:**
+- Flag any data point (labor hours, material cost, work code usage) more than 20% above/below average
+- Do not exclude outliers automatically - flag them for my review and guidance
+- Clearly document all flagged items with specific questions for my input
+- Note recurring patterns and document potential causes
+
+**Chronological Analysis:**
+- Analyze jobs in chronological order to identify time-based trends
+- Note any efficiency improvements or cost escalations over time
+- Weight more recent jobs higher in recommendations if clear trends exist
+
+**Output Format Required:**
+Format results EXACTLY like Eagle Sign Company cost summaries with:
+- Same header format (RUN DATE: [Current Date] Eagle Sign Company PAGE 1)
+- Work order summary showing TOTAL MATERIAL COST, TOTAL LABOR COST, TOTAL BURDEN COST, TOTAL COST
+- Labor section with work codes, EST vs ACTUAL hours, costs, and variances
+- Material section with part numbers, descriptions, U/M, quantities, and costs
+- Show "CURRENT STANDARDS" vs "RECOMMENDED 2025 STANDARDS"
+- Include WO Qty and per-unit calculations
+
+**Key Requirements:**
+- Support all recommendations with actual job performance data
+- Present as official Eagle Sign Company cost summary for 2025 standards
+- Flag all outliers and unusual findings for my review
+- Include summary of key changes and justification for pricing adjustments
+
+**TEMPLATE FOR UPLOAD:**
+When uploading, state: "Product: [Name] - Part #[XXX-XXXX]" and I'll apply the correct minimum shipment quantity based on the product type listed above.
+
+---
+
+**This prompt is now:**
+Accurate for all your product types and shipping quantities
+Uses actual job costs only (ignores system pricing updates)
+Flags outliers for your review instead of making assumptions
+Repeatable across all your quote numbers
+Formatted exactly like your Eagle Sign cost summaries
+
+**Ready to process all your national account audits!**

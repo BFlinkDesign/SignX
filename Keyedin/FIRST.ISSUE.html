@@ -1,0 +1,982 @@
+<html>
+<head><title>Work Order Issue</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Pragma" content="no-cache">
+<link rel="stylesheet" href="/general-style.css">
+<script langauge=JavaScript>
+<!-- Begin data validation
+function checkDate(objName,required) {
+   var datefield = objName;
+   if((objName=="")&&(required=='N')){
+      return true;      
+   }
+   if (chkdate(objName) == false) {
+      datefield.select();
+      alert("That date is invalid.  Please try again.");
+      datefield.focus();
+      return false;
+   } else {
+      return true;
+   }
+}
+function chkdate(objName) {
+   var strDatestyle = "US"; //United States date style
+   //var strDatestyle = "EU";  //European date style
+   var strDate;
+   var strDateArray;
+   var strDay;
+   var strMonth;
+   var strYear;
+   var intday;
+   var intMonth;
+   var intYear;
+   var booFound = false;
+   var datefield = objName;
+   var strSeparatorArray = new Array("-","/",".");
+   var intElementNr;
+   var err = 0;
+   strDate = datefield.value;
+      if (strDate.length < 3) {
+         return false;
+      }
+   for (intElementNr = 0; intElementNr < strSeparatorArray.length; intElementNr++) {
+      if (strDate.indexOf(strSeparatorArray[intElementNr]) != -1) {
+         strDateArray = strDate.split(strSeparatorArray[intElementNr]);
+         if (strDateArray.length < 2) {
+            //err = 1;
+            return false;
+         } else {
+            strDay = strDateArray[0];
+            strMonth = strDateArray[1];
+            if (strDateArray.length<3){
+               x = new Date();
+               strYear = x.getYear();
+            } else {
+               strYear = strDateArray[2];
+            }
+         }
+         booFound = true;
+      }
+   }
+   if (booFound == false) {
+      if (strDate.length>5) {
+         strDay = strDate.substr(0, 2);
+         strMonth = strDate.substr(2, 2);
+         strYear = strDate.substr(4);
+      }
+   }
+   if (strDatestyle == "US") {
+      strTemp = strDay;
+      strDay = strMonth;
+      strMonth = strTemp;
+   }
+   intday = parseInt(strDay, 10);
+   if (isNaN(intday)) {
+      //err = 2;
+      return false;
+   }
+   intMonth = parseInt(strMonth, 10);
+   if (isNaN(intMonth)) {
+      for (i = 0;i<12;i++) {
+         if (strMonth.toUpperCase() == strMonthArray[i].toUpperCase()) {
+            intMonth = i+1;
+            strMonth = strMonthArray[i];
+            i = 12;
+         }
+      }
+      if (isNaN(intMonth)) {
+         //err = 3;
+         return false;
+      }
+   }
+   intYear = parseInt(strYear, 10);
+   if (isNaN(intYear)) {
+      //err = 4;
+      return false;
+   }
+   if (intMonth>12 || intMonth<1) {
+      //err = 5;
+      return false;
+   }
+   if ((intMonth == 1 || intMonth == 3 || intMonth == 5 || intMonth == 7 || intMonth == 8 || intMonth == 10 || intMonth == 12) && (intday > 31 || intday < 1)) {
+      //err = 6;
+      return false;
+   }
+   if ((intMonth == 4 || intMonth == 6 || intMonth == 9 || intMonth == 11) && (intday > 30 || intday < 1)) {
+      //err = 7;
+      return false;
+   }
+   if (intMonth == 2) {
+      if (intday < 1) {
+         //err = 8;
+         return false;
+      }
+      if (LeapYear(intYear) == true) {
+         if (intday > 29) {
+            //err = 9;
+            return false;
+         }
+      } else {
+         if (intday > 28) {
+            //err = 10;
+            return false;
+         }
+      }
+   }
+return true;
+}
+
+function LeapYear(intYear) {
+   if (intYear % 100 == 0) {
+      if (intYear % 400 == 0) { return true; }
+   } else {
+      if ((intYear % 4) == 0) { return true; }
+   }
+   return false;
+}
+//  End data validation-->
+
+
+
+function validateNumber(name,condition,decimalPlaces){
+   //condition of 1 is ANY number. Positives are OK. Negatives are OK. Decimals are OK.
+   //condition of 2 is ANY POSITIVE number. Positives are OK. NO negatives. Decimals are OK.
+   //condition of 3 is ANY NEGATIVE number. NO positives. Negatives are OK. Decimals are OK.
+   //condition of 4 is ANY WHOLE number. Positives are OK. Negatives are OK. NO decimals.
+   //condition of 5 is ANY WHOLE POSITIVE number. Positives are OK. NO negatives. NO decimals.
+   //condition of 6 is ANY WHOLE NEGATIVE number. NO positives. Negatives are OK. NO decimals.
+
+   f=document.forms[0]
+
+   if(checkNumber(name,condition)){
+      if((condition!=4)&&(condition!=5)&&(condition!=6)){
+         amt=new Number(f.elements[''+name].value)
+         amt=roundNumber(amt,decimalPlaces)
+         amt=trailingZero(amt,decimalPlaces)
+         f.elements[''+name].value=amt
+      }
+      return true;
+   }else{
+      return false;
+   }
+
+}
+
+function checkNumber(field,condition){
+
+   numberValid=true
+   if(isNaN(document.all(field).value)){
+      numberValid=false
+      msg="Please enter numbers ONLY!"
+   }
+   
+   switch (condition){
+
+      case 2:
+            if(document.all(field).value<0){
+            numberValid=false
+            msg="Please enter positive number(s) ONLY!"     
+         }        
+      break;
+      case 3:
+            if(document.all(field).value>0){
+            numberValid=false
+            msg="Please enter negative number(s) ONLY!"     
+         }        
+      break;
+      case 4:
+         if(document.all(field).value.indexOf('.')!=-1){
+            numberValid=false
+            msg="Please enter whole numbers ONLY!"    
+         }
+         break;
+      case 5:
+         if((document.all(field).value.indexOf('.')!=-1)||(document.all(field).value<0)){
+            numberValid=false
+            msg="Please enter positive, whole number(s) ONLY!"    
+         }        
+         break;   
+      case 6:
+         if((document.all(field).value.indexOf('.')!=-1)||(document.all(field).value>0)){
+            numberValid=false
+            msg="Please enter negative, whole number(s) ONLY!"    
+         }        
+         break;   
+   }
+   
+   if (numberValid){
+      return true;
+   } else {
+      document.all(field).select()
+      alert(msg)
+      document.all(field).focus()
+      return false;
+   }
+}
+
+function roundNumber(number,X) {
+// rounds number to X decimal places, defaults to 2
+    X = (!X ? 2 : X);
+    return Math.round(number*Math.pow(10,X))/Math.pow(10,X);
+}
+
+function trailingZero(aNumber,trailingDigits){
+
+  strNumber=new String(aNumber)
+   //assures trailingDigits to the right of the decimal place, defaults to 2
+  trailingDigits=(!trailingDigits ? 2 : trailingDigits);     
+   
+  dotPos=strNumber.indexOf(".")
+  lengthOfNumber=strNumber.length
+  
+   if(dotPos==-1){
+      strNumber+='.';
+      for(x=0;x<trailingDigits;x++){
+         strNumber+='0'   
+      }
+   }else{
+      for(x=(lengthOfNumber-dotPos)-1;x<trailingDigits;x++){
+         strNumber+='0'   
+      }
+   }
+   
+   return strNumber 
+}
+
+
+function searchPart_v3(description,iSubmit,focusFN,partFN,descrFN,passFUNCTION){
+   url="SEARCH.PART?"
+   if (description)
+      url+="&PART_DESCR="+description
+   if (iSubmit)
+      url+="&I_SUBMIT="+iSubmit
+   if (focusFN)
+      url+="&FOCUS_FN="+focusFN
+   if (partFN)
+      url+="&PART_FN="+partFN
+   if (descrFN)
+      url+="&DESCR_FN="+descrFN
+   if (passFUNCTION)
+      url+="&PASSED_FUNCTION="+passFUNCTION
+
+         
+   features = "resizable=yes,width=650,height=500"
+   window.open(url,"searchparts",features)
+}
+
+
+function linkWorkOrderChange_v1(wono) {
+   url="WO.CHANGE"
+	url+="?WONO="+wono
+   url+="&OPENED_BY_OTHER_PROGRAM=Y"
+
+   winOptions="width=850,height=450,resizable=yes,scrollbars=yes,status"
+   window.open(url,"Help",winOptions);
+}
+
+
+var msg = ""
+function verifyNumber_v7(fieldName,condition,decimalPlaces,required,fieldDesc){
+	//condition of 1 is ANY number. Positives are OK. Negatives are OK. Decimals are OK.
+   //condition of 2 is ANY POSITIVE number. Positives are OK. NO negatives. Decimals are OK.
+   //condition of 3 is ANY NEGATIVE number. NO positives. Negatives are OK. Decimals are OK.
+   //condition of 4 is ANY WHOLE number. Positives are OK. Negatives are OK. NO decimals.
+   //condition of 5 is ANY WHOLE POSITIVE number. Positives are OK. NO negatives. NO decimals.
+   //condition of 6 is ANY WHOLE NEGATIVE number. NO positives. Negatives are OK. NO decimals.
+   msg = ""
+
+   if((required=='Y')&&(document.getElementById(fieldName).value=="")){
+      msg = "The "+fieldDesc+" is required."
+      return false;     
+   }
+   if(document.getElementById(fieldName).value==""){
+      return true;
+   }
+
+   numberToCheck=document.getElementById(fieldName).value
+	if(checkNumber(numberToCheck,condition)){
+      if((condition!=4)&&(condition!=5)&&(condition!=6)){
+         oldAmt = numberToCheck
+         amt=new Number(numberToCheck)
+         if(decimalPlaces!=""){
+            amt=roundNumber(amt,decimalPlaces)
+            amt=trailingZero(amt,decimalPlaces)
+            document.getElementById(fieldName).value=amt
+         }else{
+            document.getElementById(fieldName).value=oldAmt
+         }
+      }
+      return true;
+   }else{
+      return false;
+   }
+}
+
+function checkNumber(numberToCheck,condition){
+   if(isNaN(numberToCheck)){
+      msg="Please enter numbers ONLY!"
+		return false;
+   }
+   
+   switch (condition){
+      case 2:
+            if(numberToCheck<0){
+            msg="Please enter positive number(s) ONLY!"     
+         }        
+      break;
+      case 3:
+            if(numberToCheck>0){
+            msg="Please enter negative number(s) ONLY!"     
+         }        
+      break;
+      case 4:
+         if(numberToCheck.indexOf('.')!=-1){
+            msg="Please enter whole numbers ONLY!"    
+         }
+         break;
+      case 5:
+         if((numberToCheck.indexOf('.')!=-1)||(numberToCheck<0)){
+            msg="Please enter positive, whole number(s) ONLY!"    
+         }        
+         break;   
+      case 6:
+         if((numberToCheck.indexOf('.')!=-1)||(numberToCheck>0)){
+            msg="Please enter negative, whole number(s) ONLY!"    
+         }        
+         break;   
+   }
+   
+   if (msg==""){
+      return true;
+   }else{
+      return false;
+   }
+}
+
+function roundNumber(number,X) {
+   if(X!=""){
+       X = (!X ? 2 : X);
+       return Math.round(number*Math.pow(10,X))/Math.pow(10,X);
+   }
+}
+
+function trailingZero(aNumber,trailingDigits){
+   if(trailingDigits==""){
+      return aNumber;
+   }
+  strNumber=new String(aNumber)
+   //assures trailingDigits to the right of the decimal place, defaults to 2
+  trailingDigits=(!trailingDigits ? 2 : trailingDigits);     
+   
+  dotPos=strNumber.indexOf(".")
+  lengthOfNumber=strNumber.length
+  
+   if(dotPos==-1){
+      strNumber+='.';
+      for(x=0;x<trailingDigits;x++){
+         strNumber+='0'   
+      }
+   }else{
+      for(x=(lengthOfNumber-dotPos)-1;x<trailingDigits;x++){
+         strNumber+='0'   
+      }
+   }
+   return strNumber 
+}
+
+
+
+<!--Hard coded SCRIPTS start here-->
+ var aPartsArray = new Array();
+
+function submitWONO(){
+   if(f.elements['WCNO'].value == 'DONOTUSE'){
+      document.getElementById('errMsg').innerHTML = "Please select a valid Department Number";
+   }else{
+      f.submit();
+   }
+}
+
+
+function verifyLotNumber(lotNo,rowNo,lookupType){
+   f=document.forms[0]
+   emptyCell=false;
+
+   //if(verifyDepartment(rowNo)){  //verifyDepartment
+
+
+   for(var x=1;x<=f.NO_PARTS.value;x++){
+      if(f.elements['LOTNO_'+x]&&(x!=rowNo)){
+         if(lotNo==f.elements['LOTNO_'+x].value){
+            alert("Lot Number "+lotNo+" is already on the used.\n Please enter a new Lot Number.")
+            f.elements['LOTNO_'+rowNo].value=""
+            f.elements['LOTNO_'+rowNo].focus()
+            return false;
+         }
+         if((f.elements['TRANS_QTY_'+x].value=="")||(f.elements['LOTNO_'+x].value=="")){
+            emptyCell=true
+         }
+      }
+   }
+
+
+   remoteValidateLotandQty(lotNo,rowNo,emptyCell,lookupType)
+
+ // took out 2/4/10  createARow();
+
+   if(lookupType == "itemlookup"){
+      f.elements["TRANS_QTY_"+rowNo].focus();
+   }
+  //} //end verifyDepartment
+}
+
+function remoteValidateLotandQty(lotNo,rowNo,emptyCell,lookupType){
+   f=document.forms[0]
+
+   url="/cgi-bin/mvi.exe/INV220.VERIFY.LOTNO?"
+   url+="PARTNO="+f.elements['COMP_PARTNO_'+rowNo].value
+   url+="&WHSE="+f.WHSE.value
+   url+="&LOTNO="+lotNo
+   url+="&LOT_QTY="+f.elements['TRANS_QTY_'+rowNo].value
+   url+="&ROWNO="+rowNo
+   url+="&LOOKUPTYPE="+lookupType
+
+  features = "resizable=yes,width=475,height=200,status=yes"
+  window.open(url,"verifyLotNumber",features)
+
+}
+
+
+function createRow(){
+      return;
+}
+
+function checkMaxQty(rowNo){
+   f=document.forms[0]
+   totalQty=0
+
+   if((f.elements['TRANS_QTY_'+rowNo].value=="")||(f.elements['TRANS_QTY_'+rowNo].value=="0")){
+         return 'move'
+   }
+
+   if(validateNumber("TRANS_QTY_"+rowNo,4,0)){
+         availQty=f.elements['AVAIL_QTY_'+rowNo].value
+         transQty=f.elements['TRANS_QTY_'+rowNo].value
+         if((availQty!="")&&(availQty<f.elements['TRANS_QTY_'+rowNo].value)){
+            f.elements['TRANS_QTY_'+rowNo].value=availQty
+            msg="The quantity of "+transQty+" you entered is greater than the "+availQty+" available in the lot."
+            msg+="\nThe quantity to issue has been adjusted accordingly."
+            f.elements['TRANS_QTY_'+rowNo].select()
+            alert(msg)
+            f.elements['TRANS_QTY_'+rowNo].focus()
+            return 'noMove';
+         }
+
+
+      maxQty=f.elements['QTY_REQD_'+rowNo].value - f.elements['PREV_ISSUED_'+rowNo].value
+   }else{
+      return 'noMove';
+   }
+}
+
+function validateForm(){
+   f=document.firstIssue
+   if(f.WONO.value==""){
+      alert("Please enter a Work Order.")
+      f.WONO.focus()
+      return;
+   }
+
+   f.submit()
+}
+
+
+function addDate(){
+   f=document.firstIssue
+   if(f.TRANS_DATE){
+      if(f.TRANS_DATE.value==""){
+         var today_date= new Date()
+         var month=today_date.getMonth()+1
+         var today=today_date.getDate()
+         var year=today_date.getYear()
+         f.TRANS_DATE.value=month+"/"+today+"/"+year
+      }
+   }
+}
+
+
+function disableButtons(){
+   document.forms[0].ACTION.disabled = true
+   document.forms[0].RESET.disabled = true
+   document.forms[0].NEW.disabled = true
+}
+
+function enableButtons(){
+   document.forms[0].ACTION.disabled = false
+   document.forms[0].RESET.disabled = false
+   document.forms[0].NEW.disabled = false
+}
+
+function clearQtys(){
+   var f=document.forms[0]
+   if(!f.TRANS_DATE) return;
+
+   document.getElementById('COMP_CHECK_UNCHECK').checked=false
+
+   disableButtons()
+   lineCnt= f.NO_PARTS.value
+   for(var x=1;x<lineCnt;x++){
+      f.elements['TRANS_QTY_'+x].value=""
+
+qtyRequired = new Number(f.elements['QTY_REQD_'+x].value)
+previousIssued = new Number(f.elements['PREV_ISSUED_'+x].value)
+if(qtyRequired-previousIssued<=0){
+//      f.elements['COMPLETE_CODE_'+x].selectedIndex=1
+        document.getElementById('COMPLETE_CODE_'+x).checked=true
+}else{
+//      f.elements['COMPLETE_CODE_'+x].selectedIndex=0
+        document.getElementById('COMPLETE_CODE_'+x).checked=false
+}
+      f.elements['REASON_'+x].selectedIndex=0
+   }
+   enableButtons()
+}
+function createARow(){
+
+   lineCnt = new Number(f.elements['NO_PARTS'].value);
+   //make sure there is not a blank line on the bottom of the screen
+   if(f.elements['COMP_PARTNO_'+lineCnt].value == ""){
+     return
+   }
+   lineCnt += 1;
+   f.elements['NO_PARTS'].value = lineCnt;
+   f.elements['NO_PARTS'].value=lineCnt;
+   newRow = document.getElementById("parttable").insertRow(-1);
+   if(lineCnt%2==1){
+      newRow.className = 'oddTableRow'
+   }
+   newCell = newRow.insertCell(-1);
+   newCell.setAttribute("align","center");
+   cellText = lineCnt
+   newCell.innerHTML = cellText;
+
+   newCell = newRow.insertCell(-1);
+   cellText = "<input type=\"text\" name=\"COMP_PARTNO_"
+   cellText += lineCnt+"\""
+   cellText += ' id=\"COMP_PARTNO_'
+   cellText += lineCnt+'"'
+
+   cellText += " size=\"15\" ";
+//   cellText += " onBlur=\"return verifyLotNumber(this.value," + lineCnt + ",\'itemlookup\')\";>";
+   cellText += " onchange=\"return verifyPartNumber(this.value,\'"+lineCnt+"\');\">";
+   var callFunction1="searchPart_v3('SEARCHING','N','COMP_PARTNO_"+lineCnt+"','COMP_PARTNO_"+lineCnt+"','PART_DESCR_"+lineCnt+"',"
+   var callFunction2="'window.opener.verifyLotNumber(this.value,"+lineCnt+",\\'itemlookup\\')'";
+   cellText += '&nbsp;'
+   cellText += "<a href=\"javascript:";
+   cellText += callFunction1;
+   cellText += callFunction2;
+   cellText += ")"
+   cellText += ";\">"
+   cellText += '<img src="/assets/icons/search.gif" align="absmiddle" height="16" width="16" border="0" title="Search for a Part Number">'
+   cellText += '</a>'
+   newCell.innerHTML = cellText;
+
+   newCell = newRow.insertCell(-1);
+   cellText= "<div id=\"PART_DESCR_"+lineCnt+"\" ></div>";
+
+   newCell.innerHTML=cellText;
+
+   newCell = newRow.insertCell(-1);
+   cellText = '&nbsp;'
+   newCell.innerHTML=cellText;
+
+
+   newCell = newRow.insertCell(-1);
+   newCell.setAttribute("align","center");
+   cellText= "<div id=\"UM_"+lineCnt+"\" ></div>";
+   newCell.innerHTML = cellText;
+
+   newCell = newRow.insertCell(-1);
+   newCell.colSpan=4;
+
+   newCell = newRow.insertCell(-1);
+   newCell.setAttribute("align","right");
+//   var changeFunction="\"verifyQty('"+lineCnt+"')\"";
+   // works cellText =  '<input type="text" name="TRANS_QTY_' + lineCnt + '" size="6" style = "text-align:right" onBlur="setChangeFlag()">';
+
+//   cellText =  '<input type="text" name="TRANS_QTY_' + lineCnt + '" size="6" style = "text-align:right" onBlur='; //setChangeFlag()">';
+//   cellText += changeFunction;
+//   cellText += ">"
+   cellText =  '<input type="text" name="TRANS_QTY_' + lineCnt + '" id="TRANS_QTY_' + lineCnt + '" size="6" style="text-align:right"  onFocus="this.select()" onChange="if(!verifyNumber_v7(this.name,4,0,\'\',\'\')){this.value=\'\';alert(msg);this.focus();}else{setChangeFlag(' + lineCnt + ')}">'
+
+   newCell.innerHTML = cellText;
+
+   newCell = newRow.insertCell(-1);
+   cellText = '&nbsp';
+   newCell.innerHTML = cellText;
+
+//   newCell = newRow.insertCell(-1);
+//   cellText = '<input type="text" name="LOT_NUMBER_'+lineCnt+'" size="12" disabled style="background:lightgrey;" >'
+//   newCell.innerHTML = cellText;
+
+   newCell = newRow.insertCell(-1);
+   cellText = '&nbsp;'
+   newCell.innerHTML = cellText;
+
+   newCell = newRow.insertCell(-1);
+//   newCell.colSpan = 2;
+//   newCell = newRow.insertCell(-1);
+
+
+   var te=f.elements['REASON_1'];
+   cellText='<select name="REASON_"'+lineCnt+'>';
+   for(var iCnt=0;iCnt<te.length;iCnt++){
+      try{
+         cellText+='<option value="'+te.value[iCnt]+'">';
+         cellText+=te[iCnt].text;
+      }catch(error){
+         cellText+='<option value="'+te.length+'">';
+         cellText+=te[iCnt].text;
+      }
+   }
+   cellText += '</select>';
+   newCell.innerHTML = cellText;
+}
+
+
+function wonoFocus(){
+  try{
+     f.WONO.focus();
+  }catch(Error){
+  }
+}
+
+function verifyDepartment(rowNo){
+  var item = "";
+  var dept = "";
+  var workDept=f.elements['WCNO'].value;
+  var itemDeptlist=f.elements['NEW_DEPT'].value;
+  for(var iCnt=0;iCnt<itemDeptlist.split("^").length;iCnt++){
+
+     itemDept= new String(itemDeptlist.split("^")[iCnt]);
+     item = itemDept.split("!")[0];
+     dept = itemDept.split("!")[1];
+
+     if((item == f.elements['COMP_PARTNO_'+rowNo].value) && (item != "")){
+
+        msg ="Part "+item.length + " is already used on Parts List."+iCnt
+
+        if((dept != workDept) && (workDept != "ALL")){
+           msg+="\nIt is assigned to Department "+dept;
+        }
+           alert(msg);
+           f.elements['COMP_PARTNO_'+rowNo].value="";
+           f.elements['COMP_PARTNO_'+rowNo].focus();
+           return false;
+     }else{
+        continue;
+     }
+  }
+  // add the new values to the array if it is not null;
+  if(trimSpace(f.elements['COMP_PARTNO_'+rowNo].value) != ""){
+     var iStart = new Number(f.elements['NO_PARTS_SAVE'].value);
+     if(rowNo-iStart == 0)aPartsArray[rowNo-iStart] = f.elements['COMP_PARTNO_'+rowNo].value;
+     for(iCnt=0;iCnt<rowNo-iStart;iCnt++){
+        if(aPartsArray[iCnt] == f.elements['COMP_PARTNO_'+rowNo].value){
+           alert(f.elements['COMP_PARTNO_'+rowNo].value+" already included.");
+           f.elements['COMP_PARTNO_'+rowNo].value="";
+           f.elements['COMP_PARTNO_'+rowNo].focus();
+           return false;
+        }else{
+           aPartsArray[rowNo-iStart] = f.elements['COMP_PARTNO_'+rowNo].value;
+        }
+     }
+  }
+  return true;
+}
+
+function newDepartment(){
+  try{
+     if(changeFlag){
+        var response = confirm("All changes will be lost. Do you really want to cancel?");
+        if(!response){
+           return
+        }
+     }
+  }catch(error){
+  }
+  f.elements['WCNO'].value="";
+  f.elements['WHSE'].value="";
+  f.submit();
+}
+
+function verifyPartNumber(partNo,rowNo){
+// not null
+// not previously on form
+// in IM
+      var currentPartList = f.elements['NEW_DEPT'].value;
+   if(partNo !=""){
+     itemDeptDeleteString = "!";
+     currentPartArray = currentPartList.split("^");
+     for(x=0;x<currentPartArray.length;x++){
+        tempPartList = currentPartArray[x].split("!")
+        tempPart = tempPartList[0]
+        if(tempPart==partNo){
+           alert("Part is already on Work Order. Cannot add it again.")
+           f.elements['COMP_PARTNO_'+rowNo].value=""
+           f.elements['COMP_PARTNO_'+rowNo].focus();
+           return false;
+         }
+     }
+     if(!verifyDepartment(rowNo))return;
+     if(trimSpace(partNo) == "")return;
+
+
+     url="INV220W.VERIFY.PARTNO"
+     url+="?PARTNO="+partNo
+     url+="&ROW_NO="+rowNo
+     //alert(url);
+     features = "resizable=yes,width=475,height=200,status=yes"
+     window.open(url,"verifyPartNumber",features)
+
+     f.elements['TRANS_QTY_'+rowNo].focus();
+
+
+   }
+}
+
+function verifyQty(rowNo){
+// non numeric
+   var iQty=f.elements['TRANS_QTY_'+rowNo].value;
+   if(isNaN(iQty)){
+     alert(iQty+" is not a valid number");
+     f.elements['TRANS_QTY_'+rowNo].value="";
+     f.elements['TRANS_QTY_'+rowNo].focus();
+     return false;
+   }
+   setChangeFlag(rowNo);
+
+}
+
+function setChangeFlag(rowNo){
+  //set the changeFlag is everything is good
+  try{
+    if(changeFlag){
+      createARow();
+      return(true);
+    }
+  }catch(error){
+    createARow();
+    changeFlag="true";
+  }
+}
+function saveAction(){
+   f.elements['ACTION'].value=f.elements['saveACTION'].value;
+   f.submit();
+}
+
+function trimSpace(tVal){
+  var sSpace = " ";
+  var rVal="";
+  var tVal=new String(tVal);
+  if(tVal.indexOf(sSpace) != -1){
+     for(var iCnt=0;iCnt<tVal.length;iCnt++){
+       if(tVal.charAt(iCnt) != sSpace){
+          rVal+=tVal.charAt(iCnt);
+       }
+    }
+  }else{
+    rVal=tVal;
+  }
+  return(rVal);
+}
+
+function continueAction(){
+   var bError=false;
+   var bSingleRow=false;
+   var iStart = new Number(f.elements['NO_PARTS_SAVE'].value);
+
+   for(var iCnt=iStart;iCnt<f.elements['NO_PARTS'].value;iCnt++){
+      sPartNo=trimSpace(f.elements['COMP_PARTNO_'+iCnt].value);
+      iQty=trimSpace(f.elements['TRANS_QTY_'+iCnt].value);
+      if((sPartNo == "") && (iQty == "")){
+        bSingleRow=true;
+      }
+      if((sPartNo != "") || (iQty != "")){
+        bSingleRow=false;
+      }
+      if((sPartNo != "") && (iQty == "")){
+         bError=true;
+         f.elements['TRANS_QTY_'+iCnt].style.backgroundColor="red";
+      }
+      if((sPartNo == "") && (iQty != "")){
+         bError=true;
+         f.elements['COMP_PARTNO_'+iCnt].style.backgroundColor="red";
+      }
+   }
+   f.elements['ACTION'].value=f.elements['continueACTION'].value;
+   if(bSingleRow){
+     f.elements['WCNO'].value="";
+     f.elements['WHSE'].value="";
+     f.elements['ACTION'].value="SINGLE LINE ERROR";
+   }
+   if(!bError){
+     f.submit();
+   }
+}
+function lookSO(sono){
+   url="LOOK.SO"
+   url+="?SONO="+sono
+   features="status=yes,resizable=yes,scrollbars=yes,height=500,width=800"
+   window.open(url,"LookSalesOrder",features)
+}
+
+
+function checkOrUncheckComp(isChecked){
+   for(var x=1;x<document.getElementById('NO_PARTS').value;x++){
+      if(isChecked){
+         document.getElementById('COMPLETE_CODE_'+x).checked=true
+      }else{
+         document.getElementById('COMPLETE_CODE_'+x).checked=false
+      }
+   }
+}
+
+</script>
+</head>
+<!-- body class="workingforms" onmousemove="trackMouse();" onLoad="addDate();wonoFocus()" -->
+<body class="workingforms"  onLoad="addDate();wonoFocus()">
+<form method="post" name="firstIssue">
+<input type="hidden" name="PROGNAME" value="INV220W">
+<input type="hidden" name="NO_PARTS" id="NO_PARTS" value="0">
+<input type="hidden" name="NO_PARTS_SAVE" value="0">
+<input type="hidden" name="LOT_FLAG" value="">
+<input type="hidden" name="FOUND_LOT_PART" value="">
+
+<table align=center cellpadding=0 cellspacing=0 border=0>
+    <tr>
+        <td class=headerMain>Work Order Issue</td>
+    </tr>
+</table>
+<br>
+<div align="center" class="errorText" id="errMsg">
+
+</div>
+<br>
+
+<table cellpadding=2 cellspacing=0 border=0 align=center>
+   <tr>
+      <td><img src="/images/spacer.gif" height=1 width=150></td>
+      <td><img src="/images/spacer.gif" height=1 width=150></td>
+      <td><img src="/images/spacer.gif" height=1 width=100></td>
+      <td><img src="/images/spacer.gif" height=1 width=150></td>
+      <td><img src="/images/spacer.gif" height=1 width=80></td>
+      <td><img src="/images/spacer.gif" height=1 width=150></td>
+   </tr>
+   <tr>
+      <td class=itemLabel>Work Order Number: </td>
+      <td class=itemData><input class="inputfont" type="text" name="WONO" value="" size="12" maxlength=15 onKeyPress="if(event.keyCode==15)validateForm()">&nbsp<input type=button value=" Go " class="button" onClick="validateForm()">
+</td>
+      <td class=itemLabel>Sales Order #: </td>
+      <td class=itemData></td>
+   </tr>
+   <tr>
+      <td class=itemLabel>Customer:</td>
+      <td class=itemData rowspan="3" valign="top"></td>
+      <td class=itemLabel>Item: </td>
+      <td class=itemData rowspan="3" valign="top"></td>
+    </tr>
+    <tr>
+      <td class=itemLabel>Location: </td>
+      <td class=itemData></td>
+      <td>&nbsp;</td>
+      <td></td>
+   </tr>
+   <tr>
+      <td>&nbsp;</td>
+      <td></td>
+      <td>&nbsp;</td>
+      <td></td>
+   </tr>
+   <tr>
+      <td class=itemLabel>Due Date: </td>
+      <td class=itemData> </td>
+      <td class=itemLabel>Qty to Mfg: </td>
+      <td class=itemData></td>
+   </tr>
+   <tr>
+      <td class=itemLabel>Material Issue Date: </td>
+      <td class=itemData> </td>
+      <td class=itemLabel>Work Dept #: </td>
+      <td class=itemData></td>
+   </tr>
+   <tr>
+      <td class=itemLabel>&nbsp;</td>
+      <td class=itemData>&nbsp;</td>
+      <td class=itemLabel>Warehouse: </td>
+      <td class=itemData></td>
+   </tr>
+<tr>
+   <td height=35>&nbsp;</td>
+</tr>
+</table>
+
+<table align=center cellpadding=0 cellspacing=0 border=0 id="parttable">
+    <tr>
+      <td><img src="/images/spacer.gif" height=1 width=35></td>
+      <td><img src="/images/spacer.gif" height=1 width=110></td>
+      <td><img src="/images/spacer.gif" height=1 width=200></td>
+      <td><img src="/images/spacer.gif" height=1 width=60></td>
+      <td><img src="/images/spacer.gif" height=1 width=40></td>
+      <td><img src="/images/spacer.gif" height=1 width=60></td>
+      <td><img src="/images/spacer.gif" height=1 width=60></td>
+      <td><img src="/images/spacer.gif" height=1 width=70></td>
+      <td><img src="/images/spacer.gif" height=1 width=60></td>
+      <td><img src="/images/spacer.gif" height=1 width=60></td>
+      <td><img src="/images/spacer.gif" height=1 width=10></td>
+      <!-- td><img src="/images/spacer.gif" height=1 width=100></td>
+      <td><img src="/images/spacer.gif" height=1 width=70></td-->
+      <td><img src="/images/spacer.gif" height=1 width=65></td>
+      <td><img src="/images/spacer.gif" height=1 width=150></td>
+    </tr>
+    <tr>
+      <td colspan="10" align="right"></td>
+      <td></td>
+    </tr>
+    <tr valign=bottom>
+      <td class=itemLabel>Line</td>
+      <td class=itemLabel>Part Number</td>
+      <td class=itemLabel>Description</td>
+      <td class=itemLabelR>Qty<br>Reqd</td>
+      <td class=itemLabelC>U/M</td>
+      <td class=itemLabelR>Prev<br>Issued</td>
+      <td class=itemLabelC>Prev<br>Compl</td>
+      <td class=itemLabelC>Last Date<br>Issued</td>
+      <td class=itemLabelR>Qty<br>On Hand</td>
+      <td class=itemLabelR>Qty<br>to Issue</td>
+      <td class=itemLabel>&nbsp;&nbsp;</td>
+      <!-- td class=itemLabel>Lot <br>Number</td>
+      <td>&nbsp;</td-->
+      <td class=itemLabelC><br>Comp</td>
+      <td class=itemLabel>Reason</td>
+    </tr>
+
+        
+</table>
+<!-- /div -->
+</center>
+<br><br>
+<!--input type="button" name="lotcode" value="lotcodeb" onClick="needLotCode()"-->
+<div id='test'>
+</div>
+<center>
+   
+<br><br>
+
+   
+</center>
+</form>
+</body>
+</html>
+

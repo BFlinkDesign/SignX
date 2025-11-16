@@ -1,0 +1,8 @@
+Manual Companion for 16th Edition
+The v16.0 Companion to the AISC Steel Construction Manual is a two-volume set that supplements the 16th Edition Steel Construction Manual and is keyed to the 2022 Specification for Structural Steel Buildings. The v16.0 Companion is an update of the v15.1 Companion.
+
+Volume 1: Design Examples, includes complete design examples illustrating commonly used provisions in the 2022 Specification for Structural Steel Buildings and the 16th Edition Manual for designing members, connections, and structural systems. (1050 pp) 
+
+The system design example included in Part III includes large plan, section, and detail drawings. Full-sized drawings have been downloaded and saved as v16.0_vol-1_part-iii_dwgs and v16.0_vol-2_design-tables.
+
+Volume 2: Design Tables, supplements the Manual with several additional member and connection design tables. Highlights of Vol. 2 include compression tables for composite HSS columns and the combined loading table for W-shapes. Additionally, the combined axial, shear, flexural, and combined forces "super table" included in Steel Construction Manual Table 6-1 is expanded in Vol. 2 for 65 and 70 ksi W-shapes, and HSS members with both ASTM A500 Gr. C and ASTM A1085. Tables are reproduced in full color. (770 pp)

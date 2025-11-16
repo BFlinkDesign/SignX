@@ -1,0 +1,68 @@
+[
+  {
+    "path": "Favorites",
+    "label": "(BI) - Open Sales Order Audit Report",
+    "extURL": "",
+    "process": "OPEN.SO"
+  },
+  {
+    "path": "Sales Order Entry > Reports and Inquiries",
+    "label": "(BI) - Sales Orders by Customer P.O.",
+    "extURL": "",
+    "process": "LSO"
+  },
+  {
+    "path": "Sales Order Entry > Reports and Inquiries",
+    "label": "(BI) - Open Sales Order Audit Report",
+    "extURL": "",
+    "process": "OPEN.SO"
+  },
+  {
+    "path": "Sales Order Entry > Reports and Inquiries",
+    "label": "(BI) - Sales Order Commitments - By Customer",
+    "extURL": "",
+    "process": "SO.COMMIT"
+  },
+  {
+    "path": "Sales Analysis",
+    "label": "(BI) - Sales, GM by Sales Code with Cost Analysis",
+    "extURL": "",
+    "process": "GM.DET.PROD.PART"
+  },
+  {
+    "path": "Purchasing > Reports and Inquiries",
+    "label": "(BI) - Purchase Order History",
+    "extURL": "",
+    "process": "PUR.HISTORY"
+  },
+  {
+    "path": "Purchasing > Reports and Inquiries",
+    "label": "(BI) - Purchase Order Inquiry",
+    "extURL": "",
+    "process": "PO.INQUIRY"
+  },
+  {
+    "path": "Purchasing > Reports and Inquiries",
+    "label": "(BI) - Purchase Order Schedule Analysis",
+    "extURL": "",
+    "process": "PUR.PO.SCHED.ANALYSIS"
+  },
+  {
+    "path": "Purchasing > Reports and Inquiries",
+    "label": "(BI) - Purchase Order Receipt Analysis",
+    "extURL": "",
+    "process": "PUR.PO.VAR.ANALYSIS"
+  },
+  {
+    "path": "Production (Shop Floor Control)",
+    "label": "(BI) - Work Department Load Listing",
+    "extURL": "",
+    "process": "WORK.DEPT.LOAD"
+  },
+  {
+    "path": "Production (Shop Floor Control)",
+    "label": "(BI) - Work Order Listing",
+    "extURL": "",
+    "process": "WO.INQUIRY"
+  }
+]

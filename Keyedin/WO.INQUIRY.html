@@ -1,0 +1,52 @@
+<html>
+<head>
+<title>Work Order Listing</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Pragma" content="no-cache">
+<link rel="stylesheet" href="/general-style.css">
+<script language="JavaScript">
+<!--Hard coded SCRIPTs start here-->
+var f = ""; //Will become f=document.forms[0]
+var d = ""; //Will become d=document.all
+
+function doThingsOnLoad(){
+   f=document.forms[0]
+   d=document.all
+}
+<!--Hard coded SCRIPTs end here-->
+
+
+</script>
+<!--SCRIPT2-->
+</head>
+<body class="workingforms" onload="doThingsOnLoad();try{}catch(errOject){};">
+<form method="get" action="[ACTION]">
+
+<table align="center" cellpadding="0" cellspacing="0" border="0">
+    <tr>
+        <td class="headerMain">Work Order Listing</td>
+    </tr>
+</table>
+<br><br>
+<center>
+<div align="center" class="errorText" id="errMsg">
+
+</div>
+<script language=javascript>
+   if (document.getElementById('errMsg').innerHTML!="") {
+      document.getElementById('errMsg').style.visibility=""
+      document.write("<br><br>")
+   }
+</script>
+Please enter selection criteria.
+<br><br>
+</center>
+<center>
+   
+<br><br>
+
+</center>
+</form>
+</body>
+</html>
+

@@ -1,0 +1,11 @@
+[
+  {
+    "domain": "eaglesign.keyedinsign.com",
+    "httpOnly": false,
+    "name": "JSESSIONID",
+    "path": "/eaglesign",
+    "sameSite": "Lax",
+    "secure": true,
+    "value": "84iavu4y44ae149c8t47nlsc4"
+  }
+]

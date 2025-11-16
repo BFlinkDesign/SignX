@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell -ExecutionPolicy Bypass -File \".\\scripts\\start_database.ps1\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

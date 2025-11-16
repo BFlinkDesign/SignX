@@ -1,0 +1,49 @@
+{
+  "name": "betterbeam",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -k -n web,tauri -c auto \"npm:dev:web\" \"tauri dev\"",
+    "dev:web": "vite --host 127.0.0.1 --port 5173 --strictPort --clearScreen false",
+    "build:web": "vite build",
+    "build:app": "tauri build",
+    "build": "tsc -b && vite build",
+    "typecheck": "tsc --noEmit",
+    "dev:debug": "CHOKIDAR_USEPOLLING=1 vite --host 127.0.0.1 --port 5173 --strictPort --clearScreen false --debug vite:*",
+    "lint": "eslint .",
+    "preview": "vite preview --host 127.0.0.1 --strictPort",
+    "dev:win": "powershell -NoProfile -Command \"$env:CHOKIDAR_USEPOLLING=1; vite --host 127.0.0.1 --port 5173 --strictPort --clearScreen false\"",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.7.0",
+    "fabric": "^6.7.1",
+    "konva": "^9.3.16",
+    "pdfjs-dist": "^5.4.54",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-konva": "^18.2.10",
+    "tesseract.js": "^6.0.1",
+    "three": "^0.179.1",
+    "y-websocket": "^3.0.0",
+    "yjs": "^13.6.27"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.32.0",
+    "@tauri-apps/cli": "^2.7.1",
+    "@types/node": "^24.2.1",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.7.0",
+    "concurrently": "^9.2.0",
+    "eslint": "^9.32.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.3.0",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.39.0",
+    "vite": "^5.4.19"
+  }
+}

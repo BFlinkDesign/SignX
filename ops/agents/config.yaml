@@ -1,0 +1,51 @@
+# Roots to analyze (relative to repository root)
+project_roots:
+  - "SignX-Studio"
+  - "SignX-Intel"
+  - "Keyedin"
+
+# File globs to include/exclude
+include_globs:
+  - "**/*.py"
+  - "**/*.ts"
+  - "**/*.tsx"
+  - "**/*.js"
+  - "**/*.jsx"
+  - "**/*.md"
+  - "**/*.toml"
+  - "**/*.yaml"
+  - "**/*.yml"
+
+exclude_globs:
+  - "**/.venv/**"
+  - "**/__pycache__/**"
+  - "**/node_modules/**"
+  - "**/dist/**"
+  - "**/build/**"
+  - "**/.git/**"
+  - "**/.mypy_cache/**"
+  - "**/.ruff_cache/**"
+
+# RAG settings
+rag:
+  db_path: "ops/reports/rag/index.sqlite"
+  max_file_size_kb: 256
+  chunk_size: 1024
+  chunk_overlap: 128
+  embedding_model: "sentence-transformers/all-MiniLM-L6-v2"  # optional; falls back to tf-idf if unavailable
+
+# Tooling toggles
+tools:
+  ruff: true
+  mypy: true
+  deptry: true
+  vulture: true
+  eslint: true           # only if a local eslint config/package exists
+  ts_prune: true         # only if available in node_modules/.bin
+
+swarm:
+  enabled: true
+  max_workers: 4
+  per_root_parallelism: true
+
+

@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="8.5in"
+   height="11.000001in"
+   viewBox="0 0 215.9 279.4"
+   version="1.1"
+   id="svg2832"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="CAT Scale Intercom LED Wiring.svg">
+  <defs
+     id="defs2826" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="807.19855"
+     inkscape:cy="7.3935332"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="in"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata2829">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(933.37012,-853.17535)">
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.27717283;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3894"
+       width="215.90001"
+       height="279.40002"
+       x="-933.37012"
+       y="853.17535" />
+    <path
+       sodipodi:nodetypes="ccc"
+       inkscape:connector-curvature="0"
+       id="path1235"
+       d="m -816.58626,939.10953 10.31442,-20.53997 h 28.93392"
+       style="fill:none;stroke:#ff0000;stroke-width:0.18328279;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       id="path2563"
+       style="font-style:normal;font-weight:normal;font-size:medium;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.22145498"
+       d="m -824.09128,934.83756 h -0.81319 v -5.84425 l -1.70031,3.97664 h -0.48463 l -1.688,-3.97664 v 5.84425 h -0.7598 v -6.78262 h 1.1089 l 1.63049,3.77622 1.57711,-3.77622 h 1.12943 z"
+       inkscape:connector-curvature="0" />
+    <path
+       id="path2591"
+       style="font-style:normal;font-weight:normal;font-size:medium;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.22145498"
+       d="m -844.47565,929.26287 h -3.0926 v 1.91315 h 2.65725 v 0.80171 h -2.65725 v 3.26604 h -0.81319 v -6.78262 h 3.90579 z"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:connector-curvature="0"
+       d="m -805.24702,929.05976 h -3.0926 v 1.91316 h 2.65725 v 0.8017 h -2.65725 v 3.26604 h -0.81319 v -6.78262 h 3.90579 z"
+       style="font-style:normal;font-weight:normal;font-size:medium;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.22145498"
+       id="path2595" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path3722"
+       style="fill:#f7931e;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.70547974"
+       d="m -836.53349,1018.3079 c -3.17547,0 -6.89544,0.5354 -10.92834,2.1327 l 1.57212,1.2315 c 10.346,-4.1002 17.80583,-0.2364 18.11781,-0.07 l 1.87465,-1.0913 c -0.0613,-0.033 -4.24373,-2.2028 -10.63624,-2.2028" />
+    <path
+       d="m -816.50038,941.3004 c -3.17547,0 -6.89544,-0.53542 -10.92834,-2.13272 l 1.57213,-1.23141 c 10.34599,4.10013 17.80582,0.23638 18.11781,0.07 l 1.87464,1.09137 c -0.0613,0.0332 -4.24373,2.20274 -10.63624,2.20274"
+       style="fill:#f7931e;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.70547974"
+       id="path2533"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path2571"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.50794542;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m -827.7719,1021.602 h 1.91531 v -83.66573 h -1.91531 z" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path2593"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.50794542;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m -847.3862,1021.602 h 1.9153 v -83.66573 h -1.9153 z" />
+    <path
+       d="m -808.15757,1021.602 h 1.91531 v -83.66573 h -1.91531 z"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.50794542;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path2597"
+       inkscape:connector-curvature="0" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.58125806;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3620"
+       width="86.401428"
+       height="62.673622"
+       x="936.5556"
+       y="795.47729"
+       transform="rotate(90)" />
+    <rect
+       style="fill:#00ff00;fill-opacity:1;stroke:none;stroke-width:0.18328278;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3731"
+       width="2.2890759"
+       height="13.405055"
+       x="-798.672"
+       y="973.40839" />
+    <rect
+       style="opacity:0.37000002;fill:#808080;fill-opacity:1;stroke:none;stroke-width:0.18328278;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3733"
+       width="2.2790539"
+       height="86.715538"
+       x="-797.75635"
+       y="936.5556" />
+    <ellipse
+       cy="992.2666"
+       cx="-798.12848"
+       id="circle2689"
+       style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.43890119;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       rx="0.95644313"
+       ry="1.0608003" />
+    <path
+       style="fill:none;stroke:#0000fd;stroke-width:0.18328279;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m -806.24226,1021.602 8.06923,-28.57946 1.79,-6.2091"
+       id="path3735"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccc" />
+    <path
+       d="m -809.8667,1024.9018 2.70053,-5.1875 2.70053,5.1875 z"
+       style="fill:#d9e021;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.43862489"
+       id="path2643"
+       inkscape:connector-curvature="0" />
+    <path
+       d="m -809.60785,1024.8191 h 4.88378 l -2.44189,-4.6905 z m 5.40106,0.3312 h -5.91875 l 2.95958,-5.6846 z"
+       style="fill:#231f20;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.43862489"
+       id="path2645"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:0.18328279;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m -816.58626,939.10953 10.31442,-20.53997 h 28.93392"
+       id="path3771"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:3.7078526px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.09269633"
+       x="-1412.436"
+       y="526.89069"
+       id="text3775"
+       transform="scale(0.5740632,1.7419685)"><tspan
+         sodipodi:role="line"
+         id="tspan3773"
+         x="-1412.436"
+         y="526.89069"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Technical;-inkscape-font-specification:Technical;stroke-width:0.09269633">USE PROVIDED CABLE CLAMP AND TEK SCREW TO TIE CABLE BACK</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:0.95459783px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.02386495"
+       x="-778.72577"
+       y="889.47827"
+       id="text3783"
+       transform="scale(0.94953885,1.0531428)"><tspan
+         sodipodi:role="line"
+         id="tspan3781"
+         x="-778.72577"
+         y="889.47827"
+         style="stroke-width:0.02386495">__</tspan></text>
+    <path
+       sodipodi:nodetypes="ccc"
+       inkscape:connector-curvature="0"
+       id="path3787"
+       d="m -835.68504,1021.0779 -10.49167,20.893 h -54.70254"
+       style="fill:none;stroke:#ff0000;stroke-width:0.18643245;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       sodipodi:nodetypes="ccc"
+       inkscape:connector-curvature="0"
+       id="path3795"
+       d="m -796.12689,980.90244 5.78228,-13.50267 59.62298,0.14362"
+       style="fill:none;stroke:#ff0000;stroke-width:0.18328279;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <text
+       transform="scale(0.54818944,1.8241869)"
+       id="text3799"
+       y="524.52826"
+       x="-1441.7264"
+       style="font-style:normal;font-weight:normal;font-size:4.11425304px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.10285633"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Technical;-inkscape-font-specification:Technical;stroke-width:0.10285633"
+         y="524.52826"
+         x="-1441.7264"
+         id="tspan3797"
+         sodipodi:role="line">USE PROVIDED 10-24 SCREW, TINNERMAN NUT, WASHER, AND HEX NUT</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Technical;-inkscape-font-specification:Technical;stroke-width:0.10285633"
+         y="530.08698"
+         x="-1441.7264"
+         sodipodi:role="line"
+         id="tspan3801">TO MOUNT POWER SUPPLY.  DRILL HOLE WITH #11 BIT</tspan></text>
+    <text
+       id="text3902"
+       y="826.59283"
+       x="-960.70679"
+       style="font-style:normal;font-weight:normal;font-size:11.13544464px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.27838609"
+       xml:space="preserve"
+       transform="scale(0.94953885,1.0531428)"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Technical;-inkscape-font-specification:Technical;stroke-width:0.27838609"
+         y="826.59283"
+         x="-960.70679"
+         id="tspan3900"
+         sodipodi:role="line">CAT Scale Intercom LED Field Conversion</tspan></text>
+    <text
+       id="text3924"
+       y="1066.3142"
+       x="-777.82129"
+       style="font-style:normal;font-weight:normal;font-size:3.14418459px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.07860462"
+       xml:space="preserve"
+       transform="scale(0.94953885,1.0531428)"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Technical;-inkscape-font-specification:Technical;stroke-width:0.07860462"
+         y="1066.3142"
+         x="-777.82129"
+         id="tspan3922"
+         sodipodi:role="line">Rev. 8.8.19</tspan></text>
+    <text
+       transform="scale(0.5740632,1.7419685)"
+       id="text953"
+       y="526.89069"
+       x="-1412.436"
+       style="font-style:normal;font-weight:normal;font-size:3.7078526px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.09269633"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Technical;-inkscape-font-specification:Technical;stroke-width:0.09269633"
+         y="526.89069"
+         x="-1412.436"
+         id="tspan951"
+         sodipodi:role="line">USE PROVIDED CABLE CLAMP AND TEK SCREW TO TIE CABLE BACK</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.11425304px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.10285633"
+       x="-1441.7264"
+       y="524.52826"
+       id="text1099"
+       transform="scale(0.54818944,1.8241869)"><tspan
+         sodipodi:role="line"
+         id="tspan1095"
+         x="-1441.7264"
+         y="524.52826"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Technical;-inkscape-font-specification:Technical;stroke-width:0.10285633">USE PROVIDED 10-24 SCREW, TINNERMAN NUT, WASHER, AND HEX NUT</tspan><tspan
+         id="tspan1097"
+         sodipodi:role="line"
+         x="-1441.7264"
+         y="530.08698"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Technical;-inkscape-font-specification:Technical;stroke-width:0.10285633">TO MOUNT POWER SUPPLY.  DRILL HOLE WITH #11 BIT</tspan></text>
+    <text
+       transform="scale(0.5740632,1.7419685)"
+       id="text1103"
+       y="597.40991"
+       x="-1579.6754"
+       style="font-style:normal;font-weight:normal;font-size:3.7078526px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.09269633"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Technical;-inkscape-font-specification:Technical;stroke-width:0.09269633"
+         y="597.40991"
+         x="-1579.6754"
+         id="tspan1101"
+         sodipodi:role="line">USE PROVIDED CABLE CLAMP AND TEK SCREW TO TIE CABLE BACK</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:3.7078526px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.09269633"
+       x="-1579.6754"
+       y="597.40991"
+       id="text1107"
+       transform="scale(0.5740632,1.7419685)"><tspan
+         sodipodi:role="line"
+         id="tspan1105"
+         x="-1579.6754"
+         y="597.40991"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Technical;-inkscape-font-specification:Technical;stroke-width:0.09269633">USE PROVIDED CABLE CLAMP AND TEK SCREW TO TIE CABLE BACK</tspan></text>
+    <path
+       sodipodi:nodetypes="ccc"
+       inkscape:connector-curvature="0"
+       id="path1237"
+       d="m -847.3862,937.93627 -10.31442,-20.53997 h -28.93392"
+       style="fill:none;stroke:#ff0000;stroke-width:0.18328279;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:3.7078526px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.09269633"
+       x="-1551.8246"
+       y="526.23975"
+       id="text1241"
+       transform="scale(0.5740632,1.7419685)"><tspan
+         sodipodi:role="line"
+         id="tspan1239"
+         x="-1551.8246"
+         y="526.23975"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Technical;-inkscape-font-specification:Technical;stroke-width:0.09269633">USE PROVIDED WATERTIGHT END CAP</tspan></text>
+    <g
+       id="g1314"
+       transform="translate(26.339324,-4.3020507)">
+      <path
+         d="m -882.48101,1081.4503 c 0,0.7131 0.52129,1.2913 1.16367,1.2913 0.64295,0 1.16424,-0.5782 1.16424,-1.2913 0,-0.7131 -0.52129,-1.2913 -1.16424,-1.2913 -0.64238,0 -1.16367,0.5782 -1.16367,1.2913"
+         style="fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.59906465;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path2609"
+         inkscape:connector-curvature="0" />
+      <text
+         transform="scale(0.94953886,1.0531428)"
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.75067806px;line-height:1.25;font-family:Technical;-inkscape-font-specification:Technical;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.11876697"
+         x="-920.98663"
+         y="1028.3312"
+         id="text2613"><tspan
+           sodipodi:role="line"
+           id="tspan2611"
+           x="-920.98663"
+           y="1028.3312"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Technical;-inkscape-font-specification:Technical;stroke-width:0.11876697">5/8&quot; HEYCO</tspan></text>
+      <path
+         inkscape:connector-curvature="0"
+         id="path2615"
+         style="fill:#d9e021;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.24884094"
+         d="m -883.37437,1065.5816 2.05731,-4.2594 2.05731,4.2594 z" />
+      <g
+         id="g2621"
+         transform="matrix(0.22760345,0,0,-0.2524372,-883.37437,1065.1838)">
+        <path
+           d="m 0,-1.216999 9.039,15.656 9.039,-15.656 z"
+           style="fill:none;stroke:#231f20;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           id="path2619"
+           inkscape:connector-curvature="0" />
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.14437056px;line-height:1.25;font-family:Technical;-inkscape-font-specification:Technical;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.12860925"
+         x="-996.92639"
+         y="934.89294"
+         id="text2625"
+         transform="scale(0.87731061,1.1398472)"><tspan
+           sodipodi:role="line"
+           id="tspan2623"
+           x="-996.92639"
+           y="934.89294"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Technical;-inkscape-font-specification:Technical;stroke-width:0.12860925">LED 6' lead cable connection</tspan></text>
+      <path
+         inkscape:connector-curvature="0"
+         id="path2627"
+         style="fill:none;stroke:#f7931e;stroke-width:0.95879573;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         d="m -884.82793,1071.6958 c 0,0 3.0162,3.2006 7.07255,0" />
+      <text
+         transform="scale(0.85605208,1.1681532)"
+         id="text2631"
+         y="919.94287"
+         x="-1021.4503"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.01971531px;line-height:1.25;font-family:Technical;-inkscape-font-specification:Technical;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.12549289"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Technical;-inkscape-font-specification:Technical;stroke-width:0.12549289"
+           y="919.94287"
+           x="-1021.4503"
+           id="tspan2629"
+           sodipodi:role="line">Concord internal LED connection</tspan></text>
+      <path
+         d="m -880.56108,1095.4892 h -1.51197 v -7.3117 h 1.51197 z"
+         style="fill:#00ff00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.21235716"
+         id="path2633"
+         inkscape:connector-curvature="0" />
+      <text
+         transform="scale(0.94953885,1.0531428)"
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.56790352px;line-height:1.25;font-family:Technical;-inkscape-font-specification:Technical;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.13919757"
+         x="-921.17316"
+         y="1038.2933"
+         id="text2639"><tspan
+           sodipodi:role="line"
+           id="tspan2637"
+           x="-921.17316"
+           y="1038.2933"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Technical;-inkscape-font-specification:Technical;stroke-width:0.13919757">Power supply</tspan></text>
+      <path
+         inkscape:connector-curvature="0"
+         d="m -879.69421,1100.7281 h -2.56994 v 1.5898 h 2.20811 v 0.6663 h -2.20811 v 2.714 h -0.67576 v -5.6363 h 3.2457 z"
+         style="font-style:normal;font-weight:normal;font-size:medium;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.1840293"
+         id="path3999" />
+      <text
+         transform="scale(0.87731058,1.1398472)"
+         id="text4003"
+         y="969.71014"
+         x="-996.98218"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.71534061px;line-height:1.25;font-family:Technical;-inkscape-font-specification:Technical;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.14288352"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Technical;-inkscape-font-specification:Technical;stroke-width:0.14288352"
+           y="969.71014"
+           x="-996.98218"
+           id="tspan4001"
+           sodipodi:role="line">Female end of LED stick</tspan></text>
+      <path
+         id="path4005"
+         style="font-style:normal;font-weight:normal;font-size:medium;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.19262159"
+         d="m -878.94865,1116.1703 h -0.70729 v -5.0832 l -1.47887,3.4588 h -0.42154 l -1.46829,-3.4588 v 5.0832 h -0.66083 v -5.8995 h 0.96452 l 1.41826,3.2846 1.3717,-3.2846 h 0.98234 z"
+         inkscape:connector-curvature="0" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.71534061px;line-height:1.25;font-family:Technical;-inkscape-font-specification:Technical;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.14288352"
+         x="-996.98218"
+         y="978.78198"
+         id="text4009"
+         transform="scale(0.87731058,1.1398472)"><tspan
+           sodipodi:role="line"
+           id="tspan4007"
+           x="-996.98218"
+           y="978.78198"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Technical;-inkscape-font-specification:Technical;stroke-width:0.14288352">Male end of LED stick</tspan></text>
+      <text
+         id="text1260"
+         y="1028.3312"
+         x="-920.98663"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.75067806px;line-height:1.25;font-family:Technical;-inkscape-font-specification:Technical;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.11876697"
+         xml:space="preserve"
+         transform="scale(0.94953886,1.0531428)"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Technical;-inkscape-font-specification:Technical;stroke-width:0.11876697"
+           y="1028.3312"
+           x="-920.98663"
+           id="tspan1258"
+           sodipodi:role="line">5/8&quot; HEYCO</tspan></text>
+      <text
+         transform="scale(0.87731061,1.1398472)"
+         id="text1264"
+         y="934.89294"
+         x="-996.92639"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.14437056px;line-height:1.25;font-family:Technical;-inkscape-font-specification:Technical;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.12860925"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Technical;-inkscape-font-specification:Technical;stroke-width:0.12860925"
+           y="934.89294"
+           x="-996.92639"
+           id="tspan1262"
+           sodipodi:role="line">LED 6' lead cable connection</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.01971531px;line-height:1.25;font-family:Technical;-inkscape-font-specification:Technical;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.12549289"
+         x="-1021.4503"
+         y="919.94287"
+         id="text1268"
+         transform="scale(0.85605208,1.1681532)"><tspan
+           sodipodi:role="line"
+           id="tspan1266"
+           x="-1021.4503"
+           y="919.94287"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Technical;-inkscape-font-specification:Technical;stroke-width:0.12549289">Concord internal LED connection</tspan></text>
+      <text
+         id="text1272"
+         y="1038.2933"
+         x="-921.17316"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.56790352px;line-height:1.25;font-family:Technical;-inkscape-font-specification:Technical;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.13919757"
+         xml:space="preserve"
+         transform="scale(0.94953885,1.0531428)"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Technical;-inkscape-font-specification:Technical;stroke-width:0.13919757"
+           y="1038.2933"
+           x="-921.17316"
+           id="tspan1270"
+           sodipodi:role="line">Power supply</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.71534061px;line-height:1.25;font-family:Technical;-inkscape-font-specification:Technical;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.14288352"
+         x="-996.98218"
+         y="969.71014"
+         id="text1276"
+         transform="scale(0.87731058,1.1398472)"><tspan
+           sodipodi:role="line"
+           id="tspan1274"
+           x="-996.98218"
+           y="969.71014"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Technical;-inkscape-font-specification:Technical;stroke-width:0.14288352">Female end of LED stick</tspan></text>
+      <text
+         transform="scale(0.87731058,1.1398472)"
+         id="text1280"
+         y="978.78198"
+         x="-996.98218"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.71534061px;line-height:1.25;font-family:Technical;-inkscape-font-specification:Technical;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.14288352"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Technical;-inkscape-font-specification:Technical;stroke-width:0.14288352"
+           y="978.78198"
+           x="-996.98218"
+           id="tspan1278"
+           sodipodi:role="line">Male end of LED stick</tspan></text>
+    </g>
+    <text
+       transform="scale(0.5740632,1.7419685)"
+       id="text3407"
+       y="526.23975"
+       x="-1551.8246"
+       style="font-style:normal;font-weight:normal;font-size:3.7078526px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.09269633"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Technical;-inkscape-font-specification:Technical;stroke-width:0.09269633"
+         y="526.23975"
+         x="-1551.8246"
+         id="tspan3405"
+         sodipodi:role="line">USE PROVIDED WATERTIGHT END CAP</tspan></text>
+    <text
+       transform="scale(0.5740632,1.7419685)"
+       id="text3411"
+       y="597.40991"
+       x="-1579.6754"
+       style="font-style:normal;font-weight:normal;font-size:3.7078526px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.09269633"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Technical;-inkscape-font-specification:Technical;stroke-width:0.09269633"
+         y="597.40991"
+         x="-1579.6754"
+         id="tspan3409"
+         sodipodi:role="line">USE PROVIDED CABLE CLAMP AND TEK SCREW TO TIE CABLE BACK</tspan></text>
+  </g>
+</svg>

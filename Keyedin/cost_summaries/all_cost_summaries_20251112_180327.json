@@ -1,0 +1,83 @@
+{
+  "extraction_date": "2025-11-12T18:03:27.045004",
+  "total_summaries": 3,
+  "summaries": [
+    {
+      "source": "WO.COST.DETAIL",
+      "table_index": 0,
+      "data": {
+        "headers": [
+          "KeyedInSign v2.1Error Occurred While Processing Request.MVI Version:3.0Error Code:2002Description:WO.COST.DETAIL is not defined in the VOC file.",
+          "KeyedInSign v2.1",
+          "Error Occurred While Processing Request.",
+          "MVI Version:",
+          "3.0",
+          "Error Code:",
+          "2002",
+          "Description:",
+          "WO.COST.DETAIL is not defined in the VOC file."
+        ],
+        "rows": [
+          [
+            "KeyedInSign v2.1"
+          ],
+          [
+            "Error Occurred While Processing Request."
+          ],
+          [
+            "MVI Version:",
+            "3.0"
+          ],
+          [
+            "Error Code:",
+            "2002"
+          ],
+          [
+            "Description:",
+            "WO.COST.DETAIL is not defined in the VOC file."
+          ]
+        ],
+        "row_count": 5
+      }
+    },
+    {
+      "source": "WO.COST.DETAIL",
+      "table_index": 1,
+      "data": {
+        "headers": [
+          "KeyedInSign v2.1"
+        ],
+        "rows": [
+          [
+            "Error Occurred While Processing Request."
+          ],
+          [
+            "MVI Version:",
+            "3.0"
+          ],
+          [
+            "Error Code:",
+            "2002"
+          ],
+          [
+            "Description:",
+            "WO.COST.DETAIL is not defined in the VOC file."
+          ]
+        ],
+        "row_count": 4
+      }
+    },
+    {
+      "source": "WO.HISTORY",
+      "table_index": 0,
+      "data": {
+        "headers": [
+          "Work Order Cost History"
+        ],
+        "rows": [],
+        "row_count": 0
+      },
+      "type": "cost_history"
+    }
+  ]
+}

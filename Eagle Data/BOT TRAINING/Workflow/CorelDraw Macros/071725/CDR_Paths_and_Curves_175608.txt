@@ -1,0 +1,32 @@
+PATH AND CURVES (ADVANCED)
+==================================================
+
+This is advanced - for cutting/plotting operations
+
+CURVE CONCEPTS:
+• Node - point on a curve
+• Segment - line between nodes
+• SubPath - connected segments
+• Curve - collection of subpaths
+
+CREATING CURVE EXAMPLE...
+Created red curved line
+Nodes in curve: 2
+Segments: 1
+
+SHAPE COMBINING (Boolean):
+• Weld - combines shapes into one
+• Trim - cuts one shape from another
+• Intersect - keeps only overlap
+• Combine - merges with hole
+
+CONVERSIONS:
+• ConvertToCurves - makes editable
+• ConvertToBitmap - rasterizes
+• ConvertOutlineToObject
+
+USED FOR:
+• Cutting machines (vinyl, laser)
+• CNC routing
+• Advanced shape editing
+

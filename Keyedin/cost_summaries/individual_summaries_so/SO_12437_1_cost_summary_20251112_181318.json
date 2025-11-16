@@ -1,0 +1,17 @@
+{
+  "sales_order": "12437.1",
+  "source": "SO.CONTRACT.RUN",
+  "report_option": "D",
+  "extracted_at": "2025-11-12T18:13:16.031235",
+  "url": "/cgi-bin/mvi.exe/SO.CONTRACT.RUN?SONO=12437.1&REPORT_OPT=D&START_DATE=&END_DATE=&REPORT_WHERE=P&CLOSE_WINDOW=N",
+  "tables": [
+    {
+      "table_index": 0,
+      "headers": [
+        "Cost Summary Report"
+      ],
+      "rows": [],
+      "row_count": 0
+    }
+  ]
+}

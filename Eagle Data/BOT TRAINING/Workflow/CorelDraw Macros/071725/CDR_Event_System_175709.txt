@@ -1,0 +1,32 @@
+EVENT SYSTEM
+==================================================
+
+Events let macros run automatically...
+
+DOCUMENT EVENTS:
+• Document Open
+• Document Save
+• Document Close
+• Document Print
+
+SELECTION EVENTS:
+• Selection Change
+• Shape Added
+• Shape Deleted
+• Shape Modified
+
+APPLICATION EVENTS:
+• Application Start
+• Application Quit
+• Window Activate
+
+HOW TO USE EVENTS:
+1. Create event handler in GlobalMacros
+2. Name must match event
+3. Code runs automatically
+
+EXAMPLE USES:
+• Auto-save backup on document open
+• Update info when selection changes
+• Check requirements before print
+

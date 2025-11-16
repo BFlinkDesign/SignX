@@ -1,0 +1,27 @@
+COLOR SYSTEM CHECK
+==================================================
+
+AVAILABLE COLOR MODELS:
+• RGB (Red, Green, Blue) - for screen/web
+• CMYK (Cyan, Magenta, Yellow, Black) - for print
+• HSB (Hue, Saturation, Brightness)
+• Grayscale
+• Lab Color
+
+CREATING COLOR SAMPLES...
+Red square created (RGB: 255,0,0)
+Green square created (RGB: 0,255,0)
+Blue square created (RGB: 0,0,255)
+
+COLOR PALETTES AVAILABLE: 2
+• Document Palette (3 colors)
+• Default Palette (100 colors)
+
+FILL TYPES YOU CAN USE:
+• Uniform (solid color)
+• Fountain (gradient)
+• Pattern
+• Texture
+• No fill (transparent)
+
+TIP: Access colors via Shape.Fill.UniformColor
