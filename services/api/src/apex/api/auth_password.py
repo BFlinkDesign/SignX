@@ -276,6 +276,8 @@ def validate_reset_token(token: str, email: str, secret: str, max_age_seconds: i
         return True
         
     except Exception as e:
-        logger.warning("Exception in auth_password.py: %s", str(e))
+        logger.warning(
+            "Exception occurred in auth_password.py; error type: %s", type(e).__name__
+        )
         return False
 
