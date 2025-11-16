@@ -1,5 +1,8 @@
 # 🏗️ SignX Platform - Complete Integrated Sign Industry Solution
 
+[![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=EAGLE605_SignX&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=EAGLE605_SignX)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=EAGLE605_SignX&metric=coverage)](https://sonarcloud.io/summary/new_code?id=EAGLE605_SignX)
+
 **Status**: ✅ **Foundation Complete** | 🚀 **Ready to Deploy** | 📦 **On GitHub**
 
 **Repository**: https://github.com/EAGLE605/SignX
