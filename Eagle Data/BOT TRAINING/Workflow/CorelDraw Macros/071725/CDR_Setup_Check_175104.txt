@@ -1,0 +1,28 @@
+BASIC SETUP CHECK
+==================================================
+
+This checks your CorelDRAW environment...
+
+CORELDRAW INFORMATION:
+Version: Version 23.1.0.389
+Version Number: 23.1
+Installation Path: C:\Program Files\Corel\CorelDRAW Graphics Suite 2021\Draw\
+
+SYSTEM INFORMATION:
+Documents Open: 2
+Windows Open: 1
+
+AVAILABLE FEATURES:
+Color Palettes: 2
+Fonts Installed: 383
+Recent Files: 15
+
+VBA STATUS:
+VBA Version: 7.01
+Macros can run: YES ?
+
+WHAT THIS MEANS:
+• Your CorelDRAW is properly installed
+• VBA macros are enabled and working
+• You can run any macro in this diagnostic
+

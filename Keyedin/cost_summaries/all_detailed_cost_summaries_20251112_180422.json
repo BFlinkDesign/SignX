@@ -1,0 +1,565 @@
+{
+  "extraction_date": "2025-11-12T18:04:22.260746",
+  "total_summaries": 2,
+  "total_tables": 14,
+  "summaries": [
+    {
+      "work_order": "8443",
+      "source": "WO.STATUS.SUM",
+      "extracted_at": "2025-11-12T18:04:20.707295",
+      "tables": [
+        {
+          "table_index": 0,
+          "headers": [
+            "Job Costing - Summary"
+          ],
+          "rows": [],
+          "row_count": 0
+        },
+        {
+          "table_index": 1,
+          "headers": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "rows": [
+            [
+              "Work OrderSales OrderProject",
+              "",
+              "Sales Order:",
+              "",
+              "Item :",
+              "",
+              "Status:",
+              ""
+            ],
+            [
+              "Customer :",
+              ""
+            ],
+            [
+              "Location :",
+              "",
+              "Last ActivityMaterial:Labor:AP/Adj:",
+              ""
+            ],
+            [
+              "",
+              "Start Date:",
+              "",
+              "Due Date:",
+              "",
+              "",
+              "",
+              "Qty to Mfg:",
+              "",
+              "Qty Compl:",
+              "",
+              "",
+              "Document Link:",
+              "",
+              "",
+              "Salesperson:",
+              ""
+            ],
+            [
+              "Start Date:",
+              "",
+              "Due Date:",
+              "",
+              "",
+              ""
+            ],
+            [
+              "Qty to Mfg:",
+              "",
+              "Qty Compl:",
+              ""
+            ],
+            [
+              ""
+            ],
+            [
+              "Document Link:",
+              "",
+              "",
+              "Salesperson:",
+              ""
+            ]
+          ],
+          "row_count": 8
+        },
+        {
+          "table_index": 2,
+          "headers": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "rows": [
+            [
+              ""
+            ],
+            [
+              "Category",
+              "JobCost",
+              "EstimatedCost",
+              "VarianceAmount",
+              "VariancePercentage"
+            ],
+            [
+              ""
+            ],
+            [
+              "Material",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "Labor",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "Burden",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "Outplant",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              ""
+            ],
+            [
+              "Total Cost",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              ""
+            ]
+          ],
+          "row_count": 10
+        },
+        {
+          "table_index": 3,
+          "headers": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "rows": [
+            [
+              ""
+            ],
+            [
+              "Customer Billing",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "Billing",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "Gross Margin",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "Job GM %",
+              "",
+              ""
+            ],
+            [
+              "",
+              ""
+            ]
+          ],
+          "row_count": 6
+        },
+        {
+          "table_index": 4,
+          "headers": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "rows": [
+            [
+              "WIP Receipt",
+              ""
+            ],
+            [
+              "Var. Amount",
+              ""
+            ],
+            [
+              "Var. Percent",
+              ""
+            ]
+          ],
+          "row_count": 3
+        },
+        {
+          "table_index": 5,
+          "headers": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "rows": [
+            [
+              "Associated Jobs"
+            ],
+            [
+              ""
+            ],
+            [
+              "Work Order",
+              "Gross Margin",
+              "GM%",
+              "Mat Date",
+              "Lab Date",
+              "AP Date",
+              "Status"
+            ]
+          ],
+          "row_count": 3
+        },
+        {
+          "table_index": 6,
+          "headers": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "rows": [],
+          "row_count": 0
+        }
+      ],
+      "raw_html_length": 15602
+    },
+    {
+      "work_order": "7831576",
+      "source": "WO.STATUS.SUM",
+      "extracted_at": "2025-11-12T18:04:21.759192",
+      "tables": [
+        {
+          "table_index": 0,
+          "headers": [
+            "Job Costing - Summary"
+          ],
+          "rows": [],
+          "row_count": 0
+        },
+        {
+          "table_index": 1,
+          "headers": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "rows": [
+            [
+              "Work OrderSales OrderProject",
+              "",
+              "Sales Order:",
+              "",
+              "Item :",
+              "",
+              "Status:",
+              ""
+            ],
+            [
+              "Customer :",
+              ""
+            ],
+            [
+              "Location :",
+              "",
+              "Last ActivityMaterial:Labor:AP/Adj:",
+              ""
+            ],
+            [
+              "",
+              "Start Date:",
+              "",
+              "Due Date:",
+              "",
+              "",
+              "",
+              "Qty to Mfg:",
+              "",
+              "Qty Compl:",
+              "",
+              "",
+              "Document Link:",
+              "",
+              "",
+              "Salesperson:",
+              ""
+            ],
+            [
+              "Start Date:",
+              "",
+              "Due Date:",
+              "",
+              "",
+              ""
+            ],
+            [
+              "Qty to Mfg:",
+              "",
+              "Qty Compl:",
+              ""
+            ],
+            [
+              ""
+            ],
+            [
+              "Document Link:",
+              "",
+              "",
+              "Salesperson:",
+              ""
+            ]
+          ],
+          "row_count": 8
+        },
+        {
+          "table_index": 2,
+          "headers": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "rows": [
+            [
+              ""
+            ],
+            [
+              "Category",
+              "JobCost",
+              "EstimatedCost",
+              "VarianceAmount",
+              "VariancePercentage"
+            ],
+            [
+              ""
+            ],
+            [
+              "Material",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "Labor",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "Burden",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "Outplant",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              ""
+            ],
+            [
+              "Total Cost",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              ""
+            ]
+          ],
+          "row_count": 10
+        },
+        {
+          "table_index": 3,
+          "headers": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "rows": [
+            [
+              ""
+            ],
+            [
+              "Customer Billing",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "Billing",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "Gross Margin",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "Job GM %",
+              "",
+              ""
+            ],
+            [
+              "",
+              ""
+            ]
+          ],
+          "row_count": 6
+        },
+        {
+          "table_index": 4,
+          "headers": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "rows": [
+            [
+              "WIP Receipt",
+              ""
+            ],
+            [
+              "Var. Amount",
+              ""
+            ],
+            [
+              "Var. Percent",
+              ""
+            ]
+          ],
+          "row_count": 3
+        },
+        {
+          "table_index": 5,
+          "headers": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "rows": [
+            [
+              "Associated Jobs"
+            ],
+            [
+              ""
+            ],
+            [
+              "Work Order",
+              "Gross Margin",
+              "GM%",
+              "Mat Date",
+              "Lab Date",
+              "AP Date",
+              "Status"
+            ]
+          ],
+          "row_count": 3
+        },
+        {
+          "table_index": 6,
+          "headers": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "rows": [],
+          "row_count": 0
+        }
+      ],
+      "raw_html_length": 15602
+    }
+  ]
+}

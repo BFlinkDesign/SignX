@@ -1,0 +1,40 @@
+I need to process work order cost history data from KeyedIn with exact formatting and thorough verification. Please follow these specifications precisely:
+DATA PROCESSING REQUIREMENTS:
+1. Extract part number, description, and all work order details
+2. Sort by completion date (newest to oldest) - NOT by work order number
+3. Group in blocks of exactly 200 work orders (final group may have fewer)
+4. Detect and remove all duplicate work order numbers
+5. Calculate total quantity across all work orders with careful verification
+6. Identify transitions in manufacturing processes (e.g., when outsourcing began)
+OUTPUT FORMAT:
+Always provide VERSION 2 of each work order group. I will specify "With quantities" when version 1 is needed:
+Version 1 - For analysis (with quantities):
+```
+Part Number    [PART-NUMBER]
+Description    [DESCRIPTION]
+Total Work Orders   [COUNT]
+Total Quantity [TOTAL-QTY]
+Report Depth    [NEWEST-DATE] - [OLDEST-DATE]
+Work Orders    [COUNT] Group [GROUP-NUM]
+Group 1 Dates  [GROUP-NEWEST-DATE] - [GROUP-OLDEST-DATE]
+Total Quantity [GROUP-TOTAL-QTY]
+[WO-NUM]  ([QTY])
+[WO-NUM]  ([QTY])
+...
+```
+Version 2 - For KeyedIn copy/paste (without quantities):
+```
+Part Number    [PART-NUMBER]
+Description    [DESCRIPTION]
+Total Work Orders   [COUNT]
+Total Quantity [TOTAL-QTY]
+Report Depth    [NEWEST-DATE] - [OLDEST-DATE]
+Work Orders    [COUNT] Group [GROUP-NUM]
+Group 1 Dates  [GROUP-NEWEST-DATE] - [GROUP-OLDEST-DATE]
+[WO-NUM]
+[WO-NUM]
+...
+```
+CRITICAL: Always present each formatted block inside triple backtick code blocks (```) to preserve exact spacing and monospaced formatting. Each group must be in its own separate code block for easy copy/paste into KeyedIn.
+VERIFICATION: Double-check all quantity totals and work order counts. If you're uncertain about any calculations, explain your process and verify the numbers twice.
+I'll paste my work order cost history data for you to process according to these exact specifications.

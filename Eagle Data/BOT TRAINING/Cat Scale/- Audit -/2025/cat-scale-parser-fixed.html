@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat Scale Work Order Data Parser</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid #3498db;
+        }
+
+        .section h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .section h3::before {
+            content: "📊";
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e6ed;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .output-area {
+            display: none;
+        }
+
+        .output-area.show {
+            display: block;
+        }
+
+        .file-list {
+            background: #f8f9fc;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .file-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-left: 4px solid #27ae60;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .file-info {
+            flex: 1;
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .file-stats {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        .download-btn {
+            background: #27ae60;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+        .download-btn:hover {
+            background: #219a52;
+        }
+
+        .preview-area {
+            background: #f8f9fc;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .preview-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .preview-table th,
+        .preview-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e6ed;
+        }
+
+        .preview-table th {
+            background: #3498db;
+            color: white;
+            font-weight: 600;
+        }
+
+        .preview-table tr:hover {
+            background: #f8f9fc;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .alert-info {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        .instructions {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 30px;
+        }
+
+        .instructions h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .instructions ul {
+            padding-left: 20px;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+
+        .sample-format {
+            background: #f8f9fc;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            border: 1px solid #e0e6ed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Cat Scale Work Order Data Parser</h1>
+            <p>Convert manufacturing work order data into professional CSV files for Fortune 500 audit documentation</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="instructions">
+                <h4>📋 Instructions for Use:</h4>
+                <ul>
+                    <li><strong>Paste your data:</strong> Copy work order data from your manufacturing system</li>
+                    <li><strong>Optimized format:</strong> Header section contains Title, Part Number, and Description</li>
+                    <li><strong>Streamlined columns:</strong> Only Work Order and Date Complete in the data rows</li>
+                    <li><strong>Year organization:</strong> Data automatically sorted by completion year</li>
+                    <li><strong>File limits:</strong> Maximum 200 work orders per CSV file</li>
+                    <li><strong>Professional naming:</strong> Files named as CatScale_WorkOrder_History_[YEAR]_[SEQUENCE].csv</li>
+                    <li><strong>Performance:</strong> Processes thousands of work orders in seconds</li>
+                    <li><strong>Auto-process:</strong> Data is automatically parsed when pasted</li>
+                    <li><strong>Keyboard shortcut:</strong> Press Ctrl+T to load test data</li>
+                </ul>
+                
+                <div class="sample-format">
+                    <strong>Expected Input Format:</strong>
+Work Order Cost History
+
+Part Number     221-0200
+Description     5'-4 1/2" X 20' STANDARD OVERHEAD CAT SCALE SIGN
+
+Work Order    Date Complete    Quantity    Labor Hours    ...
+* * STOCK * *
+   68425      05/29/25        1           34.500         ...
+* * STOCK * *
+   68408      05/29/25        1           32.250         ...
+
+<strong style="color: #3498db; margin-top: 15px; display: block;">Output CSV Format:</strong>
+# Title: Work Order Cost History
+# Part Number: 221-0200
+# Description: 5'-4 1/2" X 20' STANDARD OVERHEAD CAT SCALE SIGN
+
+Work_Order,Date_Complete
+68425,05/29/2025
+68408,05/29/2025</div>
+            </div>
+
+            <div class="section">
+                <h3>Input Work Order Data</h3>
+                <div class="alert alert-error" id="errorMessage" style="display: none;">
+                    ❌ <span id="errorText"></span>
+                </div>
+                <div class="input-group">
+                    <label for="workOrderData">Paste your Cat Scale work order data below:</label>
+                    <textarea 
+                        id="workOrderData" 
+                        rows="15" 
+                        placeholder="Work Order Cost History
+
+Part Number     221-0200
+Description     5'-4 1/2&quot; X 20' STANDARD OVERHEAD CAT SCALE SIGN
+
+Work Order    Date Complete
+68425         05/29/25
+68408         05/29/25
+68407         05/15/25
+
+Paste your complete work order data here..."></textarea>
+                </div>
+                <button class="btn" onclick="parseWorkOrders()">🔧 Parse Work Orders</button>
+                <button class="btn" onclick="clearData()" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); margin-left: 10px;">🗑️ Clear</button>
+            </div>
+
+            <div class="output-area" id="outputArea">
+                <div class="section">
+                    <h3>Processing Results</h3>
+                    <div class="stats-grid" id="statsGrid">
+                        <!-- Stats will be populated here -->
+                    </div>
+                    
+                    <div class="alert alert-info" id="successMessage" style="display: none;">
+                        ✅ Successfully processed work order data! Files are ready for download.
+                    </div>
+                    
+                    <div class="file-list" id="fileList">
+                        <!-- File list will be populated here -->
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Data Preview</h3>
+                    <div class="preview-area" id="previewArea">
+                        <!-- Preview table will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize global variables
+        let parsedData = [];
+        let fileContents = {};
+        
+        // Ensure variables are initialized even if script runs early
+        if (typeof parsedData === 'undefined') parsedData = [];
+        if (typeof fileContents === 'undefined') fileContents = {};
+
+        function showError(message, type = 'error') {
+            const errorDiv = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            
+            if (!errorDiv || !errorText) {
+                console.error('Error elements not found:', message);
+                return;
+            }
+            
+            errorText.textContent = message;
+            
+            if (type === 'success') {
+                errorDiv.className = 'alert alert-info';
+            } else {
+                errorDiv.className = 'alert alert-error';
+            }
+            
+            errorDiv.style.display = 'block';
+            const timeoutId = setTimeout(() => {
+                const errorElement = document.getElementById('errorMessage');
+                if (errorElement) {
+                    errorElement.style.display = 'none';
+                }
+            }, 5000);
+        }
+
+        function parseWorkOrders() {
+            const input = document.getElementById('workOrderData').value.trim();
+            
+            if (!input) {
+                showError('Please paste your work order data first.');
+                return;
+            }
+
+            try {
+                // Reset previous results
+                parsedData = [];
+                fileContents = {};
+                document.getElementById('outputArea').classList.remove('show');
+                const downloadContainer = document.getElementById('downloadAllContainer');
+                if (downloadContainer) {
+                    downloadContainer.style.display = 'none';
+                }
+                
+                const lines = input.split('\n');
+                const workOrders = [];
+                let currentPart = {};
+                let foundWorkOrderSection = false;
+                
+                // Parse the input data line by line
+                for (let i = 0; i < lines.length; i++) {
+                    const line = lines[i].trim();
+                    
+                    // Skip empty lines, stock markers, column headers, and total lines
+                    if (!line || 
+                        line.includes('* * STOCK * *') || 
+                        (line.includes('Quantity') && line.includes('Labor') && line.includes('Hours')) ||
+                        line.toLowerCase().includes('total') ||
+                        line.toLowerCase().includes('average')) continue;
+                    
+                    // Check for new section markers
+                    if (line.includes('---') && line.toLowerCase().includes('part section')) {
+                        // Reset for new part
+                        currentPart = {};
+                        foundWorkOrderSection = false;
+                        continue;
+                    }
+                    
+                    // Check for Work Order Cost History (indicates new part section)
+                    if (line === 'Work Order Cost History') {
+                        // This might be a new section, reset current part
+                        currentPart = {};
+                        foundWorkOrderSection = false;
+                        continue;
+                    }
+                    
+                    // Check for Part Number
+                    if (line.toLowerCase().includes('part number')) {
+                        // Extract part number - handles both tab and space separators
+                        const partMatch = line.match(/part number\s+(\S+)/i);
+                        if (partMatch) {
+                            currentPart.partNumber = partMatch[1].trim();
+                        }
+                        continue;
+                    }
+                    
+                    // Check for Description
+                    if (line.toLowerCase().includes('description')) {
+                        // Extract description - everything after "Description"
+                        const descMatch = line.match(/description\s+(.+)/i);
+                        if (descMatch) {
+                            // Clean up description - remove extra spaces
+                            currentPart.description = descMatch[1].trim().replace(/\s+/g, ' ');
+                        }
+                        continue;
+                    }
+                    
+                    // Check if we've reached the work order data section
+                    if ((line.toLowerCase().includes('work') && line.toLowerCase().includes('order') && line.toLowerCase().includes('date')) ||
+                        (line.toLowerCase().includes('work') && line.toLowerCase().includes('date') && line.toLowerCase().includes('complete'))) {
+                        foundWorkOrderSection = true;
+                        continue;
+                    }
+                    
+                    // Parse work order data lines
+                    if (foundWorkOrderSection || currentPart.partNumber) {
+                        // Match lines that contain work order data
+                        // This handles the format: whitespace + work order number + whitespace + date + other data
+                        // Work orders can be 1-6 digits with optional decimal (e.g., "1", "68425", "62074.5")
+                        const workOrderMatch = line.match(/^\s*(\d{1,6}(?:\.\d+)?)\s+(\d{1,2}\/\d{1,2}\/\d{2,4})/);
+                        
+                        if (workOrderMatch) {
+                            const workOrderNum = workOrderMatch[1].trim();
+                            const dateStr = workOrderMatch[2].trim();
+                            
+                            // Parse and standardize the date
+                            const fullDate = standardizeDate(dateStr);
+                            const year = extractYear(dateStr);
+                            
+                            workOrders.push({
+                                title: "Work Order Cost History",
+                                partNumber: currentPart.partNumber || "Unknown",
+                                description: currentPart.description || "Unknown",
+                                workOrder: workOrderNum,
+                                dateComplete: fullDate,
+                                year: year
+                            });
+                        }
+                    }
+                }
+
+                if (workOrders.length === 0) {
+                    showError('No work order data found. Please check your input format and ensure it matches the expected format.');
+                    return;
+                }
+
+                // Organize by year and create files
+                const yearGroups = {};
+                workOrders.forEach(order => {
+                    if (!yearGroups[order.year]) {
+                        yearGroups[order.year] = [];
+                    }
+                    yearGroups[order.year].push(order);
+                });
+
+                // Generate CSV files
+                let totalFiles = 0;
+                const years = Object.keys(yearGroups).sort((a, b) => b - a); // Sort descending
+
+                years.forEach(year => {
+                    const orders = yearGroups[year];
+                    // Sort by date descending within year
+                    orders.sort((a, b) => {
+                        const dateA = new Date(a.dateComplete);
+                        const dateB = new Date(b.dateComplete);
+                        return dateB - dateA;
+                    });
+                    
+                    const chunks = chunkArray(orders, 200); // Max 200 per file
+                    
+                    chunks.forEach((chunk, index) => {
+                        const sequence = String(index + 1).padStart(3, '0');
+                        const fileName = `CatScale_WorkOrder_History_${year}_${sequence}.csv`;
+                        const csvContent = generateCSV(chunk);
+                        fileContents[fileName] = {
+                            content: csvContent,
+                            count: chunk.length,
+                            year: year
+                        };
+                        totalFiles++;
+                    });
+                });
+
+                parsedData = workOrders;
+                
+                // End timing
+                const endTime = performance.now();
+                const processingTime = ((endTime - startTime) / 1000).toFixed(2);
+                const ordersPerSecond = (workOrders.length / (processingTime || 1)).toFixed(0);
+                console.log(`Processing completed in ${processingTime} seconds (${ordersPerSecond} orders/sec)`);
+                
+                displayResults(totalFiles, workOrders.length, processingTime);
+
+            } catch (error) {
+                showError('Error parsing data: ' + error.message);
+                console.error('Parse error:', error);
+            }
+        }
+
+        function standardizeDate(dateStr) {
+            if (!dateStr) return 'Unknown';
+            
+            try {
+                const parts = dateStr.split('/');
+                if (parts.length !== 3) return dateStr; // Return as-is if not standard format
+                
+                const month = parts[0].padStart(2, '0');
+                const day = parts[1].padStart(2, '0');
+                let year = parseInt(parts[2]);
+                
+                // Handle 2-digit years
+                if (year < 100) {
+                    if (year < 50) {
+                        year += 2000; // 00-49 → 2000-2049
+                    } else {
+                        year += 1900; // 50-99 → 1950-1999
+                    }
+                }
+                
+                return `${month}/${day}/${year}`;
+            } catch (error) {
+                console.error('Error parsing date:', dateStr, error);
+                return dateStr;
+            }
+        }
+
+        function extractYear(dateStr) {
+            if (!dateStr) return 2000; // Default year if missing
+            
+            try {
+                const parts = dateStr.split('/');
+                if (parts.length !== 3) return 2000;
+                
+                let year = parseInt(parts[2]);
+                
+                if (year < 100) {
+                    if (year < 50) {
+                        year += 2000;
+                    } else {
+                        year += 1900;
+                    }
+                }
+                
+                return year;
+            } catch (error) {
+                console.error('Error extracting year:', dateStr, error);
+                return 2000;
+            }
+        }
+
+        function chunkArray(array, size) {
+            if (!array || !Array.isArray(array) || array.length === 0) {
+                return [];
+            }
+            if (size <= 0) size = 200; // Default to 200 if invalid size
+            
+            const chunks = [];
+            for (let i = 0; i < array.length; i += size) {
+                chunks.push(array.slice(i, i + size));
+            }
+            return chunks;
+        }
+
+        function generateCSV(orders) {
+            if (!orders || orders.length === 0) {
+                console.warn('No orders to generate CSV');
+                return '';
+            }
+            
+            // Group orders by part number and description for header
+            const groups = {};
+            orders.forEach(order => {
+                const key = `${order.partNumber}|${order.description}`;
+                if (!groups[key]) {
+                    groups[key] = {
+                        title: order.title,
+                        partNumber: order.partNumber,
+                        description: order.description,
+                        orders: []
+                    };
+                }
+                groups[key].orders.push({
+                    workOrder: order.workOrder,
+                    dateComplete: order.dateComplete
+                });
+            });
+            
+            let csv = '';
+            
+            // Generate CSV for each group
+            Object.values(groups).forEach((group, index) => {
+                if (index > 0) csv += '\n\n'; // Add spacing between groups
+                
+                // Add header section
+                csv += `# Title: ${group.title}\n`;
+                csv += `# Part Number: ${group.partNumber}\n`;
+                csv += `# Description: ${group.description}\n\n`;
+                
+                // Add column headers
+                csv += 'Work_Order,Date_Complete\n';
+                
+                // Add data rows - sort by work order number for consistency
+                group.orders.sort((a, b) => {
+                    const numA = parseFloat(a.workOrder);
+                    const numB = parseFloat(b.workOrder);
+                    return numB - numA; // Descending order
+                });
+                
+                group.orders.forEach(order => {
+                    csv += `${escapeCSV(order.workOrder)},${escapeCSV(order.dateComplete)}\n`;
+                });
+            });
+            
+            return csv;
+        }
+
+        function escapeCSV(field) {
+            // Convert to string if not already, handle null/undefined
+            field = field != null ? String(field) : '';
+            
+            // Escape quotes and wrap in quotes if necessary
+            if (field.includes(',') || field.includes('"') || field.includes('\n') || field.includes('\r')) {
+                return '"' + field.replace(/"/g, '""') + '"';
+            }
+            return field;
+        }
+
+        function displayResults(totalFiles, totalOrders, processingTime) {
+            const outputArea = document.getElementById('outputArea');
+            const statsGrid = document.getElementById('statsGrid');
+            const fileList = document.getElementById('fileList');
+            const successMessage = document.getElementById('successMessage');
+
+            if (!outputArea || !statsGrid || !fileList || !successMessage) {
+                console.error('Required display elements not found');
+                return;
+            }
+
+            // Show output area
+            outputArea.classList.add('show');
+            successMessage.innerHTML = `✅ Successfully processed ${totalOrders.toLocaleString()} work orders in ${processingTime} seconds! Files are ready for download.`;
+            successMessage.style.display = 'block';
+
+            // Update stats
+            const years = [...new Set(parsedData.map(order => order.year))];
+            const uniqueParts = [...new Set(parsedData.map(order => order.partNumber))];
+            const yearRange = years.length > 1 ? `${Math.min(...years)} - ${Math.max(...years)}` : years[0];
+            
+            // Calculate approximate file size reduction
+            const originalSize = parsedData.length * 150; // Approximate bytes per row with 5 columns
+            const optimizedSize = parsedData.length * 30; // Approximate bytes per row with 2 columns
+            const reduction = Math.round((1 - optimizedSize / originalSize) * 100);
+            
+            statsGrid.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-number">${totalFiles}</div>
+                    <div class="stat-label">CSV Files Generated</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${totalOrders.toLocaleString()}</div>
+                    <div class="stat-label">Work Orders Processed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${uniqueParts.length}</div>
+                    <div class="stat-label">Unique Parts</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${(totalOrders / (processingTime || 1)).toFixed(0)}/sec</div>
+                    <div class="stat-label">Processing Speed</div>
+                </div>
+            `;
+
+            // Generate file list with proper event handlers
+            fileList.innerHTML = '';
+            let totalSize = 0;
+            Object.keys(fileContents).sort().forEach(fileName => {
+                const file = fileContents[fileName];
+                const fileSize = new Blob([file.content]).size;
+                totalSize += fileSize;
+                
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <div class="file-info">
+                        <div class="file-name">${fileName}</div>
+                        <div class="file-stats">${file.count} work orders • Year ${file.year} • ${(fileSize / 1024).toFixed(1)} KB</div>
+                    </div>
+                    <button class="download-btn" data-filename="${fileName}">📥 Download</button>
+                `;
+                
+                // Add event listener to download button
+                const downloadBtn = fileItem.querySelector('.download-btn');
+                downloadBtn.addEventListener('click', function() {
+                    downloadFile(this.getAttribute('data-filename'));
+                });
+                
+                fileList.appendChild(fileItem);
+            });
+            
+            // Show total size
+            if (totalSize > 0) {
+                const totalSizeInfo = document.createElement('div');
+                totalSizeInfo.style.cssText = 'text-align: center; margin-top: 15px; color: #7f8c8d; font-style: italic;';
+                totalSizeInfo.textContent = `Total size: ${(totalSize / 1024).toFixed(1)} KB across ${Object.keys(fileContents).length} files`;
+                fileList.appendChild(totalSizeInfo);
+            }
+
+            // Show download all button
+            const downloadContainer = document.getElementById('downloadAllContainer');
+            if (downloadContainer) {
+                downloadContainer.style.display = 'block';
+            }
+
+            // Generate preview
+            generatePreview();
+        }
+
+        function generatePreview() {
+            const previewArea = document.getElementById('previewArea');
+            if (!previewArea || parsedData.length === 0) return;
+
+            // Group by part for preview
+            const groups = {};
+            parsedData.forEach(order => {
+                const key = `${order.partNumber}|${order.description}`;
+                if (!groups[key]) {
+                    groups[key] = {
+                        title: order.title,
+                        partNumber: order.partNumber,
+                        description: order.description,
+                        orders: []
+                    };
+                }
+                groups[key].orders.push(order);
+            });
+
+            let previewHTML = '<h4>Data Preview</h4>';
+            
+            // Show first group as example
+            const firstGroup = Object.values(groups)[0];
+            const sampleData = firstGroup.orders.slice(0, 10);
+            
+            previewHTML += `
+                <div style="background: #f0f4f8; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <strong>Header Section:</strong><br>
+                    # Title: ${escapeHTML(firstGroup.title)}<br>
+                    # Part Number: ${escapeHTML(firstGroup.partNumber)}<br>
+                    # Description: ${escapeHTML(firstGroup.description)}
+                </div>
+                <table class="preview-table">
+                    <thead>
+                        <tr>
+                            <th>Work Order</th>
+                            <th>Date Complete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            sampleData.forEach(order => {
+                previewHTML += `
+                    <tr>
+                        <td>${escapeHTML(order.workOrder)}</td>
+                        <td>${escapeHTML(order.dateComplete)}</td>
+                    </tr>
+                `;
+            });
+            
+            previewHTML += '</tbody></table>';
+            
+            const totalOrders = parsedData.length;
+            const uniqueParts = Object.keys(groups).length;
+            const years = [...new Set(parsedData.map(order => order.year))].sort();
+            const dateRange = years.length > 1 ? `${Math.min(...years)}-${Math.max(...years)}` : years[0];
+            
+            if (parsedData.length > 10) {
+                previewHTML += `<p style="margin-top: 15px; color: #7f8c8d; font-style: italic;">
+                    Showing 10 of ${totalOrders.toLocaleString()} total records across ${uniqueParts} part number(s) • Years: ${dateRange}
+                </p>`;
+            }
+            
+            previewArea.innerHTML = previewHTML;
+        }
+
+        function escapeHTML(str) {
+            if (str == null) return '';
+            const div = document.createElement('div');
+            div.textContent = String(str);
+            return div.innerHTML;
+        }
+
+        function downloadFile(fileName) {
+            if (!fileContents || !fileName) {
+                showError('Invalid file request');
+                return;
+            }
+            
+            const file = fileContents[fileName];
+            if (!file) {
+                showError('File not found: ' + fileName);
+                return;
+            }
+
+            try {
+                // Create blob with BOM for Excel compatibility
+                const BOM = '\uFEFF';
+                const blob = new Blob([BOM + file.content], { type: 'text/csv;charset=utf-8;' });
+                
+                // Create download link
+                const link = document.createElement('a');
+                if (link.download !== undefined) {
+                    const url = URL.createObjectURL(blob);
+                    link.setAttribute('href', url);
+                    link.setAttribute('download', fileName);
+                    link.style.visibility = 'hidden';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    // Clean up
+                    setTimeout(() => URL.revokeObjectURL(url), 100);
+                } else {
+                    // Fallback for older browsers
+                    showError('Your browser does not support file downloads. Please try a modern browser.');
+                }
+            } catch (error) {
+                showError('Error downloading file: ' + error.message);
+                console.error('Download error:', error);
+            }
+        }
+
+        function downloadAllFiles(event) {
+            if (!fileContents) {
+                showError('No files available');
+                return;
+            }
+            
+            const fileNames = Object.keys(fileContents).sort();
+            
+            if (fileNames.length === 0) {
+                showError('No files to download.');
+                return;
+            }
+            
+            const btn = event ? event.target : null;
+            let originalText = '📦 Download All Files';
+            
+            if (btn) {
+                originalText = btn.textContent;
+            }
+            
+            // Download files with a small delay between each
+            let index = 0;
+            const downloadNext = () => {
+                if (index < fileNames.length) {
+                    if (btn) {
+                        btn.textContent = `📥 Downloading ${index + 1} of ${fileNames.length}...`;
+                    }
+                    downloadFile(fileNames[index]);
+                    index++;
+                    setTimeout(downloadNext, 200); // 200ms delay between downloads
+                } else {
+                    if (btn) {
+                        btn.textContent = originalText;
+                    }
+                    showError('All files downloaded successfully!', 'success');
+                }
+            };
+            
+            downloadNext();
+        }
+
+        // Clear all data and reset form
+        function clearData() {
+            if (!parsedData) parsedData = [];
+            if (!fileContents) fileContents = {};
+            
+            if (parsedData.length > 0) {
+                if (!confirm('Are you sure you want to clear all data?')) {
+                    return;
+                }
+            }
+            
+            const workOrderData = document.getElementById('workOrderData');
+            if (workOrderData) workOrderData.value = '';
+            
+            parsedData = [];
+            fileContents = {};
+            
+            const outputArea = document.getElementById('outputArea');
+            if (outputArea) outputArea.classList.remove('show');
+            
+            const downloadContainer = document.getElementById('downloadAllContainer');
+            if (downloadContainer) downloadContainer.style.display = 'none';
+            
+            const errorMessage = document.getElementById('errorMessage');
+            if (errorMessage) errorMessage.style.display = 'none';
+            
+            const successMessage = document.getElementById('successMessage');
+            if (successMessage) successMessage.style.display = 'none';
+        }
+
+        // Test function for debugging
+        function testWithSampleData() {
+            const sampleData = `Work Order Cost History
+
+Part Number     221-0200
+Description     5'-4 1/2" X 20' STANDARD OVERHEAD CAT SCALE SIGN
+
+Work Order    Date Complete    Quantity    Labor Hours
+* * STOCK * *
+   68425      05/29/25        1           34.500
+* * STOCK * *
+   68408      05/29/25        1           32.250
+* * STOCK * *
+   68407      05/15/25        1           39.000
+* * STOCK * *
+   1151       07/31/07        5           41.900
+* * STOCK * *
+   62074.5    05/31/07        1           21.750
+
+--- PART SECTION 2 ---
+
+Work Order Cost History
+
+Part Number     221-0201
+Description     10' X 30' DELUXE CAT SCALE SIGN WITH LED
+
+Work Order    Date Complete    Quantity
+* * STOCK * *
+   68426      05/30/25        1
+* * STOCK * *
+   68409      05/28/25        1
+* * STOCK * *
+   1          12/19/12        1`;
+
+            document.getElementById('workOrderData').value = sampleData;
+            parseWorkOrders();
+        }
+
+        // Global error handler
+        window.addEventListener('error', function(e) {
+            console.error('Global error:', e.message || 'Unknown error');
+            // Only show error if it's not already showing
+            const errorDiv = document.getElementById('errorMessage');
+            if (errorDiv && errorDiv.style.display === 'none') {
+                showError('An unexpected error occurred. Please refresh the page and try again.');
+            }
+        });
+
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeParser);
+        } else {
+            // DOM is already loaded
+            initializeParser();
+        }
+        
+        function initializeParser() {
+            try {
+                console.log('Initializing Cat Scale Parser');
+                
+                // Add keyboard shortcut for testing (Ctrl+T)
+                document.addEventListener('keydown', function(e) {
+                    if (e.ctrlKey && e.key === 't') {
+                        e.preventDefault();
+                        testWithSampleData();
+                    }
+                });
+                
+                // Auto-process when data is pasted
+                let pasteTimeout;
+                const workOrderTextarea = document.getElementById('workOrderData');
+                if (workOrderTextarea) {
+                    console.log('Work order textarea found, adding paste listener');
+                    workOrderTextarea.addEventListener('paste', function(e) {
+                        clearTimeout(pasteTimeout);
+                        pasteTimeout = setTimeout(() => {
+                            const input = e.target.value.trim();
+                            if (input && input.toLowerCase().includes('work order')) {
+                                console.log('Auto-processing pasted data');
+                                parseWorkOrders();
+                            }
+                        }, 500); // Wait 500ms after paste
+                    });
+                } else {
+                    console.error('Work order textarea not found during initialization');
+                }
+            } catch (error) {
+                console.error('Error initializing parser:', error);
+            }
+        }
+    </script>
+</body>
+</html>

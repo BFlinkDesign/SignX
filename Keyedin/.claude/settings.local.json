@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-Command claude)",
+      "Bash(powershell -Command \"Get-Command claude\")",
+      "Bash(tree /F /A \"C:\\KeyedInAgentInstaller\" 2)",
+      "Bash(nul)",
+      "Bash(dir /S /B \"C:\\KeyedInAgentInstaller\")",
+      "Bash(python:*)",
+      "Bash(dir /S /B \"..\\KeyedIn_System_Map\\discovery_data\\screenshots\" 2)",
+      "Bash(timeout /t 10)",
+      "Bash(dir:*)",
+      "Bash(claude auth status:*)",
+      "Bash(claude auth login:*)",
+      "Bash(gh repo create:*)",
+      "Bash(git init:*)",
+      "Bash(powershell -Command \"cd ''C:\\KeyedInAgentInstaller''; git init\")",
+      "WebFetch(domain:code.claude.com)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

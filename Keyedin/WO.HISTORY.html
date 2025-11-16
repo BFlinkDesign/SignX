@@ -1,0 +1,149 @@
+<html>
+<head>
+<title>Cost History by Part</title>
+
+<link rel="stylesheet" href="/general-style.css">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Pragma" content="no-cache">
+</head>
+<script language="javascript">
+
+function linkWoStatus(wono) {
+   url="WO.STATUS.SUM"
+   url+="?WONO="+wono
+   url+="&OPENED_BY_OTHER_PROGRAM=Y"
+
+   winOptions="width=900,height=500,resizable=yes,scrollbars=yes"
+   window.open(url,"Help",winOptions);
+}
+
+
+function searchPart(description,iSubmit,focusFN,partFN,descrFN,passFUNCTION){
+   url="/cgi-bin/mvi.exe/SEARCH.PART?"
+   if (description)
+      url+="&PART_DESCR="+description
+   if (iSubmit)
+      url+="&I_SUBMIT="+iSubmit
+   if (focusFN)
+      url+="&FOCUS_FN="+focusFN
+   if (partFN)
+      url+="&PART_FN="+partFN
+   if (descrFN)
+      url+="&DESCR_FN="+descrFN
+   if (passFUNCTION)
+      url+="&PASSED_FUNCTION="+passFUNCTION
+
+         
+   features = "resizable=yes,width=650,height=500"
+   window.open(url,"searchparts",features)
+}
+
+
+function returnKeyPressed(pressed){
+  if (pressed.keyCode==13)
+    partstatus.submit();
+}
+
+</script>
+<body class="workingforms">
+<form method="post" action="WO.HISTORY" name=wohistory>
+  <input type="hidden" name="PROGNAME" value="WOC140W">
+
+<input type="hidden" name="Loaded" value="0">
+<table width="90%" border="0" align=center>
+    <tr>
+        <td width="80%">
+            <h2 class="headerMain" align=center>Work Order Cost History</h2>
+        </td>
+    </tr>
+</table>
+<br>
+<div align=center class=errorText id=errMsg>
+
+</div>
+<script language=javascript>
+   if (document.all.errMsg.innerHTML!="") {
+      document.all.errMsg.style.visibility=""
+      document.write("<br><br>")
+   }
+</script>
+<table align=center cellpadding=0 cellspacing=0 border=0>
+   <tr>
+      <td><img src="/images/spacer.gif" height=1 width=120></td>
+      <td><img src="/images/spacer.gif" height=1 width=800></td>
+   </tr>
+    <tr>
+        <td class=itemLabel>Part Number</td>
+        <td class=itemData> <input class="inputfont" type="text" name="PARTNO" id="PARTNO" value="" size="10"> <input type="button" name="go" value=" Go " onclick="document.forms[0].submit()">
+ </td>
+    </tr>
+    <tr valign="top">
+        <td class=itemLabel>Description</td>
+        <td class=itemData> <input class="inputfont" type="text" name="PART_DESC" id="PART_DESC" value="" size="20">&nbsp;<input type="button" name="search" value="Search" onClick="searchPart(document.forms[0].PART_DESC.value,'Y','','','')">
+ </td>
+    </tr>
+</table>
+<br><br>
+<table align=center cellpadding=0 cellspacing=0 border=0>
+   <tr>
+      <td><img src="/images/spacer.gif" height=1 width=90></td>
+      <td><img src="/images/spacer.gif" height=1 width=80></td>
+      <td><img src="/images/spacer.gif" height=1 width=80></td>
+      <td><img src="/images/spacer.gif" height=1 width=80></td>
+      <td><img src="/images/spacer.gif" height=1 width=80></td>
+      <td><img src="/images/spacer.gif" height=1 width=80></td>
+      <td><img src="/images/spacer.gif" height=1 width=80></td>
+      <td><img src="/images/spacer.gif" height=1 width=80></td>
+      <td><img src="/images/spacer.gif" height=1 width=80></td>
+      <td><img src="/images/spacer.gif" height=1 width=80></td>
+      <td><img src="/images/spacer.gif" height=1 width=80></td>
+      <td><img src="/images/spacer.gif" height=1 width=80></td>
+      <td><img src="/images/spacer.gif" height=1 width=10></td>
+   </tr>
+    <tr valign=bottom>
+        <td class=itemLabel>Work<br>Order</td>
+        <td class=itemLabelC>Date<br>Complete</td>
+        <td class=itemLabelR>Quantity <br>to Mfgr</td>
+        <td class=itemLabelR>Quantity <br>Complete</td>
+        <td class=itemLabelR>Labor<br>Hours</td>
+        <td class=itemLabelR>Material<br>Each</td>
+        <td class=itemLabelR>Labor<br>Each</td>
+        <td class=itemLabelR>Burden<br>Each</td>
+        <td class=itemLabelR>Outplant<br>Each</td>
+        <td class=itemLabelR>Total<br>Each</td>
+        <td class=itemLabelR>Selling<br>Price</td>
+        <td class=itemLabelR>Gross<br>Margin</td>
+      <td width=20>&nbsp;</td>
+    </tr>
+
+</table>
+<center>
+<div style=" height:275px; overflow:auto">
+<table cellpadding=0 cellspacing=0 border=0>
+   <tr>
+      <td><img src="/images/spacer.gif" height=1 width=90></td>
+      <td><img src="/images/spacer.gif" height=1 width=80></td>
+      <td><img src="/images/spacer.gif" height=1 width=80></td>
+      <td><img src="/images/spacer.gif" height=1 width=80></td>
+      <td><img src="/images/spacer.gif" height=1 width=80></td>
+      <td><img src="/images/spacer.gif" height=1 width=80></td>
+      <td><img src="/images/spacer.gif" height=1 width=80></td>
+      <td><img src="/images/spacer.gif" height=1 width=80></td>
+      <td><img src="/images/spacer.gif" height=1 width=80></td>
+      <td><img src="/images/spacer.gif" height=1 width=80></td>
+      <td><img src="/images/spacer.gif" height=1 width=80></td>
+      <td><img src="/images/spacer.gif" height=1 width=80></td>
+   </tr>
+        
+</table>
+</div>
+</center>
+<br><br>
+<center>
+    
+    <br><br>
+    
+</center>
+</body>
+</html>
+

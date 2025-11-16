@@ -1,0 +1,351 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" style="background:#FFFFFF;">
+<head><title>KeyedIn Manufacturing - Sign Edition</title>
+<link id="lnkFavIcon" rel="SHORTCUT ICON" href="//ds.datasignonline.com/favicon.ico" />
+<link href="//ds.datasignonline.com/css/login.css" rel="stylesheet" type="text/css" />
+        <style type="text/css">
+             /* Normal Login Screen Styles */
+               .serviceUpdateTitle {
+                    color: #555555;
+                    font-weight: bold;
+                    padding-bottom: 2px;
+                    padding-top: 2px;
+                }
+
+                .serviceUpdate {
+                    color: #555555;
+                    text-align: justify;
+                }
+
+                .loginpagebackground
+                {
+                   background:url(//ds.datasignonline.com/images/login/loginbackground.png) no-repeat;
+                   text-align: center;
+                   background-color: #FFFFFF; /*#3B80AA; #455560;*/
+                   height:100%;
+                }
+
+                .container {
+                   background: #FFFFFF url(//ds.datasignonline.com/images/login/backdrop.gif) no-repeat center 30px;
+                   position: absolute;
+                   top: 100px;
+                   left: 0px;
+                   width: 100%;
+                   height:80%;
+                   text-align: center;
+                   min-width: 900px;
+                }
+
+                .content {
+                   position: relative;
+                   text-align: left;
+                   width: 769px;
+                   height: auto;
+                   top:50px;
+                   margin: 0px auto;
+                   }
+
+                .error
+                {
+                  width:365px;
+                  padding:0px 0px 10px 5px;
+                }
+
+                .header
+                {
+                   position: relative;
+                   top: 30px;
+                   text-align: left;
+                   width: 769px;
+                   height: auto;
+                   margin: 0px auto;
+                }
+
+                .keyedInLogo
+                {
+                    position:absolute;
+                    Float:right;
+                    right: 10px;
+                    top: 20px;
+                    height: 50px;
+                    width: 245px;
+                    background: transparent url(//ds.datasignonline.com/images/login/keydinfaded.png) no-repeat !important;
+                    background:none;
+                }
+
+                .trusteLogo
+                {
+                    position:absolute;
+                    Float:left;
+                    right: 10px;
+                    bottom: 10px;
+                    height: 50px;
+                    width: 245px;
+                    background:none;
+                }
+
+                .bar
+                {
+                    position: absolute;
+                    background: #000000 url(//ds.datasignonline.com/images/login/bar.gif) repeat-x;
+                    text-align:center;
+                    width: 100%;
+                    height: 15px;
+                    top: 100px;
+                    left:0px;
+                    z-index: 1;
+                    border-bottom: 1px solid #FFFFFF;
+                }
+
+                .loginlogo {
+                   position: relative;
+                    top: -20px;
+                    background-color: transparent;
+                }
+
+                .pageLeftColumn {
+                   position: relative;
+                   width: 396px;
+                   height: 460px;
+                }
+
+                .pageRightColumn {
+                   position: absolute;
+                   background-color: Transparent;
+                   top:0px;
+                   right:0px;
+                   width: 377px;
+                   height: auto;
+                }
+
+                .logintable {
+                   background-image:url(//ds.datasignonline.com/images/login/login_gradient.png);
+                   width:100%;
+                   border: solid 1px #CCCCCC;
+                   }
+
+                .normalCell, .Username
+                {
+                  padding: 2px 20px 2px 20px;
+                }
+
+
+                .BoxTop {
+                   background-image:url(//ds.datasignonline.com/images/login/login_box_top.png);
+                   background-repeat: no-repeat;
+                   height: 20px;
+                }
+
+                .BoxMiddle {
+                   background-repeat: repeat-y;
+                   background-image:url(//ds.datasignonline.com/images/login/login_box_middle.png);
+                   height: auto;
+                   padding-top: 0px;
+                   padding-left: 20px;
+                   padding-right: 20px;
+                   padding-bottom: 10px;
+                   background-color:Transparent;
+                }
+
+                .BoxBottom {
+                   background-image:url(//ds.datasignonline.com/images/login/login_box_bottom.png);
+                   height: 19px;
+                   background-color: Transparent;
+                }
+
+                .boxTitle
+                {
+                  font-size:14px;
+                   font-family: Myriad Pro,"Lucida Grande","Lucida Sans Unicode",Trebuchet MS,Arial;
+                   line-height: 1.6em;
+                   letter-spacing: 0px;
+                   font-weight: 700;
+                   color:#333333;
+                   padding-bottom: 3px;
+                   padding-top:0px;
+                }
+
+                .Username
+                {
+                  font-size:11px;
+                   font-weight: 500;
+                }
+
+                .SignIn, .greenButton
+                {
+                    font-size:13px;
+                    font-family: Myriad Pro,"Lucida Grande","Lucida Sans Unicode",Trebuchet MS,Arial;
+                   font-weight: 700;
+                   color:#FFFFFF;
+                   padding:0px;
+                   display:inline-block;
+                }
+
+
+        </style>
+
+<script language=javascript>
+<!--Hard coded SCRIPTS start here-->
+var f = ""; //Will become f=document.forms[0]
+var d = ""; //Will become d=document.all
+
+function doThingsOnLoad(){
+   f=document.forms[0]
+   d=document.all
+
+   f.USERNAME.focus()
+}
+
+function validateEntry() {
+var validated=true
+
+   if (document.getElementById('PASSWORD').value==""){
+      validated=false
+      document.getElementById('pass').style.display=""
+      document.getElementById('PASSWORD').focus()
+   }else{
+      document.getElementById('pass').style.display="none"
+   }
+
+   if (document.getElementById('USERNAME').value==""){
+      validated=false
+      document.getElementById('user').style.display=""
+      document.getElementById('USERNAME').focus()
+   }else{
+      document.getElementById('user').style.display="none"
+   }
+
+   if (validated){
+      document.getElementById('SECURE').value = getProtocol()
+      f.submit()
+   }
+}
+
+
+function getProtocol(){
+   url=new String(window.location)
+   protocol=url.substring(0,5)
+
+   switch(protocol){
+      case 'https':
+         return true;
+         break;
+    default:
+      return false;
+   }
+}
+<!--Hard coded SCRIPTS end here-->
+
+
+</script>
+</head>
+<body scroll='yes' class='loginpagebackground' onLoad="doThingsOnLoad();">
+<form method="post">
+<input type="hidden" name="SECURE" id="SECURE" value="">
+    <!-- NORMAL LOGIN layout -->
+     <div class="header">
+        <div class="loginlogo" >
+            <img src="//ds.datasignonline.com/images/login/KIMfg Sign_292x45.png" id="imgLogo" alt="KeyedIn Manufacturing - Sign Edition" />
+        </div>
+     </div>
+     <div class="keyedInLogo"></div>
+     <div class="bar"></div>
+    <div class="container">
+        <div class="content">
+           <!-- Left Hand Column -->
+            <div class="pageLeftColumn">
+                    <!-- Login Box -->
+                    <div class="BoxTop"></div>
+                    <div class="BoxMiddle">
+                        <div style="padding-right:30px;">
+                            <div class="boxTitle">Customer Login</div>
+                            <div>
+                                <table class="logintable">
+                                  <tr id="ERROR_MSG_DISPLAY" style="display:none">
+                                      <td class="error" id="ERROR_MSG"></td>
+                                  </tr>
+                                  <tr>
+                                      <td class="Username" >Username:</td>
+                                  </tr>
+                                  <tr>
+                                    <td class="normalCell">
+                                        <input name="USERNAME" type="text" id="USERNAME" class="textBox" size="30" style="height:15px; width:90%;" onKeyPress="if(event.keyCode==13){validateEntry()}" tabindex="1" /><span id="user" style="display:none" class="errorText">&nbsp;<strong><font size="1" color="red">**</font></strong></span>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td class="Username">Password:</td>
+                                  </tr>
+                                  <tr>
+                                    <td class="normalCell">
+                                        <input name="PASSWORD" type="password" id="PASSWORD" class="textBox" size="30" style="height:15px;width:90%;" onKeyPress="if(event.keyCode==13){validateEntry()}" tabindex="2" /><span id="pass" style="display:none" class="errorText">&nbsp;<strong><font size="1" color="red">**</font></strong></span>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td class="normalCell">
+                                       <!-- Sign In Button -->
+                                        <table cellpadding="0" cellspacing="0" >
+                                            <tr>
+                                                <td class="greenButton_Left"></td>
+                                                <td><input name="btnLogin" type="button" onClick="validateEntry();" id="btnLogin" tabindex="6" alt="Sign In" class="greenButton" value="Sign In" /></td>
+                                                <td class="greenButton_Right"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                  </tr>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="BoxBottom">
+                    </div>
+			<table align="center" cellpadding="0" cellspacing="0" >
+                        <tr>
+<!-- * 7/14/2021 jw  Changed copyright date below. -->
+			<td align="center">Copyright @ KeyedIn Solutions 2021, inc. All rights reserved.</td>
+			</tr>
+			<tr>
+			<td align="center"><a style="text-decoration: underline;" href="http://www.keyedin.com/privacy-policy/" target="_blank">Privacy Policy</a></td>
+			</tr>
+			</table>
+            </div>
+            <!-- Right Hand Column -->
+           <div class="pageRightColumn">
+                  <!-- Service Announcements Box -->
+                    <div class="BoxTop">
+                    </div>
+                    <div class="BoxMiddle">
+                        <div style="padding-right:8px;">
+                            <div class="boxTitle">Service Announcements</div>
+                            <div>
+
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                    <tr><td class="serviceUpdateTitle" align="left" valign="middle">Nothing at this time.<td></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="BoxBottom"></div>
+            </div>
+        </div>
+
+<!-- * 7/14/2021 jw  Changed TRUSTe links to new correct ones, the previous one is commented below. -->
+        <div class="trusteLogo">
+            <div> <script type="text/javascript" src="//privacy-policy.truste.com/privacy-seal/KeyedIn-Solutions/asc?rid=69b59efa-c423-4933-8a2f-bc8a6e289b81"></script>
+               <a href="https://privacy.truste.com/privacy-seal/validation?rid=5c86d131-a1c4-4bba-b24b-799c0b369674" title="Validate TRUSTe privacy certification" target="_blank">
+                  <img style="border: none" src="https://privacy.truste.com/privacy-seal/validation?rid=5c86d131-a1c4-4bba-b24b-799c0b369674" alt="Validate TRUSTe privacy certification"/></a></div>
+        </div> 
+      <!-- <div class="trusteLogo">
+         <div> <script type="text/javascript" src="//privacy-policy.truste.com/privacy-seal/KeyedIn-Solutions/asc?rid=69b59efa-c423-4933-8a2f-bc8a6e289b81"></script><a href="//privacy.truste.com/privacy-seal/KeyedIn-Solutions/validation?rid=9f331dd3-421a-42ae-a983-d0ba609f3a93" title="Validate TRUSTe privacy certification" target="_blank"><img style="border: none" src="//privacy-policy.truste.com/privacy-seal/KeyedIn-Solutions/seal?rid=9f331dd3-421a-42ae-a983-d0ba609f3a93" alt="Validate TRUSTe privacy certification"/></a></div>
+      </div> -->
+
+    </div>
+    <!-- End Of LOGIN Layout -->
+</form>
+</body>
+<script language="JavaScript">
+if(document.getElementById('ERROR_MSG').innerHTML!=""){
+   document.getElementById('ERROR_MSG_DISPLAY').style.display=""
+}
+</script>
+</html>
+

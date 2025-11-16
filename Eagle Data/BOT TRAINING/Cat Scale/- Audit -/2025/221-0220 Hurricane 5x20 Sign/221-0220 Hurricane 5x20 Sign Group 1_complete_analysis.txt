@@ -1,0 +1,92 @@
+EAGLE SIGN COMPLETE ANALYSIS - LABOR + MATERIALS
+================================================================================
+Date Analyzed: 06/13/25
+Work Orders Analyzed: 43
+Part Numbers: 221-0220
+
+LABOR HOURS BENCHMARK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WORK   DESCRIPTION              WO#   LOW    MEAN   HIGH   RECOMMENDED  VARIANCE
+CODE                            COUNT HOURS  HOURS  HOURS  HOURS        FROM MEAN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+0200   FABRICATION LAYOUT      31     1.000  4.477 14.750  4.928      +10%
+0215   STRUCTURAL STEEL        25     0.250  3.631  8.750  3.820      +5%
+0220   EXTRUSIONS              43     0.750  7.971 16.750  8.066      +1%
+0260   FACES                   39     0.500  2.548  5.250  2.601      +2%
+0270   MISC FABRICATION        41     0.000  0.000  0.000  0.000      +0%
+0280   CRATING & SHIPPING      42     0.000  1.904  5.000  2.006      +5%
+0310   BALLAST WIRING          43     0.000  2.921  9.500  3.090      +6%
+0340   ELECTRICAL WIRING       12     1.000  3.825  7.500  3.897      +2%
+0410   CLEAN AND ETCH          39     0.250  1.312  2.500  1.315      +0%
+0420   PRIME AND FINISH        43     0.500  1.347  2.000  1.325      -2%
+0520   CUT AND/OR WEED VINYL   43     0.250  1.157  2.250  1.177      +2%
+0550   VINYL APPLICATION       43     1.500  2.771  4.500  2.756      -1%
+9200   FABRICATION OVERTIME    34     0.250  2.643  7.500  2.757      +4%
+9300   ELECTRICAL OVERTIME     15     0.250  1.154  2.500  1.167      +1%
+9500   VINYL DEPT OVERTIME     7      0.250  0.542  1.250  0.688      +27%
+0250   UNKNOWN                 1      0.750  0.750  0.750  0.750      +0%
+0710   UNKNOWN                 1      0.250  0.250  0.250  0.250      +0%
+9400   UNKNOWN                 14     0.250  1.333  2.500  1.339      +0%
+9800   UNKNOWN                 1      1.000  1.000  1.000  1.000      +0%
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TOTAL LABOR HOURS: 42.932
+
+MATERIAL USAGE SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ITEM CODE      DESCRIPTION                    UNIT  COUNT  AVG QTY  MIN    MAX
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+202-0220       ABC FLEXIBLE FACE TENSIONERS - EA    40       103.7     92    104
+209-0380       Cooley Brite II / Yellow       SF    4        275.0    275    275
+202-0100       3" ALUMINUM GUSSETS            EA    40         8.0      8      8
+202-0431       LARGE "A" Z-BRACKET            EA    40         1.4      0      2
+202-0500       8" ANGLE IRON BRACKETS - LAF I EA    40        12.0     12     12
+202-0540       C-COVER CORNER FLASHING - L/A  EA    40         6.0      6      6
+202-0560       LARGE "A" SPREADER BARS (Frame EA    40        16.0     16     16
+202-1330       6" X 7" X .032" HAND HOLE COVE EA    40        22.0     22     22
+203-0500       1/4" X 2" ALUM FLAT            LF    4          1.0      1      1
+209-0500       3M 80" PANAFLEX 946GPS YELLOW  SF    6        272.2    267    274
+214-0765       1/2" x 1/4" x HHMS             EA    4         26.0     26     26
+214-3235       1/4" X Rivet Nut               EA    4          8.0      8      8
+214-3278       1/2" Alum.Nuts                 EA    4          2.0      2      2
+214-3280       1/2 HEX NUT                    EA    4         24.0     24     24
+214-3550       TINNERMAN NUT                  EA    4         10.0     10     10
+214-3649       S/S rivet                      EA    4         20.0     20     20
+214-4180       x 1/2" THMS                    EA    4         10.0     10     10
+214-4311       #10 x 3/4" PHPSMS Pancake Head EA    4         80.0     80     80
+214-4320       #10 x 3/4" TEK Screw w/ Rubb   EA    4         30.0     30     30
+214-4712       #10 x 1/2" HWHSMS - Black      EA    4        160.0    160    160
+214-5380       WALL ANGLE #304                EA    4          2.0      2      2
+214-5470       1/2 FLAT WASHERS               EA    4         26.0     26     26
+216-0252       2" X 4" X 12' SPF WOOD FRAMING LF    4        144.0    144    144
+216-0421       7/16" OSB 4'x 8'sheet          SF    40       247.4    172    256
+219-1162       1" x 10" x 10" hurricane/170mp EA    4          2.0      2      2
+221-0195       Cat Scale Face - Laminated     EA    30         0.3      0      2
+301-0150       ADVANCE ASB BALLAST            EA    36         1.7      0      5
+301-1305       Allanson RSS496AT              EA    24         1.0      0      5
+302-0186       3/4" Cable Clamp               EA    4         25.0     25     25
+302-0187       Heyco Wavelock clip            EA    4         10.0     10     10
+302-0231       HEYCO mounting bracket         EA    4         10.0     10     10
+303-0150       RACO 1G WP BX W/3-1/2 HUBS     EA    40         1.0      1      1
+303-0155       Eagle S2983 bell box cover     EA    36         0.1      0      1
+303-0180       RACO SP 20A 277VAC SW&WP CVR   EA    4          1.0      1      1
+303-0313       7/8" Heyco Bushing             EA    4          5.0      5      5
+303-0581       #10 eyelet - Ring Tongue       EA    4          6.0      6      6
+303-0612       HEYCO Snap In Connector        EA    4          2.0      2      2
+303-1260       1-1/2" LOCK NUT                EA    4          2.0      2      2
+303-1280       1/2" CHASE NIPPLE              EA    4          1.0      1      1
+303-1355       1/2" CHASE NIPPLE 1106-DC      EA    4          2.0      2      2
+306-1100       F60T12CW/HO LAMP               EA    36        15.6      0     20
+307-0151       H96W-SD-24V power supply       EA    4          5.0      5      5
+307-0258       HPEB-CC cable 6'               EA    4          2.0      2      2
+307-0259       HPEB-CC cable                  EA    4          3.0      3      3
+307-0269       SHPEB-2S6045K NRG Bar 60" 4500 EA    4         20.0     20     20
+311-0860       SNAP IN SOCKETS - 250/BOX      EA    36        31.1      0     40
+311-0862       HPEB-MB NRG Bar Mounting Brack EA    4         20.0     20     20
+311-1055       WESTRIM TOGGLE SWITCH #38057 2 EA    36         0.3      0      1
+313-0420       RED WIRE NUTS                  EA    4         10.0     10     10
+313-0465       WIRE NUTS O/B+                 EA    4         10.0     10     10
+506-0600       Transferite - High Tack 12"    SF    4         15.0      0     60
+508-3555       VQ GLOSS BLACK VINYL 48" 3M #3 SF    36        35.4      0    232
+508-3557       Oracal GLOSS BLACK VINYL 48" p SF    4         30.0      0    120
+
+RECOMMENDATION: Average 42.932 total labor hours per unit

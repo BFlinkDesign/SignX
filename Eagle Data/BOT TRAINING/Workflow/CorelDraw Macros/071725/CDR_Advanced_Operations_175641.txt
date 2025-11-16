@@ -1,0 +1,31 @@
+ADVANCED OPERATIONS
+==================================================
+
+PROFESSIONAL FEATURES:
+
+SYMBOLS:
+• Create reusable design elements
+• Symbol libraries
+• Update all instances at once
+
+STYLES:
+• Text styles
+• Color styles
+• Outline styles
+
+DATA OPERATIONS:
+• DataFields for variable data
+• Merge with spreadsheets
+• Batch personalization
+
+COLOR MANAGEMENT:
+• Color profiles
+• Spot colors
+• Color replacement
+• Separations for print
+
+PRINT AUTOMATION:
+• PrintSettings object
+• Imposition layouts
+• Marks and bleeds
+

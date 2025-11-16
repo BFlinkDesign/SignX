@@ -1,0 +1,14 @@
+{
+  "extraction_date": "2025-11-12T14:47:53.100317",
+  "progress": {
+    "total_reports": 14,
+    "completed_reports": 14,
+    "total_records": 0,
+    "failed_reports": [],
+    "start_time": "2025-11-12T14:47:52.354643",
+    "elapsed_minutes": 0.012428316666666666
+  },
+  "output_directory": "C:\\Scripts\\SignX\\Keyedin\\GWT Google Web Toolkit\\keyedin_backup",
+  "database_file": "C:\\Scripts\\SignX\\Keyedin\\GWT Google Web Toolkit\\keyedin_backup\\keyedin_complete.db",
+  "database_size_mb": 0.0
+}

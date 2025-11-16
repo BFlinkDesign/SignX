@@ -1,0 +1,71 @@
+600437df-77ae-4aca-8f93-45b022255489
+AR Invoice Details
+AR Invoice Listing
+AR Open Invoices
+Account Receivable Invoice GL transaction detail. Selectable by Date Range, Invoice Number, Customer and Open/Closed status.
+Account Receivable invoice listing with balance and payment information. Selectable by Customer, date range and open/closed status.
+Accounts Payable
+Accounts Receivable
+Accounts Receivable open invoice listing sorted by due date.
+Cash Receipts
+Cash Receipts selected by date range. Sorted by Division, Bank, Payment Date, Payor.
+Customer Listing
+Customer Listing (Export)
+Customer Location LIsting
+Customer Location Listing (Export)
+Customer Location listing selectable by Name, Customer Number, State or Zip code.
+Customer Location listing selectable by Name, Customer Number, State or Zip code. Formatted for export to Excel.
+Customer Portal
+Customer listing selectable by Name, Customer Number, State or Zip code.
+Customer listing selectable by Name, Customer Number, State or Zip code. Formatted for export to Excel.
+Detailed Purchase Order information.
+Detailed Sales, Cost and Gross Margin for specified time period.
+Estimating \x26 Proposals
+Expected receipts and demands by Part Number.
+Export
+Inventory List
+Inventory List (Export)
+Inventory Transaction History
+Inventory Transaction History selectable by Transaction Date, Part Number or Transaction Code.
+Inventory and Parts
+Invoice Register
+Invoice Register listing selectable by Invoice Date or Entry Date.
+Invoicing
+Job Costing
+List of all Open Work Orders. Sorted by Due Date.
+Listing of Inventory Parts with quantity and cost information. Selectable by Inventory Type, Sales Code or Eng Status.
+Listing of Inventory Parts with quantity and cost information. Selectable by Inventory Type, Sales Code or Eng Status. Formatted for export to Excel.
+Listing of active quotes in the system.
+Open Sales Order Backlog
+Open Sales Order Backlog with Past Due, 0-30, 31-60, 61-90 day and Beyond buckets.
+Open Sales Order listed by delivery date.
+Open Sales Orders
+Open Work Orders
+Planned Part Activity
+Production
+Project Management
+Purchase History
+Purchase Order Detail
+Purchased Part Variance
+Purchased Part Variance report selectable by G/L Date, Received Date, Part Number, Inventory Type or Vendor Number.
+Purchasing
+Purchasing History selectable by PO Date, Part Number, Vendor, Buyer or Type.
+Quote Status Report
+Release - 2.1.3
+Release - New
+Release 2.0.1
+Sales Analysis
+Sales Cost Detail Report
+Sales Order Bookings - By Order Line Date
+Sales Order Bookings - By Sales Order Date
+Sales Order Detail
+Sales Order Details selectable by Customer, SO Number or Customer PO.
+Sales Order Status by Customer
+Sales Order summary by Line Item Date. Selectable by Date Added, Customer or Salesperson.
+Sales Order summary by Order Date. Selectable by Sales Order date, Customer or Salesperson.
+Sales Orders
+Sales order status information by Customer. Shows open, closed or all orders.
+Shipping
+Support
+[Lcom.entrinsik.gwt.data.shared.ViewPage;/650158765
+rO0ABXcEAAAAAA\x3D\x3D

@@ -1,0 +1,33 @@
+EAGLE SIGN COMPLETE ANALYSIS - LABOR + MATERIALS
+================================================================================
+Date Analyzed: 06/13/25
+Work Orders Analyzed: 49
+Part Numbers: 210-0180
+
+LABOR HOURS BENCHMARK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WORK   DESCRIPTION              WO#   LOW    MEAN   HIGH   RECOMMENDED  VARIANCE
+CODE                            COUNT HOURS  HOURS  HOURS  HOURS        FROM MEAN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+0200   FABRICATION LAYOUT      2      0.500  0.625  0.750  0.712      +14%
+0260   FACES                   2      0.500  0.875  1.250  1.138      +30%
+0270   MISC FABRICATION        2      0.250  0.375  0.500  0.462      +23%
+0280   CRATING & SHIPPING      17     0.250  0.519  1.500  0.575      +11%
+0410   CLEAN AND ETCH          3      1.000  1.500  2.000  1.850      +23%
+0520   CUT AND/OR WEED VINYL   4      1.000  1.250  1.750  1.525      +22%
+0550   VINYL APPLICATION       4      0.750  1.938  4.000  2.988      +54%
+9200   FABRICATION OVERTIME    10     0.250  1.062  3.750  1.263      +19%
+9500   VINYL DEPT OVERTIME     2      0.250  0.625  1.000  0.888      +42%
+0235   UNKNOWN                 49     0.000  1.335  7.500  1.640      +23%
+0250   UNKNOWN                 1      0.500  0.500  0.500  0.500      +0%
+9400   UNKNOWN                 2      0.500  0.500  0.500  0.500      +0%
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TOTAL LABOR HOURS: 14.041
+
+MATERIAL USAGE SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ITEM CODE      DESCRIPTION                    UNIT  COUNT  AVG QTY  MIN    MAX
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+217-0557       #2037 YELLOW FF PLEXIGLAS      SF    49       235.2      0    760
+
+RECOMMENDATION: Average 14.041 total labor hours per unit

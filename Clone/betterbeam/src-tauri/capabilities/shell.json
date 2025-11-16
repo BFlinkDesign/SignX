@@ -1,0 +1,13 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "identifier": "shell",
+  "description": "Shell access for opening files/URLs and sidecars.",
+  "permissions": [
+    { "identifier": "shell:default" },
+    { "identifier": "shell:allow-open" },
+    { "identifier": "shell:allow-spawn" },
+    { "identifier": "shell:allow-stdin-write" }
+  ]
+}
+
+

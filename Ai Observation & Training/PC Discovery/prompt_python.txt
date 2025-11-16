@@ -1,0 +1,51 @@
+﻿You are generating RUNNABLE code for MY MACHINE. Follow the CONTRACT exactly.
+
+CONTEXT:
+- OS: Windows 11 Pro
+- Shell: PowerShell 7 (pwsh)
+- Git installed. Docker optional. No WSL.
+
+CONTRACT — NON-NEGOTIABLE:
+1) Output a SINGLE-FILE PoC that runs end-to-end and a SMOKE TEST entrypoint.
+2) Provide Windows-first commands in PowerShell. If you include bash, also provide pwsh equivalents.
+3) Pin versions in requirements.txt / package.json. No placeholders, no “...”.
+4) Include sample data or `--demo` mode and show expected SMOKE pass criteria.
+5) Add Preflight: assert tool versions and print them; fail early with actionable errors.
+6) Prohibit fictional APIs. If external API is essential, include a local mock and a safe install plan.
+7) End with: Known Limitations, Next Steps, Confidence (H/M/L) + Assumptions.
+
+MACHINE PROFILE (from live discovery):
+- OS: Microsoft Windows 11 Pro v10.0.26100 (64-bit) host:CNC-1 CPU:Intel(R) Core(TM) i9-14900K cores:32 RAM:63.72GB
+- Python: in_path=True version= pip_in_path=False pip_version=
+- Node: in_path=True version= npm_in_path=False npm_version=
+- .NET: in_path=True sdk_version=
+- Git: in_path=True version=
+- GPU: nvidia_smi=True cuda= driver=
+- Package Managers: winget=True choco=True scoop=False
+
+HARD RULES:
+- Only use toolchains/versions present above; if a missing dependency is essential, output a SAFE install plan (winget search + pip/npm lines) before code, do not assume it's available.
+- Windows 11 + PowerShell 7 only.
+DELIVERABLES (Python 3.11+):
+- File: app.py (single file)
+- `--demo` auto-generates small input and runs e2e
+- `--preflight` prints Python + pip versions and asserts Python>=3.11
+- `--smoke` runs e2e and exits 0 on success else non-zero
+- Include requirements.txt with exact pins
+- Provide PowerShell commands: install, preflight, demo, smoke, test
+
+TASK:
+Build a Python 3.11 single-file CLI app.py that:
+- reads .\jobs.csv with columns: id,width_in,height_in,material
+- computes area_sqft=(width_in*height_in)/144 and labor_hours=area_sqft*0.12
+- writes .\jobs_out.csv with all original columns + area_sqft + labor_hours
+- --demo creates a 3-row jobs.csv and runs the transform
+- --preflight prints Python+pip versions and asserts Python>=3.11
+- --smoke runs demo and asserts 3 rows and that 'labor_hours' exists
+
+SELF-CONSISTENCY CHECK (silent before return):
+- Code parses for specified versions.
+- All imports installed/pinned and used.
+- Entrypoint + PowerShell commands match filenames.
+- Windows path quoting correct; CRLF/LF handled.
+- Smoke exits 0 on pass.

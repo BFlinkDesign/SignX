@@ -1,0 +1,15 @@
+CORELDRAW 2021 COMPLETE DIAGNOSTIC REPORT
+Generated: 7/16/2025 5:58:19 PM
+======================================================================
+
+This report contains all diagnostic information.
+Running all tests...
+
+SUMMARY:
+CorelDRAW Version: Version 23.1.0.389
+VBA Working: Yes
+Documents Open: 2
+Current Document: Untitled-1
+Pages: 1
+Shapes on Page: 14
+

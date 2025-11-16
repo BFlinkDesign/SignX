@@ -1,0 +1,92 @@
+{
+  "{}": {
+    "status": 200,
+    "length": 1213,
+    "tables": 0,
+    "url": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/WO.INQUIRY",
+    "has_form": true,
+    "has_iframe": false,
+    "mentions_work_order": true,
+    "has_numbers": true
+  },
+  "{'ACTION': 'SEARCH'}": {
+    "status": 200,
+    "length": 1213,
+    "tables": 0,
+    "url": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/WO.INQUIRY?ACTION=SEARCH",
+    "has_form": true,
+    "has_iframe": false,
+    "mentions_work_order": true,
+    "has_numbers": true
+  },
+  "{'ACTION': 'LIST'}": {
+    "status": 200,
+    "length": 1213,
+    "tables": 0,
+    "url": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/WO.INQUIRY?ACTION=LIST",
+    "has_form": true,
+    "has_iframe": false,
+    "mentions_work_order": true,
+    "has_numbers": true
+  },
+  "{'ACTION': 'AJAX'}": {
+    "status": 200,
+    "length": 1213,
+    "tables": 0,
+    "url": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/WO.INQUIRY?ACTION=AJAX",
+    "has_form": true,
+    "has_iframe": false,
+    "mentions_work_order": true,
+    "has_numbers": true
+  },
+  "{'SUBMIT': 'GO'}": {
+    "status": 200,
+    "length": 1213,
+    "tables": 0,
+    "url": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/WO.INQUIRY?SUBMIT=GO",
+    "has_form": true,
+    "has_iframe": false,
+    "mentions_work_order": true,
+    "has_numbers": true
+  },
+  "{'SEARCH': 'Y'}": {
+    "status": 200,
+    "length": 1213,
+    "tables": 0,
+    "url": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/WO.INQUIRY?SEARCH=Y",
+    "has_form": true,
+    "has_iframe": false,
+    "mentions_work_order": true,
+    "has_numbers": true
+  },
+  "{'FROM_DATE': '01/01/2024', 'TO_DATE': '12/31/2024'}": {
+    "status": 200,
+    "length": 1213,
+    "tables": 0,
+    "url": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/WO.INQUIRY?FROM_DATE=01%2F01%2F2024&TO_DATE=12%2F31%2F2024",
+    "has_form": true,
+    "has_iframe": false,
+    "mentions_work_order": true,
+    "has_numbers": true
+  },
+  "{'STATUS': 'OPEN'}": {
+    "status": 200,
+    "length": 1213,
+    "tables": 0,
+    "url": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/WO.INQUIRY?STATUS=OPEN",
+    "has_form": true,
+    "has_iframe": false,
+    "mentions_work_order": true,
+    "has_numbers": true
+  },
+  "{'STATUS': 'ALL'}": {
+    "status": 200,
+    "length": 1213,
+    "tables": 0,
+    "url": "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/WO.INQUIRY?STATUS=ALL",
+    "has_form": true,
+    "has_iframe": false,
+    "mentions_work_order": true,
+    "has_numbers": true
+  }
+}

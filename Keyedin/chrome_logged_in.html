@@ -1,0 +1,608 @@
+<html><head>
+      <title>
+        KeyedInSign - A SaaS Business Management Application
+      </title>
+      
+      <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+      <link rel="icon" href="https://ds.datasignonline.com/favicon.ico" type="image/x-icon">
+      <!-- <link rel="stylesheet" href="https://ds.datasignonline.com/css/jquery-ui-themes/smoothness/jquery-ui-1.8.5.css" type="text/css" media="screen" title="no title" charset="utf-8"> (9505)  -->
+      <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/smoothness/jquery-ui.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+      <link rel="stylesheet" href="https://ds.datasignonline.com/css/yahoo-grids/yui_2.8.0r4.css" type="text/css" media="screen" title="no title" charset="utf-8">
+      <link rel="stylesheet" href="https://ds.datasignonline.com/css/dataSIGN.css" type="text/css" media="screen" title="no title" charset="utf-8">
+      <link rel="stylesheet" href="https://ds.datasignonline.com/css/dataSIGN-menu.css" type="text/css" media="screen" title="no title" charset="utf-8">
+      <link rel="stylesheet" href="https://ds.datasignonline.com/css/dataSIGN-widget.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+<style>
+.table-rows {
+    background-color: #EAEAEA;
+}
+</style>
+<script language="javascript">
+</script>
+
+</head>
+<body onkeydown="checkForCtl()">
+   <div id="doc3" class="yui-t3">
+ <div id="hd">
+                <div class="yui-gb">
+                    <div class="yui-u first logo">
+                        <img src="/assets_client/logo.jpg" alt="Company Logo" height="50px">
+                    </div>
+                        <div align="right">
+                            Welcome, Brady Flink&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="javascript:;" onclick="openNew('MY.PROFILE.MAINT','ADMIN.STD')">Profile</a>&nbsp; | &nbsp;
+                            <a href="javascript:;" onclick="openNew('CHANGE.PASSWORD','ADMIN.STD')">Password</a>&nbsp; | &nbsp;
+                            <a href="javascript:;" onclick="visitSupportPage()">Help</a>&nbsp; | &nbsp;
+                            <a href="javascript:;" onclick="signOff()">Logout</a> &nbsp;
+                    </div>
+                </div>
+            </div>
+
+
+<div id="bd">
+                <div class="yui-b">
+                    <div id="container">
+                        <div id="menu"><ul class="ui-widget"><li class="menuHeader"><span class="ui-widget-header">Favorites</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('CRM.CONTACT.MGT','FAVORITES.STD')">Contact Management</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('OPEN.SO','FAVORITES.STD')">(BI) - Open Sales Order Audit Report</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('EST.RESET.EXP.DATE','FAVORITES.STD')">Reset Quote Expiration Date</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PURCHASE','FAVORITES.STD')">Purchase Order Entry</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('EST.PROP.RESET.DATE','FAVORITES.STD')">Reset Proposal Expiration Date</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PART.PRICES','FAVORITES.STD')">Part Pricing Maintenance</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SO.CONTRACT','FAVORITES.STD')">Cost Summary Report</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('STOCK','FAVORITES.STD')">Part Status Inquiry</a></li></ul></li><li class="menuHeader"><span class="ui-widget-header">CRM</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('CRM.CONTACT.MGT','CRM.STD')">Contact Management</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('CHANGE.SC.ACCOUNT','CRM.STD')">Change Account on Service Call</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SERVICE.CALL.STATUS.REPORT','CRM.STD')">(BI) - Service Call Status Report</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('CRM.NOTES.REPORT','CRM.STD')">CRM Notes Report</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('CRM.ATTACHMENTS.DELETE','CRM.STD')">Batch CRM Attachment Delete</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('IMPORT.CRM.NEW','CRM.STD')">Import CRM</a></li><li class="menuHeader"><span class="triangle-toggle ui-icon ui-icon-triangle-1-e"></span><span class="ui-widget-header">Reports and Inquiries</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('ACCOUNT.TYPE.CODE.LISTING','CRM.RPTS.STD')">Account Type Code Listing</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('CALL.METHOD.CODES.LISTING','CRM.RPTS.STD')">Call Method Codes Listing</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('CALL.TYPE.CODES.LISTING','CRM.RPTS.STD')">Call Type Codes Listing</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('LEAD.SOURCE.EVENT.LISTING','CRM.RPTS.STD')">Lead Source Event Listing</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SERVICE.CALL.STATUS.CODE.LISTING','CRM.RPTS.STD')">Service Call Status Code Listing</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('CRM.SOLUTIONS.LISTING','CRM.RPTS.STD')">Solution File Listing</a></li></ul></li></ul></li><li class="menuHeader"><span class="ui-widget-header">Project Management</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('#PROJECT.LISTING','PROJECT.STD')">Project Listings - Search</a></li><li class="menuItem ui-widget-content"><a href="HTTPS://EAGLESIGN.KEYEDINSIGN.COM:8443/eaglesign/sso?u=BRADYF&amp;t=4vjbm1rhvjfqw2c3vtmpxcqs&amp;initialAction.action=ReportRun&amp;remoteId=7831576" target="_blank">Project Status Listing - BI</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('#PROJECT.DETAILS','PROJECT.STD')">Project Summary and Setup</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('#PROJECT.MILESTONE.TRACKING','PROJECT.STD')">Project Milestone Tracking</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('#PROJECT.QUOTES','PROJECT.STD')">Project Quotes</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('#PROJECT.LOCATIONS','PROJECT.STD')">Project Locations</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('#PROJECT.PROPOSALS','PROJECT.STD')">Project Proposals</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('#PROJECT.SALES.ORDERS','PROJECT.STD')">Project Sales Orders</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('#PROJECT.WORK.ORDERS','PROJECT.STD')">Project Work Orders</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('#PROJECT.POS','PROJECT.STD')">Project Purchase Orders</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('#PROJECT.SHIPMENTS','PROJECT.STD')">Project Shipments</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('#PROJECT.CONTACTS','PROJECT.STD')">Project Contacts</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('#PROJECT.VENDORS','PROJECT.STD')">Project Vendors</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('#PROJECT.NOTES','PROJECT.STD')">Project Notes</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('#PROJECT.ATTACHMENTS','PROJECT.STD')">Project Attachments</a></li><li class="menuHeader"><span class="triangle-toggle ui-icon ui-icon-triangle-1-e"></span><span class="ui-widget-header">Reports and Inquiries</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('PM.INSURANCE.LISTING','PROJECT.RPTS.STD')">Vendor Certificate of Insurance Listing</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('LANDLORD.MALL.TC.LISTING','PROJECT.RPTS.STD')">Landlord Mall Tenant Coord Listing</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PROJECT.MILESTONE.CODES.LISTING','PROJECT.RPTS.STD')">Project Milestone Codes Listing</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PROJECT.STATUS.CODES.LISTING','PROJECT.RPTS.STD')">Project Status Codes Listing</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PROJECT.TYPE.CODES.LISTING','PROJECT.RPTS.STD')">Project Type Codes Listing</a></li></ul></li></ul></li><li class="menuHeader"><span class="ui-widget-header">Estimating and Proposals</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('EST.QUOTE.ENTRY','EST.STD')">Estimating Maintenance</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('QUOTE.ENTRY.LIMITED','EST.STD')">Estimating Maintenance Limited</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('EST.RESET.EXP.DATE','EST.STD')">Reset Quote Expiration Date</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('EST.CHANGE.ACCTID','EST.STD')">Change Account Id on a Quote</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('EST.QUOTE.PRINT','EST.STD')">Print an Estimate (Quote)</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('EST.QUOTE.COPY','EST.STD')">Copy an Estimate (Quote)</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('EST.PROP.PRINT','EST.STD')">Create a Proposal</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('EST.PROP.REPRINT','EST.STD')">Proposal Reprint</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('EST.PROP.RESET.DATE','EST.STD')">Reset Proposal Expiration Date</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('EST.PROP.DELETE','EST.STD')">Delete a Proposal</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('EST.QUOTE.STATUS','EST.STD')">(BI) - Status of all Quotes</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('QUOTE.PIPELINE.REPORT','EST.STD')">Quote Pipeline Report</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('EST.SIGN.TEMPLATE.MAINT','EST.STD')">Sign Template Maintenance</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('EST.BATCH.INACTIVE','EST.STD')">Batch Change Quotes to Inactive</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('IMPORT.SIGN.TEMPLATE','EST.STD')">Import Sign Template</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('QUOTE.MASS.UPDATE','EST.STD')">Quote Mass Update</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('QUOTE.MASS.COPY','EST.STD')">Mass Quote Copy</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('CONVERT.QUOTE.TO.MFG','EST.STD')">Convert Quote to Manufactured Part</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('QUOTE.MASS.DELETE','EST.STD')">Mass Delete Inactive Quotes</a></li><li class="menuHeader"><span class="triangle-toggle ui-icon ui-icon-triangle-1-e"></span><span class="ui-widget-header">Reports and Inquiries</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('QUOTE.LISTING','EST.RPTS.STD')">(BI) - Quote Listing</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SIGN.TEMPLATE.LISTING','EST.RPTS.STD')">Sign Template Listing</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('EST.TEMPLATE.PRINT','EST.RPTS.STD')">Sign Template Print</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('EST.PROPOSAL.STATUS','EST.RPTS.STD')">(BI) - Proposal Status Report</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('EST.QUOTE.STATUS.CODE.LIST','EST.RPTS.STD')">Quote Status Codes List</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WORK.DEPT.LIST','EST.RPTS.STD')">Work Dept Code List</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WORK.CODE.LIST','EST.RPTS.STD')">Work Code List</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SIGN.TYPE.CODES.LISTING','EST.RPTS.STD')">Sign Type Codes List</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('QUOTE.SALES.STAGE.CODE.LISTING','EST.RPTS.STD')">Quote Sales Stage Code Listing</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PREPLAN.REPORT','EST.RPTS.STD')">Pre-Planning Requirements Report</a></li></ul></li></ul></li><li class="menuHeader"><span class="ui-widget-header">Sales Order Entry</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('ORDER.ENTRY','SALES.STD')">Sales Orders Entry</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('EST.CREATE.SO','SALES.STD')">Create Sales Order From Proposal</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SO.PRINT','SALES.STD')">Print Sales Order</a></li><li class="menuHeader"><span class="triangle-toggle ui-icon ui-icon-triangle-1-e"></span><span class="ui-widget-header">Reports and Inquiries</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('LSO','SALES.RPTS.STD')">(BI) - Sales Orders by Customer P.O.</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('LOOK.SO','SALES.RPTS.STD')">Sales Order Display</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('DAY.SALES','SALES.RPTS.STD')">(BI) - Daily Sales Report</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('OPEN.SO','SALES.RPTS.STD')">(BI) - Open Sales Order Audit Report</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SO.COMMIT','SALES.RPTS.STD')">(BI) - Sales Order Commitments - By Customer</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('EXTRA.CHARGES.LIST','SALES.RPTS.STD')">Extra Charge Codes List</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('ORDER.CLASSES.LIST','SALES.RPTS.STD')">Order Class Codes List</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('ORDER.TYPES.LIST','SALES.RPTS.STD')">Order Type Codes List</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PRICE.CLASS.CODE.LIST','SALES.RPTS.STD')">Price Class Code Listing</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PRICE.CODES.LIST','SALES.RPTS.STD')">Price Codes List</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('REASON.CODES.LIST','SALES.RPTS.STD')">A/R Reason Codes List</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SALES.CODES.LIST','SALES.RPTS.STD')">Sales Product Codes List</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SALESPERSONS.LIST','SALES.RPTS.STD')">Sales Person Codes List</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SALES.TAXES.LIST','SALES.RPTS.STD')">Sales Tax Codes List</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('TERRITORY.CODES.LIST','SALES.RPTS.STD')">Sales Territory Codes List</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('STATES.LIST','SALES.RPTS.STD')">State Codes List</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('COUNTRY.LIST','SALES.RPTS.STD')">Country Codes List</a></li></ul></li></ul></li><li class="menuHeader"><span class="ui-widget-header">Shipping Tracking</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('SHIPLISTS','SHIPPING.STD')">Create Shiplists</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SHIPMENTS','SHIPPING.STD')">Record Shipment Information</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SHIPMENTS.TRACKING','SHIPPING.STD')">Enter Shipment Tracking Information</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('DAILY.SHIP.REPORT','SHIPPING.STD')">(BI) - Daily Shipments</a></li></ul></li><li class="menuHeader"><span class="ui-widget-header">Sales Analysis</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('PROD.SUM','SA.STD')">(BI) - Sales by Product Code</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('CUST.SUM','SA.STD')">(BI) - Sales by Customer</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('CUST.PROD','SA.STD')">(BI) - Sales by Customer by Product Code</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('CUST.PROD.EXPORT','SA.STD')">(BI) - Sales by Customer by Product - Export</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('GM.BY.PROD','SA.STD')">(BI) - Gross Margin by Product Code</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('GM.BY.INV','SA.STD')">(BI) - Gross Margin by Invoice Number</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('GM.BY.INV.EXPORT','SA.STD')">(BI) - Gross Margin by Invoice Export</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PROD.CUST','SA.STD')">(BI) - Sales, GM by Product Code and Customer</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SA.BY.STATE','SA.STD')">(BI) - Sales By State By City</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SLSPER.PROD','SA.STD')">(BI) - GM By Salesperson By Product Code</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SLSPER.PROD.EXPORT','SA.STD')">(BI) - GM By Salesperson - Export</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('TAX.BY.TYPE.REPORT','SA.STD')">(BI) - Tax Report by Jurisdiction State</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('QUOTE.SALES.DIFFS','SA.STD')">Quote Price to Sales Price Comparison</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SALES.TERRITORY','SA.STD')">(BI) - Sales By Territory</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('GM.DET.PROD.PART','SA.STD')">(BI) - Sales, GM by Sales Code with Cost Analysis</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('GM.PROJECT','SA.STD')">GM By Project</a></li></ul></li><li class="menuHeader"><span class="ui-widget-header">Purchasing</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('PURCHASE','PUR.STD')">Purchase Order Entry</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('QV.PRINT','PUR.STD')">Last Purchased Price Lookup</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PO.CHANGE','PUR.STD')">Change Vendor or Work Order on a PO</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PUR.PRINT','PUR.STD')">Print Purchase Orders</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PO.RECEIPTS','PUR.STD')">Receive P.O. Items </a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PO.CLOSE','PUR.STD')">Close Purchase Orders by Line Item</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PO.ACTIONS','PUR.STD')">Purchase Demand Planning</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PO.ACTION.RELEASE','PUR.STD')">Create PO from Purchase Demands</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PO.REQ.RELEASE','PUR.STD')">Create PO from PO Requisitions</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PO.REQ.DELETE','PUR.STD')">Delete PO Requisitions</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('VENDORS','PUR.STD')">Vendor Master Maintenance</a></li><li class="menuHeader"><span class="triangle-toggle ui-icon ui-icon-triangle-1-e"></span><span class="ui-widget-header">Reports and Inquiries</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('SHOW.PO','PUR.RPTS.STD')">Purchase Order Display</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PUR.HISTORY','PUR.RPTS.STD')">(BI) - Purchase Order History</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WO.OPEN.PO','PUR.RPTS.STD')">Open PO's for a Work Order</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SHOW.BUYERS','PUR.RPTS.STD')">Buyer Codes Listing</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PO.ACTIONS','PUR.RPTS.STD')">Purchase Demand Planning</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PO.INQUIRY','PUR.RPTS.STD')">(BI) - Purchase Order Inquiry</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PUR.COMMIT','PUR.RPTS.STD')">Purchase Order Commitments</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PUR.PART.VAR','PUR.RPTS.STD')">(BI) - Purchased Variance Report</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PUR.PO.DEL.ANALYSIS','PUR.RPTS.STD')">Purchase Order Delivery Analysis</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PUR.PO.SCHED.ANALYSIS','PUR.RPTS.STD')">(BI) - Purchase Order Schedule Analysis</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PUR.PO.VAR.ANALYSIS','PUR.RPTS.STD')">(BI) - Purchase Order Receipt Analysis</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WSA.PURCHASE.REPORT','PUR.RPTS.STD')">WSA Purchase Report</a></li></ul></li></ul></li><li class="menuHeader"><span class="ui-widget-header">Inventory and Parts</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('FIRST.ISSUE','INV.STD')">Work Order Issue</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('ISSUE','INV.STD')">Part Issue</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('RAW.MATL.MAINT','INV.STD')">Purchased Part Maintenance</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('ASSEMBLY.MAINT','INV.STD')">Manufactured Part Maintenance</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WIP.RECEIPTS','INV.STD')">WIP Receipts</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('ADJUST','INV.STD')">Adjust Inventory On Hand</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('TRANSFER','INV.STD')">Transfer Between Warehouses</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('BOM','INV.STD')">Bill of Material Maintenance</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('COPY.BILL','INV.STD')">Bill of Material Copy</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('BOM.DELETE','INV.STD')">Bill of Material Delete</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SHOW.PS','INV.STD')">Show Product Structure or Where-Used</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('ROUTING.MAINT','INV.STD')">Part/Standard Routing Maintenance</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('CHG.VALUE','INV.STD')">Inventory Cost Maintenance</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('COST.POST','INV.STD')">Product Cost Posting</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PART.PRICES','INV.STD')">Part Pricing Maintenance</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PART.COSTS','INV.STD')">Part Cost Maintenance</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('CUST.PRICE.MAINT','INV.STD')">Part Price Maintenance by Customer</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('OBSOLETE','INV.STD')">Change Part's Accounting Status</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('IMPORT.BOM','INV.STD')">Import Bill of Materials</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('IMPORT.ROUTING','INV.STD')">Import Routing</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('IMPORT.PARTS','INV.STD')">Import Parts</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('CONVERT.QUOTE.TO.MFG','INV.STD')">Convert Quote to Manufactured Part</a></li><li class="menuHeader"><span class="triangle-toggle ui-icon ui-icon-triangle-1-e"></span><span class="ui-widget-header">Reports and Inquiries</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('CHECK.ISSUE','INV.RPTS.STD')">Check Issue</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('IT.HISTORY','INV.RPTS.STD')">(BI) - Inventory History</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('STOCK','INV.RPTS.STD')">Part Status Inquiry</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SHOW.ACTIVITY','INV.RPTS.STD')">(BI) - Planned Part Activity</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SHOW.ADJUST.CODE','INV.RPTS.STD')">Inventory Adjust Codes Inquiry</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SHOW.ISSUE.REASON.CODES','INV.RPTS.STD')">Show Issue Reason codes</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('MATL.RECEIVED','INV.RPTS.STD')">(BI) - PO Receipts for a Date Range</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('MATL.ISSUED','INV.RPTS.STD')">(BI) - Material Issues for a Date Range</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('USAGE.ANAL.FILE','INV.RPTS.STD')">Part Usage Export</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SHOW.ENGR.STATUS.CODES','INV.RPTS.STD')">Engineering Status Codes List</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SHOW.INV.TYPES','INV.RPTS.STD')">Inventory Type Codes List</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SHOW.UM.CODES','INV.RPTS.STD')">Unit of Measure Codes List</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PRINT.RT','INV.RPTS.STD')">Routing Inquiry</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('BILL.COMPARE','INV.RPTS.STD')">Bills of Materials Compare</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('COMPLETE.BILL','INV.RPTS.STD')">Bill of Materials Audit Report</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('COMPLETE.WU','INV.RPTS.STD')">Where-Used Audit Report</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('ITEM.MASTER.LIST','INV.RPTS.STD')">(BI) - Part Listing</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SUM.BILL','INV.RPTS.STD')">Summarized Bill of Material</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('COMPLETE.WC.WU','INV.RPTS.STD')">Work Code Where-Used</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('COMPLETE.RT','INV.RPTS.STD')">Part or Standard Routing Index</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('COMPLETE.GROUP','INV.RPTS.STD')">Routing Index by Department</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('COMPLETE.TOOL.LIST','INV.RPTS.STD')">Tool/Tape Usage List</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('STOCK.STATUS','INV.RPTS.STD')">Stock Status </a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PUR.PART.VAR','INV.RPTS.STD')">(BI) - Purchased Variance Report</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PART.COST.LIST','INV.RPTS.STD')">Part Cost Listing </a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PART.PRICE.LIST','INV.RPTS.STD')">Part Price Listing </a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('COST.INQ','INV.RPTS.STD')">Part Cost</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SHOW.PART.PRICES','INV.RPTS.STD')">Part Pricing</a></li></ul></li></ul></li><li class="menuHeader"><span class="ui-widget-header">Job Cost</span><ul class="ui-widget" style="display: none;"><li class="menuHeader"><span class="triangle-toggle ui-icon ui-icon-triangle-1-e"></span><span class="ui-widget-header">Processes</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('WO.PRICE.CALC','JCOST.PROC.STD')">T&amp;M Price Calculation</a></li></ul></li><li class="menuHeader"><span class="triangle-toggle ui-icon ui-icon-triangle-1-e"></span><span class="ui-widget-header">Inquiries</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('WO.HISTORY','JCOST.INQ.STD')">Work Order Cost History</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WO.STATUS.SUM','JCOST.INQ.STD')">Costing - Summary</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WO.STATUS.MATL','JCOST.INQ.STD')">Costing - Material</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WO.STATUS.LABR','JCOST.INQ.STD')">Costing - Labor</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WO.STATUS.LDTL','JCOST.INQ.STD')">Costing - Labor Details</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WO.STATUS.LDTL.LIMITED','JCOST.INQ.STD')">Costing - Labor Detail Limited</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WO.STATUS.OUTP','JCOST.INQ.STD')">Costing - Direct Outplant</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WO.STATUS.MATDIR','JCOST.INQ.STD')">Costing - Direct Material</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WO.STATUS.BILL','JCOST.INQ.STD')">Costing - Billing</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WO.STATUS.GLTRANS','JCOST.INQ.STD')">Costing - GL Transaction</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WO.GROUP.ANALYSIS','JCOST.INQ.STD')">Work Order Group Analysis</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SHOW.WO.PRICE.CALC','JCOST.INQ.STD')">T&amp;M Price Calculation Display</a></li></ul></li><li class="menuHeader"><span class="triangle-toggle ui-icon ui-icon-triangle-1-e"></span><span class="ui-widget-header">Reports</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('WIP.RETRO','JCOST.RPT.STD')">(BI) - WIP Total Value Details</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SO.CONTRACT','JCOST.RPT.STD')">Cost Summary Report</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('EXPORT.WO.LABOR.ANALYSIS','JCOST.RPT.STD')">WO Labor Analysis - (Estimate vs Actual)</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('EXPORT.WIP.SUMMARY','JCOST.RPT.STD')">WIP Open or Closed Summary Export</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('JOB.COST.DEPT.SUMMARY','JCOST.RPT.STD')">Cost Summary by Dept Report</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('JOB.COST.SUMMARY.LIMITED','JCOST.RPT.STD')">Cost Summary Report - Limited</a></li></ul></li></ul></li><li class="menuHeader"><span class="ui-widget-header">Material Requirements Planning</span><ul class="ui-widget" style="display: none;"><li class="menuHeader"><span class="triangle-toggle ui-icon ui-icon-triangle-1-e"></span><span class="ui-widget-header">MRP Processing</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('PARTS.MRP','MRP.PROC.STD')">Parts MRP</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('MRP.CALC','MRP.PROC.STD')">MRP Planned Order Calculation</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SHOW.ACTIVITY','MRP.PROC.STD')">(BI) - Planned Part Activity</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('LIST.PLAN','MRP.PROC.STD')">List Planned Orders</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('LOOK.PLAN','MRP.PROC.STD')">Planned Order Information</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PLAN.MAINT','MRP.PROC.STD')">Planned Order Maintenance</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PLAN.BOM','MRP.PROC.STD')">Planned Order BOM</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PLAN.ROUTE','MRP.PROC.STD')">Planned Order Routing</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('CHECK.AVAIL','MRP.PROC.STD')">Planned Order Component Availability</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WO.OPEN','MRP.PROC.STD')">Open Planned Order</a></li></ul></li><li class="menuHeader"><span class="triangle-toggle ui-icon ui-icon-triangle-1-e"></span><span class="ui-widget-header">MRP Displays and Inquiries</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('LOOK.PLAN','MRP.INQ.STD')">Planned Order Information</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SHOW.MRP','MRP.INQ.STD')">Material Requirements Plan</a></li></ul></li><li class="menuHeader"><span class="triangle-toggle ui-icon ui-icon-triangle-1-e"></span><span class="ui-widget-header">Material Requirements Reporting</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('SHOW.ACTIVITY','MRP.RPT.STD')">(BI) - Planned Part Activity</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('BIN.ITEM.REQ','MRP.RPT.STD')">Bin Item Requirements</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SS.VALUE','MRP.RPT.STD')">Safety Stock Valuation</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WO.TO.START','MRP.RPT.STD')">Print Planned WIP Orders to Start </a></li></ul></li></ul></li><li class="menuHeader"><span class="ui-widget-header">Production (Shop Floor Control)</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('WO.PRINT','PRODUCTION.STD')">WO Release and Print</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WO.PRODUCTION.SUMMARY','PRODUCTION.STD')">WO Production Summary Print</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WORK.DEPT.LOAD','PRODUCTION.STD')">(BI) - Work Department Load Listing</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WO.COMPLETION.INQUIRY','PRODUCTION.STD')">Work Order Completion Listing</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WO.INQUIRY','PRODUCTION.STD')">(BI) - Work Order Listing</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PROD.CALENDAR','PRODUCTION.STD')">(BI) - Production Calendar Inquiry</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WO.CHANGE','PRODUCTION.STD')">Work Order Change</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WO.COMMENTS.MAINT','PRODUCTION.STD')">Work Order Comments Maintenance</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('ALLOCATE','PRODUCTION.STD')">Work Order Parts List</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WO.ROUTING.MAINT','PRODUCTION.STD')">Work Order Routing Maintenance</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WO.OP.STATUS','PRODUCTION.STD')">Work Order Operation Update</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('KILL.WO.RELEASE','PRODUCTION.STD')">Kill (Delete) Work Order</a></li><li class="menuHeader"><span class="triangle-toggle ui-icon ui-icon-triangle-1-e"></span><span class="ui-widget-header">Reports and Inquiries</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('SHOW.OP.STATUS','PRODUCTION.RPTS.STD')">Operation Status Codes List</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('LABOR.TASK.BY.DEPARTMENT','PRODUCTION.RPTS.STD')">Labor Tasks By Work Department</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SHOW.WO.COMMENTS','PRODUCTION.RPTS.STD')">Work Order Comments Inquiry</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SHOW.WO.OPS','PRODUCTION.RPTS.STD')">Work Order Operation Inquiry</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SHOW.WO.MATL','PRODUCTION.RPTS.STD')">Work Order Materials Inquiry</a></li></ul></li></ul></li><li class="menuHeader"><span class="ui-widget-header">Resource Scheduling</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('RESOURCE.LIST','RSC.STD')">Resource Schedule List</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('RESOURCE.INQUIRY','RSC.STD')">Resource Schedule Details</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WO.COMPLETION.INQUIRY','RSC.STD')">Work Order Completion Listing</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('PROD.CALENDAR','RSC.STD')">(BI) - Production Calendar Inquiry</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WORK.DEPT.LIST','RSC.STD')">Work Dept Code List</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('WORK.CODE.LIST','RSC.STD')">Work Code List</a></li></ul></li><li class="menuHeader"><span class="ui-widget-header">Labor and Payroll Processing</span><ul class="ui-widget" style="display: none;"><li class="menuHeader"><span class="triangle-toggle ui-icon ui-icon-triangle-1-e"></span><span class="ui-widget-header">Reports and Inquiries</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('EMP.HOURS.BY.OP','PAY.RPTS.STD')">Employee Hours by Work Code</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('EMP.HOURS.BY.DATE','PAY.RPTS.STD')">Employee Hours by Date Range</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('EMP.HOURS.BY.PAY.PERIOD','PAY.RPTS.STD')">Employee Hours by Pay Period</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('EMP.EFF','PAY.RPTS.STD')">Employee Efficiency</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SUM.DEPT.EFF','PAY.RPTS.STD')">Department Efficiency</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SUM.WC.EFF','PAY.RPTS.STD')">Work Center Efficiency</a></li></ul></li></ul></li><li class="menuHeader"><span class="ui-widget-header">Accounts Payable</span><ul class="ui-widget" style="display: none;"><li class="menuHeader"><span class="triangle-toggle ui-icon ui-icon-triangle-1-e"></span><span class="ui-widget-header">Vendor Maintenance and Reporting</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('VENDORS','AP.VEND.STD')">Vendor Master Maintenance</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('VM.INQUIRY','AP.VEND.STD')">(BI) - Vendor Master Listing</a></li></ul></li><li class="menuHeader"><span class="triangle-toggle ui-icon ui-icon-triangle-1-e"></span><span class="ui-widget-header">Inquiries</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('LIST.AP.DET','AP.INQ.STD')">(BI) - AP Invoice Listing</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('AP.DETAIL','AP.INQ.STD')">A/P Invoice Details</a></li></ul></li></ul></li><li class="menuHeader"><span class="ui-widget-header">Accounts Receivable</span><ul class="ui-widget" style="display: none;"><li class="menuHeader"><span class="triangle-toggle ui-icon ui-icon-triangle-1-e"></span><span class="ui-widget-header">Customers</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('CUSTOMERS','AR.CUST.STD')">Customer Master Maintenance</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('BILL.TO','AR.CUST.STD')">Customer Alternate Bill To Maintenance</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('SHIP.TO','AR.CUST.STD')">Customer Location Maintenance</a></li></ul></li></ul></li><li class="menuHeader"><span class="ui-widget-header">Report Administration</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('REPORT.VIEW.INDEX','RPT.STD')">Browse Spooled Reports</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('VIEW.TRANSMITTED.FORMS','RPT.STD')">Browse Recently Archived Forms</a></li></ul></li><li class="menuHeader"><span class="ui-widget-header">Administration</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('CHANGE.PASSWORD','ADMIN.STD')">Change your Password</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('CLEAR.ME','ADMIN.STD')">Clear My Locks</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('USER.LOGOFF','ADMIN.STD')">User Logoff</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('MY.PROFILE.MAINT','ADMIN.STD')">My Profile</a></li></ul></li><li class="menuHeader"><span class="ui-widget-header">System Management </span><ul class="ui-widget" style="display: none;"><li class="menuHeader"><span class="triangle-toggle ui-icon ui-icon-triangle-1-e"></span><span class="ui-widget-header">Codes and Setup Maintenance</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('BUYERS','SYS.SETUP.STD')">Buyer Code Setup</a></li></ul></li><li class="menuHeader"><span class="triangle-toggle ui-icon ui-icon-triangle-1-e"></span><span class="ui-widget-header">Transition Processes</span><ul class="ui-widget" style="display: none;"><li class="menuItem ui-widget-content"><a href="javascript:openNew('IMPORT.PARTS','SYS.INIT.STD')">Import Parts</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('IMPORT.BOM','SYS.INIT.STD')">Import Bill of Materials</a></li><li class="menuItem ui-widget-content"><a href="javascript:openNew('IMPORT.ROUTING','SYS.INIT.STD')">Import Routing</a></li></ul></li></ul></li></ul></div>
+                    </div>
+                </div>
+                <div id="yui-main">
+                    <div class="yui-b" id="datasign-widgets">
+                        <div class="yui-g">
+<div class="yui-g first column ui-sortable" id="col1">
+<!--C1_R1 STARTS HERE-->
+                                <div class="ui-widget" id="WIDGET_CRM_TASKS">
+                                    <div class="ui-widget-header ui-sortable-handle">
+                                        <span class="ui-icon ui-icon-plusthick" id="WIDGET_CRM_TASKS_EXPAND" onclick="widgetCRMTasks_expand_v1()">&nbsp;</span>
+                                        CRM Followup List
+                                    </div>
+                                    <div id="widget_content_1" class="ui-widget-content">
+													<div id="WIDGET_CRM_TASKS_TABLE" style="height:190px;overflow:auto;"><table border="0" width="100%"><tbody><tr class="table-rows"><td style="vertical-align:bottom;font-weight:bold;width:20%">Date</td><td style="vertical-align:bottom;font-weight:bold;width:20%">Acct</td><td style="vertical-align:bottom;font-weight:bold;width:60%">Task</td></tr><tr><td colspan="3">No Tasks currently assigned to you.</td></tr>
+</tbody></table></div>
+                                    </div>
+                                </div>
+<!--C1_R1 ENDS HERE-->
+<!--C1_R2 ENDS HERE-->
+                                <div class="ui-widget" id="box_feeds4">
+                                    <div class="ui-widget-header ui-sortable-handle">
+                                        Assigned Milestone List
+                                    </div>
+                                    <div id="widget_content_1" class="ui-widget-content">
+													<div id="WIDGET_ASSIGNED_MILESTONES_TABLE" style="height:190px;overflow:auto;"><table border="0" width="100%"><tbody><tr class="table-rows"><td style="vertical-align:bottom;font-weight:bold;width:17%">Start</td><td style="vertical-align:bottom;font-weight:bold;width:17%">Due</td><td style="vertical-align:bottom;font-weight:bold;width:15%">Project&nbsp;</td><td style="vertical-align:bottom;font-weight:bold;width:51%">Milestone</td></tr><tr><td colspan="4">No Milestones currently assigned to you.</td></tr>
+</tbody></table></div>
+                                    </div>
+                                </div>
+
+<!--C1_R2 ENDS HERE-->
+                            </div>
+                            <div class="yui-g column ui-sortable" id="col2">
+<!--C2_R1 STARTS HERE-->
+                                <div class="ui-widget" id="box_feeds2">
+                                    <div class="ui-widget-header ui-sortable-handle">FYI - For Your Information!</div>
+                                    <div id="WIDGET_FYI" class="ui-widget-content" style="height:190px;overflow:auto;"></div>
+                                </div>
+<!--C2_R1 ENDS HERE-->
+<!--C2_R2 STARTS HERE-->
+                                <div class="ui-widget" id="box_feeds4">
+                                    <div class="ui-widget-header ui-sortable-handle">
+                                        Assigned Service Calls
+                                    </div>
+                                    <div id="widget_content_1" class="ui-widget-content">
+													<div id="WIDGET_ASSIGNED_SERVICE_CALLS_TABLE" style="height:190px;overflow:auto;"><table border="0" width="100%"><tbody><tr class="table-rows"><td style="vertical-align:bottom;font-weight:bold;width:20%">Date</td><td style="vertical-align:bottom;font-weight:bold;width:20%">SC #</td><td style="vertical-align:bottom;font-weight:bold;width:60%">Customer/Location</td></tr><tr><td colspan="3">No Service Calls currently assigned to you.</td></tr>
+</tbody></table></div>
+                                    </div>
+                                </div>
+<!--C2_R2 ENDS HERE-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<div id="ft">
+                    <div id="footer-center" class="theme-selector">
+                        <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" style="display: inline-block;"><span class="ui-button-text">
+                            Theme Selector
+                        </span></button>
+                        <ul id="icons-ft">
+                            <li>
+                                <!-- <a href="javascript:void(0);" rel="https://ds.datasignonline.com/css/jquery-ui-themes/smoothness/jquery-ui-1.8.5.css" class="smoothness">Smoothness</a> -->
+                                <a href="javascript:void(0);" rel="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/smoothness/jquery-ui.css" class="smoothness">Smoothness</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" rel="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/black-tie/jquery-ui.css" class="blacktie">Black Tie</a>
+                            </li>
+                            <li>
+                                <!-- <a href="javascript:void(0);" rel="https://ds.datasignonline.com/css/jquery-ui-themes/blitzer/jquery-ui-1.8.5.css" class="blitzer">Blitzer</a> -->
+                                <a href="javascript:void(0);" rel="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/blitzer/jquery-ui.css" class="Blitzer">Blitzer</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" rel="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/cupertino/jquery-ui.css" class="cupertino">Cupertino</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" rel="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/dark-hive/jquery-ui.css" class="darkhive">Dark Hive</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" rel="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/dot-luv/jquery-ui.css" class="dotluv">Dot Luv</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" rel="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/eggplant/jquery-ui.css" class="eggplant">Eggplant</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" rel="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/excite-bike/jquery-ui.css" class="excitebike">Excite Bike</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" rel="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/flick/jquery-ui.css" class="flick">Flick</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" rel="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/hot-sneaks/jquery-ui.css" class="hotsneaks">Hot Sneaks</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" rel="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/humanity/jquery-ui.css" class="humanity">Humanity</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" rel="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/le-frog/jquery-ui.css" class="lefrog">Le Frog</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" rel="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/mint-choc/jquery-ui.css" class="mintchoc">Mint Chocolate</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" rel="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/overcast/jquery-ui.css" class="overcast">Overcast</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" rel="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/pepper-grinder/jquery-ui.css" class="peppergrinder">Pepper Grinder</a>
+                            </li>
+                            <li>
+                                <!-- <a href="javascript:void(0);" rel="https://ds.datasignonline.com/css/jquery-ui-themes/redmond/jquery-ui-1.8.5.css" class="redmond">Redmond</a> -->
+                                <a href="javascript:void(0);" rel="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/redmond/jquery-ui.css" class="redmond">Redmond</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" rel="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/south-street/jquery-ui.css" class="southstreet">South Street</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" rel="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/start/jquery-ui.css" class="start">Start</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" rel="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/sunny/jquery-ui.css" class="sunny">Sunny</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" rel="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/swanky-purse/jquery-ui.css" class="swankypurse">Swanky Purse</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" rel="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/trontastic/jquery-ui.css" class="trontastic">Trontastic</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" rel="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/ui-darkness/jquery-ui.css" class="uidarkness">UI Darkness</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" rel="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/ui-lightness/jquery-ui.css" class="uilightness">UI Lightness</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" rel="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/vader/jquery-ui.css" class="vader">Vader</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+   </div>
+
+
+<!-- <script src="https://ds.datasignonline.com/js/jquery-1.4.2.min.js" type="text/javascript" charset="utf-8"></script> (9505) -->
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js" type="text/javascript" charset="utf-8"></script>
+
+
+<!-- <script src="https://ds.datasignonline.com/js/jquery-ui-1.8.5.min.js" type="text/javascript" charset="utf-8"></script> (9505) -->
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+
+
+      <script src="https://ds.datasignonline.com/js/cookie.js" type="text/javascript" charset="utf-8">
+</script>
+      <script src="https://ds.datasignonline.com/js/jquery.styleswitch.js" type="text/javascript" charset="utf-8">
+</script>
+      <script charset="utf-8" type="text/javascript" src="https://ds.datasignonline.com/js/jquery.dataTables.js">
+</script>
+
+<form name="indexPortal" id="indexPortal">
+<input type="hidden" name="USERID" id="USERID" value="BRADYF">
+<input type="hidden" name="IMPERSONATE" id="IMPERSONATE" value="">
+<input type="hidden" name="BAD_FISCAL_PERIODS" id="BAD_FISCAL_PERIODS" value="">
+<input type="hidden" name="PREVIOUSLY_LOGGED_IN" id="PREVIOUSLY_LOGGED_IN" value="[PREVIOUSLY_LOGGED_IN]">
+</form>
+      <script type="text/javascript" charset="utf-8">
+
+function visitSupportPage(){
+   url="https://keyedinmanufacturing.freshdesk.com/support/login/"
+   window.open(url,"QuestionForSupport","addressbar=no,resizable=yes,height=700,width=875,status=yes,scrollbars=yes")
+}
+
+// datasign menu cookie and ctl-key
+var CtlKeyPressedDown = false;
+function checkForCtl() {
+    CtlKeyPressedDown = true;
+
+}
+
+function stringFilter (input) {
+   s = input;
+   filteredValues = ".?=";     // Characters stripped out
+   var i;
+   var returnString = "";
+   for (i = 0; i < s.length; i++) {
+      var c = s.charAt(i);
+      if (filteredValues.indexOf(c) == -1) returnString += c;
+   }
+   return returnString;
+}
+
+function openNew(process, menuID) {
+    SetCookie("currentMenu", menuID, null, "/", null, null);
+
+//*  06/15/17 - SOS
+//    if (CtlKeyPressedDown) {
+        var screenH = screen.availHeight - 155;
+        var screenW = screen.availWidth - 10;
+        var params = 'toolbar,status,menubar,scrollbars,resizable,location=yes';
+        params += ',width=' + screenW + ',height=' + screenH + ',top=1,left=1';
+        CtlKeyPressedDown = false;
+
+//    }else {
+//        screenH = screen.availHeight - 65;
+//        screenW = screen.availWidth - 10;
+//        params = "resizable=yes,status=1,scrollbars=yes,menubar=no,toolbar=no";
+//        params += ",height=" + screenH + ",width=" + screenW + ",top=0,left=0";
+//    }
+
+if((process.substring(0,1)=="@")||(process.substring(0,1)=="#")){
+process=  process.substring(1,10000);
+        openWindowURL =process+"?process=" + process +"&menu="+ menuID
+}else{
+    if (process.indexOf("APPLOAD") == -1) {
+        openWindowURL = "APPLOAD?APP=" + process;
+    }
+}
+    winName=stringFilter(process+menuID)
+    var newWin = window.open(openWindowURL, winName, params);
+}
+// end datasign menu cookie and ctl-key
+
+
+$(document).ready(function () {
+//initiate jquery.styleswitch.js
+$('.theme-selector .ui-button').show();
+                    //initiate jquery.styleswitch.js and theme-selector
+                    $('.theme-selector li a').styleInit();
+
+                    $('body').click(function(){
+                        $('.theme-selector li:visible').hide();
+                    });
+
+                    $('.theme-selector button').click(function(event){
+                        $('.theme-selector li').toggle();
+                        event.stopPropagation();
+                    });
+                       $('.ui-button').button();
+
+
+
+
+                        $(".ui-sortable-placeholder").sortable("option", "disabled", true);
+
+                        $(".column").sortable({
+                            connectWith: ".column",
+                            handle: ".ui-widget-header",
+                            stop: function(event, ui){
+                                if ($('.column').eq(0).children('.ui-widget').length == 0) {
+                                    $('.column').eq(0).html('<div class="ui-sortable-placeholder ui-state-highlight ui-priority-primary">Drag widget here.</div>');
+                                }
+
+                                else {
+                                    $('.ui-sortable-placeholder').hide();
+                                }
+
+
+                                if ($('.column').eq(1).children('.ui-widget').length == 0) {
+
+                                    $('.column').eq(1).html('<div class="ui-sortable-placeholder ui-state-highlight ui-priority-primary">Drag widget here.</div>');
+
+                                }
+
+                            }
+
+                        });
+
+                        $("#datasign-widgets .ui-widget-header").click(function(){
+//                            $(this).next().slideToggle();
+//                            $(this).find('.ui-icon').toggleClass("ui-icon-minusthick").toggleClass("ui-icon-plusthick");
+                        });
+
+//});
+initializeScreen()
+});
+
+function initializeScreen(){
+populateCookies()
+   self.setInterval("populateCookies()",14400000);  //refresh every 240 minutes 1000 ms * 60seconds * 20min take this out if it slows down the system
+
+populateMenu()
+populateWidgets()
+checkForBadFiscalPeriods()
+}
+
+function checkForBadFiscalPeriods(){
+   if(document.getElementById('BAD_FISCAL_PERIODS').value!=""){
+      alert('ALERT!!!!\nUpcoming Fiscal Year Periods have not been configured. Please notify someone in your accounting department.')
+   }
+}
+
+function populateCookies(){
+//SetCookie ("user","BRADYF",1000,"/",null,null);
+SetCookie ("user",document.getElementById('USERID').value,1000,"/",null,null);
+SetCookie ("IMPERSONATE",document.getElementById('IMPERSONATE').value,'',"/",null,null);
+SetCookie ("secure","TRUE",1000,"/",null,null);
+
+}
+
+function populateMenu(){
+
+                    //menu
+//                        $.getJSON('WEB.MENU?USERNAME=BRADYF', function(data){
+                        $.getJSON('WEB.MENU?USERNAME='+document.getElementById('USERID').value, function(data){
+                        function menuHTML(menuArray){
+                            var s = '<ul class="ui-widget">';
+
+                            $.each(menuArray, function(){
+                                var m = this;
+
+                                if //if "process" is undefined then it must be header. set the class to menuHeader
+                 (m.process === undefined) {
+                                    s += '<li class="' + m.type + '"><span class="triangle-toggle ui-icon ui-icon-triangle-1-e"><\/span>' + '<span class="ui-widget-header">' + m.text + '</span>';
+
+                                }
+
+                                else
+                                    if //if item has an extURL; put the url in the href tag.
+                 (m.extURL !== "") {
+                                        s += '<li class="' + m.type + ' ' + 'ui-widget-content' + '">' + '<a href="' + m.extURL + '" target="_blank"' + '>' + m.text + '<\/a>';
+
+                                    }
+
+                                    else // print the type (menuItem in this case), the process and the text.
+                                    {
+                                        s += '<li class="' + m.type + ' ' + 'ui-widget-content' + '">' + '<a href="javascript:openNew(' + "'" + m.process + "'" + ',' + "'" + m.menuID + "'" + ')">' + m.text + '<\/a>';
+
+                                    }
+
+                                // if "submenu", pass the submenu data to the menuHTML function
+                                if (m.submenu) {
+                                    s += menuHTML(m.submenu);
+
+                                }
+
+                                s += '<\/li>';
+
+                            });
+
+                            s += '<\/ul>';
+
+                            return s;
+
+                        }
+
+
+                        $('#menu').html(menuHTML(data.menu));
+                        $('#menu .spinner').hide();
+                          $('#menu > ul > li.menuHeader > .triangle-toggle').remove();
+                        $('#menu > ul > li.menuHeader, #menu > ul > li.menuHeader > ul > li.menuHeader').children().not('span.ui-widget-header, .triangle-toggle').hide();
+
+
+
+                        $('li.menuHeader > span.ui-widget-header').click(function(event){
+                            var eventTar = (event.target);
+
+                           //hide all children of menuHeaders that weren't clicked. Do not include sub menus.
+                            $(eventTar).parent().siblings().not('#menu > ul> li.menuHeader > ul > li.menuHeader').children(':not(:first-child)').slideUp().not('#menu > ul> li.menuHeader > ul > li.menuHeader');
+
+       if (this == event.target) {
+
+                                var e = $(this).parent();
+                                if ($(e).children().is(':hidden')) {
+                                    $(e).children().slideDown();
+                                    $(e).children('.triangle-toggle').toggleClass('ui-icon-triangle-1-e ui-icon-triangle-1-s');
+                                }
+                                else {
+                                    $(e).children().not('.triangle-toggle').not(this).slideUp();
+                                    $(e).children('.triangle-toggle').toggleClass('ui-icon-triangle-1-e ui-icon-triangle-1-s');
+                                }
+                            }
+
+
+
+                        });
+});
+}
+
+function populateWidgets(){
+   widgetFYI();
+
+   widgetCRMTasks();
+   self.setInterval("widgetCRMTasks()",1020000);  //refresh every 17 minutes 1000 ms * 60seconds
+
+   widgetAssignedMilestones();
+   self.setInterval("widgetAssignedMilestones()",1140000);  //refresh every 19 minutes 1000 ms * 60seconds
+
+   widgetAssignedServiceCalls();
+   self.setInterval("widgetAssignedServiceCalls()",3660000);  //refresh every 61 minutes * 1000 ms * 60seconds
+
+   self.setInterval("checkSessionLogin()",300000);  //refresh every 5 minutes * 1000 ms * 60 seconds
+
+}
+
+function checkSessionLogin(){
+  url="CHECK.IS.USER.LOGGED.IN"
+  data = "ACTION=AJAX"
+  $.ajax({
+      async:false,
+      cache:false,
+      data:data,
+      dataType:"text",
+      url:url,
+      success:function(resp){
+         if(resp.indexOf("N")>=0){
+            document.getElementById('USERID').value = ""
+            document.forms[0].submit()
+         }   
+      }
+  });
+
+}
+
+
+
+function widgetFYI(){
+  url="WIDGET.FYI"
+  data = "ACTION=AJAX"
+  $.ajax({
+      async:false,
+      cache:false,
+      data:data,
+      dataType:"html",
+      url:url,
+      success:function(resp){
+$('#WIDGET_FYI').html(resp)
+}
+  });
+
+}
+
+function widgetAssignedServiceCalls(){
+  url="WIDGET.ASSIGNED.SERVICE.CALLS"
+  data = "ACTION=AJAX"
+  $.ajax({
+      async:false,
+      cache:false,
+      data:data,
+      dataType:"html",
+      url:url,
+      success:function(resp){
+$('#WIDGET_ASSIGNED_SERVICE_CALLS_TABLE').html(resp)
+}
+  });
+
+}
+
+function widgetAssignedMilestones(){
+  url="WIDGET.ASSIGNED.MILESTONES"
+  data = "ACTION=AJAX"
+  $.ajax({
+      async:false,
+      cache:false,
+      data:data,
+      dataType:"html",
+      url:url,
+      success:function(resp){
+$('#WIDGET_ASSIGNED_MILESTONES_TABLE').html(resp)
+}
+  });
+
+}
+
+function widgetCRMTasks(){
+  url="WIDGET.CRM.TASKS"
+  data = "ACTION=AJAX"
+  $.ajax({
+      async:false,
+      cache:false,
+      data:data,
+      dataType:"html",
+      url:url,
+      success:function(resp){
+$('#WIDGET_CRM_TASKS_TABLE').html(resp)
+}
+  });
+
+}
+
+function widgetCRMTasks_linkCrmAccount_v1(acctNo){
+   url="CRM.CONTACT.MGT"
+   url+="?ACCTID="+acctNo
+
+   winOptions="width="+screen.width+",height="+screen.height+",top=0,left=0,resizable=yes,scrollbars=yes"
+   window.open(url,"linkCrmAccount"+acctNo,winOptions);
+}
+function widgetCRMTasks_expand_v1(){
+   url="CRM.ASSIGNED.TO.LIST"
+   url+="?FROM_CRM=N"
+
+   winOptions="width=800,height=400,top=0,left=0,resizable=yes,scrollbars=yes,status=yes"
+   window.open(url,"linkCRMFollowup",winOptions);
+}
+
+function widgetAssignedMilestones_linkProject_v1(projectNo){
+   url="PROJECT.MILESTONE.TRACKING"
+   url+="?PROJECTNO="+projectNo
+   url+="&menu=PROJECT.STD"
+   url+="&process=PROJECT.MILESTONE.TRACKING"
+
+// 04-26-16 - SOS - Fixed issue with IE not liking a dash within the window name.
+var extendedWindowName = projectNo
+var index = extendedWindowName.indexOf("-");;
+extendedWindowName = extendedWindowName.substr(0, index) + '_' + extendedWindowName.substr(index + 1);
+
+   winOptions="width="+screen.width+",height="+screen.height+",top=0,left=0,resizable=yes,scrollbars=yes"
+   window.open(url,"linkProject"+extendedWindowName,winOptions);
+}
+
+
+
+function widgetAssignedServiceCalls_linkWOPrint_v1(serviceCallNo){
+   var f=document.forms[0]
+   url="WO.PRINT.GEN"
+   url +="?WONO_COUNT=1"
+   url +="&CBX1="+serviceCallNo
+   url +="&ORDER_SEQ=Y"
+   url +="&CLOSE_WINDOW=Y"
+   features = "width=1,height=1"
+   window.open(url,"printServiceCallWindow",features)
+
+   key = document.getElementById('USERID').value+"_SFC460.GEN"
+   url2="VIEW.LOG"
+   url2+="?LOGKEY="+key
+   url2+="&FIRSTRUN=Y"
+   url2+="&CLOSE_WINDOW=N"
+
+   features = "scrollbars=yes,resizable=yes,width=300,height=300"
+   window.open(url2,"progressServiceCallWindow",features)
+}
+
+
+function signOff(){
+   url="/cgi-bin/mvi.exe/USER.LOGOFF?LOGOFF=AUTO"
+   parent.location=url
+}
+
+
+</script>
+<script type="text/javascript">
+
+//wootric_survey_immediately = true; // Shows survey immediately for testing purposes. TODO: Comment out for production.
+
+//window.wootricSettings = {
+
+//email:'eaglesign_BRADYF_brady@eaglesign.net',// TODO: The current logged in user's email address.
+
+//created_at: 1762733228, // TODO: The current logged in user's sign-up date as a 10 digit Unix timestamp in seconds.
+
+//account_token: 'NPS-04137d91' // This is your unique account token.
+
+//};
+
+</script>
+
+  <!-- begin Wootric code -->
+<!--script language=javascript src="//ds.datasignonline.com/wootric.js"></script-->
+
+
+
+
+</body></html>

@@ -1,0 +1,25 @@
+TEXT AND FONTS CHECK
+==================================================
+
+FONTS INSTALLED: 383
+
+SAMPLE FONTS:
+... and 373 more
+
+CREATING TEXT SAMPLES...
+Created Arial text
+Created Bold text
+Created Italic text
+Created Red text
+
+TEXT TYPES:
+• Artistic Text - for short text, titles
+• Paragraph Text - for long text blocks
+
+TEXT PROPERTIES YOU CAN CHANGE:
+• Font: Text.FontProperties.Name
+• Size: Text.FontProperties.Size
+• Bold: Text.FontProperties.Bold
+• Italic: Text.FontProperties.Italic
+• Color: Fill.UniformColor
+

@@ -1,0 +1,33 @@
+TOOLS AND AUTOMATION
+==================================================
+
+AUTOMATION FEATURES:
+• Batch processing multiple files
+• Automatic dimensioning
+• Color replacement
+• Object arrangement
+• Export automation
+
+SPEED OPTIMIZATION:
+For faster macros use:
+• Application.Optimization = True
+• ActiveDocument.BeginCommandGroup
+• Avoid screen updates during processing
+
+SELECTION OPERATIONS:
+• ActiveSelection.Shapes - selected objects
+• Shape.CreateSelection - select one
+• Shape.AddToSelection - add to selection
+• ActiveDocument.ClearSelection
+
+USER INTERACTION:
+• InputBox - get text from user
+• MsgBox - show messages
+• GetUserClick - let user click point
+• GetUserArea - let user drag area
+
+UNDO SYSTEM:
+• Group operations for single undo
+• ActiveDocument.Undo
+• ActiveDocument.Redo
+

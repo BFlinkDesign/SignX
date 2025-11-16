@@ -1,0 +1,48 @@
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║   EAGLE SIGN - GEMINI PROJECT GENERATOR                         ║
+║   Quick Start Guide                                             ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+
+📋 WHAT YOU HAVE HERE:
+  ✓ generate_gemini_docs.py  - Main Python script
+  ✓ requirements.txt          - Dependencies
+  ✓ RUN_ME.bat               - Windows launcher (USE THIS!)
+  ✓ README.md                - Full documentation
+
+⚡ FASTEST WAY TO RUN:
+
+  1. Make sure Python is installed
+     (If not: download from python.org and check "Add to PATH")
+
+  2. Double-click: RUN_ME.bat
+
+  3. Wait 2-3 minutes
+
+  4. Check your Desktop for "Gemini_Project_Summaries" folder
+     with 10 HTML files ready to upload!
+
+📊 WHAT IT DOES:
+  • Reads G:\2024 Work order tracking.xlsx
+  • Finds 10 diverse projects (different types & sizes)
+  • Searches G:\ for project folders
+  • Generates beautiful HTML summaries
+  • Outputs to your Desktop
+
+🎯 NEXT STEPS AFTER GENERATION:
+  1. Go to https://aistudio.google.com
+  2. Create new corpus named "eagle_sign_projects"
+  3. Upload all 10 HTML files
+  4. Test with query: "Find monument sign projects in Iowa"
+
+💡 PRO TIP:
+  The HTML files are human-readable too! Open them in your
+  browser to review before uploading to Gemini.
+
+❓ PROBLEMS?
+  - Read README.md for troubleshooting
+  - Most common issue: Python not in PATH
+  - Solution: Reinstall Python, check "Add Python to PATH"
+
+🚀 READY? Double-click RUN_ME.bat now!

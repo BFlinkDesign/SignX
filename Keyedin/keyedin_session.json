@@ -1,0 +1,50 @@
+[
+  {
+    "domain": "eaglesign.keyedinsign.com",
+    "httpOnly": false,
+    "name": "IMPERSONATE",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": ""
+  },
+  {
+    "domain": "eaglesign.keyedinsign.com",
+    "expiry": 1762797772,
+    "httpOnly": false,
+    "name": "secure",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "TRUE"
+  },
+  {
+    "domain": "eaglesign.keyedinsign.com",
+    "expiry": 1762797772,
+    "httpOnly": false,
+    "name": "user",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "BRADYF"
+  },
+  {
+    "domain": "eaglesign.keyedinsign.com",
+    "expiry": 1762840943,
+    "httpOnly": false,
+    "name": "SESSIONID",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "ry3ksqkgsxoisflzwrqm1den"
+  },
+  {
+    "domain": "eaglesign.keyedinsign.com",
+    "httpOnly": true,
+    "name": "ASP.NET_SessionId",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "ry3ksqkgsxoisflzwrqm1den"
+  }
+]

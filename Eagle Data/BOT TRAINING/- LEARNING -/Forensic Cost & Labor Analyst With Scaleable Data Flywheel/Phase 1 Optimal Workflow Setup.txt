@@ -1,0 +1,20 @@
+**Daily Variance Analysis Flow:**
+
+1. **Data Export** (5 min)
+   - Run KeyedIn report → Export CSV/PDF
+   - Or use the Selenium script I'll create
+
+2. **Claude Analysis** (10 min)
+   - Upload to Claude Project
+   - Get forensic analysis + predictions
+   - Receive executable automation scripts
+
+3. **Local Automation** (runs continuously)
+   - Python script monitors patterns
+   - Alerts you to anomalies
+   - Builds pattern library
+
+4. **Weekly Pattern Review** (30 min)
+   - Upload accumulated data
+   - Claude updates flywheel patterns
+   - Generates executive dashboard

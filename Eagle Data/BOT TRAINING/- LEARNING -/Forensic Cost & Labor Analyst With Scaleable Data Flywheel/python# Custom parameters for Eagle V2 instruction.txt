@@ -1,0 +1,14 @@
+python# Custom parameters for Eagle Sign Co
+EAGLE_BASELINE_METRICS = {
+    'target_efficiency': 0.85,
+    'material_costs': {
+        'aluminum': 12.50,  # $/sq ft
+        'acrylic': 8.75,
+        'vinyl': 3.25
+    },
+    'labor_rates': {
+        'fabrication': 35,
+        'finishing': 32,
+        'installation': 45
+    }
+}

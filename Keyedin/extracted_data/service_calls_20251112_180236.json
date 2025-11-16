@@ -1,0 +1,16 @@
+{
+  "Service Call List": {
+    "type": "html",
+    "length": 1758,
+    "tables": 2,
+    "status": 200,
+    "content_preview": "<html>\r\n<head>\r\n<title>MVI Error</title>\r\n<link rel=\"stylesheet\" href=\"/general-style.css\" type=\"text/css\">\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\r\n<meta http-equiv=\"Pragma\" content=\"no-cache\">\r\n<script language=javascript>\r\n<!--SCRIPT-->\r\n\r\n<!--Hard coded SCRIPTs start Here-->\r\n</script>\r\n</head>\r\n<body class=workingForms onLoad=\"\">\r\n<br><br>\r\n<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"430\" align=\"center\">\r\n <tr>\r\n   <td bgcolor=\"#696969\">\r\n     "
+  },
+  "Assigned Service Calls": {
+    "type": "html",
+    "length": 357,
+    "tables": 1,
+    "status": 200,
+    "content_preview": "<table border=\"0\" width=\"100%\"><tr class=\"table-rows\"><td style=\"vertical-align:bottom;font-weight:bold;width:20%\">Date</td><td style=\"vertical-align:bottom;font-weight:bold;width:20%\">SC #</td><td style=\"vertical-align:bottom;font-weight:bold;width:60%\">Customer/Location</td></tr><tr><td colspan=\"3\">No Service Calls currently assigned to you.</td></tr>\r\n"
+  }
+}

@@ -1,0 +1,60 @@
+LABOR HOURS PER KIT - LOW, MEAN, HIGH ANALYSIS
+Part: 307-0267 Hanley NRG LED 5x20 conversion kit
+================================================================================
+LABOR HOURS BREAKDOWN BY WORK ORDER:
+--------------------------------------------------------------------------------
+WO      Qty   Total Hrs   Hrs/Kit     Date        Notes               
+--------------------------------------------------------------------------------
+68377   40    30.50       0.7625      05/06/25    Med Efficiency      
+68357   60    51.75       0.8625      04/07/25    Med Efficiency      
+68341   70    56.50       0.8071      03/14/25    Med Efficiency      
+68333   40    30.00       0.7500      02/24/25    Med Efficiency      
+68305   40    40.00       1.0000      01/16/25    Low Efficiency      
+68116   60    47.75       0.7958      07/30/24    Med Efficiency      
+68055   50    25.00       0.5000      05/23/24    High Efficiency     
+67318   20    14.75       0.7375      03/30/22    Med Efficiency      
+67274   20    24.00       1.2000      2022        Low Efficiency      
+66954   20    31.75       1.5875      02/04/21    Low Efficiency      
+
+================================================================================
+LABOR HOURS STATISTICAL ANALYSIS:
+================================================================================
+METRIC              LOW            MEAN           HIGH           RANGE          
+--------------------------------------------------------------------------------
+Hours per Kit       0.5000         0.9003         1.5875         1.0875         
+Total Job Hours     14.7500        35.2000        56.5000        41.7500        
+Job Quantities      20             42.0           70             50             
+
+================================================================================
+LABOR EFFICIENCY ANALYSIS:
+================================================================================
+• Labor Hours per Kit Variance: 217%
+• Most Efficient Job: 0.5000 hrs/kit (WO 68055)
+• Least Efficient Job: 1.5875 hrs/kit (WO 66954)
+• Average Efficiency: 0.9003 hrs/kit
+
+LABOR HOUR OUTLIERS (>20% from average):
+• WO 68055: 0.5000 hrs/kit (44% BELOW average)
+• WO 67274: 1.2000 hrs/kit (33% ABOVE average)
+• WO 66954: 1.5875 hrs/kit (76% ABOVE average)
+
+================================================================================
+LABOR HOURS BY WORK CODE (from recent 5 jobs):
+================================================================================
+WORK CODE                     LOW         MEAN        HIGH        RANGE       
+------------------------------------------------------------------------------
+0340 - ELECTRICAL WIRING      0.4417      0.5984      0.7625      0.3208      
+0280 - CRATING & SHIPPING     0.1000      0.1738      0.3000      0.2000      
+0270 - MISC FABRICATION       0.0000      0.0826      0.1583      0.1583      
+9300 - ELECTRICAL OVERTIME    0.0063      0.0532      0.1250      0.1187      
+
+================================================================================
+RECOMMENDED 2025 LABOR STANDARDS:
+================================================================================
+• ELECTRICAL WIRING: 0.5984 hrs/kit (average)
+• CRATING & SHIPPING: 0.3000 hrs/kit (worst-case)
+• MISC FABRICATION: 0.1583 hrs/kit (worst-case)
+• ELECTRICAL OVERTIME: 0.0532 hrs/kit (average)
+• TOTAL STANDARD: 1.1099 hrs/kit
+
+Note: Total standard of 1.1099 hrs/kit provides buffer for variability
