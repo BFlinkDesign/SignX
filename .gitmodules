@@ -1,0 +1,4 @@
+[submodule "SignX-Studio"]
+	path = SignX-Studio
+	url = https://github.com/EAGLE605/SignX-Studio.git
+
