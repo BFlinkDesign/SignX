@@ -1,0 +1,10 @@
+{
+  "task_id": "demo-dfma-1",
+  "description": "sheet metal L-bracket",
+  "process": "sheet_metal",
+  "params": {
+    "r_over_t": 1.0,
+    "gauge_mm": 2.0,
+    "quantity": 5000
+  }
+}

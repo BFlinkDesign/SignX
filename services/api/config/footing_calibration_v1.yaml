@@ -1,0 +1,67 @@
+# Foundation Calibration Constants (ASCE 7-16 + Calibration)
+# Used for direct burial foundation depth calculations
+
+footing_calibration:
+  version: "v1"
+  effective_date: "2024-01-01"
+  source: "ASCE 7-16 Section 12.7.1 + calibrated field data"
+  
+  k_factors:
+    description: "Calibrated K factor for lateral resistance"
+    unit: "dimensionless"
+    
+    soil_types:
+      sand:
+        k: 0.15
+        notes: "Compact sand, optimal conditions"
+      
+      silt:
+        k: 0.10
+        notes: "Medium-dense silt, average conditions"
+      
+      clay:
+        k: 0.07
+        notes: "Stiff clay, conservative assumption"
+    
+    default:
+      k: 0.12
+      notes: "Generic mixed soil when type unknown"
+  
+  soil_bearing:
+    description: "Allowable soil bearing pressures"
+    unit: "psf"
+    
+    default:
+      value: 3000.0
+      notes: "Conservative default for compact fill"
+    
+    by_type:
+      sand:
+        value: 4000.0
+        notes: "Compact sand, well-drained"
+      
+      silt:
+        value: 2500.0
+        notes: "Medium-dense silt"
+      
+      clay:
+        value: 2000.0
+        notes: "Stiff clay, cohesive"
+      
+      bedrock:
+        value: 10000.0
+        notes: "Competent rock formation"
+  
+  concrete_properties:
+    description: "Concrete material constants"
+    
+    normal_weight:
+      density_pcf: 150.0
+      strength_psi: 3000.0
+      notes: "Standard 3000 psi concrete"
+    
+    lightweight:
+      density_pcf: 110.0
+      strength_psi: 2500.0
+      notes: "Lightweight concrete option"
+

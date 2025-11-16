@@ -1,0 +1,45 @@
+[project]
+name = "apex"
+version = "0.1.0"
+description = "APEX monorepo: deterministic, test-first, containerized mechanical-engineering copilot"
+readme = "README.md"
+requires-python = ">=3.11,<3.12"
+authors = [{ name = "APEX Contributors" }]
+license = { text = "MIT" }
+dependencies = []
+
+[dependency-groups]
+dev = [
+  "pytest>=8.0.0",
+  "mypy>=1.10.0",
+  "ruff>=0.5.0",
+]
+
+[tool.uv]
+# Configure uv if needed
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = []
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+disallow_untyped_defs = true
+no_implicit_optional = true
+disallow_any_generics = true
+check_untyped_defs = true
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-q"
+testpaths = ["tests"]
+
+

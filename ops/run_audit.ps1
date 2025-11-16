@@ -22,7 +22,7 @@ if (-not (Test-Path "ops\reports")) {
     New-Item -ItemType Directory -Path "ops\reports" | Out-Null
 }
 
-# Run orchestrator
+# Run orchestrator with flags
 $argsList = @("full", "--config", $ConfigPath)
 if ($Workers -gt 0) { $argsList += @("--workers", "$Workers") }
 if ($NoSwarm.IsPresent) { $argsList += @("--no-swarm") }

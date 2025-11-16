@@ -1,0 +1,97 @@
+================================================================================
+MIGRATION SQUASH - FILES TO DELETE
+================================================================================
+
+Date: 2025-11-01
+Purpose: Remove 16 obsolete migration files after consolidation
+
+The following migration files are now OBSOLETE and should be deleted:
+
+LOCATION: services/api/alembic/versions/
+
+FILES TO DELETE (16 total):
+----------------------------
+1.  001_initial_projects_schema.py
+2.  002_add_enums_and_indexes.py
+3.  003_add_calib_pricing_tables.py
+4.  004_seed_calib_pricing_data.py
+5.  005_performance_indexes_query_timeout.py
+6.  006_envelope_support_indexes.py
+7.  007_add_partitioning.py
+8.  008_add_pole_sections_table.py
+9.  009_add_audit_rbac_compliance_tables.py
+10. 001a_create_aisc_foundation.py
+11. 001b_create_material_costs.py
+12. 001c_create_sign_views.py
+13. 010_add_cantilever_tables.py
+14. 011_add_monument_tables.py
+15. 011_add_monument_pole_tables.py
+16. 012_restructure_to_pole_architecture.py
+
+NEW MIGRATIONS (2 total):
+--------------------------
+✓ 001_foundation.py (KEEP - new consolidated base migration)
+✓ 002_pole_architecture.py (KEEP - new pole architecture migration)
+
+================================================================================
+DELETION COMMANDS
+================================================================================
+
+PowerShell (Windows):
+---------------------
+cd C:\Scripts\SignX-Studio\services\api\alembic\versions
+
+Remove-Item 001_initial_projects_schema.py
+Remove-Item 002_add_enums_and_indexes.py
+Remove-Item 003_add_calib_pricing_tables.py
+Remove-Item 004_seed_calib_pricing_data.py
+Remove-Item 005_performance_indexes_query_timeout.py
+Remove-Item 006_envelope_support_indexes.py
+Remove-Item 007_add_partitioning.py
+Remove-Item 008_add_pole_sections_table.py
+Remove-Item 009_add_audit_rbac_compliance_tables.py
+Remove-Item 001a_create_aisc_foundation.py
+Remove-Item 001b_create_material_costs.py
+Remove-Item 001c_create_sign_views.py
+Remove-Item 010_add_cantilever_tables.py
+Remove-Item 011_add_monument_tables.py
+Remove-Item 011_add_monument_pole_tables.py
+Remove-Item 012_restructure_to_pole_architecture.py
+
+
+Bash/Linux:
+-----------
+cd services/api/alembic/versions
+
+rm 001_initial_projects_schema.py
+rm 002_add_enums_and_indexes.py
+rm 003_add_calib_pricing_tables.py
+rm 004_seed_calib_pricing_data.py
+rm 005_performance_indexes_query_timeout.py
+rm 006_envelope_support_indexes.py
+rm 007_add_partitioning.py
+rm 008_add_pole_sections_table.py
+rm 009_add_audit_rbac_compliance_tables.py
+rm 001a_create_aisc_foundation.py
+rm 001b_create_material_costs.py
+rm 001c_create_sign_views.py
+rm 010_add_cantilever_tables.py
+rm 011_add_monument_tables.py
+rm 011_add_monument_pole_tables.py
+rm 012_restructure_to_pole_architecture.py
+
+================================================================================
+VERIFICATION
+================================================================================
+
+After deletion, you should only have 2 migration files:
+
+ls services/api/alembic/versions/*.py
+
+Expected output:
+  001_foundation.py
+  002_pole_architecture.py
+
+Total migration files: 2
+
+================================================================================

@@ -8,7 +8,7 @@ This `ops/agents` toolkit provides a modular, multi‑agent pipeline to:
 
 ### High‑Level Agents
 - AuditorAgent: runs static analyzers (ruff, mypy, deptry, vulture, eslint if available) and normalizes results.
-- UnusedDetectorAgent: finds unused files and symbols (Python via AST+vulture; TS via ts-prune when available).
+- UnusedDetectorAgent: finds unused files and symbols (Python via AST+vulture; TS via simple import scan/ts-prune if available).
 - RAGIndexerAgent: builds a local SQLite-backed code/docs index for retrieval.
 - RefactorPlannerAgent: aggregates signals and produces actionable proposals (keep, refactor, archive, delete).
 - Orchestrator: coordinates agents and emits reports in `ops/reports/`.
@@ -31,16 +31,5 @@ This `ops/agents` toolkit provides a modular, multi‑agent pipeline to:
    - `ops/reports/findings.json`
    - `ops/reports/unused_files.json`
    - `ops/reports/rag/index.sqlite` (RAG store)
-
-### Configuration
-Edit `ops/agents/config.yaml` to include project roots to analyze and ignore patterns. Defaults focus on:
-- `SignX-Studio/`
-- `SignX-Intel/`
-- `Keyedin/`
-
-### Notes
-- Node-based tools (eslint/ts-prune) are invoked only if found locally.
-- All reports are deterministic and CI-friendly where possible.
-- No app code is modified by default; proposals are written as reports.
 
 

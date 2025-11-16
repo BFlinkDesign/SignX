@@ -1,0 +1,45 @@
+name: ci
+on:
+  push: { branches: ["main"] }
+  pull_request: { branches: ["main"] }
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/uv-action@v3
+      - name: Python deps
+        run: uv pip install -q -r <(uv pip compile --generate-hashes pyproject.toml)
+      - name: Ruff
+        run: ruff check .
+      - name: Mypy
+        run: mypy .
+      - name: Pytest
+        run: pytest -q
+
+  smoke-compose:
+    runs-on: ubuntu-latest
+    services:
+      redis:
+        image: redis:7-alpine
+        ports: ['6379:6379']
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build & Up
+        run: docker compose -f infra/compose.yaml up --build -d
+      - name: Smoke
+        run: |
+          set -e
+          timeout 60 bash -c 'until curl -fsS http://localhost:8000/health; do sleep 2; done'
+          python scripts/smoke.py
+      - name: Logs on failure
+        if: failure()
+        run: docker compose -f infra/compose.yaml logs --no-color > compose.log || true
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: compose-logs
+          path: compose.log
+
+

@@ -1,0 +1,13 @@
+{
+  "task_id": "demo-materials-1",
+  "application": "Al 6061 bracket for outdoor use",
+  "key_requirements": [
+    "outdoor corrosion"
+  ],
+  "min_yield_mpa": 240.0,
+  "weights": {
+    "cost": 0.3,
+    "strength": 0.5,
+    "corrosion": 0.2
+  }
+}

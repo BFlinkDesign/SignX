@@ -1,0 +1,33 @@
+# Conda environment for SignX-Studio ML/AI features
+# Includes RAPIDS (cuDF, cuML, cuGraph) for GPU acceleration
+# Compatible with NVIDIA RTX 5070 Ti and CUDA 12.1
+
+name: signx-ml
+channels:
+  - rapidsai
+  - conda-forge
+  - nvidia
+  - pytorch
+  - defaults
+
+dependencies:
+  - python=3.11
+  - cuda-version=12.1
+  
+  # RAPIDS ecosystem (cuDF, cuML, cuGraph)
+  - rapids=24.10
+  - cudatoolkit=12.1
+  
+  # System dependencies for PDF processing
+  - ghostscript
+  - poppler
+  
+  # Optional: Jupyter for experimentation
+  - jupyterlab=4.2
+  - ipywidgets=8.1
+  
+  # Pip packages (installed after conda)
+  - pip
+  - pip:
+      - -r requirements-ml.txt
+

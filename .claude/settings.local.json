@@ -1,9 +1,36 @@
 {
   "permissions": {
     "allow": [
-      "Bash(powershell -ExecutionPolicy Bypass -File \".\\scripts\\start_database.ps1\")"
+      "WebFetch(domain:calcusign.com)",
+      "Bash(alembic:*)",
+      "Bash(docker ps:*)",
+      "Bash(pip install:*)",
+      "Bash(python:*)",
+      "Bash(docker run:*)",
+      "Bash(findstr:*)",
+      "Bash(dir:*)",
+      "mcp__ide__getDiagnostics",
+      "Bash(npm run typecheck:*)",
+      "Bash(npm run lint)",
+      "Bash(powershell.exe -ExecutionPolicy Bypass -File rebrand_to_signx_studio.ps1)",
+      "Bash(psql:*)",
+      "Bash(\"/c/Program Files/PostgreSQL/16/bin/psql.exe\" --version)",
+      "Bash(\"/c/Program Files/PostgreSQL/15/bin/psql.exe\" --version)",
+      "Bash(\"/c/Program Files/PostgreSQL/14/bin/psql.exe\" --version)",
+      "Bash(powershell.exe -ExecutionPolicy Bypass -File setup_database.ps1)",
+      "Bash(docker --version:*)",
+      "Bash(docker-compose up:*)",
+      "Bash(cat:*)",
+      "Bash(docker exec:*)",
+      "Bash(npm create:*)",
+      "Bash(npm install:*)",
+      "Bash(node -e:*)",
+      "Bash(npx:*)",
+      "Bash(/plugin marketplace add:*)",
+      "Bash(ruff check:*)",
+      "Bash(find:*)"
     ],
-    "deny": [],
-    "ask": []
-  }
+    "deny": []
+  },
+  "enableAllProjectMcpServers": true
 }

@@ -1,0 +1,277 @@
+# ============================================================================
+# SignX Studio - Production Docker Compose Configuration
+# ============================================================================
+#
+# This configuration is optimized for production deployment with:
+# - Persistent data volumes
+# - Automatic restart policies
+# - Resource limits
+# - Health checks
+# - Security hardening
+#
+# Usage:
+#   docker-compose -f docker-compose.prod.yml up -d
+#   docker-compose -f docker-compose.prod.yml down
+#   docker-compose -f docker-compose.prod.yml logs -f
+#
+# Prerequisites:
+#   - Docker Engine 20.10+
+#   - Docker Compose 2.0+
+#   - .env file with production secrets
+# ============================================================================
+
+name: signx-studio
+
+services:
+  # ==========================================================================
+  # PostgreSQL Database - Primary data store
+  # ==========================================================================
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: signx-db
+    restart: unless-stopped
+
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-signx}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
+      - POSTGRES_DB=${POSTGRES_DB:-signx_studio}
+      - POSTGRES_INITDB_ARGS=--encoding=UTF8 --locale=en_US.UTF-8
+      # Performance tuning
+      - PGDATA=/var/lib/postgresql/data/pgdata
+
+    command:
+      - postgres
+      - -c
+      - shared_preload_libraries=pg_stat_statements
+      - -c
+      - pg_stat_statements.track=all
+      - -c
+      - statement_timeout=60s
+      - -c
+      - wal_level=replica
+      - -c
+      - max_connections=200
+      - -c
+      - shared_buffers=512MB
+      - -c
+      - effective_cache_size=1GB
+      - -c
+      - work_mem=16MB
+      - -c
+      - maintenance_work_mem=128MB
+      - -c
+      - checkpoint_completion_target=0.9
+      - -c
+      - random_page_cost=1.1
+      - -c
+      - effective_io_concurrency=200
+      - -c
+      - max_wal_size=2GB
+      - -c
+      - min_wal_size=1GB
+      - -c
+      - log_statement=ddl
+      - -c
+      - log_min_duration_statement=1000
+
+    volumes:
+      - signx_db_data:/var/lib/postgresql/data
+      - ./backups:/backups:rw
+      - ./scripts/backup_database.ps1:/scripts/backup_database.ps1:ro
+
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+    networks:
+      - signx-network
+
+    security_opt:
+      - no-new-privileges:true
+
+  # ==========================================================================
+  # Redis Cache - Session and task queue
+  # ==========================================================================
+  cache:
+    image: redis:7-alpine
+    container_name: signx-cache
+    restart: unless-stopped
+
+    command:
+      - redis-server
+      - --requirepass
+      - ${REDIS_PASSWORD:?REDIS_PASSWORD must be set in .env}
+      - --maxmemory
+      - 256mb
+      - --maxmemory-policy
+      - allkeys-lru
+      - --appendonly
+      - "yes"
+      - --appendfsync
+      - everysec
+
+    volumes:
+      - signx_redis_data:/data
+
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+
+    networks:
+      - signx-network
+
+    security_opt:
+      - no-new-privileges:true
+
+  # ==========================================================================
+  # FastAPI Application - Main API server
+  # ==========================================================================
+  api:
+    build:
+      context: ./services/api
+      dockerfile: Dockerfile
+      args:
+        - APP_VERSION=${APP_VERSION:-1.0.0}
+    image: signx-studio-api:${APP_VERSION:-1.0.0}
+    container_name: signx-api
+    restart: unless-stopped
+
+    environment:
+      # Application
+      - ENV=production
+      - SERVICE_NAME=api
+      - APP_VERSION=${APP_VERSION:-1.0.0}
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - PYTHONPATH=/app/src
+
+      # Database
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-signx}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-signx_studio}
+
+      # Redis
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@cache:6379/0
+
+      # Security
+      - SECRET_KEY=${SECRET_KEY:?SECRET_KEY must be set in .env}
+      - CORS_ALLOW_ORIGINS=${CORS_ALLOW_ORIGINS:-http://localhost:3000}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS:-localhost,127.0.0.1}
+
+      # Rate Limiting
+      - APEX_RATE_LIMIT_PER_MIN=${RATE_LIMIT_PER_MIN:-120}
+
+      # Object Storage (optional)
+      - MINIO_URL=${MINIO_URL:-}
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-}
+      - MINIO_BUCKET=${MINIO_BUCKET:-signx-uploads}
+
+      # Authentication (optional)
+      - APEX_SUPABASE_URL=${SUPABASE_URL:-}
+      - APEX_SUPABASE_KEY=${SUPABASE_KEY:-}
+      - APEX_SUPABASE_SERVICE_KEY=${SUPABASE_SERVICE_KEY:-}
+
+      # Monitoring (optional)
+      - SENTRY_DSN=${SENTRY_DSN:-}
+      - SENTRY_ENVIRONMENT=production
+      - SENTRY_TRACES_SAMPLE_RATE=${SENTRY_TRACES_SAMPLE_RATE:-0.1}
+
+    ports:
+      - "${API_PORT:-8000}:8000"
+
+    depends_on:
+      db:
+        condition: service_healthy
+      cache:
+        condition: service_healthy
+
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+
+    volumes:
+      # Logs
+      - signx_api_logs:/var/log/apex:rw
+      # Temporary files
+      - type: tmpfs
+        target: /tmp
+        tmpfs:
+          size: 100M
+
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+
+    networks:
+      - signx-network
+
+    security_opt:
+      - no-new-privileges:true
+
+    read_only: false  # Set to true for maximum security, but requires tmpfs for all writable paths
+
+# ==========================================================================
+# Networks
+# ==========================================================================
+networks:
+  signx-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+# ==========================================================================
+# Volumes - Persistent data storage
+# ==========================================================================
+volumes:
+  # PostgreSQL data - CRITICAL: Back up regularly
+  signx_db_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${DB_DATA_PATH:-./data/postgres}
+
+  # Redis persistence
+  signx_redis_data:
+    driver: local
+
+  # Application logs
+  signx_api_logs:
+    driver: local

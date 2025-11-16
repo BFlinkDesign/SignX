@@ -1,0 +1,69 @@
+﻿# Prometheus configuration for SIGN X Studio Clone
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'apex'
+    environment: 'production'
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
+
+# Load rules
+rule_files:
+  - 'alerts.yml'
+
+# Scrape configurations
+scrape_configs:
+  # API Service
+  - job_name: 'apex-api'
+    scrape_interval: 15s
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['api:8000']
+        labels:
+          service: 'api'
+          component: 'api'
+          environment: '${ENV:-dev}'
+
+  # Worker Service (if exposing metrics)
+  - job_name: 'apex-worker'
+    scrape_interval: 30s
+    static_configs:
+      - targets: ['worker:5555']  # Flower/Celery metrics endpoint
+        labels:
+          service: 'worker'
+          component: 'celery'
+          environment: '${ENV:-dev}'
+
+  # PostgreSQL (via postgres_exporter if available)
+  - job_name: 'postgres'
+    scrape_interval: 30s
+    static_configs:
+      - targets: ['postgres-exporter:9187']
+        labels:
+          service: 'database'
+          component: 'postgresql'
+          environment: '${ENV:-dev}'
+
+  # Redis (via redis_exporter if available)
+  - job_name: 'redis'
+    scrape_interval: 30s
+    static_configs:
+      - targets: ['redis-exporter:9121']
+        labels:
+          service: 'cache'
+          component: 'redis'
+          environment: '${ENV:-dev}'
+
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    scrape_interval: 30s
+    static_configs:
+      - targets: ['localhost:9090']
+

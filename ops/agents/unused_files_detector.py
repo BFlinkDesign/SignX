@@ -1,14 +1,15 @@
-import os
 import re
 import ast
 from pathlib import Path
 from typing import Dict, Any, List, Set, Tuple
 
 from rich import print as rprint
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def _py_import_graph(root: Path) -> Tuple[Set[Path], Set[Path]]:
-	"""Very lightweight Python import graph: returns (all_files, referenced_files)."""
 	all_py: Set[Path] = set(p.resolve() for p in root.glob("**/*.py"))
 	referenced: Set[Path] = set()
 
@@ -25,7 +26,8 @@ def _py_import_graph(root: Path) -> Tuple[Set[Path], Set[Path]]:
 		try:
 			src = file.read_text(encoding="utf-8", errors="ignore")
 			tree = ast.parse(src)
-		except Exception:
+		except Exception as e:
+			logger.warning("Exception in unused_files_detector.py: %s", str(e))
 			continue
 		for node in ast.walk(tree):
 			if isinstance(node, ast.Import):
@@ -42,7 +44,6 @@ def _py_import_graph(root: Path) -> Tuple[Set[Path], Set[Path]]:
 
 
 def _ts_references(root: Path) -> Tuple[Set[Path], Set[Path]]:
-	"""Find TS/TSX/JS/JSX files and approximate references via import lines."""
 	all_files: Set[Path] = set()
 	for pattern in ("**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"):
 		all_files.update({p.resolve() for p in root.glob(pattern)})
@@ -53,14 +54,13 @@ def _ts_references(root: Path) -> Tuple[Set[Path], Set[Path]]:
 	for f in list(all_files):
 		try:
 			txt = f.read_text(encoding="utf-8", errors="ignore")
-		except Exception:
+		except Exception as e:
+			logger.warning("Exception in unused_files_detector.py: %s", str(e))
 			continue
 		for m in import_re.finditer(txt):
 			ref = m.group(1)
-			# Only handle relative paths here; ts-prune (if available) will be better
 			if ref.startswith("."):
 				target = (f.parent / ref).resolve()
-				# Try extensions
 				candidates = [
 					target,
 					target.with_suffix(".ts"),
@@ -84,12 +84,10 @@ def detect_unused_files(cfg: Dict[str, Any]) -> Dict[str, Any]:
 	roots = [Path(r) for r in cfg.get("project_roots", [])]
 
 	for root in roots:
-		# Python
 		all_py, ref_py = _py_import_graph(root)
 		py_unused = sorted(str(p) for p in (all_py - ref_py))
 		results["python"][str(root)] = {"all": len(all_py), "referenced": len(ref_py), "unused_candidates": py_unused}
 
-		# TS/JS
 		all_ts, ref_ts = _ts_references(root)
 		ts_unused = sorted(str(p) for p in (all_ts - ref_ts))
 		results["node"][str(root)] = {"all": len(all_ts), "referenced": len(ref_ts), "unused_candidates": ts_unused}

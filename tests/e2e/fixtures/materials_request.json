@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0.0",
+  "units": {"stress": "MPa", "density": "g/cm^3", "cost": "USD/kg"},
+  "weights": {"yield_strength": 0.5, "density": 0.2, "cost": 0.1, "corrosion": 0.2, "fatigue": 0.0},
+  "constraints": {"min_yield_strength": 240, "max_density": 8.0, "max_cost": 80},
+  "materials": [
+    {
+      "id": "A",
+      "name": "Aluminum",
+      "properties": {"yield_strength": 300, "density": 2.7, "cost": 3.0},
+      "qualities": {"corrosion": "Fair"},
+      "provenance": [{"source": "MatWeb", "version": "2020"}]
+    },
+    {
+      "id": "B",
+      "name": "Steel",
+      "properties": {"yield_strength": 600, "density": 7.8, "cost": 2.0},
+      "qualities": {"corrosion": "Good"},
+      "provenance": [{"source": "ASM Handbook Vol.1", "version": "2019"}]
+    },
+    {
+      "id": "C",
+      "name": "Titanium",
+      "properties": {"yield_strength": 900, "density": 4.5, "cost": 15.0},
+      "qualities": {"corrosion": "Excellent"},
+      "provenance": [{"source": "MatWeb", "version": "2021"}]
+    }
+  ],
+  "must_have": {"form": "plate"},
+  "nice_to_have": {"cert": "AMS-QQ-A-250/11"}
+}
+
+

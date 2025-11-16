@@ -1,0 +1,40 @@
+stages:
+  - audit
+  - lint
+  - test
+  - build
+
+variables:
+  PYTHON_VERSION: "3.12"
+
+.python_cache: &python_cache
+  cache:
+    key:
+      files:
+        - ops/requirements.txt
+    paths:
+      - .venv_ops/
+      - .cache/pip/
+
+audit:swarm:
+  stage: audit
+  image: python:${PYTHON_VERSION}-slim
+  <<: *python_cache
+  before_script:
+    - python --version
+    - pip install --upgrade pip
+    - pip install -r ops/requirements.txt
+  script:
+    - python -m ops.agents.orchestrator full --config ops/agents/config.yaml --workers 4
+    - python -m ops.agents.gate
+  artifacts:
+    when: always
+    paths:
+      - ops/reports/summary.md
+      - ops/reports/findings.json
+      - ops/reports/rag/index.sqlite
+    expire_in: 1 week
+  rules:
+    - if: $CI_COMMIT_BRANCH
+
+

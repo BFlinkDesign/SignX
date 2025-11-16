@@ -1,0 +1,92 @@
+﻿# MkDocs configuration for SIGN X Studio Clone documentation
+
+site_name: SIGN X Studio Clone Documentation
+site_description: Complete documentation for SIGN X Studio Clone platform
+site_author: APEX Team
+site_url: https://calcusign-apex-clone.readthedocs.io
+
+repo_name: calcusign-apex-clone
+repo_url: https://github.com/yourorg/calcusign-apex-clone
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.annotate
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - toc:
+      permalink: true
+
+plugins:
+  - search
+  - awesome-pages
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - getting-started/quickstart.md
+    - getting-started/installation.md
+    - getting-started/architecture.md
+  - Guides:
+    - guides/project-management.md
+    - guides/sign-design-workflow.md
+    - guides/foundation-design.md
+    - guides/pricing-estimation.md
+    - guides/file-management.md
+    - guides/api-integration.md
+  - Reference:
+    - reference/api-endpoints.md
+    - reference/environment-variables.md
+    - reference/response-envelope.md
+    - reference/error-codes.md
+  - Deployment:
+    - deployment/production.md
+    - deployment/docker-compose.md
+    - deployment/kubernetes.md
+  - Operations:
+    - operations/monitoring.md
+    - operations/troubleshooting.md
+    - operations/runbooks.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/yourorg/calcusign-apex-clone
+  version:
+    provider: mike
+

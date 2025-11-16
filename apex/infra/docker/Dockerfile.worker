@@ -1,0 +1,14 @@
+FROM python:3.11-slim
+WORKDIR /app
+COPY pyproject.toml ./
+COPY services/worker/pyproject.toml services/worker/pyproject.toml
+RUN python -m pip install --upgrade pip uv \
+    && uv pip compile pyproject.toml -o /tmp/req-root.txt --generate-hashes \
+    && uv pip install --require-hashes -r /tmp/req-root.txt \
+    && uv pip compile services/worker/pyproject.toml -o /tmp/req-worker.txt --generate-hashes \
+    && uv pip install --require-hashes -r /tmp/req-worker.txt
+COPY services/worker /app/services/worker
+ENV PYTHONPATH=/app/services/worker/src:/app
+
+
+

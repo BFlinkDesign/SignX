@@ -13,7 +13,7 @@ pycln>=2.4.0
 isort>=5.13.2
 pip-audit>=2.7.3
 
-# RAG (optional; if missing we fall back to tf-idf)
+# RAG (optional; if missing we fall back to no embeddings)
 sentence-transformers>=3.2.1
 faiss-cpu>=1.8.0
 scikit-learn>=1.5.2

@@ -1,0 +1,128 @@
+# ============================================================================
+# Docker Ignore File - Minimize image size and improve build performance
+# ============================================================================
+
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+.env/
+
+# Testing
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+.hypothesis/
+tests/
+
+# Type checking
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pytype/
+.ruff_cache/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation
+docs/
+*.md
+!README.md
+CHANGELOG.md
+LICENSE
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+Jenkinsfile
+
+# Docker files
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Logs
+*.log
+logs/
+*.out
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Backup files
+*.bak
+*.backup
+backups/
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Development files
+.env
+.env.*
+!.env.example
+*.local
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Monitoring and profiling
+.profile
+*.prof
+
+# Jupyter notebooks
+*.ipynb
+.ipynb_checkpoints/
+
+# Node modules (if any)
+node_modules/
+
+# Scripts not needed in container
+scripts/deploy*.sh
+scripts/setup*.sh
+scripts/*_local.py
+
+# Alembic - keep only what's needed
+alembic/versions/.gitkeep
+
+# Config overrides (use environment variables instead)
+config/local.yaml
+config/dev.yaml
+config/*.local.*
+

@@ -1,0 +1,6 @@
+anchors:
+  - pattern: 4
+    dia_in: 0.75
+    grade: A307
+    min_edge_in: 3.0
+

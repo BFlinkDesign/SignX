@@ -1,0 +1,278 @@
+name: apex
+
+services:
+  api:
+    build:
+      context: ../services/api
+    image: apex-api:dev
+    environment:
+      - ENV=dev
+      - SERVICE_NAME=api
+      - APP_VERSION=0.1.0
+      - GIT_SHA=${GIT_SHA:-dev}
+      - GIT_DIRTY=${GIT_DIRTY:-false}
+      - BUILD_ID=${BUILD_ID:-local}
+      - MODEL_PROVIDER=none
+      - MODEL_NAME=none
+      - MODEL_TEMPERATURE=0.0
+      - MODEL_MAX_TOKENS=1024
+      - CORS_ALLOW_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
+      - REDIS_URL=redis://cache:6379/0
+      - DATABASE_URL=postgresql://apex:apex@db:5432/apex
+      - APEX_RATE_LIMIT_PER_MIN=60
+      - MINIO_URL=http://object:9000
+      - MINIO_ACCESS_KEY=minioadmin
+      - MINIO_SECRET_KEY=minioadmin
+      - MINIO_BUCKET=apex-uploads
+      # Supabase Auth (optional - set via .env for production)
+      - APEX_SUPABASE_URL=${SUPABASE_URL:-}
+      - APEX_SUPABASE_KEY=${SUPABASE_KEY:-}
+      - APEX_SUPABASE_SERVICE_KEY=${SUPABASE_SERVICE_KEY:-}
+    ports:
+      - "8000:8000"
+    depends_on:
+      cache:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+      object:
+        condition: service_healthy
+      search:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/ready"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "512M"
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp:uid=1000,gid=1000,mode=1777
+      - /var/tmp:uid=1000,gid=1000,mode=1777
+      - /tmp/apex:uid=1000,gid=1000,mode=1777,size=100M
+
+  worker:
+    build:
+      context: ../services/worker
+    image: apex-worker:dev
+    environment:
+      - SERVICE_NAME=worker
+      - REDIS_URL=redis://cache:6379/0
+      - CELERY_BROKER_URL=redis://cache:6379/0
+      - CELERY_RESULT_BACKEND=redis://cache:6379/1
+    depends_on:
+      cache:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "from apex.worker.app import ping; import sys; sys.exit(0 if ping().get('status')=='ok' else 1)"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp:uid=1000,gid=1000,mode=1777
+      - /var/tmp:uid=1000,gid=1000,mode=1777
+      - /tmp/apex:uid=1000,gid=1000,mode=1777,size=100M
+
+  signcalc:
+    build:
+      context: ../services/signcalc-service
+    image: apex-signcalc:dev
+    environment:
+      - SERVICE_NAME=signcalc
+      - PORT=8002
+    ports:
+      - "8002:8002"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8002/healthz"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      - POSTGRES_USER=apex
+      - POSTGRES_PASSWORD=apex
+      - POSTGRES_DB=apex
+      - POSTGRES_INITDB_ARGS=--encoding=UTF8 --locale=en_US.UTF-8
+    command:
+      - postgres
+      - -c
+      - "shared_preload_libraries=pg_stat_statements"
+      - -c
+      - "pg_stat_statements.track=all"
+      - -c
+      - "statement_timeout=30s"
+      - -c
+      - "wal_level=replica"
+      - -c
+      - "max_connections=100"
+      - -c
+      - "shared_buffers=256MB"
+      - -c
+      - "effective_cache_size=512MB"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./backups:/backups
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    ports:
+      - "5432:5432"
+
+  postgres_exporter:
+    image: prometheuscommunity/postgres-exporter:v0.15.0
+    environment:
+      - DATA_SOURCE_NAME=postgresql://apex:apex@db:5432/apex?sslmode=disable
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "9187:9187"
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9187/metrics"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  cache:
+    image: redis:7-alpine
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    ports:
+      - "6379:6379"
+
+  object:
+    image: minio/minio:RELEASE.2024-06-13T22-53-53Z
+    command: ["server", "/data", "--console-address", ":9001"]
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+    volumes:
+      - minio_data:/data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+
+  search:
+    image: opensearchproject/opensearch:2.12.0
+    environment:
+      - discovery.type=single-node
+      - plugins.security.disabled=true
+      - OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m
+      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=StrongDevPassword123!@#
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=1s"]
+      interval: 20s
+      timeout: 5s
+      retries: 15
+    ports:
+      - "9200:9200"
+
+  dashboards:
+    image: opensearchproject/opensearch-dashboards:2.12.0
+    depends_on:
+      search:
+        condition: service_healthy
+    environment:
+      - OPENSEARCH_HOSTS=["http://search:9200"]
+    ports:
+      - "5601:5601"
+
+  grafana:
+    image: grafana/grafana:10.3.0
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_INSTALL_PLUGINS=grafana-clock-panel
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./services/api/monitoring/grafana_dashboard.json:/etc/grafana/provisioning/dashboards/db.json
+    depends_on:
+      - postgres_exporter
+    ports:
+      - "3001:3000"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  frontend:
+    build:
+      context: ../apex/apps/ui-web
+      dockerfile: Dockerfile
+    image: apex-frontend:dev
+    environment:
+      - VITE_API_BASE=http://localhost:8000/api
+      - VITE_SENTRY_DSN=${VITE_SENTRY_DSN:-}
+      - VITE_ENV=${ENV:-dev}
+      - VITE_RELEASE=${APP_VERSION:-0.1.0}
+    ports:
+      - "3000:3000"
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3000/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "256M"
+
+  supabase-db:
+    image: supabase/postgres:15.1.0.117
+    environment:
+      - POSTGRES_USER=supabase
+      - POSTGRES_PASSWORD=your-super-secret-password
+      - POSTGRES_DB=postgres
+      - POSTGRES_HOST=/var/run/postgresql
+    volumes:
+      - supabase_db:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U supabase"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    command:
+      - postgres
+      - -c
+      - "listen_addresses=*"
+      - -c
+      - "max_connections=100"
+
+volumes:
+  pg_data:
+  minio_data:
+  grafana_data:
+  supabase_db:

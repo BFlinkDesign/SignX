@@ -1,0 +1,55 @@
+{
+  "case_01": {
+    "description": "Standard 10x8 sign cabinet",
+    "inputs": {
+      "endpoint": "/cabinets/derive",
+      "payload": {
+        "sign": {"height_ft": 10.0, "width_ft": 8.0},
+        "board": {"layers": []}
+      }
+    },
+    "expected_outputs": {
+      "result": {
+        "area_ft2": 80.0,
+        "weight_lb": {"min": 100, "max": 200}
+      }
+    },
+    "tolerance": 0.05
+  },
+  "case_02": {
+    "description": "Pole filtering for 100 kip-ft moment",
+    "inputs": {
+      "endpoint": "/poles/options",
+      "payload": {
+        "loads": {"moment_kips_ft": 100},
+        "preferences": {}
+      }
+    },
+    "expected_outputs": {
+      "result": {
+        "options": {
+          "length": {"min": 3, "max": 20}
+        }
+      }
+    },
+    "tolerance": 0.0
+  },
+  "case_03": {
+    "description": "Direct burial foundation 50 kip load",
+    "inputs": {
+      "endpoint": "/footing/design",
+      "payload": {
+        "module": "signage.direct_burial_2pole",
+        "loads": {"force_kips": 50}
+      }
+    },
+    "expected_outputs": {
+      "result": {
+        "depth_ft": {"min": 4.0, "max": 8.0},
+        "diameter_in": {"min": 12, "max": 24}
+      }
+    },
+    "tolerance": 0.10
+  }
+}
+

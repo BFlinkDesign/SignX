@@ -1,0 +1,6 @@
+{
+  "sequences": [
+    {"name": "perf_tube_basic", "steps": ["cut", "drill", "galv"]}
+  ]
+}
+

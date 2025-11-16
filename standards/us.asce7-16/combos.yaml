@@ -1,0 +1,9 @@
+combos:
+  strength:
+    - name: W
+      expr: 1.0*W
+  allowable:
+    - name: W
+      expr: 1.0*W
+
+

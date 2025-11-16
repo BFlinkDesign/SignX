@@ -1,8 +1,0 @@
-﻿{
-    "base_url":  "https://eaglesign.keyedinsign.com:8443/eaglesign/",
-    "cookies":  {
-                    "JSESSIONID":  "16zigc7ehs9816ham55pq7opc"
-                },
-    "authToken":  "a84254d8-0ad1-4951-beae-fcab814cdce7",
-    "clientId":  "7a91a9ef-aa03-46d2-93ee-f3afcc65cfe3"
-}

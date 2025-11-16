@@ -1,0 +1,7 @@
+# Documentation build dependencies
+
+mkdocs==1.5.3
+mkdocs-material==9.5.3
+mkdocs-awesome-pages-plugin==2.9.2
+mkdocs-mermaid2-plugin==1.1.0
+

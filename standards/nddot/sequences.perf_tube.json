@@ -1,0 +1,6 @@
+[
+  {"step": 1, "post_size": "PT 2x2x12ga", "sleeve_size": "PT 2.5x2.5x12ga", "n_posts": 2},
+  {"step": 2, "post_size": "PT 2.5x2.5x12ga", "sleeve_size": "PT 3x3x11ga", "n_posts": 2}
+]
+
+

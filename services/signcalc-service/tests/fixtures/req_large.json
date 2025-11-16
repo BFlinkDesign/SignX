@@ -1,0 +1,20 @@
+{
+  "schema_version": "sign-1.0",
+  "jurisdiction": "US",
+  "standard": {"code": "ASCE7", "version": "16", "importance": "II"},
+  "site": {
+    "lat": 32.7,
+    "lon": -117.1,
+    "elevation_m": 30.0,
+    "exposure": "D",
+    "topography": "flat",
+    "soil_bearing_psf": 2000,
+    "frost_depth_in": 12
+  },
+  "sign": {"width_ft": 20.0, "height_ft": 10.0, "centroid_height_ft": 30.0, "gross_weight_lbf": 800.0},
+  "support_options": ["pipe", "W", "tube"],
+  "embed": {"type": "direct"},
+  "constraints": {},
+  "provenance": {"source": "test"}
+}
+

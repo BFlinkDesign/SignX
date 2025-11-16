@@ -1,0 +1,176 @@
+﻿# Prometheus alert rules for SIGN X Studio Clone
+
+groups:
+  - name: apex_api
+    interval: 30s
+    rules:
+      # High error rate
+      - alert: HighErrorRate
+        expr: |
+          rate(http_requests_total{status=~"5.."}[5m]) 
+          / rate(http_requests_total[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+          component: api
+        annotations:
+          summary: "High API error rate"
+          description: "Error rate is {{ $value | humanizePercentage }} (threshold: 5%)"
+
+      # Very high error rate
+      - alert: CriticalErrorRate
+        expr: |
+          rate(http_requests_total{status=~"5.."}[5m]) 
+          / rate(http_requests_total[5m]) > 0.10
+        for: 2m
+        labels:
+          severity: critical
+          component: api
+        annotations:
+          summary: "Critical API error rate"
+          description: "Error rate is {{ $value | humanizePercentage }} (threshold: 10%)"
+
+      # High latency (P95)
+      - alert: HighLatency
+        expr: |
+          histogram_quantile(0.95, 
+            rate(http_request_duration_seconds_bucket[5m])
+          ) > 2
+        for: 5m
+        labels:
+          severity: warning
+          component: api
+        annotations:
+          summary: "High API latency"
+          description: "P95 latency is {{ $value }}s (threshold: 2s)"
+
+      # Very high latency
+      - alert: CriticalLatency
+        expr: |
+          histogram_quantile(0.95, 
+            rate(http_request_duration_seconds_bucket[5m])
+          ) > 5
+        for: 2m
+        labels:
+          severity: critical
+          component: api
+        annotations:
+          summary: "Critical API latency"
+          description: "P95 latency is {{ $value }}s (threshold: 5s)"
+
+      # Service down
+      - alert: ServiceDown
+        expr: up{job="apex-api"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          component: api
+        annotations:
+          summary: "API service is down"
+          description: "API service has been down for {{ $for }}"
+
+  - name: apex_database
+    interval: 30s
+    rules:
+      # Database pool exhaustion
+      - alert: DatabasePoolExhaustion
+        expr: apex_pg_pool_used > 8
+        for: 2m
+        labels:
+          severity: warning
+          component: database
+        annotations:
+          summary: "Database pool nearly exhausted"
+          description: "{{ $value }} connections in use (threshold: 8)"
+
+      # Database transaction failures
+      - alert: DatabaseTransactionFailures
+        expr: |
+          rate(apex_db_transaction_failures_total[5m]) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+          component: database
+        annotations:
+          summary: "High database transaction failure rate"
+          description: "{{ $value }} failures/sec"
+
+      # Database rollbacks
+      - alert: HighRollbackRate
+        expr: |
+          rate(apex_db_rollbacks_total[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+          component: database
+        annotations:
+          summary: "High database rollback rate"
+          description: "{{ $value }} rollbacks/sec"
+
+  - name: apex_celery
+    interval: 30s
+    rules:
+      # Celery queue backlog
+      - alert: CeleryQueueBacklog
+        expr: apex_celery_queue_depth > 100
+        for: 5m
+        labels:
+          severity: warning
+          component: worker
+        annotations:
+          summary: "Celery queue backlog"
+          description: "Queue depth: {{ $value }} (threshold: 100)"
+
+      # Critical queue backlog
+      - alert: CeleryQueueCritical
+        expr: apex_celery_queue_depth > 500
+        for: 2m
+        labels:
+          severity: critical
+          component: worker
+        annotations:
+          summary: "Critical Celery queue backlog"
+          description: "Queue depth: {{ $value }} (threshold: 500)"
+
+  - name: apex_cache
+    interval: 30s
+    rules:
+      # Low cache hit ratio
+      - alert: LowCacheHitRatio
+        expr: apex_cache_hit_ratio < 0.5 and apex_cache_hit_ratio >= 0
+        for: 10m
+        labels:
+          severity: warning
+          component: cache
+        annotations:
+          summary: "Low cache hit ratio"
+          description: "Hit ratio: {{ $value | humanizePercentage }}"
+
+  - name: apex_search
+    interval: 30s
+    rules:
+      # High search failure rate
+      - alert: HighSearchFailureRate
+        expr: |
+          rate(apex_search_failures_total[5m]) 
+          / rate(apex_search_requests_total[5m]) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+          component: search
+        annotations:
+          summary: "High search failure rate"
+          description: "Failure rate: {{ $value | humanizePercentage }}"
+
+      # Frequent search fallback
+      - alert: FrequentSearchFallback
+        expr: |
+          rate(apex_search_fallback_total[5m]) 
+          / rate(apex_search_requests_total[5m]) > 0.2
+        for: 5m
+        labels:
+          severity: warning
+          component: search
+        annotations:
+          summary: "Frequent search fallback to database"
+          description: "Fallback rate: {{ $value | humanizePercentage }}"

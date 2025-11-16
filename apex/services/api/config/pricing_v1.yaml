@@ -1,0 +1,9 @@
+version: v1
+base_brackets:
+  - max_height_ft: 25
+    price: 200
+  - max_height_ft: 9999
+    price: 300
+addons:
+  calc_packet: 35
+  hard_copies: 30

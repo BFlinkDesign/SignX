@@ -1,0 +1,11 @@
+# Minimal placeholder for demo
+wind:
+  exposure_Kz:
+    B: 0.85
+    C: 1.00
+    D: 1.05
+  Kzt: 1.0
+  Kd: 0.85
+  default_V_basic_mph: 100
+
+

@@ -1,4 +1,3 @@
-import json
 import shutil
 import subprocess
 from pathlib import Path
@@ -80,7 +79,7 @@ def run_all_audits(cfg: Dict[str, Any]) -> Dict[str, Any]:
 		eslint_enabled = tools_cfg.get("eslint", True)
 		if eslint_enabled:
 			eslint_bin = shutil.which("eslint") or str((root / "node_modules" / ".bin" / "eslint").resolve())
-			if Path(eslint_bin).exists():
+			if eslint_bin and Path(eslint_bin).exists():
 				code, out, err = _run([eslint_bin, ".", "-f", "json"], cwd=root)
 				results["node"][root_key]["eslint"] = {"code": code, "stdout": out, "stderr": err}
 

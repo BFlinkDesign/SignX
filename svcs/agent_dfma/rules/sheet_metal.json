@@ -1,0 +1,6 @@
+[
+  {"id": "min_bend_radius", "desc": "min bend radius >= 1t"},
+  {"id": "hole_to_edge", "desc": "hole-to-edge >= 1.5d"}
+]
+
+

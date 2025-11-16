@@ -1,0 +1,50 @@
+# Development and Testing Requirements
+# SignX-Studio API Service
+# Install with: pip install -r requirements-dev.txt
+
+# Testing Framework
+pytest==7.4.3
+pytest-cov==4.1.0
+pytest-asyncio==0.21.1
+pytest-benchmark==4.0.0
+pytest-mock==3.12.0
+pytest-timeout==2.2.0
+pytest-xdist==3.5.0  # Parallel testing
+
+# Property-Based Testing
+hypothesis==6.92.1
+
+# Type Checking
+mypy==1.7.1
+pyright==1.1.338
+
+# Linting & Formatting
+ruff==0.1.6  # Replaces flake8, black, isort
+interrogate==1.5.0  # Docstring coverage
+
+# Code Quality
+radon==6.0.1  # Complexity metrics
+bandit==1.7.5  # Security linting
+safety==2.3.5  # Dependency vulnerability scanning
+
+# Database Testing
+faker==20.1.0  # Test data generation
+factory-boy==3.3.0  # Test fixtures
+
+# API Testing
+httpx==0.25.2  # Async HTTP client for testing
+respx==0.20.2  # HTTP mocking
+
+# Performance Testing
+locust==2.19.1  # Load testing
+memray==1.10.0  # Memory profiling
+
+# Documentation
+mkdocs==1.5.3
+mkdocs-material==9.5.3
+mkdocstrings[python]==0.24.0
+
+# Development Tools
+ipython==8.18.1
+ipdb==0.13.13
+watchdog==3.0.0  # File watching for auto-reload

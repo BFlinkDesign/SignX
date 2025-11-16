@@ -1,0 +1,80 @@
+# Prometheus PostgreSQL exporter configuration for APEX metrics
+
+modules:
+  pg:
+    query:
+      # Top slow queries from pg_stat_statements
+      slow_queries: |
+        SELECT 
+          calls,
+          total_exec_time,
+          mean_exec_time,
+          query
+        FROM pg_stat_statements
+        WHERE mean_exec_time > 100
+        ORDER BY mean_exec_time DESC
+        LIMIT 10
+    
+    # Index hit rate
+    index_hit_rate: |
+      SELECT 
+        schemaname,
+        tablename,
+        CASE 
+          WHEN idx_scan + seq_scan = 0 THEN 0
+          ELSE (idx_scan::float / (idx_scan + seq_scan)) * 100
+        END as index_hit_rate_pct,
+        idx_scan,
+        seq_scan
+      FROM pg_stat_user_tables
+      WHERE schemaname = 'public'
+    
+    # Connection pool usage
+    connection_pool: |
+      SELECT 
+        state,
+        COUNT(*) as connections
+      FROM pg_stat_activity
+      WHERE datname = 'apex'
+      GROUP BY state
+    
+    # Cache hit rate
+    cache_hit_rate: |
+      SELECT 
+        'apex' as datname,
+        sum(blks_hit)::float / NULLIF(sum(blks_hit + blks_read), 0) * 100 as cache_hit_rate_pct
+      FROM pg_stat_database
+      WHERE datname = 'apex'
+    
+    # Transaction throughput
+    transaction_throughput: |
+      SELECT 
+        datname,
+        xact_commit + xact_rollback as total_xacts,
+        xact_commit,
+        xact_rollback,
+        tup_inserted + tup_updated + tup_deleted as total_tup_changes
+      FROM pg_stat_database
+      WHERE datname = 'apex'
+    
+    query_exporters:
+      - name: "slow_queries"
+        namespace: "postgres"
+        type: summary
+        help: "Slow queries from pg_stat_statements"
+      - name: "index_hit_rate"
+        namespace: "postgres"
+        type: gauge
+        help: "Index hit rate percentage per table"
+      - name: "connection_pool"
+        namespace: "postgres"
+        type: gauge
+        help: "Connection pool usage by state"
+      - name: "cache_hit_rate"
+        namespace: "postgres"
+        type: gauge
+        help: "Buffer cache hit rate"
+      - name: "transaction_throughput"
+        namespace: "postgres"
+        type: counter
+        help: "Transaction and tuple change statistics"

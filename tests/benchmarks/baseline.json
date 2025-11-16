@@ -1,0 +1,38 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2025-01-27T00:00:00Z",
+  "endpoints": {
+    "GET /health": {
+      "p50": 5,
+      "p95": 10,
+      "p99": 15
+    },
+    "GET /projects/": {
+      "p50": 20,
+      "p95": 40,
+      "p99": 60
+    },
+    "POST /cabinets/derive": {
+      "p50": 30,
+      "p95": 80,
+      "p99": 150
+    },
+    "POST /poles/options": {
+      "p50": 15,
+      "p95": 40,
+      "p99": 80
+    },
+    "POST /footing/design": {
+      "p50": 20,
+      "p95": 45,
+      "p99": 90
+    },
+    "POST /projects/{id}/report": {
+      "p50": 200,
+      "p95": 800,
+      "p99": 1200
+    }
+  },
+  "notes": "Baseline established from initial performance testing. Regression threshold: 20% increase."
+}
+

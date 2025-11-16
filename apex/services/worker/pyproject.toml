@@ -1,0 +1,6 @@
+[project]
+name = "apex-worker"
+version = "0.0.1"
+dependencies = ["celery==5.4.0","redis==5.0.7"]
+
+

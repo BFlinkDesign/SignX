@@ -1,0 +1,52 @@
+{
+  "dashboard": {
+    "title": "APEX Database Performance",
+    "panels": [
+      {
+        "title": "Top 10 Slow Queries",
+        "targets": [
+          {
+            "expr": "pg_stat_statements_mean_exec_time{instance=\"db:5432\"}",
+            "legendFormat": "{{query}}"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12},
+        "type": "table"
+      },
+      {
+        "title": "Index Hit Rate %",
+        "targets": [
+          {
+            "expr": "pg_stat_database_index_hit_ratio{datname=\"apex\"}",
+            "legendFormat": "{{tablename}}"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12},
+        "type": "graph",
+        "yaxes": [{"format": "percentunit"}]
+      },
+      {
+        "title": "Connection Pool Usage",
+        "targets": [
+          {
+            "expr": "pg_stat_activity_connections{instance=\"db:5432\"}",
+            "legendFormat": "{{state}}"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12},
+        "type": "graph"
+      },
+      {
+        "title": "Query Timeout Errors",
+        "targets": [
+          {
+            "expr": "increase(pg_stat_database_stat_reset{datname=\"apex\"}[5m])"
+          }
+        ],
+        "gridPos": {"h": 4, "w": 24},
+        "type": "graph"
+      }
+    ]
+  }
+}
+

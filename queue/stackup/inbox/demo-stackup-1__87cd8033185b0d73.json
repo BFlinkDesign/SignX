@@ -1,0 +1,25 @@
+{
+  "task_id": "demo-stackup-1",
+  "description": "shaft-hub press fit",
+  "features": [
+    {
+      "name": "shaft_d",
+      "nominal": 20.0,
+      "tol_plus": 0.01,
+      "tol_minus": 0.01,
+      "distribution": "normal",
+      "correlation_group": null
+    },
+    {
+      "name": "hub_bore",
+      "nominal": 19.98,
+      "tol_plus": 0.01,
+      "tol_minus": 0.01,
+      "distribution": "normal",
+      "correlation_group": null
+    }
+  ],
+  "sample_size": 10000,
+  "lower_spec": null,
+  "upper_spec": null
+}

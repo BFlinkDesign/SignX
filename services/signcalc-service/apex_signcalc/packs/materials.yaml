@@ -1,0 +1,5 @@
+steel:
+  fy_psi: 50000
+aluminum:
+  fy_psi: 35000
+

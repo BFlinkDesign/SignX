@@ -32,7 +32,7 @@ rag:
   max_file_size_kb: 256
   chunk_size: 1024
   chunk_overlap: 128
-  embedding_model: "sentence-transformers/all-MiniLM-L6-v2"  # optional; falls back to tf-idf if unavailable
+  embedding_model: "sentence-transformers/all-MiniLM-L6-v2"  # optional; falls back if unavailable
 
 # Tooling toggles
 tools:

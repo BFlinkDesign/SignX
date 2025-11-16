@@ -1,0 +1,21 @@
+{
+  "name": "APEX",
+  "dockerComposeFile": ["../infra/compose.yaml"],
+  "service": "api",
+  "workspaceFolder": "/workspaces/apex",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/apex,type=bind,consistency=cached",
+  "features": { "ghcr.io/devcontainers/features/common-utils:2": {} },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "charliermarsh.ruff",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "github.vscode-github-actions"
+      ]
+    }
+  },
+  "postCreateCommand": "make sync"
+}
+
+

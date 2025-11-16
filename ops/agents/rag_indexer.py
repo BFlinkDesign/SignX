@@ -1,11 +1,13 @@
 from __future__ import annotations
 
-import os
 import sqlite3
 from pathlib import Path
-from typing import Dict, Any, Iterable, List, Tuple
+from typing import Dict, Any, Iterable, List
 
 from rich import print as rprint
+import logging
+
+logger = logging.getLogger(__name__)
 
 try:
 	from sentence_transformers import SentenceTransformer
@@ -21,18 +23,14 @@ def _iter_files(roots: List[str], include_globs: List[str], exclude_globs: List[
 			for p in base.glob(pattern):
 				if p.is_dir():
 					continue
-				s = str(p).replace("\\", "/")
-				skip = False
-				for ex in exclude_globs:
-					if p.match(ex):
-						skip = True
-						break
-				if skip:
+				# naive exclude check
+				if any(p.match(ex) for ex in exclude_globs):
 					continue
 				try:
 					if p.stat().st_size > max_kb * 1024:
 						continue
-				except Exception:
+				except Exception as e:
+					logger.warning("Exception in rag_indexer.py: %s", str(e))
 					continue
 				yield p
 
@@ -90,7 +88,8 @@ def build_rag_index(cfg: Dict[str, Any]) -> Dict[str, Any]:
 	for p in _iter_files(roots, include, exclude, max_kb=max_kb):
 		try:
 			text = p.read_text(encoding="utf-8", errors="ignore")
-		except Exception:
+		except Exception as e:
+			logger.warning("Exception in rag_indexer.py: %s", str(e))
 			continue
 		cur.execute("INSERT OR REPLACE INTO docs(path, content) VALUES(?, ?)", (str(p), text))
 		files_indexed += 1

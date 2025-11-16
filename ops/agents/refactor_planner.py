@@ -1,7 +1,6 @@
 from __future__ import annotations
 
-from pathlib import Path
-from typing import Dict, Any, List, Tuple
+from typing import Dict, Any, List
 
 
 def _merge_findings(audit: Dict[str, Any], unused: Dict[str, Any]) -> Dict[str, Any]:
@@ -18,10 +17,6 @@ def _merge_findings(audit: Dict[str, Any], unused: Dict[str, Any]) -> Dict[str, 
 
 
 def _propose_deletions(merged: Dict[str, Any]) -> List[str]:
-	"""
-	Heuristic deletion set: files never referenced by import graph and not tests/migrations/readme.
-	Conservative: only within listed project roots; proposals only (no file operations).
-	"""
 	proposals: List[str] = []
 	ignore_suffixes = (".md",)
 	ignore_substrings = ("migrations", "alembic", "tests", "test_", "README", "readme")
@@ -49,11 +44,11 @@ def build_refactor_plan(cfg: Dict[str, Any], audit: Dict[str, Any], unused: Dict
 			"Enable type-checking in CI; fail on new warnings",
 		],
 		"deps": [
-			"Remove unused Python deps flagged by deptry; pin versions in pyproject/requirements",
+			"Remove unused Python deps flagged by deptry; pin versions",
 			"Run pip-audit and address high/critical advisories",
 		],
 		"structure": [
-			"Consolidate duplicate scripts in SignX-Studio/scripts into modules",
+			"Consolidate duplicate scripts into modules",
 			"Move one-off experiments to an /archive directory",
 		],
 	}

@@ -1,0 +1,28 @@
+﻿apiVersion: v2
+name: apex
+description: SIGN X Studio Clone Helm Chart
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+
+dependencies:
+  - name: postgresql
+    version: 12.0.0
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled
+  - name: redis
+    version: 17.0.0
+    repository: https://charts.bitnami.com/bitnami
+    condition: redis.enabled
+
+keywords:
+  - api
+  - engineering
+  - calculations
+
+maintainers:
+  - name: APEX Team
+
+sources:
+  - https://github.com/example/calcusign-apex-clone
+

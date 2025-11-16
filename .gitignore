@@ -8,28 +8,44 @@ desktop.ini
 *.swo
 .vscode/
 .idea/
+*~
 
 ############################
 # Python
 ############################
 __pycache__/
 *.py[cod]
-*.pyo
-*.pyd
+*$py.class
+*.so
+.Python
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
 .coverage
 .coverage.*
 htmlcov/
-.mypy_cache/
-.ruff_cache/
-.venv/
-venv/
-env/
-ENV/
+.ipynb_checkpoints/
 .eggs/
 *.egg-info/
+wheels/
+lib/
+lib64/
+sdist/
+var/
+develop-eggs/
+eggs/
+parts/
 dist/
 build/
+
+############################
+# Virtual Environments
+############################
+.venv/
+venv/
+ENV/
+env/
 
 ############################
 # Node / frontend
@@ -40,13 +56,41 @@ yarn.lock
 .npm/
 .eslintcache
 coverage/
-*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 ############################
 # Rust (Tauri)
 ############################
 target/
 Cargo.lock
+
+############################
+# Databases
+############################
+*.db
+*.sqlite
+*.sqlite3
+
+############################
+# Environment variables / Secrets
+############################
+.env
+.env.local
+.env.*
+.env.*.local
+*.key
+*.pem
+*.p12
+credentials.json
+
+############################
+# Temporary files
+############################
+*.tmp
+*.temp
+~$*
 
 ############################
 # Packaging / archives
@@ -58,12 +102,39 @@ Cargo.lock
 *.7z
 
 ############################
-# Misc
+# Project specific
 ############################
-.env
-.env.*
-*.tmp
-*.temp
-~$*
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+data/models/*.pkl
+data/models/*.joblib
+!data/models/.gitkeep
+artifacts/
+queue/
+runs/
+*.ndjson
 
+############################
+# Documentation builds
+############################
+docs/_build/
+site/
+
+############################
+# Large/binary files (use Git LFS)
+############################
+*.pdf
+*.dwg
+*.dxf
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.webp
+*.mp4
+*.mkv
+*.zip
+*.ico
 
