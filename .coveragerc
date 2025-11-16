@@ -1,5 +1,5 @@
 # Coverage.py configuration for APEX/SignX
-# Integrates with pytest-cov and SonarQube
+# Integrates with pytest-cov and Codecov uploads
 
 [run]
 source =

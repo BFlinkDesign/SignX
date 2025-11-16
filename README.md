@@ -1,8 +1,5 @@
 # 🏗️ SignX Platform - Complete Integrated Sign Industry Solution
 
-[![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=EAGLE605_SignX&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=EAGLE605_SignX)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=EAGLE605_SignX&metric=coverage)](https://sonarcloud.io/summary/new_code?id=EAGLE605_SignX)
-
 **Status**: ✅ **Foundation Complete** | 🚀 **Ready to Deploy** | 📦 **On GitHub**
 
 **Repository**: https://github.com/EAGLE605/SignX
@@ -106,6 +103,10 @@ python platform/api/main.py
 **Visit**: http://localhost:8000/api/docs
 
 **Success**: You see the Swagger UI with 5 modules registered
+
+## 🔒 Security
+
+Every push and pull request runs Semgrep (SAST), Gitleaks (secret scanning), and Safety (Python dependency audit) inside [`.github/workflows/security-scan.yml`](.github/workflows/security-scan.yml). Read [docs/SECURITY_SCANNING.md](docs/SECURITY_SCANNING.md) for local commands and policies before opening a PR so the checks stay green. VBA macros used for structural calculations remain out of scope for automation—continue to run VBDepend manually whenever you edit CorelDraw or Excel tooling.
 
 ---
 
@@ -227,7 +228,7 @@ async def on_quote_accepted(event: Event):
 | Storage | $5 (S3) | $60 |
 | **Total** | **$117/mo** | **$1,404/yr** |
 
-**vs. Hiring estimator**: $60k/year  
+**vs. Hiring estimator**: $60k/year
 **Savings**: $58,596/year (97% reduction)
 
 ---
@@ -383,7 +384,7 @@ Read the docs first, then:
 
 ## 📄 **License**
 
-Proprietary - Eagle Sign Co.  
+Proprietary - Eagle Sign Co.
 All rights reserved.
 
 ---
