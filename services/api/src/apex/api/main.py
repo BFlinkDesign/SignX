@@ -1,54 +1,60 @@
 from __future__ import annotations
 
+import asyncio
 import os
 import socket
 import uuid
-from typing import Any
+from contextlib import asynccontextmanager
+from typing import Any, AsyncGenerator
 
+import asyncpg
 import structlog
 from fastapi import Depends, FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, ORJSONResponse
+from fastapi.exceptions import RequestValidationError
+from redis.asyncio import Redis
 from slowapi import Limiter
 from slowapi.errors import RateLimitExceeded
 from slowapi.util import get_remote_address
 
-from .schemas import CodeVersionModel, ModelConfigModel, ResponseEnvelope  # Must import first for forward refs
+from .common.idem import enforce_idempotency
 from .common.models import make_envelope
 from .common.redis_client import close_redis_client
-from .common.idem import enforce_idempotency
-from .deps import get_code_version, get_model_config, settings, get_rate_limit_default
-from .error_handlers import unhandled_exception_handler, validation_exception_handler
-from .metrics import ABSTAIN_TOTAL, setup_metrics
-from .startup_checks import validate_prod_requirements
 from .contract_lock import ensure_materials_contract
-from .tracing import setup_tracing
+from .deps import get_code_version, get_model_config, get_rate_limit_default, settings
+from .error_handlers import unhandled_exception_handler, validation_exception_handler
+from .metrics import CACHE_HIT_RATIO, CELERY_QUEUE_DEPTH, PG_POOL_USED, setup_metrics
 from .middleware import BodySizeLimitMiddleware
 from .ready import router as ready_router
-from .routes.auth import router as auth_router
-from .routes.materials import router as materials_router
-from .routes.projects import router as projects_router
-from .routes.site import router as site_router
-from .routes.cabinets import router as cabinets_router
-from .routes.poles import router as poles_router
-from .routes.direct_burial import router as burial_router
-from .routes.baseplate import router as baseplate_router
-from .routes.cantilever import router as cantilever_router
-from .routes.pricing import router as pricing_router
-from .routes.submission import router as submission_router
-from .routes.files import router as files_router
-from .routes.payloads import router as payloads_router
-from .routes.concrete import router as concrete_router
-from .routes.bom import router as bom_router
-from .routes.tasks import router as tasks_router
-from .routes.signcalc import router as signcalc_router
-from .routes.uploads import router as uploads_router
-from .routes.compliance import router as compliance_router
-from .routes.crm import router as crm_router
-from .routes.audit import router as audit_router
-from .routes.cad_export import router as cad_export_router
 from .routes.ai import router as ai_router
-
+from .routes.audit import router as audit_router
+from .routes.auth import router as auth_router
+from .routes.baseplate import router as baseplate_router
+from .routes.bom import router as bom_router
+from .routes.cabinets import router as cabinets_router
+from .routes.cad_export import router as cad_export_router
+from .routes.cantilever import router as cantilever_router
+from .routes.compliance import router as compliance_router
+from .routes.concrete import router as concrete_router
+from .routes.crm import router as crm_router
+from .routes.direct_burial import router as burial_router
+from .routes.files import router as files_router
+from .routes.materials import router as materials_router
+from .routes.payloads import router as payloads_router
+from .routes.poles import router as poles_router
+from .routes.pricing import router as pricing_router
+from .routes.projects import router as projects_router
+from .routes.signcalc import router as signcalc_router
+from .routes.site import router as site_router
+from .routes.submission import router as submission_router
+from .routes.tasks import router as tasks_router
+from .routes.uploads import router as uploads_router
+from .schemas import (  # Must import first for forward refs
+    ResponseEnvelope,
+)
+from .startup_checks import validate_prod_requirements
+from .tracing import setup_tracing
 
 logger = structlog.get_logger(__name__)
 
@@ -70,10 +76,97 @@ except (ImportError, AttributeError):
     pass
 
 
-# build_envelope removed - use make_envelope from common.models instead
+@asynccontextmanager
+async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
+    """
+    Lifespan context manager for startup and shutdown events.
+    Handles database connections, background tasks, and resource cleanup.
+    """
+    # --- Startup ---
+    logger.info("startup.begin")
+    
+    # 1. Validate production requirements
+    validate_prod_requirements()
+    
+    # 2. Contract Lock / Material Verification
+    try:
+        sha = ensure_materials_contract()
+        app.state.materials_contract_sha = sha
+    except Exception as e:
+        logger.error("startup.contract_lock_failed", error=str(e))
+        # In strict mode we might want to fail here, but for now we log and proceed
+        app.state.materials_contract_sha = f"error:{e}"
+
+    # 3. Background Metrics Task
+    async def update_runtime_metrics():
+        # Queue depth
+        try:
+            r = Redis.from_url(settings.REDIS_URL)
+            depth = await r.llen("celery")
+            await r.aclose()
+            CELERY_QUEUE_DEPTH.set(depth)
+        except Exception as e:
+            logger.warning("metrics.redis_error", error=str(e))
+        
+        # PG pool usage
+        pool = getattr(app.state, "pg_pool", None)
+        if isinstance(pool, asyncpg.Pool):
+            try:
+                size = pool.get_size()
+                idle = pool.get_idle_count()
+                PG_POOL_USED.set(max(size - idle, 0))
+            except Exception as e:
+                logger.warning("metrics.pg_pool_error", error=str(e))
+        
+        # Cache hit ratio
+        try:
+            CACHE_HIT_RATIO.set(-1)
+        except Exception as e:
+            logger.warning("metrics.cache_error", error=str(e))
+    
+    async def metrics_background_loop():
+        while True:
+            await update_runtime_metrics()
+            await asyncio.sleep(10)
+    
+    # Start the background task
+    app.state.metrics_task = asyncio.create_task(metrics_background_loop())
+    
+    logger.info("startup.complete")
+    
+    yield
+    
+    # --- Shutdown ---
+    logger.info("shutdown.begin")
+    
+    # Cancel background tasks
+    if hasattr(app.state, "metrics_task"):
+        app.state.metrics_task.cancel()
+        try:
+            await app.state.metrics_task
+        except asyncio.CancelledError:
+            pass
+            
+    # Cleanup resources
+    await close_redis_client()
+    
+    logger.info("shutdown.complete")
 
 
-app = FastAPI(title="APEX API", default_response_class=ORJSONResponse)
+# Disable default docs in production
+# We use a custom /docs endpoint for Scalar, so we disable the default docs_url
+docs_url = None 
+redoc_url = "/redoc" if settings.ENV != "prod" else None
+openapi_url = "/openapi.json" if settings.ENV != "prod" else None
+
+app = FastAPI(
+    title="APEX API", 
+    default_response_class=ORJSONResponse,
+    docs_url=docs_url,
+    redoc_url=redoc_url,
+    openapi_url=openapi_url,
+    lifespan=lifespan
+)
 app.add_middleware(BodySizeLimitMiddleware)
 
 # Idempotency middleware (early, before rate limiting)
@@ -96,13 +189,11 @@ def rate_key_func(request: Request):  # type: ignore[no-untyped-def]
     auth_header = request.headers.get("Authorization", "")
     if auth_header.startswith("Bearer "):
         try:
-            from ..auth import get_current_user
             # Would need to decode JWT here - simplified for now
             # In production, extract user_id from token payload
             pass
         except Exception as e:
-            logger.warning("Exception in main.py: %s", str(e))
-            pass
+            logger.warning("ratelimit.jwt_extract_error", error=str(e))
     
     # Fallback to IP or API key
     token = request.headers.get("x-apex-key")
@@ -211,11 +302,6 @@ async def version(
     )
 
 
-# Register custom exception handlers
-from fastapi.exceptions import RequestValidationError
-import logging
-
-logger = logging.getLogger(__name__)
 
 app.add_exception_handler(RequestValidationError, validation_exception_handler)
 app.add_exception_handler(Exception, unhandled_exception_handler)
@@ -232,7 +318,7 @@ async def envelope_schema():  # type: ignore[no-untyped-def]
 # Minimal Scalar docs at /docs (Redoc still at /redoc)
 @app.get("/docs", include_in_schema=False)
 async def scalar_docs():  # type: ignore[no-untyped-def]
-    html = f"""
+    html = """
     <!doctype html>
     <html>
       <head><meta charset=\"utf-8\"><title>APEX API Docs</title></head>
@@ -312,70 +398,3 @@ app.include_router(ai_router, tags=["ai-ml"])
 
 # Tracing last to ensure provider in place
 setup_tracing()
-# Startup hooks
-@app.on_event("startup")
-async def _startup_checks():  # type: ignore[no-untyped-def]
-    validate_prod_requirements()
-
-
-@app.on_event("startup")
-async def _startup_contract_lock():  # type: ignore[no-untyped-def]
-    try:
-        sha = ensure_materials_contract()
-        app.state.materials_contract_sha = sha
-    except Exception as e:  # pragma: no cover
-        app.state.materials_contract_sha = f"error:{e}"
-
-
-@app.on_event("startup")
-async def _startup_metrics_background():  # type: ignore[no-untyped-def]
-    """Start background metrics collection task."""
-    import asyncio
-    import asyncpg
-    from redis.asyncio import Redis
-    from .metrics import CELERY_QUEUE_DEPTH, PG_POOL_USED, CACHE_HIT_RATIO
-    
-    async def update_runtime_metrics():
-        # Queue depth
-        try:
-            r = Redis.from_url(settings.REDIS_URL)
-            depth = await r.llen("celery")
-            await r.aclose()
-            CELERY_QUEUE_DEPTH.set(depth)
-        except Exception as e:
-            logger.warning("Exception in main.py: %s", str(e))
-            pass
-        
-        # PG pool usage
-        pool = getattr(app.state, "pg_pool", None)
-        if isinstance(pool, asyncpg.Pool):
-            try:
-                size = pool.get_size()
-                idle = pool.get_idle_count()
-                PG_POOL_USED.set(max(size - idle, 0))
-            except Exception as e:
-                logger.warning("Exception in main.py: %s", str(e))
-                pass
-        
-        # Cache hit ratio
-        try:
-            CACHE_HIT_RATIO.set(-1)
-        except Exception as e:
-            logger.warning("Exception in main.py: %s", str(e))
-            pass
-    
-    async def metrics_background_loop():
-        while True:
-            await update_runtime_metrics()
-            await asyncio.sleep(10)
-    
-    app.state.metrics_task = asyncio.create_task(metrics_background_loop())
-
-
-@app.on_event("shutdown")
-async def _shutdown_cleanup():  # type: ignore[no-untyped-def]
-    """Cleanup resources on shutdown."""
-    await close_redis_client()
-    logger.info("shutdown.complete")
-
-
