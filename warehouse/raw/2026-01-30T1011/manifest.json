@@ -1,0 +1,1240 @@
+{
+  "timestamp": "2026-01-30T1011",
+  "source": "C:\\Scripts\\keyedin-capture\\reports\\cost_detail",
+  "files_parsed": 1,
+  "wo_headers": 200,
+  "labor_detail_rows": 1862,
+  "labor_summary_rows": 1142,
+  "material_rows": 2539,
+  "outplant_rows": 181,
+  "source_tier": 3,
+  "cross_validation": {
+    "total_wos": 200,
+    "labor_matches": 25,
+    "labor_mismatches": 175,
+    "material_matches": 0,
+    "material_mismatches": 0,
+    "outplant_matches": 0,
+    "outplant_mismatches": 0,
+    "mismatched_wos": [
+      {
+        "wo": "1000.1",
+        "type": "labor",
+        "header": 107.33,
+        "detail_sum": 0,
+        "diff": 107.33
+      },
+      {
+        "wo": "10000.1",
+        "type": "labor",
+        "header": 1067.41,
+        "detail_sum": 1624.9899999999998,
+        "diff": -557.5799999999997
+      },
+      {
+        "wo": "10000.2",
+        "type": "labor",
+        "header": 1017.25,
+        "detail_sum": 1260.16,
+        "diff": -242.91000000000008
+      },
+      {
+        "wo": "10000.3",
+        "type": "labor",
+        "header": 31.5,
+        "detail_sum": 0,
+        "diff": 31.5
+      },
+      {
+        "wo": "10001.1",
+        "type": "labor",
+        "header": 88.25,
+        "detail_sum": 0,
+        "diff": 88.25
+      },
+      {
+        "wo": "10002.1",
+        "type": "labor",
+        "header": 5102.32,
+        "detail_sum": 8508.999999999998,
+        "diff": -3406.6799999999985
+      },
+      {
+        "wo": "10002.2",
+        "type": "labor",
+        "header": 120.13,
+        "detail_sum": 0.0,
+        "diff": 120.13
+      },
+      {
+        "wo": "10002.3",
+        "type": "labor",
+        "header": 9.75,
+        "detail_sum": 0,
+        "diff": 9.75
+      },
+      {
+        "wo": "10003.1",
+        "type": "labor",
+        "header": 121.88,
+        "detail_sum": 1.0,
+        "diff": 120.88
+      },
+      {
+        "wo": "10004.1",
+        "type": "labor",
+        "header": 84.38,
+        "detail_sum": 227.91,
+        "diff": -143.53
+      },
+      {
+        "wo": "10005.1",
+        "type": "labor",
+        "header": 225.76,
+        "detail_sum": 615.6899999999999,
+        "diff": -389.92999999999995
+      },
+      {
+        "wo": "10006.1",
+        "type": "labor",
+        "header": 729.76,
+        "detail_sum": 777.73,
+        "diff": -47.97000000000003
+      },
+      {
+        "wo": "10006.2",
+        "type": "labor",
+        "header": 21.0,
+        "detail_sum": 0,
+        "diff": 21.0
+      },
+      {
+        "wo": "10008.1",
+        "type": "labor",
+        "header": 242.14,
+        "detail_sum": 389.93999999999994,
+        "diff": -147.79999999999995
+      },
+      {
+        "wo": "10008.2",
+        "type": "labor",
+        "header": 106.13,
+        "detail_sum": 2.0,
+        "diff": 104.13
+      },
+      {
+        "wo": "10008.3",
+        "type": "labor",
+        "header": 315.25,
+        "detail_sum": 0.0,
+        "diff": 315.25
+      },
+      {
+        "wo": "10008.4",
+        "type": "labor",
+        "header": 272.26,
+        "detail_sum": 2.0,
+        "diff": 270.26
+      },
+      {
+        "wo": "10009.1",
+        "type": "labor",
+        "header": 15.75,
+        "detail_sum": 0,
+        "diff": 15.75
+      },
+      {
+        "wo": "10009.4",
+        "type": "labor",
+        "header": 759.44,
+        "detail_sum": 792.42,
+        "diff": -32.979999999999905
+      },
+      {
+        "wo": "1001.1",
+        "type": "labor",
+        "header": 77.64,
+        "detail_sum": 0,
+        "diff": 77.64
+      },
+      {
+        "wo": "10010.1",
+        "type": "labor",
+        "header": 168.25,
+        "detail_sum": 28.46,
+        "diff": 139.79
+      },
+      {
+        "wo": "10011.2",
+        "type": "labor",
+        "header": 56.25,
+        "detail_sum": 1.0,
+        "diff": 55.25
+      },
+      {
+        "wo": "10012.1",
+        "type": "labor",
+        "header": 112.25,
+        "detail_sum": 34.71,
+        "diff": 77.53999999999999
+      },
+      {
+        "wo": "10013.1",
+        "type": "labor",
+        "header": 19.5,
+        "detail_sum": 0,
+        "diff": 19.5
+      },
+      {
+        "wo": "10014.1",
+        "type": "labor",
+        "header": 142.0,
+        "detail_sum": 1.0,
+        "diff": 141.0
+      },
+      {
+        "wo": "10014.2",
+        "type": "labor",
+        "header": 53.38,
+        "detail_sum": 1.0,
+        "diff": 52.38
+      },
+      {
+        "wo": "10015.1",
+        "type": "labor",
+        "header": 65.13,
+        "detail_sum": 1.0,
+        "diff": 64.13
+      },
+      {
+        "wo": "10015.2",
+        "type": "labor",
+        "header": 98.64,
+        "detail_sum": 122.67,
+        "diff": -24.03
+      },
+      {
+        "wo": "10015.3",
+        "type": "labor",
+        "header": 91.26,
+        "detail_sum": 52.84,
+        "diff": 38.42
+      },
+      {
+        "wo": "10015.4",
+        "type": "labor",
+        "header": 37.63,
+        "detail_sum": 10.9,
+        "diff": 26.730000000000004
+      },
+      {
+        "wo": "10015.5",
+        "type": "labor",
+        "header": 7.5,
+        "detail_sum": 0.0,
+        "diff": 7.5
+      },
+      {
+        "wo": "10015.6",
+        "type": "labor",
+        "header": 33.88,
+        "detail_sum": 30.2,
+        "diff": 3.6800000000000033
+      },
+      {
+        "wo": "10015.7",
+        "type": "labor",
+        "header": 15.75,
+        "detail_sum": 0,
+        "diff": 15.75
+      },
+      {
+        "wo": "10016.1",
+        "type": "labor",
+        "header": 24.75,
+        "detail_sum": 0,
+        "diff": 24.75
+      },
+      {
+        "wo": "10018.1",
+        "type": "labor",
+        "header": 37.5,
+        "detail_sum": 107.25,
+        "diff": -69.75
+      },
+      {
+        "wo": "10019.1",
+        "type": "labor",
+        "header": 96.13,
+        "detail_sum": 0,
+        "diff": 96.13
+      },
+      {
+        "wo": "1002.1",
+        "type": "labor",
+        "header": 44.33,
+        "detail_sum": 0,
+        "diff": 44.33
+      },
+      {
+        "wo": "10020.1",
+        "type": "labor",
+        "header": 37.5,
+        "detail_sum": 106.13,
+        "diff": -68.63
+      },
+      {
+        "wo": "10021.2",
+        "type": "labor",
+        "header": 216.38,
+        "detail_sum": 207.99,
+        "diff": 8.389999999999986
+      },
+      {
+        "wo": "10021.3",
+        "type": "labor",
+        "header": 174.01,
+        "detail_sum": 397.08000000000004,
+        "diff": -223.07000000000005
+      },
+      {
+        "wo": "10021.4",
+        "type": "labor",
+        "header": 148.63,
+        "detail_sum": 262.25,
+        "diff": -113.62
+      },
+      {
+        "wo": "10021.6",
+        "type": "labor",
+        "header": 10.5,
+        "detail_sum": 0,
+        "diff": 10.5
+      },
+      {
+        "wo": "10022.2",
+        "type": "labor",
+        "header": 197.0,
+        "detail_sum": 445.31,
+        "diff": -248.31
+      },
+      {
+        "wo": "10022.3",
+        "type": "labor",
+        "header": 297.94,
+        "detail_sum": 260.93,
+        "diff": 37.00999999999999
+      },
+      {
+        "wo": "10022.4",
+        "type": "labor",
+        "header": 31.5,
+        "detail_sum": 0,
+        "diff": 31.5
+      },
+      {
+        "wo": "10023.1",
+        "type": "labor",
+        "header": 131.0,
+        "detail_sum": 229.52,
+        "diff": -98.52000000000001
+      },
+      {
+        "wo": "10023.2",
+        "type": "labor",
+        "header": 152.63,
+        "detail_sum": 147.52,
+        "diff": 5.109999999999985
+      },
+      {
+        "wo": "10023.3",
+        "type": "labor",
+        "header": 341.5,
+        "detail_sum": 202.38,
+        "diff": 139.12
+      },
+      {
+        "wo": "10023.4",
+        "type": "labor",
+        "header": 28.25,
+        "detail_sum": 1.0,
+        "diff": 27.25
+      },
+      {
+        "wo": "10023.5",
+        "type": "labor",
+        "header": 34.0,
+        "detail_sum": 2.0,
+        "diff": 32.0
+      },
+      {
+        "wo": "10023.6",
+        "type": "labor",
+        "header": 72.25,
+        "detail_sum": 24.8,
+        "diff": 47.45
+      },
+      {
+        "wo": "10024.2",
+        "type": "labor",
+        "header": 48.5,
+        "detail_sum": 0,
+        "diff": 48.5
+      },
+      {
+        "wo": "10024.3",
+        "type": "labor",
+        "header": 33.19,
+        "detail_sum": 31.85,
+        "diff": 1.3399999999999963
+      },
+      {
+        "wo": "10024.4",
+        "type": "labor",
+        "header": 965.39,
+        "detail_sum": 1505.9699999999998,
+        "diff": -540.5799999999998
+      },
+      {
+        "wo": "10025.1",
+        "type": "labor",
+        "header": 130.01,
+        "detail_sum": 1.0,
+        "diff": 129.01
+      },
+      {
+        "wo": "10026.1",
+        "type": "labor",
+        "header": 73.01,
+        "detail_sum": 0,
+        "diff": 73.01
+      },
+      {
+        "wo": "10027.1",
+        "type": "labor",
+        "header": 159.75,
+        "detail_sum": 187.19,
+        "diff": -27.439999999999998
+      },
+      {
+        "wo": "10028.1",
+        "type": "labor",
+        "header": 75.13,
+        "detail_sum": 30.2,
+        "diff": 44.92999999999999
+      },
+      {
+        "wo": "10028.2",
+        "type": "labor",
+        "header": 17.5,
+        "detail_sum": 21.3,
+        "diff": -3.8000000000000007
+      },
+      {
+        "wo": "10029.1",
+        "type": "labor",
+        "header": 4.88,
+        "detail_sum": 0,
+        "diff": 4.88
+      },
+      {
+        "wo": "1003.1",
+        "type": "labor",
+        "header": 479.08,
+        "detail_sum": 0,
+        "diff": 479.08
+      },
+      {
+        "wo": "10030.1",
+        "type": "labor",
+        "header": 4.88,
+        "detail_sum": 0,
+        "diff": 4.88
+      },
+      {
+        "wo": "10031.1",
+        "type": "labor",
+        "header": 262.51,
+        "detail_sum": 199.05,
+        "diff": 63.45999999999998
+      },
+      {
+        "wo": "10031.2",
+        "type": "labor",
+        "header": 345.26,
+        "detail_sum": 233.66,
+        "diff": 111.6
+      },
+      {
+        "wo": "10032.1",
+        "type": "labor",
+        "header": 40.25,
+        "detail_sum": 0,
+        "diff": 40.25
+      },
+      {
+        "wo": "10033.1",
+        "type": "labor",
+        "header": 15.0,
+        "detail_sum": 0.0,
+        "diff": 15.0
+      },
+      {
+        "wo": "10034.1",
+        "type": "labor",
+        "header": 810.01,
+        "detail_sum": 999.6300000000001,
+        "diff": -189.62000000000012
+      },
+      {
+        "wo": "10034.2",
+        "type": "labor",
+        "header": 72.75,
+        "detail_sum": 96.98,
+        "diff": -24.230000000000004
+      },
+      {
+        "wo": "10034.3",
+        "type": "labor",
+        "header": 80.63,
+        "detail_sum": 155.62,
+        "diff": -74.99000000000001
+      },
+      {
+        "wo": "10034.4",
+        "type": "labor",
+        "header": 46.25,
+        "detail_sum": 0.0,
+        "diff": 46.25
+      },
+      {
+        "wo": "10034.5",
+        "type": "labor",
+        "header": 10.5,
+        "detail_sum": 0,
+        "diff": 10.5
+      },
+      {
+        "wo": "10034.6",
+        "type": "labor",
+        "header": 25.13,
+        "detail_sum": 20.55,
+        "diff": 4.579999999999998
+      },
+      {
+        "wo": "10034.7",
+        "type": "labor",
+        "header": 356.38,
+        "detail_sum": 595.41,
+        "diff": -239.02999999999997
+      },
+      {
+        "wo": "10034.8",
+        "type": "labor",
+        "header": 50.88,
+        "detail_sum": 0,
+        "diff": 50.88
+      },
+      {
+        "wo": "10035.1",
+        "type": "labor",
+        "header": 43.25,
+        "detail_sum": 38.8,
+        "diff": 4.450000000000003
+      },
+      {
+        "wo": "10036.1",
+        "type": "labor",
+        "header": 62.13,
+        "detail_sum": 101.53,
+        "diff": -39.4
+      },
+      {
+        "wo": "10037.1",
+        "type": "labor",
+        "header": 273.0,
+        "detail_sum": 0,
+        "diff": 273.0
+      },
+      {
+        "wo": "10038.1",
+        "type": "labor",
+        "header": 397.14,
+        "detail_sum": 0,
+        "diff": 397.14
+      },
+      {
+        "wo": "10038.2",
+        "type": "labor",
+        "header": 263.13,
+        "detail_sum": 0,
+        "diff": 263.13
+      },
+      {
+        "wo": "10038.3",
+        "type": "labor",
+        "header": 62.25,
+        "detail_sum": 0,
+        "diff": 62.25
+      },
+      {
+        "wo": "10038.4",
+        "type": "labor",
+        "header": 13.5,
+        "detail_sum": 0,
+        "diff": 13.5
+      },
+      {
+        "wo": "10038.5",
+        "type": "labor",
+        "header": 8.63,
+        "detail_sum": 0,
+        "diff": 8.63
+      },
+      {
+        "wo": "10039.1",
+        "type": "labor",
+        "header": 362.75,
+        "detail_sum": 473.99,
+        "diff": -111.24000000000001
+      },
+      {
+        "wo": "10040.1",
+        "type": "labor",
+        "header": 72.25,
+        "detail_sum": 2.0,
+        "diff": 70.25
+      },
+      {
+        "wo": "10041.1",
+        "type": "labor",
+        "header": 98.38,
+        "detail_sum": 2.0,
+        "diff": 96.38
+      },
+      {
+        "wo": "10042.1",
+        "type": "labor",
+        "header": 21.0,
+        "detail_sum": 0,
+        "diff": 21.0
+      },
+      {
+        "wo": "10042.2",
+        "type": "labor",
+        "header": 1354.64,
+        "detail_sum": 2546.48,
+        "diff": -1191.84
+      },
+      {
+        "wo": "10042.3",
+        "type": "labor",
+        "header": 53.81,
+        "detail_sum": 1.0,
+        "diff": 52.81
+      },
+      {
+        "wo": "10043.1",
+        "type": "labor",
+        "header": 310.63,
+        "detail_sum": 263.73,
+        "diff": 46.89999999999998
+      },
+      {
+        "wo": "10043.3",
+        "type": "labor",
+        "header": 411.64,
+        "detail_sum": 826.48,
+        "diff": -414.84000000000003
+      },
+      {
+        "wo": "10043.4",
+        "type": "labor",
+        "header": 10.25,
+        "detail_sum": 19.78,
+        "diff": -9.530000000000001
+      },
+      {
+        "wo": "10044.1",
+        "type": "labor",
+        "header": 149.5,
+        "detail_sum": 292.44,
+        "diff": -142.94
+      },
+      {
+        "wo": "10044.2",
+        "type": "labor",
+        "header": 21.0,
+        "detail_sum": 0,
+        "diff": 21.0
+      },
+      {
+        "wo": "10045.1",
+        "type": "labor",
+        "header": 1114.08,
+        "detail_sum": 2478.5699999999997,
+        "diff": -1364.4899999999998
+      },
+      {
+        "wo": "10045.10",
+        "type": "labor",
+        "header": 1079.42,
+        "detail_sum": 414.97,
+        "diff": 664.45
+      },
+      {
+        "wo": "10045.3",
+        "type": "labor",
+        "header": 10.5,
+        "detail_sum": 0.0,
+        "diff": 10.5
+      },
+      {
+        "wo": "10045.8",
+        "type": "labor",
+        "header": 96.0,
+        "detail_sum": 1.0,
+        "diff": 95.0
+      },
+      {
+        "wo": "10045.9",
+        "type": "labor",
+        "header": 261.88,
+        "detail_sum": 718.25,
+        "diff": -456.37
+      },
+      {
+        "wo": "10046.1",
+        "type": "labor",
+        "header": 2175.48,
+        "detail_sum": 3210.6800000000003,
+        "diff": -1035.2000000000003
+      },
+      {
+        "wo": "10046.2",
+        "type": "labor",
+        "header": 42.0,
+        "detail_sum": 0,
+        "diff": 42.0
+      },
+      {
+        "wo": "10046.3",
+        "type": "labor",
+        "header": 77.76,
+        "detail_sum": 0,
+        "diff": 77.76
+      },
+      {
+        "wo": "10047.1",
+        "type": "labor",
+        "header": 21.0,
+        "detail_sum": 0,
+        "diff": 21.0
+      },
+      {
+        "wo": "10047.2",
+        "type": "labor",
+        "header": 104.5,
+        "detail_sum": 132.63,
+        "diff": -28.129999999999995
+      },
+      {
+        "wo": "10048.1",
+        "type": "labor",
+        "header": 265.75,
+        "detail_sum": 1.0,
+        "diff": 264.75
+      },
+      {
+        "wo": "10049.1",
+        "type": "labor",
+        "header": 625.26,
+        "detail_sum": 1.0,
+        "diff": 624.26
+      },
+      {
+        "wo": "10050.1",
+        "type": "labor",
+        "header": 3.75,
+        "detail_sum": 0,
+        "diff": 3.75
+      },
+      {
+        "wo": "10051.1",
+        "type": "labor",
+        "header": 769.67,
+        "detail_sum": 1385.29,
+        "diff": -615.62
+      },
+      {
+        "wo": "10052.1",
+        "type": "labor",
+        "header": 34.13,
+        "detail_sum": 0,
+        "diff": 34.13
+      },
+      {
+        "wo": "10053.1",
+        "type": "labor",
+        "header": 152.7,
+        "detail_sum": 0,
+        "diff": 152.7
+      },
+      {
+        "wo": "10053.2",
+        "type": "labor",
+        "header": 569.21,
+        "detail_sum": 1.0,
+        "diff": 568.21
+      },
+      {
+        "wo": "10054.1",
+        "type": "labor",
+        "header": 106.13,
+        "detail_sum": 2.0,
+        "diff": 104.13
+      },
+      {
+        "wo": "10055.1",
+        "type": "labor",
+        "header": 51.63,
+        "detail_sum": 30.68,
+        "diff": 20.950000000000003
+      },
+      {
+        "wo": "10057.1",
+        "type": "labor",
+        "header": 65.63,
+        "detail_sum": 1.0,
+        "diff": 64.63
+      },
+      {
+        "wo": "10058.1",
+        "type": "labor",
+        "header": 63.13,
+        "detail_sum": 1.0,
+        "diff": 62.13
+      },
+      {
+        "wo": "10059.1",
+        "type": "labor",
+        "header": 86.63,
+        "detail_sum": 177.93,
+        "diff": -91.30000000000001
+      },
+      {
+        "wo": "10061.1",
+        "type": "labor",
+        "header": 120.56,
+        "detail_sum": 139.21,
+        "diff": -18.650000000000006
+      },
+      {
+        "wo": "10061.2",
+        "type": "labor",
+        "header": 21.0,
+        "detail_sum": 0,
+        "diff": 21.0
+      },
+      {
+        "wo": "10062.1",
+        "type": "labor",
+        "header": 146.0,
+        "detail_sum": 0,
+        "diff": 146.0
+      },
+      {
+        "wo": "10063.1",
+        "type": "labor",
+        "header": 69.38,
+        "detail_sum": 1.0,
+        "diff": 68.38
+      },
+      {
+        "wo": "10064.1",
+        "type": "labor",
+        "header": 584.13,
+        "detail_sum": 0,
+        "diff": 584.13
+      },
+      {
+        "wo": "10065.1",
+        "type": "labor",
+        "header": 48.76,
+        "detail_sum": 0,
+        "diff": 48.76
+      },
+      {
+        "wo": "10066.1",
+        "type": "labor",
+        "header": 178.13,
+        "detail_sum": 403.2,
+        "diff": -225.07
+      },
+      {
+        "wo": "10067.1",
+        "type": "labor",
+        "header": 371.51,
+        "detail_sum": 133.67,
+        "diff": 237.84
+      },
+      {
+        "wo": "10067.2",
+        "type": "labor",
+        "header": 846.66,
+        "detail_sum": 196.04,
+        "diff": 650.62
+      },
+      {
+        "wo": "10067.3",
+        "type": "labor",
+        "header": 15.75,
+        "detail_sum": 0.0,
+        "diff": 15.75
+      },
+      {
+        "wo": "10067.6",
+        "type": "labor",
+        "header": 15.38,
+        "detail_sum": 0,
+        "diff": 15.38
+      },
+      {
+        "wo": "10067.7",
+        "type": "labor",
+        "header": 111.26,
+        "detail_sum": 31.68,
+        "diff": 79.58000000000001
+      },
+      {
+        "wo": "10068.1",
+        "type": "labor",
+        "header": 183.01,
+        "detail_sum": 114.69,
+        "diff": 68.32
+      },
+      {
+        "wo": "10068.2",
+        "type": "labor",
+        "header": 69.63,
+        "detail_sum": 141.1,
+        "diff": -71.47
+      },
+      {
+        "wo": "10068.3",
+        "type": "labor",
+        "header": 10.5,
+        "detail_sum": 0,
+        "diff": 10.5
+      },
+      {
+        "wo": "10069.1",
+        "type": "labor",
+        "header": 64.88,
+        "detail_sum": 134.18,
+        "diff": -69.30000000000001
+      },
+      {
+        "wo": "10069.2",
+        "type": "labor",
+        "header": 71.88,
+        "detail_sum": 87.27000000000001,
+        "diff": -15.390000000000015
+      },
+      {
+        "wo": "10069.3",
+        "type": "labor",
+        "header": 31.5,
+        "detail_sum": 0,
+        "diff": 31.5
+      },
+      {
+        "wo": "10070.1",
+        "type": "labor",
+        "header": 14.63,
+        "detail_sum": 0,
+        "diff": 14.63
+      },
+      {
+        "wo": "10071.1",
+        "type": "labor",
+        "header": 808.34,
+        "detail_sum": 1487.9099999999999,
+        "diff": -679.5699999999998
+      },
+      {
+        "wo": "10071.2",
+        "type": "labor",
+        "header": 445.39,
+        "detail_sum": 517.06,
+        "diff": -71.66999999999996
+      },
+      {
+        "wo": "10072.1",
+        "type": "labor",
+        "header": 141.25,
+        "detail_sum": 0,
+        "diff": 141.25
+      },
+      {
+        "wo": "10074.1",
+        "type": "labor",
+        "header": 148.75,
+        "detail_sum": 0,
+        "diff": 148.75
+      },
+      {
+        "wo": "10075.1",
+        "type": "labor",
+        "header": 213.44,
+        "detail_sum": 448.96000000000004,
+        "diff": -235.52000000000004
+      },
+      {
+        "wo": "10076.1",
+        "type": "labor",
+        "header": 257.83,
+        "detail_sum": 554.49,
+        "diff": -296.66
+      },
+      {
+        "wo": "10076.2",
+        "type": "labor",
+        "header": 91.87,
+        "detail_sum": 41.21,
+        "diff": 50.660000000000004
+      },
+      {
+        "wo": "10077.1",
+        "type": "labor",
+        "header": 132.51,
+        "detail_sum": 116.85000000000001,
+        "diff": 15.659999999999982
+      },
+      {
+        "wo": "10078.1",
+        "type": "labor",
+        "header": 152.5,
+        "detail_sum": 0,
+        "diff": 152.5
+      },
+      {
+        "wo": "10079.1",
+        "type": "labor",
+        "header": 130.51,
+        "detail_sum": 150.86,
+        "diff": -20.350000000000023
+      },
+      {
+        "wo": "10079.2",
+        "type": "labor",
+        "header": 41.51,
+        "detail_sum": 31.450000000000003,
+        "diff": 10.059999999999995
+      },
+      {
+        "wo": "10079.4",
+        "type": "labor",
+        "header": 106.25,
+        "detail_sum": 1.0,
+        "diff": 105.25
+      },
+      {
+        "wo": "1008.1",
+        "type": "labor",
+        "header": 344.7,
+        "detail_sum": 0,
+        "diff": 344.7
+      },
+      {
+        "wo": "10080.1",
+        "type": "labor",
+        "header": 1302.8,
+        "detail_sum": 2303.7200000000003,
+        "diff": -1000.9200000000003
+      },
+      {
+        "wo": "10080.2",
+        "type": "labor",
+        "header": 53.76,
+        "detail_sum": 46.13,
+        "diff": 7.6299999999999955
+      },
+      {
+        "wo": "10080.3",
+        "type": "labor",
+        "header": 31.5,
+        "detail_sum": 0,
+        "diff": 31.5
+      },
+      {
+        "wo": "10082.1",
+        "type": "labor",
+        "header": 229.5,
+        "detail_sum": 292.99,
+        "diff": -63.49000000000001
+      },
+      {
+        "wo": "10082.2",
+        "type": "labor",
+        "header": 261.64,
+        "detail_sum": 244.84,
+        "diff": 16.799999999999983
+      },
+      {
+        "wo": "10082.3",
+        "type": "labor",
+        "header": 55.13,
+        "detail_sum": 58.150000000000006,
+        "diff": -3.020000000000003
+      },
+      {
+        "wo": "10083.1",
+        "type": "labor",
+        "header": 22.38,
+        "detail_sum": 26.46,
+        "diff": -4.080000000000002
+      },
+      {
+        "wo": "10083.2",
+        "type": "labor",
+        "header": 68.0,
+        "detail_sum": 1.0,
+        "diff": 67.0
+      },
+      {
+        "wo": "10083.3",
+        "type": "labor",
+        "header": 138.88,
+        "detail_sum": 1.0,
+        "diff": 137.88
+      },
+      {
+        "wo": "10083.4",
+        "type": "labor",
+        "header": 10.5,
+        "detail_sum": 0,
+        "diff": 10.5
+      },
+      {
+        "wo": "10084.1",
+        "type": "labor",
+        "header": 261.76,
+        "detail_sum": 2.0,
+        "diff": 259.76
+      },
+      {
+        "wo": "10085.1",
+        "type": "labor",
+        "header": 152.38,
+        "detail_sum": 0,
+        "diff": 152.38
+      },
+      {
+        "wo": "10086.1",
+        "type": "labor",
+        "header": 177.56,
+        "detail_sum": 360.28,
+        "diff": -182.71999999999997
+      },
+      {
+        "wo": "10086.2",
+        "type": "labor",
+        "header": 266.43,
+        "detail_sum": 500.24,
+        "diff": -233.81
+      },
+      {
+        "wo": "10087.1",
+        "type": "labor",
+        "header": 95.25,
+        "detail_sum": 170.89,
+        "diff": -75.63999999999999
+      },
+      {
+        "wo": "10088.1",
+        "type": "labor",
+        "header": 171.13,
+        "detail_sum": 262.74,
+        "diff": -91.61000000000001
+      },
+      {
+        "wo": "10089.1",
+        "type": "labor",
+        "header": 1619.26,
+        "detail_sum": 2403.8700000000003,
+        "diff": -784.6100000000004
+      },
+      {
+        "wo": "10089.2",
+        "type": "labor",
+        "header": 31.5,
+        "detail_sum": 0,
+        "diff": 31.5
+      },
+      {
+        "wo": "1009.1",
+        "type": "labor",
+        "header": 2275.79,
+        "detail_sum": 4826.29,
+        "diff": -2550.5
+      },
+      {
+        "wo": "1009.2",
+        "type": "labor",
+        "header": 22.8,
+        "detail_sum": 0.0,
+        "diff": 22.8
+      },
+      {
+        "wo": "1009.3",
+        "type": "labor",
+        "header": 564.98,
+        "detail_sum": 0,
+        "diff": 564.98
+      },
+      {
+        "wo": "1009.4",
+        "type": "labor",
+        "header": 37.5,
+        "detail_sum": 0,
+        "diff": 37.5
+      },
+      {
+        "wo": "1009.5",
+        "type": "labor",
+        "header": 61.5,
+        "detail_sum": 0,
+        "diff": 61.5
+      },
+      {
+        "wo": "10090.1",
+        "type": "labor",
+        "header": 209.76,
+        "detail_sum": 11.9,
+        "diff": 197.85999999999999
+      },
+      {
+        "wo": "10090.2",
+        "type": "labor",
+        "header": 34.26,
+        "detail_sum": 49.27,
+        "diff": -15.010000000000005
+      },
+      {
+        "wo": "10090.3",
+        "type": "labor",
+        "header": 31.38,
+        "detail_sum": 20.55,
+        "diff": 10.829999999999998
+      },
+      {
+        "wo": "10090.4",
+        "type": "labor",
+        "header": 93.02,
+        "detail_sum": 133.95,
+        "diff": -40.92999999999999
+      }
+    ]
+  }
+}

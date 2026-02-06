@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+venv/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+
+# Sensitive
+.env
+*.credentials
+**/secrets/
+
+# Large files
+*.db
+*.sqlite
+
+# Temp
+*.tmp
+*.log
+*.db
+
+# Large data files
+warehouse/raw/**/material_detail.csv

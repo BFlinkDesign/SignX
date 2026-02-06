@@ -1,0 +1,125 @@
+{
+  "project": "SignX Warehouse - KeyedIn ERP & Informer Full Data Extraction",
+  "branchName": "ralph/informer-full-extraction",
+  "description": "Extract ALL data from KeyedIn ERP (main system) and Informer BI (30 reports) into CSV files for the Eagle Sign Decision Intelligence Engine. Current state: Customer Listing extraction works via manually-captured payload. Reconnaissance reveals capture script targets wrong endpoint (commandService vs ViewRPCService), 11 reports fail Launch click, 3 have no 'Launch Report' button, and required-param reports block on validation.",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Fix capture_all_reports.py network interception",
+      "description": "As a data engineer, I want the capture script to intercept ViewRPCService POST requests (not just commandService) so that report payloads are actually captured when 'Launch Report' is clicked.",
+      "acceptanceCriteria": [
+        "Network interception listens for both ViewRPCService and commandService endpoints",
+        "Captured payloads saved with endpoint type in filename (e.g. report_customer_listing_view_request.txt)",
+        "Response bodies also captured for ViewRPCService POSTs",
+        "Python syntax check passes (py_compile)",
+        "Smoke test: import capture_all_reports succeeds"
+      ],
+      "priority": 1,
+      "passes": false
+    },
+    {
+      "id": "US-002",
+      "title": "Fix Launch click for all 30 reports",
+      "description": "As a data engineer, I want the capture script to successfully click 'Launch' for all 30 reports, including the 11 that currently fail with 'all_strategies_failed'.",
+      "acceptanceCriteria": [
+        "Reports with 'Export' in name handled (different UI pattern - may not have Launch link)",
+        "Reports visible on page 2 of reports list navigated to correctly",
+        "Strategy fallback uses JS-based row matching for reports not found by text locator",
+        "Recon confirms Launch click succeeds for at least 22 non-export reports",
+        "Export reports flagged as separate category (not treated as failures)"
+      ],
+      "priority": 2,
+      "passes": false
+    },
+    {
+      "id": "US-003",
+      "title": "Handle required parameters in parameter dialogs",
+      "description": "As a data engineer, I want the capture script to fill required date fields with a wide date range (2000-01-01 to 2099-12-31) before clicking 'Launch Report' so that required-param reports don't block on validation.",
+      "acceptanceCriteria": [
+        "Required date fields (marked with red asterisk) detected and filled",
+        "Wide date range used: start=2000-01-01, end=2099-12-31 (captures all historical data)",
+        "Non-required params left empty (returns all data)",
+        "AR Invoice Details successfully fires ViewRPCService POST after filling Invoice Date",
+        "AR Invoice Listing, Inventory Transaction History, Invoice Register also work",
+        "Reports without Launch Report button (AR Open Invoices, Open Sales Orders, Open Work Orders) handled gracefully"
+      ],
+      "priority": 3,
+      "passes": false
+    },
+    {
+      "id": "US-004",
+      "title": "Update scrape_informer.py to replay ViewRPCService payloads",
+      "description": "As a data engineer, I want scrape_informer.py to accept and replay ViewRPCService payloads (in addition to existing commandService payloads) so that captured browser payloads can be used for HTTP-based extraction.",
+      "acceptanceCriteria": [
+        "load_captured_payload() detects payload type (view vs command) from filename or content",
+        "New replay_view_rpc() method sends payload to ViewRPCService endpoint",
+        "ViewToken extracted from ViewRPCService response (same gwt_parser)",
+        "Pagination via getData works with ViewRPCService-obtained ViewTokens",
+        "Existing commandService flow unchanged (backward compatible)",
+        "Python syntax check passes",
+        "Existing test suite still passes (14/14)"
+      ],
+      "priority": 4,
+      "passes": false
+    },
+    {
+      "id": "US-005",
+      "title": "Capture all 30 report payloads",
+      "description": "As a data engineer, I want to run capture_all_reports.py and successfully capture ViewRPCService payloads for all launchable reports so that scrape_informer.py has the data it needs.",
+      "acceptanceCriteria": [
+        "capture_all_reports.py --skip-existing runs successfully",
+        "At least 20 of 30 reports have captured payload files in C:\\Scripts\\keyedin-capture\\reports\\",
+        "field_names_manifest.json updated with discovered field names",
+        "Export-only reports documented as requiring different approach",
+        "No-Launch-Report-button reports documented with screenshots"
+      ],
+      "priority": 5,
+      "passes": false
+    },
+    {
+      "id": "US-006",
+      "title": "Extract all reports to CSV via HTTP",
+      "description": "As a data engineer, I want to run scrape_informer.py and extract all captured reports to CSV files so that the data warehouse has complete Informer data.",
+      "acceptanceCriteria": [
+        "scrape_informer.py processes all reports with captured payloads",
+        "CSV files written to warehouse/processed/ with correct column headers",
+        "Row counts logged for each report",
+        "At least 15 reports produce non-empty CSV output",
+        "Customer Listing still extracts 6269 rows (regression check)",
+        "3-tier field discovery works (REPORT_FIELDS -> manifest -> auto-discovery)"
+      ],
+      "priority": 6,
+      "passes": false
+    },
+    {
+      "id": "US-007",
+      "title": "Clean up temporary files and debug code",
+      "description": "As a developer, I want all temporary recon scripts, debug screenshots, and debug code blocks removed so that the codebase is clean and production-ready.",
+      "acceptanceCriteria": [
+        "recon_informer_ui.py deleted (temporary recon script)",
+        "PLAN.md deleted (superseded by PRD)",
+        "All DEBUG code blocks removed from capture_all_reports.py (DOM dump, debug screenshots, debug POST listener)",
+        "warehouse/raw/recon/ directory cleaned up",
+        "warehouse/raw/debug_dialog.png and ar_invoice_dialog.png removed",
+        "No print() debug statements in any script"
+      ],
+      "priority": 7,
+      "passes": false
+    },
+    {
+      "id": "US-008",
+      "title": "KeyedIn Main ERP reconnaissance",
+      "description": "As a data engineer, I want a complete map of KeyedIn ERP's main application (not Informer) including all accessible modules, pages, data endpoints, and export capabilities so that we can plan full ERP data extraction.",
+      "acceptanceCriteria": [
+        "ERP main menu structure documented (all top-level modules)",
+        "Key data pages identified (Customers, Vendors, Sales Orders, Purchase Orders, Inventory, Work Orders, GL)",
+        "Data export options mapped (CSV export, print-to-file, API endpoints)",
+        "URL patterns documented for each module",
+        "Authentication flow verified (SSO tokens, session management)",
+        "Reconnaissance report saved as structured JSON"
+      ],
+      "priority": 8,
+      "passes": false
+    }
+  ]
+}

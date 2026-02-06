@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-01-30T1015",
+  "source": "C:\\Scripts\\keyedin-capture\\reports\\cost_detail",
+  "files_parsed": 168,
+  "wo_headers": 33428,
+  "labor_detail_rows": 254012,
+  "labor_summary_rows": 161377,
+  "material_rows": 780868,
+  "outplant_rows": 23352,
+  "source_tier": 3,
+  "cross_validation": {
+    "total_wos": 33428,
+    "labor_matches": 33428,
+    "labor_mismatches": 0,
+    "material_matches": 33428,
+    "material_mismatches": 0,
+    "mismatched_wos": []
+  }
+}

@@ -1,0 +1,182 @@
+wo_number,outplant_date,work_dept,sub_contractor,uom,est_qty,actual_qty,qty_variance,est_cost,job_cost,cost_variance,description,source_tier,source_file
+10000.1,2020-12-22,,PO#19282-1 NAGLE SIG,,,1.0,,,225.0,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10000.1,,,PO#19282-1 NAGLE SIG  EA,,1,1,225,225.0,3.5,,""" B",3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10000.1,,0600,TEMPLATE              EA,,19,0,-19,48.45,0.0,-48.45,Mounting Pattern,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10000.2,2020-12-22,,PO#19282-2 NAGLE SIG,,,1.0,,,225.0,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10000.2,,,PO#19282-2 NAGLE SIG  EA,,1,1,225,225.0,3.5,,"""",3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10000.2,,0600,TEMPLATE              EA,,19,0,-19,48.45,0.0,-48.45,Mounting Pattern,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10001.1,2020-12-22,,PO#19345-1 BTI SPECI,,,1.0,,,2650.0,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10001.1,,,PO#19345-1 BTI SPECI  EA,,1,1,2650,2650.0,,,shipping for cat scale.,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10002.1,2021-02-19,,8412068 BTI LOGISTIC,,,0.0,,,2100.0,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10002.1,,,8412068 BTI LOGISTIC,,0,0,2100,2100.0,,,shipping for cat scale canopy to ka,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10002.1,,0200,10X10                 FT,,40,0,-40,1775.2,0.0,-1775.2,steel t,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10002.1,,0200,14GA                  EA,,4,0,-4,288.0,0.0,-288.0,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10002.1,,0200,2998T53               EA,,2,0,-2,40.0,0.0,-40.0,turn buckle,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10002.1,,0200,3372T25KIT            EA,,4,0,-4,40.0,0.0,-40.0,kit,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10002.1,,0200,BOX                   EA,,1,0,-1,11.0,0.0,-11.0,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10002.1,,0200,CABLE                 FT,,60,0,-60,123.0,0.0,-123.0,Galvanized cable,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10002.1,,0200,CHANNEL               EA,,40,0,-40,358.8,0.0,-358.8,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10002.1,,0200,COVER                 EA,,1,0,-1,3.5,0.0,-3.5,-GNG WP BLNK CVR,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10002.1,,0200,FLAT                  EA,,1,0,-1,58.64,0.0,-58.64,flat,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10002.1,,0200,KITS                  EA,,4,0,-4,40.0,0.0,-40.0,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10002.1,,0200,NETTING               EA,,1,0,-1,25.0,0.0,-25.0,´ Poultry Netting,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10002.1,,0200,W12X16                FT,,20,0,-20,208.0,0.0,-208.0,beam,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10002.1,,0300,LIGHTS                EA,,6,0,-6,1944.0,0.0,-1944.0,W LED Canopy,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10002.1,,0300,POWER                 EA,,14,0,-14,721.28,0.0,-721.28,watt,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10002.2,2021-02-22,,PO#19268-1 RODERICK,,,1.0,,,4000.0,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10002.2,,,PO#19268-1 RODERICK   EA,,1,1,4000,4000.0,,,-INSTALL CATSCALE CANOPY.,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10002.2,,0600,INSTALLATION          EA,,1,0,-1,4000.0,0.0,-4000.0,Roderick Sign Co. - installation,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10004.1,,0200,SHIPPING              EA,,1,0,-1,100.0,0.0,-100.0,estimated Pride LED shipping,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10004.1,,0300,LEDS                  EA,,6,0,-6,1091.94,0.0,-1091.94,W LED Street Light F,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10004.1,,0600,DISPOSAL              EA,,6,0,-6,30.0,0.0,-30.0,Lamp disposal,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10005.1,,0200,GEMINI                EA,,1,0,-1,2006.58,0.0,-2006.58,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10008.1,,0200,RECOVERS              EA,,1,0,-1,1975.0,0.0,-1975.0,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10009.2,2021-05-06,,PO#19639-1 DIVISION,,,1.0,,,2080.0,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10009.2,,,PO#19639-1 DIVISION   EA,,1,1,2080,2080.0,,,PROVIDE NEW MONUMENT SIGN FOOTING P,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10009.2,,0600,FOOTINGS              EA,,1,0,-1,2080.0,0.0,-2080.0,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10009.3,,0600,STONE                 EA,,1,0,-1,1800.0,0.0,-1800.0,qu,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10009.4,,0200,LETTERS               EA,,1,0,-1,7043.0,0.0,-7043.0,sets from steel art,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10009.4,,0200,SHIP                  EA,,1,0,-1,150.0,0.0,-150.0,letters,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10009.4,,0200,TAR                   EA,,1,0,-1,50.0,0.0,-50.0,paper,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10009.4,,0600,NICHIHA               EA,,1,0,-1,4100.0,0.0,-4100.0,qu,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10014.2,,5300,PERMIT                EA,,1,0,-1,550.0,0.0,-550.0,Permit fee,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10015.1,,0500,OVERLAMINATE          EA,,5,0,-5,5.0,0.0,-5.0,clear,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10015.2,,0500,OVERLAMINATE          SF,,99,0,-99,148.5,0.0,-148.5,Overlaminate,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10015.3,,0500,OVERLAMINATE          SF,,2,0,-2,3.0,0.0,-3.0,Overlaminate,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10016.1,2020-12-17,,PO#19335-1 UNISHIPPE,,,1.0,,,124.97,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10016.1,,,PO#19335-1 UNISHIPPE  EA,,1,1,124,124.97,,,shipping for cat scale.,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10018.1,,0200,MODEM                 EA,,1,0,-1,597.0,0.0,-597.0,watchfire - quote,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10019.1,2021-01-12,,PO#19394-1 BTI LOGIS,,,1.0,,,2650.0,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10019.1,,,PO#19394-1 BTI LOGIS  EA,,1,1,2650,2650.0,,,"shipping for cat scale to Meridian,",3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10020.1,,0200,MODEM                 EA,,1,0,-1,597.0,0.0,-597.0,watchfire - quote,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10021.2,,0600,MOUNTING              EA,,8,0,-8,36.0,0.0,-36.0,template,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10022.2,,0200,GEMINI                EA,,1,0,-1,550.0,0.0,-550.0,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10024.3,,0200,CORTEN                EA,,1,0,-1,925.0,0.0,-925.0,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10024.3,,0200,CRATING               EA,,1,0,-1,66.0,0.0,-66.0,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10024.3,,0200,LETTERS               EA,,1,0,-1,4449.0,0.0,-4449.0,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10024.3,,0200,SHIPPING              EA,,1,0,-1,200.0,0.0,-200.0,estimated Steel Art shipping charge,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10024.3,,0200,SHIPPING1             EA,,1,0,-1,250.0,0.0,-250.0,estimated CSS shipping charges,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10024.3,,0600,FOOTINGS              EA,,1,0,-1,3623.0,0.0,-3623.0,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10024.4,2022-08-01,,PO#21093-1 DIVISION,,,1.0,,,320.0,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10024.4,,,PO#21093-1 DIVISION   EA,,1,1,320,320.0,,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10024.4,2022-08-01,,PO#21093-2 DIVISION,,,1.0,,,4166.0,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10024.4,,,PO#21093-2 DIVISION   EA,,1,1,4166,4166.0,2022064.0,,TO,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10024.4,,0200,CORTEN                EA,,1,0,-1,997.0,0.0,-997.0,),3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10024.4,,0200,LETTERS               EA,,1,0,-1,5725.0,0.0,-5725.0,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10024.4,,0200,SHIPPING              EA,,1,0,-1,250.0,0.0,-250.0,estimated Steel Art shipping charge,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10024.4,,0200,SHIPPING1             EA,,1,0,-1,300.0,0.0,-300.0,estimated CSS shipping charges,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10024.4,,0600,FOOTINGS              EA,,1,0,-1,4166.0,0.0,-4166.0,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10026.1,2021-01-14,,PO#19420-1 BTI LOGIS,,,1.0,,,2650.0,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10026.1,,,PO#19420-1 BTI LOGIS  EA,,1,1,2650,2650.0,,,shipping for cat scale.,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10028.2,,0500,OVERLAMINATE          SF,,9,0,-9,13.5,0.0,-13.5,Overlaminate,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+1003.1,2007-07-24,,3920384696 LAKEVILLE,,,0.0,,,223.64,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+1003.1,,,3920384696 LAKEVILLE,,0,0,223,223.64,,,Salad Creations,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+1003.1,2007-08-31,,PO#1020-1 MCNEILL SI,,,1.0,,,2098.84,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+1003.1,,,PO#1020-1 MCNEILL SI  EA,,1,1,2098,2098.84,20.0,,""" cha",3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+1003.1,2007-08-31,,PO#1020-2 MCNEILL SI,,,1.0,,,1375.93,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+1003.1,,,PO#1020-2 MCNEILL SI  EA,,1,1,1375,1375.93,,,Time Clock Installation,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+1003.1,,,PO#1020-3 MCNEILL SI  EA,,0,0,0,0.0,,,Staff Time,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+1003.1,,,PO#1020-4 MCNEILL SI  EA,,0,0,0,0.0,,,Permits @ Cost,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+1003.1,,,PO#1020-5 MCNEILL SI  EA,,0,0,0,0.0,,,Engineering,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+1003.1,2007-07-31,,PO#1577-1 NAGLE SIGN,,,1.0,,,450.95,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+1003.1,,,PO#1577-1 NAGLE SIGN  EA,,1,1,450,450.95,4.0,3.0,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10031.1,2021-04-16,,PO#19717-1 CARDMEMBE,,,6.0,,,22.98,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10031.1,,,PO#19717-1 CARDMEMBE  EA,,6,6,22,22.98,,,Quickrete,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10031.1,,0500,OVERLAMINATE          SF,,35,0,-35,35.0,0.0,-35.0,Overlaminate,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10031.2,2021-04-16,,PO#19717-2 CARDMEMBE,,,6.0,,,22.99,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10031.2,,,PO#19717-2 CARDMEMBE  EA,,6,6,22,22.99,,,Quikrete,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10031.2,,0500,OVERLAMINATE          SF,,35,0,-35,35.0,0.0,-35.0,Overlaminate,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10033.1,,0500,OVERLAMINATE          SF,,1,0,-1,1.0,0.0,-1.0,overlaminate,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10034.1,2021-01-12,,PO#19374-1 NAGLE SIG,,,1.0,,,87.5,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10034.1,,,PO#19374-1 NAGLE SIG  EA,,1,1,87,87.5,,,Bend returns for Grimes Chiropracti,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10034.3,,0500,VINYL                 SF,,55,0,-55,241.45,0.0,-241.45,WHI,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10034.7,2021-01-28,,PO#19417-1 NAGLE SIG,,,1.0,,,112.5,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10034.7,,,PO#19417-1 NAGLE SIG  EA,,1,1,112,112.5,3.0,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10042.2,2021-01-28,,PO#19400-1 NAGLE SIG,,,1.0,,,212.5,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10042.2,,,PO#19400-1 NAGLE SIG  EA,,1,1,212,212.5,,,Bend letter returns for EXEMPLACARE,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10042.2,2021-01-31,,PO#19458-1 CONTRACTO,,,1.0,,,1401.93,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10042.2,,,PO#19458-1 CONTRACTO  EA,,1,1,1401,1401.93,85.0,,´ JLG LIFT FOR EAGLE SIGN,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10042.2,,0300,POWER                 EA,,2,0,-2,180.0,0.0,-180.0,watt with SW,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10042.2,,0600,TEMPLATE              EA,,24,0,-24,61.2,0.0,-61.2,Mounting Pattern,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10043.3,,0200,BANNER                SF,,30,0,-30,45.0,0.0,-45.0,oz,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10043.3,,0200,FREIGHT               EA,,1,0,-1,15.0,0.0,-15.0,estimated shipping,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10043.4,,0200,BANNER                SF,,30,0,-30,45.0,0.0,-45.0,oz,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10043.4,,0200,FREIGHT               EA,,1,0,-1,15.0,0.0,-15.0,estimated shipping,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10045.1,,0600,LIFT                  EA,,3,0,-3,600.0,0.0,-600.0,rental,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10045.11,2022-05-24,,PO#20792-3 DIVISION,,,1.0,,,5120.0,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10045.11,,,PO#20792-3 DIVISION   EA,,1,1,5120,5120.0,,,INSTALL NEW MONUMENT SIGN FOOTING A,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10045.11,,0600,PAD                   EA,,1,0,-1,1463.0,0.0,-1463.0,),3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10045.11,,0600,SAWCUT                EA,,1,0,-1,816.0,0.0,-816.0,),3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10045.8,2022-04-30,,PO#20756-1 BAKER ELE,,,1.0,,,260.31,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10045.8,,,PO#20756-1 BAKER ELE  EA,,1,1,260,260.31,,,PROVIDE PRIVATE LOCATES AT MONUMENT,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10045.8,2022-05-24,,PO#20792-1 DIVISION,,,1.0,,,0.0,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10045.8,,,PO#20792-1 DIVISION   EA,,1,1,0,0.0,,,DRILL SEVERAL EXPLORATORY HOLES IN,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10045.8,2022-05-24,,PO#20792-2 DIVISION,,,1.0,,,0.0,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10045.8,,,PO#20792-2 DIVISION   EA,,1,1,0,0.0,4.0,4.0,' SQUARE PORTION OF PARKI,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10045.8,,0200,STEEL                 FT,,21,0,-21,827.4,0.0,-827.4,"pipe,",3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10045.8,,0600,CAISSON               EA,,10,0,-10,1250.0,0.0,-1250.0,Nagle drill,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10045.8,,0600,RENT                  EA,,4,0,-4,400.0,0.0,-400.0,dump truck,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10047.2,,0500,OVERLAMINATE          SF,,41,0,-41,61.5,0.0,-61.5,Overlaminate,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+1005.1,2007-05-24,,PO#1039-1 AIRPORT SI,,,1.0,,,75.0,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+1005.1,,,PO#1039-1 AIRPORT SI  EA,,1,1,75,75.0,1.0,-0.0,"""",3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10051.1,,0600,CABLE                 EA,,1,0,-1,230.0,0.0,-230.0,Galvanized Steel,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10051.1,,0600,SHACKLE               EA,,8,0,-8,199.36,0.0,-199.36,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10052.1,2021-01-14,,PO#19418-1 BTI LOGIS,,,1.0,,,1800.0,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10052.1,,,PO#19418-1 BTI LOGIS  EA,,1,1,1800,1800.0,,,shipping for cat scale.,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10053.1,2021-02-12,,PO#19493-1 BTI LOGIS,,,1.0,,,2650.0,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10053.1,,,PO#19493-1 BTI LOGIS  EA,,1,1,2650,2650.0,,,shipping for cat scale.,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10055.1,,0500,OVERLAMINATE          SF,,20,0,-20,20.0,0.0,-20.0,Overlaminate,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10056.1,,0200,FACE                  EA,,1,0,-1,844.36,0.0,-844.36,Commercial Plastics - email quote,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10056.1,,0200,FREIGHT               EA,,1,0,-1,114.72,0.0,-114.72,Commercial Plastics - freight,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10061.1,,0500,OVERLAMINATE          SF,,32,0,-32,48.0,0.0,-48.0,Overlaminate,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10064.1,2021-02-09,,PO#19491-1 UNISHIPPE,,,1.0,,,125.79,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10064.1,,,PO#19491-1 UNISHIPPE  EA,,1,1,125,125.79,,,shipping for cat scale,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10065.1,2021-01-31,,PO#19464-1 BTI LOGIS,,,1.0,,,900.0,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10065.1,,,PO#19464-1 BTI LOGIS  EA,,1,1,900,900.0,,,shipping for cat scale,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10067.1,,0600,TEMPLATE              EA,,21,0,-21,53.55,0.0,-53.55,Mounting Pattern,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10067.2,,0600,TEMPLATE              EA,,21,0,-21,53.55,0.0,-53.55,Mounting Pattern,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10067.3,,5300,PERMIT                EA,,3,0,-3,225.0,0.0,-225.0,Permit fee,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10067.5,,0400,METALLIC              EA,,1,0,-1,150.0,0.0,-150.0,AI Innovations - upcharge for metal,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10067.7,,0200,LETTERS               EA,,1,0,-1,823.0,0.0,-823.0,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+1007.1,2007-05-31,,PO#1043-1 NAGLE SIGN,,,1.0,,,1551.5,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+1007.1,,,PO#1043-1 NAGLE SIGN  EA,,1,1,1551,1551.5,,,"Remove ""Microtel Inn & Suites"" chan",3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+1007.1,,0600,HARDWARE              EA,,3,0,-3,30.0,0.0,-30.0,Misc,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10071.1,,0200,CORNERS               EA,,8,0,-8,12.96,0.0,-12.96,Thrif frame,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10071.1,,0200,EMC                   EA,,1,0,-1,4264.89,0.0,-4264.89,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10073.1,2021-01-31,,PO#19463-1 MIDWEST S,,,1.0,,,70.74,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10073.1,,,PO#19463-1 MIDWEST S  EA,,1,1,70,70.74,6.0,,""" Condensed Punctuation Set",3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10073.1,,0200,PUNCTUATION           EA,,1,0,-1,44.08,0.0,-44.08,""" punctuation se",3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10073.1,,0200,SHIPPING              EA,,1,0,-1,25.0,0.0,-25.0,estimated MidWest shipping,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10076.1,,0300,30                    EA,,2,0,-2,36.46,0.0,-36.46,Grimco - HanleyLED PhoenixNRG Bar -,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10076.1,,0300,36                    EA,,1,0,-1,21.87,0.0,-21.87,Grimco - HanleyLED PhoenixNRG Bar -,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10076.1,,0300,42                    EA,,4,0,-4,102.08,0.0,-102.08,Grimco - HanleyLED PhoenixNRG Bar -,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10076.1,,0300,48                    EA,,1,0,-1,29.16,0.0,-29.16,Grimco - HanleyLED PhoenixNRG Bar -,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10076.1,,0300,64                    EA,,2,0,-2,77.76,0.0,-77.76,Grimco - HanleyLED PhoenixNRG Bar -,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10076.1,,0600,DISPOSAL              EA,,10,0,-10,10.0,0.0,-10.0,Lamp disposal,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10077.1,,0200,GEMINI                EA,,1,0,-1,845.13,0.0,-845.13,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10079.1,,0200,FACES                 EA,,1,0,-1,620.9,0.0,-620.9,Commercial Plastics - email quote,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10079.1,,0200,FREIGHT               EA,,1,0,-1,120.0,0.0,-120.0,Commercial Plastics - freight,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10079.2,,0500,OVERLAMINATE          SF,,3,0,-3,4.5,0.0,-4.5,Overlaminate,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10080.2,,0600,QUOTE                 EA,,2,0,-2,17519.8,0.0,-17519.8,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10082.1,,0500,OVERLAMINATE          SF,,45,0,-45,40.5,0.0,-40.5,Overlaminate,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10082.2,,0500,OVERLAMINATE          SF,,32,0,-32,28.8,0.0,-28.8,Overlaminate,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10082.3,,0500,OVERLAMINATE          SF,,16,0,-16,14.4,0.0,-14.4,Overlaminate,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10084.1,,0200,FACES                 EA,,1,0,-1,1382.0,0.0,-1382.0,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10084.1,,0200,FREIGHT               EA,,1,0,-1,250.0,0.0,-250.0,estimated shipping,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10088.1,,0500,CHROME                SF,,24,0,-24,21.72,0.0,-21.72,CHROME MIRROR,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10089.1,2021-04-30,,PO#19638-1 DIVISION,,,1.0,,,1750.0,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10089.1,,,PO#19638-1 DIVISION   EA,,1,1,1750,1750.0,2021.0,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10089.1,,0200,FREIGHT               EA,,1,0,-1,135.0,0.0,-135.0,Gemini freight,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10089.1,,0200,LETTERS               EA,,1,0,-1,1684.0,0.0,-1684.0,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10089.1,,0300,CONTROLLER            EA,,1,0,-1,47.49,0.0,-47.49,Grimco - HanleyLED RGB Controller,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10089.1,,0300,RGB                   BG,,1,0,-1,246.07,0.0,-246.07,Grimco - HanleyLED Peregrine Series,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10089.1,,0600,FOOTINGS              EA,,1,0,-1,1750.0,0.0,-1750.0,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+1009.2,2007-06-30,,PO#1073-1 NAGLE SIGN,,,1.0,,,3504.0,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+1009.2,,,PO#1073-1 NAGLE SIGN  EA,,1,1,3504,3504.0,3.0,,),3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+1009.4,2007-06-05,,PO#1073-2 NAGLE SIGN,,,1.0,,,0.0,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+1009.4,,,PO#1073-2 NAGLE SIGN  EA,,1,1,0,0.0,,,Remove,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+1009.5,2007-06-05,,PO#1073-3 NAGLE SIGN,,,1.0,,,0.0,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+1009.5,,,PO#1073-3 NAGLE SIGN  EA,,1,1,0,0.0,1.0,,) set,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10090.1,2021-03-22,,PO#19614-1 VITAL SIG,,,1.0,,,150.0,,,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10090.1,,,PO#19614-1 VITAL SIG  EA,,1,1,150,150.0,,,"Cut and apply, first surface white",3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html
+10090.3,,0500,OVERLAMINATE          SF,,1,0,-1,1.0,0.0,-1.0,Overlaminate,3,C:\Scripts\keyedin-capture\reports\cost_detail\cost_detail_batch_001.html

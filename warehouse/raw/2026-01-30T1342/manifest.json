@@ -1,0 +1,21 @@
+{
+  "phase": "Phase 2 \u2014 Informer BI Extraction",
+  "timestamp": "2026-01-30T13:43:00.218045",
+  "elapsed_seconds": 14.0,
+  "output_dir": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\2026-01-30T1342",
+  "reports_attempted": 1,
+  "reports_ok": 1,
+  "reports_failed": 0,
+  "reports_no_payload": 0,
+  "total_rows": 6269,
+  "results": [
+    {
+      "report_id": 1441850,
+      "report_name": "Customer Listing",
+      "status": "OK",
+      "csv_path": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\2026-01-30T1342\\informer_customer_listing.csv",
+      "row_count": 6269,
+      "elapsed": 14.0
+    }
+  ]
+}

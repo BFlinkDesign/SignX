@@ -1,0 +1,22 @@
+{
+  "phase": "Phase 2 \u2014 Informer BI Extraction",
+  "timestamp": "2026-01-30T13:39:55.415654",
+  "elapsed_seconds": 0.2,
+  "output_dir": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\2026-01-30T1339",
+  "reports_attempted": 1,
+  "reports_ok": 0,
+  "reports_failed": 1,
+  "reports_no_payload": 0,
+  "total_rows": 0,
+  "results": [
+    {
+      "report_id": 1441850,
+      "report_name": "Customer Listing",
+      "status": "RPC_ERROR",
+      "csv_path": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\2026-01-30T1339\\informer_customer_listing.csv",
+      "row_count": 0,
+      "elapsed": 0.2,
+      "error": "GWT RPC Error: com.entrinsik.informer.core.exception.AuthenticationException/2156709188"
+    }
+  ]
+}
