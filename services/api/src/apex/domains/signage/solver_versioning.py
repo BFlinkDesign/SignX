@@ -7,10 +7,11 @@ Track solver function versions for A/B testing and traceability.
 from __future__ import annotations
 
 import functools
-from typing import Any, Callable, Dict
+from collections.abc import Callable
+from typing import Any
 
 # Solver version registry
-_SOLVER_VERSIONS: Dict[str, str] = {
+_SOLVER_VERSIONS: dict[str, str] = {
     "derive_loads": "1.2.0",
     "filter_poles": "1.1.0",
     "footing_solve": "1.3.0",
@@ -48,7 +49,7 @@ def solver_version(version: str):
     return decorator
 
 
-def get_solver_versions(called_functions: list[str] | None = None) -> Dict[str, str]:
+def get_solver_versions(called_functions: list[str] | None = None) -> dict[str, str]:
     """
     Get solver versions for traceability.
     

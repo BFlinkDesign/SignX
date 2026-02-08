@@ -2,17 +2,15 @@
 
 from __future__ import annotations
 
-import asyncio
 import hashlib
 import io
-from pathlib import Path
-from typing import Optional, BinaryIO
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime
+from typing import Optional
 
 import structlog
-from fastapi import UploadFile, HTTPException, status
-from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi import HTTPException, UploadFile, status
 from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
 try:
     from PIL import Image
@@ -20,10 +18,9 @@ try:
 except ImportError:
     PIL_AVAILABLE = False
 
-from .storage import StorageClient
-from .models_audit import FileUpload
 from .audit import log_audit
-from .deps import settings
+from .models_audit import FileUpload
+from .storage import StorageClient
 
 logger = structlog.get_logger(__name__)
 
@@ -229,8 +226,6 @@ async def upload_file(
     # Upload to storage
     if storage._client:
         try:
-            from minio import Minio
-            from minio.error import S3Error
             
             storage._client.put_object(
                 storage.bucket,
@@ -277,7 +272,7 @@ async def upload_file(
         size_bytes=file_size,
         sha256=sha256,
         virus_scan_status=scan_status,
-        virus_scan_at=datetime.now(timezone.utc) if scan_status != "pending" else None,
+        virus_scan_at=datetime.now(UTC) if scan_status != "pending" else None,
         thumbnail_key=thumbnail_key,
         project_id=project_id,
         uploaded_by=user_id,

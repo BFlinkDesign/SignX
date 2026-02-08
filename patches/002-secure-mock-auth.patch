@@ -1,0 +1,78 @@
+From: Automated Audit <audit@signx.local>
+Subject: [PATCH] Add production guards to MockAuth class
+
+This patch adds safety guards to prevent MockAuth from being used
+in production environments. It also removes admin role from mock users.
+
+---
+ services/api/src/apex/api/auth.py | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
+
+diff --git a/services/api/src/apex/api/auth.py b/services/api/src/apex/api/auth.py
+index 1234567..abcdefg 100644
+--- a/services/api/src/apex/api/auth.py
++++ b/services/api/src/apex/api/auth.py
+@@ -253,18 +253,27 @@ def require_role(allowed_roles: list[str]):
+     return _role_check
+ 
+ 
+-# Placeholder auth for development
++# Placeholder auth for development ONLY - protected against production use
+ class MockAuth:
+-    """Mock auth for local development without JWT."""
++    """Mock auth for local development without JWT.
++    
++    WARNING: This class is disabled in production environments.
++    To use in development, set APEX_ALLOW_MOCK_AUTH=true.
++    """
+     
+     @staticmethod
+     def get_mock_user() -> TokenData:
+-        """Return a mock user for local dev."""
++        """Return a mock user for local dev.
++        
++        Raises:
++            RuntimeError: If called in production or without explicit opt-in.
++        """
++        if settings.ENV == "prod":
++            logger.critical("auth.mock_blocked", msg="MockAuth attempted in production!")
++            raise RuntimeError("MockAuth cannot be used in production environment")
++        
++        import os
++        if not os.getenv("APEX_ALLOW_MOCK_AUTH", "").lower() == "true":
++            raise RuntimeError(
++                "MockAuth requires APEX_ALLOW_MOCK_AUTH=true environment variable. "
++                "This is a safety measure to prevent accidental use of mock auth."
++            )
++        
++        logger.warning("auth.mock_user_created", msg="Using mock authentication - FOR DEVELOPMENT ONLY")
+         return TokenData(
+             user_id="dev-user",
+             account_id="dev-account",
+             email="dev@example.com",
+-            roles=["admin", "user"],
++            roles=["user"],  # No admin privileges for mock users
+         )
+ 
+ 
+ # Optional: generate mock token for testing
+ def create_mock_token() -> str:
+-    """Generate a mock JWT for testing/local dev."""
++    """Generate a mock JWT for testing/local dev.
++    
++    WARNING: Only use in development/test environments.
++    """
++    if settings.ENV == "prod":
++        raise RuntimeError("create_mock_token cannot be used in production")
++    
+     data = {
+         "sub": "dev-user",
+         "email": "dev@example.com",
+         "account_id": "dev-account",
+-        "roles": ["admin", "user"],
++        "roles": ["user"],  # No admin privileges for mock tokens
+     }
+     return create_access_token(data)
+-- 
+2.40.0
+

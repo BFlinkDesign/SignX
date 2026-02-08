@@ -5,7 +5,7 @@ from __future__ import annotations
 import math
 
 import structlog
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter
 
 from ..common.models import make_envelope
 from ..deps import get_code_version, get_model_config
@@ -46,7 +46,7 @@ async def calculate_concrete_yards(req: dict) -> ResponseEnvelope:
         "depth_ft": depth_ft,
     }
     
-    add_assumption(assumptions, f"Formula: V = π × (d/2)² × h / 27")
+    add_assumption(assumptions, "Formula: V = π × (d/2)² × h / 27")
     
     return make_envelope(
         result=result,

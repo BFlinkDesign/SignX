@@ -3,9 +3,9 @@
 from __future__ import annotations
 
 from typing import Optional
+from urllib.parse import urlparse
 
 import structlog
-from urllib.parse import urlparse
 
 logger = structlog.get_logger(__name__)
 

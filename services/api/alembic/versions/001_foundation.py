@@ -31,13 +31,14 @@ SOURCES (squashed from):
 """
 from __future__ import annotations
 
-from typing import Sequence, Union
-from datetime import date
+import logging
+from collections.abc import Sequence
+from typing import Union
 
-from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
-import logging
+
+from alembic import op
 
 logger = logging.getLogger(__name__)
 

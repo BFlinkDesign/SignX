@@ -8,7 +8,6 @@ from celery.utils.log import get_task_logger
 
 from ..app import app
 
-
 logger = get_task_logger(__name__)
 
 

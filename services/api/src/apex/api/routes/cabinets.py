@@ -2,13 +2,11 @@
 
 from __future__ import annotations
 
-import math
 import structlog
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter
 
-from ..common.envelope import calc_confidence, round_floats
+from ..common.envelope import calc_confidence
 from ..common.models import make_envelope
-from ..deps import get_code_version, get_model_config
 from ..schemas import ResponseEnvelope, add_assumption
 
 logger = structlog.get_logger(__name__)

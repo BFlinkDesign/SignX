@@ -1,5 +1,4 @@
 import pytest
-
 from apex.domains.signage.cache import deterministic_cache
 
 

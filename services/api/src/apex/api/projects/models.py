@@ -6,7 +6,7 @@ Defines project lifecycle, payloads, and event tracking.
 from __future__ import annotations
 
 from enum import Enum
-from typing import Any, Literal, Optional
+from typing import Literal, Optional
 
 from pydantic import BaseModel, Field
 

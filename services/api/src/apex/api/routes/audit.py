@@ -6,16 +6,16 @@ from datetime import datetime
 from typing import Optional
 
 import structlog
-from fastapi import APIRouter, Depends, Query, HTTPException, status
+from fastapi import APIRouter, Depends, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ..db import get_db
-from ..auth import get_current_user, TokenData
-from ..rbac import require_permission
 from ..audit import query_audit_logs
-from ..schemas import ResponseEnvelope
-from ..common.models import make_envelope
+from ..auth import TokenData, get_current_user
 from ..common.helpers import get_code_version, get_model_config
+from ..common.models import make_envelope
+from ..db import get_db
+from ..rbac import require_permission
+from ..schemas import ResponseEnvelope
 
 logger = structlog.get_logger(__name__)
 

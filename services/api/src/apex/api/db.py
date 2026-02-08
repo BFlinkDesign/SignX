@@ -2,14 +2,19 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import date, datetime
+from decimal import Decimal
 from typing import Annotated
 
 import sqlalchemy as sa
-from decimal import Decimal
-from datetime import date
-
-from sqlalchemy import JSON, Boolean, Column, DateTime, Integer, String, Text, Numeric, Date, ForeignKey
+from sqlalchemy import (
+    JSON,
+    DateTime,
+    ForeignKey,
+    Numeric,
+    String,
+    Text,
+)
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
@@ -51,13 +56,13 @@ class Project(Base):
     confidence: Mapped[float | None] = mapped_column(sa.Float, nullable=True)  # Last confidence score
     
     # Relationships (eager loading for performance)
-    payloads: Mapped[list["ProjectPayload"]] = relationship(
+    payloads: Mapped[list[ProjectPayload]] = relationship(
         "ProjectPayload",
         foreign_keys="ProjectPayload.project_id",
         lazy="selectin",
         back_populates="project",
     )
-    events: Mapped[list["ProjectEvent"]] = relationship(
+    events: Mapped[list[ProjectEvent]] = relationship(
         "ProjectEvent",
         foreign_keys="ProjectEvent.project_id",
         lazy="selectin",
@@ -81,7 +86,7 @@ class ProjectPayload(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=sa.func.now())
     
     # Relationships
-    project: Mapped["Project"] = relationship("Project", back_populates="payloads")
+    project: Mapped[Project] = relationship("Project", back_populates="payloads")
 
 
 class ProjectEvent(Base):
@@ -97,7 +102,7 @@ class ProjectEvent(Base):
     data: Mapped[dict] = mapped_column(JSON, nullable=False, default=dict)
     
     # Relationships
-    project: Mapped["Project"] = relationship("Project", back_populates="events")
+    project: Mapped[Project] = relationship("Project", back_populates="events")
 
 
 class CalibrationConstant(Base):

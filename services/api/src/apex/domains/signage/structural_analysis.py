@@ -7,10 +7,6 @@ Dynamic load analysis, fatigue analysis, and connection design.
 from __future__ import annotations
 
 import math
-from typing import Dict, List
-
-import numpy as np
-
 
 # ========== Dynamic Load Analysis (ASCE 7-22 Response Spectrum) ==========
 
@@ -20,7 +16,7 @@ def dynamic_load_analysis(
     natural_period_sec: float,
     damping_ratio: float = 0.05,
     site_class: str = "C",
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """
     Calculate dynamic amplification factor per ASCE 7-22.
     
@@ -83,7 +79,7 @@ def fatigue_analysis(
     stress_range_ksi: float,
     detail_category: str = "E",
     design_life_years: float = 25.0,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Fatigue analysis per AISC 360-16 Appendix 3.
     
@@ -152,7 +148,7 @@ def connection_design(
     bolt_grade: str = "A325",
     bolt_diameter_in: float = 0.75,
     num_bolts: int = 4,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Bolt group analysis per AISC 360-16 Table J3.2.
     

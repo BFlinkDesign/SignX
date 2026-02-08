@@ -16,7 +16,6 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass
 from enum import Enum
-from typing import Dict, List, Optional, Tuple
 
 import numpy as np
 from pydantic import BaseModel, Field, validate_call
@@ -107,8 +106,8 @@ class CantileverAnalysisResult(BaseModel):
     fatigue_factor: float = Field(..., description="Fatigue reduction factor")
     
     # Warnings
-    warnings: List[str] = Field(default_factory=list)
-    assumptions: List[str] = Field(default_factory=list)
+    warnings: list[str] = Field(default_factory=list)
+    assumptions: list[str] = Field(default_factory=list)
 
 
 # Engineering constants
@@ -163,12 +162,12 @@ def analyze_cantilever_sign(
     Raises:
         ValueError: If inputs are out of valid ranges
     """
-    warnings: List[str] = []
-    assumptions: List[str] = []
+    warnings: list[str] = []
+    assumptions: list[str] = []
     
     # Add assumptions
     assumptions.append(f"Steel properties: Fy={FY_STEEL_KSI}ksi, E={E_STEEL_KSI}ksi")
-    assumptions.append(f"Wind exposure assumed uniform over sign area")
+    assumptions.append("Wind exposure assumed uniform over sign area")
     assumptions.append(f"Connection assumed to be {config.connection_type.value}")
     
     # Validate pole height
@@ -324,7 +323,7 @@ def optimize_cantilever_design(
     max_arm_length_ft: float = 25.0,
     min_arm_length_ft: float = 5.0,
     target_stress_ratio: float = 0.9,
-) -> Tuple[CantileverConfig, CantileverAnalysisResult]:
+) -> tuple[CantileverConfig, CantileverAnalysisResult]:
     """
     Optimize cantilever design for given loads and constraints.
     
@@ -409,7 +408,7 @@ def calculate_cantilever_foundation_loads(
     analysis_result: CantileverAnalysisResult,
     include_overstrength: bool = True,
     overstrength_factor: float = 1.1,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """
     Calculate foundation design loads from cantilever analysis.
     

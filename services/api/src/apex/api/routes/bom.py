@@ -11,7 +11,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..common.helpers import require_project
 from ..common.models import make_envelope
-from ..common.transactions import with_transaction
 from ..db import ProjectPayload, get_db
 from ..deps import get_code_version, get_model_config
 from ..schemas import ResponseEnvelope, add_assumption

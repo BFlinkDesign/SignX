@@ -1,0 +1,39 @@
+From: Automated Audit <audit@signx.local>
+Subject: [PATCH] Remove fallback JWT secret from routes/auth.py
+
+The routes/auth.py file has a fallback JWT secret that could be
+used if the centralized setting fails. This patch removes it
+to ensure the secure centralized configuration is always used.
+
+---
+ services/api/src/apex/api/routes/auth.py | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/services/api/src/apex/api/routes/auth.py b/services/api/src/apex/api/routes/auth.py
+index 1234567..abcdefg 100644
+--- a/services/api/src/apex/api/routes/auth.py
++++ b/services/api/src/apex/api/routes/auth.py
+@@ -33,8 +33,9 @@ from ..supabase_client import get_supabase_admin, get_supabase_client
+ 
+ logger = structlog.get_logger(__name__)
+ 
+-# Import centralized JWT settings
+-JWT_SECRET_KEY = getattr(settings, "JWT_SECRET_KEY", "dev-secret-key-change-in-production")
++# Import centralized JWT settings - no fallback for security
++from ..auth import JWT_SECRET_KEY, JWT_ALGORITHM
++# JWT_SECRET_KEY is validated in auth.py - will raise in production if not set
+ 
+ router = APIRouter(prefix="/api/v1/auth", tags=["auth"])
+ 
+@@ -432,7 +433,7 @@ async def verify_session_mfa(
+     """
+     # Decode session token
+     try:
+-        payload = jwt.decode(req.session_token, JWT_SECRET_KEY, algorithms=[JWT_ALGORITHM])
++        payload = jwt.decode(req.session_token, JWT_SECRET_KEY, algorithms=["HS256"])
+     except JWTError:
+         raise HTTPException(
+             status_code=status.HTTP_401_UNAUTHORIZED,
+-- 
+2.40.0
+

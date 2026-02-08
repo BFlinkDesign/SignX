@@ -8,10 +8,12 @@ Adds performance indexes, materialized views, query timeout, and monitoring exte
 """
 from __future__ import annotations
 
-from typing import Sequence, Union
+from collections.abc import Sequence
+from typing import Union
+
+import sqlalchemy as sa
 
 from alembic import op
-import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
 revision: str = "005"

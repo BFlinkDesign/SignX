@@ -1,15 +1,13 @@
-from datetime import datetime, timezone
-
-import pytest
+from datetime import UTC, datetime
 
 from apex.api.db import Project
-from apex.api.routes.projects import _serialize_project_model, _coerce_search_record
+from apex.api.routes.projects import _coerce_search_record, _serialize_project_model
 
 
 def _make_project(**overrides) -> Project:
     """Create a minimal ``Project`` instance for serialization tests."""
 
-    now = datetime(2024, 1, 1, tzinfo=timezone.utc)
+    now = datetime(2024, 1, 1, tzinfo=UTC)
     defaults = {
         "project_id": "proj-1",
         "account_id": "acct-1",

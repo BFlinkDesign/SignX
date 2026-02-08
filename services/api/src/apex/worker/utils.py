@@ -1,13 +1,12 @@
 from __future__ import annotations
 
 import json
+import logging
 import os
-import time
 from hashlib import sha256
 from typing import Any, Optional
 
 import redis
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -25,8 +24,11 @@ def idem_cache_get(route: str, body: bytes, key: str) -> Optional[dict[str, Any]
         return None
     try:
         return json.loads(val)
+    except json.JSONDecodeError as e:
+        logger.warning("idem_cache_get.json_error", error=str(e))
+        return None
     except Exception as e:
-        logger.warning("Exception in utils.py: %s", str(e))
+        logger.error("idem_cache_get.unexpected_error", error=str(e))
         return None
 
 

@@ -8,10 +8,9 @@ import structlog
 from fastapi import Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import ORJSONResponse
-from pydantic import ValidationError
 
-from .common.models import make_envelope
 from .common.envelope import calc_confidence
+from .common.models import make_envelope
 from .deps import get_code_version, get_model_config, settings
 
 logger = structlog.get_logger(__name__)

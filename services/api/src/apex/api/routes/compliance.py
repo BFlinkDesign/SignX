@@ -5,23 +5,23 @@ from __future__ import annotations
 from typing import Optional
 
 import structlog
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends
 from pydantic import BaseModel, Field
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ..db import get_db
-from ..auth import get_current_user, TokenData
-from ..rbac import require_permission
+from ..auth import TokenData, get_current_user
+from ..common.models import make_envelope
 from ..compliance import (
     check_compliance,
+    create_pe_stamp,
     get_project_compliance,
     verify_breakaway_compliance,
     verify_wind_load_compliance,
-    create_pe_stamp,
 )
-from ..schemas import ResponseEnvelope
-from ..common.models import make_envelope
+from ..db import get_db
 from ..deps import get_code_version, get_model_config
+from ..rbac import require_permission
+from ..schemas import ResponseEnvelope
 
 logger = structlog.get_logger(__name__)
 

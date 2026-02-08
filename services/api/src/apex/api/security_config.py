@@ -1,7 +1,6 @@
 """Central security configuration helpers (rate limits, throttling, etc.)."""
 
 from functools import lru_cache
-from typing import Dict
 
 import structlog
 from slowapi import Limiter
@@ -12,7 +11,7 @@ from .deps import get_rate_limit_default
 logger = structlog.get_logger(__name__)
 
 # Per-endpoint overrides keyed by a stable identifier.
-_RATE_LIMIT_OVERRIDES: Dict[str, str] = {
+_RATE_LIMIT_OVERRIDES: dict[str, str] = {
     "signcalc": "100/minute",
 }
 

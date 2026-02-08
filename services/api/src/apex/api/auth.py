@@ -7,7 +7,7 @@ Implements RBAC with roles: user, admin.
 from __future__ import annotations
 
 import secrets
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from typing import Any, Optional
 
 import structlog
@@ -20,8 +20,17 @@ from .deps import settings
 
 logger = structlog.get_logger(__name__)
 
-# JWT settings (insecure default for dev; override via env in production)
-JWT_SECRET_KEY = getattr(settings, "JWT_SECRET_KEY", secrets.token_urlsafe(32))
+# JWT settings
+# In production, JWT_SECRET_KEY must be set. In dev, we can fall back to a random key.
+JWT_SECRET_KEY = getattr(settings, "JWT_SECRET_KEY", None)
+if not JWT_SECRET_KEY:
+    if settings.ENV == "prod":
+        logger.critical("security.jwt_secret_missing", msg="JWT_SECRET_KEY must be set in production!")
+        raise ValueError("JWT_SECRET_KEY must be set in production environment")
+    
+    logger.warning("security.jwt_secret_default", msg="Using random JWT secret. Tokens will be invalidated on restart.")
+    JWT_SECRET_KEY = secrets.token_urlsafe(32)
+
 JWT_ALGORITHM = "HS256"
 JWT_EXPIRE_MINUTES = 60 * 24 * 7  # 7 days
 
@@ -63,10 +72,10 @@ def create_access_token(
         Encoded JWT token string
     """
     to_encode = data.copy()
-    expire = datetime.now(timezone.utc) + (expires_delta or timedelta(minutes=JWT_EXPIRE_MINUTES))
+    expire = datetime.now(UTC) + (expires_delta or timedelta(minutes=JWT_EXPIRE_MINUTES))
     to_encode.update({
         "exp": expire, 
-        "iat": datetime.now(timezone.utc),
+        "iat": datetime.now(UTC),
         "mfa_verified": mfa_verified,
     })
     
@@ -126,8 +135,9 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
     # Try Supabase token verification first
     if settings.SUPABASE_URL and settings.SUPABASE_KEY:
         try:
-            from .supabase_client import get_supabase_client
             from gotrue.errors import AuthApiError
+
+            from .supabase_client import get_supabase_client
             
             supabase = get_supabase_client()
             # Verify token with Supabase

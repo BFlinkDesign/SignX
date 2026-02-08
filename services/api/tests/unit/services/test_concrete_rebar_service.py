@@ -13,17 +13,15 @@ Date: 2025-11-02
 """
 
 import pytest
-from hypothesis import given, strategies as st
-
+from apex.domains.signage.exceptions import ValidationError
 from apex.domains.signage.services import (
     ConcreteRebarService,
-    RebarSize,
-    ConcreteGrade,
     FoundationType,
     RebarScheduleInput,
+    RebarSize,
 )
-from apex.domains.signage.exceptions import ValidationError
-
+from hypothesis import given
+from hypothesis import strategies as st
 
 # ============================================================================
 # Fixtures

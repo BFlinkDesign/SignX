@@ -7,12 +7,14 @@ Create Date: 2025-11-01
 Clean architectural break from monument-specific to universal single/double-pole framework.
 Implements exact ASCE 7-22 wind load tables and IBC 2024 Section 1605/1807 requirements.
 """
-from typing import Sequence, Union
+import logging
+from collections.abc import Sequence
+from typing import Union
 
-from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
-import logging
+
+from alembic import op
 
 logger = logging.getLogger(__name__)
 

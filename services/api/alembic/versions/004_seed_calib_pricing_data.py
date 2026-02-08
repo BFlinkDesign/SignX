@@ -8,11 +8,10 @@ Seeds calibration constants, pricing configs, and AISC/ASCE catalog stubs.
 """
 from __future__ import annotations
 
-from typing import Sequence, Union
-from datetime import date
+from collections.abc import Sequence
+from typing import Union
 
 from alembic import op
-import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
 revision: str = "004"

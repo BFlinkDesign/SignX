@@ -4,8 +4,6 @@ import hashlib
 import json
 from typing import Any
 
-from pydantic import BaseModel
-
 from ..schemas import ResponseEnvelope, TraceModel
 
 

@@ -9,7 +9,8 @@ from __future__ import annotations
 import hashlib
 import time
 from collections import OrderedDict
-from typing import Any, Callable, Dict, Optional
+from collections.abc import Callable
+from typing import Any
 
 # Request coalescing cache (content_sha256 -> result)
 _COALESCING_CACHE: OrderedDict[str, tuple[Any, float]] = OrderedDict()
@@ -17,7 +18,7 @@ _CACHE_MAX_SIZE = 1000
 _COALESCING_WINDOW_MS = 100  # 100ms window
 
 
-def compute_content_sha256(content: Dict[str, Any]) -> str:
+def compute_content_sha256(content: dict[str, Any]) -> str:
     """
     Compute SHA256 hash of request content for deduplication.
     
@@ -38,7 +39,7 @@ def coalesce_request(
     content_sha256: str,
     solver_func: Callable,
     solver_args: tuple,
-    solver_kwargs: Dict[str, Any],
+    solver_kwargs: dict[str, Any],
 ) -> Any:
     """
     Coalesce identical requests within 100ms window.
@@ -90,7 +91,7 @@ class ProgressiveResult:
         self.full_result = full_result
         self.is_complete = full_result is not None
     
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         """Convert to dict for API response."""
         return {
             "quick_estimate": self.quick_estimate,

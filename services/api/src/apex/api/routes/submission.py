@@ -6,17 +6,16 @@ from pathlib import Path
 
 import structlog
 from fastapi import APIRouter, Depends, Header, HTTPException
-from sqlalchemy.ext.asyncio import AsyncSession
-
 from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..common.helpers import log_event, require_project
 from ..common.models import make_envelope
 from ..common.transactions import transaction
-from ..db import Project, ProjectEvent, ProjectPayload, get_db
+from ..db import ProjectEvent, ProjectPayload, get_db
 from ..deps import get_code_version, get_model_config, settings
 from ..schemas import ResponseEnvelope, add_assumption
-from ..utils.celery_client import enqueue_email, enqueue_pm_dispatch, enqueue_report_generation
+from ..utils.celery_client import enqueue_email, enqueue_pm_dispatch
 from ..utils.report import generate_report_from_payload
 
 logger = structlog.get_logger(__name__)
@@ -46,7 +45,7 @@ async def submit_project(
     
     # Idempotency check: look for existing submission event with same key
     # Note: SQLAlchemy JSON queries use cast() for PostgreSQL
-    from sqlalchemy import cast, String
+    from sqlalchemy import String, cast
     
     if idempotency_key:
         event_query = await db.execute(

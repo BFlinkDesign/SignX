@@ -3,11 +3,10 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Annotated
 
 import sqlalchemy as sa
-from sqlalchemy import JSON, DateTime, Integer, String, Text, ForeignKey, Table, Column
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
+from sqlalchemy import JSON, Column, DateTime, ForeignKey, Integer, String, Table, Text
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .db import Base, int_pk, str_255, str_text
 
@@ -51,7 +50,7 @@ class Role(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=sa.func.now())
 
     # Relationships
-    permissions: Mapped[list["Permission"]] = relationship(
+    permissions: Mapped[list[Permission]] = relationship(
         "Permission",
         secondary="role_permissions",
         back_populates="roles",
@@ -70,7 +69,7 @@ class Permission(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=sa.func.now())
 
     # Relationships
-    roles: Mapped[list["Role"]] = relationship(
+    roles: Mapped[list[Role]] = relationship(
         "Role",
         secondary="role_permissions",
         back_populates="permissions",
@@ -99,7 +98,7 @@ class UserRole(Base):
     assigned_by: Mapped[str_255 | None] = mapped_column(String(255), nullable=True)
 
     # Relationships
-    role: Mapped["Role"] = relationship("Role")
+    role: Mapped[Role] = relationship("Role")
 
 
 # File Upload Models

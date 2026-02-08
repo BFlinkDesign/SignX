@@ -2,17 +2,16 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 
 import structlog
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from .utils.report import generate_report_from_payload
-from .models_audit import PEStamp
 from .compliance import get_project_compliance
+from .models_audit import PEStamp
+from .utils.report import generate_report_from_payload
 
 logger = structlog.get_logger(__name__)
 
@@ -113,9 +112,9 @@ async def add_pe_stamp_to_pdf(
         Path to stamped PDF
     """
     try:
-        from reportlab.pdfgen import canvas
-        from reportlab.lib.pagesizes import letter
         from PyPDF2 import PdfReader, PdfWriter
+        from reportlab.lib.pagesizes import letter
+        from reportlab.pdfgen import canvas
         
         # Generate certification page
         cert_buffer = io.BytesIO()

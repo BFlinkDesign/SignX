@@ -6,9 +6,6 @@ from __future__ import annotations
 
 import time
 
-import pytest
-
-from apex.domains.signage.models import Cabinet, SiteLoads
 from apex.domains.signage.optimization import baseplate_optimize_ga, pareto_optimize_poles
 
 

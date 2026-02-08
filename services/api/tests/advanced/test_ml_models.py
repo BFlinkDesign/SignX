@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import pytest
-
 from apex.domains.signage.ml_models import detect_unusual_config, predict_initial_config
 
 

@@ -3,8 +3,9 @@
 from __future__ import annotations
 
 import functools
+from collections.abc import Callable
 from contextlib import asynccontextmanager
-from typing import Any, Callable, TypeVar
+from typing import Any, TypeVar
 
 import structlog
 from sqlalchemy.ext.asyncio import AsyncSession

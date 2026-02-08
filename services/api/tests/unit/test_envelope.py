@@ -2,12 +2,19 @@
 
 from __future__ import annotations
 
-import hashlib
-
-import pytest
-
-from apex.api.common.envelope import calc_confidence, envelope_sha, extract_solver_warnings, round_floats
-from apex.api.schemas import CodeVersionModel, ModelConfigModel, ResponseEnvelope, TraceDataModel, TraceModel
+from apex.api.common.envelope import (
+    calc_confidence,
+    envelope_sha,
+    extract_solver_warnings,
+    round_floats,
+)
+from apex.api.schemas import (
+    CodeVersionModel,
+    ModelConfigModel,
+    ResponseEnvelope,
+    TraceDataModel,
+    TraceModel,
+)
 
 
 class TestRoundFloats:

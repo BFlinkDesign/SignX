@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import pytest
-
 from apex.domains.signage.calibration import (
     compute_uncertainty_bands,
     monte_carlo_reliability,

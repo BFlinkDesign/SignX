@@ -5,7 +5,7 @@ from __future__ import annotations
 import math
 
 import structlog
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter
 
 from ..common.signcalc_import import get_signcalc_import
 

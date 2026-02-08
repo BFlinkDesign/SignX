@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import structlog
 from fastapi import APIRouter, Depends, HTTPException
@@ -118,7 +118,7 @@ async def attach_file(
         "project_id": project_id,
         "blob_key": blob_key,
         "sha256": sha256,
-        "attached_at": datetime.now(timezone.utc).isoformat(),
+        "attached_at": datetime.now(UTC).isoformat(),
         "validated": sha256_valid,
     }
 

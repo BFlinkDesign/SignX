@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 import json
-import structlog
-from hashlib import sha256
+from collections.abc import Callable
 from functools import wraps
-from typing import Any, Callable, TypeVar
+from hashlib import sha256
+from typing import Any, TypeVar
+
+import structlog
 
 from .redis_client import get_redis_client
 

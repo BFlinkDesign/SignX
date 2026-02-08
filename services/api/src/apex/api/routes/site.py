@@ -1,11 +1,11 @@
 """Site and environmental data endpoints."""
 
 import structlog
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter
 from pydantic import BaseModel, Field
 
-from ..common.models import SiteLoads, make_envelope
-from ..deps import get_code_version, get_model_config, settings
+from ..common.models import make_envelope
+from ..deps import get_code_version, get_model_config
 from ..integrations.asce import fetch_asce_hazards
 from ..schemas import ResponseEnvelope, add_assumption
 from ..utils.geocoding import geocode_address

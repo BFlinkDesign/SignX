@@ -7,10 +7,12 @@ Create Date: 2025-11-01
 Monument sign pole structural calculations - references AISC foundation catalog.
 Handles single-pole vertical structures from 6'-16' heights typical for Eagle Sign projects.
 """
-from typing import Sequence, Union
-from alembic import op
+from collections.abc import Sequence
+from typing import Union
+
 import sqlalchemy as sa
 
+from alembic import op
 
 # revision identifiers, used by Alembic.
 revision: str = '011_monument_poles'

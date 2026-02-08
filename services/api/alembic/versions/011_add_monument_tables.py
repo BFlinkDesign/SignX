@@ -7,12 +7,14 @@ Create Date: 2025-11-01
 Monument sign pole calculations - references AISC foundation catalog.
 Supports single-pole monument signs with wind load analysis and foundation design.
 """
-from typing import Sequence, Union
+import logging
+from collections.abc import Sequence
+from typing import Union
 
-from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
-import logging
+
+from alembic import op
 
 logger = logging.getLogger(__name__)
 

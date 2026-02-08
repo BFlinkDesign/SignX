@@ -28,8 +28,7 @@ All tests include:
 from __future__ import annotations
 
 import pytest
-import asyncpg
-from sqlalchemy import select, text
+from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 # Mark all tests in this module as database tests

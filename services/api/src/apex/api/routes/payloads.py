@@ -1,9 +1,9 @@
 """Project payload management endpoints."""
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import structlog
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -78,7 +78,7 @@ async def save_payload(
         files=payload.get("files", []),
         cost_snapshot=payload.get("cost_snapshot", {}),
         sha256=sha256,
-        created_at=datetime.now(timezone.utc),
+        created_at=datetime.now(UTC),
     )
     
     db.add(payload_row)

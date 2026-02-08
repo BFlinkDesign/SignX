@@ -7,9 +7,8 @@ Tests ALL endpoints that call solvers, verifies Envelope structure, confidence, 
 from __future__ import annotations
 
 import pytest
-from httpx import AsyncClient
-
 from apex.api.main import app
+from httpx import AsyncClient
 
 
 @pytest.mark.asyncio

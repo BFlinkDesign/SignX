@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 from typing import Any, Optional
 
 import httpx
@@ -7,10 +8,9 @@ from fastapi import APIRouter, Depends, Request
 
 from ..common.models import make_envelope
 from ..deps import get_code_version, get_model_config
-from ..security_config import get_global_limiter, get_rate_limit
 from ..metrics import ABSTAIN_TOTAL
 from ..schemas import ResponseEnvelope
-import logging
+from ..security_config import get_global_limiter, get_rate_limit
 
 logger = logging.getLogger(__name__)
 

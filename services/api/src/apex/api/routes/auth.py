@@ -2,32 +2,31 @@
 
 from __future__ import annotations
 
-import structlog
-from datetime import timedelta
 import time
-from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
+from typing import Optional
+
+import structlog
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from fastapi.responses import RedirectResponse
 from fastapi.security import OAuth2PasswordRequestForm
 from gotrue.errors import AuthApiError
 from jose import JWTError, jwt
 from pydantic import BaseModel, EmailStr
-from typing import Optional
 
 from ..auth import TokenData, create_access_token, create_session_token, get_current_user
+from ..auth_health import ProviderStatus, get_health_monitor
 from ..auth_helpers import get_account_from_email, normalize_provider
-from ..auth_health import get_health_monitor, ProviderStatus
 from ..auth_password import (
-    get_lockout_manager,
-    hash_password,
     PasswordStrength,
     generate_reset_token,
+    get_lockout_manager,
     validate_reset_token,
 )
 from ..common.models import make_envelope
 from ..deps import get_code_version, get_model_config, settings
 from ..duo_client import get_duo_service
 from ..schemas import ResponseEnvelope, add_assumption
-from ..supabase_client import get_supabase_client, get_supabase_admin
+from ..supabase_client import get_supabase_admin, get_supabase_client
 
 logger = structlog.get_logger(__name__)
 

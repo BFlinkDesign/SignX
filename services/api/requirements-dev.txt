@@ -3,7 +3,7 @@
 # Install with: pip install -r requirements-dev.txt
 
 # Testing Framework
-pytest==7.4.3
+pytest==8.2.2
 pytest-cov==4.1.0
 pytest-asyncio==0.21.1
 pytest-benchmark==4.0.0
@@ -37,7 +37,7 @@ respx==0.20.2  # HTTP mocking
 
 # Performance Testing
 locust==2.19.1  # Load testing
-memray==1.10.0  # Memory profiling
+# memray==1.10.0  # Memory profiling (Linux only)
 
 # Documentation
 mkdocs==1.5.3

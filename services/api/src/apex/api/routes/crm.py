@@ -9,12 +9,12 @@ from fastapi import APIRouter, Depends, HTTPException, Request, status
 from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ..db import get_db
-from ..auth import get_current_user_optional, TokenData
-from ..crm_integration import crm_client, CRMWebhookPayload
-from ..schemas import ResponseEnvelope
+from ..auth import TokenData, get_current_user_optional
 from ..common.models import make_envelope
+from ..crm_integration import CRMWebhookPayload, crm_client
+from ..db import get_db
 from ..deps import get_code_version, get_model_config
+from ..schemas import ResponseEnvelope
 
 logger = structlog.get_logger(__name__)
 

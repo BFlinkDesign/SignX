@@ -8,10 +8,23 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass
-from typing import Dict, List, Optional, Tuple, Any
 from enum import Enum
+from typing import Optional
 
 import structlog
+
+from .constants import (
+    DENSITY_ALUMINUM_PCF,
+    DENSITY_CONCRETE_PCF,
+    DENSITY_ICE_PCF,
+    FACTOR_SAFETY_OVERTURNING_MIN,
+    FACTOR_SAFETY_OVERTURNING_PREFERRED,
+    LIMIT_DEFLECTION_RATIO_DEFAULT,
+    LIMIT_STRESS_RATIO_MAX,
+    LIMIT_STRESS_RATIO_WARNING,
+    SOIL_BEARING_CAPACITY_DEFAULT_PSF,
+    WEIGHT_HARDWARE_ESTIMATE_LBS,
+)
 
 logger = structlog.get_logger(__name__)
 
@@ -36,25 +49,6 @@ class MonumentConfig:
     """Monument sign configuration parameters."""
     
     # Project identification
-    project_id: str
-    config_id: str
-    
-    # Pole geometry
-    pole_height_ft: float
-    pole_section: str  # AISC designation (e.g., "HSS8X8X1/2")
-    base_plate_size_in: Optional[float] = None
-    embedment_depth_ft: Optional[float] = None
-    
-    # Sign geometry
-    sign_width_ft: float
-    sign_height_ft: float
-    sign_area_sqft: float
-    sign_thickness_in: float = 0.125  # 1/8" aluminum typical
-    clearance_to_grade_ft: float = 8.0
-    
-    # Environmental loads
-    basic_wind_speed_mph: float
-    exposure_category: ExposureCategory = ExposureCategory.C
     importance_factor: ImportanceFactor = ImportanceFactor.II
     gust_factor: float = 0.85
     force_coefficient: float = 1.2  # Cf for flat signs
@@ -63,10 +57,10 @@ class MonumentConfig:
     ground_snow_load_psf: float = 0
     ice_thickness_in: float = 0
     seismic_sds: float = 0
-    soil_bearing_capacity_psf: float = 2000
+    soil_bearing_capacity_psf: float = SOIL_BEARING_CAPACITY_DEFAULT_PSF
     
     # Design criteria
-    deflection_limit_ratio: float = 200  # L/200
+    deflection_limit_ratio: float = LIMIT_DEFLECTION_RATIO_DEFAULT
     stress_ratio_limit: float = 0.9
     foundation_type: str = "spread_footing"
 
@@ -97,46 +91,6 @@ class MonumentResults:
     # Wind load analysis
     design_wind_pressure_psf: float
     gust_effect_factor: float
-    velocity_pressure_qz_psf: float
-    total_wind_force_lbs: float
-    wind_moment_at_base_kipft: float
-    
-    # Additional loads
-    dead_load_lbs: float
-    snow_load_lbs: float = 0
-    ice_load_lbs: float = 0
-    seismic_force_lbs: float = 0
-    
-    # Pole stress analysis
-    max_bending_stress_ksi: float
-    max_shear_stress_ksi: float
-    combined_stress_ratio: float
-    max_deflection_in: float
-    deflection_ratio: float
-    
-    # Foundation analysis
-    overturning_moment_kipft: float
-    resisting_moment_kipft: float
-    overturning_safety_factor: float
-    max_soil_pressure_psf: float
-    foundation_width_ft: Optional[float] = None
-    foundation_length_ft: Optional[float] = None
-    foundation_thickness_ft: Optional[float] = None
-    
-    # Design status
-    pole_adequate: bool
-    foundation_adequate: bool
-    overall_passes: bool
-    
-    # Metadata
-    warnings: List[str]
-    design_notes: List[str]
-    assumptions: List[str]
-
-
-class MonumentSolver:
-    """Monument sign engineering solver using ASCE 7-22 standards."""
-    
     def __init__(self):
         self.logger = logger.bind(component="monument_solver")
     
@@ -185,19 +139,19 @@ class MonumentSolver:
         pole_adequate = (stress_results['combined_ratio'] <= config.stress_ratio_limit and
                         stress_results['deflection_ratio'] >= config.deflection_limit_ratio)
         
-        foundation_adequate = (foundation_results['safety_factor'] >= 1.5 and
+        foundation_adequate = (foundation_results['safety_factor'] >= FACTOR_SAFETY_OVERTURNING_MIN and
                              foundation_results['max_soil_pressure'] <= config.soil_bearing_capacity_psf)
         
         overall_passes = pole_adequate and foundation_adequate
         
         # Generate warnings
-        if stress_results['combined_ratio'] > 0.95:
+        if stress_results['combined_ratio'] > LIMIT_STRESS_RATIO_WARNING:
             warnings.append(f"High stress ratio: {stress_results['combined_ratio']:.2f}")
         
         if stress_results['deflection_ratio'] < config.deflection_limit_ratio:
             warnings.append(f"Deflection exceeds L/{config.deflection_limit_ratio}")
         
-        if foundation_results['safety_factor'] < 2.0:
+        if foundation_results['safety_factor'] < FACTOR_SAFETY_OVERTURNING_PREFERRED:
             warnings.append(f"Low overturning safety factor: {foundation_results['safety_factor']:.2f}")
         
         # Generate design notes
@@ -257,7 +211,7 @@ class MonumentSolver:
         )
     
     def _calculate_wind_loads(self, config: MonumentConfig, 
-                            assumptions: List[str]) -> Dict[str, float]:
+                            assumptions: list[str]) -> dict[str, float]:
         """Calculate wind loads per ASCE 7-22."""
         
         # Velocity pressure coefficient Kz (ASCE 7-22 Table 26.10-1)
@@ -318,19 +272,18 @@ class MonumentSolver:
     
     def _calculate_dead_loads(self, config: MonumentConfig, 
                             section_props: SectionProperties,
-                            assumptions: List[str]) -> float:
+                            assumptions: list[str]) -> float:
         """Calculate dead loads (pole + sign weight)."""
         
         # Pole weight
         pole_weight = section_props.weight_plf * config.pole_height_ft
         
         # Sign weight (aluminum sign panel)
-        aluminum_density_pcf = 169  # lbs/ft³
         sign_volume_ft3 = config.sign_area_sqft * config.sign_thickness_in / 12
-        sign_weight = sign_volume_ft3 * aluminum_density_pcf
+        sign_weight = sign_volume_ft3 * DENSITY_ALUMINUM_PCF
         
         # Hardware/connections (estimated)
-        hardware_weight = 50  # lbs estimate
+        hardware_weight = WEIGHT_HARDWARE_ESTIMATE_LBS
         
         total_dead_load = pole_weight + sign_weight + hardware_weight
         
@@ -339,7 +292,7 @@ class MonumentSolver:
         return total_dead_load
     
     def _calculate_snow_loads(self, config: MonumentConfig,
-                            assumptions: List[str]) -> float:
+                            assumptions: list[str]) -> float:
         """Calculate snow loads on sign (simplified)."""
         
         # Snow accumulation on top edge of sign (conservative)
@@ -349,20 +302,19 @@ class MonumentSolver:
         return snow_load
     
     def _calculate_ice_loads(self, config: MonumentConfig,
-                           assumptions: List[str]) -> float:
+                           assumptions: list[str]) -> float:
         """Calculate ice loads (simplified)."""
         
         # Ice weight on sign and pole
-        ice_density_pcf = 57  # lbs/ft³
         
         # Ice on sign
         ice_volume_sign = config.sign_area_sqft * config.ice_thickness_in / 12
-        ice_load_sign = ice_volume_sign * ice_density_pcf
+        ice_load_sign = ice_volume_sign * DENSITY_ICE_PCF
         
         # Ice on pole (simplified as cylindrical)
         pole_diameter_est = math.sqrt(config.sign_area_sqft / 40)  # Rough estimate
         ice_volume_pole = math.pi * pole_diameter_est * config.ice_thickness_in/12 * config.pole_height_ft
-        ice_load_pole = ice_volume_pole * ice_density_pcf
+        ice_load_pole = ice_volume_pole * DENSITY_ICE_PCF
         
         total_ice_load = ice_load_sign + ice_load_pole
         assumptions.append(f"Ice load: sign={ice_load_sign:.0f} + pole={ice_load_pole:.0f} = {total_ice_load:.0f} lbs")
@@ -370,7 +322,7 @@ class MonumentSolver:
         return total_ice_load
     
     def _calculate_seismic_loads(self, config: MonumentConfig,
-                               assumptions: List[str]) -> float:
+                               assumptions: list[str]) -> float:
         """Calculate seismic loads (simplified)."""
         
         # Simplified seismic force F = Sds * W (very conservative)
@@ -383,8 +335,8 @@ class MonumentSolver:
                              section_props: SectionProperties,
                              moment_kipft: float,
                              shear_force_lbs: float,
-                             assumptions: List[str],
-                             warnings: List[str]) -> Dict[str, float]:
+                             assumptions: list[str],
+                             warnings: list[str]) -> dict[str, float]:
         """Analyze pole stresses and deflection."""
         
         # Material properties
@@ -427,8 +379,8 @@ class MonumentSolver:
     def _analyze_foundation(self, config: MonumentConfig,
                           overturning_moment_kipft: float,
                           dead_load_lbs: float,
-                          assumptions: List[str],
-                          warnings: List[str]) -> Dict[str, float]:
+                          assumptions: list[str],
+                          warnings: list[str]) -> dict[str, float]:
         """Analyze foundation requirements."""
         
         # Estimate foundation dimensions (simplified)
@@ -441,9 +393,8 @@ class MonumentSolver:
         
         # Foundation weight (estimate)
         foundation_depth_ft = max(3.0, config.pole_height_ft / 8)  # Rule of thumb
-        concrete_weight_pcf = 150
         foundation_volume_ft3 = foundation_width_ft**2 * foundation_depth_ft
-        foundation_weight_lbs = foundation_volume_ft3 * concrete_weight_pcf
+        foundation_weight_lbs = foundation_volume_ft3 * DENSITY_CONCRETE_PCF
         
         total_dead_load = dead_load_lbs + foundation_weight_lbs
         
@@ -480,7 +431,7 @@ class MonumentSolver:
 
 
 def optimize_monument_pole(config: MonumentConfig,
-                         available_sections: List[SectionProperties]) -> Tuple[SectionProperties, MonumentResults]:
+                         available_sections: list[SectionProperties]) -> tuple[SectionProperties, MonumentResults]:
     """Find the optimal pole section for given monument requirements.
     
     Args:
@@ -513,8 +464,12 @@ def optimize_monument_pole(config: MonumentConfig,
                 best_section = section
                 best_results = results
                 
-        except Exception as e:
+        except (ValueError, ArithmeticError) as e:
             logger.warning("monument.optimization.section_failed", 
+                         section=section.designation, error=str(e))
+            continue
+        except Exception as e:
+            logger.error("monument.optimization.unexpected_error", 
                          section=section.designation, error=str(e))
             continue
     

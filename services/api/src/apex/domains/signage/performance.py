@@ -8,11 +8,7 @@ from __future__ import annotations
 
 import functools
 import time
-from typing import Any, Callable, Dict, List, Optional
-
-import numpy as np
-from deap import algorithms, base, tools
-
+from typing import Any
 
 # ========== Adaptive Stopping Criteria ==========
 
@@ -30,7 +26,7 @@ class AdaptiveStopping:
         """
         self.improvement_threshold = improvement_threshold
         self.patience = patience
-        self.best_fitness_history: List[float] = []
+        self.best_fitness_history: list[float] = []
         self.stagnant_count = 0
     
     def should_stop(self, current_best: float) -> bool:
@@ -65,14 +61,14 @@ class AdaptiveStopping:
 
 def pareto_optimize_poles_enhanced(
     mu_required_kipin: float,
-    sections: List[Dict[str, Any]],
-    prefs: Dict[str, Any],
+    sections: list[dict[str, Any]],
+    prefs: dict[str, Any],
     height_ft: float,
     cost_per_lb: float = 3.0,
     max_solutions: int = 10,
     seed: int = 42,
     use_multiprocessing: bool = True,
-) -> List[Any]:
+) -> list[Any]:
     """
     Enhanced Pareto optimization with adaptive stopping and parallelization.
     
@@ -119,7 +115,7 @@ def _cached_predict(
     height_ft_hash: int,
     wind_speed_hash: int,
     soil_bearing_hash: int,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Cached prediction (simplified - actual implementation would hash feature vector).
     
@@ -134,7 +130,7 @@ def predict_with_cache(
     height_ft: float,
     wind_speed_mph: float,
     soil_bearing_psf: float,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Predict with LRU cache (1000 entries).
     
@@ -160,9 +156,9 @@ def predict_with_cache(
 
 
 def batch_predict(
-    inputs: List[Dict[str, float]],
+    inputs: list[dict[str, float]],
     batch_size: int = 32,
-) -> List[Dict[str, Any]]:
+) -> list[dict[str, Any]]:
     """
     Batch ML inference for multiple projects.
     
@@ -211,7 +207,7 @@ def quantize_model(model: Any, reduction_factor: float = 0.5) -> Any:
 def benchmark_scale_test(
     n_projects: int = 10000,
     n_workers: int = 4,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Benchmark batch processing at scale.
     
