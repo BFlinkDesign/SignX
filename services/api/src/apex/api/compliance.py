@@ -2,15 +2,15 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Optional
 
 import structlog
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from .models_audit import ComplianceRecord, PEStamp
 from .audit import log_audit
+from .models_audit import ComplianceRecord, PEStamp
 
 logger = structlog.get_logger(__name__)
 
@@ -88,7 +88,7 @@ async def check_compliance(
         record.status = status
         record.compliance_data = compliance_data
         record.verified_by = verified_by
-        record.verified_at = datetime.now(timezone.utc) if verified_by else None
+        record.verified_at = datetime.now(UTC) if verified_by else None
         record.notes = notes
         await db.commit()
         await db.refresh(record)
@@ -101,7 +101,7 @@ async def check_compliance(
             status=status,
             compliance_data=compliance_data,
             verified_by=verified_by,
-            verified_at=datetime.now(timezone.utc) if verified_by else None,
+            verified_at=datetime.now(UTC) if verified_by else None,
             notes=notes,
         )
         db.add(record)
@@ -167,7 +167,7 @@ async def verify_breakaway_compliance(
         "material": material,
         "requires_breakaway": pole_height_ft > 40.0,
         "is_compliant": is_compliant,
-        "check_date": datetime.now(timezone.utc).isoformat(),
+        "check_date": datetime.now(UTC).isoformat(),
     }
     
     status = "compliant" if is_compliant else "non_compliant"
@@ -205,7 +205,7 @@ async def verify_wind_load_compliance(
         "calculated_load_psf": calculated_load_psf,
         "code_reference": code_reference,
         "is_compliant": is_compliant,
-        "check_date": datetime.now(timezone.utc).isoformat(),
+        "check_date": datetime.now(UTC).isoformat(),
     }
     
     status = "compliant" if is_compliant else "non_compliant"

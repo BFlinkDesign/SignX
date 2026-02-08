@@ -7,9 +7,7 @@ Detect and handle solver failures with diagnostics.
 from __future__ import annotations
 
 import math
-from typing import Any, Dict, List
-
-import numpy as np
+from typing import Any
 
 
 class SolverError(Exception):
@@ -30,7 +28,7 @@ class ConstraintError(SolverError):
 class SolverFailureDetector:
     """Detects various failure modes in solver outputs."""
     
-    def detect_nan_inf(self, outputs: Dict[str, Any]) -> List[str]:
+    def detect_nan_inf(self, outputs: dict[str, Any]) -> list[str]:
         """
         Detect NaN/Inf in outputs.
         
@@ -58,7 +56,7 @@ class SolverFailureDetector:
         
         return failures
     
-    def detect_non_converged(self, optimization_result: Dict[str, Any]) -> bool:
+    def detect_non_converged(self, optimization_result: dict[str, Any]) -> bool:
         """
         Detect non-converged optimization.
         
@@ -86,9 +84,9 @@ class SolverFailureDetector:
     
     def detect_contradictory_constraints(
         self,
-        constraints: Dict[str, Any],
-        variable_bounds: Dict[str, tuple[float, float]],
-    ) -> List[str]:
+        constraints: dict[str, Any],
+        variable_bounds: dict[str, tuple[float, float]],
+    ) -> list[str]:
         """
         Detect contradictory constraints.
         
@@ -118,11 +116,11 @@ class SolverFailureDetector:
     
     def generate_diagnostics(
         self,
-        inputs: Dict[str, Any],
-        outputs: Dict[str, Any],
+        inputs: dict[str, Any],
+        outputs: dict[str, Any],
         solver_name: str,
         error: Exception | None = None,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """
         Generate diagnostics for troubleshooting.
         
@@ -209,7 +207,7 @@ TROUBLESHOOTING_GUIDE = {
 }
 
 
-def get_troubleshooting_advice(failure_type: str) -> Dict[str, Any]:
+def get_troubleshooting_advice(failure_type: str) -> dict[str, Any]:
     """
     Get troubleshooting advice for failure type.
     

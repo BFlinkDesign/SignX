@@ -5,7 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 import structlog
@@ -13,13 +13,13 @@ from fastapi import APIRouter, Depends, Header, HTTPException, Query, Request
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from ..auth import TokenData, get_current_user_optional
 from ..common.constants import get_constants_version_string
-from ..auth import TokenData, get_current_user, get_current_user_optional
 from ..common.helpers import fetch_project_with_history, log_event, require_project
 from ..common.models import build_response_envelope, make_envelope
-from ..db import Project, ProjectEvent, ProjectPayload, get_db
-from ..deps import get_code_version, get_model_config, settings
-from ..projects.models import ProjectCreateRequest, ProjectUpdateRequest, ProjectStatus
+from ..db import Project, ProjectEvent, get_db
+from ..deps import get_code_version, get_model_config
+from ..projects.models import ProjectCreateRequest, ProjectStatus, ProjectUpdateRequest
 from ..schemas import ResponseEnvelope, add_assumption
 from ..utils.search import ensure_index_exists, index_project, search_projects
 from ..utils.state_machine import validate_transition
@@ -220,7 +220,7 @@ async def create_project(
     logger.info("projects.create", name=req.name, account_id=account_id, created_by=created_by)
 
     project_id = f"proj_{uuid.uuid4().hex[:12]}"
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
 
     project = Project(
         project_id=project_id,
@@ -382,7 +382,7 @@ async def update_project(
     if req.street is not None:
         project.street = req.street
 
-    project.updated_at = datetime.now(timezone.utc)
+    project.updated_at = datetime.now(UTC)
     project.etag = _compute_etag(project)
     
     # Update envelope fields for audit trail

@@ -1,0 +1,130 @@
+From: Automated Audit <audit@signx.local>
+Subject: [PATCH] Implement Redis storage for MFA codes
+
+This patch implements proper Redis storage for MFA verification codes
+with 10-minute expiration and secure comparison.
+
+---
+ services/api/src/apex/api/routes/auth_mfa.py | 62 ++++++++++++++++----
+ 1 file changed, 50 insertions(+), 12 deletions(-)
+
+diff --git a/services/api/src/apex/api/routes/auth_mfa.py b/services/api/src/apex/api/routes/auth_mfa.py
+index 1234567..abcdefg 100644
+--- a/services/api/src/apex/api/routes/auth_mfa.py
++++ b/services/api/src/apex/api/routes/auth_mfa.py
+@@ -1,6 +1,7 @@
+ """MFA routes for authentication API."""
+ 
+ from __future__ import annotations
++import secrets
+ 
+ from typing import Optional
+ 
+@@ -14,6 +15,23 @@ from ..deps import get_code_version, get_model_config
+ 
+ logger = structlog.get_logger(__name__)
+ 
++# Redis client for MFA code storage
++_redis_client = None
++
++def get_mfa_redis():
++    """Get Redis client for MFA code storage."""
++    global _redis_client
++    if _redis_client is None:
++        import redis
++        from ..deps import settings
++        _redis_client = redis.from_url(settings.REDIS_URL, decode_responses=True)
++    return _redis_client
++
++# Constants
++MFA_CODE_TTL_SECONDS = 600  # 10 minutes
++MFA_CODE_PREFIX = "mfa_code:"
++
++
+ router = APIRouter(prefix="/api/v1/auth/mfa", tags=["auth", "mfa"])
+ 
+ 
+@@ -152,11 +170,18 @@ async def send_sms_code(
+     if not success:
+         logger.error("mfa.sms.send_failed", user_id=current_user.user_id, phone=request.phone_number)
+         raise HTTPException(
+             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+             detail="Failed to send SMS code"
+         )
+     
+-    # TODO: Store code in Redis with expiration (10 minutes)
++    # Store code in Redis with 10-minute expiration
++    try:
++        redis_client = get_mfa_redis()
++        redis_key = f"{MFA_CODE_PREFIX}{current_user.user_id}"
++        redis_client.setex(redis_key, MFA_CODE_TTL_SECONDS, code)
++        logger.debug("mfa.code.stored", user_id=current_user.user_id, ttl=MFA_CODE_TTL_SECONDS)
++    except Exception as e:
++        logger.error("mfa.redis.store_failed", error=str(e))
++        # Continue - code was sent, storage failure is non-fatal for UX
+     
+     logger.info("mfa.sms.code_sent", user_id=current_user.user_id, phone=request.phone_number)
+     
+@@ -197,11 +222,18 @@ async def send_email_code(
+     if not success:
+         logger.error("mfa.email.send_failed", user_id=current_user.user_id, email=email)
+         raise HTTPException(
+             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+             detail="Failed to send email code"
+         )
+     
+-    # TODO: Store code in Redis with expiration (10 minutes)
++    # Store code in Redis with 10-minute expiration
++    try:
++        redis_client = get_mfa_redis()
++        redis_key = f"{MFA_CODE_PREFIX}{current_user.user_id}"
++        redis_client.setex(redis_key, MFA_CODE_TTL_SECONDS, code)
++        logger.debug("mfa.code.stored", user_id=current_user.user_id, ttl=MFA_CODE_TTL_SECONDS)
++    except Exception as e:
++        logger.error("mfa.redis.store_failed", error=str(e))
++        # Continue - code was sent, storage failure is non-fatal for UX
+     
+     logger.info("mfa.email.code_sent", user_id=current_user.user_id, email=email)
+     
+@@ -238,10 +270,25 @@ async def verify_mfa_code(
+     Returns:
+         Success message and updated token with mfa_verified=True
+     """
+-    # TODO: Retrieve stored code from Redis and validate
+-    # For now, we'll accept any 6-digit code as valid (DEV ONLY)
++    # Retrieve stored code from Redis
++    try:
++        redis_client = get_mfa_redis()
++        redis_key = f"{MFA_CODE_PREFIX}{current_user.user_id}"
++        stored_code = redis_client.get(redis_key)
++        
++        if not stored_code:
++            logger.warning("mfa.code.not_found", user_id=current_user.user_id)
++            raise HTTPException(
++                status_code=status.HTTP_401_UNAUTHORIZED,
++                detail="No pending verification code. Please request a new one."
++            )
++        
++        # Secure comparison to prevent timing attacks
++        is_valid = secrets.compare_digest(stored_code, request.code)
++        
++        # Delete code after use (one-time use)
++        redis_client.delete(redis_key)
++        
++    except HTTPException:
++        raise
++    except Exception as e:
++        logger.error("mfa.redis.verify_failed", error=str(e))
++        raise HTTPException(
++            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
++            detail="Verification service temporarily unavailable"
++        )
+     
+-    is_valid = len(request.code) == 6 and request.code.isdigit()
+-    
+     if not is_valid:
+         logger.warning("mfa.code.verify_failed", user_id=current_user.user_id)
+         raise HTTPException(
+-- 
+2.40.0
+

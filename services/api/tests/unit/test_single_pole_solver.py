@@ -21,29 +21,28 @@ All tests include:
 
 from __future__ import annotations
 
-import math
-import pytest
 import sys
 from pathlib import Path
+
+import pytest
 
 # Add src to path for imports
 src_path = Path(__file__).parent.parent.parent / "src"
 if str(src_path) not in sys.path:
     sys.path.insert(0, str(src_path))
 
-from apex.domains.signage.single_pole_solver import (
-    PoleSection,
-    SinglePoleConfig,
-    analyze_single_pole_sign,
-    E_STEEL_KSI,
-    ASD_ALLOWABLE_BENDING_FACTOR,
-    ASD_ALLOWABLE_SHEAR_FACTOR,
-    IBC_OVERTURNING_SAFETY_FACTOR_MIN,
-    DEFLECTION_LIMIT_L_OVER,
-)
 from apex.domains.signage.asce7_wind import (
     ExposureCategory,
     RiskCategory,
+)
+from apex.domains.signage.single_pole_solver import (
+    ASD_ALLOWABLE_BENDING_FACTOR,
+    ASD_ALLOWABLE_SHEAR_FACTOR,
+    DEFLECTION_LIMIT_L_OVER,
+    IBC_OVERTURNING_SAFETY_FACTOR_MIN,
+    PoleSection,
+    SinglePoleConfig,
+    analyze_single_pole_sign,
 )
 
 

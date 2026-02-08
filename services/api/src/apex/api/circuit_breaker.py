@@ -4,9 +4,10 @@ from __future__ import annotations
 
 import asyncio
 import time
+from collections.abc import Callable
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Callable, Optional
+from typing import Any, Optional
 
 import structlog
 
@@ -91,7 +92,7 @@ class CircuitBreaker:
             
             return result
             
-        except Exception as e:
+        except Exception:
             # Record failure
             async with self._lock:
                 await self._record_failure()

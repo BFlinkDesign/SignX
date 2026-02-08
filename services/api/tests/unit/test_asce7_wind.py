@@ -23,9 +23,10 @@ All tests include:
 from __future__ import annotations
 
 import math
-import pytest
 import sys
 from pathlib import Path
+
+import pytest
 
 # Add src to path for imports
 src_path = Path(__file__).parent.parent.parent / "src"
@@ -33,18 +34,15 @@ if str(src_path) not in sys.path:
     sys.path.insert(0, str(src_path))
 
 from apex.domains.signage.asce7_wind import (
+    EXPOSURE_PARAMETERS,
     ExposureCategory,
     RiskCategory,
-    calculate_kz,
-    calculate_wind_importance_factor,
-    calculate_velocity_pressure,
     calculate_design_wind_pressure,
+    calculate_kz,
+    calculate_velocity_pressure,
     calculate_wind_force_on_sign,
+    calculate_wind_importance_factor,
     calculate_wind_moment_at_base,
-    WIND_IMPORTANCE_FACTORS,
-    WIND_DIRECTIONALITY_FACTOR_SIGNS,
-    FORCE_COEFFICIENT_FLAT_SIGN,
-    EXPOSURE_PARAMETERS,
 )
 
 

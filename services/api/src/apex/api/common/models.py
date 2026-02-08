@@ -81,8 +81,9 @@ def make_envelope(
     - Applies deterministic rounding to result
     - Computes content_sha256 for auditability
     """
-    from ..schemas import ResponseEnvelope as Envelope, TraceDataModel, TraceModel
     from ..deps import get_code_version, get_model_config
+    from ..schemas import ResponseEnvelope as Envelope
+    from ..schemas import TraceDataModel, TraceModel
     from .envelope import round_floats
     
     # Try to get request_id from context (if middleware is active)

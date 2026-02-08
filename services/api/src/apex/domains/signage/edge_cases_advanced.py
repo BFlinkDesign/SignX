@@ -7,12 +7,9 @@ Multi-cabinet stacking, extreme conditions, soil edge cases, and abstain paths.
 from __future__ import annotations
 
 import math
-from typing import Any, Dict, List, Optional
+from typing import Any
 
-import numpy as np
-
-from .models import Cabinet, LoadDerivation, SiteLoads
-
+from .models import Cabinet, SiteLoads
 
 # ========== Multi-Cabinet Stacking Edge Cases ==========
 
@@ -22,9 +19,9 @@ class EdgeCaseDetector:
     
     def detect_eccentric_loading(
         self,
-        cabinets: List[Cabinet],
+        cabinets: list[Cabinet],
         pole_center_x: float = 0.0,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """
         Detect eccentric loading (cabinets not aligned on pole centerline).
         
@@ -74,8 +71,8 @@ class EdgeCaseDetector:
     
     def detect_non_symmetric_arrangement(
         self,
-        cabinets: List[Cabinet],
-    ) -> Dict[str, Any]:
+        cabinets: list[Cabinet],
+    ) -> dict[str, Any]:
         """
         Detect non-symmetric cabinet arrangements (torsional concerns).
         
@@ -119,9 +116,9 @@ class EdgeCaseDetector:
     
     def analyze_progressive_failure(
         self,
-        cabinets: List[Cabinet],
+        cabinets: list[Cabinet],
         site: SiteLoads,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """
         Analyze progressive failure scenario (what if one cabinet fails?).
         
@@ -179,7 +176,7 @@ def check_combined_wind_seismic(
     wind_load_kipft: float,
     seismic_load_kipft: float,
     site_class: str = "C",
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Check combined wind + seismic per ASCE 7-22 Section 12.4.3.
     
@@ -216,7 +213,7 @@ def check_ice_loading(
     cabinet_area_ft2: float,
     ice_thickness_in: float = 0.5,
     site_temperature_f: float = 32.0,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Check ice loading on cabinets per ASCE 7-22 Chapter 10.
     
@@ -257,7 +254,7 @@ def check_temperature_effects(
     temperature_f: float,
     pole_length_ft: float,
     material: str = "steel",
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Check thermal expansion and cold weather effects.
     
@@ -299,9 +296,9 @@ def check_temperature_effects(
 
 
 def check_layered_soil(
-    soil_layers: List[Dict[str, float]],
+    soil_layers: list[dict[str, float]],
     footing_depth_ft: float,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Check layered soil profiles (different bearing at different depths).
     
@@ -348,7 +345,7 @@ def check_groundwater_effects(
     groundwater_depth_ft: float,
     footing_depth_ft: float,
     soil_bearing_psf: float = 3000.0,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Check groundwater effects: saturated soil, buoyancy.
     
@@ -395,7 +392,7 @@ def check_frost_heave(
     frost_depth_ft: float,
     footing_depth_ft: float,
     location: str = "northern",
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Check frost heave concerns (seasonal movement).
     
@@ -443,7 +440,7 @@ def abstain_with_recommendation(
     reason: str,
     recommendation: str,
     confidence: float = 0.0,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Return abstain response with specific recommendation.
     

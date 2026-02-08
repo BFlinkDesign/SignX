@@ -8,10 +8,12 @@ Adds ENUM constraints for status/module/event_type and composite indexes for per
 """
 from __future__ import annotations
 
-from typing import Sequence, Union
+from collections.abc import Sequence
+from typing import Union
+
+import sqlalchemy as sa
 
 from alembic import op
-import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
 revision: str = "002"

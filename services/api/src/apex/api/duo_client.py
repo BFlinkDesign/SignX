@@ -5,8 +5,9 @@ Provides Duo authentication services with graceful fallback if not configured.
 
 from __future__ import annotations
 
-import structlog
 from typing import Any, Optional
+
+import structlog
 
 logger = structlog.get_logger(__name__)
 

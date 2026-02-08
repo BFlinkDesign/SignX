@@ -7,12 +7,14 @@ Create Date: 2025-11-01
 Material cost indices and pricing for all structural materials.
 Shared by all modules for cost estimation.
 """
-from typing import Sequence, Union
+import logging
+from collections.abc import Sequence
+from typing import Union
 
-from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
-import logging
+
+from alembic import op
 
 logger = logging.getLogger(__name__)
 

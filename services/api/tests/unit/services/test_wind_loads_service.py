@@ -14,17 +14,16 @@ Date: 2025-11-02
 """
 
 import pytest
-from hypothesis import given, strategies as st, assume
-
+from apex.domains.signage.exceptions import ValidationError
 from apex.domains.signage.services.wind_loads_service import (
-    WindLoadService,
     ExposureCategory,
     RiskCategory,
     VelocityPressureResult,
     WindForceResult,
+    WindLoadService,
 )
-from apex.domains.signage.exceptions import ValidationError
-
+from hypothesis import assume, given
+from hypothesis import strategies as st
 
 # ============================================================================
 # Fixtures
@@ -98,7 +97,7 @@ class TestVelocityPressure:
 
         # Verify Kz from ASCE 7-22 Table 26.10-1
         assert abs(result.kz - 0.57) < 0.01, \
-            f"Expected Kz = 0.57 for Exposure B at 30 ft"
+            "Expected Kz = 0.57 for Exposure B at 30 ft"
 
     def test_exposure_d_coastal(self, wind_service):
         """Test Exposure D (flat coastal) calculations."""
@@ -114,7 +113,7 @@ class TestVelocityPressure:
 
         # Verify Kz from ASCE 7-22 Table 26.10-1
         assert abs(result.kz - 1.03) < 0.01, \
-            f"Expected Kz = 1.03 for Exposure D at 20 ft"
+            "Expected Kz = 1.03 for Exposure D at 20 ft"
 
     def test_minimum_height_enforcement(self, wind_service):
         """
@@ -163,7 +162,7 @@ class TestVelocityPressure:
         actual_ratio = result_hill.qz_psf / result_flat.qz_psf
 
         assert abs(actual_ratio - expected_ratio) < 0.01, \
-            f"Kzt should scale qz linearly"
+            "Kzt should scale qz linearly"
 
     def test_validates_negative_wind_speed(self, wind_service):
         """Test that negative wind speeds are rejected."""

@@ -18,10 +18,10 @@ References:
 - ASCE 7-22 Figure 29.4-1: Force Coefficients for Chimneys, Tanks, and Similar Structures
 """
 
-from typing import Literal, NamedTuple
-from enum import Enum
-import math
 import logging
+import math
+from enum import Enum
+from typing import NamedTuple
 
 logger = logging.getLogger(__name__)
 
@@ -468,9 +468,9 @@ if __name__ == "__main__":
         risk_category=RiskCategory.II,
     )
 
-    logger.info(f"  Wind speed:             115 mph (3-sec gust)")
-    logger.info(f"  Exposure:               C (open terrain)")
-    logger.info(f"  Risk category:          II (normal structures)")
+    logger.info("  Wind speed:             115 mph (3-sec gust)")
+    logger.info("  Exposure:               C (open terrain)")
+    logger.info("  Risk category:          II (normal structures)")
     logger.info(f"  Sign centroid height:   {12.0 + 1.5:.1f} ft")
     logger.info(f"  Kz coefficient:         {result.exposure_coefficient_kz:.3f}")
     logger.info(f"  Iw importance factor:   {result.wind_importance_factor_iw:.2f}")
@@ -498,9 +498,9 @@ if __name__ == "__main__":
         risk_category=RiskCategory.II,
     )
 
-    logger.info(f"  Wind speed:             120 mph (3-sec gust)")
-    logger.info(f"  Exposure:               C (open terrain)")
-    logger.info(f"  Risk category:          II (normal structures)")
+    logger.info("  Wind speed:             120 mph (3-sec gust)")
+    logger.info("  Exposure:               C (open terrain)")
+    logger.info("  Risk category:          II (normal structures)")
     logger.info(f"  Sign centroid height:   {34.0 + 3.0:.1f} ft")
     logger.info(f"  Kz coefficient:         {result2.exposure_coefficient_kz:.3f}")
     logger.info(f"  Velocity pressure qz:   {result2.velocity_pressure_qz_psf:.2f} psf")

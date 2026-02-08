@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import pytest
-
 from apex.domains.signage.structural_analysis import (
     connection_design,
     dynamic_load_analysis,

@@ -1,15 +1,7 @@
 from __future__ import annotations
 
-import asyncio
-from typing import Callable
-
-import asyncpg
 from prometheus_client import Counter, Gauge
 from prometheus_fastapi_instrumentator import Instrumentator
-from redis.asyncio import Redis
-
-from .deps import settings
-
 
 REQUEST_LATENCY = None  # Instrumentator provides http metrics
 ABSTAIN_TOTAL = Counter("apex_abstain_total", "Count of abstain responses")

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any
 
 import structlog
 import yaml
@@ -19,10 +19,10 @@ logger = structlog.get_logger(__name__)
 router = APIRouter(prefix="/projects", tags=["pricing"])
 
 
-_PRICING_CACHE: Dict[str, Dict[str, Any]] = {}
+_PRICING_CACHE: dict[str, dict[str, Any]] = {}
 
 
-def _load_pricing(version: str) -> Dict[str, Any]:
+def _load_pricing(version: str) -> dict[str, Any]:
     """Load pricing config YAML by version (e.g., v1). Cached in-process."""
     if version in _PRICING_CACHE:
         return _PRICING_CACHE[version]

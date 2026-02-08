@@ -1,20 +1,18 @@
 from __future__ import annotations
 
-import json
+import logging
 from typing import Any
 
 import aiohttp
 import anyio
 import asyncpg
 from celery import Celery
-from fastapi import APIRouter, Depends, status
-from fastapi import Request
+from fastapi import APIRouter, Depends, Request, status
 from redis.asyncio import Redis
 
 from .common.models import make_envelope
 from .deps import get_code_version, get_model_config, settings
 from .schemas import CodeVersionModel, ModelConfigModel, ResponseEnvelope
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -120,7 +118,7 @@ async def ready(
     
     # Authentication providers health
     try:
-        from .auth_health import get_health_monitor, ProviderStatus
+        from .auth_health import get_health_monitor
         
         health_monitor = get_health_monitor()
         auth_providers = {}
@@ -151,7 +149,7 @@ async def ready(
         
         duo_service = get_duo_service()
         checks["duo_2fa"] = "configured" if duo_service and duo_service.is_configured else "disabled"
-    except Exception as e:  # pragma: no cover
+    except Exception:  # pragma: no cover
         checks["duo_2fa"] = "disabled"
 
     contracts: dict[str, Any] = {}

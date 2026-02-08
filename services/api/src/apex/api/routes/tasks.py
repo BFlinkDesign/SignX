@@ -2,14 +2,15 @@
 
 from __future__ import annotations
 
-import structlog
-from fastapi import APIRouter, Depends, HTTPException
 from typing import Any
+
+import structlog
+from fastapi import APIRouter, HTTPException
 
 from ..common.models import make_envelope
 from ..deps import get_code_version, get_model_config
-from ..utils.celery_client import get_celery_client
 from ..schemas import ResponseEnvelope
+from ..utils.celery_client import get_celery_client
 
 logger = structlog.get_logger(__name__)
 

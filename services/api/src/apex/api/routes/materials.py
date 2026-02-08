@@ -15,7 +15,6 @@ from ..metrics import (
 )
 from ..schemas import ResponseEnvelope
 
-
 router = APIRouter()
 
 

@@ -2,18 +2,15 @@
 
 from __future__ import annotations
 
-import functools
-from typing import Callable, Optional
-
 import structlog
 from fastapi import Depends, HTTPException, status
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from .auth import get_current_user, TokenData
-from .db import get_db
-from .models_audit import Role, Permission, UserRole, role_permissions
 from .audit import log_audit
+from .auth import TokenData, get_current_user
+from .db import get_db
+from .models_audit import Permission, Role, UserRole, role_permissions
 
 logger = structlog.get_logger(__name__)
 
@@ -116,7 +113,7 @@ def require_permission(permission: str):
             # Log failed permission check
             await log_audit(
                 db=db,
-                action=f"permission.denied",
+                action="permission.denied",
                 resource_type="access_control",
                 user_id=current_user.user_id,
                 account_id=current_user.account_id,

@@ -1,8 +1,8 @@
 from apex.api.common.models import (
-    compute_confidence,
     add_assumption,
-    make_envelope,
     build_response_envelope,
+    compute_confidence,
+    make_envelope,
 )
 from apex.api.deps import get_code_version, get_model_config
 

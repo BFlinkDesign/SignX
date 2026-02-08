@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 
 import structlog
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, HTTPException
 
 # Add signcalc-service to path for imports
 _signcalc_path = Path(__file__).parent.parent.parent.parent.parent / "signcalc-service"
@@ -18,7 +18,6 @@ try:
 except ImportError:
     # Fallback for development
     from dataclasses import dataclass
-    from typing import List
 
     @dataclass
     class Section:
@@ -32,10 +31,8 @@ except ImportError:
     def catalogs_for_order(order):
         return []
 
-from ..common.models import make_envelope
-from ..common.caching import cache_result
 from ..common.envelope import calc_confidence
-from ..deps import get_code_version, get_model_config
+from ..common.models import make_envelope
 from ..schemas import ResponseEnvelope, add_assumption
 
 logger = structlog.get_logger(__name__)

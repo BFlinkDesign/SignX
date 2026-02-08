@@ -6,11 +6,10 @@ Monte Carlo reliability analysis and sensitivity analysis.
 
 from __future__ import annotations
 
-from typing import Any, Dict, List
+from typing import Any
 
 import numpy as np
 from scipy import stats
-
 
 # ========== Monte Carlo Reliability Analysis ==========
 
@@ -24,7 +23,7 @@ def monte_carlo_reliability(
     target_beta: float = 3.5,
     use_importance_sampling: bool = True,
     use_antithetic: bool = True,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Monte Carlo reliability analysis per ASCE 7.
     
@@ -115,11 +114,11 @@ def monte_carlo_reliability(
 
 
 def sensitivity_analysis(
-    input_means: Dict[str, float],
-    input_stds: Dict[str, float],
+    input_means: dict[str, float],
+    input_stds: dict[str, float],
     output_function: Any,  # Callable that takes dict[str, float] -> float
     n_samples: int = 1000,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Sensitivity analysis using Sobol indices.
     
@@ -200,7 +199,7 @@ def compute_uncertainty_bands(
     nominal_value: float,
     coefficient_of_variation: float = 0.1,
     confidence_level: float = 0.9,
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """
     Compute uncertainty bands with confidence intervals.
     

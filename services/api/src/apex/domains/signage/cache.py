@@ -4,8 +4,9 @@ from __future__ import annotations
 
 import threading
 from collections import OrderedDict
+from collections.abc import Callable, Hashable
 from functools import wraps
-from typing import Any, Callable, Hashable, Tuple
+from typing import Any
 
 
 def _normalize_value(value: Any) -> Any:
@@ -36,7 +37,7 @@ def deterministic_cache(maxsize: int = 256) -> Callable[[Callable[..., Any]], Ca
     """
 
     def decorator(func: Callable[..., Any]) -> Callable[..., Any]:
-        cache: "OrderedDict[Hashable, Any]" = OrderedDict()
+        cache: OrderedDict[Hashable, Any] = OrderedDict()
         lock = threading.RLock()
 
         @wraps(func)

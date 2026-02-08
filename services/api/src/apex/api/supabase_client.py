@@ -12,8 +12,8 @@ if TYPE_CHECKING:
     from supabase import Client
 
 try:
-    from supabase import create_client
     from gotrue.errors import AuthApiError
+    from supabase import create_client
 except ImportError:
     create_client = None  # type: ignore
     AuthApiError = Exception  # type: ignore
@@ -22,7 +22,7 @@ except ImportError:
 from .deps import settings
 
 
-@lru_cache()
+@lru_cache
 def get_supabase_client() -> Client:
     """Get singleton Supabase client (anon/public key).
     
@@ -48,7 +48,7 @@ def get_supabase_client() -> Client:
     return create_client(settings.SUPABASE_URL, settings.SUPABASE_KEY)
 
 
-@lru_cache()
+@lru_cache
 def get_supabase_admin() -> Client:
     """Get admin Supabase client with service role key.
     

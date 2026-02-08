@@ -7,10 +7,10 @@ Agent 3: Importing AISC steel sections and ASCE wind load references for materia
 from __future__ import annotations
 
 import structlog
+from sqlalchemy import insert, select
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, insert
 
-from ..db import MaterialCatalog, CodeReference
+from ..db import CodeReference, MaterialCatalog
 
 logger = structlog.get_logger(__name__)
 

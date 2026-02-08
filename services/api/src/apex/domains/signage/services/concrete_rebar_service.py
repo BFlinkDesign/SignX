@@ -14,20 +14,11 @@ from __future__ import annotations
 
 import math
 from enum import Enum
-from typing import Literal
 
 import structlog
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field
 
-from ..constants import (
-    ACI_318_19_FC_DEFAULT_KSI,
-    ACI_318_19_FY_REBAR_KSI,
-    ACI_318_19_CONCRETE_DENSITY_PCF,
-    ACI_318_19_MIN_COVER_IN,
-    ACI_318_19_DEVELOPMENT_LENGTH_FACTOR,
-)
-from ..exceptions import ValidationError, CalculationError
-from ..types import Feet, Inches, Ksi, Pounds, CubicYards
+from ..exceptions import CalculationError, ValidationError
 
 logger = structlog.get_logger(__name__)
 

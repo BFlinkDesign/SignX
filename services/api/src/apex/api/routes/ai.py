@@ -7,10 +7,10 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
-from typing import Any, Optional
+from typing import Optional
 
 import structlog
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field
 
 # Add services/ml to path
@@ -20,7 +20,6 @@ sys.path.insert(0, str(ml_services_path))
 from cost_model import CostPredictor
 
 from ..common.models import build_response_envelope
-from ..deps import get_code_version, get_model_config
 from ..schemas import ResponseEnvelope
 
 logger = structlog.get_logger(__name__)

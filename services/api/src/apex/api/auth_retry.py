@@ -3,19 +3,20 @@
 from __future__ import annotations
 
 import asyncio
-from typing import Any, Callable, TypeVar
+from collections.abc import Callable
+from typing import Any, TypeVar
 
 import structlog
+from httpx import NetworkError
+from httpx import TimeoutError as HTTPTimeoutError
 from tenacity import (
+    after_log,
+    before_sleep_log,
     retry,
+    retry_if_exception_type,
     stop_after_attempt,
     wait_exponential,
-    retry_if_exception_type,
-    before_sleep_log,
-    after_log,
 )
-
-from httpx import NetworkError, TimeoutError as HTTPTimeoutError
 
 logger = structlog.get_logger(__name__)
 

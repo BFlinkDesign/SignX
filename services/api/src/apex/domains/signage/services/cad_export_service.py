@@ -25,20 +25,17 @@ from __future__ import annotations
 
 import io
 import math
-from enum import Enum
-from typing import Literal, BinaryIO
 from dataclasses import dataclass
+from enum import Enum
+from typing import Literal
 
 import ezdxf
-from ezdxf import colors
-from ezdxf.enums import TextEntityAlignment
 import structlog
-
+from ezdxf.enums import TextEntityAlignment
 from pydantic import BaseModel, Field
 
-from ..types import Feet, Inches
-from .concrete_rebar_service import RebarScheduleResult, RebarBar, ConcreteVolume
 from ..exceptions import ValidationError
+from .concrete_rebar_service import ConcreteVolume, RebarScheduleResult
 
 logger = structlog.get_logger(__name__)
 

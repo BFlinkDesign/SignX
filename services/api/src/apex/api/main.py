@@ -30,6 +30,7 @@ from .ready import router as ready_router
 from .routes.ai import router as ai_router
 from .routes.audit import router as audit_router
 from .routes.auth import router as auth_router
+from .routes.auth_mfa import router as auth_mfa_router
 from .routes.baseplate import router as baseplate_router
 from .routes.bom import router as bom_router
 from .routes.cabinets import router as cabinets_router
@@ -340,6 +341,9 @@ app.include_router(ready_router)
 
 # Include auth router
 app.include_router(auth_router)
+
+# Include MFA router
+app.include_router(auth_mfa_router)
 
 # Include materials gateway router
 app.include_router(materials_router, tags=["materials"])

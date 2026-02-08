@@ -9,31 +9,28 @@ Target: <100ms p95 latency for real-time derives.
 from __future__ import annotations
 
 import functools
-import hashlib
 import math
-import warnings
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from collections.abc import Callable
+from typing import Any, Optional
 
 import numpy as np
 import pint
-from pint import Quantity
 from pydantic import validate_call
 
 from .cache import deterministic_cache
 from .code_refs import (
-    ASCE_7_22_SECTION_12,
-    IBC_2024_SECTION_1807_3,
-    IBC_2024_TABLE_1806_2,
     AISC_360_22_CHAPTER_J,
     AISC_360_22_SECTION_J3,
     AISC_360_22_SECTION_J3_7,
+    ASCE_7_22_SECTION_12,
+    IBC_2024_SECTION_1807_3,
+    IBC_2024_TABLE_1806_2,
 )
 from .models import (
     BasePlateInput,
     BasePlateSolution,
     Cabinet,
     CheckResult,
-    FootingConfig,
     LoadDerivation,
     PoleOption,
     SiteLoads,
@@ -83,7 +80,7 @@ STEEL_GRADES = {
 
 # Performance: LRU cache for AISC section lookups
 @functools.lru_cache(maxsize=256)
-def _get_section_properties_sync(shape: str, steel_grade: str) -> Dict[str, float]:
+def _get_section_properties_sync(shape: str, steel_grade: str) -> dict[str, float]:
     """
     Cached synchronous lookup for AISC section properties.
     
@@ -130,7 +127,7 @@ async def get_section_properties_async(
     shape: str,
     steel_grade: str,
     db_session: Optional[Any] = None
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """
     Async database lookup for AISC section properties.
     
@@ -148,7 +145,6 @@ async def get_section_properties_async(
         ValueError: If shape not found in AISC database
     """
     # Import here to avoid circular dependency
-    from sqlalchemy import select
     
     if db_session is None:
         # Get database session if not provided
@@ -324,9 +320,9 @@ def _validate_non_negative(value: float, name: str, context: str = "", code_ref:
         error_msg += ". Check input parameters and units."
         raise ValueError(error_msg)
 
-def _warn_sanity(height_ft: Optional[float] = None, depth_ft: Optional[float] = None) -> List[str]:
+def _warn_sanity(height_ft: Optional[float] = None, depth_ft: Optional[float] = None) -> list[str]:
     """Generate sanity check warnings."""
-    warnings_list: List[str] = []
+    warnings_list: list[str] = []
     if height_ft is not None and height_ft > MAX_POLE_HEIGHT_FT:
         warnings_list.append(f"Pole height {height_ft:.1f}ft exceeds recommended maximum {MAX_POLE_HEIGHT_FT}ft")
     if depth_ft is not None and depth_ft > MAX_FOOTING_DEPTH_FT:
@@ -338,10 +334,10 @@ def _warn_sanity(height_ft: Optional[float] = None, depth_ft: Optional[float] = 
 @validate_call
 def derive_loads(
     site: SiteLoads,
-    cabinets: List[Cabinet],
+    cabinets: list[Cabinet],
     height_ft: float,
     seed: int = 0,
-    warnings_list: Optional[List[str]] = None,
+    warnings_list: Optional[list[str]] = None,
 ) -> LoadDerivation:
     """
     Compute projected area, centroid, weight, and ultimate moment per ASCE 7-22.
@@ -456,11 +452,11 @@ def derive_loads(
 @validate_call
 def filter_poles(
     mu_required_kipin: float,
-    sections: List[Dict[str, Any]],
-    prefs: Dict[str, Any],
+    sections: list[dict[str, Any]],
+    prefs: dict[str, Any],
     seed: int = 0,
     return_warnings: bool = False,
-) -> Tuple[List[PoleOption], List[str]]:
+) -> tuple[list[PoleOption], list[str]]:
     """
     Filter feasible pole sections by AISC 360-16 strength check.
     
@@ -485,7 +481,7 @@ def filter_poles(
         AISC 360-16 Chapter F: Design of Members for Flexure
         Equation: φMn = φ * Fy * Sx >= Mu_required
     """
-    warnings_list: List[str] = []
+    warnings_list: list[str] = []
     
     # Input validation
     _validate_non_negative(mu_required_kipin, "mu_required_kipin")
@@ -568,7 +564,7 @@ def footing_solve(
     footing_type: str | None = None,
     seed: int = 0,
     request_engineering: bool = False,
-) -> Tuple[float, bool, List[str]]:
+) -> tuple[float, bool, list[str]]:
     """
     Compute minimum footing depth for direct burial using Broms-style lateral capacity.
     
@@ -594,7 +590,7 @@ def footing_solve(
         ASCE 7-22 Chapter 12: Foundations
         Broms (1964) lateral earth pressure theory
     """
-    warnings_list: List[str] = []
+    warnings_list: list[str] = []
     
     # Input validation with engineering context
     _validate_positive(mu_kipft, "mu_kipft", 
@@ -642,10 +638,10 @@ def footing_solve(
 @validate_call
 def baseplate_checks(
     plate: BasePlateInput,
-    loads: Dict[str, float],
+    loads: dict[str, float],
     seed: int = 0,
     suggest_alternatives: bool = True,
-) -> Tuple[List[CheckResult], List[str]]:
+) -> tuple[list[CheckResult], list[str]]:
     """
     Compute all base plate engineering checks per AISC 360-16 and ACI 318.
     
@@ -665,8 +661,8 @@ def baseplate_checks(
         AISC 360-16 Chapter J: Design of Connections
         ACI 318 Chapter 17: Anchorage to Concrete
     """
-    checks: List[CheckResult] = []
-    alternatives: List[str] = []
+    checks: list[CheckResult] = []
+    alternatives: list[str] = []
     
     # Convert loads
     mu_kipft = loads.get("mu_kipft", 0.0)
@@ -799,9 +795,9 @@ def baseplate_checks(
 # ========== Base Plate Auto-Solve with Grid Optimizer ==========
 
 def baseplate_auto_solve(
-    loads: Dict[str, float],
-    constraints: Dict[str, Any] | None = None,
-    cost_weights: Dict[str, float] | None = None,
+    loads: dict[str, float],
+    constraints: dict[str, Any] | None = None,
+    cost_weights: dict[str, float] | None = None,
     seed: int = 0,
     progress_callback: Optional[Callable[[int, int], None]] = None,
 ) -> BasePlateSolution:
@@ -840,7 +836,7 @@ def baseplate_auto_solve(
     if "max_plate_size_in" in constraints:
         plate_sizes_in = [s for s in plate_sizes_in if s <= constraints["max_plate_size_in"]]
     
-    feasible_solutions: List[Tuple[BasePlateInput, float, List[CheckResult]]] = []
+    feasible_solutions: list[tuple[BasePlateInput, float, list[CheckResult]]] = []
     
     # Calculate total iterations for progress
     total_iterations = len(plate_sizes_in) * len(plate_sizes_in) * len(plate_thicknesses_in) * len(anchor_patterns) * len(anchor_diameters_in) * len(anchor_embed_in)
@@ -938,8 +934,9 @@ def baseplate_auto_solve(
 
 # ========== Async-Compatible Wrappers with Perfect Type Forwarding ==========
 
-from typing import ParamSpec, TypeVar, Awaitable
 import asyncio
+from collections.abc import Awaitable
+from typing import ParamSpec, TypeVar
 
 P = ParamSpec('P')
 T = TypeVar('T')

@@ -2,14 +2,14 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any, Optional
 
+from fastapi import HTTPException, Request
+from slowapi.util import get_remote_address
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
-from fastapi import HTTPException, Request
-from slowapi.util import get_remote_address
 
 from ..db import Project, ProjectEvent
 
@@ -133,7 +133,7 @@ async def log_event(
         project_id=project_id,
         event_type=event_type,
         actor=actor,
-        timestamp=datetime.now(timezone.utc),
+        timestamp=datetime.now(UTC),
         data=event_data,
     )
     session.add(event)

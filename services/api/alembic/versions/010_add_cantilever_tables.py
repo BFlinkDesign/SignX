@@ -7,12 +7,14 @@ Create Date: 2025-11-01
 Adds tables for cantilever sign configurations and analysis results.
 References the AISC foundation catalog for structural sections.
 """
-from typing import Sequence, Union
+import logging
+from collections.abc import Sequence
+from typing import Union
 
-from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
-import logging
+
+from alembic import op
 
 logger = logging.getLogger(__name__)
 

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from starlette.types import ASGIApp, Receive, Scope, Send
 from starlette.responses import PlainTextResponse
+from starlette.types import ASGIApp, Receive, Scope, Send
 
 from .deps import settings
 

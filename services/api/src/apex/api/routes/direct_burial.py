@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import structlog
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter
 
 from ..common.signcalc_import import get_signcalc_import
 
@@ -44,8 +44,8 @@ def _fallback_solve_footing_interactive(diameter_ft: float, M_pole_kipft: float,
     return round(depth_in, 1)
 
 
-from ..common.models import make_envelope
 from ..common.envelope import calc_confidence
+from ..common.models import make_envelope
 from ..deps import get_code_version, get_model_config
 from ..schemas import ResponseEnvelope, add_assumption
 
@@ -75,7 +75,7 @@ async def footing_solve(req: dict) -> ResponseEnvelope:
     
     add_assumption(assumptions, f"soil_bearing={soil_psf}psf, K=calib_v1")
     if num_poles > 1:
-        add_assumption(assumptions, f"two_pole_split=0.5 each")
+        add_assumption(assumptions, "two_pole_split=0.5 each")
     
     # Use deterministic solver
     depth_in = solve_footing_interactive(diameter_ft, M_pole_kipft, soil_psf, num_poles)

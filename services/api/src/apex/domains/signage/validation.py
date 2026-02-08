@@ -6,14 +6,13 @@ Compare solver predictions against field data and auto-tune parameters.
 
 from __future__ import annotations
 
-import json
+import logging
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Optional
 
 import numpy as np
 import pandas as pd
-from scipy import optimize, stats
-import logging
+from scipy import optimize
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +30,7 @@ class FieldDataValidator:
         Args:
             field_data_path: Path to CSV with historical project data
         """
-        self.field_data: List[Dict[str, Any]] = []
+        self.field_data: list[dict[str, Any]] = []
         if field_data_path and field_data_path.exists():
             try:
                 df = pd.read_csv(field_data_path)
@@ -42,9 +41,9 @@ class FieldDataValidator:
     
     def validate_against_field_data(
         self,
-        predictions: List[Dict[str, Any]],
-        actuals: List[Dict[str, Any]] | None = None,
-    ) -> Dict[str, Any]:
+        predictions: list[dict[str, Any]],
+        actuals: list[dict[str, Any]] | None = None,
+    ) -> dict[str, Any]:
         """
         Compare predictions vs actual installations.
         
@@ -164,9 +163,9 @@ class SolverParameterTuner:
     
     def tune_parameters(
         self,
-        field_data: List[Dict[str, Any]],
+        field_data: list[dict[str, Any]],
         objective: str = "minimize_error",
-    ) -> Dict[str, float]:
+    ) -> dict[str, float]:
         """
         Auto-tune parameters to minimize prediction error.
         
@@ -218,7 +217,7 @@ class SolverParameterTuner:
         
         return self.current_params
     
-    def validate_safety(self, tuned_params: Dict[str, float]) -> bool:
+    def validate_safety(self, tuned_params: dict[str, float]) -> bool:
         """
         Validate that tuned parameters maintain safety.
         
@@ -239,9 +238,9 @@ class SolverParameterTuner:
 
 
 def generate_validation_report(
-    validation_results: Dict[str, Any],
+    validation_results: dict[str, Any],
     output_path: Path,
-    field_data: List[Dict[str, Any]] | None = None,
+    field_data: list[dict[str, Any]] | None = None,
 ) -> Path:
     """
     Generate PDF validation report with scatter plots and statistics.
@@ -254,7 +253,6 @@ def generate_validation_report(
     Returns:
         Path to generated PDF
     """
-    from matplotlib import pyplot as plt
     from weasyprint import HTML
     
     # Generate scatter plots
@@ -342,9 +340,9 @@ def generate_validation_report(
 
 
 def validate_against_field_data(
-    predictions: List[Dict[str, Any]],
+    predictions: list[dict[str, Any]],
     field_data_path: Optional[Path] = None,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Convenience function to validate predictions.
     
@@ -362,7 +360,7 @@ def validate_against_field_data(
 def auto_tune_parameters(
     field_data_path: Path,
     objective: str = "minimize_error",
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """
     Auto-tune solver parameters from field data.
     

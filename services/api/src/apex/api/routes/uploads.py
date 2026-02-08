@@ -2,24 +2,23 @@
 
 from __future__ import annotations
 
+from datetime import UTC
 from typing import Optional
 
 import structlog
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, status
-from fastapi.security import HTTPAuthorizationCredentials
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ..db import get_db
-from ..auth import get_current_user, TokenData
-from ..rbac import require_permission
-from ..storage import StorageClient
-from ..deps import storage_client
-from ..file_upload_service import upload_file, get_presigned_download_url
-from ..models_audit import FileUpload
-from ..schemas import ResponseEnvelope, add_assumption
-from ..common.models import make_envelope
+from ..auth import TokenData, get_current_user
 from ..common.helpers import get_code_version, get_model_config
-from sqlalchemy import select
+from ..common.models import make_envelope
+from ..db import get_db
+from ..deps import storage_client
+from ..file_upload_service import get_presigned_download_url, upload_file
+from ..models_audit import FileUpload
+from ..rbac import require_permission
+from ..schemas import ResponseEnvelope, add_assumption
 
 logger = structlog.get_logger(__name__)
 
@@ -41,8 +40,6 @@ async def upload_file_endpoint(
     Returns:
         FileUpload metadata with presigned download URL
     """
-    from fastapi import Request
-    from starlette.requests import Request as StarletteRequest
     
     # Extract IP and user agent from request context
     # Note: We need to pass Request through middleware or dependency
@@ -194,8 +191,8 @@ async def delete_upload(
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access denied")
     
     # Soft delete: set expiration
-    from datetime import datetime, timezone, timedelta
-    upload_record.expires_at = datetime.now(timezone.utc) + timedelta(seconds=1)
+    from datetime import datetime, timedelta
+    upload_record.expires_at = datetime.now(UTC) + timedelta(seconds=1)
     await db.commit()
     
     # Log audit

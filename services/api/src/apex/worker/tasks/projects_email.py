@@ -11,7 +11,6 @@ from celery.utils.log import get_task_logger
 from ..app import app
 from ..utils import breaker_allow, breaker_record_failure, breaker_record_success, dlq_push
 
-
 logger = get_task_logger(__name__)
 
 

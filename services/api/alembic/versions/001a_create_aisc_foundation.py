@@ -12,12 +12,14 @@ shared reference catalog for ALL structural modules in the platform:
 - Wall brackets → Channels, angles, tubes
 - Custom fabrications → All shape types
 """
-from typing import Sequence, Union
+import logging
+from collections.abc import Sequence
+from typing import Union
 
-from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
-import logging
+
+from alembic import op
 
 logger = logging.getLogger(__name__)
 

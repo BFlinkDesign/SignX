@@ -1,11 +1,11 @@
 from __future__ import annotations
 
+import logging
 import sys
 
 import structlog
 
 from .deps import settings
-import logging
 
 logger = logging.getLogger(__name__)
 

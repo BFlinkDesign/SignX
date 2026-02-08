@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
-import structlog
 from typing import Optional
+
+import structlog
 
 try:
     import redis.asyncio as aioredis
@@ -38,8 +39,11 @@ async def get_redis_client() -> Optional[aioredis.Redis]:
                 socket_keepalive=True,
             )
             logger.info("redis.client_initialized", url=settings.REDIS_URL)
-        except Exception as e:
+        except aioredis.RedisError as e:
             logger.warning("redis.client_failed", error=str(e))
+            return None
+        except Exception as e:
+            logger.error("redis.client_unexpected_error", error=str(e))
             return None
     
     return _client

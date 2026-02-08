@@ -7,10 +7,10 @@ Parallel processing for multiple project configurations.
 from __future__ import annotations
 
 import multiprocessing
-from typing import Any, Callable, Dict, List, Optional
+from collections.abc import Callable
+from typing import Any, Optional
 
 from .models import Cabinet, SiteLoads
-
 
 # ========== Batch Solver ==========
 
@@ -22,7 +22,7 @@ class ProjectConfig:
         self,
         project_id: str,
         site: SiteLoads,
-        cabinets: List[Dict[str, Any]],
+        cabinets: list[dict[str, Any]],
         height_ft: float,
     ):
         self.project_id = project_id
@@ -31,7 +31,7 @@ class ProjectConfig:
         self.height_ft = height_ft
 
 
-def _solve_single_project(config: ProjectConfig) -> Dict[str, Any]:
+def _solve_single_project(config: ProjectConfig) -> dict[str, Any]:
     """
     Solve a single project (used in multiprocessing).
     
@@ -77,10 +77,10 @@ def _solve_single_project(config: ProjectConfig) -> Dict[str, Any]:
 
 
 def solve_batch(
-    projects: List[ProjectConfig],
+    projects: list[ProjectConfig],
     progress_callback: Optional[Callable[[int, int, int], None]] = None,
     n_workers: Optional[int] = None,
-) -> List[Dict[str, Any]]:
+) -> list[dict[str, Any]]:
     """
     Solve multiple projects in parallel.
     

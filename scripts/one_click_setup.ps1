@@ -59,7 +59,7 @@ if ($InstallExtensions) {
 	}
 }
 
-Write-Header "Validating Java for RSP/SonarLint"
+Write-Header "Validating Java (optional tools)"
 try {
 	Exec "java -version"
 } catch {
@@ -67,12 +67,8 @@ try {
 }
 
 Write-Header "Summary"
-Write-Host "SONAR_SERVER_URL=$($env:SONAR_SERVER_URL)"
-Write-Host "SONAR_PROJECT_KEY=$($env:SONAR_PROJECT_KEY)"
-Write-Host "SONAR_TOKEN set? " -NoNewline
-Write-Host ([string]::IsNullOrWhiteSpace($env:SONAR_TOKEN) ? "NO" : "YES") -ForegroundColor ([string]::IsNullOrWhiteSpace($env:SONAR_TOKEN) ? "Red" : "Green")
 Write-Host ""
 Write-Host "Done. Restart VS Code to ensure environment changes are picked up, then:"
 Write-Host " - Ctrl+Shift+P → Developer: Reload Window"
-Write-Host " - Check Output: SonarLint, RSP connectors"
+Write-Host " - Check Output: extensions and connectors"
 
