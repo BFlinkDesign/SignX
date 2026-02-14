@@ -84,6 +84,8 @@ Cargo.lock
 *.pem
 *.p12
 credentials.json
+*credentials*
+*.keyedin-auth*
 
 ############################
 # Temporary files
