@@ -16,21 +16,8 @@
 #    pip install -r requirements-ml.txt
 # ==============================================================================
 
-# Core ML frameworks with CUDA 12.1 support
---index-url https://download.pytorch.org/whl/cu121
-torch==2.4.1+cu121
-torchvision==0.19.1+cu121
-torchaudio==2.4.1+cu121
-
-# Graph Neural Networks (for structural analysis)
-torch-geometric==2.5.3
-# Install scatter/sparse from PyG wheel index:
-# pip install torch-scatter torch-sparse torch-cluster torch-spline-conv \
-#     -f https://data.pyg.org/whl/torch-2.4.0+cu121.html
-
 # GPU-accelerated gradient boosting
 xgboost==2.1.1
-lightgbm==4.5.0
 
 # Traditional ML (works with cuML when using cudf.pandas)
 scikit-learn==1.5.2
@@ -40,7 +27,7 @@ pdfplumber==0.11.4
 PyMuPDF==1.24.10
 tabula-py==2.9.3
 camelot-py[cv]==0.11.0
-pdfminer.six==20231228
+pdfminer.six>=20260107
 
 # Data processing (pairs with cudf.pandas for GPU acceleration)
 pandas==2.2.3
@@ -50,7 +37,6 @@ pyarrow==17.0.0
 polars==1.9.0  # Alternative fast dataframe library
 
 # Experiment tracking and model versioning
-mlflow==2.16.2
 wandb==0.18.3
 
 # Feature engineering
