@@ -1,0 +1,41 @@
+{
+  "phase": 0,
+  "completed_at": "2026-02-15T06:05:00Z",
+  "tasks": {
+    "0.0_update_plan_md": {
+      "status": "completed",
+      "notes": "PLAN.md updated: HTTP connector replaces Anthropic IP connector, risks/decisions/costs updated"
+    },
+    "0.1_update_extraction_prompt": {
+      "status": "completed",
+      "notes": "Added MASONRY_SUB, REMOVAL, STRUCTURAL_BASE to sign_type enum with extraction hints"
+    },
+    "0.2_update_schema_json": {
+      "status": "completed",
+      "notes": "Added 3 sign types with colors: MASONRY_SUB (gray), REMOVAL (default), STRUCTURAL_BASE (brown)"
+    },
+    "0.3_commit_fixes": {
+      "status": "pending",
+      "notes": "Will commit with Phase 1 artifacts"
+    },
+    "0.4_sample_emails": {
+      "status": "completed",
+      "notes": "11 emails sampled from 5 folders via Outlook COM. Folders: Jeff Fye (24), Joe Phillips (8), WAITING FOR SUBS (3), Rich Thompson (1), WAINTING FOR SUBS (1). No Chris Erickson folder found."
+    },
+    "0.5_test_extraction": {
+      "status": "completed",
+      "gate_passed": true,
+      "notes": "11/11 extractions passed validation (100%). Known issue: Sonnet wraps JSON in code fences (stripped in parser). Minor: $1.00 Pre-Bid Value from KeyedIn captured as estimated_value=1."
+    },
+    "manual_checklist": {
+      "status": "created",
+      "notes": "MANUAL-CHECKLIST.md created with 5 browser tasks for Brady"
+    }
+  },
+  "discoveries": {
+    "email_format": "Emails are CRM-generated notifications from KeyedIn, not freeform customer requests. Structured format with Quote Number, Delivery Date, Description, SOLD TO, LOCATION fields.",
+    "folder_structure": "5 active folders found. No Chris Erickson subfolder. Typo folder 'WAINTING FOR SUBS' exists alongside 'WAITING FOR SUBS'. Empty folders: HOLD, ON HOLD, House.",
+    "code_fence_issue": "Sonnet wraps JSON in ```json fences despite 'no markdown, no backticks' instruction. Must strip in PA flow (Compose step) and test scripts.",
+    "prebid_value_issue": "KeyedIn sets Pre-Bid Value to $1.00 as placeholder. Sonnet sometimes captures this as estimated_value=1. Consider adding prompt rule: 'ignore Pre-Bid Value of $1.00'."
+  }
+}

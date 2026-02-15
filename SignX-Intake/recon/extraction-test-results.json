@@ -1,0 +1,367 @@
+{
+  "tests": [
+    {
+      "email_subject": "UPDATED - VIXXO CORP. - Quote #40646 - BID REQUEST.",
+      "folder": "Rich Thompson",
+      "extraction": {
+        "quote_name": "CosmoProf #86042 Channel Letter Survey",
+        "customer": "VIXXO CORP.",
+        "location": "Urbandale, IA",
+        "sign_type": "CHANNEL_LETTERS",
+        "estimated_value": null,
+        "description": "Survey information for existing channel letters at CosmoProf location. Measurements provided for lowercase 'm' (21-9/16\" tall, 7-3/4\" stroke) and uppercase 'P' (31-5/8\" tall, 8-1/4\" stroke).",
+        "sq_ft": null,
+        "faces": null,
+        "cabinet_dims": null,
+        "pixel_pitch": null,
+        "delivery_date": "2026-01-24",
+        "is_redo": true,
+        "has_drawings": false,
+        "has_specs": false,
+        "blocking": []
+      },
+      "validation": {
+        "valid_json": true,
+        "sign_type_valid": true,
+        "blocking_valid": true,
+        "value_type_valid": true,
+        "date_format_valid": true,
+        "required_fields_present": true,
+        "issues": []
+      },
+      "pass": true
+    },
+    {
+      "email_subject": "Bid Request Needed",
+      "folder": "Joe Phillips",
+      "extraction": {
+        "quote_name": "Community Choice Credit Union Banner Replacement - Veterans Memorial",
+        "customer": "Choice Creative Solutions / Community Choice Credit Union",
+        "location": null,
+        "sign_type": null,
+        "estimated_value": null,
+        "description": "Replace banner that has completely come off the Veterans Memorial building for Community Choice Credit Union. Urgent replacement needed.",
+        "sq_ft": null,
+        "faces": null,
+        "cabinet_dims": null,
+        "pixel_pitch": null,
+        "delivery_date": null,
+        "is_redo": false,
+        "has_drawings": false,
+        "has_specs": false,
+        "blocking": [
+          "needs_drawings",
+          "needs_specs"
+        ]
+      },
+      "validation": {
+        "valid_json": true,
+        "sign_type_valid": true,
+        "blocking_valid": true,
+        "value_type_valid": true,
+        "date_format_valid": true,
+        "required_fields_present": true,
+        "issues": []
+      },
+      "pass": true
+    },
+    {
+      "email_subject": "CHOICE CREATIVE SOLUTIONS - Quote #40662 - BID REQUEST.",
+      "folder": "Joe Phillips",
+      "extraction": {
+        "quote_name": "Choice Creative Solutions - Replacement Banner 24'x20'",
+        "customer": "Choice Creative Solutions",
+        "location": "Des Moines, IA",
+        "sign_type": null,
+        "estimated_value": null,
+        "description": "Furnish and install new single face replacement banner measuring 24'-4\"H x 20'W at Veterans Memorial Community Choice location.",
+        "sq_ft": 487,
+        "faces": 1,
+        "cabinet_dims": null,
+        "pixel_pitch": null,
+        "delivery_date": "2026-02-09",
+        "is_redo": false,
+        "has_drawings": true,
+        "has_specs": false,
+        "blocking": [
+          "needs_specs"
+        ]
+      },
+      "validation": {
+        "valid_json": true,
+        "sign_type_valid": true,
+        "blocking_valid": true,
+        "value_type_valid": true,
+        "date_format_valid": true,
+        "required_fields_present": true,
+        "issues": []
+      },
+      "pass": true
+    },
+    {
+      "email_subject": "LIGHTBRITE COFFEE ROASTERS - Quote #40661 - BID REQUEST.",
+      "folder": "Joe Phillips",
+      "extraction": {
+        "quote_name": "LightBrite Coffee Roasters - Replacement Face",
+        "customer": "LightBrite Coffee Roasters",
+        "location": "Grimes, IA",
+        "sign_type": "CABINET_ILLUMINATED",
+        "estimated_value": null,
+        "description": "Replace existing cabinet face with new 15.18\"H x 137.42\"W white polycarbonate face featuring 3M standard blue reverse cut vinyl and black trim cap.",
+        "sq_ft": 14.5,
+        "faces": 1,
+        "cabinet_dims": "137.42 x 15.18",
+        "pixel_pitch": null,
+        "delivery_date": "2026-02-05",
+        "is_redo": false,
+        "has_drawings": false,
+        "has_specs": false,
+        "blocking": []
+      },
+      "validation": {
+        "valid_json": true,
+        "sign_type_valid": true,
+        "blocking_valid": true,
+        "value_type_valid": true,
+        "date_format_valid": true,
+        "required_fields_present": true,
+        "issues": []
+      },
+      "pass": true
+    },
+    {
+      "email_subject": "CITY OF AMES POWER PLANT - Quote #40628 - BID REQUEST.",
+      "folder": "WAITING FOR SUBS",
+      "extraction": {
+        "quote_name": "City of Ames Power Plant - LED Faux Neon Replacement",
+        "customer": "City of Ames Power Plant",
+        "location": "Ames, IA",
+        "sign_type": "CHANNEL_LETTERS",
+        "estimated_value": null,
+        "description": "Replace existing real neon tubing with LED faux neon tubing on G2G Aurora Flex sign. Price subject to change pending survey findings.",
+        "sq_ft": null,
+        "faces": null,
+        "cabinet_dims": null,
+        "pixel_pitch": null,
+        "delivery_date": "2026-02-23",
+        "is_redo": false,
+        "has_drawings": false,
+        "has_specs": false,
+        "blocking": [
+          "needs_specs"
+        ]
+      },
+      "validation": {
+        "valid_json": true,
+        "sign_type_valid": true,
+        "blocking_valid": true,
+        "value_type_valid": true,
+        "date_format_valid": true,
+        "required_fields_present": true,
+        "issues": []
+      },
+      "pass": true
+    },
+    {
+      "email_subject": "DECKS & DOCKS COMPANY - Quote #40626 - BID REQUEST.",
+      "folder": "WAITING FOR SUBS",
+      "extraction": {
+        "quote_name": "Decks & Docks Non-Lit Channel Letters & Logo",
+        "customer": "Decks & Docks Company",
+        "location": "West Des Moines, IA",
+        "sign_type": "CHANNEL_LOGO",
+        "estimated_value": null,
+        "description": "Fabricate and install 2\" deep non-lit metal channel letters and 3\" deep non-lit metal logo painted and mounted to 1\" deep painted metal backer panels.",
+        "sq_ft": null,
+        "faces": null,
+        "cabinet_dims": null,
+        "pixel_pitch": null,
+        "delivery_date": "2026-03-09",
+        "is_redo": false,
+        "has_drawings": true,
+        "has_specs": false,
+        "blocking": []
+      },
+      "validation": {
+        "valid_json": true,
+        "sign_type_valid": true,
+        "blocking_valid": true,
+        "value_type_valid": true,
+        "date_format_valid": true,
+        "required_fields_present": true,
+        "issues": []
+      },
+      "pass": true
+    },
+    {
+      "email_subject": "MERLE HAY MALL - Quote #40632 - BID REQUEST.",
+      "folder": "WAITING FOR SUBS",
+      "extraction": {
+        "quote_name": "Merle Hay Mall Masonry Repairs",
+        "customer": "Merle Hay Mall",
+        "location": "Des Moines, IA",
+        "sign_type": "MASONRY_SUB",
+        "estimated_value": null,
+        "description": "Masonry repairs including damaged concrete retaining wall and stone veneer restoration at mall location.",
+        "sq_ft": null,
+        "faces": null,
+        "cabinet_dims": null,
+        "pixel_pitch": null,
+        "delivery_date": "2026-03-23",
+        "is_redo": false,
+        "has_drawings": false,
+        "has_specs": false,
+        "blocking": [
+          "masonry_sub_quote"
+        ]
+      },
+      "validation": {
+        "valid_json": true,
+        "sign_type_valid": true,
+        "blocking_valid": true,
+        "value_type_valid": true,
+        "date_format_valid": true,
+        "required_fields_present": true,
+        "issues": []
+      },
+      "pass": true
+    },
+    {
+      "email_subject": "Pancheros - Quote #40660 - BID REQUEST.",
+      "folder": "Jeff Fye",
+      "extraction": {
+        "quote_name": "Pancheros Waukee - LED Channel Letters",
+        "customer": "Pancheros",
+        "location": "Waukee, IA",
+        "sign_type": "CHANNEL_LOGO",
+        "estimated_value": null,
+        "description": "Fabricate and install 27\" LED illuminated channel letters spelling 'LOGO PANCHEROS MEXICAN GRILL' on east elevation. 5\" returns painted PMS180C with 1\" brown trimcap, faces decorated per drawings.",
+        "sq_ft": 48.242,
+        "faces": null,
+        "cabinet_dims": null,
+        "pixel_pitch": null,
+        "delivery_date": "2026-04-15",
+        "is_redo": false,
+        "has_drawings": true,
+        "has_specs": false,
+        "blocking": [
+          "needs_drawings"
+        ]
+      },
+      "validation": {
+        "valid_json": true,
+        "sign_type_valid": true,
+        "blocking_valid": true,
+        "value_type_valid": true,
+        "date_format_valid": true,
+        "required_fields_present": true,
+        "issues": []
+      },
+      "pass": true
+    },
+    {
+      "email_subject": "Grain Millers - Quote #40556 - BID REQUEST.",
+      "folder": "Jeff Fye",
+      "extraction": {
+        "quote_name": "Grain Millers Shipping Office Door Vinyl",
+        "customer": "Grain Millers",
+        "location": "Lake Mills, IA",
+        "sign_type": null,
+        "estimated_value": 1,
+        "description": "Furnish and ship black vinyl lettering for metal door: 2\" 'OFFICE' letters and 1.2\" 'SHIPPING/DELIVERIES/VISITORS' letters. Customer to obtain permit and install.",
+        "sq_ft": null,
+        "faces": null,
+        "cabinet_dims": null,
+        "pixel_pitch": null,
+        "delivery_date": "2026-04-15",
+        "is_redo": false,
+        "has_drawings": false,
+        "has_specs": false,
+        "blocking": []
+      },
+      "validation": {
+        "valid_json": true,
+        "sign_type_valid": true,
+        "blocking_valid": true,
+        "value_type_valid": true,
+        "date_format_valid": true,
+        "required_fields_present": true,
+        "issues": []
+      },
+      "pass": true
+    },
+    {
+      "email_subject": "Grain Millers - Quote #40555 - BID REQUEST.",
+      "folder": "Jeff Fye",
+      "extraction": {
+        "quote_name": "Grain Millers Employee Entrance Vinyl Lettering",
+        "customer": "Grain Millers",
+        "location": "Lake Mills, IA",
+        "sign_type": null,
+        "estimated_value": 1,
+        "description": "Furnish and ship black vinyl lettering for metal doors at employee entrance. 2\" letters for 'EMPLOYEES ENTRANCE' and 3/4\" letters for directional text. Customer to handle permits and installation.",
+        "sq_ft": null,
+        "faces": null,
+        "cabinet_dims": null,
+        "pixel_pitch": null,
+        "delivery_date": "2026-04-15",
+        "is_redo": false,
+        "has_drawings": false,
+        "has_specs": false,
+        "blocking": []
+      },
+      "validation": {
+        "valid_json": true,
+        "sign_type_valid": true,
+        "blocking_valid": true,
+        "value_type_valid": true,
+        "date_format_valid": true,
+        "required_fields_present": true,
+        "issues": []
+      },
+      "pass": true
+    },
+    {
+      "email_subject": "ST. ANTHONY - Quote #40592 - BID REQUEST.",
+      "folder": "WAINTING FOR SUBS",
+      "extraction": {
+        "quote_name": "St. Anthony Full Color EMC Monument",
+        "customer": "ST. ANTHONY",
+        "location": "Carroll, IA",
+        "sign_type": "EMC_MONUMENT",
+        "estimated_value": null,
+        "description": "Double-faced 6mm full color Watchfire EMC monument with custom aluminum base, columns, and perforated panels for airflow. Includes structural foundation, steel poles, and acrylic logo below message center.",
+        "sq_ft": 160,
+        "faces": 2,
+        "cabinet_dims": "10' x 16'",
+        "pixel_pitch": 6,
+        "delivery_date": "2026-04-15",
+        "is_redo": false,
+        "has_drawings": false,
+        "has_specs": true,
+        "blocking": [
+          "watchfire_pricing"
+        ]
+      },
+      "validation": {
+        "valid_json": true,
+        "sign_type_valid": true,
+        "blocking_valid": true,
+        "value_type_valid": true,
+        "date_format_valid": true,
+        "required_fields_present": true,
+        "issues": []
+      },
+      "pass": true
+    }
+  ],
+  "summary": {
+    "total": 11,
+    "passed": 11,
+    "failed": 0,
+    "failure_rate_pct": 0.0,
+    "gate_passed": true,
+    "failure_details": []
+  },
+  "tested_at": "2026-02-15T06:11:41.355258+00:00"
+}
