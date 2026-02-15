@@ -1,294 +1,446 @@
-# KeyedIn Pipeline Status — Component by Component
+# KEYEDIN PIPELINE STATUS
 
-**Date:** 2026-02-14
-**Purpose:** Every pipeline component, its file path, tested/untested status, and what's needed next
-
----
-
-## Pipeline 1: Authentication (Main App)
-
-| Status | **WORKING** |
-|--------|-------------|
-
-| Component | File Path | Status | Notes |
-|-----------|-----------|--------|-------|
-| Direct POST login | `Keyedin/extract_with_credentials.py` | TESTED, WORKING | Posts USERNAME/PASSWORD/SECURE |
-| Chrome CDP cookie extraction | `Keyedin/keyedin_cdp_extractor.py` | TESTED, WORKING | Opens Chrome, user logs in, extracts cookies |
-| Selenium cookie extraction | `Keyedin/extract_cookies_chrome.py` | TESTED, WORKING | WebDriver + ChromeDriver |
-| Enhanced API wrapper | `Keyedin/keyedin_api_enhanced.py` | TESTED, WORKING | Session manager with auto-refresh |
-| Legacy API wrapper | `Keyedin/keyedin_api.py` | TESTED, WORKING | Superseded by enhanced version |
-| Session validation | `Keyedin/comprehensive_test.py` | TESTED, WORKING | 9/9 tests pass |
-| Captured session cookies | `Keyedin/keyedin_session.json` | CAPTURED | 5 cookies, domain: eaglesign.keyedinsign.com |
-| Chrome session capture | `Keyedin/keyedin_chrome_session.json` | CAPTURED | Alternative session source |
-
-**Next steps:** Confirm whether login is still direct POST or has switched to Google SSO.
+**Generated**: 2026-02-14
+**Audit Method**: File existence + code inspection + output verification
 
 ---
 
-## Pipeline 2: Authentication (Informer BI)
+## Pipeline Overview
 
-| Status | **WORKING** |
-|--------|-------------|
-
-| Component | File Path | Status | Notes |
-|-----------|-----------|--------|-------|
-| SSO URL pattern | `Keyedin/informer_portal_urls.json` | DOCUMENTED | `sso?u=BRADYF&t={token}` |
-| JSESSIONID capture | `Keyedin/GWT Google Web Toolkit/keyedin_session.json` | CAPTURED | Java session cookie |
-| authToken capture | `Keyedin/GWT Google Web Toolkit/keyedin_session.json` | CAPTURED | UUID auth token |
-| clientId capture | `Keyedin/GWT Google Web Toolkit/keyedin_session.json` | CAPTURED | UUID client ID |
-| PowerShell extractor | `Keyedin/GWT Google Web Toolkit/MASTER_EXTRACTOR.ps1` | TESTED, PARTIAL | Auth works, data extraction incomplete |
-| Chrome session capture | `Keyedin/GWT Google Web Toolkit/session_cookies.json` | CAPTURED | Informer-specific cookies |
-
-**Next steps:** Tokens likely expired. Re-authenticate to get fresh tokens.
-
----
-
-## Pipeline 3: Endpoint Discovery & Mapping
-
-| Status | **WORKING** |
-|--------|-------------|
-
-| Component | File Path | Status | Notes |
-|-----------|-----------|--------|-------|
-| Menu discovery | `Keyedin/WEB.MENU.json` | TESTED, WORKING | 262 endpoints mapped |
-| Endpoint categorization | `Keyedin/endpoint_map.json` | COMPLETE | Categorized by module |
-| Full endpoint listing | `Keyedin/complete_endpoint_map.json` | COMPLETE | All details |
-| Endpoint mapper script | `Keyedin/map_all_endpoints.py` | TESTED, WORKING | Automated mapping |
-| Menu HTML capture | `Keyedin/WEB.MENU.html` | CAPTURED | HTML version |
-
-**Next steps:** None — this pipeline is complete. 262 endpoints fully mapped.
-
----
-
-## Pipeline 4: CGI/MVI Data Extraction (Read)
-
-| Status | **PARTIALLY WORKING** |
-|--------|----------------------|
-
-| Component | File Path | Status | Notes |
-|-----------|-----------|--------|-------|
-| Bulk data extractor | `Keyedin/extract_all_data.py` | TESTED, WORKING | Extracts all endpoints |
-| Everything extractor | `Keyedin/extract_everything_complete.py` | TESTED, PARTIAL | Some endpoints error |
-| WO query | `Keyedin/fetch_work_orders.py` | TESTED, WORKING | Fetches WO data |
-| WO query (all) | `Keyedin/get_all_work_orders.py` | TESTED, WORKING | Bulk WO fetch |
-| HTML form analyzer | `Keyedin/analyze_form.py` | TESTED, WORKING | Parses form fields |
-| WO inquiry analyzer | `Keyedin/analyze_wo_inquiry_form.py` | TESTED, WORKING | WO-specific analysis |
-| Menu explorer | `Keyedin/explore_menu.py` | TESTED, WORKING | Interactive menu walk |
-| HAR parser | `Keyedin/parse_har.py` | TESTED, WORKING | Network traffic analysis |
-| Page analyzer | `Keyedin/analyze_pages.py` | TESTED, WORKING | HTML structure analysis |
-| JSON inspector | `Keyedin/inspect_json.py` | TESTED, WORKING | JSON response analysis |
-| Quick extract | `Keyedin/quick_extract.py` | TESTED, WORKING | Fast single-endpoint |
-| Quick test | `Keyedin/quick_test.py` | TESTED, WORKING | Fast validation |
-| WO endpoint tester | `Keyedin/test_wo_endpoints.py` | TESTED, WORKING | WO-specific tests |
-| Endpoint tester | `Keyedin/test_endpoints.py` | TESTED, WORKING | General endpoint tests |
-| Network capture | `Keyedin/capture_network.py` | TESTED, WORKING | HTTP capture |
-| Extracted menu data | `Keyedin/extracted_data/menu_*.json` | CAPTURED | Menu JSON |
-| Extracted WO data | `Keyedin/extracted_data/work_orders_*.json` | CAPTURED | WO form data |
-| WO query results | `Keyedin/wo_query_results.json` | CAPTURED | Query responses |
-
-**Result:** 13/14 endpoints (93%) return 200 OK. Only `WO.COST.DETAIL` fails (not in VOC).
-
-**Next steps:** Build targeted parsers for specific pages: `QUOTE.ENTRY.DETAILS`, `WO.STATUS.SUM`, `ORDER.ENTRY`.
+```
+                                    ┌──────────────────────────┐
+                                    │  KeyedIn Sign ERP v2.1   │
+                                    │  (mvi.exe CGI backend)   │
+                                    └──────┬────────┬──────────┘
+                                           │        │
+                            ┌──────────────┘        └──────────────┐
+                            ▼                                      ▼
+                  ┌──────────────────┐                   ┌──────────────────┐
+                  │ Cost Summary     │                   │ Informer BI      │
+                  │ Print/View       │                   │ (GWT-RPC v7)     │
+                  │ (168 HTML files) │                   │ (30 reports)     │
+                  └────────┬─────────┘                   └────────┬─────────┘
+                           │                                      │
+                     Phase 1                                Phase 2/3
+                           │                                      │
+                           ▼                                      ▼
+                  ┌──────────────────┐                   ┌──────────────────┐
+                  │ parse_full_      │                   │ scrape_informer  │
+                  │ cost_detail.py   │                   │ .py              │
+                  │ (907 lines)      │                   │ (GWT replay)     │
+                  └────────┬─────────┘                   └────────┬─────────┘
+                           │                                      │
+                           ▼                                      │
+                  ┌──────────────────┐                            │
+                  │ 5 CSV outputs    │                            │
+                  │ (1.25M rows)     │              ┌─────────────┘
+                  └────────┬─────────┘              │
+                           │                        │ (NOT YET INTEGRATED)
+                           ▼                        ▼
+              Phase 4 ┌──────────────────┐   ┌──────────────────┐
+            ─────────▶│ ingest_local_    │   │ GWT response     │
+  Local Excel/CSV     │ files.py         │   │ CSVs (partial)   │
+  from OneDrive       └────────┬─────────┘   └──────────────────┘
+                               │
+                         Phase 5│
+                               ▼
+                      ┌──────────────────┐
+                      │ build_warehouse  │
+                      │ .py (1034 lines) │
+                      │ → SQLite 211MB   │
+                      └────────┬─────────┘
+                               │
+                         Phase 6│
+                               ▼
+                      ┌──────────────────┐
+                      │ decision_engine  │
+                      │ .py              │
+                      │ → Reports (.md)  │
+                      └──────────────────┘
+```
 
 ---
 
-## Pipeline 5: Cost Summary Extraction
+## Component-by-Component Status
 
-| Status | **BROKEN — Headers only, no data cells** |
-|--------|----------------------------------------|
+### 1. HTML Capture (Cost Summary Batch Files)
 
-| Component | File Path | Status | Notes |
-|-----------|-----------|--------|-------|
-| WO.STATUS.SUM extractor | `Keyedin/extract_all_cost_summaries.py` | TESTED, PARTIAL | 443 lines, gets headers but 0 usable data |
-| Complete version | `Keyedin/extract_all_cost_summaries_complete.py` | TESTED, PARTIAL | Same issue |
-| Detailed version | `Keyedin/extract_all_detailed_cost_summaries.py` | TESTED, PARTIAL | Same issue |
-| SO.CONTRACT.RUN extractor | `Keyedin/extract_all_cost_summaries_via_report.py` | TESTED, FAILED | 10 SOs queried, ALL 0 data rows |
-| Individual WO summaries (52) | `Keyedin/cost_summaries/individual_summaries/WO_*.json` | CAPTURED | Headers + partial data |
-| Bulk summary JSON (5 files) | `Keyedin/cost_summaries/all_*.json` | CAPTURED | Headers only |
-| CSV exports | `Keyedin/cost_summaries/*.csv` | CAPTURED | Minimal data |
+| Attribute | Value |
+|-----------|-------|
+| **Status** | WORKING |
+| **Location** | `C:\Scripts\keyedin-capture\reports\cost_detail\` |
+| **Files** | 168 HTML files (`cost_detail_batch_001.html` - `_168.html`) |
+| **Size** | 559 MB |
+| **Content** | 33,428 work orders with full cost detail |
+| **Captured** | 2026-01-29 to 2026-01-30 |
+| **Method** | Print/View from KeyedIn ERP → Save HTML via browser |
+| **Dependencies** | VPN access to eaglesign.keyedinsign.com |
+| **Test Status** | VERIFIED — All 168 files parseable |
 
-**Root cause:** BeautifulSoup HTML parsing doesn't handle the MVI-generated HTML table structure correctly. Data cells are either empty or concatenated with labels.
-
-**What DOES work (manual):** The detailed cost summary CSV in `Benchmark/storage/-Audit-/2025/307-0267.../Cost Summaries DETAILED *.csv` has full data with all fields (Est Hrs, Act Hrs, Est Cost, Act Lab, Act Bur, Act Mat, Act Out, Job Cost, Var Cost, GM). This was manually exported from KeyedIn.
-
-**Next steps:**
-1. Test Report Option 'D' + Send To 'P' via the quote entry screen
-2. Fix BeautifulSoup selectors for `WO.STATUS.SUM` HTML tables
-3. Or: automate the manual export process with Playwright
-
----
-
-## Pipeline 6: Informer GWT-RPC Data Extraction
-
-| Status | **BROKEN — 0 records extracted** |
-|--------|--------------------------------|
-
-| Component | File Path | Status | Notes |
-|-----------|-----------|--------|-------|
-| Python extractor (complete) | `Keyedin/GWT Google Web Toolkit/keyedin_complete_extraction.py` | TESTED, PARTIAL | Auth works, getData fails |
-| Python extractor (enhanced) | `Keyedin/GWT Google Web Toolkit/keyedin_enhanced_extractor.py` | TESTED, PARTIAL | Same |
-| Python extractor (working) | `Keyedin/GWT Google Web Toolkit/keyedin_working_extractor.py` | TESTED, PARTIAL | Found 71 reports, 0 data |
-| Python extractor (general) | `Keyedin/GWT Google Web Toolkit/keyedin_data_extractor.py` | TESTED, PARTIAL | Same |
-| Python extractor (SQL) | `Keyedin/GWT Google Web Toolkit/keyedin_sql_extraction.py` | UNTESTED | SQL Server variant |
-| PowerShell master extractor | `Keyedin/GWT Google Web Toolkit/MASTER_EXTRACTOR.ps1` | TESTED, PARTIAL | Auth OK, data fail |
-| PowerShell test scripts (10) | `Keyedin/GWT Google Web Toolkit/test_*.ps1` | TESTED, FAILED | Various payload attempts |
-| Cookie extractor | `Keyedin/GWT Google Web Toolkit/extract_cookies.py` | TESTED, WORKING | Gets Informer cookies |
-| Session extractor | `Keyedin/GWT Google Web Toolkit/extract_keyedin_session.py` | TESTED, WORKING | Gets session tokens |
-| HAR capture | `Keyedin/GWT Google Web Toolkit/eaglesign.keyedinsign.com.har` | CAPTURED | Full Informer traffic |
-| Extraction summary | `Keyedin/GWT Google Web Toolkit/keyedin_extraction_*/extraction_summary.txt` | CAPTURED | 71 reports listed |
-| HAR auto-capture | `Keyedin/auto_capture_har.py` | TESTED, WORKING | Automated HAR capture |
-| Informer API capture | `Keyedin/capture_informer_api.py` | TESTED, PARTIAL | API call capture |
-| Informer finder | `Keyedin/find_informer.py` | TESTED, WORKING | Finds Informer portal |
-| BI report finder | `Keyedin/find_bi_reports.py` | TESTED, WORKING | Lists available reports |
-| Informer tester | `Keyedin/test_informer.py` | TESTED, PARTIAL | Tests Informer API |
-| Informer accessor | `Keyedin/access_informer.py` | TESTED, PARTIAL | Accesses Informer |
-
-**Root cause:** GWT-RPC uses a specific serialization format (`7|0|22|...`) with policy file hashes (`327E0F303D0CA463050DC31340CFE01D`). The `getData` payload must exactly match the server's expected format. All 10+ PowerShell test scripts tried different payload formats — all got 500 errors.
-
-**Next steps:**
-1. Capture a WORKING `getData` request from the browser using Chrome DevTools Network tab
-2. Replay that exact payload programmatically
-3. OR: Use Informer's built-in export/download buttons via Playwright automation
+**Scripts involved in capture**:
+| Script | Path | Status |
+|--------|------|--------|
+| `extract_wo_batches.py` | `C:\Scripts\keyedin-capture\` | WORKING — CDP-based batch extraction |
+| `cost_summary_automation.py` | `C:\Scripts\keyedin-capture\` | WORKING — Automated capture driver |
+| `fast_extract.py` | `C:\Scripts\keyedin-capture\` | WORKING — Optimized extraction |
+| `setup_credentials.py` | `C:\Scripts\keyedin-capture\` | WORKING — Credential setup |
+| `test_cdp.py` | `C:\Scripts\keyedin-capture\` | WORKING — CDP connectivity test |
+| `test_pipeline.py` | `C:\Scripts\keyedin-capture\` | WORKING — Pipeline smoke test |
+| `test_20wo.py` | `C:\Scripts\keyedin-capture\` | WORKING — Small batch test |
+| `test_200wo_debug.py` | `C:\Scripts\keyedin-capture\` | WORKING — Debug extraction |
+| `test_200wo_post.py` | `C:\Scripts\keyedin-capture\` | WORKING — POST verification |
 
 ---
 
-## Pipeline 7: MCP Server (Claude Integration)
+### 2. Phase 1 — HTML Parser
 
-| Status | **BUILT, NOT VALIDATED** |
-|--------|------------------------|
+| Attribute | Value |
+|-----------|-------|
+| **Status** | WORKING |
+| **Script** | `parse_full_cost_detail.py` |
+| **Locations** | `C:\Scripts\signx-warehouse\scripts\` AND `~\OneDrive\signx-warehouse\scripts\` |
+| **Lines** | 907 |
+| **Language** | Python 3.13 (BeautifulSoup + regex) |
+| **Input** | 168 HTML files from `C:\Scripts\keyedin-capture\reports\cost_detail\` |
+| **Output Dir** | `C:\Scripts\signx-warehouse\warehouse\raw\{timestamp}\` |
+| **Dependencies** | `beautifulsoup4`, `lxml` |
+| **Test Status** | VERIFIED — 1,253,042 rows extracted, 0 cross-validation mismatches |
 
-| Component | File Path | Status | Notes |
-|-----------|-----------|--------|-------|
-| Secure MCP server (v2) | `Keyedin/KEYEDIN MCP/keyedin_mcp_server_secure.py` | BUILT | 533 lines, 7 tools |
-| MCP validation | `Keyedin/KEYEDIN MCP/keyedin_mcp_validation.py` | BUILT | Validation tests |
-| MCP quick setup | `Keyedin/KEYEDIN MCP/keyedin_quick_setup.py` | BUILT | Setup script |
-| MCP test | `Keyedin/KEYEDIN MCP/keyedin_test_now2.py` | BUILT | Quick test |
-| V1 MCP server (broken) | `Keyedin/KEYEDIN MCP/v1/Broke V1 (CLAUDE 4)/keyedin_mcp_server.py` | FAILED | Labeled "Broke V1" |
-| V1 resilient agent | `Keyedin/KEYEDIN MCP/v1/Broke V1 (CLAUDE 4)/keyedin_resilient_agent.py` | FAILED | |
-| V1 deployment | `Keyedin/KEYEDIN MCP/v1/Broke V1 (CLAUDE 4)/Deploy-KeyedInAgent.ps1` | FAILED | |
-| V1 export test | `Keyedin/KEYEDIN MCP/v1/Broke V1 (CLAUDE 4)/test_export.py` | FAILED | |
+**Output files**:
+| File | Rows | Status |
+|------|------|--------|
+| `wo_headers.csv` | 33,428 | VERIFIED |
+| `labor_detail.csv` | 254,012 | VERIFIED |
+| `labor_summary.csv` | 161,377 | VERIFIED — includes EST HRS |
+| `material_detail.csv` | 780,868 | VERIFIED |
+| `outplant_detail.csv` | 23,352 | VERIFIED |
+| `manifest.json` | 1 | VERIFIED |
 
-**Next steps:** Test v2 MCP server from Brady's PC with active KeyedIn session.
-
----
-
-## Pipeline 8: Architecture Discovery
-
-| Status | **BUILT, PARTIALLY RUN** |
-|--------|------------------------|
-
-| Component | File Path | Status | Notes |
-|-----------|-----------|--------|-------|
-| Architecture mapper | `Keyedin/KEYEDIN MCP/discovery/keyedin_architecture_mapper.py` | BUILT | 669 lines, maps 18 sections |
-| Discovery analyzer | `Keyedin/KEYEDIN MCP/discovery/analyze_discovery.py` | BUILT | Analyzes discovery output |
-| Discovery runner | `Keyedin/KEYEDIN MCP/discovery/run_complete_discovery.py` | BUILT | Full discovery automation |
-| Discovery monitor | `Keyedin/KEYEDIN MCP/discovery/monitor_discovery.py` | BUILT | Progress monitoring |
-| Button finder | `Keyedin/KEYEDIN MCP/discovery/find_button.py` | BUILT | UI element discovery |
-| Report generators | `Keyedin/KEYEDIN MCP/discovery/report_generators.py` | BUILT | Generates discovery reports |
-| Test discovery | `Keyedin/KEYEDIN MCP/discovery/test_discovery.py` | BUILT | Tests discovery flow |
-| Login debug | `Keyedin/KEYEDIN MCP/discovery/test_login_debug.py` | BUILT | Login troubleshooting |
-| Investigator v5 | `Keyedin/KEYEDIN MCP/Test/keyedin_investigator_v5.py` | BUILT | Investigation tool |
-| Manual login mapper | `Keyedin/KEYEDIN MCP/Test/keyedin_manual_login_mapper.py` | BUILT | Maps login flow |
-| KeyedIn module | `Keyedin/KEYEDIN MCP/Test/keyedin.py` | BUILT | Core module |
-| Discovery data (HTML) | `Keyedin/..KeyedIn_System_Map/discovery_data/html_captures/` | CAPTURED | Home page HTML |
-
-**Next steps:** Run full architecture discovery from VPN-connected PC.
+**Extraction runs** (all from 2026-01-30):
+| Timestamp | Status | Notes |
+|-----------|--------|-------|
+| T1011 | Complete | First run |
+| T1026 | Complete | Primary extraction (used for warehouse build) |
+| T1107 | Complete | Phase 4 local files |
+| T1131, T1133, T1135, T1138, T1150, T1153, T1157, T1342 | Complete | Iterative refinement runs |
 
 ---
 
-## Pipeline 9: Login Flow Investigation
+### 3. Informer BI Capture
 
-| Status | **COMPLETED** |
-|--------|--------------|
+| Attribute | Value |
+|-----------|-------|
+| **Status** | WORKING (capture complete, replay untested) |
+| **Capture Location** | `C:\Scripts\keyedin-capture\reports\` |
+| **Reports Captured** | 30/30 |
+| **Protocol** | GWT-RPC v7 (pipe-delimited) |
+| **Endpoint** | `https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ViewRPCService` |
+| **Session Doc** | `C:\Scripts\keyedin-capture\SESSION_HANDOFF.md` |
+| **Dependencies** | VPN + active Informer session cookie |
+| **Test Status** | CAPTURE VERIFIED, REPLAY UNTESTED |
 
-| Component | File Path | Status | Notes |
-|-----------|-----------|--------|-------|
-| Login flow investigator | `Keyedin/investigate_login_flow.py` | COMPLETED | Full login flow mapped |
-| Login investigator | `Keyedin/investigate_login.py` | COMPLETED | Login page analysis |
-| Login page finder | `Keyedin/find_actual_login.py` | COMPLETED | Actual login URL found |
-| Corrected login | `Keyedin/corrected_login.py` | COMPLETED | Fixed login script |
-| Selenium login | `Keyedin/selenium_login.py` | COMPLETED | Selenium-based login |
-| Selenium entry | `Keyedin/selenium_enter.py` | COMPLETED | Form entry automation |
-| Selenium fixed | `Keyedin/selenium_fixed.py` | COMPLETED | Fixed Selenium version |
-| Manual submit | `Keyedin/manual_submit.py` | COMPLETED | Manual form submission |
-| Simple capture | `Keyedin/simple_capture.py` | COMPLETED | Simple session capture |
-| Auto login capture | `Keyedin/auto_login_capture.py` | COMPLETED | Automated login capture |
-| Form debugger | `Keyedin/debug_form.py` | COMPLETED | Form field debugging |
-| Login page HTML | `Keyedin/login_page.html` | CAPTURED | |
-| Login start HTML | `Keyedin/login_start_page.html` | CAPTURED | |
-| Actual login HTML | `Keyedin/actual_login_page.html` | CAPTURED | |
-| Login success HTML | `Keyedin/login_success.html` | CAPTURED | |
-| Logged-in HTML | `Keyedin/logged_in_page.html` | CAPTURED | |
-| After login HTML | `Keyedin/after_login.html` | CAPTURED | |
-| Chrome logged-in HTML | `Keyedin/chrome_logged_in.html` | CAPTURED | |
-| Main page HTML | `Keyedin/MAIN.html` | CAPTURED | |
+**Capture assets**:
+| File Pattern | Count | Status |
+|-------------|-------|--------|
+| `report_*_view_request.txt` | 30 | VERIFIED |
+| `report_*_view_response.txt` | varies | PARTIAL |
+| `report_*_cmd_request.txt` | varies | PARTIAL |
+| `raw_captures.json` | 1 | VERIFIED |
 
-**Conclusion:** Login is direct POST to `https://eaglesign.keyedinsign.com` with `USERNAME`, `PASSWORD`, `SECURE` fields. Returns 5 cookies.
+**Replay/automation scripts**:
+| Script | Path | Status |
+|--------|------|--------|
+| `scrape_informer.py` | `C:\Scripts\signx-warehouse\scripts\` | EXISTS — untested end-to-end |
+| `capture_all_reports.py` | `C:\Scripts\signx-warehouse\scripts\` | EXISTS — untested |
+| `split_captures.py` | `C:\Scripts\signx-warehouse\scripts\` | WORKING — splits raw_captures.json |
+| `capture_hook.js` | `C:\Scripts\signx-warehouse\scripts\` (claimed) | NOT VERIFIED |
 
----
-
-## Pipeline 10: Live Test Suite
-
-| Status | **BUILT, NOT RUN** |
-|--------|-------------------|
-
-| Component | File Path | Status | Notes |
-|-----------|-----------|--------|-------|
-| All-in-one test script | `recon-results/run_all_tests.py` | BUILT | Zero-dependency, 5 tests |
-| Network location test | `recon-results/01-network-location.md` | BLOCKED | Needs VPN |
-| Test results template | `RECON-TEST-RESULTS.md` | CREATED | Awaiting live results |
-
-**Tests included:**
-1. DNS resolution + network path analysis
-2. Direct POST authentication
-3. 6 export endpoint tests
-4. Informer BI SSO probe
-5. Quote entry read test
-
-**Next steps:** Brady runs `python run_all_tests.py --username BRADYF --quote 39430` from VPN-connected PC.
+**GWT Protocol tooling**:
+| Script | Path | Status |
+|--------|------|--------|
+| `gwt_parser.py` | `C:\Scripts\signx-warehouse\scripts\` | EXISTS |
+| `gwt_deserialize.py` | `C:\Scripts\signx-warehouse\scripts\` | EXISTS |
+| `gwt_analyze.py` | `C:\Scripts\signx-warehouse\scripts\` | EXISTS |
+| `gwt_dump_rows.py` | `C:\Scripts\signx-warehouse\scripts\` | EXISTS |
 
 ---
 
-## Pipeline 11: Benchmark Cost Analysis
+### 4. Phase 4 — Local File Ingestion
 
-| Status | **DATA PRESENT, MANUALLY SOURCED** |
-|--------|-----------------------------------|
+| Attribute | Value |
+|-----------|-------|
+| **Status** | WORKING |
+| **Script** | `ingest_local_files.py` |
+| **Locations** | `C:\Scripts\signx-warehouse\scripts\` AND `~\OneDrive\signx-warehouse\scripts\` |
+| **Input Sources** | Excel/CSV files from `H:\brady\BOT TRAINING\` and OneDrive |
+| **Output Dir** | `C:\Scripts\signx-warehouse\warehouse\raw\{timestamp}\` |
+| **Dependencies** | `pandas`, `openpyxl` |
+| **Test Status** | VERIFIED — Multiple file types ingested |
 
-| Component | File Path | Status | Notes |
-|-----------|-----------|--------|-------|
-| Cost history (Part 209-0385) | `Benchmark/storage/-Audit-/2025/209-0385.../Cost History/Group 1.txt` | DATA PRESENT | 30 WOs incl 68441-68414 |
-| Cost summary CSV (Part 307-0267) | `Benchmark/storage/-Audit-/2025/307-0267.../Cost Summaries DETAILED *.csv` | DATA PRESENT | Full detail with all cost fields |
-| Cost summary PDFs (12+ parts) | `Benchmark/storage/-Audit-/2025/*/Cost Summary/*.pdf` | DATA PRESENT | PDF format |
-| Cost history TXT (12+ parts) | `Benchmark/storage/-Audit-/2025/*/Cost History/Group *.txt` | DATA PRESENT | WO number listings |
-| Audit prompt | `Benchmark/storage/-Audit-/2025/AuditPrompt.txt` | PRESENT | Analysis instructions |
-| Cost history format prompt | `Benchmark/storage/-Audit-/2025/CostHistoryFormatPrompt.txt` | PRESENT | Data format spec |
-| Cost history prompt | `Benchmark/storage/-Audit-/2025/CostHistoryPrompt.txt` | PRESENT | Analysis prompt |
-| Complete analysis reports | `Benchmark/storage/-Audit-/2025/*_complete_analysis.txt` | PRESENT | AI-generated analyses |
-| Master cost summaries PDF | `Benchmark/storage/-Audit-/2025/2025 Cost Summaries By Part Number.pdf` | PRESENT | All parts combined |
-
-**Key data:** This is the ONLY source of properly formatted, field-complete cost summary data. All programmatic extraction attempts failed to capture the same level of detail.
-
----
-
-## Summary
-
-| Pipeline | Components | Tested | Working | Broken | Untested |
-|----------|-----------|--------|---------|--------|----------|
-| 1. Auth (Main) | 8 | 6 | 6 | 0 | 2 |
-| 2. Auth (Informer) | 6 | 4 | 4 | 0 | 2 |
-| 3. Endpoint Discovery | 5 | 5 | 5 | 0 | 0 |
-| 4. CGI/MVI Read | 18 | 16 | 15 | 1 | 2 |
-| 5. Cost Summary | 7 | 5 | 0 | 5 | 2 |
-| 6. Informer GWT-RPC | 18 | 14 | 6 | 8 | 4 |
-| 7. MCP Server | 8 | 0 | 0 | 4 | 4 |
-| 8. Architecture Discovery | 12 | 0 | 0 | 0 | 12 |
-| 9. Login Investigation | 19 | 19 | 19 | 0 | 0 |
-| 10. Live Test Suite | 3 | 0 | 0 | 0 | 3 |
-| 11. Benchmark Cost | 9 | N/A | N/A | N/A | N/A |
-| **TOTALS** | **113** | **69** | **55** | **18** | **31** |
-
-**81 Python scripts + 12 PowerShell scripts = 93 total automation scripts**
+**Known local data sources ingested**:
+| Source File | Table | Rows | Trust Tier |
+|-------------|-------|------|------------|
+| `H:\brady\BOT TRAINING\Cat Scale\*.xlsx` | labor_forensics | 53,380 | 4 (local) |
+| `BRADYF_STOCK.STATUS.xlsx` | inventory | 1,062 | 4 (local) |
+| Various shop efficiency exports | shop_efficiency | 44 | 4 (local) |
+| Labor multiplier tables | labor_multipliers | 42 | 4 (local) |
+| GM by salesperson exports | gm_by_salesperson | 4,298 | 4 (local) |
 
 ---
 
-*Component inventory complete. Every file path verified via repo scan.*
+### 5. Phase 5 — Warehouse Builder
+
+| Attribute | Value |
+|-----------|-------|
+| **Status** | WORKING |
+| **Script** | `build_warehouse.py` |
+| **Locations** | `C:\Scripts\signx-warehouse\scripts\` AND `~\OneDrive\signx-warehouse\scripts\` |
+| **Lines** | 1,034 |
+| **Output** | `C:\Scripts\signx-warehouse\warehouse\production\eagle_warehouse.db` |
+| **DB Size** | 211 MB |
+| **Tables** | 17 |
+| **Total Rows** | 1,376,130 |
+| **Built** | 2026-01-30T11:10:07 |
+| **Dependencies** | Python stdlib `sqlite3` |
+| **Test Status** | VERIFIED — manifest.json confirms all counts |
+
+**Table inventory**:
+| Table | Rows | Source Phase | Status |
+|-------|------|-------------|--------|
+| work_orders | 33,428 | Phase 1 (HTML) | VERIFIED |
+| labor_detail | 254,012 | Phase 1 (HTML) | VERIFIED |
+| labor_summary | 161,377 | Phase 1 (HTML) | VERIFIED |
+| material_transactions | 780,868 | Phase 1 (HTML) | VERIFIED |
+| outplant_transactions | 23,352 | Phase 1 (HTML) | VERIFIED |
+| invoices | 26,643 | Phase 4 (local) | VERIFIED |
+| inventory | 1,062 | Phase 4 (local) | VERIFIED |
+| purchase_orders | 5,974 | Phase 4 (local) | VERIFIED |
+| customers | 3,748 | Phase 4 (local) | VERIFIED |
+| sales_orders | 27,707 | Phase 4 (local) | VERIFIED |
+| employees | 95 | Derived | VERIFIED (18 active) |
+| ref_work_codes | 62 | Phase 4 (local) | VERIFIED |
+| ref_sign_types | 38 | Phase 4 (local) | VERIFIED |
+| shop_efficiency | 44 | Phase 4 (local) | VERIFIED |
+| labor_multipliers | 42 | Phase 4 (local) | VERIFIED |
+| labor_forensics | 53,380 | Phase 4 (local) | VERIFIED |
+| gm_by_salesperson | 4,298 | Phase 4 (local) | VERIFIED |
+
+---
+
+### 6. Phase 6 — Decision Engine
+
+| Attribute | Value |
+|-----------|-------|
+| **Status** | WORKING |
+| **Script** | `decision_engine.py` |
+| **Locations** | `C:\Scripts\signx-warehouse\scripts\` AND `~\OneDrive\signx-warehouse\scripts\` |
+| **Input** | `eagle_warehouse.db` |
+| **Output** | `warehouse\reports\decision_report_{timestamp}.md` |
+| **Dependencies** | `sqlite3` |
+| **Test Status** | VERIFIED — Report generated 2026-01-30 |
+
+**Key findings from decision report**:
+| Metric | Value | Status |
+|--------|-------|--------|
+| Dead stock value | $241,701.53 | CONFIRMED |
+| Labor overestimation | 50-56% across all estimators | CONFIRMED |
+| Average true margin | 8.6% | CONFIRMED |
+| Top customer (Cat Scale) | $28.96M revenue, 2,619 WOs | CONFIRMED |
+| Win/loss analysis | BLOCKED — no quote data | CONFIRMED GAP |
+
+---
+
+### 7. KeyedIn Knowledge MCP Server
+
+| Attribute | Value |
+|-----------|-------|
+| **Status** | WORKING (when loaded) |
+| **Main Script** | `keyedin.py` |
+| **Location** | `C:\Scripts\keyedin-automation\` |
+| **Framework** | FastMCP 2.14.3 |
+| **Vector DB** | ChromaDB (384-dim, sentence-transformers/all-MiniLM-L6-v2) |
+| **Documents** | 1,141 indexed (129 functions, 4 workflows, 1,008 filesystem paths) |
+| **Tools** | 8 (search_knowledge, get_workflow, list_workflows, get_url_pattern, get_page_map, get_field_info, find_project, get_navigation_path) |
+| **Dependencies** | `fastmcp`, `chromadb`, `sentence-transformers` |
+| **Test Status** | VERIFIED — tools functional when server running |
+| **Currently Connected** | NO (not in active MCP config) |
+
+**Supporting scripts**:
+| Script | Purpose | Status |
+|--------|---------|--------|
+| `scripts/init_database.py` | Initialize SQLite | WORKING |
+| `scripts/init_chromadb.py` | Initialize vector store | WORKING |
+| `scripts/discover_filesystem.py` | Scan filesystem for paths | WORKING |
+| `scripts/ingest.py` | Ingest documents into collections | WORKING |
+| `scripts/verify_knowledge_base.py` | Validate knowledge base | WORKING |
+| `scripts/test_tools_directly.py` | Direct tool testing | WORKING |
+
+---
+
+### 8. Supplementary Analysis Scripts (keyedin-capture/reports/)
+
+| Script | Purpose | Status |
+|--------|---------|--------|
+| `generate_benchmarks.py` | Performance benchmarking | EXISTS — untested |
+| `audit_script.py` | Data audit | EXISTS — untested |
+| `run_audit.py` | Run audit pipeline | EXISTS — untested |
+| `build_abc_update.py` | ABC classification | EXISTS — untested |
+| `build_abc_update_v2.py` | ABC v2 | EXISTS — untested |
+| `labor_query.py` | Labor SQL queries | EXISTS — untested |
+| `labor_query_test.py` | Labor query tests | EXISTS — untested |
+| `parse_descriptions.py` | WO description parsing | EXISTS — untested |
+| `parse_gm_salesperson.py` | GM by salesperson | EXISTS — untested |
+| `build_master_dataset.py` | Master dataset builder | EXISTS — untested |
+| `eagle_insights.py` | Insight generation | EXISTS — untested |
+| `test_parse_reports.py` | Parser tests | EXISTS — untested |
+| `parse_reports.py` | Generic report parser | EXISTS — untested |
+
+---
+
+### 9. Site Map & Discovery
+
+| Attribute | Value |
+|-----------|-------|
+| **Status** | COMPLETE (static snapshot) |
+| **File** | `C:\Scripts\keyedin-automation\discovery\keyedin\keyedin_site_map.json` |
+| **Functions Mapped** | 288 |
+| **Captured** | 2025-05-22 via Puppeteer |
+| **Sections** | FAVORITES, CRM, PROJECT_MANAGEMENT, SALES_AND_AR, PURCHASING_AND_AP, INVENTORY, WORK_ORDERS, MISC, UTILITIES, GL, ADMIN |
+| **Network Analysis** | `C:\Scripts\keyedin-automation\discovery\keyedin\network_analysis_report.md` |
+| **Test Status** | VERIFIED — JSON parseable, 288 entries confirmed |
+
+---
+
+### 10. SignX Repository (KeyedIn Integration Code)
+
+| Attribute | Value |
+|-----------|-------|
+| **Status** | PARTIAL (early prototype) |
+| **Repo** | `C:\Users\Brady.EAGLE\Desktop\SignX` |
+| **Branch** | `origin/claude/signx-platform-setup-011CUyNrHbNEXBgpFqWgJYSZ` |
+| **Key Files** | `keyedin/connection.ts`, `keyedin/types.ts`, `keyedin/scraper.ts` |
+| **Integration Doc** | `docs/integrations/keyedin-crm.md` |
+| **Test Status** | NOT TESTED — early TypeScript stubs, no tests written |
+| **Dependencies** | Network access to KeyedIn (blocked without VPN) |
+
+---
+
+### 11. Downloads Archive (`~/Downloads/SignX-main/SignX-main/Keyedin/`)
+
+| Attribute | Value |
+|-----------|-------|
+| **Status** | ARCHIVE (historical, 2025-11-12 session) |
+| **Size** | 36 MB |
+| **Scripts** | 81 Python files |
+| **Data Files** | 95 JSON + 41 HTML + CSV exports |
+| **Actual Extracted Data** | YES — 50 WO cost summaries, 33,080-row WO history CSV |
+| **Test Status** | HISTORICAL — scripts may need updating for current env |
+
+Key data assets:
+| File | Rows/Size | Status |
+|------|-----------|--------|
+| `Closed WO 11-1-00 to 10-31-25.csv` | 33,080 rows, 6 MB | EXISTS |
+| `all_detailed_cost_summaries_20251112.json` | 50 WOs, 350 tables | EXISTS |
+| `complete_endpoint_map.json` | 50+ endpoints, 61 KB | EXISTS |
+| `DATA_EXTRACTION_GUIDE.md` | 14 endpoints, 93% success | EXISTS |
+
+Key scripts:
+| Script | Size | Purpose | Status |
+|--------|------|---------|--------|
+| `keyedin_api_enhanced.py` | 24 KB | CDP API with session auto-refresh | UNTESTED (current env) |
+| `extract_everything_complete.py` | 22 KB | Full extraction pipeline | UNTESTED |
+| `map_all_endpoints.py` | 18 KB | Endpoint discovery | UNTESTED |
+| `keyedin_cdp_extractor.py` | 16 KB | CDP cookie extractor | UNTESTED |
+
+---
+
+### 12. Keyedin Mapping API MCP (`C:\Scripts\Keyedin Mapping API MCP\`)
+
+| Attribute | Value |
+|-----------|-------|
+| **Status** | PRODUCTION-READY (inactive) |
+| **Size** | 1.5 GB |
+| **Architecture** | MCP server + Electron desktop app + API server |
+| **API Server** | `127.0.0.1:8765` |
+| **Chrome Debug Port** | 9222 |
+| **Extractors** | Quote, cost, inventory, search + CSV stream parser |
+| **Features** | Multi-session pool, cache with offline mode, session managers |
+| **Desktop Config** | `AppData\Local\KeyedIn Desktop\config.json` |
+| **Test Status** | EXISTS but not currently connected to Claude Code |
+| **Last Activity** | 2026-01-09 (per log timestamps) |
+
+---
+
+### 13. Additional KeyedIn Repositories
+
+| Path | Size | Status |
+|------|------|--------|
+| `C:\Scripts\keyedin-mcp\` | 109 MB | EXISTS — earlier MCP version |
+| `C:\Scripts\keyedin-extraction\` | 43 KB | EXISTS — lightweight utils |
+
+---
+
+## Aggregate Status Summary
+
+| Category | Total | Working | Untested | Broken | N/A |
+|----------|-------|---------|----------|--------|-----|
+| **Capture scripts** | 9 | 9 | 0 | 0 | 0 |
+| **Phase 1 (HTML parse)** | 1 | 1 | 0 | 0 | 0 |
+| **Informer capture** | 30 reports | 30 | 0 | 0 | 0 |
+| **Informer replay** | 4 scripts | 0 | 4 | 0 | 0 |
+| **GWT tooling** | 4 scripts | 0 | 4 | 0 | 0 |
+| **Phase 4 (local ingest)** | 1 | 1 | 0 | 0 | 0 |
+| **Phase 5 (warehouse)** | 1 | 1 | 0 | 0 | 0 |
+| **Phase 6 (decision)** | 1 | 1 | 0 | 0 | 0 |
+| **MCP Knowledge Server** | 7 scripts | 7 | 0 | 0 | 0 |
+| **Analysis scripts** | 13 | 0 | 13 | 0 | 0 |
+| **Site map/discovery** | 2 files | 2 | 0 | 0 | 0 |
+| **SignX integration** | 3 files | 0 | 3 | 0 | 0 |
+| **Downloads archive** | 81 scripts + data | 0 | 81 | 0 | 0 |
+| **Mapping API MCP** | 1 system | 0 | 1 | 0 | 0 |
+| **Other repos (keyedin-mcp, extraction)** | 2 | 0 | 2 | 0 | 0 |
+| **TOTALS** | **160+** | **52** | **108** | **0** | **0** |
+
+---
+
+## Data Artifacts
+
+| Artifact | Location | Size | Status |
+|----------|----------|------|--------|
+| 168 HTML batch files | `C:\Scripts\keyedin-capture\reports\cost_detail\` | 559 MB | EXISTS |
+| 30 Informer payloads | `C:\Scripts\keyedin-capture\reports\` | ~5 MB | EXISTS |
+| Raw CSVs (11 runs) | `C:\Scripts\signx-warehouse\warehouse\raw\` | ~200 MB | EXISTS |
+| SQLite warehouse | `C:\Scripts\signx-warehouse\warehouse\production\eagle_warehouse.db` | 211 MB | EXISTS |
+| Decision report | `~\OneDrive\signx-warehouse\warehouse\reports\` | ~50 KB | EXISTS |
+| Site map JSON | `C:\Scripts\keyedin-automation\discovery\keyedin\keyedin_site_map.json` | ~100 KB | EXISTS |
+| ChromaDB vectors | `C:\Scripts\keyedin-automation\` (embedded) | ~50 MB | EXISTS |
+| OneDrive mirror | `~\OneDrive - Eagle Sign Co\signx-warehouse\` | 742 MB | EXISTS |
+| Local scripts mirror | `C:\Scripts\signx-warehouse\` | ~300 MB | EXISTS |
+
+**Total data footprint**: ~2.2 GB across all locations
+
+---
+
+## Known Gaps & Blockers
+
+| Gap | Impact | Severity | Mitigation |
+|-----|--------|----------|------------|
+| No quote/estimating data | Cannot do win/loss analysis | HIGH | Requires Main ERP capture (Quote module) |
+| Informer replay untested | Can't refresh BI data automatically | MEDIUM | Test `scrape_informer.py` with valid session |
+| GWT tools untested | Can't decode Informer responses | MEDIUM | Test `gwt_parser.py` against captured responses |
+| 13 analysis scripts untested | Unknown utility | LOW | Audit each for usefulness |
+| SignX integration stubs | No live ERP connection | LOW | Blocked by VPN/proxy |
+| No AP/GL data captured | Incomplete financial picture | MEDIUM | Requires Main ERP capture |
+| No vendor detail | Missing supply chain data | LOW | Available in Informer (vendor_listing captured) |
+| Warehouse is static snapshot | Data from 2026-01-30 only | HIGH | Need automated refresh pipeline |
+
+---
+
+## Recommended Next Steps (Priority Order)
+
+1. **Test Informer replay** — Run `scrape_informer.py` with fresh session to verify automated data refresh works
+2. **Capture Main ERP modules** — Log into `mvi.exe`, capture Quotes, GL, AP data using Print/View method
+3. **Test GWT tooling** — Verify `gwt_parser.py` can decode response payloads into usable data
+4. **Audit analysis scripts** — Run each of the 13 scripts in `keyedin-capture/reports/` to determine usefulness
+5. **Build refresh pipeline** — Automate: login → capture → parse → build → report cycle
+6. **Integrate Informer data** — Feed decoded Informer CSV data into warehouse as trust tier 2

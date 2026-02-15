@@ -1,296 +1,407 @@
-# KeyedIn Complete Intelligence Report
+# KeyedIn Complete Intelligence Audit
 
-**Compiled:** 2026-02-14
-**Method:** Exhaustive search of entire `/home/user/SignX` repo — all branches, all directories, all file types
-**Scope:** Every reference to KeyedIn, SignX-Warehouse, cost summary pipeline, Informer BI, GWT-RPC, and integration attempts
-
----
-
-## Table of Contents
-
-1. [System Architecture](#1-system-architecture)
-2. [Data Inventory](#2-data-inventory)
-3. [Pipeline Components](#3-pipeline-components)
-4. [Extraction Attempts History](#4-extraction-attempts-history)
-5. [Known Data Gaps](#5-known-data-gaps)
-6. [API & Endpoint Map](#6-api--endpoint-map)
-7. [Immediate Opportunities (Ranked)](#7-immediate-opportunities-ranked)
-8. [Blockers & Unknowns](#8-blockers--unknowns)
+**Generated**: 2026-02-14
+**Auditor**: Claude Opus 4.6 — full repo + filesystem scan
+**Scope**: SignX repo (all branches) + C:\Scripts\keyedin-automation + C:\Scripts\keyedin-capture + signx-warehouse (OneDrive) + all external locations
 
 ---
 
 ## 1. System Architecture
 
-### Identity
-
-| Field | Value | Source |
-|-------|-------|--------|
-| Product | KeyedIn Sign v2.1 | Error messages in extracted HTML |
-| MVI Version | 3.0 | Error response from invalid endpoint |
-| Tenant ID | `eaglesign` | URL path component |
-| Primary User | `BRADYF` (Brady F.) | Session cookies, menu requests |
-| Email | `brady@eaglesign.net` | Script references |
-| Product Lineage | DataSIGN (2006) → KeyedIn Sign → KIMCO ERP (2023+) | Web research |
-
-### Network Architecture
-
-```
-Browser (Chrome)
-    │
-    ├── Port 80/443 ──→ IIS / ASP.NET ──→ mvi.exe (CGI) ──→ MultiValue/Pick DB
-    │                   (web server)       (MV Interface 3.0)  (engine unknown)
-    │
-    └── Port 8443 ───→ Informer BI ──→ GWT-RPC Service ──→ Same DB (via SSO)
-                       (Entrinsik 5.x)   (ViewRPCService)
-```
-
-### Technology Stack
+### Confirmed Tech Stack (with evidence)
 
 | Layer | Technology | Evidence |
 |-------|-----------|----------|
-| Web Server | IIS + ASP.NET | `ASP.NET_SessionId` cookie |
-| CGI Gateway | `mvi.exe` v3.0 (MultiValue Interface) | All URLs: `/cgi-bin/mvi.exe/` |
-| Database | MultiValue/Pick (UniVerse, UniData, jBASE, or D3) | VOC file errors, ALLCAPS.DOT naming |
-| BI Platform | Entrinsik Informer 5.x | GWT class: `com.entrinsik.informer.*` |
-| BI Frontend | Google Web Toolkit (GWT) | `text/x-gwt-rpc` content type |
-| BI Transport | GWT-RPC binary protocol | Captured payloads |
-| Auth (Main) | Direct POST with USERNAME/PASSWORD/SECURE | Tested + validated |
-| Auth (BI) | SSO token from main app → JSESSIONID | `sso?u=BRADYF&t={token}` pattern |
+| **ERP Product** | KeyedIn Sign v2.1 (MVI 3.0) | Login page title, CGI headers |
+| **CGI Engine** | mvi.exe | All 288+ endpoint URLs use `/cgi-bin/mvi.exe/` |
+| **Database** | MultiValue/Pick | KIMCO contract PDF, DataSIGN heritage |
+| **BI Module** | Informer BI (GWT-RPC) | Port 8443, AngularJS SPA, GWT serialization |
+| **Web Server** | IIS (inferred) | HTTPS termination, CGI hosting |
+| **Hosting** | External (KIMCO/KeyedIn cloud) | eaglesign.keyedinsign.com resolves externally |
 
-### Key Evidence for MultiValue/Pick
+### All Known URLs
 
-1. `mvi.exe` = MultiValue Interface — standard web gateway for Pick databases
-2. VOC file reference: `"WO.COST.DETAIL is not defined in the VOC file."` — Pick concept
-3. ALLCAPS.DOT.SEPARATED naming (e.g., `WO.COST.SUMMARY`) — Pick convention
-4. `LOGIN.START` process name — Pick naming pattern
-5. ASP.NET_SessionId alongside custom SESSIONID — IIS hosting MVI CGI
+| URL | Purpose | Status |
+|-----|---------|--------|
+| `https://eaglesign.keyedinsign.com` | Main ERP login | CONFIRMED WORKING |
+| `https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/LOGIN.START` | CGI login entry | CONFIRMED WORKING |
+| `https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/{FUNCTION}` | All CGI endpoints | 288+ functions mapped |
+| `https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html` | Informer BI portal | CONFIRMED WORKING |
+| `https://eaglesign.keyedinsign.com:8443/eaglesign/sso` | Informer SSO | CONFIRMED WORKING |
+| `https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ViewRPCService` | GWT-RPC data endpoint | CONFIRMED WORKING |
+| `https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService` | GWT-RPC report endpoint | CONFIRMED (untested for automation) |
+| `https://eaglesign.keyedinsign.com:8443/graphicfx/` | GraphicFX tenant | CONFIRMED EXISTS |
+| `https://eaglesign.keyedinsign.com:8443/naglesigns/` | Nagle Signs tenant | CONFIRMED EXISTS |
 
-### Server Names Found in Repo
+### Authentication Methods
 
-- `ES-FS02` — File server
-- `ES-DC03` — Domain controller
-- `ES-SecSer02` — Security server
-- All on Eagle Sign's internal network
+| Method | System | Status | Evidence |
+|--------|--------|--------|----------|
+| Direct POST login | Main ERP | WORKING | `USERNAME=BradyF&PASSWORD=***&SECURE=TRUE` to base URL |
+| Session cookies | Main ERP | WORKING | SESSIONID, ASP.NET_SessionId, user, secure, IMPERSONATE |
+| Google SSO | Informer BI | BLOCKED | Bot detection encountered (SESSION_SUMMARY.md) |
+| Informer SSO pass-through | Informer BI | WORKING | `/eaglesign/sso` returns authToken + clientId |
+| authToken + clientId | Informer RPC | WORKING | Query params on RPC calls, GUID format |
 
-### CRITICAL: Legacy vs KIMCO
+### Network Topology
 
-Eagle Sign runs the **legacy** KeyedIn Sign v2.1 (CGI/MVI/Pick). This is NOT:
-- KIMCO ERP (the new .NET 5/Azure SQL/Azure platform)
-- KeyedIn PPM (project portfolio management, acquired by Sciforma)
-
-KIMCO is the upgrade path with modern APIs. Eagle Sign has NOT migrated.
+- Hosted externally by KIMCO/KeyedIn (not on-premises)
+- Requires Eagle Sign VPN for access (Cisco AnyConnect)
+- Main ERP on port 443 (HTTPS)
+- Informer BI on port 8443 (HTTPS)
+- No direct database access available
+- No REST API available (CGI only)
 
 ---
 
 ## 2. Data Inventory
 
-### 2A. KeyedIn API Extractions (`Keyedin/` — 35 MB)
+### A. SQLite Warehouse Database [CONFIRMED - FILE EXISTS]
 
-| File | Content | Records | Date |
-|------|---------|---------|------|
-| `WEB.MENU.json` | 262 endpoint menu structure | 262 endpoints | 2025-11-12 |
-| `endpoint_map.json` | Categorized endpoint listing | 262 | 2025-11-12 |
-| `complete_endpoint_map.json` | Full endpoint details | 262 | 2025-11-12 |
-| `keyedin_session.json` | 5 session cookies | 5 cookies | 2025-11-12 |
-| `keyedin_chrome_session.json` | Chrome-extracted session | — | 2025-11-12 |
-| `keyedin_chrome_session_network.json` | Network capture (8 requests) | 8 | 2025-11-12 |
-| `keyedin_network_capture.json` | Network traffic capture | — | 2025-11-12 |
-| `captured_all_requests.json` | All HTTP requests | — | 2025-11-12 |
-| `extracted_data/extracted_data_*.json` | Menu + endpoint data | — | 2025-11-12 |
-| `extracted_data/menu_*.json` | Menu structure | — | 2025-11-12 |
-| `extracted_data/work_orders_*.json` | WO form data | — | 2025-11-12 |
-| `wo_query_results.json` | WO query results | — | 2025-11-12 |
-| `informer_portal_urls.json` | Informer SSO URLs | — | 2025-11-12 |
+| Property | Value |
+|----------|-------|
+| **Path** | `C:\Scripts\signx-warehouse\warehouse\production\eagle_warehouse.db` |
+| **Size** | 211 MB |
+| **Built** | 2026-01-30T11:10:07 |
+| **Total Rows** | **1,376,130** |
+| **Total Tables** | **17** |
 
-### 2B. Cost Summary Extractions (`Keyedin/cost_summaries/` — 528 KB)
+#### Table Row Counts
 
-| File | WOs Queried | Data Rows | Status |
-|------|------------|-----------|--------|
-| `all_cost_summaries_20251112_180327.json` | Multiple | Headers only, 0 data rows | PARTIAL |
-| `all_cost_summaries_20251112_180352.json` | Multiple | Headers only, 0 data rows | PARTIAL |
-| `all_cost_summaries_so_contract_20251112_181318.json` | 10 SOs | 10 tables, ALL 0 rows | FAILED |
-| `all_detailed_cost_summaries_20251112_180422.json` | Multiple | — | PARTIAL |
-| `all_detailed_cost_summaries_20251112_181028.json` | Multiple | — | PARTIAL |
-| `individual_summaries/` (52 files) | WO 8343-8392 + 2 others | Headers + partial row data | PARTIAL |
+| Table | Rows | Source Phase |
+|-------|------|-------------|
+| work_orders | 33,428 | Phase 1 (HTML parse) |
+| labor_detail | 254,012 | Phase 1 |
+| labor_summary | 161,377 | Phase 1 |
+| material_transactions | 780,868 | Phase 1 |
+| outplant_transactions | 23,352 | Phase 1 |
+| invoices | 26,643 | Phase 4 (local files) |
+| inventory | 1,062 | Phase 4 |
+| purchase_orders | 5,974 | Phase 4 |
+| customers | 3,748 | Phase 4 |
+| sales_orders | 27,707 | Phase 4 |
+| ref_work_codes | 62 | Phase 4 |
+| ref_sign_types | 38 | Phase 4 |
+| shop_efficiency | 44 | Phase 4 |
+| labor_multipliers | 42 | Phase 4 |
+| labor_forensics | 53,380 | Phase 4 |
+| gm_by_salesperson | 4,298 | Phase 4 |
+| employees | 95 | Derived |
 
-**Key finding:** Individual WO summaries via `WO.STATUS.SUM?WONO={#}` returned some row data (table headers and field labels) but BeautifulSoup parsing didn't capture the actual cost values cleanly. The `SO.CONTRACT.RUN` approach returned 0 data rows.
+#### Validation Results
 
-### 2C. Informer BI Extractions (`Keyedin/GWT Google Web Toolkit/`)
+- Work orders: 33,428 unique
+- WOs with labor data: 28,829 (86.3%)
+- WOs with estimator: 12,285 (36.8%)
+- Employees: 95 total, 18 active (last 180 days)
+- Source tiers: all tier 3 (HTML reparse) for work_orders
 
-| File | Content | Status |
-|------|---------|--------|
-| `extraction_summary.txt` | 71 reports discovered | SUCCESS |
-| `keyedin_session.json` | JSESSIONID, authToken, clientId | SUCCESS |
-| `eaglesign.keyedinsign.com.har` | Full HAR capture | SUCCESS |
-| `session_cookies.json` | Informer cookies | SUCCESS |
-| GWT-RPC data extraction | 14 reports attempted, 0 records | FAILED |
+### B. HTML Source Files [CONFIRMED - FILES EXIST]
 
-### 2D. CSV Data Exports from KeyedIn (`Keyedin/Data Exports/` + `Eagle Data/`)
+| Property | Value |
+|----------|-------|
+| **Path** | `C:\Scripts\keyedin-capture\reports\cost_detail\` |
+| **File Count** | 168 HTML batch files |
+| **Naming** | `cost_detail_batch_001.html` through `_168.html` |
+| **Total Directory Size** | 559 MB |
+| **Content** | Complete Cost Summary Detail reports for ALL work orders |
+| **WO Range** | WO#1 (2012) through ~WO#70000+ (2026) |
+| **Parsing Status** | FULLY PARSED into CSVs on 2026-01-30 |
 
-| File | Content | Size | Records |
-|------|---------|------|---------|
-| `Closed WO 11-1-00 to 10-31-25.csv` | 25 years of closed WOs | 5.8 MB | ~33,080 |
-| `BRADYF.WIP.SUMMARY 010106-062725.csv` | WIP summary 2006-2025 | Large | 19 years |
-| `Sales Order Numbers by Customer 01012006-07182025.csv` | All SOs 2006-2025 | Large | 19 years |
-| `Closed Sales Order Status by Customer.csv` | Closed SOs by customer | — | — |
-| `Sales Summary - by Customer.csv` | Sales summary | — | — |
-| `Vendor Listing.csv` | All vendors | — | — |
-| `GM by Salesperson/*.CSV` | GM by salesperson reports | — | — |
-| `SIGN_TYPE_CODES.csv` | 39 sign type codes | Small | 39 |
-| `Work Codes and Pricing.csv` | 50+ work codes, 10 departments | Small | 50+ |
-| `EMPLOYEE_HOURS_BY_WORK_CODE 01012006_05092025.csv` | Employee × work code matrix | Large | All employees |
-| `Inventory List.csv` | Part Nbr, Description, Qty, Prices | — | — |
+**CORRECTION**: Prior sessions referenced "402MB HTML files" — actual directory size is **559MB**.
 
-**These CSVs are the richest data source in the repo.** They were manually exported from KeyedIn's built-in export features.
+### C. Parsed CSV Data [CONFIRMED - FILES EXIST]
 
-### 2E. Benchmark/Audit Cost Data (`Benchmark/storage/` — 571 KB)
+**Path**: `~/OneDrive - Eagle Sign Co/signx-warehouse/warehouse/raw/`
 
-| Part Number | Description | Groups | WOs | Format |
-|-------------|-------------|--------|-----|--------|
-| 209-0385 | 5x20 Replacement Faces | 1 | 30 (incl WO 68441, 68417, 68416, 68415, 68414) | TXT + PDF + XLSX |
-| 210-0180 | Guaranteed Faces | 1 | — | TXT + PDF |
-| 210-0190 | Instruction Faces | 1 | — | TXT + PDF |
-| 221-0190 | Intercom Sign | 5 | — | TXT + PDF |
-| 221-0200 | Standard 5x20 Sign | 6 | — | TXT + PDF |
-| 221-0210 | High Wind 5x20 Sign | 1 | — | TXT + PDF |
-| 221-0220 | Hurricane 5x20 Sign | 1 | — | TXT + PDF |
-| 221-0300 | Standard Poles | 4 | — | TXT + PDF |
-| 221-0320 | High Wind Poles | 1 | — | TXT |
-| 221-0330 | Hurricane Poles | 1 | — | TXT |
-| 307-0267 | 5x20 NRG LED Conversion Kits | 1 | 5 (WO 68305, 68333, 68341, 68357, 68377) | TXT + PDF + CSV |
-| 307-0268 | Intercom Sign NRG LED Conversion Kit | 1 | — | TXT + PDF |
+#### Extraction Runs (2026-01-30)
 
-**Detailed Cost Summary CSV fields (confirmed in `307-0267` CSV):**
-- Work Order, Cost Type, Date, Work Dept, Work Code, Seq
-- Emp/Part/Item, U/M
-- **Est Hrs, Act Hrs, Var Hrs** (labor hours)
-- **Est Qty, Act Qty, Var Qty** (material quantities)
-- **Est Cost, Act Lab, Act Bur, Act Mat, Act Out, Use Tax, Job Cost**
-- R/I, Var Cost, Gross Margin
-- Description, Inv Type
+| Timestamp | Size | Type | Files |
+|-----------|------|------|-------|
+| T1011 | 852K | Phase 1 (first test) | 5 CSVs (small) |
+| T1015 | 170M | Phase 1 (full run) | 5 CSVs |
+| T1025 | 876K | Phase 1 (test) | 5 CSVs (small) |
+| **T1026** | **175M** | **Phase 1 (best run)** | **5 CSVs — 1,253,042 rows** |
+| T1101 | 45M | Phase 4 (local files) | 13 CSVs |
+| T1106 | 65M | Phase 4 (expanded) | 22 CSVs |
+| **T1107** | **66M** | **Phase 4 (best run)** | **26 CSVs** |
+| T1155 | 0 | Empty run | - |
+| T1324 | 8K | Manifest only | - |
+| T1339 | 8K | Manifest only | - |
+| T1342 | 1.1M | Informer test | 1 CSV (customer_listing) |
+| tracer_bullet | 44K | Debug HTML | 1 HTML file |
 
-### 2F. HTML Page Captures
+#### Best Phase 1 Run (T1026) Detail
 
-| File | Content |
-|------|---------|
-| `Keyedin/login_page.html` | Login form |
-| `Keyedin/login_start_page.html` | Login start redirect |
-| `Keyedin/actual_login_page.html` | Actual form fields |
-| `Keyedin/login_success.html` | Post-login page |
-| `Keyedin/logged_in_page.html` | Authenticated state |
-| `Keyedin/MAIN.html` | Main dashboard |
-| `Keyedin/WEB.MENU.html` | Menu page |
-| `Keyedin/WORKORDER_LIST.html` | WO list page |
-| `Keyedin/SERVICE_CALL_LIST.html` | Service call list |
-| `Keyedin/..KeyedIn_System_Map/.../00_logged_in_home.html` | Discovery capture |
+| File | Rows | Size | Content |
+|------|------|------|---------|
+| wo_headers.csv | 33,428 | 13 MB | WO number, customer, costs, margins, estimator, status |
+| material_detail.csv | 780,868 | 107 MB | Date, dept, item, est/actual qty, est/actual cost |
+| labor_detail.csv | 254,012 | 32 MB | Date, dept, code, employee, hours, cost |
+| labor_summary.csv | 161,377 | 22 MB | Dept, code, est_hrs, actual_hrs, variance |
+| outplant_detail.csv | 23,352 | ~1 MB | Subcontractor, PO details |
 
-### 2G. HAR Files
+#### Best Phase 4 Run (T1107) Detail
+
+| File | Source | Content |
+|------|--------|---------|
+| local_work_orders.csv | OneDrive WIP export | Invoice-level data: 26,643 rows |
+| local_sales_orders.csv | OneDrive | 27,707 sales orders |
+| local_wip_summary.csv | OneDrive | 9.1 MB WIP summary |
+| local_gm_salesperson.csv | OneDrive | 6.1 MB GM data |
+| local_gm_sp_2023/2024/2025.csv | OneDrive | Annual GM by salesperson |
+| local_labor_forensics.csv | H:\brady\BOT TRAINING | 7.4 MB Cat Scale labor |
+| local_stock_status.csv | OneDrive BRADYF_STOCK.STATUS.xlsx | Inventory status |
+| local_inventory_active.csv | OneDrive | Active inventory |
+| local_purchase_history.csv | OneDrive | Purchase order history |
+| local_emp_hours_*.csv | OneDrive | Per-employee hours (Brady, Brian, John, Matt) |
+| local_sales_summary_customer.csv | OneDrive | Customer revenue summary |
+| local_sales_summary_product.csv | OneDrive | Product revenue summary |
+| local_shop_efficiency.csv | Derived | Work code efficiency scores |
+| local_labor_multipliers.csv | Derived | Labor time stats by code |
+| local_mfg_parts.csv | OneDrive | Manufacturing parts list |
+| local_purchased_parts.csv | OneDrive | Purchased parts list |
+| local_vendors.csv | OneDrive | Vendor listing |
+| local_ref_work_codes.csv | OneDrive | 62 work codes |
+| local_ref_sign_types.csv | OneDrive | 38 sign types |
+
+### D. Informer BI Report Captures [CONFIRMED]
+
+| Property | Value |
+|----------|-------|
+| **Path** | `C:\Scripts\keyedin-capture\reports\` |
+| **Reports Captured** | 30 out of 30 visible in Informer |
+| **Capture Date** | 2026-02-06 |
+| **Format** | GWT-RPC ViewRPCService request payloads (.txt files) |
+| **Response Files** | Also captured for most reports |
+
+#### Captured Reports (30 total)
+
+| Report ID | Report Name | Request File |
+|-----------|-------------|-------------|
+| 1441842 | AR Invoice Details | report_ar_invoice_details_view_request.txt |
+| 1441843 | AR Invoice Listing | report_ar_invoice_listing_view_request.txt |
+| 1441844 | AR Open Invoices | report_ar_open_invoices_view_request.txt |
+| 1441849 | Cash Receipts | report_cash_receipts_view_request.txt |
+| 1441850 | Customer Listing | report_customer_listing_view_request.txt |
+| 1441851 | Customer Listing Export | report_customer_listing_export_view_request.txt |
+| 1441852 | Customer Location Listing | report_customer_location_listing_view_request.txt |
+| 1441853 | Customer Location Listing Export | report_customer_location_listing_export_view_request.txt |
+| 1441854 | Inventory List | report_inventory_list_view_request.txt |
+| 1441855 | Inventory List Export | report_inventory_list_export_view_request.txt |
+| 1441856 | Inventory Transaction History | report_inventory_transaction_history_view_request.txt |
+| 1441857 | Invoice Register | report_invoice_register_view_request.txt |
+| 1441859 | Open Sales Order Backlog | report_open_sales_order_backlog_view_request.txt |
+| 1441860 | Open Sales Orders | report_open_sales_orders_view_request.txt |
+| 1441861 | Open Work Orders | report_open_work_orders_view_request.txt |
+| 1441862 | Planned Part Activity | report_planned_part_activity_view_request.txt |
+| 1441865 | Purchase History | report_purchase_history_view_request.txt |
+| 1441866 | Purchase Order Detail | report_purchase_order_detail_view_request.txt |
+| 1441868 | Purchased Part Variance | report_purchased_part_variance_view_request.txt |
+| 1441869 | Quote Status Report | report_quote_status_report_view_request.txt |
+| 1441870 | Sales Cost Detail Report | report_sales_cost_detail_report_view_request.txt |
+| 1441872 | Sales Order Bookings By Line Date | report_sales_order_bookings_by_line_date_view_request.txt |
+| 1441873 | Sales Order Bookings By SO Date | report_sales_order_bookings_by_so_date_view_request.txt |
+| 1441874 | Sales Order Detail | report_sales_order_detail_view_request.txt |
+| 1441875 | Sales Order Status by Customer | report_sales_order_status_by_customer_view_request.txt |
+| 1441877 | Sales Summary by Customer | report_sales_summary_by_customer_view_request.txt |
+| 1441878 | Sales Summary by Product Type | report_sales_summary_by_product_type_view_request.txt |
+| 1441883 | Vendor Listing | report_vendor_listing_view_request.txt |
+| 1441884 | Vendor Listing Export | report_vendor_listing_export_view_request.txt |
+| 1441887 | Work Order Listing | report_work_order_listing_view_request.txt |
+
+**CORRECTION**: Prior sessions referenced "71 discovered reports" — actual count is **30 reports** visible and captured from Informer.
+
+### E. KeyedIn Automation MCP Server [CONFIRMED]
+
+| Property | Value |
+|----------|-------|
+| **Path** | `C:\Scripts\keyedin-automation\` |
+| **Framework** | FastMCP 2.14.3 + ChromaDB |
+| **Documents Indexed** | 1,141 (129 functions + 4 workflows + 1,008 filesystem paths) |
+| **Discovery Data** | keyedin_site_map.json (288 links / 264 entries / 241 unique codes), keyedin_page_mappings.json (3 pages), network_analysis_report.md |
+| **Tools** | 8 MCP tools (search_knowledge, get_workflow, list_workflows, get_url_pattern, get_page_map, get_field_info, find_project, get_navigation_path) |
+
+**CRITICAL BUG**: `ingest_keyedin()` in `scripts/ingest.py` only reads top-level `section_data.get("functions", [])` — it does NOT recurse into sub-sections (`reports`, `processing`, `inquiry`, `vendor_master`, `customer_master`). This drops **135 of 264 function entries (51%)**. Entire modules have ZERO functions ingested: JOB_COST (19), MRP (16), LABOR_AND_PAYROLL (6), ACCOUNTS_PAYABLE (4), ACCOUNTS_RECEIVABLE (3), SYSTEM_MANAGEMENT (4).
+
+**Empty tables**: `fields` (0 rows — page_mappings.json never consumed), `js_functions` (0 rows), `projects` (0 rows — G:\, H:\ not scanned).
+
+**Additional subsystem**: `keyedin-quote-entry-headed.js` (364 lines) — production-ready Playwright batch quote entry automation with real job data in `job.json` (Hexagon ADA Room Signs, 16 quotes).
+
+### F. Decision Intelligence Report [CONFIRMED]
+
+| Property | Value |
+|----------|-------|
+| **Path** | `signx-warehouse/warehouse/reports/decision_report_20260130_111224.md` |
+| **Generated** | 2026-01-30 11:12 |
+| **Key Findings** | See below |
+
+#### Confirmed Findings
+
+| Finding | Value | Evidence |
+|---------|-------|----------|
+| Dead stock capital | **$241,701.53** | 499 items with stock on hand |
+| Top dead stock item | H96W-SD-24V power supply: $34,577 (806 units) | Inventory query |
+| Labor overestimation | **50-56% below estimates** (all estimators) | 17,031 WOs analyzed |
+| Adam Fasselius variance | -53.6% avg, 9,467 WOs | Est 159,784 hrs vs actual 85,126 hrs |
+| Brady Flink variance | -55.7% avg, 534 WOs | Est 11,141 hrs vs actual 4,840 hrs |
+| Average true margin | **8.6%** | 31,138 WOs |
+| ERP burden rate | 1.35x labor cost avg | 28,756 WOs |
+| Top customer revenue | Cat Scale: $28.96M | 2,619 WOs |
+| Win/Loss Ratio | **BLOCKED** | Quote data not yet available from Informer |
+
+### G. Additional Data Locations
+
+| Location | Content | Size |
+|----------|---------|------|
+| `C:\Scripts\keyedin-capture\reports\` | 243 files including ABC pricing guides, audit scripts, report payloads | ~559 MB dir |
+| `C:\Scripts\keyedin-capture\screenshots\` | ERP screenshots (admin menu, cost summary, labor analysis, login page) | Multiple PNG |
+| `C:\Scripts\keyedin-capture\raw\` | Raw GWT-RPC request/response captures (req51-req102) | Multiple TXT |
+| `C:\Scripts\keyedin-capture\session_auth.json` | Saved authentication session data | 2 KB |
+| `C:\Scripts\keyedin-capture\reports_manifest.json` | Manifest of all captured reports | 7 KB |
+| `~/Desktop/Keyedin HELP` | KIS 2.5.7 Release Notes PDF | 1.86 MB |
+| `~/Downloads/SignX-main/SignX-main/Keyedin` | Archive: 81 Python scripts, 95 JSON, 41 HTML captures | 36 MB |
+| `C:\Scripts\keyedin-capture/Eagle Sign Contract - Keyedin MFG.pdf` | Vendor contract document | 330 KB |
+| `C:\Scripts\keyedin-capture/Kimco-Terms-and-Conditions-MSA-Final.pdf` | KIMCO terms and conditions | 229 KB |
+
+### H. Downloads Archive — Extracted Data & Automation Scripts [CONFIRMED]
+
+**Path**: `~/Downloads/SignX-main/SignX-main/Keyedin/`
+**Total Size**: 36 MB | **Files**: 81 Python, 95 JSON, 41 HTML
+
+This location contains **actual extracted data** from a 2025-11-12 session:
 
 | File | Size | Content |
 |------|------|---------|
-| `Keyedin/GWT Google Web Toolkit/eaglesign.keyedinsign.com.har` | — | Full network capture of Informer session |
-| `Keyedin/har_capture.json` | — | Additional HAR capture |
+| `all_detailed_cost_summaries_20251112_181028.json` | 263 KB | **50 work orders**, 350 tables |
+| `all_cost_summaries_20251112_180352.json` | 6.7 KB | Summary-level cost data |
+| `Data Exports/Closed WO 11-1-00 to 10-31-25.csv` | 6 MB | **33,080 rows — 25 years of WO history** |
+| `extracted_data_20251112_180236.json` | 77 KB | Comprehensive extraction run |
+| `menu_20251112_180236.json` | 59 KB | Full menu structure |
+| `work_orders_20251112_180236.json` | 10 KB | Work order data |
+| `service_calls_20251112_180236.json` | 1.2 KB | Service call listings |
+| `complete_endpoint_map.json` | 61 KB | 50+ mapped endpoints |
+| `endpoint_map.json` | 92 KB | Additional endpoint data |
+| `bi_report_urls.json` | 1.7 KB | BI report URLs |
+| `individual_summaries/` | ~52 files | Individual WO cost files |
+| `API_REVIEW_SUMMARY.md` | 6 KB | API architecture review |
+| `DATA_EXTRACTION_GUIDE.md` | 5.5 KB | 14 endpoints, 93% success rate |
+| `KEYEDIN_API_README.md` | 7.6 KB | API usage documentation |
+
+Key automation scripts:
+| Script | Size | Purpose |
+|--------|------|---------|
+| `keyedin_api_enhanced.py` | 24 KB | Enhanced API with CDP, session validation, auto-refresh |
+| `keyedin_cdp_extractor.py` | 16 KB | Chrome DevTools Protocol cookie extractor |
+| `extract_all_cost_summaries_complete.py` | 15 KB | Automated cost extraction |
+| `extract_all_detailed_cost_summaries.py` | 16 KB | Detailed cost reports |
+| `extract_everything_complete.py` | 22 KB | Comprehensive data extraction |
+| `map_all_endpoints.py` | 18 KB | Endpoint discovery and mapping |
+
+### I. Keyedin Mapping API MCP [CONFIRMED]
+
+**Path**: `C:\Scripts\Keyedin Mapping API MCP\`
+**Total Size**: 1.5 GB (largest KeyedIn installation)
+**Status**: Production-ready MCP server + Electron desktop app
+
+| Component | Content |
+|-----------|---------|
+| `src/automation/` | Session managers, multi-session pool, Chrome CDP client |
+| `src/cache/` | Cache manager, offline mode, TTL config, timing tracker |
+| `src/extractors/` | Quote, cost, inventory, search extractors + CSV stream parser |
+| `src/mcp_server/` | MCP server implementation |
+| `src/validators/` | Data validation logic |
+| `desktop_app/` | Electron KeyedIn Desktop app |
+| `data/keyedin_cache.db` | SQLite cache with WAL |
+| `data/erp_module_coverage.json` | 61 KB module coverage data |
+| `data/informer_complete_network_analysis.json` | 24 KB |
+| `data/input_field_specs.json` | 17 KB field specifications |
+
+Desktop app config: `AppData\Local\KeyedIn Desktop\config.json` — auto-launches Chrome on debug port 9222, MCP+API server on `127.0.0.1:8765`.
+
+### J. Additional KeyedIn Script Repositories [CONFIRMED]
+
+| Path | Size | Content |
+|------|------|---------|
+| `C:\Scripts\keyedin-mcp\` | 109 MB | Earlier version or fork of Mapping API MCP |
+| `C:\Scripts\keyedin-extraction\` | 43 KB | Lightweight extraction utilities |
 
 ---
 
 ## 3. Pipeline Components
 
-### 3A. Authentication Pipeline
+### Trust Hierarchy
 
-**Status: WORKING**
+| Tier | Source | Status |
+|------|--------|--------|
+| 1 | erp_fresh_scrape (live CGI) | NOT IMPLEMENTED |
+| 2 | informer_bi_export (GWT-RPC) | PARTIALLY WORKING (1/30 reports automated) |
+| 3 | html_reparse (local HTML files) | **FULLY WORKING** — 1.25M rows extracted |
+| 4 | local_excel_csv (manual exports) | **FULLY WORKING** — 120K+ rows ingested |
 
-```
-Step 1: Chrome CDP → open browser with remote debugging
-Step 2: User logs in manually (or script POSTs USERNAME/PASSWORD/SECURE)
-Step 3: Extract 5 cookies via CDP or Selenium
-Step 4: All subsequent HTTP requests use SESSIONID cookie
-```
+### Script Inventory by Location
 
-**Files:**
-- `keyedin_cdp_extractor.py` — Chrome DevTools Protocol cookie extraction
-- `extract_cookies_chrome.py` — Selenium-based extraction
-- `extract_with_credentials.py` — Direct POST authentication
-- `keyedin_api_enhanced.py` — Session management wrapper
+#### signx-warehouse (`~/OneDrive - Eagle Sign Co/signx-warehouse/scripts/`)
 
-### 3B. CGI/MVI Endpoint Access Pipeline
+| Script | Lines | Purpose | Status | Last Modified |
+|--------|-------|---------|--------|---------------|
+| `parse_full_cost_detail.py` | 907 | Phase 1: Parse 168 HTML files into 5 CSVs | **WORKING** | 2026-01-30 |
+| `build_warehouse.py` | 1034 | Phase 5: Combine Phase 1+4 into SQLite | **WORKING** | 2026-01-30 |
+| `ingest_local_files.py` | ~500 | Phase 4: Ingest OneDrive Excel/CSV | **WORKING** | 2026-01-30 |
+| `decision_engine.py` | ~800 | Generate intelligence reports from warehouse | **WORKING** | 2026-01-30 |
+| `scrape_informer.py` | ~400 | Automate Informer BI report extraction | PARTIALLY WORKING | 2026-01-30 |
+| `gwt_parser.py` | ~300 | Parse GWT-RPC serialization format | WRITTEN | 2026-01-30 |
+| `gwt_analyze.py` | ~200 | Analyze GWT response structure | WRITTEN | 2026-01-30 |
+| `gwt_deserialize.py` | ~200 | Deserialize GWT-RPC payloads | WRITTEN | 2026-01-30 |
+| `gwt_dump_rows.py` | ~200 | Extract row data from GWT responses | WRITTEN | 2026-01-30 |
+| `capture_all_reports.py` | ~300 | Capture all Informer report payloads | WRITTEN | 2026-01-30 |
+| `tracer_bullet.py` | ~200 | Single-report end-to-end test | WRITTEN | 2026-01-30 |
+| `test_pipeline_fixes.py` | ~200 | Test pipeline components | WRITTEN | 2026-01-30 |
+| `_get_session.py` | ~100 | Informer session helper | WRITTEN | 2026-01-30 |
 
-**Status: WORKING (93% success rate)**
+#### keyedin-capture (`C:\Scripts\keyedin-capture/`)
 
-```
-Step 1: Authenticate (get SESSIONID cookie)
-Step 2: GET /cgi-bin/mvi.exe/{PROCESS_NAME}[?params]
-Step 3: Receive HTML response
-Step 4: Parse with BeautifulSoup
-```
+| Script | Size | Purpose | Status |
+|--------|------|---------|--------|
+| `cost_summary_automation.py` | 12 KB | Automate cost summary report generation | WRITTEN, UNTESTED LIVE |
+| `extract_wo_batches.py` | 3 KB | Extract WO data in batches | WRITTEN |
+| `fast_extract.py` | 26 KB | Fast extraction via CDP | WRITTEN, PARTIALLY TESTED |
+| `parse_reports.py` | 26 KB | Parse captured report files | WRITTEN |
+| `setup_credentials.py` | 2.6 KB | Credential management | WRITTEN |
+| `test_200wo_debug.py` | 4 KB | Test 200 WO extraction (debug) | WRITTEN |
+| `test_200wo_post.py` | 7 KB | Test 200 WO extraction (POST) | WRITTEN |
+| `test_20wo.py` | 3 KB | Test 20 WO extraction | WRITTEN |
+| `test_cdp.py` | 2.7 KB | Chrome DevTools Protocol test | WRITTEN |
+| `test_parse_reports.py` | 17 KB | Unit tests for parsers | WRITTEN |
+| `test_pipeline.py` | 7 KB | Pipeline integration tests | WRITTEN |
+| `scan_sql.ps1` | 1.9 KB | SQL scanning utility | WRITTEN |
 
-**Files:**
-- `extract_all_data.py` — Bulk endpoint extraction
-- `map_all_endpoints.py` — Endpoint discovery and mapping
-- `comprehensive_test.py` — Validation (9/9 tests pass)
+#### keyedin-automation MCP Server (`C:\Scripts\keyedin-automation/`)
 
-### 3C. Cost Summary Extraction Pipeline
+| Component | Purpose | Status |
+|-----------|---------|--------|
+| `mcp_server/server.py` | FastMCP server with 8 tools | **WORKING** |
+| `scripts/ingest.py` | Ingest data into ChromaDB | WORKING |
+| `scripts/discover_filesystem.py` | Scan filesystem for project paths | WORKING |
+| `scripts/verify_knowledge_base.py` | Verify ChromaDB collections | WORKING |
+| `keyedin.py` | Playwright-based page automation | WRITTEN (old, uses mvt.exe typo) |
+| `keyedin-quote-entry-headed.js` | JavaScript quote entry automation | WRITTEN, 364 lines |
+| `launch_mcp.py` | MCP server launcher | WORKING |
+| `discovery/keyedin/keyedin_site_map.json` | 288 function codes mapped | DATA FILE |
+| `discovery/keyedin/keyedin_page_mappings.json` | Page structure mappings | DATA FILE |
+| `discovery/keyedin/network_analysis_report.md` | Network endpoint analysis | DOCUMENTATION |
 
-**Status: PARTIAL — headers extracted, data rows mostly empty**
+#### SignX Repo — platform-setup branch
 
-```
-Approach 1: WO.STATUS.SUM?WONO={#} → HTML table → BeautifulSoup
-Approach 2: SO.CONTRACT.RUN?SONO={#}&REPORT_OPT=D&REPORT_WHERE=P → HTML table
-```
-
-**Files:**
-- `extract_all_cost_summaries.py` (443 lines) — WO.STATUS.SUM approach
-- `extract_all_cost_summaries_complete.py` — Complete version
-- `extract_all_detailed_cost_summaries.py` — Detailed version
-- `extract_all_cost_summaries_via_report.py` — SO.CONTRACT.RUN approach
-
-**Result:** 52 individual WO cost summaries extracted with partial data. Table headers captured but many data cells came back empty or concatenated (parsing issue).
-
-### 3D. Informer BI / GWT-RPC Pipeline
-
-**Status: Auth WORKING, data extraction FAILED**
-
-```
-Step 1: Get SSO token from main app
-Step 2: Navigate to /eaglesign/sso?u=BRADYF&t={token}
-Step 3: Capture JSESSIONID, authToken, clientId
-Step 4: POST GWT-RPC payload to ViewRPCService
-Step 5: Parse GWT-RPC response (FAILED — 500 errors on getData)
-```
-
-**Files:**
-- `GWT Google Web Toolkit/MASTER_EXTRACTOR.ps1` — PowerShell automation
-- `GWT Google Web Toolkit/keyedin_complete_extraction.py` — Python version
-- `GWT Google Web Toolkit/keyedin_enhanced_extractor.py` — Enhanced version
-- `GWT Google Web Toolkit/keyedin_working_extractor.py` — Working variant
-- `GWT Google Web Toolkit/keyedin_data_extractor.py` — General extractor
-- 11 PowerShell test scripts for GWT-RPC payload formatting
-
-### 3E. MCP Server Pipeline
-
-**Status: BUILT, NOT VALIDATED IN PRODUCTION**
-
-```
-Playwright-based MCP server with 7 tools:
-- login, navigate, get_data, fill_form, search, screenshot, list_sections
-```
-
-**Files:**
-- `KEYEDIN MCP/keyedin_mcp_server_secure.py` (533 lines) — Main MCP server
-- `KEYEDIN MCP/v1/Broke V1 (CLAUDE 4)/keyedin_mcp_server.py` — V1 (broken)
-- `KEYEDIN MCP/v1/Broke V1 (CLAUDE 4)/keyedin_resilient_agent.py` — Agent (broken)
-- `KEYEDIN MCP/discovery/keyedin_architecture_mapper.py` (669 lines) — Discovery mapper
-- `KEYEDIN MCP/Test/keyedin_investigator_v5.py` — Investigation tool
-- `KEYEDIN MCP/Test/keyedin_manual_login_mapper.py` — Login mapper
-
-### 3F. Live Test Pipeline
-
-**Status: BUILT, NOT YET RUN (requires VPN)**
-
-```
-recon-results/run_all_tests.py — Zero-dependency Python script
-Tests: DNS, Auth, 6 Exports, Informer BI, Quote Entry
-Must run from Brady's VPN-connected PC
-```
+| Script | Purpose | Status |
+|--------|---------|--------|
+| `scripts/scrape_keyedin.py` | Main ERP scraper (requests + BeautifulSoup) | WRITTEN, BOT DETECTION BLOCKED |
+| `scripts/scrape_keyedin_informer.py` | Informer BI scraper | WRITTEN |
+| `scripts/test_keyedin_connection.py` | Connection testing | WRITTEN |
+| `scripts/run_keyedin_test.ps1` | PowerShell test runner | WRITTEN |
+| `scripts/setup_keyedin_windows.ps1` | Windows environment setup | WRITTEN |
+| `scripts/train_cost_model.py` | ML cost prediction model | WRITTEN |
+| `services/api/src/apex/api/crm_integration.py` | CRM integration module | WRITTEN |
 
 ---
 
@@ -298,335 +409,237 @@ Must run from Brady's VPN-connected PC
 
 ### Timeline
 
-| Date | Session | What Happened | Outcome |
-|------|---------|---------------|---------|
-| 2025-11-12 | Session 1 | Authentication + endpoint mapping | SUCCESS — 262 endpoints, 13/14 tested |
-| 2025-11-12 | Session 1 | Cost summary extraction via WO.STATUS.SUM | PARTIAL — 52 WOs, headers only |
-| 2025-11-12 | Session 1 | Cost summary via SO.CONTRACT.RUN | FAILED — 0 data rows |
-| 2025-11-12 | Session 1 | Informer GWT-RPC report discovery | SUCCESS — 71 reports found |
-| 2025-11-12 | Session 1 | Informer GWT-RPC data extraction | FAILED — 500 errors, 0 records |
-| 2025-11-12 | Session 1 | Session validation (9/9 tests) | SUCCESS — all endpoints accessible |
-| Pre-2025-11 | Earlier | MCP server v1 build | FAILED — labeled "Broke V1" |
-| Pre-2025-11 | Earlier | MCP server v2 (secure) build | BUILT — untested in production |
-| Pre-2025-11 | Earlier | Selenium login automation | WORKING — cookie capture confirmed |
-| Pre-2025-11 | Earlier | Architecture mapper (669 lines) | BUILT — 18 sections mapped |
-| 2026-02-14 | Current | Integration recon from cloud sandbox | BLOCKED — no network access |
-| 2026-02-14 | Current | Legacy intel compilation | COMPLETE — `LEGACY-KEYEDIN-INTEL.md` |
-| 2026-02-14 | Current | Live test script creation | COMPLETE — `run_all_tests.py` |
+| Date | Action | Result |
+|------|--------|--------|
+| **2025-05-22** | Puppeteer DOM scraping of KeyedIn menu structure | **SUCCESS** — 288 links/functions mapped to keyedin_site_map.json |
+| **2025-07-12** | Initial keyedin.py Playwright automation | **WRITTEN** — contains typo (mvt.exe instead of mvi.exe) |
+| **2025-11-12** | SignX repo: KeyedIn CRM scrapers committed | **WRITTEN** — bot detection encountered on Google SSO |
+| **2025-11-12** | SignX repo: Informer scraper written | **WRITTEN** — GWT-RPC endpoint identified |
+| **2025-11-12** | SignX repo: Windows setup + connection test | **PARTIAL** — connection works, scraping blocked by SSO |
+| **2026-01-05** | Network analysis report generated | **SUCCESS** — documented CGI + RPC endpoints |
+| **2026-01-15** | KeyedIn Knowledge MCP server built | **SUCCESS** — 8 tools, 1,141 docs indexed in ChromaDB |
+| **2026-01-29** | keyedin-capture: Cost summary automation scripts written | **WRITTEN** — multiple approaches attempted |
+| **2026-01-29** | keyedin-capture: HTML batch capture strategy executed | **SUCCESS** — 168 HTML files captured (559MB) |
+| **2026-01-29** | keyedin-capture: Informer pentest and access analysis | **DOCUMENTED** — INFORMER_PENTEST_RESULTS.md, INFORMER_ACCESS_ANALYSIS.md |
+| **2026-01-29** | keyedin-capture: ERP admin mapping documented | **DOCUMENTED** — ERP_ADMIN_MAPPING.md |
+| **2026-01-30 10:11** | Phase 1 first test: Parse single batch file | **SUCCESS** — small CSV output |
+| **2026-01-30 10:15** | Phase 1 full run: Parse all 168 HTML files | **SUCCESS** — 170MB, 1.25M rows |
+| **2026-01-30 10:26** | Phase 1 refined run: Parse with cross-validation | **SUCCESS** — 175MB, 33,428 WOs, 0 mismatches |
+| **2026-01-30 11:01** | Phase 4 first run: Ingest local files (13 sources) | **SUCCESS** — 45MB |
+| **2026-01-30 11:06** | Phase 4 expanded: Add more local sources | **SUCCESS** — 65MB, 22 CSVs |
+| **2026-01-30 11:07** | Phase 4 final run: All local sources | **SUCCESS** — 66MB, 26 CSVs |
+| **2026-01-30 11:10** | Phase 5: Build SQLite warehouse | **SUCCESS** — 211MB, 17 tables, 1,376,130 rows |
+| **2026-01-30 11:12** | Decision engine: Generate intelligence report | **SUCCESS** — estimator accuracy, dead stock, margin analysis |
+| **2026-01-30 13:42** | Phase 2 test: Informer customer listing export | **PARTIAL** — 1 report automated, GWT parsing incomplete |
+| **2026-02-03** | Contract PDFs added to keyedin-capture | **STORED** — Eagle Sign Contract + KIMCO Terms |
+| **2026-02-06** | Informer report capture: All 30 payloads | **SUCCESS** — GWT-RPC request/response payloads saved |
+| **2026-02-14** | Export endpoint test script written | **BLOCKED** — cannot reach KeyedIn from cloud sandbox (proxy whitelist) |
 
-### What Was Attempted but NOT Committed
+### What Failed and Why
 
-**[NOT IN REPO — FROM CONVERSATION HISTORY ONLY]**
-
-The following items were referenced in mission briefs but DO NOT exist anywhere in the repository:
-
-| Item | Search Result |
-|------|--------------|
-| 402 MB HTML files | NOT FOUND — no files of this size exist |
-| 17 parsed tables | NOT FOUND — no reference in any file |
-| 1.3M rows | NOT FOUND — no reference in any file |
-| $241K dead stock finding | NOT FOUND in committed code — may be from conversation analysis |
-| 54% labor below estimates | NOT FOUND in committed code — may be from conversation analysis |
-| `EXTRACTION_SKILL` files | NOT FOUND — no such file or reference exists |
-| `parse_cost_summary_printer.py` | NOT FOUND — no such file exists |
-| 8-agent exploration | NOT FOUND — no multi-agent orchestration code committed |
-| Workforce intelligence engine | NOT FOUND — no such code exists |
-| `PROJECT-STATE` files | NOT FOUND — no such files exist |
-
-**These findings likely came from interactive conversation sessions where data was analyzed in memory but never committed to the repo.**
-
-### Data Analysis Findings (from Benchmark CSVs, verified in repo)
-
-The detailed cost summary CSV at `Benchmark/storage/- Audit -/2025/307-0267 .../Cost Summaries DETAILED 68305 68333 68341 68357 68377.csv` contains real cost data for WOs 68305-68377:
-
-| WO | Est Hrs | Act Hrs | Var Hrs | Est Cost | Job Cost | Var Cost |
-|----|---------|---------|---------|----------|----------|----------|
-| 68377 | 80 | 35.75 | -44.25 | $53,048 | $51,108 | -$1,940 |
-| 68357 | 120 | 51.75 | -68.25 | $83,589 | $76,583 | -$7,006 |
-| 68341 | 140 | 56.50 | -83.50 | $97,521 | $93,910 | -$3,611 |
-| 68333 | 80 | 32.75 | -47.25 | $55,726 | $53,614 | -$2,113 |
-| 68305 | 80 | 46.25 | -33.75 | $55,726 | $54,293 | -$1,433 |
-
-**Labor actuals consistently below estimates** (avg ~55% of estimated hours) — this IS visible in the committed data, though the "54%" figure itself isn't explicitly stated in any file.
+| Attempt | Failure Mode | Root Cause |
+|---------|-------------|------------|
+| Google SSO login via requests | Bot detection | Google blocks automated OAuth flows |
+| Direct POST login from cloud sandbox | Connection refused | eaglesign.keyedinsign.com not on proxy whitelist |
+| GWT-RPC getData automation | Partial parse | GWT serialization format complex, pipe-delimited v7 |
+| Informer report CSV export | Only 1/30 automated | GWT response parsing incomplete for most report types |
+| keyedin.py Playwright | Never tested | Contains typo (mvt.exe instead of mvi.exe) |
 
 ---
 
 ## 5. Known Data Gaps
 
-### Gap 1: Cost Summary Programmatic Extraction
+### Fields That EXIST in Source but Were NOT Extracted
 
-**Status:** BROKEN
-**What's missing:** The extraction scripts connect and authenticate, but:
-- `WO.STATUS.SUM` returns HTML that BeautifulSoup doesn't parse correctly (concatenated cells)
-- `SO.CONTRACT.RUN` returns 0 data rows
-- The DETAILED cost summary CSV was manually exported, not programmatically extracted
+| Field | Present In | Extraction Status | Notes |
+|-------|-----------|-------------------|-------|
+| **EST HOURS** | labor_summary.csv column `est_hrs` | **EXTRACTED** | Available in **** summary lines via span parsing |
+| **Material costs** | material_detail.csv columns `est_cost`, `job_cost` | **EXTRACTED** | Both estimated and actual |
+| **Outplant costs** | outplant_detail.csv columns `est_cost`, `job_cost` | **EXTRACTED** | Both estimated and actual |
+| **Quoted Price** | wo_headers.csv column `quoted_price` | **EXTRACTED** | From header block |
+| **Sale Price** | wo_headers.csv column `sale_price` | **EXTRACTED** | From header block |
+| **Part Number** | wo_headers.csv column `part_number` | **EXTRACTED** | From header block |
 
-**Fix needed:** Either fix the HTML parser for WO.STATUS.SUM, or use Playwright to automate the manual export process (Report Option 'D' + Send To 'P').
+**CORRECTION**: Prior session claimed EST HOURS, Material, and Outplant were "confirmed in HTML but never parsed." This is **FALSE** — all three were successfully extracted by `parse_full_cost_detail.py` into the respective CSV files and loaded into the SQLite warehouse. The confusion may stem from the earlier broken `parse_cost_summary_printer.py` (which was superseded by the working `parse_full_cost_detail.py`).
 
-### Gap 2: Informer Report Data
+### Actual Remaining Gaps
 
-**Status:** BROKEN
-**What's missing:** 71 reports discovered but 0 data rows extracted
-**Root cause:** GWT-RPC `getData` calls fail with 500 Server Error — the binary payload format is wrong
-**Fix needed:** Capture a working getData payload from the browser (via HAR) and reverse-engineer the exact format, OR use Informer's built-in export buttons via Playwright
+| Gap | Impact | How to Fill |
+|-----|--------|-------------|
+| Quote data (Won/Lost/Void/Cancelled) | Cannot compute win/loss ratio | Automate Informer report ID 1441869 (Quote Status) |
+| Real-time WO status | Only historical data | Need live ERP scraping (Phase 3) or export endpoint |
+| Employee cost rates | Cannot validate labor costs | Not exposed in current HTML capture |
+| Bill of Materials (BOM) | Cannot do should-cost analysis | Test IMPORT.BOM endpoint for structure |
+| Routing/operations | Cannot model production flow | Test IMPORT.ROUTING endpoint |
+| Margin by sign type (current) | Only historical margins | Need fresh data extraction |
 
-### Gap 3: Quote Entry Read/Write
+### Work Order Coverage
 
-**Status:** UNTESTED
-**What's missing:** Never attempted to:
-- Read quote line items from `QUOTE.ENTRY.DETAILS?QUOTENO={#}&DEPTNO={code}`
-- Write new quote line items via POST to `EST.QUOTE.ENTRY`
-**Fix needed:** Test from VPN-connected PC using `run_all_tests.py`
-
-### Gap 4: Export Endpoints
-
-**Status:** UNTESTED
-**What's missing:** 6 built-in export endpoints never tested:
-1. `CUST.PROD.EXPORT`
-2. `GM.BY.INV.EXPORT`
-3. `SLSPER.PROD.EXPORT`
-4. `USAGE.ANAL.FILE`
-5. `EXPORT.WO.LABOR.ANALYSIS`
-6. `EXPORT.WIP.SUMMARY`
-**Fix needed:** Test from VPN-connected PC
-
-### Gap 5: Import Endpoints
-
-**Status:** UNTESTED
-**What's missing:** 5 built-in import endpoints never tested:
-1. `IMPORT.PARTS`
-2. `IMPORT.BOM`
-3. `IMPORT.ROUTING`
-4. `IMPORT.CRM.NEW`
-5. `IMPORT.SIGN.TEMPLATE`
-**Fix needed:** Open each import screen, document file format requirements
-
-### Gap 6: Network Location & Hosting
-
-**Status:** UNKNOWN
-**What's missing:** Cannot determine from cloud sandbox whether:
-- Server is on-prem at Eagle Sign or hosted by KeyedIn/KIMCO
-- Direct database access is possible
-- What specific MultiValue/Pick engine runs
-**Fix needed:** Brady runs network tests from VPN-connected PC
-
-### Gap 7: Login Method
-
-**Status:** CONTRADICTORY
-**What's known:**
-- Scripts use direct POST with USERNAME/PASSWORD/SECURE — this worked on 2025-11-12
-- Mission briefs mention Google SSO with green "Sign In" button
-- Could be that login method changed, or there are two login flows
-**Fix needed:** Confirm current login method on-site
+- **Earliest WO**: WO#1 (date_completed: 2012-12-19)
+- **Latest WO**: ~WO#70000+ (2026)
+- **Total WOs**: 33,428
+- **WOs with complete cost data**: 33,428 (100% — cross-validated, 0 mismatches)
+- **WOs with labor detail**: 28,829 (86.3%)
+- **WOs with estimator info**: 12,285 (36.8%)
 
 ---
 
 ## 6. API & Endpoint Map
 
-### Authentication
+### Main ERP — 288 CGI Function Codes
 
-```
-POST https://eaglesign.keyedinsign.com/
-Body: USERNAME=BRADYF&PASSWORD={pwd}&SECURE=TRUE
-Response: Set-Cookie: SESSIONID, ASP.NET_SessionId, user, secure, IMPERSONATE
-```
+Extracted from `keyedin_site_map.json` (2025-05-22 Puppeteer scrape).
 
-### Informer SSO
+**Navigation sections with sample functions:**
 
-```
-GET https://eaglesign.keyedinsign.com:8443/eaglesign/sso
-  ?u=BRADYF
-  &t={sso_token}                    ← 25-char lowercase alphanum
-  &initialAction.action=ReportRun
-  &remoteId={report_id}             ← numeric
-```
+| Section | Function Code | Name |
+|---------|--------------|------|
+| FAVORITES | CRM.CONTACT.MGT | Contact Management |
+| FAVORITES | OPEN.SO | Open Sales Order Audit Report (BI) |
+| FAVORITES | SO.CONTRACT | Cost Summary Report |
+| FAVORITES | STOCK | Part Status Inquiry |
+| FAVORITES | EST.QUOTE.STATUS | Status of all Quotes (BI) |
+| CRM | IMPORT.CRM.NEW | Import CRM |
+| CRM Reports | ACCOUNT.TYPE.CODE.LISTING | Account Type Code Listing |
 
-### Top-Level Modules (262 endpoints total)
+**Full 288-function JSON**: `C:\Scripts\keyedin-automation\discovery\keyedin\keyedin_site_map.json`
 
-| Module | Menu ID | Key Endpoints |
-|--------|---------|---------------|
-| CRM | `CRM.STD` | `CRM.CONTACT.MGT`, `CHANGE.SC.ACCOUNT` |
-| Project Mgmt | `PROJECT.STD` | `#PROJECT.LISTING`, `#PROJECT.DETAILS` |
-| Estimating | `EST.STD` | `EST.QUOTE.ENTRY`, `QUOTE.ENTRY.DETAILS`, `QUOTE.ENTRY.LIMITED` |
-| Sales Orders | `SALES.STD` | `ORDER.ENTRY`, `EST.CREATE.SO`, `SO.PRINT` |
-| Shipping | `SHIPPING.STD` | `SHIPLISTS`, `SHIPMENTS`, `SHIPMENTS.TRACKING` |
-| Sales Analysis | `SA.STD` | GM reports, sales by product/customer |
-| Purchasing | `PUR.STD` | `PURCHASE`, `PO.RECEIPTS`, `PO.CLOSE` |
-| Inventory | `INV.STD` | `FIRST.ISSUE`, parts maint, BOM, routing |
-| Job Cost | `JCOST.*` | `WO.HISTORY`, `WO.STATUS.SUM`, `SO.CONTRACT` |
-| MRP | `MRP.*` | `PARTS.MRP`, `MRP.CALC` |
-| Production | `PRODUCTION.STD` | `WO.PRINT`, `WO.INQUIRY`, `WO.CHANGE` |
-| Labor | `PAY.*` | Employee hours by work code/date |
-| AP | `AP.*` | Vendor master, invoice listing |
-| AR | `AR.*` | Customer master, bill-to, ship-to |
-| Reports | `RPT.STD` | `REPORT.VIEW.INDEX` |
-| Admin | `ADMIN.STD` | Password change, clear locks, logoff |
+### Export Endpoints (6 total) [NOT YET TESTED]
 
-### Tested Endpoints (13/14 = 93%)
+| Endpoint | Purpose | Test Status |
+|----------|---------|-------------|
+| `CUST.PROD.EXPORT` | Sales by Customer by Product | UNTESTED |
+| `GM.BY.INV.EXPORT` | Gross Margin by Invoice | UNTESTED |
+| `SLSPER.PROD.EXPORT` | GM by Salesperson | UNTESTED |
+| `USAGE.ANAL.FILE` | Part Usage Export | UNTESTED |
+| `EXPORT.WO.LABOR.ANALYSIS` | WO Labor Analysis | UNTESTED |
+| `EXPORT.WIP.SUMMARY` | WIP Summary (Open or Closed) | UNTESTED |
 
-| Endpoint | Status | Response |
-|----------|--------|----------|
-| `WEB.MENU?USERNAME=BRADYF` | 200 | 33,981 bytes JSON |
-| `WO.INQUIRY` | 200 | HTML form |
-| `WO.HISTORY` | 200 | HTML, 4 tables |
-| `WO.COST.SUMMARY` | 200 | HTML |
-| `SERVICE.CALL.LIST` | 200 | HTML, 2 tables |
-| `WIDGET.ASSIGNED.SERVICE.CALLS?ACTION=AJAX` | 200 | JSON |
-| `WIDGET.ASSIGNED.MILESTONES?ACTION=AJAX` | 200 | JSON |
-| `WIDGET.CRM.TASKS?ACTION=AJAX` | 200 | JSON |
-| `WIDGET.FYI?ACTION=AJAX` | 200 | JSON |
-| `MAIN` | 200 | HTML |
-| `HOME` | 200 | HTML |
-| `WO.COMPLETION.INQUIRY` | 200 | HTML |
-| `WO.GROUP.ANALYSIS` | 200 | HTML, 5 tables |
-| `WO.COST.DETAIL` | ERROR | Not in VOC file |
+### Import Endpoints (5 total) [NOT YET TESTED]
 
-### Export Endpoints (untested)
+| Endpoint | Purpose | Test Status |
+|----------|---------|-------------|
+| `IMPORT.PARTS` | Part master import | UNTESTED |
+| `IMPORT.BOM` | Bill of Materials import | UNTESTED |
+| `IMPORT.ROUTING` | Routing/operations import | UNTESTED |
+| `IMPORT.CRM.NEW` | CRM contact import | UNTESTED |
+| `IMPORT.SIGN.TEMPLATE` | Sign template import | UNTESTED |
 
-1. `CUST.PROD.EXPORT` — Sales by Customer by Product
-2. `GM.BY.INV.EXPORT` — Gross Margin by Invoice
-3. `SLSPER.PROD.EXPORT` — GM by Salesperson
-4. `USAGE.ANAL.FILE` — Part Usage
-5. `EXPORT.WO.LABOR.ANALYSIS` — WO Labor Analysis
-6. `EXPORT.WIP.SUMMARY` — WIP Summary
+### Quote Entry [NOT YET TESTED]
 
-### Import Endpoints (untested)
+| Endpoint | Purpose | Test Status |
+|----------|---------|-------------|
+| `EST.QUOTE.ENTRY` | Quote entry form | JavaScript automation written (`keyedin-quote-entry-headed.js`) but NOT tested live |
+| `QUOTE.ENTRY.DETAILS` | Quote detail view | Referenced in JS script |
 
-1. `IMPORT.PARTS`
-2. `IMPORT.BOM`
-3. `IMPORT.ROUTING`
-4. `IMPORT.CRM.NEW`
-5. `IMPORT.SIGN.TEMPLATE`
+### Informer BI — 30 Reports
+
+See Section 2.D above for complete list with IDs.
+
+**RPC Endpoints:**
+
+| Service | URL | Protocol |
+|---------|-----|----------|
+| ViewRPCService | `/eaglesign/informer/rpc/protected/ViewRPCService` | GWT-RPC v7, POST |
+| ReportRPCService | `/eaglesign/informer/rpc/protected/ReportRPCService` | GWT-RPC v7, POST |
+| FunctionRPCService | Not yet tested | GWT-RPC v7 |
+| CodeFileRPCService | Not yet tested | GWT-RPC v7 |
+| LoggingRPCService | Not yet tested | GWT-RPC v7 |
+| MetadataRPCService | Not yet tested | GWT-RPC v7 |
 
 ---
 
-## 7. Immediate Opportunities (Ranked)
+## 7. Immediate Opportunities (Ranked by Effort vs Impact)
 
-### Rank 1: Built-in Export Endpoints (Confidence: HIGH)
+### Rank A: Query the Existing Warehouse (0 effort, immediate)
 
-**Why:** These are pre-built by KeyedIn for CSV/Excel output. Zero reverse-engineering needed.
-**Action:** Test the 6 EXPORT endpoints from Brady's PC.
-**Effort:** 30 minutes
-**If successful:** Immediate access to WO labor analysis, WIP summary, GM data, part usage
-**Files:** None needed — just HTTP GET with session cookie
+The 211MB SQLite database at `C:\Scripts\signx-warehouse\warehouse\production\eagle_warehouse.db` is fully built with 1.37M rows across 17 tables. **No network access needed.** Every analysis query can be run immediately.
 
-### Rank 2: CGI/MVI HTTP API — Read (Confidence: HIGH)
+### Rank B: Test Export Endpoints (30 min, requires VPN)
 
-**Why:** Already proven working at 93% success rate. Just needs better HTML parsers.
-**Action:** Build targeted parsers for `QUOTE.ENTRY.DETAILS`, `WO.STATUS.SUM`, `ORDER.ENTRY`
-**Effort:** 1-2 days
-**Files:** `keyedin_api_enhanced.py` (working session manager), new parsers needed
+The 6 EXPORT endpoints (`CUST.PROD.EXPORT`, `GM.BY.INV.EXPORT`, `SLSPER.PROD.EXPORT`, `USAGE.ANAL.FILE`, `EXPORT.WO.LABOR.ANALYSIS`, `EXPORT.WIP.SUMMARY`) likely return direct CSV/Excel downloads. A test script exists at `~/Desktop/SignX/test_export_endpoints.py`. Requires running from VPN-connected PC.
 
-### Rank 3: Playwright Browser Automation (Confidence: MEDIUM-HIGH)
+### Rank C: Automate Remaining Informer Reports (2-4 hours, requires VPN)
 
-**Why:** Can handle dynamic forms, SSO, and any endpoint. Universal fallback.
-**Action:** Build Playwright persistent context with manual first-login, then automate
-**Effort:** 2-3 days
-**Key advantage:** Can interact with forms (write capability) and handle JavaScript-rendered content
-**Files:** `KEYEDIN MCP/keyedin_mcp_server_secure.py` (533 lines, needs production testing)
+30 GWT-RPC payloads are captured. The `scrape_informer.py` script successfully automated 1 report (customer_listing). Extending to remaining 29 reports requires fixing GWT deserialization for each report's column structure. The `Quote Status Report` (ID 1441869) is highest priority — it unlocks win/loss ratio analysis.
 
-### Rank 4: Informer BI Export Buttons (Confidence: MEDIUM)
+### Rank D: Re-parse HTML for Additional Fields (1-2 hours, no network)
 
-**Why:** Informer likely has built-in CSV/Excel export buttons on each report
-**Action:** Open any report in browser, check for export button, automate with Playwright
-**Effort:** 1 day (if export buttons exist)
-**Unlocks:** All 71 BI reports as downloadable data
+If any fields were missed in the first parse, the 168 HTML files (559MB) are still available locally. The parser `parse_full_cost_detail.py` can be extended. However, **all major fields appear to have been extracted** — this may not yield new data.
 
-### Rank 5: Built-in Import Endpoints (Confidence: MEDIUM)
+### Rank E: Live ERP Scraping at Scale (2-3 days, requires VPN)
 
-**Why:** Menu reveals 5 import screens — designed for bulk data ingest
-**Action:** Open each import screen, document format requirements, test with sample data
-**Effort:** 1-2 days
-**Unlocks:** Write capability for parts, BOM, routing, CRM, sign templates
+Build Phase 3 (trust tier 1) for real-time fresh data. Uses authenticated session + CDP automation. Most infrastructure exists but needs VPN testing.
 
-### Rank 6: CGI/MVI HTTP API — Write via POST (Confidence: MEDIUM)
+### Rank F: Quote Entry Automation (1 week, high risk)
 
-**Why:** If forms accept POST data, we can create/update records programmatically
-**Action:** Capture form fields from `EST.QUOTE.ENTRY`, replay as POST
-**Effort:** 2-3 days
-**Risk:** May require hidden form fields, CSRF tokens, or specific field sequences
-
-### Rank 7: Informer GWT-RPC Data Extraction (Confidence: LOW)
-
-**Why:** Authentication works but the binary protocol is hard to reverse-engineer
-**Action:** Capture a working `getData` payload from browser HAR, replay exactly
-**Effort:** 3-5 days
-**Risk:** GWT-RPC is notoriously fragile — any version mismatch breaks payloads
-
-### Rank 8: KIMCO Migration / Vendor API (Confidence: LOW for legacy)
-
-**Why:** KIMCO has modern APIs, but migration is a major business decision
-**Action:** Contact KIMCO sales, ask about API for current instance + migration timeline
-**Effort:** Vendor-dependent
-**Unlocks:** If migrated, full REST API access
-
-### Rank 9: Direct Database Access (Confidence: VERY LOW)
-
-**Why:** No credentials, unknown hosting, Pick database requires specialized ODBC
-**Action:** Ask IT if server is on-prem, request database access
-**Effort:** IT-dependent
-**Risk:** Direct DB writes could corrupt data
+The `keyedin-quote-entry-headed.js` script (364 lines) automates quote entry read operations. Would enable programmatic access to quote details. High risk — writes to production ERP if not careful.
 
 ---
 
 ## 8. Blockers & Unknowns
 
-### Active Blockers
+### Cannot Determine from Repo Alone
 
-| Blocker | Impact | Resolution |
-|---------|--------|------------|
-| Cloud sandbox cannot reach `eaglesign.keyedinsign.com` | Cannot run any live tests | Brady runs `run_all_tests.py` from VPN PC |
-| GWT-RPC binary protocol not reverse-engineered | Cannot extract Informer report data | Capture browser payload via HAR |
-| HTML parser doesn't capture cost summary data cells | WO.STATUS.SUM returns data but parser misses values | Fix BeautifulSoup selectors or use Playwright |
-| Export endpoints never tested | Don't know if they produce downloadable files | Test from VPN PC |
+| Item | Why | Action Required |
+|------|-----|-----------------|
+| Export endpoint output format | Never tested — may return CSV, Excel, or form | Brady: Test from VPN PC |
+| Import endpoint form fields | Never tested — need GET to see field structure | Brady: Test from VPN PC |
+| Informer report #31-71 | Prior session claimed 71 reports, but only 30 found in Informer | Verify: Log into Informer and count |
+| Current WO status | Warehouse has historical data only | Need live data refresh |
+| Quote entry POST payload | JS script written but never executed | Brady: Test from VPN PC with Chrome DevTools |
+| Rate limits on CGI endpoints | Never tested | Careful testing needed |
 
-### Critical Unknowns
+### Requires VPN Access
 
-| Unknown | Why It Matters | Resolution |
-|---------|---------------|------------|
-| On-prem or hosted? | If on-prem, direct DB access possible | Ask IT |
-| Which MultiValue engine? | Determines ODBC drivers, tools | Check server processes |
-| Google SSO or direct login? | Determines auth automation approach | Load login page, confirm |
-| IMPORT.* file format? | Enables write capability | Open import screens, document |
-| Informer export buttons? | Enables easy bulk data extraction | Open any BI report, check UI |
-| KIMCO migration timeline? | Invest in legacy or wait for modern? | Contact KIMCO |
-| Do `#PROJECT.*` URLs work? | `#` prefix may break URL routing | Test with/without `#` |
-| Report Option 'D' + Send To 'P' format? | Cost summary print output | Test from quote entry screen |
+- All live endpoint testing
+- Export/Import endpoint testing
+- Fresh Informer report automation
+- Phase 3 live scraping
 
-### Credentials in Repo (SECURITY NOTE)
+### Requires Vendor Contact (KIMCO/KeyedIn)
 
-The following are committed to the repository and should be rotated:
-- Password `Eagle@605!` in `extract_with_credentials.py:11`
-- URL-encoded password in `captured_all_requests.json:15`
-- JSESSIONID `16zigc7ehs9816ham55pq7opc` (likely expired)
-- Multiple authToken UUIDs (likely expired)
-- Multiple clientId UUIDs
+- Direct database access or API availability
+- Bulk export capabilities
+- Documentation for CGI endpoint parameters
+- Data model/schema documentation
+
+### Requires On-Site Access
+
+- Nothing identified — all work can be done remotely via VPN
 
 ---
 
-## Summary Table
+## SECURITY NOTE: Plaintext Credentials in Git History
 
-| Component | Found | Tested | Working | Broken | Untested |
-|-----------|-------|--------|---------|--------|----------|
-| Authentication (Main) | YES | YES | YES | — | — |
-| Authentication (Informer) | YES | YES | YES | — | — |
-| Endpoint Discovery (262) | YES | YES | YES | — | — |
-| CGI/MVI Read | YES | YES | YES (93%) | 1 endpoint | 248+ |
-| CGI/MVI Write | YES | NO | — | — | ALL |
-| Cost Summary Extract | YES | YES | PARTIAL | Parser broken | — |
-| Informer Report Catalog | YES | YES | YES | — | — |
-| Informer Data Extract | YES | YES | — | FAILED (500) | — |
-| Export Endpoints (6) | YES | NO | — | — | ALL 6 |
-| Import Endpoints (5) | YES | NO | — | — | ALL 5 |
-| MCP Server | YES | NO | — | V1 broken | V2 untested |
-| Playwright Automation | YES | NO | — | — | UNTESTED |
-| Direct DB Access | NO | NO | — | — | N/A |
-| Live Test Script | YES | NO | — | — | Awaiting Brady |
+The SignX repo branch `origin/claude/signx-platform-setup-011CUyNrHbNEXBgpFqWgJYSZ` contains **plaintext KeyedIn credentials** (`BradyF / Eagle@605!`) committed across 5 files:
 
-**Total scripts in `Keyedin/`:** 81 Python files, 12 PowerShell scripts
-**Total data extracted:** 35 MB (KeyedIn) + 184 MB (Eagle Data) + 571 KB (Benchmark)
-**Total endpoints mapped:** 262 (main) + 71 Informer reports = 333
+| File | Exposure Method |
+|------|----------------|
+| `keyedin/KEYEDIN_STATUS_REVIEW.md` | In "Credentials File" and "What We Know" sections |
+| `keyedin/SESSION_SUMMARY.md` | In "Quick Reference" section + session cookie |
+| `keyedin/WINDOWS_SETUP_GUIDE.md` | In "Prerequisites" section |
+| `scripts/run_keyedin_test.ps1` | In error output text |
+| `scripts/setup_keyedin_windows.ps1` | HARDCODED in heredoc that generates `.env.keyedin` |
+
+**Risk assessment**: The repo is **private** (`EAGLE605/SignX`). Credentials are only accessible to repo collaborators. No rotation needed unless the repo is made public or untrusted collaborators are added. Session cookie in `SESSION_SUMMARY.md` is long-expired.
 
 ---
 
-*Compiled from exhaustive scan of all files in `/home/user/SignX`. Search covered: all branches, all directories, all file types. Items marked [NOT IN REPO] were referenced in conversation history but never committed.*
+## Appendix: Corrections to Prior Session Claims
+
+| Prior Claim | Actual Finding | Status |
+|-------------|----------------|--------|
+| "402MB HTML files" | 559MB directory (168 HTML batch files) | CORRECTED |
+| "17 parsed tables" | Exactly 17 tables in eagle_warehouse.db | CONFIRMED |
+| "1.3M rows" | 1,376,130 rows | CONFIRMED |
+| "$241K dead stock" | $241,701.53 tied-up capital | CONFIRMED |
+| "54% labor below estimates" | 50-56% variance across all estimators | CONFIRMED |
+| "262 mapped endpoints" | 288 total links / 264 entries / 241 unique function codes in keyedin_site_map.json | CORRECTED (241 unique, not 262) |
+| "71 Informer reports" | 30 reports visible and captured | CORRECTED (30, not 71) |
+| "KEYEDIN_COST_SUMMARY_EXTRACTION_SKILL.md" | Does NOT exist as a file anywhere | NOT FOUND — conversation context only |
+| "parse_cost_summary_printer.py" | Superseded by parse_full_cost_detail.py | SUPERSEDED |
+| "EST HOURS never parsed" | EST HOURS IS in labor_summary.csv (est_hrs column) | CORRECTED — was parsed |
+| "Material costs never extracted" | Material costs ARE in material_detail.csv | CORRECTED — was extracted |
+| "8-agent exploration results" | Not saved to any file — existed only in conversation | NOT PERSISTED |
+| "claude/keyedin-integration-recon branch" | Not pushed to remote — exists only in previous session context | NOT COMMITTED |
