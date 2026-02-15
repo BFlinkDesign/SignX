@@ -1,0 +1,128 @@
+{
+  "database_id": "304c1e58d2dd814aae63c6a0d44e6679",
+  "database_name": "Bid Pipeline Command Center",
+  "properties": {
+    "Quote #": {
+      "type": "title",
+      "mapped_from": "quote_name",
+      "notes": "Short descriptive project name"
+    },
+    "Customer": {
+      "type": "rich_text",
+      "mapped_from": "customer"
+    },
+    "Location": {
+      "type": "rich_text",
+      "mapped_from": "location"
+    },
+    "Description": {
+      "type": "rich_text",
+      "mapped_from": "description"
+    },
+    "Cabinet Dims": {
+      "type": "rich_text",
+      "mapped_from": "cabinet_dims"
+    },
+    "CRM ID": {
+      "type": "rich_text",
+      "mapped_from": null,
+      "notes": "Filled manually by Brady after KeyedIn entry"
+    },
+    "Salesman": {
+      "type": "select",
+      "options": ["Jeff Fye", "Joe Phillips", "Rich Thompson", "House"],
+      "mapped_from": "hardcoded per flow trigger folder",
+      "notes": "Phase 1 = Jeff Fye. Phase 2 = derived from subfolder."
+    },
+    "Sign Type": {
+      "type": "select",
+      "options": ["EMC_MONUMENT", "EMC_POLE", "EMC_RETROFIT", "EMC", "CHANNEL_LETTERS", "CHANNEL_LOGO", "MONUMENT_BASE", "MONUMENT_MANUAL_READER", "CABINET_ILLUMINATED", "INFO_PANEL"],
+      "mapped_from": "sign_type"
+    },
+    "Pipeline Stage": {
+      "type": "select",
+      "options": ["INTAKE", "NEEDS_INFO", "NEEDS_VENDOR_QUOTE", "NEEDS_SUB_QUOTE", "READY_TO_TAKEOFF", "IN_PROGRESS", "QUOTED", "WON", "LOST"],
+      "mapped_from": "auto:INTAKE",
+      "notes": "Always INTAKE for new bid emails"
+    },
+    "Status": {
+      "type": "select",
+      "options": ["BID REQUEST", "REDO BID REQUEST"],
+      "mapped_from": "derived from is_redo",
+      "notes": "is_redo=true → REDO BID REQUEST, else BID REQUEST"
+    },
+    "Value Source": {
+      "type": "select",
+      "options": ["estimated", "warehouse_median", "actual_quote"],
+      "mapped_from": "auto:estimated if value provided, else null"
+    },
+    "Blocking Owner": {
+      "type": "select",
+      "options": ["brady", "salesman", "vendor", "sub"],
+      "mapped_from": "auto:brady",
+      "notes": "Default brady for new intake"
+    },
+    "Blocking": {
+      "type": "multi_select",
+      "options": ["watchfire_pricing", "needs_drawings", "needs_specs", "masonry_sub_quote"],
+      "mapped_from": "blocking"
+    },
+    "Est. Value": {
+      "type": "number",
+      "mapped_from": "estimated_value"
+    },
+    "Sq Ft": {
+      "type": "number",
+      "mapped_from": "sq_ft"
+    },
+    "Faces": {
+      "type": "number",
+      "mapped_from": "faces"
+    },
+    "Pixel Pitch (mm)": {
+      "type": "number",
+      "mapped_from": "pixel_pitch"
+    },
+    "Age (Days)": {
+      "type": "number",
+      "mapped_from": null,
+      "notes": "Notion formula, auto-calculated"
+    },
+    "Days to Delivery": {
+      "type": "number",
+      "mapped_from": null,
+      "notes": "Calculated manually"
+    },
+    "Email Received": {
+      "type": "date",
+      "mapped_from": "email trigger received_datetime"
+    },
+    "Delivery Date": {
+      "type": "date",
+      "mapped_from": "delivery_date"
+    },
+    "Is Redo": {
+      "type": "checkbox",
+      "mapped_from": "is_redo"
+    },
+    "✅ Takeoff Done": {
+      "type": "checkbox",
+      "mapped_from": "auto:false"
+    },
+    "✅ Quoted": {
+      "type": "checkbox",
+      "mapped_from": "auto:false"
+    },
+    "✅ Job Complete": {
+      "type": "checkbox",
+      "mapped_from": "auto:false"
+    }
+  },
+  "auto_defaults": {
+    "Pipeline Stage": "INTAKE",
+    "Blocking Owner": "brady",
+    "✅ Takeoff Done": false,
+    "✅ Quoted": false,
+    "✅ Job Complete": false
+  }
+}
