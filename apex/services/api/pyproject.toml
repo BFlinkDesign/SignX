@@ -6,7 +6,7 @@ dependencies = [
   "uvicorn[standard]==0.30.6",
   "pydantic==2.9.2",
   "pydantic-settings==2.5.2",
-  "orjson==3.10.7",
+  "orjson==3.11.5",
   "slowapi==0.1.9",
   "prometheus-fastapi-instrumentator==6.1.0",
   "redis==5.0.7",
