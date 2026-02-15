@@ -1,6 +1,6 @@
 # Bid Request Extraction Prompt
 
-Used in Power Automate → Anthropic IP connector → "Create a message" action.
+Used in Power Automate → HTTP connector → POST to api.anthropic.com/v1/messages.
 
 ## Model
 claude-sonnet-4-5-20250929
@@ -20,7 +20,7 @@ Extract project details from this bid request email. Return ONLY valid JSON, no 
   "quote_name": "short descriptive project name — used as the Notion title",
   "customer": "company or person name requesting the sign",
   "location": "city, state if mentioned, else null",
-  "sign_type": one of: "EMC_MONUMENT", "EMC_POLE", "EMC_RETROFIT", "EMC", "CHANNEL_LETTERS", "CHANNEL_LOGO", "MONUMENT_BASE", "MONUMENT_MANUAL_READER", "CABINET_ILLUMINATED", "INFO_PANEL", or null if unclear,
+  "sign_type": one of: "EMC_MONUMENT", "EMC_POLE", "EMC_RETROFIT", "EMC", "CHANNEL_LETTERS", "CHANNEL_LOGO", "MONUMENT_BASE", "MONUMENT_MANUAL_READER", "CABINET_ILLUMINATED", "INFO_PANEL", "MASONRY_SUB", "REMOVAL", "STRUCTURAL_BASE", or null if unclear,
   "estimated_value": dollar amount as number if mentioned, else null,
   "description": "1-3 sentence summary of what they need",
   "sq_ft": number if sign dimensions mentioned (calculate from W×H), else null,
@@ -39,6 +39,9 @@ Rules:
 - For EMC projects, try to extract pixel pitch from specs.
 - "is_redo" = true ONLY if email explicitly references a previous quote number or says "re-bid" / "revise".
 - estimated_value: only if the email states a budget or target price. Don't fabricate.
+- MASONRY_SUB = project is primarily masonry/brick/stone work for a sign base
+- REMOVAL = sign removal, demolition, or decommission job
+- STRUCTURAL_BASE = structural foundation, pole, or mounting structure only (no sign fabrication)
 ```
 
 ## User Message Template

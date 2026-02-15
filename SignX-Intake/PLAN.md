@@ -23,7 +23,7 @@ Eagle Sign receives bid requests via email across multiple salespeople (Jeff Fye
 | Notion Bid Pipeline DB | Active | 21 quotes, $516K. ID: 304c1e58d2dd814aae63c6a0d44e6679 |
 | Notion API token | Active | ntn_5204874518193...c8 |
 | Notion IP connector | Confirmed available | Premium, covered by M365 license |
-| Anthropic IP connector | NEW DISCOVERY | Premium, covered by license. "Create a message" action with model select, system prompt, temperature, extended thinking. Supports claude-sonnet-4-5-20250929. Was missed in Chrome extension audit — search "Anthropic" in New Connection to confirm. |
+| HTTP connector (for Anthropic API) | Confirmed available | Premium, covered by M365 license. POST to api.anthropic.com/v1/messages with x-api-key header. Anthropic IP connector confirmed NOT available in PA (Chrome ext audit 2026-02-14). |
 | Office 365 Outlook | Connected (x2) | Auto-authenticates to brady@eaglesign.net |
 | BID REQUEST folder structure | Mapped | Inbox/BID REQUEST/Jeff Fye, /Joe Fye, /Chris Erickson, etc. |
 
@@ -67,12 +67,12 @@ STEP 1: HTML to Text (Content Conversion)
 STEP 2: Compose — Build extraction prompt
   → Concatenate: system prompt + email plain text + sender + subject + date
 
-STEP 3: Anthropic — Create a Message
-  → Model: claude-sonnet-4-5-20250929
-  → System prompt: (see below)
-  → Content: Composed prompt from Step 2
-  → Max tokens: 500
-  → Temperature: 0
+STEP 3: HTTP — Call Anthropic API
+  → Method: POST
+  → URI: https://api.anthropic.com/v1/messages
+  → Headers: x-api-key: <ANTHROPIC_API_KEY>, anthropic-version: 2023-06-01, Content-Type: application/json
+  → Body: {"model":"claude-sonnet-4-5-20250929","max_tokens":500,"temperature":0,"system":"<system_prompt>","messages":[{"role":"user","content":"<composed_prompt>"}]}
+  → NOTE: Anthropic IP connector confirmed NOT available in PA (2026-02-14 audit). HTTP connector (Premium, covered by M365 license) used as direct replacement.
 
 STEP 4: Parse JSON — Extract Claude response
   → Parse the JSON response from Claude into individual fields
@@ -94,7 +94,7 @@ Extract project details from this bid request email. Return ONLY valid JSON, no 
   "quote_name": "short descriptive project name — used as the Notion title",
   "customer": "company or person name requesting the sign",
   "location": "city, state if mentioned, else null",
-  "sign_type": one of: "EMC_MONUMENT", "EMC_POLE", "EMC_RETROFIT", "EMC", "CHANNEL_LETTERS", "CHANNEL_LOGO", "MONUMENT_BASE", "MONUMENT_MANUAL_READER", "CABINET_ILLUMINATED", "INFO_PANEL", or null if unclear,
+  "sign_type": one of: "EMC_MONUMENT", "EMC_POLE", "EMC_RETROFIT", "EMC", "CHANNEL_LETTERS", "CHANNEL_LOGO", "MONUMENT_BASE", "MONUMENT_MANUAL_READER", "CABINET_ILLUMINATED", "INFO_PANEL", "MASONRY_SUB", "REMOVAL", "STRUCTURAL_BASE", or null if unclear,
   "estimated_value": dollar amount as number if mentioned, else null,
   "description": "1-3 sentence summary of what they need",
   "sq_ft": number if sign dimensions mentioned (calculate from W×H), else null,
@@ -136,7 +136,8 @@ SELECT FIELDS:
                                         ← Hardcoded per flow (Phase 1 = "Jeff Fye")
   Sign Type            select         → [EMC_MONUMENT, EMC_POLE, EMC_RETROFIT, EMC,
                                          CHANNEL_LETTERS, CHANNEL_LOGO, MONUMENT_BASE,
-                                         MONUMENT_MANUAL_READER, CABINET_ILLUMINATED, INFO_PANEL]
+                                         MONUMENT_MANUAL_READER, CABINET_ILLUMINATED, INFO_PANEL,
+                                         MASONRY_SUB, REMOVAL, STRUCTURAL_BASE]
                                         ← Claude "sign_type"
   Pipeline Stage       select         → [INTAKE, NEEDS_INFO, NEEDS_VENDOR_QUOTE, NEEDS_SUB_QUOTE,
                                          READY_TO_TAKEOFF, IN_PROGRESS, QUOTED, WON, LOST]
@@ -298,7 +299,7 @@ STEP 4: Notion — Append Block Children
 
 | Risk | Impact | Mitigation |
 |---|---|---|
-| Anthropic IP connector not found in Brady's PA environment | Blocks Phases 1-3 AI extraction | Connector confirmed on Microsoft Learn docs. If not in PA search, fallback: HTTP connector + raw API call (x-api-key header, POST to api.anthropic.com/v1/messages). Custom connector tutorial also available. |
+| ~~Anthropic IP connector not found~~ | ~~Blocks Phases 1-3~~ | **CONFIRMED 2026-02-14:** Anthropic IP connector does NOT exist in PA. RESOLVED: Using HTTP connector (Premium, covered by M365 license) to call api.anthropic.com/v1/messages directly. No functional impact. |
 | Notion IP connector auth fails with integration token | Blocks all Notion writes | Fallback: HTTP connector + Notion API direct calls (proven in this session) |
 | Subfolder triggers not supported by Outlook V3 | Complicates Phase 2 scaling | Use Outlook rules to tag/copy to flat folder, trigger on that |
 | Claude extraction hallucinates fields | Bad data in pipeline | Temperature 0, strict JSON schema, validation step in flow |
@@ -314,7 +315,7 @@ STEP 4: Notion — Append Block Children
 |---|---|
 | Power Automate | $0 (included in M365 Business Standard) |
 | Notion connector | $0 (Premium included in license) |
-| Anthropic connector | $0 (Premium included in license) |
+| Anthropic connector | N/A — using HTTP connector (same $0 Premium tier) |
 | Anthropic API usage | ~$1-3/month (Sonnet, ~10-20 emails/day) |
 | **Total** | **~$1-3/month** |
 
@@ -339,7 +340,8 @@ Compare to: Brady's time @ ~$50/hr effective × 30 min/day manual intake = ~$750
 
 | Date | Decision | Rationale |
 |---|---|---|
-| 2026-02-15 | Use Anthropic IP connector over HTTP | Simpler, no custom headers, same Premium tier already covered |
+| 2026-02-15 | ~~Use Anthropic IP connector over HTTP~~ | ~~Simpler, no custom headers~~ — **REVERSED 2026-02-15** |
+| 2026-02-15 | Use HTTP connector for Anthropic API | Anthropic IP connector confirmed unavailable in PA audit (2026-02-14). HTTP connector (Premium, covered by M365 license) calls api.anthropic.com/v1/messages directly. Same cost, slightly more setup. |
 | 2026-02-15 | Use Notion IP connector over HTTP | Same — native connector with Create a Page action |
 | 2026-02-15 | Sonnet over Haiku for extraction | Better structured output reliability, cost difference negligible at volume |
 | 2026-02-15 | Phase 0 gate before any building | Two dormant flows exist — must understand before duplicating |

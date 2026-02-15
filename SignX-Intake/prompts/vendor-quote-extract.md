@@ -1,6 +1,6 @@
 # Vendor Quote Extraction Prompt
 
-Used in Power Automate → Anthropic IP connector → "Create a message" action.
+Used in Power Automate → HTTP connector → POST to api.anthropic.com/v1/messages.
 Phase 3 flow: VENDOR-QUOTE-EXTRACT
 
 ## Model

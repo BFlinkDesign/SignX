@@ -36,7 +36,21 @@
     },
     "Sign Type": {
       "type": "select",
-      "options": ["EMC_MONUMENT", "EMC_POLE", "EMC_RETROFIT", "EMC", "CHANNEL_LETTERS", "CHANNEL_LOGO", "MONUMENT_BASE", "MONUMENT_MANUAL_READER", "CABINET_ILLUMINATED", "INFO_PANEL"],
+      "options": [
+        {"name": "EMC_MONUMENT"},
+        {"name": "EMC_POLE"},
+        {"name": "EMC_RETROFIT"},
+        {"name": "EMC"},
+        {"name": "CHANNEL_LETTERS"},
+        {"name": "CHANNEL_LOGO"},
+        {"name": "MONUMENT_BASE"},
+        {"name": "MONUMENT_MANUAL_READER"},
+        {"name": "CABINET_ILLUMINATED"},
+        {"name": "INFO_PANEL"},
+        {"name": "MASONRY_SUB", "color": "gray"},
+        {"name": "REMOVAL", "color": "default"},
+        {"name": "STRUCTURAL_BASE", "color": "brown"}
+      ],
       "mapped_from": "sign_type"
     },
     "Pipeline Stage": {
