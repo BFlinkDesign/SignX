@@ -39,6 +39,7 @@ Rules:
 - For EMC projects, try to extract pixel pitch from specs.
 - "is_redo" = true ONLY if email explicitly references a previous quote number or says "re-bid" / "revise".
 - estimated_value: only if the email states a budget or target price. Don't fabricate.
+- If estimated_value is $1.00 or $1, set estimated_value to null (this is a KeyedIn placeholder, not a real budget).
 - MASONRY_SUB = project is primarily masonry/brick/stone work for a sign base
 - REMOVAL = sign removal, demolition, or decommission job
 - STRUCTURAL_BASE = structural foundation, pole, or mounting structure only (no sign fabrication)

@@ -74,14 +74,21 @@ STEP 3: HTTP — Call Anthropic API
   → Body: {"model":"claude-sonnet-4-5-20250929","max_tokens":500,"temperature":0,"system":"<system_prompt>","messages":[{"role":"user","content":"<composed_prompt>"}]}
   → NOTE: Anthropic IP connector confirmed NOT available in PA (2026-02-14 audit). HTTP connector (Premium, covered by M365 license) used as direct replacement.
 
-STEP 4: Parse JSON — Extract Claude response
-  → Parse the JSON response from Claude into individual fields
+STEP 4: Parse JSON — Extract Claude API response envelope
+  → Parse the JSON response from Claude into content array
 
-STEP 5: Notion — Create a Page
+STEP 4.5: Compose — Strip code fences from Claude's text
+  → Expression: replace(replace(body('Parse_JSON')?['content'][0]?['text'], '```json', ''), '```', '')
+  → NOTE: Sonnet sometimes wraps JSON in ```json fences despite prompt instructions
+
+STEP 5: Parse JSON — Extract bid fields from cleaned text
+  → Input: output of Step 4.5 (cleaned JSON string)
+
+STEP 6: Notion — Create a Page
   → Database ID: 304c1e58d2dd814aae63c6a0d44e6679
   → Properties: Map extracted fields to Notion DB columns
 
-STEP 6: (Optional) Mark email as read / move to processed folder
+STEP 7: (Optional) Mark email as read / move to processed folder
 ```
 
 #### Claude System Prompt for Extraction:
@@ -113,6 +120,7 @@ Rules:
 - For EMC projects, try to extract pixel pitch from specs.
 - "is_redo" = true ONLY if email explicitly references a previous quote number or says "re-bid" / "revise".
 - estimated_value: only if the email states a budget or target price. Don't fabricate.
+- If estimated_value is $1.00 or $1, set estimated_value to null (this is a KeyedIn placeholder, not a real budget).
 ```
 
 #### Notion Bid Pipeline DB — Actual Schema (25 properties):
