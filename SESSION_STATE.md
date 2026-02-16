@@ -1,10 +1,10 @@
 # SignX Warehouse - Comprehensive Session State
 
-**Generated:** 2026-02-15 23:30 CST
-**Repository:** https://github.com/EAGLE605/signx-warehouse
+**Generated:** 2026-02-15 23:45 CST
+**Repository:** https://github.com/EAGLE605/signx-warehouse + https://github.com/EAGLE605/SignX
 **Branch:** master
-**Latest Commit:** ea772ab (2026-02-15 22:59:23 -0600)
-**Total Size:** 1.5 GB on disk (warehouse data + scripts)
+**Latest Commit:** 3794acb (2026-02-15 23:08:46 -0600)
+**Total Size:** ~1.6 GB on disk (warehouse data + scripts)
 **Agent:** Claude Opus 4.6
 **Operator:** Brady Flink, Eagle Sign Co.
 
@@ -17,16 +17,17 @@
 3. [Git History](#3-git-history)
 4. [Repository Structure](#4-repository-structure)
 5. [Data Pipeline Architecture](#5-data-pipeline-architecture)
-6. [Warehouse Database](#6-warehouse-database)
-7. [Scripts Inventory](#7-scripts-inventory)
-8. [G: Drive Integration](#8-g-drive-integration)
-9. [Data Coverage & Gaps](#9-data-coverage--gaps)
-10. [Numbering Systems](#10-numbering-systems)
-11. [Technical Reference](#11-technical-reference)
-12. [Decision Engine](#12-decision-engine)
-13. [Known Issues](#13-known-issues)
-14. [Deliverables](#14-deliverables)
-15. [Next Steps](#15-next-steps)
+6. [DuckDB Warehouse](#6-duckdb-warehouse)
+7. [SQLite Warehouse](#7-sqlite-warehouse)
+8. [Scripts Inventory](#8-scripts-inventory)
+9. [G: Drive Integration](#9-g-drive-integration)
+10. [Data Coverage & Gaps](#10-data-coverage--gaps)
+11. [Numbering Systems](#11-numbering-systems)
+12. [Technical Reference](#12-technical-reference)
+13. [Decision Engine](#13-decision-engine)
+14. [Known Issues](#14-known-issues)
+15. [Deliverables](#15-deliverables)
+16. [Next Steps](#16-next-steps)
 
 ---
 
@@ -40,9 +41,12 @@ SignX Warehouse is a data extraction, parsing, and analytics toolkit that pulls 
    - **KeyedIn ERP** (CGI-based, `mvi.exe`) - Work orders, labor, materials, invoices, sales, purchasing
    - **Informer BI** (GWT-RPC v7) - 30 pre-built reports on port 8443
 2. **Parses HTML spool files** - 168 batch HTML files containing 33,428 work order cost details
-3. **Maps the G: drive** (`\\ES-FS02\customers2`) - 6,861 customer folders, 456,030 files scanned
-4. **Cross-references** warehouse data with G: drive files via customer name + ESC quote numbers
-5. **Produces analytics** via decision engine (estimating accuracy, profitability, capacity, efficiency)
+3. **Scrapes reference tables** - 33 MVI reference code listings via Playwright (system Chrome)
+4. **Exports CSV reports** - 6 endpoints x 22 years = 154 jobs, merged into 7 _ALL files, enriched with ref lookups
+5. **Loads into DuckDB** - 40 tables (7 main + 33 ref), 609,132 rows, 18.0MB analytical database
+6. **Maps the G: drive** (`\\ES-FS02\customers2`) - 6,861 customer folders, 456,030 files scanned
+7. **Cross-references** warehouse data with G: drive files via customer name + ESC quote numbers
+8. **Produces analytics** via decision engine (estimating accuracy, profitability, capacity, efficiency)
 
 ### Why It Exists
 
@@ -60,57 +64,46 @@ SignX Warehouse is a data extraction, parsing, and analytics toolkit that pulls 
 |---------|------|-------|----------|
 | **1** | 2026-02-06 | Opus 4.5 | Informer BI capture (30 GWT-RPC report payloads), MVI ERP discovery (240+ processes, 19 modules), initial repo setup |
 | **2** | 2026-02-08 | Opus 4.5 | HTML Cost Detail parser (168 batches -> 5 CSVs), GWT parser/deserializer, build_warehouse.py (SQLite), decision engine, local file ingestion |
-| **3** | 2026-02-15 (early) | Opus 4.6 | CSV export pipeline (6 endpoints x 22 years), reference table scraper (33 tables), enrichment engine, crash recovery/resume |
-| **4** | 2026-02-15 (late) | Opus 4.6 | G: drive discovery (6,861 folders), ESC filename scanner (40,611 indexed files), quote lookup tool, estimation briefs (Mercy/St. Anthony/Ankeny), .gitignore security fix, full commit/push |
+| **3** | 2026-02-15 (early) | Opus 4.6 | CSV export pipeline (6 endpoints x 22 years = 154 jobs), reference table scraper (33 tables via Playwright), enrichment engine (5 files at 98-100% join rate), crash recovery/resume |
+| **4** | 2026-02-15 (mid) | Opus 4.6 | G: drive discovery (6,861 folders), ESC filename scanner (40,611 indexed files), quote lookup tool, estimation briefs, .gitignore security fix, full commit/push |
+| **5** | 2026-02-15 (late) | Opus 4.6 | **DuckDB warehouse load** (40 tables, 609K rows, 18MB), clean CSV pipeline, multiline header fix, session state generation |
 
-### Session 4 Detail (Current)
+### Session 5 Detail (Current)
 
 **Tasks completed this session:**
 
-1. **G: Drive Folder Structure Mapping**
-   - Remapped stale SMB drive `G:` -> `\\ES-FS02\customers2`
-   - Scanned 50 top-level folders, cataloged 6,861 customer folders
-   - Exported `g_drive_customer_map.csv` (Letter, Customer, SubfolderCount, SampleSubfolders, Path)
-   - Found naming convention: 85.7% plain names, 14.3% year-based, 0% with WO numbers in folder names
-   - Key discovery: WO/quote numbers appear in **filenames** not folder names, format `MMYY-NNNNN-RR`
+1. **DuckDB Database Creation**
+   - Built `scripts/load_duckdb.py` (329 lines) - strips report-format artifacts, writes clean CSVs, loads via DuckDB native `read_csv`
+   - Strips metadata rows, repeated year headers, subtotals, blank lines, "NO RECORDS FOUND" placeholders
+   - First attempt used `executemany` with 463K rows - hung indefinitely
+   - Rewrote to 2-pass: Python csv strips to clean CSV, DuckDB `read_csv` loads natively (completes in seconds)
+   - 10 ref tables had multiline quoted headers (`"Sales\nAccount"`) that broke DuckDB auto-detect
+   - Added Python csv fallback: read multiline, flatten newlines, write clean, reload
+   - Final result: 40 tables, 609,132 rows, 18.0MB at `warehouse/signx.duckdb`
 
-2. **ESC Filename Scanner**
-   - Built `scan_esc_numbers.ps1` (214 lines PowerShell, streaming CSV output)
-   - Scanned 456,030 files in 4:08
-   - Found 43,367 matches, 32,468 unique ESC numbers
-   - Cleaned false positives -> `esc_file_index_clean.csv` (40,611 clean rows)
-   - Preserved 4-digit jobs >= 8000 (legitimate pre-2012 quotes)
+2. **Clean CSV Intermediate Layer**
+   - Created `warehouse/clean/` directory (72MB total, 17 files)
+   - 7 main table CSVs with normalized column names (snake_case, deduplicated)
+   - 10 reference table CSVs with flattened multiline headers
+   - These serve as DuckDB's import source and are reusable for other tools
 
-3. **Quote Lookup Tool**
-   - Built `scripts/lookup_job.py` (203 lines Python)
-   - Combines ESC file index + warehouse billing data
-   - Batch support: `python lookup_job.py 40654 40655 40660`
-   - Shows customer, WO, billing, GM%, files with sizes/dates, G: paths
+3. **Data Validation**
+   - Queried all tables to verify row counts match source CSVs
+   - Validated enrichment columns populated (work_dept_name, salesperson_1_name, etc.)
+   - Sample queries confirmed: Cat Scale = $29.2M top customer, Fabrication = 180K hrs top dept
+   - DuckDB auto-detected date columns (time_date, inv_date as DATE type)
 
-4. **Customer Cross-Reference**
-   - 85.6% match rate (2,775/3,241 warehouse customers found on G: drive)
-   - Match breakdown: 37.3% exact, 45.9% first-word, 2.4% contains
-   - 466 unmatched (mostly numeric-prefix names, abbreviations, defunct)
-   - ESC quote_number to warehouse quote_nbr: 31.1% match rate (4,015 matches)
-
-5. **Monday Estimation Briefs**
-   - Gathered context for 3 pending jobs:
-     - **Mercy UC Pleasant Hill** - caisson replacement (21 monument files, 8 quotes, no caisson cost history)
-     - **St. Anthony Hospital EMC** - Watchfire monument (68 files, 26 quotes across 5 phases, need Watchfire pricing)
-     - **Ankeny Parks** - 3 park signs (sparse data, WDM Parks $57K baseline, Job 7880 missing)
-   - Saved to `C:\Users\Brady.EAGLE\Desktop\MONDAY-ESTIMATION-BRIEFS.md`
-
-6. **Security & Repository Cleanup**
-   - Caught `informer_session.json` containing session tokens (jsessionid, auth_token, client_id)
-   - Removed from git tracking, added to `.gitignore`
-   - Added large data directories to `.gitignore`: `so_contracts/`, `so_contract_raw/`, `csv_exports/`, `spooled_samples/`, `wo_batches/`, `2026-*/`
-   - Staged 23 files, committed, pushed to origin/master
+4. **Session State Documentation**
+   - Updated SESSION_STATE.md with DuckDB warehouse details (this file)
+   - Updated SESSION_HANDOFF.md in prior step
 
 ---
 
 ## 3. Git History
 
 ```
+3794acb 2026-02-15 23:08:46 Add DuckDB loader script and ignore DuckDB binary files
+0fcb009 2026-02-15 23:04:00 Add comprehensive session state document
 ea772ab 2026-02-15 22:59:23 Update session handoff with Session 3 status (pipeline complete)
 84bc856 2026-02-15 22:56:57 Add warehouse data extraction pipeline, parsed datasets, and skills
 6086bbe 2026-02-15 22:53:05 Add CSV export pipeline: extract, reference tables, and enrichment
@@ -119,15 +112,15 @@ dbf6d00 2026-02-06 17:46:58 Update session handoff with final status
 ea086b1 2026-02-06 00:47:43 Initial commit: SignX Warehouse - KeyedIn data extraction toolkit
 ```
 
-**Total changes since initial commit:** 231 files changed, 4,209,733 insertions, 181 deletions
+**Total:** 8 commits, 2 remotes (origin=signx-warehouse, signx=SignX)
 
 ---
 
 ## 4. Repository Structure
 
 ```
-C:\Scripts\signx-warehouse\ (1.5 GB)
-├── .gitignore                         # Excludes secrets, large data, caches
+C:\Scripts\signx-warehouse\ (~1.6 GB)
+├── .gitignore                         # Excludes: .env, *.duckdb, csv_exports/, etc.
 ├── AGENTS.md                          # Agent instructions (beads integration)
 ├── SESSION_HANDOFF.md                 # Session-by-session handoff notes
 ├── SESSION_STATE.md                   # THIS FILE - comprehensive state
@@ -135,67 +128,52 @@ C:\Scripts\signx-warehouse\ (1.5 GB)
 ├── g_drive_discovery.md               # G: drive mapping report (293 lines)
 ├── g_drive_matched_customers.csv      # 2,775 warehouse->G: matches
 ├── g_drive_unmatched_customers.csv    # 466 unmatched customers
-├── esc_file_index.csv                 # Raw ESC scan (43,367 rows, in .gitignore)
 ├── esc_file_index_clean.csv           # Clean ESC index (40,611 rows)
 ├── scan_esc_numbers.ps1               # PowerShell G: drive scanner (214 lines)
 │
-├── config/                            # (empty)
-├── skills/
-│   └── constructioniq-frameworks.md   # Skill reference
-├── tests/                             # (empty)
-│
-├── scripts/ (924 KB, 13,968 lines across 27 files)
-│   ├── _get_session.py                # Playwright SSO -> Informer session (254 lines)
-│   ├── build_warehouse.py             # Merge all CSVs into SQLite (1,034 lines)
-│   ├── capture_all_reports.py         # Playwright GWT-RPC capture (1,093 lines)
-│   ├── capture_hook.js                # Browser JS injection hook
-│   ├── decision_engine.py             # 8-module analytics engine (711 lines)
+├── scripts/ (28 files, ~14,300 lines)
+│   ├── load_duckdb.py                 # DuckDB warehouse loader (329 lines) [NEW]
 │   ├── enrich_csv_exports.py          # Reference code enrichment (413 lines)
-│   ├── extract_all_so_contracts.py    # CDP batch extraction (724 lines)
 │   ├── extract_mvi_csv_exports.py     # Bulk CSV export from MVI (967 lines)
-│   ├── extract_quote_report.py        # Quote report extractor (301 lines)
-│   ├── extract_spooled_reports.py     # Spooled report handler (281 lines)
-│   ├── gwt_analyze.py                 # GWT serialization diagnostics (379 lines)
-│   ├── gwt_deserialize.py             # Right-to-left GWT deser (613 lines)
-│   ├── gwt_dump_rows.py               # Raw data dump (155 lines)
-│   ├── gwt_parser.py                  # GWT RPC v7 parser (1,259 lines)
-│   ├── ingest_local_files.py          # H:\ + OneDrive scanner (632 lines)
-│   ├── lookup_job.py                  # Quote-to-files lookup (203 lines)
-│   ├── parse_full_cost_detail.py      # HTML -> 5 CSVs (907 lines)
-│   ├── scrape_informer.py             # HTTP GWT-RPC extraction (1,748 lines)
 │   ├── scrape_ref_tables_playwright.py # Playwright ref table scraper (319 lines)
-│   ├── split_captures.py              # Split capture files (170 lines)
-│   ├── tracer_bullet.py               # POC CDP login (451 lines)
-│   ├── validate_so_contract.py        # Data validation (408 lines)
-│   ├── test_extract_5pages.py         # Extraction tests (118 lines)
-│   ├── test_field_mapping.py          # Field mapping tests (137 lines)
-│   ├── test_pipeline_fixes.py         # Pipeline fix tests (269 lines)
-│   └── test_quote_pagination.py       # Quote pagination tests (292 lines)
+│   ├── build_warehouse.py             # Merge all CSVs into SQLite (1,034 lines)
+│   ├── parse_full_cost_detail.py      # HTML -> 5 CSVs (907 lines)
+│   ├── decision_engine.py             # 8-module analytics engine (711 lines)
+│   ├── lookup_job.py                  # Quote-to-files lookup (203 lines)
+│   ├── capture_all_reports.py         # Playwright GWT-RPC capture (1,093 lines)
+│   ├── scrape_informer.py             # HTTP GWT-RPC extraction (1,748 lines)
+│   ├── gwt_parser.py                  # GWT RPC v7 parser (1,259 lines)
+│   ├── gwt_deserialize.py             # Right-to-left GWT deser (613 lines)
+│   ├── ingest_local_files.py          # H:\ + OneDrive scanner (632 lines)
+│   └── ... (14 more: extractors, tests, utilities)
 │
 ├── warehouse/
+│   ├── signx.duckdb                   # DuckDB database (18.0 MB, 40 tables, 609K rows) [NEW]
+│   ├── clean/                         # Clean intermediate CSVs (72 MB, 17 files) [NEW]
+│   │   ├── emp_hours.csv              # 463,825 rows, 14 cols (39.2MB)
+│   │   ├── cust_prod.csv              # 26,947 rows, 28 cols (4.5MB)
+│   │   ├── gm_by_inv.csv             # 26,947 rows, 33 cols (4.6MB)
+│   │   ├── slsper_prod.csv            # 26,947 rows, 25 cols (3.9MB)
+│   │   ├── wo_labor.csv               # 27,004 rows, 168 cols (12.3MB)
+│   │   ├── wip_summary_closed.csv     # 33,880 rows, 34 cols (6.6MB)
+│   │   ├── wip_summary_open.csv       # 2,447 rows, 36 cols (0.5MB)
+│   │   └── ref_*.csv                  # 10 cleaned reference tables
 │   ├── production/
-│   │   ├── eagle_warehouse.db         # SQLite database (211 MB, 1,376,130 rows)
+│   │   ├── eagle_warehouse.db         # SQLite database (211 MB, 17 tables, 1.38M rows)
 │   │   └── warehouse_manifest.json    # Build metadata + row counts
 │   ├── staging/                       # (empty, used during builds)
 │   ├── reports/
 │   │   └── decision_report_*.md       # Decision engine output
-│   └── raw/                           # (1.4 GB, mostly .gitignored)
-│       ├── 2026-01-30T*/              # 11 timestamped ingestion runs
-│       ├── 2026-02-15T*/              # 5 timestamped runs from session 4
-│       ├── csv_exports/               # 7 merged + 5 enriched + 33 ref tables
+│   └── raw/                           # (~1.4 GB, mostly .gitignored)
+│       ├── csv_exports/               # 197 files: yearly CSVs, merged, enriched, ref tables
 │       ├── so_contracts/              # .gitignored
-│       ├── so_contract_raw/           # .gitignored
-│       ├── spooled_samples/           # .gitignored
 │       ├── wo_batches/                # .gitignored
-│       ├── recon/                     # Reconnaissance data
-│       ├── all_wo_numbers.csv         # Full WO number list
-│       ├── so_contracts_parsed.csv    # 27,063 parsed WO rows
-│       ├── so_contract_wo_summary.csv # 13,752 WO summaries
-│       ├── so_contract_labor.csv      # Labor detail
-│       ├── so_contract_material.csv   # Material detail
-│       ├── so_contract_outplant.csv   # Outplant detail (7,126 rows)
-│       ├── wo_labor_all_DUE.csv       # 27,052 labor rows
-│       └── quote_status_report.csv    # Quote status extract
+│       └── ...
+│
+├── config/                            # (empty)
+├── skills/
+│   └── constructioniq-frameworks.md   # Skill reference
+└── tests/                             # (empty)
 ```
 
 ---
@@ -217,51 +195,56 @@ C:\Scripts\signx-warehouse\ (1.5 GB)
               +--------+--------+    +------+------+
                        |                    |
     +------------------+----------+    +----+----+
-    |                             |    |         |
-+---+---+  +-----+-----+  +-----+--+ +----+---+
-|fast_  |  |extract_mvi|  |scrape_ | |capture_|
-|extract|  |_csv_      |  |ref_    | |all_    |
-|.py    |  |exports.py |  |tables  | |reports |
-|(CDP)  |  |(HTTP POST)|  |_playwt | |.py     |
-+---+---+  +-----+-----+  +-----+--+ +---+----+
-    |            |              |          |
-    v            v              v          v
-+---+---+  +----+-----+  +----+----+ +---+----+
-|168 HTML|  |7 merged  |  |33 ref  | |30 GWT  |
-|batches |  |CSVs      |  |tables  | |payloads|
-+---+---+  +----+-----+  +----+----+ +---+----+
-    |            |              |          |
-    v            |              |          |
-+---+--------+  |              |          |
-|parse_full_ |  v              v          |
-|cost_detail |  +----+---------+          |
-|.py         |  |enrich_csv_exports.py|   |
-+---+--------+  +----+----------------+  |
-    |                 |                   |
-    v                 v                   v
-+---+-----+    +-----+-----+    +-------+------+
-|5 parsed |    |5 enriched |    |scrape_       |
-|CSVs     |    |CSVs       |    |informer.py   |
-+---+-----+    +-----+-----+    +-------+------+
-    |                 |                   |
-    +---------+-------+---+------+--------+
-              |           |      |
-              v           v      v
-         +----+----+ +---+---+ +-+--------+
-         |ingest_  | |build_ | |decision_ |
-         |local_   | |ware-  | |engine.py |
-         |files.py | |house  | |(8 modules)|
-         +----+----+ |.py    | +---+------+
-              |      +---+---+     |
-              +----------|--------+
-                         v
-                  +------+-------+
-                  |eagle_warehouse|
-                  |.db (211 MB)   |
-                  |1,376,130 rows |
-                  |17 tables      |
-                  +--------------+
+    |                  |          |    |         |
++---+---+  +----------+--+ +-----+--+ +----+---+
+|fast_  |  |extract_mvi_ | |scrape_ | |capture_|
+|extract|  |csv_exports  | |ref_    | |all_    |
+|.py    |  |.py (HTTP)   | |tables  | |reports |
+|(CDP)  |  |154 jobs     | |_playwt | |.py     |
++---+---+  +------+------+ +--+-----+ +---+----+
+    |              |           |           |
+    v              v           v           v
++---+---+  +------+------+ +--+----+ +---+----+
+|168 HTML|  |7 merged CSVs| |33 ref | |30 GWT  |
+|batches |  |1.56M lines  | |tables | |payloads|
++---+---+  +------+------+ +--+----+ +---+----+
+    |              |           |           |
+    v              v           v           |
++---+--------+ +---+----------+---+       |
+|parse_full_ | |enrich_csv_exports|       |
+|cost_detail | |.py (join refs)   |       |
++---+--------+ +---+--------------+       |
+    |                |                    |
+    v                v                    v
++---+-----+  +------+-------+  +--------+-------+
+|5 parsed |  |5 enriched    |  |scrape_informer |
+|CSVs     |  |CSVs          |  |.py (HTTP GWT)  |
++---+-----+  +------+-------+  +--------+-------+
+    |                |                    |
+    +--------+-------+----+------+--------+
+             |            |      |
+             v            v      v
+    +--------+---+ +------+---+ +-+--------+
+    |load_duckdb | |build_    | |decision_ |
+    |.py [NEW]   | |warehouse | |engine.py |
+    |strip+load  | |.py       | |(8 modules)|
+    +--------+---+ +------+---+ +---+------+
+             |            |         |
+             v            v         v
+    +--------+---+ +------+------+ +----+------+
+    |signx.duckdb| |eagle_ware-  | |reports/   |
+    |18MB, 40 tbl| |house.db     | |decision_  |
+    |609K rows   | |211MB, 17tbl | |report.md  |
+    +------------+ |1.38M rows   | +-----------+
+                   +-------------+
 ```
+
+### Two Analytical Databases
+
+| Database | Engine | Size | Tables | Rows | Purpose |
+|----------|--------|------|--------|------|---------|
+| `signx.duckdb` | DuckDB | 18 MB | 40 | 609,132 | CSV exports + ref tables (2005-2026, enriched) |
+| `eagle_warehouse.db` | SQLite | 211 MB | 17 | 1,376,130 | HTML batch data + local files (full history) |
 
 ### Trust Hierarchy (source_tier)
 
@@ -271,10 +254,128 @@ C:\Scripts\signx-warehouse\ (1.5 GB)
 | 2 | informer_bi_export | **PARTIAL** | GWT RPC extraction - 1/30 reports automated |
 | 3 | html_reparse | **COMPLETE** | 168 HTML batch files -> 5 CSVs (33,428 WOs) |
 | 4 | local_excel_csv | **COMPLETE** | 13 local file sources ingested |
+| 5 | mvi_csv_export | **COMPLETE** | 6 endpoints x 22 years, enriched with ref lookups |
 
 ---
 
-## 6. Warehouse Database
+## 6. DuckDB Warehouse
+
+### signx.duckdb (18.0 MB)
+
+**Location:** `warehouse/signx.duckdb`
+**Created:** 2026-02-15
+**Loader:** `scripts/load_duckdb.py` (329 lines)
+**Clean CSVs:** `warehouse/clean/` (72 MB, 17 files)
+
+#### Main Tables (7)
+
+| Table | Cols | Rows | Source File | Key Columns |
+|-------|------|------|-------------|-------------|
+| emp_hours | 14 | 463,825 | EMP.HOURS.BY.DATE_ALL_enriched | empno, employee_name, time_date (DATE), labor_hrs, work_code, work_dept_name |
+| wip_summary_closed | 34 | 33,880 | EXPORT.WIP.SUMMARY_C_ALL | work_order, act_total, est_total, var_cost, act_gm_pct, customer_name |
+| wo_labor | 168 | 27,004 | EXPORT.WO.LABOR.ANALYSIS_ALL_enriched | wo, due_date, customer, sign_type, template_code + 22 dept groups x 6 metrics |
+| cust_prod | 28 | 26,947 | CUST.PROD.EXPORT_ALL_enriched | cust_no, customer_name, prod_code, gross_sales, gross_margin, salesperson_1_name |
+| gm_by_inv | 33 | 26,947 | GM.BY.INV.EXPORT_ALL_enriched | invoice_no, inv_date, prod_code, gross_sales, total_cost, gross_margin, salesper_1_name |
+| slsper_prod | 25 | 26,947 | SLSPER.PROD.EXPORT_ALL_enriched | invoice_no, inv_date, prod_code, gross_sales, gross_margin, salesperson_1_name |
+| wip_summary_open | 36 | 2,447 | EXPORT.WIP.SUMMARY_O_ALL | work_order, act_total, est_total, customer_name, due_date |
+
+#### Reference Tables (33)
+
+| Table | Rows | Key Use |
+|-------|------|---------|
+| ref_salespersons_list | 15 | Salesperson code -> name (used in enrichment) |
+| ref_states_list | 63 | State abbreviation -> name |
+| ref_sales_taxes_list | 549 | Tax jurisdiction details |
+| ref_work_code_list | 62 | Work code -> description + dept mapping |
+| ref_sign_type_codes_listing | 38 | Sign type code -> description |
+| ref_sign_template_listing | 55 | Template code -> description |
+| ref_sales_codes_list | 39 | Product/sales code -> GL accounts |
+| ref_show_inv_types | 52 | Inventory type codes |
+| ref_show_um_codes | 32 | Unit of measure codes |
+| ref_country_list | 31 | Country codes |
+| ref_est_quote_status_code_list | 30 | Quote status codes |
+| ref_work_dept_list | 21 | Work dept code -> name (FABRICATION, INSTALL, etc.) |
+| ref_quote_sales_stage_code_listing | 21 | Sales pipeline stages |
+| ref_territory_codes_list | 18 | Sales territory codes |
+| ref_extra_charges_list | 16 | Extra charge codes |
+| ref_show_adjust_code | 12 | Inventory adjustment codes |
+| ref_show_buyers | 12 | Buyer/purchasing agents |
+| ref_order_classes_list | 12 | Order classification codes |
+| ref_price_codes_list | 8 | Price tier codes |
+| ref_account_type_code_listing | 7 | Customer account types |
+| ref_show_op_status | 7 | Operation status codes |
+| ref_reason_codes_list | 6 | Return/adjustment reason codes |
+| ref_show_issue_reason_codes | 5 | Inventory issue reasons |
+| ref_call_method_codes_listing | 4 | CRM call method codes |
+| ref_show_engr_status_codes | 4 | Engineering status codes |
+| ref_call_type_codes_listing | 3 | CRM call type codes |
+| ref_lead_source_event_listing | 3 | Lead source tracking |
+| ref_price_class_code_list | 3 | Price class codes |
+| ref_project_milestone_codes_listing | 3 | Project milestone tracking |
+| ref_service_call_status_code_listing | 3 | Service call status |
+| ref_order_types_list | 1 | Order type codes |
+| ref_project_status_codes_listing | 0 | (empty - no active data) |
+| ref_project_type_codes_listing | 0 | (empty - no active data) |
+
+#### Key Analytics Queries (Validated)
+
+```sql
+-- Top 10 customers by gross sales
+SELECT customer_name, count(*) as invoices, round(sum(gross_sales),2) as total_sales
+FROM cust_prod WHERE gross_sales > 0
+GROUP BY customer_name ORDER BY total_sales DESC LIMIT 10;
+
+-- Result: Cat Scale $29.2M (2,510 invoices), Nagle Signs $2.1M, City of Des Moines $705K
+
+-- Hours by department
+SELECT work_dept_name, round(sum(labor_hrs),1) as total_hrs, count(*) as entries
+FROM emp_hours WHERE work_dept_name != ''
+GROUP BY work_dept_name ORDER BY total_hrs DESC;
+
+-- Result: Fabrication 181K hrs, Installation 101K, Vinyl 31K, Paint 30K, Electrical 24K
+
+-- Salesperson performance
+SELECT salesperson_1_name, count(*) as invoices, round(sum(gross_sales),2) as sales
+FROM cust_prod WHERE salesperson_1_name IS NOT NULL AND salesperson_1_name != ''
+GROUP BY salesperson_1_name ORDER BY sales DESC;
+```
+
+#### DuckDB Loader Architecture
+
+```
+Raw enriched CSVs (report-format: metadata + repeated headers + subtotals + blank lines)
+    |
+    v
+[strip_to_clean_csv()] Python csv reader
+    - Skips blank rows, metadata (Eagle Sign, dates, timestamps)
+    - Skips subtotals (*** Totals, Product Type Totals, Grand Total)
+    - Skips repeated year headers (keeps first only)
+    - Skips "NO RECORDS FOUND" rows
+    - Normalizes column names (snake_case, deduplicated)
+    - Pads/trims rows to header width
+    |
+    v
+Clean CSVs in warehouse/clean/ (72 MB, single header + data rows only)
+    |
+    v
+[DuckDB read_csv()] Native columnar import
+    - auto_detect=true for type inference
+    - ignore_errors=true for edge cases
+    - null_padding=true for ragged rows
+    |
+    v
+signx.duckdb (18.0 MB, 40 tables)
+
+Reference table fallback:
+    DuckDB read_csv fails on multiline quoted headers ("Sales\nAccount")
+        -> Python csv.reader (handles RFC 4180 multiline)
+        -> Flatten newlines in headers and values
+        -> Write clean CSV -> DuckDB read_csv (10 tables needed this)
+```
+
+---
+
+## 7. SQLite Warehouse
 
 ### eagle_warehouse.db (211 MB SQLite)
 
@@ -314,45 +415,36 @@ C:\Scripts\signx-warehouse\ (1.5 GB)
 | gm_by_salesperson | 4,298 | GM detail by salesperson |
 | labor_forensics | 53,380 | Deep labor analysis |
 
-#### Indexes (19)
-
-```
-idx_labor_detail_wo, idx_labor_detail_emp, idx_labor_detail_dept, idx_labor_detail_date
-idx_labor_summary_wo, idx_material_wo, idx_outplant_wo
-idx_invoices_cust, idx_invoices_date, idx_wo_customer, idx_wo_sign_type
-idx_wo_estimator, idx_wo_date, idx_po_vendor, idx_sales_orders_so
-idx_forensics_wo, idx_forensics_emp, idx_gm_sp_cust
-```
-
 ---
 
-## 7. Scripts Inventory
+## 8. Scripts Inventory
 
-### Data Extraction (6 scripts, 4,148 lines)
+### Data Extraction (6 scripts, ~4,400 lines)
 
 | Script | Lines | Method | Status |
 |--------|-------|--------|--------|
 | extract_all_so_contracts.py | 724 | Chrome CDP -> HTML spool | COMPLETE (168 batches) |
-| extract_mvi_csv_exports.py | 967 | HTTP POST -> CSV download | COMPLETE (6 endpoints x 22 years) |
-| scrape_ref_tables_playwright.py | 319 | Playwright -> ref table HTML | COMPLETE (31/33 tables) |
+| extract_mvi_csv_exports.py | 967 | HTTP POST -> CSV download | COMPLETE (154 jobs, resume/retry) |
+| scrape_ref_tables_playwright.py | 319 | Playwright + system Chrome | COMPLETE (33/33 tables) |
 | capture_all_reports.py | 1,093 | Playwright -> GWT-RPC payloads | COMPLETE (30 reports) |
 | scrape_informer.py | 1,748 | HTTP GWT-RPC replay | PARTIAL (1/30 automated) |
 | _get_session.py | 254 | Playwright SSO -> session tokens | WORKING |
 
-### Data Parsing & Transformation (5 scripts, 2,792 lines)
+### Data Parsing & Transformation (5 scripts, ~2,800 lines)
 
 | Script | Lines | Input | Output |
 |--------|-------|-------|--------|
 | parse_full_cost_detail.py | 907 | 168 HTML batch files | 5 CSVs (WO headers, labor detail/summary, material, outplant) |
 | gwt_parser.py | 1,259 | GWT-RPC responses | Parsed rows via extract_rows() |
 | gwt_deserialize.py | 613 | GWT binary format | Right-to-left HashMap deserialization |
-| enrich_csv_exports.py | 413 | Merged CSVs + ref tables | 5 enriched CSVs with human-readable names |
+| enrich_csv_exports.py | 413 | Merged CSVs + ref tables | 5 enriched CSVs (98-100% join rates) |
 | split_captures.py | 170 | Captured payloads | Split into individual files |
 
-### Data Loading (2 scripts, 1,666 lines)
+### Data Loading (3 scripts, ~2,000 lines)
 
 | Script | Lines | Purpose |
 |--------|-------|---------|
+| load_duckdb.py | 329 | Strip report-format CSVs -> DuckDB (40 tables) [NEW] |
 | build_warehouse.py | 1,034 | Merge all CSVs into SQLite with trust-based upsert |
 | ingest_local_files.py | 632 | Scan H:\ and OneDrive for Excel/CSV -> local_*.csv |
 
@@ -368,21 +460,16 @@ idx_forensics_wo, idx_forensics_emp, idx_gm_sp_cust
 |--------|-------|---------|
 | lookup_job.py | 203 | Quote-to-files lookup combining ESC index + warehouse data |
 
-### Utilities & Debug (5 scripts, 1,632 lines)
+### Utilities, Debug & Tests (9 scripts, ~2,400 lines)
 
 | Script | Lines | Purpose |
 |--------|-------|---------|
 | tracer_bullet.py | 451 | POC: CDP login -> Informer export |
 | validate_so_contract.py | 408 | Data validation checks |
 | gwt_analyze.py | 379 | GWT serialization diagnostics |
-| gwt_dump_rows.py | 155 | Raw data dump around Row positions |
 | extract_quote_report.py | 301 | Quote report extraction |
 | extract_spooled_reports.py | 281 | Spooled report handling |
-
-### Tests (4 scripts, 816 lines)
-
-| Script | Lines | Purpose |
-|--------|-------|---------|
+| gwt_dump_rows.py | 155 | Raw data dump around Row positions |
 | test_pipeline_fixes.py | 269 | Pytest suite for extraction pipeline |
 | test_quote_pagination.py | 292 | Quote pagination validation |
 | test_field_mapping.py | 137 | Field mapping verification |
@@ -390,7 +477,7 @@ idx_forensics_wo, idx_forensics_emp, idx_gm_sp_cust
 
 ---
 
-## 8. G: Drive Integration
+## 9. G: Drive Integration
 
 ### G: Drive = `\\ES-FS02\customers2` (mapped as G:)
 
@@ -428,7 +515,6 @@ G:\
 |-------|-----|---------|
 | ~8000s | 2010-2011 | `Bankers Trust 1st Flr 1110-8398-00.pdf` |
 | ~15000s | 2014 | `H & R Block 0114-15454-00.ai` |
-| ~21000s | 2016 | n/a |
 | ~27000s | 2019 | `Mercy One Euclid Monument 0319-27135-00.pdf` |
 | ~37000s | 2024 | Phase 1 St. Anthony letters |
 | ~40000s | 2025-2026 | `Pancheros Waukee West Elev 0126-40654-00.pdf` |
@@ -444,35 +530,18 @@ G:\
 | Unmatched | 466 (14.4%) |
 | ESC quote -> warehouse quote_nbr | 4,015 / 12,912 (31.1%) |
 
-### Generated Files
-
-| File | Rows | Purpose |
-|------|------|---------|
-| `g_drive_customer_map.csv` | 6,861 | Letter, Customer, SubfolderCount, Path |
-| `esc_file_index_clean.csv` | 40,611 | esc_number, quote_number, full_path, customer_folder |
-| `g_drive_matched_customers.csv` | 2,775 | Name, G: folder, match type |
-| `g_drive_unmatched_customers.csv` | 466 | Name, reason |
-| `g_drive_discovery.md` | 293 lines | Full discovery report |
-
 ---
 
-## 9. Data Coverage & Gaps
+## 10. Data Coverage & Gaps
 
-### What's In The Warehouse (1,376,130 rows)
+### Total Data Inventory
 
-| Data | Rows | Source Tier | Completeness |
-|------|------|------------|--------------|
-| Work order costs & margins | 33,428 | Tier 3 (HTML parse) | HIGH - all historical WOs |
-| Labor transactions | 254,012 | Tier 3 | HIGH - full detail |
-| Labor est vs actual | 161,377 | Tier 3 | HIGH - summary rollup |
-| Material transactions | 780,868 | Tier 3 | MEDIUM - contains dupes |
-| Outplant transactions | 23,352 | Tier 3 | HIGH |
-| Invoices | 26,643 | Tier 4 (local Excel) | MEDIUM - may be subset |
-| Customers | 3,748 | Tier 4 | LOW - summary only |
-| Sales orders | 27,707 | Tier 4 | MEDIUM |
-| Purchase orders | 5,974 | Tier 4 | LOW - may be subset |
-| Inventory | 1,062 | Tier 4 | MEDIUM - snapshot |
-| Employees | 95 | Derived | HIGH (18 active) |
+| Store | Tables | Rows | Source |
+|-------|--------|------|--------|
+| signx.duckdb | 40 | 609,132 | MVI CSV exports (2005-2026) + 33 ref tables |
+| eagle_warehouse.db | 17 | 1,376,130 | HTML batch parse + local files |
+| csv_exports/ | 197 files | ~1.56M lines | Raw yearly + merged + enriched CSVs |
+| esc_file_index_clean.csv | 1 file | 40,611 | G: drive filename scan |
 
 ### What's NOT In The Warehouse
 
@@ -482,44 +551,37 @@ G:\
 | Vendor master | UniVerse VENDOR | ODBC or Informer Vendor Listing |
 | Quote details | UniVerse QUOTE | ODBC or Informer Quote Status |
 | AR open invoices | UniVerse AR | ODBC or Informer AR Open |
-| Inventory history | UniVerse INV.TRANS | ODBC or Informer Inv Trans History |
-| Purchase history | UniVerse PO | ODBC or Informer Purchase History |
-| Sales cost detail | UniVerse SALES | ODBC or Informer Sales Cost Detail |
-| Employee hours (non-WO) | UniVerse EMPLOYEE | ERP process EMP.HOURS.BY.DATE |
 | GL data | UniVerse GL | NOT ACCESSIBLE |
 | Payroll data | UniVerse PAYROLL | NOT ACCESSIBLE |
 
-### CSV Export Pipeline Data (Not Yet In SQLite)
+### Enrichment Join Results (from enrich_csv_exports.py)
 
-| File | Lines | Size | Enriched |
-|------|-------|------|----------|
-| EMP.HOURS.BY.DATE_ALL.csv | 1,108,565 | 39MB | Yes (41MB) |
-| CUST.PROD.EXPORT_ALL.csv | 134,869 | 7.4MB | Yes (6.5MB) |
-| GM.BY.INV.EXPORT_ALL.csv | 129,165 | 8.4MB | Yes (7.0MB) |
-| EXPORT.WIP.SUMMARY_C_ALL.csv | 67,997 | 9.1MB | No |
-| SLSPER.PROD.EXPORT_ALL.csv | 63,421 | 4.5MB | Yes (4.1MB) |
-| EXPORT.WO.LABOR.ANALYSIS_ALL.csv | 54,349 | 21MB | Yes (13MB) |
-| EXPORT.WIP.SUMMARY_O_ALL.csv | 5,129 | 688KB | No |
+| File | Column | Match Rate | Orphans |
+|------|--------|------------|---------|
+| EMP.HOURS | Work Code | 100% | 0 |
+| EMP.HOURS | Work Dept | 100% | 0 |
+| CUST.PROD | Prod Code | 100% | 0 |
+| CUST.PROD | Salesperson #1 | 98.3% | 6 codes (BOBR, TOMW, JMC, JENNYF, JENP, LUIS) |
+| GM.BY.INV | Prod Code | 100% | 0 |
+| GM.BY.INV | SalesPer #1 | 98.2% | 6 codes |
+| SLSPER.PROD | Prod Code | 100% | 0 |
+| SLSPER.PROD | Salesperson #1 | 98.0% | 6 codes |
+| WO.LABOR | Sign Type | 99.8% | 1 code |
+| WO.LABOR | Template | 99.0% | 3 codes |
+
+The 6 orphan salesperson codes (BOBR, TOMW, JMC, JENNYF, JENP, LUIS) are hard-deleted from KeyedIn — not recoverable even with SHOW_ALL_CODES enabled.
 
 ---
 
-## 10. Numbering Systems
+## 11. Numbering Systems
 
 ### Three Distinct Systems
 
 | System | Format | Range | Source |
 |--------|--------|-------|--------|
-| **SignX-Warehouse WO** | `NNNNN.N` | 1000.1 - 62206.1 | `so_contracts_parsed.csv` (wo_number column) |
-| **SignX-Warehouse Quote** | 4-5 digit | 498 - 62172 | `so_contracts_parsed.csv` (quote_nbr column) |
+| **WO Number** | `NNNNN.N` | 1000.1 - 62206.1 | `so_contracts_parsed.csv` (wo_number column) |
+| **Quote Number** | 4-5 digit | 498 - 62172 | `so_contracts_parsed.csv` (quote_nbr column) |
 | **ESC Job Number** | `MMYY-NNNNN-RR` | ~8000 - 40660+ | G: drive filenames |
-
-### These Do NOT Directly Map
-
-- WO `62200.2` (CAT Scale) is NOT ESC `30115` in filenames
-- Pancheros WO `2214.1` with quote `5209` in warehouse but ESC `40654` in filenames
-- ESC numbers come from KeyedIn's **quoting/estimating** module
-- WO numbers come from the **production/billing** module
-- The warehouse `quote_nbr` column is the closest match to ESC numbers (31.1% overlap)
 
 ### Cross-Reference Strategy
 
@@ -530,46 +592,32 @@ Customer name is the **only reliable bridge** between systems:
 
 ---
 
-## 11. Technical Reference
+## 12. Technical Reference
 
 ### Two ERP Systems
 
 | System | URL | Technology | Status |
 |--------|-----|------------|--------|
-| KeyedIn ERP | `http://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/` | CGI (mvi.exe) | Extraction working |
+| KeyedIn ERP | `https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/` | CGI (mvi.exe) | Extraction working |
 | Informer BI | `https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html` | GWT-RPC v7 | 30 reports captured |
 
-### ERP CGI Endpoints
+### MVI Export Pattern
+
+1. POST form params to `mvi.exe/ENDPOINT` (date range, WIP type, etc.)
+2. GET `mvi.exe/ENDPOINT.RUN` to trigger report generation
+3. Poll `mvi.exe/VIEW.LOG` until "CSV extract file created"
+4. Download CSV from `/attachments/{filename}`
+
+### MVI Frameset Structure (Reference Tables)
 
 ```
-LOGIN.START                    # Login page
-DASHBOARD                     # Main dashboard
-REPORT.IFRAME?REPORT_ID={id}  # Report viewer
-CUST.PROD.EXPORT              # Customer product export
-GM.BY.INV.EXPORT              # GM by invoice export
-EMP.HOURS.BY.DATE             # Employee hours
-SLSPER.PROD.EXPORT            # Salesperson product export
-EXPORT.WO.LABOR.ANALYSIS      # WO labor analysis
-EXPORT.WIP.SUMMARY            # WIP summary (C=closed, O=open)
-```
-
-### GWT-RPC Protocol
-
-```
-Module Base:    https://eaglesign.keyedinsign.com:8443/eaglesign/informer/
-Permutation:    6823F3E0DFFF554BC1A7951AA98B182D
-Protocol:       GWT RPC v7
-Response:       //OK[<data>, ["string_table"], <offset>, <version>]
-Page Size:      25 rows per request
-Serialization:  Right-to-left HashMap<String, Value>
-```
-
-### Informer Version
-
-```
-Informer:  v4.7.0 Build 470031
-Plugin:    v2 build 082914
-Server:    Jetty 8.1.8
+APPLOAD?APP=ENDPOINT
+  -> frameset
+     -> TITLE frame (page title)
+     -> APP frame (data table)
+        -> table[0] = title/nav
+        -> table[1] = data (headers + rows)
+        -> #SHOW_ALL_CODES checkbox (some pages)
 ```
 
 ### Credentials
@@ -579,29 +627,27 @@ Server:    Jetty 8.1.8
 | KEYEDIN_USERNAME | `C:\Scripts\keyedin-capture\.env` | ERP login |
 | KEYEDIN_PASSWORD | `C:\Scripts\keyedin-capture\.env` | ERP login |
 | JSESSIONID | Cookie (auto via SSO) | Informer session |
-| authToken | Response header | GWT RPC auth |
-| clientId | Response body | GWT RPC client ID |
 
 ---
 
-## 12. Decision Engine
+## 13. Decision Engine
 
 ### 8 Analytical Modules
 
 | Module | Purpose | Key Finding |
 |--------|---------|-------------|
-| Estimating Accuracy | Quoted vs actual costs | Avg variance -53% to -57% (consistent over-estimation across all estimators) |
+| Estimating Accuracy | Quoted vs actual costs | Avg variance -53% to -57% (consistent over-estimation) |
 | Shadow Burden | ERP burden rate analysis | Avg 1.35x labor cost; outliers up to 36.88x |
-| Dead Stock | Inventory tied-up capital | 499 items, $241,702 tied up; H96W-SD-24V power supplies = $34,577 alone |
-| Profitability | GM by customer/sign type/estimator | Top-line analysis available |
-| Capacity | Labor utilization by dept | Hours capacity and bottleneck identification |
+| Dead Stock | Inventory tied-up capital | 499 items, $241,702; H96W-SD-24V = $34,577 alone |
+| Profitability | GM by customer/sign type/estimator | Cat Scale $29.2M, avg GM varies by product |
+| Capacity | Labor utilization by dept | Fabrication 181K hrs dominant |
 | Shop Efficiency | Est vs actual hours | 44 work codes scored |
 | Customer Analytics | Customer value/retention | LTV and order frequency |
 | Cash Flow | AR aging/payment patterns | DSO and aging buckets |
 
 ---
 
-## 13. Known Issues
+## 14. Known Issues
 
 ### Active
 
@@ -609,36 +655,37 @@ Server:    Jetty 8.1.8
 |-------|--------|--------|
 | License quota exceeded | ACTIVE | Too many concurrent ERP sessions from automation |
 | Informer Consumer role | KNOWN | Can't create custom reports (need Designer role) |
-| Material 2x duplication | FIXED but stale | Skip `****` lines applied but DB not rebuilt |
-| Export CSV URL unknown | OPEN | 6 URL patterns tested, all 404 |
+| Material 2x duplication | FIXED but stale | Skip `****` lines applied but SQLite DB not rebuilt |
+| Orphan salesperson codes | PERMANENT | 6 codes (BOBR, TOMW, etc.) hard-deleted from KeyedIn |
 | SSO link intermittent | INTERMITTENT | Fallback lands on login page |
-| Job 7880 not found | UNRESOLVED | Referenced for Ankeny Parks but doesn't exist in any data source |
 
-### Bash/PowerShell Gotchas (Documented)
+### Technical Gotchas (Documented)
 
+- `executemany` with 400K+ rows hangs DuckDB Python — use native `read_csv` instead
+- DuckDB `read_csv_auto` fails on multiline quoted headers — flatten with Python csv first
+- Report-format CSVs have blank lines between every data row — strip before loading
 - `$_` gets mangled by bash into extglob — use `-File script.ps1`
 - UNC backslashes mangled by MSYS — write to `.ps1` first
 - `numpy.int64` breaks pandas `.join()` — use `dtype={'quote_number': str}`
-- winget doesn't work inside `Start-Job` — use `Start-Process`
+- Playwright bundled Chromium chmod fails on Windows — use `channel="chrome"` for system Chrome
 
 ---
 
-## 14. Deliverables
+## 15. Deliverables
 
-### For Brady (Estimation)
+### Databases
+
+| Deliverable | Location | Size | Tables | Rows |
+|-------------|----------|------|--------|------|
+| DuckDB Warehouse | `warehouse/signx.duckdb` | 18 MB | 40 | 609,132 |
+| SQLite Warehouse | `warehouse/production/eagle_warehouse.db` | 211 MB | 17 | 1,376,130 |
+
+### For Estimation
 
 | Deliverable | Location | Purpose |
 |-------------|----------|---------|
-| Monday Estimation Briefs | `~/Desktop/MONDAY-ESTIMATION-BRIEFS.md` | Context for 3 pending jobs |
 | Quote Lookup Tool | `scripts/lookup_job.py` | Instant quote-to-files + billing |
-
-### For Analytics
-
-| Deliverable | Location | Purpose |
-|-------------|----------|---------|
-| eagle_warehouse.db | `warehouse/production/` | 1.38M row SQLite analytics DB |
-| Decision Report | `warehouse/reports/` | 8-module analysis output |
-| Enriched CSVs | `warehouse/raw/csv_exports/` | Human-readable export data |
+| Monday Briefs | `~/Desktop/MONDAY-ESTIMATION-BRIEFS.md` | Context for 3 pending jobs |
 
 ### For Integration
 
@@ -647,30 +694,30 @@ Server:    Jetty 8.1.8
 | ESC File Index | `esc_file_index_clean.csv` | 40,611 G: drive files indexed by quote# |
 | Customer Match | `g_drive_matched_customers.csv` | 2,775 warehouse-to-G: mappings |
 | G: Discovery | `g_drive_discovery.md` | Complete archive structure documentation |
+| Clean CSVs | `warehouse/clean/` | 17 analysis-ready CSVs (72 MB) |
 
 ---
 
-## 15. Next Steps
+## 16. Next Steps
 
 ### Immediate (Ready Now)
 
-1. **Rebuild warehouse DB** with enriched CSVs (csv_exports data not yet in SQLite)
-2. **Fix material dedup** — rebuild with `****` line skip applied
-3. **Load into DuckDB/Pandas** for ad-hoc analytics
-4. **Build dashboards** (Streamlit, Supabase, or Jupyter)
+1. **Build dashboards** on DuckDB (Streamlit, Jupyter, or Evidence)
+2. **Rebuild SQLite warehouse** with enriched CSVs (csv_exports data not yet in SQLite)
+3. **Fix material dedup** — rebuild with `****` line skip applied
+4. **Cross-reference DuckDB + SQLite** — bridge CSV export data with HTML batch data
 
 ### Short-Term (Requires Browser Session)
 
 5. **Automate remaining 29 Informer reports** via scrape_informer.py
 6. **Capture additional MVI modules** (Quotes, GL, AP detail)
-7. **Improve customer matching** — fuzzy match with Levenshtein, add numeric-prefix folders
+7. **Improve customer matching** — fuzzy match with Levenshtein
 
 ### Strategic (Requires Vendor/IT)
 
-8. **Request ODBC read-only access** to UniVerse database (eliminates all scraping)
+8. **Request ODBC read-only access** to UniVerse database
 9. **Request data dictionary** (table/field documentation)
 10. **Upgrade Informer role** to Designer (custom report creation)
-11. **Manage session licensing** (concurrent user quota)
 
 ### The Single Highest-Leverage Action
 
@@ -688,18 +735,21 @@ Server:    Jetty 8.1.8
 # Read this file to resume
 Read C:\Scripts\signx-warehouse\SESSION_STATE.md
 
+# Query the DuckDB warehouse
+python -c "import duckdb; con = duckdb.connect('C:/Scripts/signx-warehouse/warehouse/signx.duckdb', read_only=True); print(con.execute('SELECT * FROM emp_hours LIMIT 5').fetchdf())"
+
 # Quick lookup tool
 python C:\Scripts\signx-warehouse\scripts\lookup_job.py <quote_number>
 
-# Estimation briefs
-Read C:\Users\Brady.EAGLE\Desktop\MONDAY-ESTIMATION-BRIEFS.md
+# Reload DuckDB from enriched CSVs
+python C:\Scripts\signx-warehouse\scripts\load_duckdb.py
 ```
 
 ---
 
-**Generated:** 2026-02-15 23:30 CST
+**Generated:** 2026-02-15 23:45 CST
 **User:** Brady Flink
 **Agent:** Claude Opus 4.6
-**Commits:** 6 (ea086b1 -> ea772ab)
-**Total Lines of Python:** 13,968 across 27 scripts
-**Total Data Rows:** 1,376,130 (warehouse) + 40,611 (ESC index) + 1,563,495 (CSV exports)
+**Commits:** 8 (ea086b1 -> 3794acb)
+**Total Lines of Python:** ~14,300 across 28 scripts
+**Total Data Rows:** 1,376,130 (SQLite) + 609,132 (DuckDB) + 40,611 (ESC index) = 2,025,873

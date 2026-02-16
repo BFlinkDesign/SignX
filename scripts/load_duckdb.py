@@ -1,20 +1,22 @@
 """Load enriched warehouse CSVs into a DuckDB database.
 
 Strips report-format artifacts (metadata rows, repeated headers, subtotals,
-blank lines) and loads clean data rows into typed DuckDB tables.
+blank lines), writes clean intermediate CSVs, and loads them via DuckDB's
+native read_csv for maximum speed.
 
 Usage:
     python load_duckdb.py
 """
 import csv
 import re
-import sys
+import tempfile
 from pathlib import Path
 
 import duckdb
 
 CSV_DIR = Path(r"C:\Scripts\signx-warehouse\warehouse\raw\csv_exports")
 DB_PATH = Path(r"C:\Scripts\signx-warehouse\warehouse\signx.duckdb")
+CLEAN_DIR = Path(r"C:\Scripts\signx-warehouse\warehouse\clean")
 
 # ---------------------------------------------------------------------------
 # 1. Row Classification (mirrors enrich_csv_exports.py logic)
@@ -46,8 +48,6 @@ def is_subtotal(row):
         return True
     if "Product Type Totals" in text:
         return True
-    if "Totals" in text and ("***" in text or re.search(r"\bTotals\b", text)):
-        return True
     return False
 
 
@@ -55,258 +55,14 @@ def is_subtotal(row):
 # 2. Table Configurations
 # ---------------------------------------------------------------------------
 
-TABLES = {
-    "emp_hours": {
-        "file": "EMP.HOURS.BY.DATE_ALL_enriched.csv",
-        "header_sig": "EmpNo",
-        "table_name": "emp_hours",
-        "columns": [
-            ("emp_no", "VARCHAR"),
-            ("employee_name", "VARCHAR"),
-            ("time_date", "VARCHAR"),
-            ("wo_ind_code", "VARCHAR"),
-            ("job_location", "VARCHAR"),
-            ("start_time", "VARCHAR"),
-            ("stop_time", "VARCHAR"),
-            ("labor_hrs", "DOUBLE"),
-            ("work_code", "VARCHAR"),
-            ("work_description", "VARCHAR"),
-            ("timecard_comments", "VARCHAR"),
-            ("work_code_ref_desc", "VARCHAR"),
-            ("work_dept", "VARCHAR"),
-            ("work_dept_name", "VARCHAR"),
-        ],
-    },
-    "cust_prod": {
-        "file": "CUST.PROD.EXPORT_ALL_enriched.csv",
-        "header_sig": "Cust No",
-        "table_name": "cust_prod",
-        "columns": [
-            ("cust_no", "VARCHAR"),
-            ("customer_name", "VARCHAR"),
-            ("prod_code", "VARCHAR"),
-            ("product_type_desc", "VARCHAR"),
-            ("inv_date", "VARCHAR"),
-            ("invoice_no", "VARCHAR"),
-            ("job_part", "VARCHAR"),
-            ("gross_sales", "DOUBLE"),
-            ("total_cost", "DOUBLE"),
-            ("gross_margin", "DOUBLE"),
-            ("gm_pct", "DOUBLE"),
-            ("extra_charge", "DOUBLE"),
-            ("sales_tax", "DOUBLE"),
-            ("location_no", "VARCHAR"),
-            ("location_name", "VARCHAR"),
-            ("city", "VARCHAR"),
-            ("state", "VARCHAR"),
-            ("salesperson_1", "VARCHAR"),
-            ("comm_rate_1", "DOUBLE"),
-            ("salesperson_2", "VARCHAR"),
-            ("comm_rate_2", "DOUBLE"),
-            ("salesperson_3", "VARCHAR"),
-            ("comm_rate_3", "DOUBLE"),
-            ("_blank", "VARCHAR"),
-            ("prod_code_ref_desc", "VARCHAR"),
-            ("salesperson_1_name", "VARCHAR"),
-            ("salesperson_2_name", "VARCHAR"),
-            ("salesperson_3_name", "VARCHAR"),
-        ],
-    },
-    "gm_by_inv": {
-        "file": "GM.BY.INV.EXPORT_ALL_enriched.csv",
-        "header_sig": "Invoice No",
-        "table_name": "gm_by_inv",
-        "columns": [
-            ("invoice_no", "VARCHAR"),
-            ("inv_date", "VARCHAR"),
-            ("prod_code", "VARCHAR"),
-            ("wo_part", "VARCHAR"),
-            ("quote", "VARCHAR"),
-            ("gross_sales", "DOUBLE"),
-            ("total_cost", "DOUBLE"),
-            ("gross_margin", "DOUBLE"),
-            ("gm_pct", "DOUBLE"),
-            ("extra_chg", "DOUBLE"),
-            ("sales_tax", "DOUBLE"),
-            ("quote_cost", "DOUBLE"),
-            ("quote_price", "DOUBLE"),
-            ("quote_gm_pct", "DOUBLE"),
-            ("quote_sell_price", "DOUBLE"),
-            ("quote_sell_gm_pct", "DOUBLE"),
-            ("cust_no", "VARCHAR"),
-            ("customer_name", "VARCHAR"),
-            ("salesper_1", "VARCHAR"),
-            ("rate_1", "DOUBLE"),
-            ("salesper_2", "VARCHAR"),
-            ("rate_2", "DOUBLE"),
-            ("salesper_3", "VARCHAR"),
-            ("rate_3", "DOUBLE"),
-            ("location_no", "VARCHAR"),
-            ("location_name", "VARCHAR"),
-            ("city", "VARCHAR"),
-            ("state", "VARCHAR"),
-            ("_blank", "VARCHAR"),
-            ("prod_code_desc", "VARCHAR"),
-            ("salesper_1_name", "VARCHAR"),
-            ("salesper_2_name", "VARCHAR"),
-            ("salesper_3_name", "VARCHAR"),
-        ],
-    },
-    "slsper_prod": {
-        "file": "SLSPER.PROD.EXPORT_ALL_enriched.csv",
-        "header_sig": "Invoice No",
-        "table_name": "slsper_prod",
-        "columns": [
-            ("invoice_no", "VARCHAR"),
-            ("inv_date", "VARCHAR"),
-            ("prod_code", "VARCHAR"),
-            ("cust_no", "VARCHAR"),
-            ("customer_name", "VARCHAR"),
-            ("gross_sales", "DOUBLE"),
-            ("total_cost", "DOUBLE"),
-            ("gross_margin", "DOUBLE"),
-            ("gm_pct", "DOUBLE"),
-            ("extra_charge", "DOUBLE"),
-            ("salesperson_1", "VARCHAR"),
-            ("comm_rate_1", "DOUBLE"),
-            ("salesperson_2", "VARCHAR"),
-            ("comm_rate_2", "DOUBLE"),
-            ("salesperson_3", "VARCHAR"),
-            ("comm_rate_3", "DOUBLE"),
-            ("location_no", "VARCHAR"),
-            ("location_name", "VARCHAR"),
-            ("city", "VARCHAR"),
-            ("state", "VARCHAR"),
-            ("_blank", "VARCHAR"),
-            ("prod_code_desc", "VARCHAR"),
-            ("salesperson_1_name", "VARCHAR"),
-            ("salesperson_2_name", "VARCHAR"),
-            ("salesperson_3_name", "VARCHAR"),
-        ],
-    },
-    "wo_labor": {
-        "file": "EXPORT.WO.LABOR.ANALYSIS_ALL_enriched.csv",
-        "header_sig": "WO #",
-        "table_name": "wo_labor",
-        # This table has 168 columns with repeating dept groups.
-        # We'll auto-detect column names from the header row.
-        "columns": "auto",
-    },
-    "wip_summary_c": {
-        "file": "EXPORT.WIP.SUMMARY_C_ALL.csv",
-        "header_sig": "Work Order",
-        "table_name": "wip_summary_closed",
-        "columns": [
-            ("work_order", "VARCHAR"),
-            ("quote_part_desc", "VARCHAR"),
-            ("qty_mfg", "INTEGER"),
-            ("qty_comp", "INTEGER"),
-            ("act_material", "DOUBLE"),
-            ("act_labor", "DOUBLE"),
-            ("act_burden", "DOUBLE"),
-            ("act_cncrt", "DOUBLE"),
-            ("act_out1", "DOUBLE"),
-            ("act_utax", "DOUBLE"),
-            ("act_total", "DOUBLE"),
-            ("est_material", "DOUBLE"),
-            ("est_labor", "DOUBLE"),
-            ("est_burden", "DOUBLE"),
-            ("est_cncrt", "DOUBLE"),
-            ("est_out1", "DOUBLE"),
-            ("est_utax", "DOUBLE"),
-            ("est_total", "DOUBLE"),
-            ("var_cost", "DOUBLE"),
-            ("act_billing", "DOUBLE"),
-            ("act_gm_pct", "DOUBLE"),
-            ("est_billing", "DOUBLE"),
-            ("est_gm_pct", "DOUBLE"),
-            ("due_date", "VARCHAR"),
-            ("cust_no", "VARCHAR"),
-            ("customer_name", "VARCHAR"),
-            ("c_f", "VARCHAR"),
-            ("std_comp_amt", "DOUBLE"),
-            ("est_cogs", "DOUBLE"),
-            ("net_wip", "DOUBLE"),
-            ("invoice_date", "VARCHAR"),
-            ("invoice_nbr", "VARCHAR"),
-            ("est_hrs", "DOUBLE"),
-            ("act_hrs", "DOUBLE"),
-        ],
-    },
-    "wip_summary_o": {
-        "file": "EXPORT.WIP.SUMMARY_O_ALL.csv",
-        "header_sig": "Work Order",
-        "table_name": "wip_summary_open",
-        # O variant has 2 extra unnamed columns; detect from header
-        "columns": "auto",
-    },
-}
-
-
-# ---------------------------------------------------------------------------
-# 3. CSV Parsing
-# ---------------------------------------------------------------------------
-
-def parse_report_csv(filepath, header_sig, expected_ncols=None):
-    """Parse a report-format CSV, returning (header, data_rows).
-
-    Strips metadata, blank lines, subtotals, and repeated headers.
-    """
-    header = None
-    data = []
-
-    with open(filepath, encoding="utf-8") as f:
-        reader = csv.reader(f)
-        for row in reader:
-            # Skip blank rows
-            if not row or all(c.strip() == "" for c in row):
-                continue
-
-            # Check for header row
-            if row[0].strip().strip('"') == header_sig:
-                if header is None:
-                    header = [c.strip().strip('"') for c in row]
-                    if expected_ncols is None:
-                        expected_ncols = len(header)
-                continue  # Skip all header rows (repeated per year)
-
-            if is_blank_or_meta(row):
-                continue
-            if is_subtotal(row):
-                continue
-
-            # Check column count (allow ±3 tolerance)
-            if expected_ncols and abs(len(row) - expected_ncols) > 3:
-                continue
-
-            # Pad short rows, trim long rows to header width
-            if header:
-                if len(row) < len(header):
-                    row = row + [""] * (len(header) - len(row))
-                elif len(row) > len(header):
-                    row = row[: len(header)]
-
-            # Strip quotes from values (WIP files have triple-quoted values)
-            cleaned = [c.strip().strip('"') for c in row]
-            data.append(cleaned)
-
-    return header, data
-
-
-# ---------------------------------------------------------------------------
-# 4. DuckDB Table Creation & Loading
-# ---------------------------------------------------------------------------
-
 def safe_col_name(name, idx, seen):
     """Create a unique, SQL-safe column name."""
     if not name or name.strip() == "":
         name = f"col_{idx}"
-    # Normalize
     name = re.sub(r"[^a-zA-Z0-9_]", "_", name.strip())
     name = re.sub(r"_+", "_", name).strip("_").lower()
     if not name:
         name = f"col_{idx}"
-    # Deduplicate
     base = name
     counter = 2
     while name in seen:
@@ -316,221 +72,236 @@ def safe_col_name(name, idx, seen):
     return name
 
 
-def auto_columns_from_header(header):
-    """Generate (col_name, type) tuples from a raw header row."""
-    seen = set()
-    cols = []
-    for i, h in enumerate(header):
-        name = safe_col_name(h, i, seen)
-        cols.append((name, "VARCHAR"))
-    return cols
-
-
-def create_table(con, table_name, columns):
-    """Create a DuckDB table from column definitions."""
-    col_defs = ", ".join(f'"{name}" {dtype}' for name, dtype in columns)
-    con.execute(f"DROP TABLE IF EXISTS {table_name}")
-    con.execute(f"CREATE TABLE {table_name} ({col_defs})")
-
-
-def safe_double(val):
-    """Convert a string to float, handling commas and blanks."""
-    if not val or val.strip() == "":
-        return None
-    val = val.strip().replace(",", "").replace("%", "")
-    try:
-        return float(val)
-    except ValueError:
-        return None
-
-
-def safe_int(val):
-    if not val or val.strip() == "":
-        return None
-    val = val.strip().replace(",", "")
-    try:
-        return int(float(val))
-    except ValueError:
-        return None
-
-
-def insert_rows(con, table_name, columns, data):
-    """Insert data rows into a DuckDB table with type conversion."""
-    if not data:
-        return 0
-
-    placeholders = ", ".join(["?"] * len(columns))
-    sql = f"INSERT INTO {table_name} VALUES ({placeholders})"
-
-    batch = []
-    skipped = 0
-    for row in data:
-        converted = []
-        for i, (_, dtype) in enumerate(columns):
-            val = row[i] if i < len(row) else ""
-            if dtype == "DOUBLE":
-                converted.append(safe_double(val))
-            elif dtype == "INTEGER":
-                converted.append(safe_int(val))
-            else:
-                converted.append(val if val else None)
-        batch.append(converted)
-
-    # Batch insert
-    con.executemany(sql, batch)
-    return len(batch)
+TABLES = [
+    {
+        "file": "EMP.HOURS.BY.DATE_ALL_enriched.csv",
+        "header_sig": "EmpNo",
+        "table_name": "emp_hours",
+    },
+    {
+        "file": "CUST.PROD.EXPORT_ALL_enriched.csv",
+        "header_sig": "Cust No",
+        "table_name": "cust_prod",
+    },
+    {
+        "file": "GM.BY.INV.EXPORT_ALL_enriched.csv",
+        "header_sig": "Invoice No",
+        "table_name": "gm_by_inv",
+    },
+    {
+        "file": "SLSPER.PROD.EXPORT_ALL_enriched.csv",
+        "header_sig": "Invoice No",
+        "table_name": "slsper_prod",
+    },
+    {
+        "file": "EXPORT.WO.LABOR.ANALYSIS_ALL_enriched.csv",
+        "header_sig": "WO #",
+        "table_name": "wo_labor",
+    },
+    {
+        "file": "EXPORT.WIP.SUMMARY_C_ALL.csv",
+        "header_sig": "Work Order",
+        "table_name": "wip_summary_closed",
+    },
+    {
+        "file": "EXPORT.WIP.SUMMARY_O_ALL.csv",
+        "header_sig": "Work Order",
+        "table_name": "wip_summary_open",
+    },
+]
 
 
 # ---------------------------------------------------------------------------
-# 5. WO Labor special handling — deduplicate repeated dept column names
+# 3. Strip report-format to clean CSV
 # ---------------------------------------------------------------------------
 
-def build_wo_labor_columns(header):
-    """Build column defs for WO Labor with dept-prefixed group columns.
+def strip_to_clean_csv(src_path, dst_path, header_sig):
+    """Strip report-format CSV to a clean CSV with one header + data rows.
 
-    The header has repeating groups of (blank, Est Hrs, Act Hrs, Variance,
-    Est Dollars, Act Dollars, Variance) for each dept code. The dept codes
-    are in the metadata row above the header (not in the header itself).
-    We'll just number the groups.
+    Returns (header_list, data_row_count).
     """
-    seen = set()
-    cols = []
-    group_idx = 0
-    group_fields = ["est_hrs", "act_hrs", "variance_hrs",
-                    "est_dollars", "act_dollars", "variance_dollars"]
-    group_pos = 0
-    in_group = False
+    header = None
+    ncols = None
+    data_count = 0
 
-    for i, h in enumerate(header):
-        h_clean = h.strip()
+    with open(src_path, encoding="utf-8") as fin, \
+         open(dst_path, "w", newline="", encoding="utf-8") as fout:
+        reader = csv.reader(fin)
+        writer = csv.writer(fout)
 
-        # First 10 columns are the fixed fields
-        if i < 10:
-            name = safe_col_name(h_clean, i, seen)
-            cols.append((name, "VARCHAR"))
-            continue
+        for row in reader:
+            # Skip blank rows
+            if not row or all(c.strip() == "" for c in row):
+                continue
 
-        # Detect group separator (empty column between groups)
-        if h_clean == "" and not in_group:
-            group_idx += 1
-            group_pos = 0
-            in_group = True
-            name = safe_col_name(f"g{group_idx:02d}_sep", i, seen)
-            cols.append((name, "VARCHAR"))
-            continue
+            # Header row detection
+            if row[0].strip().strip('"') == header_sig:
+                if header is None:
+                    header = [c.strip().strip('"') for c in row]
+                    ncols = len(header)
+                    # Write normalized header
+                    seen = set()
+                    clean_header = [safe_col_name(h, i, seen) for i, h in enumerate(header)]
+                    writer.writerow(clean_header)
+                continue
 
-        if in_group and group_pos < 6:
-            name = safe_col_name(f"g{group_idx:02d}_{group_fields[group_pos]}", i, seen)
-            cols.append((name, "DOUBLE"))
-            group_pos += 1
-            if group_pos >= 6:
-                in_group = False
-            continue
+            if is_blank_or_meta(row):
+                continue
+            if is_subtotal(row):
+                continue
 
-        # Trailing columns after all groups
-        name = safe_col_name(h_clean if h_clean else f"col_{i}", i, seen)
-        cols.append((name, "VARCHAR" if "Desc" in h or "Type" in h or "#" in h
-                     else "DOUBLE" if "Hrs" in h or "Dollars" in h or "Variance" in h
-                     else "VARCHAR"))
+            # Skip rows before header is found
+            if header is None:
+                continue
 
-    return cols
+            # Column count check
+            if abs(len(row) - ncols) > 3:
+                continue
 
+            # Normalize width
+            cleaned = [c.strip().strip('"') for c in row]
+            if len(cleaned) < ncols:
+                cleaned += [""] * (ncols - len(cleaned))
+            elif len(cleaned) > ncols:
+                cleaned = cleaned[:ncols]
 
-# ---------------------------------------------------------------------------
-# 6. Reference Tables
-# ---------------------------------------------------------------------------
+            writer.writerow(cleaned)
+            data_count += 1
 
-def load_ref_tables(con):
-    """Load all ref_*.csv files into DuckDB as ref_ tables."""
-    ref_files = sorted(CSV_DIR.glob("ref_*.csv"))
-    loaded = 0
-    for ref_file in ref_files:
-        table_name = ref_file.stem.lower()  # e.g., ref_salespersons_list
-        try:
-            con.execute(f"DROP TABLE IF EXISTS {table_name}")
-            con.execute(f"""
-                CREATE TABLE {table_name} AS
-                SELECT * FROM read_csv_auto('{ref_file.as_posix()}',
-                    header=true,
-                    ignore_errors=true,
-                    normalize_names=true)
-            """)
-            count = con.execute(f"SELECT count(*) FROM {table_name}").fetchone()[0]
-            print(f"  {table_name}: {count} rows")
-            loaded += 1
-        except Exception as e:
-            print(f"  {table_name}: FAILED - {e}")
-    return loaded
+    return header, data_count
 
 
 # ---------------------------------------------------------------------------
-# 7. Main
+# 4. Main
 # ---------------------------------------------------------------------------
 
 def main():
-    print(f"DuckDB Warehouse Loader")
+    print("DuckDB Warehouse Loader")
     print(f"Source: {CSV_DIR}")
     print(f"Target: {DB_PATH}\n")
 
+    CLEAN_DIR.mkdir(parents=True, exist_ok=True)
+
+    # Remove stale DB
+    if DB_PATH.exists():
+        DB_PATH.unlink()
+        print(f"Removed existing {DB_PATH.name}\n")
+
     con = duckdb.connect(str(DB_PATH))
 
-    # Load main tables
+    # --- Main tables ---
     print("=" * 60)
     print("MAIN TABLES")
     print("=" * 60)
 
-    for key, cfg in TABLES.items():
-        filepath = CSV_DIR / cfg["file"]
-        if not filepath.exists():
+    for cfg in TABLES:
+        src = CSV_DIR / cfg["file"]
+        if not src.exists():
             print(f"\nSKIP: {cfg['file']} not found")
             continue
 
         table_name = cfg["table_name"]
-        header_sig = cfg["header_sig"]
+        clean_path = CLEAN_DIR / f"{table_name}.csv"
+
         print(f"\n--- {cfg['file']} -> {table_name} ---")
 
-        # Parse the report CSV
-        header, data = parse_report_csv(filepath, header_sig)
+        # Step 1: Strip to clean CSV
+        header, data_count = strip_to_clean_csv(src, clean_path, cfg["header_sig"])
         if not header:
-            print(f"  No header found, skipping")
+            print("  No header found, skipping")
             continue
-        print(f"  Parsed: {len(data):,} data rows, {len(header)} columns")
+        clean_size = clean_path.stat().st_size / (1024 * 1024)
+        print(f"  Cleaned: {data_count:,} rows, {len(header)} cols, {clean_size:.1f}MB")
 
-        # Determine column definitions
-        if cfg["columns"] == "auto":
-            if key == "wo_labor":
-                columns = build_wo_labor_columns(header)
-            else:
-                columns = auto_columns_from_header(header)
-        else:
-            columns = cfg["columns"]
+        # Step 2: Load into DuckDB via native read_csv
+        clean_posix = clean_path.as_posix()
+        con.execute(f"DROP TABLE IF EXISTS {table_name}")
+        con.execute(f"""
+            CREATE TABLE {table_name} AS
+            SELECT * FROM read_csv('{clean_posix}',
+                header=true,
+                auto_detect=true,
+                ignore_errors=true,
+                null_padding=true,
+                max_line_size=1048576)
+        """)
 
-        # Validate column count matches
-        if len(columns) != len(header):
-            print(f"  Column mismatch: defined {len(columns)}, header has {len(header)}")
-            print(f"  Falling back to auto-detect")
-            columns = auto_columns_from_header(header)
-
-        # Create table and insert
-        create_table(con, table_name, columns)
-        inserted = insert_rows(con, table_name, columns, data)
-        print(f"  Loaded: {inserted:,} rows into {table_name}")
-
-        # Verify
         count = con.execute(f"SELECT count(*) FROM {table_name}").fetchone()[0]
-        print(f"  Verified: {count:,} rows in table")
+        ncols = con.execute(f"""
+            SELECT count(*) FROM information_schema.columns
+            WHERE table_name = '{table_name}'
+        """).fetchone()[0]
+        print(f"  Loaded: {count:,} rows, {ncols} cols into {table_name}")
 
-    # Load reference tables
+    # --- Reference tables ---
     print(f"\n{'=' * 60}")
     print("REFERENCE TABLES")
     print("=" * 60)
-    ref_count = load_ref_tables(con)
-    print(f"\n  Loaded {ref_count} reference tables")
 
-    # Summary
+    ref_files = sorted(CSV_DIR.glob("ref_*.csv"))
+    ref_loaded = 0
+    for ref_file in ref_files:
+        table_name = ref_file.stem.lower()
+        posix = ref_file.as_posix()
+        con.execute(f"DROP TABLE IF EXISTS {table_name}")
+        try:
+            con.execute(f"""
+                CREATE TABLE {table_name} AS
+                SELECT * FROM read_csv('{posix}',
+                    header=true,
+                    delim=',',
+                    quote='"',
+                    normalize_names=true,
+                    ignore_errors=true,
+                    null_padding=true,
+                    auto_detect=true)
+            """)
+            count = con.execute(f"SELECT count(*) FROM {table_name}").fetchone()[0]
+            print(f"  {table_name}: {count} rows")
+            ref_loaded += 1
+        except Exception:
+            # Fallback: read with Python csv (handles multiline headers),
+            # flatten, write clean version, reload
+            clean_path = CLEAN_DIR / f"{table_name}.csv"
+            with open(ref_file, encoding="utf-8") as fin, \
+                 open(clean_path, "w", newline="", encoding="utf-8") as fout:
+                reader = csv.reader(fin)
+                writer = csv.writer(fout)
+                header_row = next(reader)
+                seen = set()
+                clean_hdr = [safe_col_name(
+                    h.replace("\n", " ").replace("\r", " ").strip(), i, seen
+                ) for i, h in enumerate(header_row)]
+                writer.writerow(clean_hdr)
+                for row in reader:
+                    cleaned = [c.replace("\n", " ").replace("\r", " ").strip()
+                               for c in row]
+                    writer.writerow(cleaned)
+            cposix = clean_path.as_posix()
+            try:
+                con.execute(f"""
+                    CREATE TABLE {table_name} AS
+                    SELECT * FROM read_csv('{cposix}',
+                        header=true,
+                        auto_detect=true,
+                        ignore_errors=true,
+                        null_padding=true)
+                """)
+                count = con.execute(
+                    f"SELECT count(*) FROM {table_name}"
+                ).fetchone()[0]
+                print(f"  {table_name}: {count} rows (cleaned)")
+                ref_loaded += 1
+            except Exception as e2:
+                print(f"  {table_name}: FAILED even after clean - {e2}")
+
+    print(f"\n  {ref_loaded} reference tables loaded")
+
+    # --- Summary ---
     print(f"\n{'=' * 60}")
     print("DATABASE SUMMARY")
     print("=" * 60)
+
     tables = con.execute("""
         SELECT table_name,
                (SELECT count(*) FROM information_schema.columns c
@@ -544,10 +315,11 @@ def main():
     for tname, ncols in tables:
         row_count = con.execute(f"SELECT count(*) FROM {tname}").fetchone()[0]
         total_rows += row_count
-        print(f"  {tname:<35} {ncols:>4} cols  {row_count:>10,} rows")
+        print(f"  {tname:<40} {ncols:>4} cols  {row_count:>10,} rows")
 
+    db_size = DB_PATH.stat().st_size / (1024 * 1024)
     print(f"\n  Total: {len(tables)} tables, {total_rows:,} rows")
-    print(f"  Database: {DB_PATH} ({DB_PATH.stat().st_size / 1024 / 1024:.1f}MB)")
+    print(f"  Database: {DB_PATH} ({db_size:.1f}MB)")
 
     con.close()
     print("\nDone.")

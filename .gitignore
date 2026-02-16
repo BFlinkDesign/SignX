@@ -36,4 +36,5 @@ warehouse/raw/csv_exports/
 warehouse/raw/spooled_samples/
 warehouse/raw/wo_batches/
 warehouse/raw/2026-*/
+warehouse/clean/
 esc_file_index.csv
