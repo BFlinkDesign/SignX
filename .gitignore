@@ -118,6 +118,9 @@ artifacts/
 queue/
 runs/
 *.ndjson
+warehouse/raw/csv_exports/*.csv
+esc_file_index*.csv
+*.output
 
 ############################
 # Documentation builds

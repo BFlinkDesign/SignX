@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SignX-Takeoff — Channel Letter Estimator</title>
+<style>
+  :root {
+    --bg: #0f172a; --surface: #1e293b; --surface2: #334155;
+    --border: #475569; --text: #e2e8f0; --text-dim: #94a3b8;
+    --accent: #3b82f6; --accent2: #8b5cf6; --green: #22c55e;
+    --orange: #f59e0b; --red: #ef4444;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 1rem; }
+
+  /* Header */
+  header { display: flex; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; }
+  header h1 { font-size: 1.5rem; font-weight: 700; }
+  header h1 span { color: var(--accent); }
+  header .subtitle { color: var(--text-dim); font-size: 0.85rem; }
+
+  /* Layout */
+  .grid { display: grid; grid-template-columns: 400px 1fr; gap: 1.5rem; }
+  @media (max-width: 1000px) { .grid { grid-template-columns: 1fr; } }
+
+  /* Cards */
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.25rem; margin-bottom: 1rem; }
+  .card h2 { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+  .card h2 .badge { font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 9999px; background: var(--accent); color: white; font-weight: 500; }
+
+  /* Forms */
+  label { display: block; font-size: 0.8rem; color: var(--text-dim); margin-bottom: 0.25rem; font-weight: 500; }
+  input, select { width: 100%; padding: 0.5rem 0.75rem; background: var(--bg); border: 1px solid var(--border); border-radius: 0.5rem; color: var(--text); font-size: 0.9rem; }
+  input:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(59,130,246,0.2); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem; }
+  .form-group { margin-bottom: 0.75rem; }
+  .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem; }
+
+  /* Buttons */
+  button { padding: 0.6rem 1.25rem; border: none; border-radius: 0.5rem; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+  .btn-primary { background: var(--accent); color: white; width: 100%; }
+  .btn-primary:hover { background: #2563eb; }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* Tabs */
+  .tabs { display: flex; gap: 0; border-bottom: 2px solid var(--border); margin-bottom: 1rem; }
+  .tab { padding: 0.5rem 1rem; cursor: pointer; color: var(--text-dim); font-size: 0.85rem; font-weight: 500; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.15s; }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab:hover { color: var(--text); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* Drop zone */
+  .dropzone { border: 2px dashed var(--border); border-radius: 0.75rem; padding: 2rem; text-align: center; cursor: pointer; transition: all 0.2s; }
+  .dropzone:hover, .dropzone.dragover { border-color: var(--accent); background: rgba(59,130,246,0.05); }
+  .dropzone svg { width: 48px; height: 48px; color: var(--text-dim); margin-bottom: 0.5rem; }
+  .dropzone p { color: var(--text-dim); font-size: 0.85rem; }
+  .dropzone .filename { color: var(--green); font-weight: 600; margin-top: 0.5rem; }
+
+  /* PF Display */
+  .pf-display { background: linear-gradient(135deg, #1e3a5f, #1e293b); border: 1px solid var(--accent); border-radius: 0.75rem; padding: 1.25rem; text-align: center; margin: 1rem 0; }
+  .pf-display .value { font-size: 2.5rem; font-weight: 800; color: var(--accent); }
+  .pf-display .label { font-size: 0.85rem; color: var(--text-dim); }
+  .pf-display .source { font-size: 0.75rem; color: var(--text-dim); margin-top: 0.25rem; }
+
+  /* Results */
+  .results { display: none; }
+  .results.show { display: block; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+  th { text-align: left; padding: 0.5rem 0.75rem; background: var(--bg); color: var(--text-dim); font-weight: 600; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  td { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--surface2); }
+  tr:hover td { background: rgba(59,130,246,0.05); }
+  .mono { font-family: 'Cascadia Code', 'Fira Code', monospace; }
+  .right { text-align: right; }
+  .unit-crew { color: var(--orange); font-weight: 600; }
+  .unit-man { color: var(--green); }
+
+  /* Summary boxes */
+  .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-bottom: 1rem; }
+  .summary-box { background: var(--bg); border: 1px solid var(--border); border-radius: 0.5rem; padding: 0.75rem; text-align: center; }
+  .summary-box .val { font-size: 1.5rem; font-weight: 700; }
+  .summary-box .lbl { font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; }
+  .summary-box.accent .val { color: var(--accent); }
+  .summary-box.green .val { color: var(--green); }
+  .summary-box.orange .val { color: var(--orange); }
+  .summary-box.purple .val { color: var(--accent2); }
+
+  /* Warnings */
+  .warning { background: rgba(245,158,11,0.1); border: 1px solid var(--orange); border-radius: 0.5rem; padding: 0.75rem; margin-bottom: 0.75rem; font-size: 0.8rem; color: var(--orange); }
+
+  /* Collapsible */
+  details { margin-bottom: 0.5rem; }
+  summary { cursor: pointer; padding: 0.5rem; font-weight: 600; font-size: 0.85rem; color: var(--text-dim); }
+  summary:hover { color: var(--text); }
+
+  /* Loading */
+  .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid var(--text-dim); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.6s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Section toggle */
+  .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
+  .section-header h3 { font-size: 0.9rem; font-weight: 600; }
+
+  /* Checkbox */
+  .checkbox-group { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; }
+  .checkbox-group input[type="checkbox"] { width: auto; }
+  .checkbox-group label { margin-bottom: 0; }
+
+  /* Separator */
+  hr { border: none; border-top: 1px solid var(--surface2); margin: 1rem 0; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div>
+      <h1><span>SignX</span>-Takeoff</h1>
+      <div class="subtitle">Channel Letter Estimation &mdash; ABC Section 4B/4C/10B &mdash; KeyedIn Ready</div>
+    </div>
+  </header>
+
+  <div class="grid">
+    <!-- ═══ LEFT: INPUT PANEL ═══ -->
+    <div class="input-panel">
+
+      <!-- PF Source -->
+      <div class="card">
+        <h2>Peripheral Feet (PF) <span class="badge">INPUT</span></h2>
+        <div class="tabs" id="pf-tabs">
+          <div class="tab active" data-tab="pdf">PDF Upload</div>
+          <div class="tab" data-tab="chart">Footage Chart</div>
+          <div class="tab" data-tab="manual">Manual PF</div>
+        </div>
+
+        <!-- PDF Upload -->
+        <div class="tab-content active" id="tab-pdf">
+          <div class="dropzone" id="dropzone">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 16V4m0 0l-4 4m4-4l4 4M4 20h16"/></svg>
+            <p>Drop PDF here (Gemini Art, cut file, or conceptual)<br>or click to browse</p>
+            <div class="filename" id="pdf-filename"></div>
+          </div>
+          <input type="file" id="pdf-input" accept=".pdf" style="display:none">
+          <div class="form-row" style="margin-top:0.75rem">
+            <div><label>Scale Factor (0 = auto)</label>
+              <input type="number" id="pdf-scale" value="0" min="0" max="10" step="0.25">
+            </div>
+            <div><label>Known Letter Height (in)</label>
+              <input type="number" id="pdf-known-height" value="0" min="0" max="120" step="0.5">
+            </div>
+          </div>
+          <p style="font-size:0.7rem;color:var(--text-dim);margin-bottom:0.5rem;">Gemini Art / cut files: leave at 0. Conceptual PDFs on letter paper: try 2.75, or enter known height.</p>
+          <div id="pdf-result" style="display:none">
+            <div style="font-size:0.8rem;color:var(--text-dim);" id="pdf-info"></div>
+          </div>
+        </div>
+
+        <!-- Footage Chart -->
+        <div class="tab-content" id="tab-chart">
+          <div class="form-row-3">
+            <div><label>Letters</label><input type="number" id="chart-count" value="10" min="1" max="100"></div>
+            <div><label>Height (in)</label><input type="number" id="chart-height" value="12" min="3" max="120" step="0.5"></div>
+            <div><label>Font</label>
+              <select id="chart-font">
+                <option value="block">Block</option>
+                <option value="serif">Serif</option>
+                <option value="script">Script</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn-primary" onclick="calcFromChart()" style="margin-top:0.5rem">Calculate PF from Chart</button>
+          <div id="chart-result" style="margin-top:0.5rem;font-size:0.8rem;color:var(--text-dim);"></div>
+        </div>
+
+        <!-- Manual -->
+        <div class="tab-content" id="tab-manual">
+          <div class="form-group">
+            <label>Total Peripheral Feet</label>
+            <input type="number" id="manual-pf" step="0.01" placeholder="e.g. 78.64">
+          </div>
+          <div class="form-group">
+            <label>Face Area (SF) &mdash; optional</label>
+            <input type="number" id="manual-face-sf" step="0.01" placeholder="Leave blank to auto-calculate">
+          </div>
+          <p style="font-size:0.75rem;color:var(--text-dim);">Paste PF from CorelDRAW macro or Bluebeam measurement.</p>
+        </div>
+
+        <!-- PF Result Display -->
+        <div class="pf-display" id="pf-display" style="display:none">
+          <div class="value" id="pf-value">0.00</div>
+          <div class="label">Peripheral Feet</div>
+          <div class="source" id="pf-source"></div>
+        </div>
+      </div>
+
+      <!-- Sign Specs -->
+      <div class="card">
+        <h2>Sign Specifications</h2>
+        <div class="form-row">
+          <div><label>Construction Type</label>
+            <select id="construction">
+              <option value="face_lit">Face-Lit (Pan Channel)</option>
+              <option value="halo">Halo (Reverse Channel)</option>
+              <option value="strip">Strip Channel (25"+)</option>
+              <option value="open_face">Open Face</option>
+            </select>
+          </div>
+          <div><label>Letter Height (in)</label>
+            <input type="number" id="spec-height" value="12" min="3" max="120" step="0.5">
+          </div>
+        </div>
+        <div class="form-row">
+          <div><label>Return Depth (in)</label>
+            <input type="number" id="return-depth" value="5" min="2" max="12" step="0.5">
+          </div>
+          <div><label>Logo PF (additional)</label>
+            <input type="number" id="logo-pf" value="0" min="0" step="0.1">
+          </div>
+        </div>
+      </div>
+
+      <!-- Installation -->
+      <div class="card">
+        <h2>Installation</h2>
+        <div class="form-row">
+          <div><label>Mount Height (ft)</label>
+            <input type="number" id="install-height" value="15" min="0" max="200">
+          </div>
+          <div><label>Substrate</label>
+            <select id="substrate">
+              <option value="standard">Standard</option>
+              <option value="eifs_unknown">EIFS/Unknown (x1.15)</option>
+              <option value="old_masonry">Old Masonry (x1.20)</option>
+              <option value="steel">Steel (x1.25)</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row-3">
+          <div><label>Raceway (LF)</label>
+            <input type="number" id="raceway-lf" value="0" min="0" step="0.5">
+          </div>
+          <div><label>Miles (one-way)</label>
+            <input type="number" id="miles" value="0" min="0">
+          </div>
+          <div><label>Crew Size</label>
+            <select id="crew-size">
+              <option value="2" selected>2 Men</option>
+              <option value="3">3 Men</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div><label># Sign Units</label>
+            <input type="number" id="num-units" value="1" min="1" max="20">
+          </div>
+          <div class="checkbox-group" style="align-self:end;padding-bottom:0.5rem;">
+            <input type="checkbox" id="include-removal">
+            <label for="include-removal">Include Removal</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Run Button -->
+      <button class="btn-primary" id="run-btn" onclick="runEstimate()">
+        Generate Estimate
+      </button>
+    </div>
+
+    <!-- ═══ RIGHT: RESULTS PANEL ═══ -->
+    <div class="results-panel">
+      <div class="results" id="results">
+
+        <!-- Summary -->
+        <div class="summary-grid">
+          <div class="summary-box accent"><div class="val" id="sum-pf">—</div><div class="lbl">Peripheral Ft</div></div>
+          <div class="summary-box green"><div class="val" id="sum-man">—</div><div class="lbl">Man-Hours</div></div>
+          <div class="summary-box orange"><div class="val" id="sum-crew">—</div><div class="lbl">Crew-Hours</div></div>
+          <div class="summary-box purple"><div class="val" id="sum-items">—</div><div class="lbl">BOM Items</div></div>
+        </div>
+
+        <!-- Warnings -->
+        <div id="warnings-container"></div>
+
+        <!-- Labor Table -->
+        <div class="card">
+          <div class="section-header">
+            <h3>Fabrication Labor &mdash; KeyedIn Entry</h3>
+            <span style="font-size:0.7rem;color:var(--text-dim);" id="labor-section"></span>
+          </div>
+          <table>
+            <thead><tr>
+              <th>Code</th><th>Description</th><th class="right">Hours</th><th>Unit</th><th>Dept</th><th>Formula (ABC)</th>
+            </tr></thead>
+            <tbody id="labor-body"></tbody>
+            <tfoot id="labor-foot"></tfoot>
+          </table>
+        </div>
+
+        <!-- Install Table -->
+        <div class="card">
+          <div class="section-header">
+            <h3>Installation Labor &mdash; KeyedIn Entry</h3>
+            <span style="font-size:0.7rem;color:var(--orange);">0640/0650 = CREW-hours!</span>
+          </div>
+          <table>
+            <thead><tr>
+              <th>Code</th><th>Description</th><th class="right">Hours</th><th>Unit</th><th>Dept</th><th>Formula (ABC)</th>
+            </tr></thead>
+            <tbody id="install-body"></tbody>
+            <tfoot id="install-foot"></tfoot>
+          </table>
+        </div>
+
+        <!-- LED Spec -->
+        <div class="card">
+          <h2>LED System Specification</h2>
+          <div id="led-spec" style="font-size:0.85rem;"></div>
+        </div>
+
+        <!-- Material BOM -->
+        <div class="card">
+          <h2>Material BOM</h2>
+          <table>
+            <thead><tr>
+              <th>Item</th><th>Part #</th><th class="right">Qty</th><th>Unit</th><th>Waste</th><th>Formula</th>
+            </tr></thead>
+            <tbody id="bom-body"></tbody>
+          </table>
+        </div>
+
+        <!-- Warehouse Benchmark -->
+        <div class="card" id="benchmark-card" style="display:none;">
+          <h2>Warehouse Benchmark <span class="badge" style="background:var(--accent2);">HISTORICAL</span></h2>
+          <div id="benchmark-content"></div>
+        </div>
+
+        <!-- Export -->
+        <div class="card" style="text-align:center;">
+          <button class="btn-primary" onclick="copyToClipboard()" style="width:auto;display:inline-block;margin-right:0.5rem;">
+            Copy KeyedIn Lines
+          </button>
+          <button class="btn-primary" onclick="exportCSV()" style="width:auto;display:inline-block;background:var(--accent2);">
+            Export CSV
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Placeholder when no results -->
+      <div id="placeholder" class="card" style="text-align:center;padding:4rem 2rem;">
+        <svg style="width:64px;height:64px;color:var(--text-dim);margin-bottom:1rem;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+        <h3 style="color:var(--text-dim);margin-bottom:0.5rem;">Ready to Estimate</h3>
+        <p style="color:var(--text-dim);font-size:0.85rem;">Upload a PDF, use the footage chart, or enter PF manually.<br>Then click "Generate Estimate" to see KeyedIn-ready line items.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── State ───────────────────────────────────────────────────────────────
+let currentPF = 0;
+let currentPFSource = '';
+let currentFaceSF = 0;
+let lastResult = null;
+
+// ── Tabs ────────────────────────────────────────────────────────────────
+document.querySelectorAll('#pf-tabs .tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('#pf-tabs .tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+  });
+});
+
+// ── PDF Upload ──────────────────────────────────────────────────────────
+const dropzone = document.getElementById('dropzone');
+const pdfInput = document.getElementById('pdf-input');
+
+dropzone.addEventListener('click', () => pdfInput.click());
+dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('dragover'); });
+dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+dropzone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropzone.classList.remove('dragover');
+  if (e.dataTransfer.files.length) handlePDF(e.dataTransfer.files[0]);
+});
+pdfInput.addEventListener('change', () => { if (pdfInput.files.length) handlePDF(pdfInput.files[0]); });
+
+async function handlePDF(file) {
+  document.getElementById('pdf-filename').textContent = file.name;
+  document.getElementById('pdf-result').style.display = 'block';
+  document.getElementById('pdf-info').innerHTML = '<span class="spinner"></span> Extracting vectors...';
+
+  const form = new FormData();
+  form.append('file', file);
+  const sf = parseFloat(document.getElementById('pdf-scale').value) || 0;
+  const kh = parseFloat(document.getElementById('pdf-known-height').value) || 0;
+
+  try {
+    const resp = await fetch(`/api/extract-pf?scale_factor=${sf}&known_letter_height=${kh}`, { method: 'POST', body: form });
+    const data = await resp.json();
+    currentPF = data.total_pf;
+    currentFaceSF = data.total_face_sf;
+    currentPFSource = 'PDF: ' + data.filename;
+    showPF(currentPF, currentPFSource);
+
+    let info = `Found ${data.letter_count} shapes | Face: ${data.total_face_sf} SF | Heights: ${data.min_height_inches}" - ${data.max_height_inches}"`;
+    if (data.warnings.length) info += '<br><span style="color:var(--orange)">' + data.warnings.join('<br>') + '</span>';
+    document.getElementById('pdf-info').innerHTML = info;
+
+    // Auto-fill height if detected
+    if (data.max_height_inches > 0) {
+      document.getElementById('spec-height').value = Math.round(data.max_height_inches);
+      document.getElementById('chart-height').value = Math.round(data.max_height_inches);
+    }
+  } catch (err) {
+    document.getElementById('pdf-info').innerHTML = '<span style="color:var(--red)">Error: ' + err.message + '</span>';
+  }
+}
+
+// ── Footage Chart ───────────────────────────────────────────────────────
+async function calcFromChart() {
+  const count = parseInt(document.getElementById('chart-count').value);
+  const height = parseFloat(document.getElementById('chart-height').value);
+  const font = document.getElementById('chart-font').value;
+
+  try {
+    const resp = await fetch('/api/footage-chart', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ letter_count: count, height_inches: height, font_type: font }),
+    });
+    const data = await resp.json();
+    currentPF = data.total_pf;
+    currentPFSource = `Chart: ${count} x ${font} @ ${height}"`;
+    currentFaceSF = 0;
+    showPF(currentPF, currentPFSource + ` (${data.pf_per_letter} PF/letter)`);
+    document.getElementById('chart-result').textContent = `${data.pf_per_letter} PF/letter x ${count} = ${data.total_pf} PF`;
+    document.getElementById('spec-height').value = height;
+  } catch (err) {
+    document.getElementById('chart-result').textContent = 'Error: ' + err.message;
+  }
+}
+
+// ── Show PF ─────────────────────────────────────────────────────────────
+function showPF(pf, source) {
+  const disp = document.getElementById('pf-display');
+  disp.style.display = 'block';
+  document.getElementById('pf-value').textContent = pf.toFixed(2);
+  document.getElementById('pf-source').textContent = source;
+}
+
+// ── Run Estimate ────────────────────────────────────────────────────────
+async function runEstimate() {
+  const btn = document.getElementById('run-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Calculating...';
+
+  // Determine PF source
+  const activeTab = document.querySelector('#pf-tabs .tab.active').dataset.tab;
+  let pfSource = 'manual';
+  let pfValue = 0;
+  let letterCount = 0;
+  let heightIn = parseFloat(document.getElementById('spec-height').value) || 12;
+
+  if (activeTab === 'pdf' && currentPF > 0) {
+    pfSource = 'pdf';
+    pfValue = currentPF;
+  } else if (activeTab === 'chart') {
+    pfSource = 'chart';
+    letterCount = parseInt(document.getElementById('chart-count').value) || 10;
+    heightIn = parseFloat(document.getElementById('chart-height').value) || 12;
+    document.getElementById('spec-height').value = heightIn;
+  } else {
+    pfSource = 'manual';
+    pfValue = parseFloat(document.getElementById('manual-pf').value) || currentPF;
+    if (!pfValue) {
+      btn.disabled = false;
+      btn.textContent = 'Generate Estimate';
+      alert('Enter PF value, upload a PDF, or use the footage chart.');
+      return;
+    }
+    currentPF = pfValue;
+    showPF(pfValue, 'Manual entry');
+  }
+
+  const body = {
+    pf_source: pfSource,
+    pf_value: pfValue,
+    letter_count: letterCount,
+    height_inches: heightIn,
+    font_type: document.getElementById('chart-font').value,
+    logo_pf: parseFloat(document.getElementById('logo-pf').value) || 0,
+    construction: document.getElementById('construction').value,
+    return_depth: parseFloat(document.getElementById('return-depth').value) || 5,
+    install_height: parseFloat(document.getElementById('install-height').value) || 15,
+    raceway_lf: parseFloat(document.getElementById('raceway-lf').value) || 0,
+    substrate: document.getElementById('substrate').value,
+    miles: parseFloat(document.getElementById('miles').value) || 0,
+    crew_size: parseInt(document.getElementById('crew-size').value) || 2,
+    num_units: parseInt(document.getElementById('num-units').value) || 1,
+    include_removal: document.getElementById('include-removal').checked,
+    face_sf: parseFloat(document.getElementById('manual-face-sf').value) || currentFaceSF || 0,
+  };
+
+  try {
+    const resp = await fetch('/api/estimate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    lastResult = await resp.json();
+    renderResults(lastResult);
+  } catch (err) {
+    alert('Estimation error: ' + err.message);
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Generate Estimate';
+}
+
+// ── Render Results ──────────────────────────────────────────────────────
+function renderResults(r) {
+  document.getElementById('results').classList.add('show');
+  document.getElementById('placeholder').style.display = 'none';
+
+  // Summary
+  document.getElementById('sum-pf').textContent = r.total_pf.toFixed(2);
+  document.getElementById('sum-man').textContent = r.total_man_hours.toFixed(2);
+  document.getElementById('sum-crew').textContent = r.total_crew_hours.toFixed(2);
+  document.getElementById('sum-items').textContent = r.materials.length;
+
+  // Update PF display
+  showPF(r.total_pf, r.pf_source);
+
+  // Warnings
+  const wc = document.getElementById('warnings-container');
+  wc.innerHTML = '';
+  for (const w of r.warnings) {
+    wc.innerHTML += `<div class="warning">${w}</div>`;
+  }
+
+  // Section label
+  document.getElementById('labor-section').textContent =
+    `ABC ${r.construction.replace('_', '-')} | ${r.height_category}" | ${r.total_pf} PF`;
+
+  // Labor table
+  renderTable('labor-body', 'labor-foot', r.labor, 'Fab Subtotal');
+
+  // Install table
+  renderTable('install-body', 'install-foot', r.install, 'Install Subtotal');
+
+  // LED spec
+  const led = r.led;
+  document.getElementById('led-spec').innerHTML = `
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;">
+      <div><div style="font-size:1.2rem;font-weight:700;color:var(--accent)">${led.modules}</div><div style="font-size:0.7rem;color:var(--text-dim)">LED Modules</div></div>
+      <div><div style="font-size:1.2rem;font-weight:700;color:var(--orange)">${led.watts}W</div><div style="font-size:0.7rem;color:var(--text-dim)">Total Watts</div></div>
+      <div><div style="font-size:1.2rem;font-weight:700;color:var(--green)">${led.ps_spec}</div><div style="font-size:0.7rem;color:var(--text-dim)">Power Supply (${led.ps_part})</div></div>
+    </div>
+    <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--text-dim);">
+      Capacity needed: ${led.capacity_needed}W | ${led.ps_count} supply unit(s) | PF x ${r.construction === 'halo' ? '1.0' : '1.2'} x 1.05 waste
+    </div>
+  `;
+
+  // BOM table
+  const bomBody = document.getElementById('bom-body');
+  bomBody.innerHTML = '';
+  for (const m of r.materials) {
+    bomBody.innerHTML += `<tr>
+      <td>${m.item}</td>
+      <td class="mono">${m.part}</td>
+      <td class="right mono">${m.qty}</td>
+      <td>${m.unit}</td>
+      <td>${m.waste}</td>
+      <td style="font-size:0.75rem;color:var(--text-dim)">${m.formula}</td>
+    </tr>`;
+  }
+
+  // Benchmark
+  const benchCard = document.getElementById('benchmark-card');
+  const benchContent = document.getElementById('benchmark-content');
+  if (r.benchmark) {
+    benchCard.style.display = 'block';
+    const b = r.benchmark;
+    const abcTotal = r.total_man_hours + r.total_crew_hours;
+    const diff = abcTotal - b.avg_hours;
+    const diffPct = ((diff / b.avg_hours) * 100).toFixed(1);
+    const diffColor = Math.abs(diff) < b.std_dev ? 'var(--green)' : 'var(--orange)';
+
+    benchContent.innerHTML = `
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.75rem;margin-bottom:1rem;">
+        <div style="text-align:center;">
+          <div style="font-size:1.5rem;font-weight:700;color:var(--accent)">${abcTotal.toFixed(1)}</div>
+          <div style="font-size:0.7rem;color:var(--text-dim)">ABC Estimate (hrs)</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:1.5rem;font-weight:700;color:var(--accent2)">${b.avg_hours}</div>
+          <div style="font-size:0.7rem;color:var(--text-dim)">Warehouse Avg (hrs)</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:1.5rem;font-weight:700;color:${diffColor}">${diff > 0 ? '+' : ''}${diff.toFixed(1)} (${diffPct}%)</div>
+          <div style="font-size:0.7rem;color:var(--text-dim)">Difference</div>
+        </div>
+      </div>
+      <div style="font-size:0.8rem;color:var(--text-dim);margin-bottom:0.75rem;">
+        Based on <strong>${b.matching_jobs}</strong> similar channel letter jobs |
+        Median: ${b.median_hours} hrs | Range: ${b.min_hours} - ${b.max_hours} hrs |
+        StdDev: &plusmn;${b.std_dev} | Confidence: <strong>${b.confidence}</strong> |
+        Avg Revenue: $${b.avg_revenue.toLocaleString()} | Avg GM: ${b.avg_margin_pct}%
+      </div>
+      ${b.similar_jobs.length ? `
+        <details><summary>Closest matching jobs</summary>
+        <table style="margin-top:0.5rem;">
+          <thead><tr><th>WO</th><th>Customer</th><th class="right">Est Hours</th><th class="right">Revenue</th><th class="right">GM%</th></tr></thead>
+          <tbody>${b.similar_jobs.map(j => `<tr>
+            <td class="mono">${j.wo}</td>
+            <td>${j.customer}</td>
+            <td class="right">${j.hours_est}</td>
+            <td class="right">$${j.revenue.toLocaleString()}</td>
+            <td class="right">${j.gm}%</td>
+          </tr>`).join('')}</tbody>
+        </table></details>` : ''}
+    `;
+  } else {
+    benchCard.style.display = 'none';
+  }
+}
+
+function renderTable(bodyId, footId, rows, subtotalLabel) {
+  const body = document.getElementById(bodyId);
+  const foot = document.getElementById(footId);
+  body.innerHTML = '';
+  let totalMan = 0, totalCrew = 0;
+
+  for (const l of rows) {
+    const isCrew = l.unit.includes('CREW');
+    const unitClass = isCrew ? 'unit-crew' : 'unit-man';
+    body.innerHTML += `<tr>
+      <td class="mono">${l.code}</td>
+      <td>${l.desc}</td>
+      <td class="right mono" style="font-weight:600">${l.hours.toFixed(2)}</td>
+      <td class="${unitClass}">${l.unit}</td>
+      <td style="font-size:0.75rem;color:var(--text-dim)">${l.dept}</td>
+      <td style="font-size:0.75rem;color:var(--text-dim)">${l.formula}</td>
+    </tr>`;
+    if (isCrew) totalCrew += l.hours;
+    else totalMan += l.hours;
+  }
+
+  let footHtml = '';
+  if (totalMan > 0) footHtml += `<tr><td colspan="2" style="font-weight:600">${subtotalLabel} (man-hrs)</td><td class="right mono" style="font-weight:700;color:var(--green)">${totalMan.toFixed(2)}</td><td class="unit-man">man-hrs</td><td colspan="2"></td></tr>`;
+  if (totalCrew > 0) footHtml += `<tr><td colspan="2" style="font-weight:600">${subtotalLabel} (crew-hrs)</td><td class="right mono" style="font-weight:700;color:var(--orange)">${totalCrew.toFixed(2)}</td><td class="unit-crew">CREW-hrs</td><td colspan="2"></td></tr>`;
+  foot.innerHTML = footHtml;
+}
+
+// ── Export ───────────────────────────────────────────────────────────────
+function copyToClipboard() {
+  if (!lastResult) return;
+  let lines = 'Code\tDescription\tHours\tUnit\n';
+  for (const l of [...lastResult.labor, ...lastResult.install]) {
+    lines += `${l.code}\t${l.desc}\t${l.hours.toFixed(2)}\t${l.unit}\n`;
+  }
+  navigator.clipboard.writeText(lines).then(() => alert('Copied to clipboard!'));
+}
+
+function exportCSV() {
+  if (!lastResult) return;
+  let csv = 'Type,Code,Description,Hours,Unit,Department,Formula,Section\n';
+  for (const l of lastResult.labor) {
+    csv += `Fabrication,${l.code},"${l.desc}",${l.hours.toFixed(2)},${l.unit},"${l.dept}","${l.formula}","${l.section}"\n`;
+  }
+  for (const l of lastResult.install) {
+    csv += `Installation,${l.code},"${l.desc}",${l.hours.toFixed(2)},${l.unit},"${l.dept}","${l.formula}","${l.section}"\n`;
+  }
+  csv += '\nMaterials\nItem,Part,Qty,Unit,Waste,Formula\n';
+  for (const m of lastResult.materials) {
+    csv += `"${m.item}",${m.part},${m.qty},${m.unit},${m.waste},"${m.formula}"\n`;
+  }
+  csv += `\nLED Modules,${lastResult.led.modules}\nLED Watts,${lastResult.led.watts}\nPower Supply,${lastResult.led.ps_spec}\n`;
+
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `signx-estimate-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>
