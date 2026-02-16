@@ -1,0 +1,14 @@
+Code,Description,"Dollars
+Required","Invoice
+Print
+Type","Default 
+Catalog 
+Number"
+1,Wholesale,Y,$,1
+2,Distributer,Y,$,2
+3,OEM,Y,$,3
+4,VAR,Y,$,4
+5,CATALOG PRICE 5,Y,$,5
+6,CATALOG PRICE 6,Y,$,6
+7,OTHER,Y,$,7
+L,LIST PRICE,Y,$,L

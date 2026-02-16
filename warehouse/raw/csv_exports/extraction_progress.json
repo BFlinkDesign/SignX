@@ -1,0 +1,936 @@
+{
+  "EMP.HOURS.BY.DATE": {
+    "2025": {
+      "status": "done",
+      "rows": 27568,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EMP.HOURS.BY.DATE_2025.csv",
+      "timestamp": "2026-02-15T17:50:01.936699"
+    },
+    "2005": {
+      "status": "done",
+      "rows": 27568,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EMP.HOURS.BY.DATE_2005.csv",
+      "timestamp": "2026-02-15T17:50:18.936255"
+    },
+    "2006": {
+      "status": "done",
+      "rows": 27568,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EMP.HOURS.BY.DATE_2006.csv",
+      "timestamp": "2026-02-15T17:50:33.464843"
+    },
+    "2007": {
+      "status": "done",
+      "rows": 25050,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EMP.HOURS.BY.DATE_2007.csv",
+      "timestamp": "2026-02-15T17:50:54.885744"
+    },
+    "2008": {
+      "status": "done",
+      "rows": 28327,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EMP.HOURS.BY.DATE_2008.csv",
+      "timestamp": "2026-02-15T17:51:18.250627"
+    },
+    "2009": {
+      "status": "done",
+      "rows": 19738,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EMP.HOURS.BY.DATE_2009.csv",
+      "timestamp": "2026-02-15T17:51:36.907887"
+    },
+    "2010": {
+      "status": "done",
+      "rows": 18486,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EMP.HOURS.BY.DATE_2010.csv",
+      "timestamp": "2026-02-15T17:51:55.125492"
+    },
+    "2011": {
+      "status": "done",
+      "rows": 19848,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EMP.HOURS.BY.DATE_2011.csv",
+      "timestamp": "2026-02-15T17:52:14.237498"
+    },
+    "2012": {
+      "status": "done",
+      "rows": 24625,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EMP.HOURS.BY.DATE_2012.csv",
+      "timestamp": "2026-02-15T17:52:35.898714"
+    },
+    "2013": {
+      "status": "done",
+      "rows": 29809,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EMP.HOURS.BY.DATE_2013.csv",
+      "timestamp": "2026-02-15T17:53:00.499012"
+    },
+    "2014": {
+      "status": "done",
+      "rows": 30592,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EMP.HOURS.BY.DATE_2014.csv",
+      "timestamp": "2026-02-15T17:53:25.379480"
+    },
+    "2015": {
+      "status": "done",
+      "rows": 29059,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EMP.HOURS.BY.DATE_2015.csv",
+      "timestamp": "2026-02-15T17:53:52.737602"
+    },
+    "2016": {
+      "status": "done",
+      "rows": 30171,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EMP.HOURS.BY.DATE_2016.csv",
+      "timestamp": "2026-02-15T17:54:18.088547"
+    },
+    "2017": {
+      "status": "done",
+      "rows": 27841,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EMP.HOURS.BY.DATE_2017.csv",
+      "timestamp": "2026-02-15T17:54:40.751695"
+    },
+    "2018": {
+      "status": "done",
+      "rows": 26061,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EMP.HOURS.BY.DATE_2018.csv",
+      "timestamp": "2026-02-15T17:55:02.618810"
+    },
+    "2019": {
+      "status": "done",
+      "rows": 26579,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EMP.HOURS.BY.DATE_2019.csv",
+      "timestamp": "2026-02-15T17:55:24.790160"
+    },
+    "2020": {
+      "status": "done",
+      "rows": 25937,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EMP.HOURS.BY.DATE_2020.csv",
+      "timestamp": "2026-02-15T17:55:46.989504"
+    },
+    "2021": {
+      "status": "done",
+      "rows": 26617,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EMP.HOURS.BY.DATE_2021.csv",
+      "timestamp": "2026-02-15T17:56:09.208402"
+    },
+    "2022": {
+      "status": "done",
+      "rows": 24802,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EMP.HOURS.BY.DATE_2022.csv",
+      "timestamp": "2026-02-15T17:56:30.158629"
+    },
+    "2023": {
+      "status": "done",
+      "rows": 25844,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EMP.HOURS.BY.DATE_2023.csv",
+      "timestamp": "2026-02-15T17:56:51.595739"
+    },
+    "2024": {
+      "status": "done",
+      "rows": 28792,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EMP.HOURS.BY.DATE_2024.csv",
+      "timestamp": "2026-02-15T17:57:15.083499"
+    },
+    "2026": {
+      "status": "done",
+      "rows": 3389,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EMP.HOURS.BY.DATE_2026.csv",
+      "timestamp": "2026-02-15T17:57:29.678314"
+    }
+  },
+  "EXPORT.WO.LABOR.ANALYSIS": {
+    "2005": {
+      "status": "error",
+      "error": "Quarterly Q1 timeout",
+      "timestamp": "2026-02-15T18:01:49.558905"
+    },
+    "2006": {
+      "status": "error",
+      "error": "Quarterly Q1 timeout",
+      "timestamp": "2026-02-15T18:06:04.964792"
+    },
+    "2007": {
+      "status": "done",
+      "rows": 1369,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WO.LABOR.ANALYSIS_2007.csv",
+      "timestamp": "2026-02-15T18:06:22.087419"
+    },
+    "2008": {
+      "status": "done",
+      "rows": 1236,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WO.LABOR.ANALYSIS_2008.csv",
+      "timestamp": "2026-02-15T18:06:39.701659"
+    },
+    "2009": {
+      "status": "done",
+      "rows": 1087,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WO.LABOR.ANALYSIS_2009.csv",
+      "timestamp": "2026-02-15T18:06:56.293650"
+    },
+    "2010": {
+      "status": "done",
+      "rows": 1103,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WO.LABOR.ANALYSIS_2010.csv",
+      "timestamp": "2026-02-15T18:07:13.282073"
+    },
+    "2011": {
+      "status": "done",
+      "rows": 1202,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WO.LABOR.ANALYSIS_2011.csv",
+      "timestamp": "2026-02-15T18:07:30.146268"
+    },
+    "2012": {
+      "status": "done",
+      "rows": 1302,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WO.LABOR.ANALYSIS_2012.csv",
+      "timestamp": "2026-02-15T18:07:48.026479"
+    },
+    "2013": {
+      "status": "done",
+      "rows": 1846,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WO.LABOR.ANALYSIS_2013.csv",
+      "timestamp": "2026-02-15T18:08:07.525922"
+    },
+    "2014": {
+      "status": "done",
+      "rows": 1961,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WO.LABOR.ANALYSIS_2014.csv",
+      "timestamp": "2026-02-15T18:08:27.170102"
+    },
+    "2015": {
+      "status": "done",
+      "rows": 1778,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WO.LABOR.ANALYSIS_2015.csv",
+      "timestamp": "2026-02-15T18:08:46.395587"
+    },
+    "2016": {
+      "status": "done",
+      "rows": 1566,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WO.LABOR.ANALYSIS_2016.csv",
+      "timestamp": "2026-02-15T18:09:04.644599"
+    },
+    "2017": {
+      "status": "done",
+      "rows": 1449,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WO.LABOR.ANALYSIS_2017.csv",
+      "timestamp": "2026-02-15T18:09:22.858994"
+    },
+    "2018": {
+      "status": "done",
+      "rows": 1448,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WO.LABOR.ANALYSIS_2018.csv",
+      "timestamp": "2026-02-15T18:09:40.910356"
+    },
+    "2019": {
+      "status": "done",
+      "rows": 1551,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WO.LABOR.ANALYSIS_2019.csv",
+      "timestamp": "2026-02-15T18:09:59.528090"
+    },
+    "2020": {
+      "status": "done",
+      "rows": 1420,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WO.LABOR.ANALYSIS_2020.csv",
+      "timestamp": "2026-02-15T18:10:16.907948"
+    },
+    "2021": {
+      "status": "done",
+      "rows": 1514,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WO.LABOR.ANALYSIS_2021.csv",
+      "timestamp": "2026-02-15T18:10:34.997998"
+    },
+    "2022": {
+      "status": "done",
+      "rows": 1400,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WO.LABOR.ANALYSIS_2022.csv",
+      "timestamp": "2026-02-15T18:10:52.475178"
+    },
+    "2023": {
+      "status": "done",
+      "rows": 1414,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WO.LABOR.ANALYSIS_2023.csv",
+      "timestamp": "2026-02-15T18:11:10.874945"
+    },
+    "2024": {
+      "status": "done",
+      "rows": 1323,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WO.LABOR.ANALYSIS_2024.csv",
+      "timestamp": "2026-02-15T18:11:28.256275"
+    },
+    "2025": {
+      "status": "done",
+      "rows": 1087,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WO.LABOR.ANALYSIS_2025.csv",
+      "timestamp": "2026-02-15T18:11:45.167462"
+    },
+    "2026": {
+      "status": "done",
+      "rows": 108,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WO.LABOR.ANALYSIS_2026.csv",
+      "timestamp": "2026-02-15T18:11:59.543710"
+    }
+  },
+  "GM.BY.INV.EXPORT": {
+    "2005": {
+      "status": "done",
+      "rows": 5,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\GM.BY.INV.EXPORT_2005.csv",
+      "timestamp": "2026-02-15T18:12:14.039595"
+    },
+    "2006": {
+      "status": "done",
+      "rows": 5,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\GM.BY.INV.EXPORT_2006.csv",
+      "timestamp": "2026-02-15T18:12:28.315789"
+    },
+    "2007": {
+      "status": "done",
+      "rows": 1979,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\GM.BY.INV.EXPORT_2007.csv",
+      "timestamp": "2026-02-15T18:12:44.791871"
+    },
+    "2008": {
+      "status": "done",
+      "rows": 3081,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\GM.BY.INV.EXPORT_2008.csv",
+      "timestamp": "2026-02-15T18:13:02.515415"
+    },
+    "2009": {
+      "status": "done",
+      "rows": 2433,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\GM.BY.INV.EXPORT_2009.csv",
+      "timestamp": "2026-02-15T18:13:19.302794"
+    },
+    "2010": {
+      "status": "done",
+      "rows": 2924,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\GM.BY.INV.EXPORT_2010.csv",
+      "timestamp": "2026-02-15T18:13:36.314464"
+    },
+    "2011": {
+      "status": "done",
+      "rows": 3123,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\GM.BY.INV.EXPORT_2011.csv",
+      "timestamp": "2026-02-15T18:13:53.823968"
+    },
+    "2012": {
+      "status": "done",
+      "rows": 3237,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\GM.BY.INV.EXPORT_2012.csv",
+      "timestamp": "2026-02-15T18:14:10.490159"
+    },
+    "2013": {
+      "status": "done",
+      "rows": 4266,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\GM.BY.INV.EXPORT_2013.csv",
+      "timestamp": "2026-02-15T18:14:28.505110"
+    },
+    "2014": {
+      "status": "done",
+      "rows": 4774,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\GM.BY.INV.EXPORT_2014.csv",
+      "timestamp": "2026-02-15T18:14:46.956278"
+    },
+    "2015": {
+      "status": "done",
+      "rows": 4290,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\GM.BY.INV.EXPORT_2015.csv",
+      "timestamp": "2026-02-15T18:15:05.593167"
+    },
+    "2016": {
+      "status": "done",
+      "rows": 4159,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\GM.BY.INV.EXPORT_2016.csv",
+      "timestamp": "2026-02-15T18:15:23.698226"
+    },
+    "2017": {
+      "status": "done",
+      "rows": 3526,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\GM.BY.INV.EXPORT_2017.csv",
+      "timestamp": "2026-02-15T18:15:41.182241"
+    },
+    "2018": {
+      "status": "done",
+      "rows": 3501,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\GM.BY.INV.EXPORT_2018.csv",
+      "timestamp": "2026-02-15T18:15:58.717124"
+    },
+    "2019": {
+      "status": "done",
+      "rows": 3361,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\GM.BY.INV.EXPORT_2019.csv",
+      "timestamp": "2026-02-15T18:16:17.111726"
+    },
+    "2020": {
+      "status": "done",
+      "rows": 3255,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\GM.BY.INV.EXPORT_2020.csv",
+      "timestamp": "2026-02-15T18:16:34.472838"
+    },
+    "2021": {
+      "status": "done",
+      "rows": 3600,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\GM.BY.INV.EXPORT_2021.csv",
+      "timestamp": "2026-02-15T18:16:52.086886"
+    },
+    "2022": {
+      "status": "done",
+      "rows": 3255,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\GM.BY.INV.EXPORT_2022.csv",
+      "timestamp": "2026-02-15T18:17:09.529167"
+    },
+    "2023": {
+      "status": "done",
+      "rows": 3405,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\GM.BY.INV.EXPORT_2023.csv",
+      "timestamp": "2026-02-15T18:17:27.184689"
+    },
+    "2024": {
+      "status": "done",
+      "rows": 3286,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\GM.BY.INV.EXPORT_2024.csv",
+      "timestamp": "2026-02-15T18:17:44.791696"
+    },
+    "2025": {
+      "status": "done",
+      "rows": 2741,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\GM.BY.INV.EXPORT_2025.csv",
+      "timestamp": "2026-02-15T18:18:01.838405"
+    },
+    "2026": {
+      "status": "done",
+      "rows": 365,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\GM.BY.INV.EXPORT_2026.csv",
+      "timestamp": "2026-02-15T18:18:16.407577"
+    }
+  },
+  "SLSPER.PROD.EXPORT": {
+    "2005": {
+      "status": "done",
+      "rows": 5,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\SLSPER.PROD.EXPORT_2005.csv",
+      "timestamp": "2026-02-15T18:18:30.699956"
+    },
+    "2006": {
+      "status": "done",
+      "rows": 5,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\SLSPER.PROD.EXPORT_2006.csv",
+      "timestamp": "2026-02-15T18:18:44.766810"
+    },
+    "2007": {
+      "status": "done",
+      "rows": 1311,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\SLSPER.PROD.EXPORT_2007.csv",
+      "timestamp": "2026-02-15T18:18:59.371299"
+    },
+    "2008": {
+      "status": "done",
+      "rows": 1717,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\SLSPER.PROD.EXPORT_2008.csv",
+      "timestamp": "2026-02-15T18:19:14.367566"
+    },
+    "2009": {
+      "status": "done",
+      "rows": 1251,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\SLSPER.PROD.EXPORT_2009.csv",
+      "timestamp": "2026-02-15T18:19:29.274045"
+    },
+    "2010": {
+      "status": "done",
+      "rows": 1418,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\SLSPER.PROD.EXPORT_2010.csv",
+      "timestamp": "2026-02-15T18:19:44.261245"
+    },
+    "2011": {
+      "status": "done",
+      "rows": 1491,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\SLSPER.PROD.EXPORT_2011.csv",
+      "timestamp": "2026-02-15T18:19:59.198630"
+    },
+    "2012": {
+      "status": "done",
+      "rows": 1599,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\SLSPER.PROD.EXPORT_2012.csv",
+      "timestamp": "2026-02-15T18:20:13.814766"
+    },
+    "2013": {
+      "status": "done",
+      "rows": 2140,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\SLSPER.PROD.EXPORT_2013.csv",
+      "timestamp": "2026-02-15T18:20:28.816278"
+    },
+    "2014": {
+      "status": "done",
+      "rows": 2254,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\SLSPER.PROD.EXPORT_2014.csv",
+      "timestamp": "2026-02-15T18:20:43.995578"
+    },
+    "2015": {
+      "status": "done",
+      "rows": 1966,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\SLSPER.PROD.EXPORT_2015.csv",
+      "timestamp": "2026-02-15T18:20:59.256927"
+    },
+    "2016": {
+      "status": "done",
+      "rows": 1913,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\SLSPER.PROD.EXPORT_2016.csv",
+      "timestamp": "2026-02-15T18:21:14.373932"
+    },
+    "2017": {
+      "status": "done",
+      "rows": 1632,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\SLSPER.PROD.EXPORT_2017.csv",
+      "timestamp": "2026-02-15T18:21:29.404445"
+    },
+    "2018": {
+      "status": "done",
+      "rows": 1689,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\SLSPER.PROD.EXPORT_2018.csv",
+      "timestamp": "2026-02-15T18:21:44.212379"
+    },
+    "2019": {
+      "status": "done",
+      "rows": 1705,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\SLSPER.PROD.EXPORT_2019.csv",
+      "timestamp": "2026-02-15T18:21:59.302210"
+    },
+    "2020": {
+      "status": "done",
+      "rows": 1617,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\SLSPER.PROD.EXPORT_2020.csv",
+      "timestamp": "2026-02-15T18:22:14.583422"
+    },
+    "2021": {
+      "status": "done",
+      "rows": 1718,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\SLSPER.PROD.EXPORT_2021.csv",
+      "timestamp": "2026-02-15T18:22:29.654689"
+    },
+    "2022": {
+      "status": "done",
+      "rows": 1567,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\SLSPER.PROD.EXPORT_2022.csv",
+      "timestamp": "2026-02-15T18:22:44.476807"
+    },
+    "2023": {
+      "status": "done",
+      "rows": 1607,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\SLSPER.PROD.EXPORT_2023.csv",
+      "timestamp": "2026-02-15T18:22:59.363192"
+    },
+    "2024": {
+      "status": "done",
+      "rows": 1554,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\SLSPER.PROD.EXPORT_2024.csv",
+      "timestamp": "2026-02-15T18:23:14.379865"
+    },
+    "2025": {
+      "status": "done",
+      "rows": 1305,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\SLSPER.PROD.EXPORT_2025.csv",
+      "timestamp": "2026-02-15T18:23:30.035508"
+    },
+    "2026": {
+      "status": "done",
+      "rows": 235,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\SLSPER.PROD.EXPORT_2026.csv",
+      "timestamp": "2026-02-15T18:23:44.266060"
+    }
+  },
+  "EXPORT.WIP.SUMMARY": {
+    "2005_C": {
+      "status": "done",
+      "rows": 205,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_C_2005.csv",
+      "timestamp": "2026-02-15T18:23:58.828634"
+    },
+    "2006_C": {
+      "status": "done",
+      "rows": 205,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_C_2006.csv",
+      "timestamp": "2026-02-15T18:24:13.262061"
+    },
+    "2007_C": {
+      "status": "done",
+      "rows": 1188,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_C_2007.csv",
+      "timestamp": "2026-02-15T18:24:30.954339"
+    },
+    "2008_C": {
+      "status": "done",
+      "rows": 1905,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_C_2008.csv",
+      "timestamp": "2026-02-15T18:24:51.220215"
+    },
+    "2009_C": {
+      "status": "done",
+      "rows": 1263,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_C_2009.csv",
+      "timestamp": "2026-02-15T18:25:10.645547"
+    },
+    "2010_C": {
+      "status": "done",
+      "rows": 1517,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_C_2010.csv",
+      "timestamp": "2026-02-15T18:25:30.497546"
+    },
+    "2011_C": {
+      "status": "done",
+      "rows": 1702,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_C_2011.csv",
+      "timestamp": "2026-02-15T18:25:50.615066"
+    },
+    "2012_C": {
+      "status": "done",
+      "rows": 1434,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_C_2012.csv",
+      "timestamp": "2026-02-15T18:26:09.892096"
+    },
+    "2013_C": {
+      "status": "done",
+      "rows": 2124,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_C_2013.csv",
+      "timestamp": "2026-02-15T18:26:31.898018"
+    },
+    "2014_C": {
+      "status": "done",
+      "rows": 2331,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_C_2014.csv",
+      "timestamp": "2026-02-15T18:26:56.026430"
+    },
+    "2015_C": {
+      "status": "done",
+      "rows": 2095,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_C_2015.csv",
+      "timestamp": "2026-02-15T18:27:19.172717"
+    },
+    "2016_C": {
+      "status": "done",
+      "rows": 2061,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_C_2016.csv",
+      "timestamp": "2026-02-15T18:27:41.959849"
+    },
+    "2017_C": {
+      "status": "done",
+      "rows": 1779,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_C_2017.csv",
+      "timestamp": "2026-02-15T18:28:03.669746"
+    },
+    "2018_C": {
+      "status": "done",
+      "rows": 1877,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_C_2018.csv",
+      "timestamp": "2026-02-15T18:28:25.367879"
+    },
+    "2019_C": {
+      "status": "done",
+      "rows": 1821,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_C_2019.csv",
+      "timestamp": "2026-02-15T18:28:46.729458"
+    },
+    "2020_C": {
+      "status": "done",
+      "rows": 1719,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_C_2020.csv",
+      "timestamp": "2026-02-15T18:29:08.786599"
+    },
+    "2021_C": {
+      "status": "done",
+      "rows": 1854,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_C_2021.csv",
+      "timestamp": "2026-02-15T18:29:30.724454"
+    },
+    "2022_C": {
+      "status": "done",
+      "rows": 1718,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_C_2022.csv",
+      "timestamp": "2026-02-15T18:29:51.837163"
+    },
+    "2023_C": {
+      "status": "done",
+      "rows": 1774,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_C_2023.csv",
+      "timestamp": "2026-02-15T18:30:13.264520"
+    },
+    "2024_C": {
+      "status": "done",
+      "rows": 1715,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_C_2024.csv",
+      "timestamp": "2026-02-15T18:30:33.913332"
+    },
+    "2025_C": {
+      "status": "done",
+      "rows": 1522,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_C_2025.csv",
+      "timestamp": "2026-02-15T18:30:54.165496"
+    },
+    "2026_C": {
+      "status": "done",
+      "rows": 178,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_C_2026.csv",
+      "timestamp": "2026-02-15T18:31:10.530172"
+    },
+    "2005_O": {
+      "status": "done",
+      "rows": 3,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_O_2005.csv",
+      "timestamp": "2026-02-15T21:02:21.991429"
+    },
+    "2006_O": {
+      "status": "done",
+      "rows": 3,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_O_2006.csv",
+      "timestamp": "2026-02-15T21:04:14.415428"
+    },
+    "2007_O": {
+      "status": "done",
+      "rows": 255,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_O_2007.csv",
+      "timestamp": "2026-02-15T21:06:05.703645"
+    },
+    "2008_O": {
+      "status": "done",
+      "rows": 63,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_O_2008.csv",
+      "timestamp": "2026-02-15T21:07:51.306665"
+    },
+    "2009_O": {
+      "status": "done",
+      "rows": 131,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_O_2009.csv",
+      "timestamp": "2026-02-15T21:09:34.724944"
+    },
+    "2010_O": {
+      "status": "done",
+      "rows": 92,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_O_2010.csv",
+      "timestamp": "2026-02-15T21:11:14.537044"
+    },
+    "2011_O": {
+      "status": "done",
+      "rows": 87,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_O_2011.csv",
+      "timestamp": "2026-02-15T21:12:50.324022"
+    },
+    "2012_O": {
+      "status": "done",
+      "rows": 114,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_O_2012.csv",
+      "timestamp": "2026-02-15T21:14:22.495830"
+    },
+    "2013_O": {
+      "status": "done",
+      "rows": 146,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_O_2013.csv",
+      "timestamp": "2026-02-15T21:15:48.297723"
+    },
+    "2014_O": {
+      "status": "done",
+      "rows": 122,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_O_2014.csv",
+      "timestamp": "2026-02-15T21:17:07.406782"
+    },
+    "2015_O": {
+      "status": "done",
+      "rows": 139,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_O_2015.csv",
+      "timestamp": "2026-02-15T21:18:18.914072"
+    },
+    "2016_O": {
+      "status": "done",
+      "rows": 90,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_O_2016.csv",
+      "timestamp": "2026-02-15T21:19:24.277039"
+    },
+    "2017_O": {
+      "status": "done",
+      "rows": 111,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_O_2017.csv",
+      "timestamp": "2026-02-15T21:20:24.331259"
+    },
+    "2018_O": {
+      "status": "done",
+      "rows": 108,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_O_2018.csv",
+      "timestamp": "2026-02-15T21:21:18.613333"
+    },
+    "2019_O": {
+      "status": "done",
+      "rows": 119,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_O_2019.csv",
+      "timestamp": "2026-02-15T21:22:08.215739"
+    },
+    "2020_O": {
+      "status": "done",
+      "rows": 131,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_O_2020.csv",
+      "timestamp": "2026-02-15T21:22:51.252689"
+    },
+    "2021_O": {
+      "status": "done",
+      "rows": 149,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_O_2021.csv",
+      "timestamp": "2026-02-15T21:23:28.446722"
+    },
+    "2022_O": {
+      "status": "done",
+      "rows": 144,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_O_2022.csv",
+      "timestamp": "2026-02-15T21:24:00.485560"
+    },
+    "2023_O": {
+      "status": "done",
+      "rows": 172,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_O_2023.csv",
+      "timestamp": "2026-02-15T21:24:26.960608"
+    },
+    "2024_O": {
+      "status": "done",
+      "rows": 102,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_O_2024.csv",
+      "timestamp": "2026-02-15T21:24:47.726613"
+    },
+    "2025_O": {
+      "status": "done",
+      "rows": 133,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_O_2025.csv",
+      "timestamp": "2026-02-15T21:25:04.641256"
+    },
+    "2026_O": {
+      "status": "done",
+      "rows": 139,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\EXPORT.WIP.SUMMARY_O_2026.csv",
+      "timestamp": "2026-02-15T21:25:19.995881"
+    }
+  },
+  "CUST.PROD.EXPORT": {
+    "2005": {
+      "status": "done",
+      "rows": 5,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\CUST.PROD.EXPORT_2005.csv",
+      "timestamp": "2026-02-15T21:25:34.229929"
+    },
+    "2006": {
+      "status": "done",
+      "rows": 5,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\CUST.PROD.EXPORT_2006.csv",
+      "timestamp": "2026-02-15T21:25:48.252720"
+    },
+    "2007": {
+      "status": "done",
+      "rows": 2555,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\CUST.PROD.EXPORT_2007.csv",
+      "timestamp": "2026-02-15T21:26:03.564846"
+    },
+    "2008": {
+      "status": "done",
+      "rows": 3511,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\CUST.PROD.EXPORT_2008.csv",
+      "timestamp": "2026-02-15T21:26:19.978951"
+    },
+    "2009": {
+      "status": "done",
+      "rows": 2565,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\CUST.PROD.EXPORT_2009.csv",
+      "timestamp": "2026-02-15T21:26:34.946828"
+    },
+    "2010": {
+      "status": "done",
+      "rows": 3174,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\CUST.PROD.EXPORT_2010.csv",
+      "timestamp": "2026-02-15T21:26:50.480305"
+    },
+    "2011": {
+      "status": "done",
+      "rows": 3221,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\CUST.PROD.EXPORT_2011.csv",
+      "timestamp": "2026-02-15T21:27:06.230808"
+    },
+    "2012": {
+      "status": "done",
+      "rows": 3413,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\CUST.PROD.EXPORT_2012.csv",
+      "timestamp": "2026-02-15T21:27:21.565117"
+    },
+    "2013": {
+      "status": "done",
+      "rows": 4736,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\CUST.PROD.EXPORT_2013.csv",
+      "timestamp": "2026-02-15T21:27:37.366697"
+    },
+    "2014": {
+      "status": "done",
+      "rows": 4816,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\CUST.PROD.EXPORT_2014.csv",
+      "timestamp": "2026-02-15T21:27:53.769806"
+    },
+    "2015": {
+      "status": "done",
+      "rows": 4580,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\CUST.PROD.EXPORT_2015.csv",
+      "timestamp": "2026-02-15T21:28:10.081589"
+    },
+    "2016": {
+      "status": "done",
+      "rows": 4285,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\CUST.PROD.EXPORT_2016.csv",
+      "timestamp": "2026-02-15T21:28:26.142610"
+    },
+    "2017": {
+      "status": "done",
+      "rows": 3544,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\CUST.PROD.EXPORT_2017.csv",
+      "timestamp": "2026-02-15T21:28:41.782353"
+    },
+    "2018": {
+      "status": "done",
+      "rows": 3829,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\CUST.PROD.EXPORT_2018.csv",
+      "timestamp": "2026-02-15T21:28:57.638388"
+    },
+    "2019": {
+      "status": "done",
+      "rows": 3533,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\CUST.PROD.EXPORT_2019.csv",
+      "timestamp": "2026-02-15T21:29:13.617242"
+    },
+    "2020": {
+      "status": "done",
+      "rows": 3471,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\CUST.PROD.EXPORT_2020.csv",
+      "timestamp": "2026-02-15T21:29:28.919959"
+    },
+    "2021": {
+      "status": "done",
+      "rows": 3474,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\CUST.PROD.EXPORT_2021.csv",
+      "timestamp": "2026-02-15T21:29:44.346626"
+    },
+    "2022": {
+      "status": "done",
+      "rows": 3205,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\CUST.PROD.EXPORT_2022.csv",
+      "timestamp": "2026-02-15T21:29:59.733764"
+    },
+    "2023": {
+      "status": "done",
+      "rows": 3285,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\CUST.PROD.EXPORT_2023.csv",
+      "timestamp": "2026-02-15T21:30:15.864609"
+    },
+    "2024": {
+      "status": "done",
+      "rows": 3122,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\CUST.PROD.EXPORT_2024.csv",
+      "timestamp": "2026-02-15T21:30:31.432253"
+    },
+    "2025": {
+      "status": "done",
+      "rows": 2639,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\CUST.PROD.EXPORT_2025.csv",
+      "timestamp": "2026-02-15T21:30:46.843480"
+    },
+    "2026": {
+      "status": "done",
+      "rows": 455,
+      "file": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\csv_exports\\CUST.PROD.EXPORT_2026.csv",
+      "timestamp": "2026-02-15T21:31:01.308329"
+    }
+  }
+}

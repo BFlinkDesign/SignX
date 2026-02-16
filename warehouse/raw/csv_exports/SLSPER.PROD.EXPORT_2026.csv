@@ -1,0 +1,236 @@
+"15 FEB 2026","18:23:34","","","GROSS MARGIN BY SALESPERSON",
+"","","","","PERIOD: 01/01/26 through 02/15/26",
+
+"Invoice No","Inv Date","Prod Code","Cust No","Customer Name","Gross Sales","Total Cost","Gross Margin","GM %","Extra Charge","Salesperson #1","Comm Rate #1","Salesperson #2","Comm Rate #2","Salesperson #3","Comm Rate #3","Location No","Location Name","City","State",
+
+"12711","01/19/26","MISC","2123","CHESNUT SIGNS","359.31","239.54","119.77","33.33","","","","","","","","DEFAULT","CHESNUT SIGNS","DES MOINES","IA",
+"","","MISC","","Product Totals","359.31","239.54","119.77","33.33","0.00","",
+
+"","","","","Salesperson  Totals","359.31","239.54","119.77","33.33","0.00","",
+
+"12738","02/12/26","BANNER","6337","CAMPBELL SUPPLY CO","169.11","0.00","169.11","100.00","","BRADY","0.020","","","","","DEFAULT","Campbell Supply CO","Des Moines","IA",
+"","","BANNER","","Product Totals","169.11","0.00","169.11","100.00","0.00","BRADY",
+
+"12707","01/19/26","MISC","6424","MIDDLE RIVER FRIENDS CHURCH","560.00","405.60","154.40","27.57","","BRADY","0.020","","","","","DEFAULT","Middle River Friends Church","Carlisle","IA",
+"","","MISC","","Product Totals","560.00","405.60","154.40","27.57","0.00","BRADY",
+
+"","","","","Salesperson BRADY Totals","729.11","405.60","323.51","44.37","0.00","BRADY",
+
+"12699","01/27/26","CHANNL","6408","GATOR SIGNS","1913.04","945.42","967.62","50.58","","HOUSE","","","","","","1","LOVE'S # 411- GATOR SIGN COMPANY","CLIVE","IA",
+"","","CHANNL","","Product Totals","1913.04","945.42","967.62","50.58","0.00","HOUSE",
+
+"12665","01/27/26","REPFCE","6408","GATOR SIGNS","522.50","304.45","218.05","41.73","255.00","HOUSE","","","","","","1","LOVE´S # 411- GATOR SIGN COMPANY","CLIVE","IA",
+"","","REPFCE","","Product Totals","522.50","304.45","218.05","41.73","255.00","HOUSE",
+
+"SC8548","01/16/26","SRVCE","77950","NAGLE SIGNS  INC.","332.50","458.61","-126.11","-37.93","","HOUSE","","","","","","441","KWIK STAR # 1186- NAGLE SIGNS","ALTOONA","IA",
+"SC8573","01/07/26","SRVCE","77950","NAGLE SIGNS  INC.","192.50","182.68","9.82","5.10","","HOUSE","","","","","","414","DAIRY QUEEN - NAGLE SIGNS","MARSHALLTOWN","IA",
+"SC8574","01/07/26","SRVCE","77950","NAGLE SIGNS  INC.","87.50","76.67","10.83","12.38","","HOUSE","","","","","","548","HOBBY LOBBY- NAGLE","MARSHALLTOWN","IA",
+"SC8576","01/07/26","SRVCE","77950","NAGLE SIGNS  INC.","210.00","202.93","7.07","3.37","","HOUSE","","","","","","556","STATE BANK OF TOLEDO-NAGLE","TOLEDO","IA",
+"SC8591","02/05/26","SRVCE","5156","ARCHITECTURAL GRAPHIC INC.","330.00","181.35","148.65","45.05","","HOUSE","","","","","","12","RAISING CANE # 667 - AGI","ALTOONA","IA",
+"SC8600","02/06/26","SRVCE","77950","NAGLE SIGNS  INC.","332.50","327.65","4.85","1.46","","HOUSE","","","","","","528","MCDONALDS-NAGLE SIGNS","WEBSTER CITY","IA",
+"","","SRVCE","","Product Totals","1485.00","1429.89","55.11","3.71","0.00","HOUSE",
+
+"","","","","Salesperson HOUSE Totals","3920.54","2679.76","1240.78","31.65","255.00","HOUSE",
+
+"12119-2","01/30/26","01","28110","CITY OF DES MOINES/ DEPT. OF FINANCE. ACCOUNTS PAYABLE","0.00","973.83","-973.83","","","JEFF","","","","","","DEFAULT","City of Des Moines/ Purchasing Division/ Department of Finance","Des Moines","IA",
+"","","01","","Product Totals","0.00","973.83","-973.83","","0.00","JEFF",
+
+"12560","01/21/26","ALUM","6386","CRAMER & ASSOCIATES INC.","11689.76","6663.21","5026.55","43.00","","JEFF","","","","","","1","WALNUT STREET BRIDGE OVER DSM RIVER - CRAMER & ASSOCIATES","DES MOINES","IA",
+"","","ALUM","","Product Totals","11689.76","6663.21","5026.55","43.00","0.00","JEFF",
+
+"12659","01/05/26","BLDG","4631","ANKENY LIL TOTS","1664.57","958.75","705.82","42.40","197.00","JEFF","","","","","","DEFAULT","Ankeny Lil Tots","Ankeny","IA",
+"12694","02/05/26","BLDG","6006","VAN WALL EQUIPMENT","3581.70","2602.54","979.16","27.34","","JEFF","","","","","","DEFAULT","Van Wall Equipment","Mason City","IA",
+"","","BLDG","","Product Totals","5246.27","3561.29","1684.98","32.12","197.00","JEFF",
+
+"12681","02/04/26","CHANNL","5791","VAN WALL EQUIPMENT","2548.15","1778.61","769.54","30.20","","JEFF","","","","","","7","Van Wall Equipment","Denison","IA",
+"","","CHANNL","","Product Totals","2548.15","1778.61","769.54","30.20","0.00","JEFF",
+
+"12119-2","01/30/26","DRCT","28110","CITY OF DES MOINES/ DEPT. OF FINANCE. ACCOUNTS PAYABLE","3071.36","1894.14","1177.22","38.33","","JEFF","","","","","","DEFAULT","City of Des Moines/ Purchasing Division/ Department of Finance","Des Moines","IA",
+"12119-2","01/30/26","DRCT","28110","CITY OF DES MOINES/ DEPT. OF FINANCE. ACCOUNTS PAYABLE","352.38","27.29","325.09","92.26","","JEFF","","","","","","DEFAULT","City of Des Moines/ Purchasing Division/ Department of Finance","Des Moines","IA",
+"","","DRCT","","Product Totals","3423.74","1921.43","1502.31","43.88","0.00","JEFF",
+
+"12654","01/23/26","ELMSTT","6410","COLLEGIATE PRESBYTERIAN CHURCH","22479.00","16333.98","6145.02","27.34","","JEFF","","","","","","DEFAULT","Collegiate Presbyterian Church","Ames","IA",
+"","","ELMSTT","","Product Totals","22479.00","16333.98","6145.02","27.34","0.00","JEFF",
+
+"12119-2","01/30/26","INSTL","28110","CITY OF DES MOINES/ DEPT. OF FINANCE. ACCOUNTS PAYABLE","3500.00","259.37","3240.63","92.59","","JEFF","","","","","","DEFAULT","City of Des Moines/ Purchasing Division/ Department of Finance","Des Moines","IA",
+"12119-2","01/30/26","INSTL","28110","CITY OF DES MOINES/ DEPT. OF FINANCE. ACCOUNTS PAYABLE","1397.51","674.95","722.56","51.70","","JEFF","","","","","","DEFAULT","City of Des Moines/ Purchasing Division/ Department of Finance","Des Moines","IA",
+"12644","01/12/26","INSTL","3798","PACIFIC NEON","2717.04","821.82","1895.22","69.75","","JEFF","","","","","","4","Boot Barn","West Des Moines","IA",
+"12644","01/12/26","INSTL","3798","PACIFIC NEON","447.91","218.98","228.93","51.11","","JEFF","","","","","","4","Boot Barn","West Des Moines","IA",
+"12644","01/12/26","INSTL","3798","PACIFIC NEON","447.91","80.84","367.07","81.95","","JEFF","","","","","","4","Boot Barn","West Des Moines","IA",
+"","","INSTL","","Product Totals","8510.37","2055.96","6454.41","75.84","0.00","JEFF",
+
+"12508","01/05/26","INT","6374","NORTHWESTERN MUTUAL","6730.57","3862.72","2867.85","42.61","","JEFF","","","","","","DEFAULT","Northwestern Mutual","West Des Moines","IA",
+"12508","01/05/26","INT","6374","NORTHWESTERN MUTUAL","14638.61","7967.56","6671.05","45.57","","JEFF","","","","","","DEFAULT","Northwestern Mutual","West Des Moines","IA",
+"12508","01/05/26","INT","6374","NORTHWESTERN MUTUAL","8869.05","2201.34","6667.71","75.18","","JEFF","","","","","","DEFAULT","Northwestern Mutual","West Des Moines","IA",
+"12562-2","01/07/26","INT","4035","IOWA DEPARTMENT OF TRANSPORTATION ADMINISTRATION BUILDING","1950.54","501.32","1449.22","74.30","","JEFF","","","","","","DEFAULT","IOWA DEPARTMENT OF TRANSPORTATION ADMINISTRATION BUILDING","AMES","IA",
+"12652","01/07/26","INT","6409","MEMBERS 1ST CREDIT UNION","2290.17","872.51","1417.66","61.90","","JEFF","","","","","","DEFAULT","Members 1st Credit Union","Ames","IA",
+"12714","02/06/26","INT","6104","LUMINEO SIGNS.","1121.94","0.00","1121.94","100.00","","JEFF","","","","","","4","Equity Bank","West Des Moines","IA",
+"","","INT","","Product Totals","35600.88","15405.45","20195.43","56.73","0.00","JEFF",
+
+"12550","01/08/26","MONMNT","2460","DOWNING INC.","6649.90","2780.66","3869.24","58.18","427.00","JEFF","","","","","","30","Oaks On Grand - Downing Construction","West Des Moines","IA",
+"12550","01/08/26","MONMNT","2460","DOWNING INC.","7732.82","4268.76","3464.06","44.80","","JEFF","","","","","","30","Oaks On Grand - Downing Construction","West Des Moines","IA",
+"12550","01/08/26","MONMNT","2460","DOWNING INC.","0.00","96.44","-96.44","","","JEFF","","","","","","30","Oaks On Grand - Downing Construction","West Des Moines","IA",
+"","","MONMNT","","Product Totals","14382.72","7145.86","7236.86","50.32","427.00","JEFF",
+
+"12644","01/12/26","PRMT","3798","PACIFIC NEON","0.00","97.46","-97.46","","","JEFF","","","","","","4","Boot Barn","West Des Moines","IA",
+"12654","01/23/26","PRMT","6410","COLLEGIATE PRESBYTERIAN CHURCH","0.00","0.00","0.00","","","JEFF","","","","","","DEFAULT","Collegiate Presbyterian Church","Ames","IA",
+"12659","01/05/26","PRMT","4631","ANKENY LIL TOTS","0.00","48.73","-48.73","","","JEFF","","","","","","DEFAULT","Ankeny Lil Tots","Ankeny","IA",
+"","","PRMT","","Product Totals","0.00","146.19","-146.19","","0.00","JEFF",
+
+"12600-3","01/12/26","PYLON","18600","CAT SCALE","8325.00","2773.72","5551.28","66.68","155.09","JEFF","","","","","","DEFAULT","CAT SCALE","Walcott","IA",
+"12600-4","02/05/26","PYLON","18600","CAT SCALE","8325.00","2649.65","5675.35","68.17","","JEFF","","","","","","DEFAULT","CAT SCALE","Walcott","IA",
+"12663","01/21/26","PYLON","18600","CAT SCALE","80145.00","53989.60","26155.40","32.64","3875.00","JEFF","","","","","","50","CAT SCALE","MERIDIAN","MS",
+"12678","01/07/26","PYLON","18600","CAT SCALE","3735.00","1605.51","2129.49","57.01","140.87","JEFF","","","","","","1185","CAT #35","KNOXVILLE","TN",
+"12679","01/07/26","PYLON","18600","CAT SCALE","12869.00","9596.82","3272.18","25.43","2375.00","JEFF","","","","","","1186","CAT #1952","BRUSH","CO",
+"12683","01/05/26","PYLON","18600","CAT SCALE","3895.60","1605.51","2290.09","58.79","","JEFF","","","","","","1189","CAT #2044","TYLER","TX",
+"12684","01/07/26","PYLON","18600","CAT SCALE","12869.00","9129.86","3739.14","29.06","1812.00","JEFF","","","","","","703","CAT #524","GEORGETOWN","KY",
+"12686","01/07/26","PYLON","18600","CAT SCALE","2146.00","1032.39","1113.61","51.89","","JEFF","","","","","","1190","CAT #124","COUNCIL BLUFFS","IA",
+"12690","01/15/26","PYLON","18600","CAT SCALE","22812.00","15914.92","6897.08","30.23","","JEFF","","","","","","1182","CAT #2641","BAYTOWN","TX",
+"12693","01/07/26","PYLON","18600","CAT SCALE","3895.60","1605.51","2290.09","58.79","","JEFF","","","","","","512","CAT #2476","TERRELL","TX",
+"12696","01/07/26","PYLON","18600","CAT SCALE","1651.00","1216.30","434.70","26.33","256.49","JEFF","","","","","","1191","CAT #1862","GULFPORT","MS",
+"12697","01/09/26","PYLON","18600","CAT SCALE","15494.00","9749.89","5744.11","37.07","","JEFF","","","","","","966","CAT #380","BISMARK","ND",
+"12700","01/13/26","PYLON","18600","CAT SCALE","1651.00","1216.30","434.70","26.33","929.20","JEFF","","","","","","234","CAT #1424","BRUNSWICK","GA",
+"12701","01/15/26","PYLON","18600","CAT SCALE","2005.00","4221.38","-2216.38","-110.54","3925.00","JEFF","","","","","","1192","CAT #3406","NOGALES","AZ",
+"12702","01/13/26","PYLON","18600","CAT SCALE","1651.00","1216.30","434.70","26.33","929.20","JEFF","","","","","","1193","CAT #3122","BUNKIE","LA",
+"12705","01/16/26","PYLON","18600","CAT SCALE","3895.60","1605.51","2290.09","58.79","","JEFF","","","","","","680","CAT #2013","HOUSTON","TX",
+"12709","01/19/26","PYLON","18600","CAT SCALE","1651.00","1216.30","434.70","26.33","251.89","JEFF","","","","","","906","CAT #897","MONROE","MI",
+"12712","02/11/26","PYLON","18600","CAT SCALE","17942.00","0.00","17942.00","100.00","2719.00","JEFF","","","","","","1195","CAT #1400","MCCALLA","AL",
+"12719","01/22/26","PYLON","18600","CAT SCALE","1982.00","1216.30","765.70","38.63","262.86","JEFF","","","","","","492","CAT #636","TALLULAH","LA",
+"12721","01/22/26","PYLON","18600","CAT SCALE","1982.00","1216.30","765.70","38.63","854.65","JEFF","","","","","","923","CAT #85","ADEL","GA",
+"12732","02/06/26","PYLON","18600","CAT SCALE","22740.00","0.00","22740.00","100.00","182.44","JEFF","","","","","","DEFAULT","CAT SCALE","WALCOTT","IA",
+"12733","02/11/26","PYLON","18600","CAT SCALE","3790.00","0.00","3790.00","100.00","165.68","JEFF","","","","","","66","CAT #401","DENHAM SPRINGS","LA",
+"12734","02/06/26","PYLON","18600","CAT SCALE","3790.00","1605.51","2184.49","57.64","168.16","JEFF","","","","","","1198","CAT #204","ELOY","AZ",
+"12739","02/11/26","PYLON","18600","CAT SCALE","1982.00","0.00","1982.00","100.00","456.31","JEFF","","","","","","1199","CAT #1236","CAMERON","MO",
+"12740","02/11/26","PYLON","18600","CAT SCALE","3790.00","0.00","3790.00","100.00","165.68","JEFF","","","","","","743","CAT #225","HAMMOND","LA",
+"","","PYLON","","Product Totals","245013.80","124383.58","120630.22","49.23","19624.52","JEFF",
+
+"SC8554","01/16/26","SRVCE","2958","EYCHANER PROPERTIES","1040.03","773.09","266.94","25.67","20.00","JEFF","","","","","","3","FIREHOUSE SUBS -EYECHANER PROPERTIES","DES MOINES","IA",
+"SC8554","01/16/26","SRVCE","2958","EYCHANER PROPERTIES","0.00","0.00","0.00","","","JEFF","","","","","","3","FIREHOUSE SUBS -EYECHANER PROPERTIES","DES MOINES","IA",
+"SC8555","01/21/26","SRVCE","6412","THE CHURCH AT UNION PARK","2409.00","2016.34","392.66","16.30","","JEFF","","","","","","DEFAULT","THE CHURCH AT UNION PARK","DES MOINES","IA",
+"SC8575","01/27/26","SRVCE","6420","JOHN DEERE","0.00","305.34","-305.34","","","JEFF","","","","","","DEFAULT","JOHN DEERE","PATON","IA",
+"SC8588","02/04/26","SRVCE","6058","CLAIM DOC","247.50","159.25","88.25","35.66","","JEFF","","","","","","DEFAULT","CLAIM DOC","WEST DES MOINES","IA",
+"SC8592","02/03/26","SRVCE","5905","HERITAGE BUILDING MAINTENANCE","332.73","178.45","154.28","46.37","3.00","JEFF","","","","","","DEFAULT","HERITAGE BUILDING MAINTENANCE","DES MOINES","IA",
+"SC8593","02/06/26","SRVCE","4053","STORAGE MART","220.00","949.02","-729.02","-331.37","","JEFF","","","","","","47","STORAGE MART","ANKENY","IA",
+"SC8598","02/04/26","SRVCE","5562","MOM'S MEALS","137.50","99.00","38.50","28.00","","JEFF","","","","","","DEFAULT","MOM´S MEALS","DES MOINES","IA",
+"SC8609","02/10/26","SRVCE","2958","EYCHANER PROPERTIES","113.94","32.92","81.02","71.11","","JEFF","","","","","","1","EYCHANER PROPERTIES","DES MOINES","IA",
+"SC8610","02/10/26","SRVCE","4043","EYCHANER PROPERTIES","137.50","75.36","62.14","45.19","","JEFF","","","","","","DEFAULT","EYCHANER PROPERTIES","DES MOINES","IA",
+"","","SRVCE","","Product Totals","4638.20","4588.77","49.43","1.07","23.00","JEFF",
+
+"12644","01/12/26","SURVEY","3798","PACIFIC NEON","415.00","189.15","225.85","54.42","703.00","JEFF","","","","","","4","Boot Barn","West Des Moines","IA",
+"12685","01/15/26","SURVEY","5156","ARCHITECTURAL GRAPHIC INC.","475.00","453.50","21.50","4.53","","JEFF","","","","","","21","RAISING CANES-AGI","JOHNSTON","IA",
+"12729","02/04/26","SURVEY","3461","AURORA SIGN CO.","369.54","485.62","-116.08","-31.41","","JEFF","","","","","","22","POWERLIFE YOGA - AURORA SIGN CO.","ANKENY","IA",
+"","","SURVEY","","Product Totals","1259.54","1128.27","131.27","10.42","703.00","JEFF",
+
+"12714","02/06/26","VINYL","6104","LUMINEO SIGNS.","385.91","0.00","385.91","100.00","","JEFF","","","","","","4","Equity Bank","West Des Moines","IA",
+"","","VINYL","","Product Totals","385.91","0.00","385.91","100.00","0.00","JEFF",
+
+"12550","01/08/26","WARMFG","2460","DOWNING INC.","0.00","675.71","-675.71","","","JEFF","","","","","","30","Oaks On Grand - Downing Construction","West Des Moines","IA",
+"12636","01/30/26","WARMFG","28110","CITY OF DES MOINES/ DEPT. OF FINANCE. ACCOUNTS PAYABLE","0.00","1107.98","-1107.98","","","JEFF","","","","","","DEFAULT","CITY OF DES MOINES","DES MOINES","IA",
+"12636","01/30/26","WARMFG","28110","CITY OF DES MOINES/ DEPT. OF FINANCE. ACCOUNTS PAYABLE","0.00","2633.99","-2633.99","","","JEFF","","","","","","DEFAULT","CITY OF DES MOINES","DES MOINES","IA",
+"12636","01/30/26","WARMFG","28110","CITY OF DES MOINES/ DEPT. OF FINANCE. ACCOUNTS PAYABLE","0.00","2572.62","-2572.62","","","JEFF","","","","","","DEFAULT","CITY OF DES MOINES","DES MOINES","IA",
+"12636","01/30/26","WARMFG","28110","CITY OF DES MOINES/ DEPT. OF FINANCE. ACCOUNTS PAYABLE","0.00","1734.84","-1734.84","","","JEFF","","","","","","DEFAULT","CITY OF DES MOINES","DES MOINES","IA",
+"","","WARMFG","","Product Totals","0.00","8725.14","-8725.14","","0.00","JEFF",
+
+"","","","","Salesperson JEFF Totals","355178.34","194811.57","160366.77","45.15","20974.52","JEFF",
+
+"12651","01/15/26","AWNING","5622","LOVING CUP  LLC- DBA: SCOOTER'S COFFEE","2217.90","1649.03","568.87","25.65","","JOEP","","","","","","2","SCOOTER´S COFFEE","PLEASANT HILL","IA",
+"","","AWNING","","Product Totals","2217.90","1649.03","568.87","25.65","0.00","JOEP",
+
+"12662","01/29/26","ELMSTT","6411","MID-IOWA INSURANCE & REAL ESTATE","59134.26","41826.03","17308.23","29.27","475.19","JOEP","","","","","","DEFAULT","MID-IOWA INSURANCE & REAL ESTATE","CARROLL","IA",
+"","","ELMSTT","","Product Totals","59134.26","41826.03","17308.23","29.27","475.19","JOEP",
+
+"12698","01/16/26","GRAVEH","6421","CODE - EZ TRANSPORT LLC","582.22","332.88","249.34","42.83","","JOEP","","","","","","DEFAULT","CODE - EZ TRANSPORT LLC","WEST DES MOINES","IA",
+"","","GRAVEH","","Product Totals","582.22","332.88","249.34","42.83","0.00","JOEP",
+
+"12397-5","01/13/26","INSTL","3686","ADCON","7575.28","3128.17","4447.11","58.71","","JOEP","","","","","","7","CHIPOTLE - ADCON","CLIVE","IA",
+"","","INSTL","","Product Totals","7575.28","3128.17","4447.11","58.71","0.00","JOEP",
+
+"12688","01/05/26","INT","6043","PEDDICORD LILLIS","64.79","59.81","4.98","7.69","","JOEP","","","","","","DEFAULT","PEDDICORD LILLIS","West Des Moines","IA",
+"","","INT","","Product Totals","64.79","59.81","4.98","7.69","0.00","JOEP",
+
+"12397-5","01/13/26","MISC","3686","ADCON","135.00","71.67","63.33","46.91","","JOEP","","","","","","7","CHIPOTLE - ADCON","CLIVE","IA",
+"12397-5","01/13/26","MISC","3686","ADCON","605.08","369.92","235.16","38.86","","JOEP","","","","","","7","CHIPOTLE - ADCON","CLIVE","IA",
+"12689","01/10/26","MISC","5140","BLACK HILLS CORPORATION","932.93","663.14","269.79","28.92","","JOEP","","","","","","DEFAULT","BLACK HILLS CORPORATION","GRIMES","IA",
+"12691","01/05/26","MISC","6392","FOSTER ORTHODONTICS","1062.50","850.00","212.50","20.00","","JOEP","","","","","","DEFAULT","FOSTER ORTHODONTICS","DES MOINES","IA",
+"","","MISC","","Product Totals","2735.51","1954.73","780.78","28.54","0.00","JOEP",
+
+"12370","02/04/26","MONMNT","6293","KEMIN CENTRAL WAREHOUSE","18107.00","9837.54","8269.46","45.67","","JOEP","","","","","","DEFAULT","KEMIN CENTRAL WAREHOUSE","DES MOINES","IA",
+"","","MONMNT","","Product Totals","18107.00","9837.54","8269.46","45.67","0.00","JOEP",
+
+"12718","01/27/26","PLYWD","5710","PENTA PARTNERS LLC","727.19","349.82","377.37","51.89","","JOEP","","","","","","DEFAULT","PENTA PARTNERS LLC","WEST DES MOINES","IA",
+"","","PLYWD","","Product Totals","727.19","349.82","377.37","51.89","0.00","JOEP",
+
+"12370","02/04/26","PRMT","6293","KEMIN CENTRAL WAREHOUSE","0.00","0.00","0.00","","413.00","JOEP","","","","","","DEFAULT","KEMIN CENTRAL WAREHOUSE","DES MOINES","IA",
+"12626","01/21/26","PRMT","6401","THE POUR HOUSE","0.00","0.00","0.00","","","JOEP","","","","","","DEFAULT","THE POUR HOUSE","WAVERLY","IA",
+"12662","01/29/26","PRMT","6411","MID-IOWA INSURANCE & REAL ESTATE","0.00","0.00","0.00","","","JOEP","","","","","","DEFAULT","MID-IOWA INSURANCE & REAL ESTATE","CARROLL","IA",
+"12716","01/27/26","PRMT","3686","ADCON","150.00","48.73","101.27","67.51","50.00","JOEP","","","","","","9","CHIPOTLE","ALTOONA","IA",
+"","","PRMT","","Product Totals","150.00","48.73","101.27","67.51","463.00","JOEP",
+
+"12626","01/21/26","REPFCE","6401","THE POUR HOUSE","2005.27","1444.44","560.83","27.97","155.00","JOEP","","","","","","DEFAULT","THE POUR HOUSE","WAVERLY","IA",
+"12626","01/21/26","REPFCE","6401","THE POUR HOUSE","1494.50","806.41","688.09","46.04","","JOEP","","","","","","DEFAULT","THE POUR HOUSE","WAVERLY","IA",
+"12704","01/16/26","REPFCE","4254","LOF-XPRESS OIL CHANGE","2634.03","943.85","1690.18","64.17","","JOEP","","","","","","DEFAULT","LOF-XPRESS OIL CHANGE","AMES","IA",
+"","","REPFCE","","Product Totals","6133.80","3194.70","2939.10","47.92","155.00","JOEP",
+
+"12649","01/31/26","SRVCE","2993","SMITTY'S TENDERLOINS","7779.21","2257.27","5521.94","70.98","","JOEP","","","","","","DEFAULT","SMITTY´S TENDERLOINS","DES MOINES","IA",
+"12717","02/11/26","SRVCE","2209","HUBBELL REALTY","3788.10","0.00","3788.10","100.00","","JOEP","","","","","","29","CONVERGE","WAUKEE","IA",
+"SC8513","01/19/26","SRVCE","3010","PATTISONID","0.00","561.85","-561.85","","","JOEP","","","","","","30","WELLS FARGO- PATTISON ID","INDIANOLA","IA",
+"SC8513","01/19/26","SRVCE","3010","PATTISONID","2906.41","1208.85","1697.56","58.41","","JOEP","","","","","","30","WELLS FARGO- PATTISON ID","INDIANOLA","IA",
+"SC8562","01/15/26","SRVCE","3010","PATTISONID","719.48","333.67","385.81","53.62","30.00","JOEP","","","","","","20","RAMSEY SUBARU OF DES MOINES - PATTISON SIGN GROUP, INC.","URBANDALE","IA",
+"SC8564","01/08/26","SRVCE","5529","BACK ROADS LOUNGE","258.47","159.59","98.88","38.26","","JOEP","","","","","","DEFAULT","BACK ROADS LOUNGE","JOHNSTON","IA",
+"SC8565","01/21/26","SRVCE","2209","HUBBELL REALTY","0.00","129.57","-129.57","","","JOEP","","","","","","29","CONVERGE","WAUKEE","IA",
+"SC8569","02/03/26","SRVCE","4254","LOF-XPRESS OIL CHANGE","0.00","241.35","-241.35","","","JOEP","","","","","","DEFAULT","LOF-XPRESS OIL CHANGE","AMES","IA",
+"SC8571","01/13/26","SRVCE","5891","R&R REALTY GROUP","137.50","75.36","62.14","45.19","","JOEP","","","","","","12","BURGER KING","WEST DES MOINES","IA",
+"SC8580","01/19/26","SRVCE","6423","TCS INC / THE COLOR SPOT","250.00","349.09","-99.09","-39.64","","JOEP","","","","","","1","KIDS UNITED","URBANDALE","IA",
+"SC8582","02/03/26","SRVCE","5107","ATLANTIC BOTTLING COCA-COLA","0.00","838.34","-838.34","","","JOEP","","","","","","DEFAULT","ATLANTIC BOTTLING COCA-COLA","DES MOINES","IA",
+"SC8594","02/03/26","SRVCE","2993","SMITTY'S TENDERLOINS","420.20","208.00","212.20","50.50","8.00","JOEP","","","","","","DEFAULT","SMITTY´S TENDERLOINS","DES MOINES","IA",
+"SC8596","02/04/26","SRVCE","125070","ZIROUS","295.75","173.67","122.08","41.28","","JOEP","","","","","","DEFAULT","ZIROUS","WEST DES MOINES","IA",
+"SC8604","02/11/26","SRVCE","3807","SHOTGUN BETTY'S COUNTRY ROCK BAR","165.00","0.00","165.00","100.00","","JOEP","","","","","","DEFAULT","SHOTGUN BETTY´S COUNTRY ROCK BAR","WEST DES MOINES","IA",
+"SC8605","02/11/26","SRVCE","5973","TONIC","821.24","0.00","821.24","100.00","","JOEP","","","","","","DEFAULT","TONIC","WEST DES MOINES","IA",
+"SC8606","02/11/26","SRVCE","5412","1908 DRAUGHT HOUSE","433.25","0.00","433.25","100.00","","JOEP","","","","","","DEFAULT","1908 DRAUGHT HOUSE","NORWALK","IA",
+"","","SRVCE","","Product Totals","17974.61","6536.61","11438.00","63.63","38.00","JOEP",
+
+"12710","01/21/26","VINYL","6013","HUBER GRADING INC.","208.98","107.17","101.81","48.72","","JOEP","","","","","","DEFAULT","HUBER GRADING INC.","ELKHART","IA",
+"12710","01/21/26","VINYL","6013","HUBER GRADING INC.","148.23","114.09","34.14","23.03","","JOEP","","","","","","DEFAULT","HUBER GRADING INC.","ELKHART","IA",
+"","","VINYL","","Product Totals","357.21","221.26","135.95","38.06","0.00","JOEP",
+
+"","","","","Salesperson JOEP Totals","115759.77","69139.31","46620.46","40.27","1131.19","JOEP",
+
+"12676","01/08/26","INSTL","6037","RUGGLES SIGN","1656.00","647.59","1008.41","60.89","","RICHT","","","","","","6","KAY JEWELERS-RUGGLES SIGN","DES MOINES","IA",
+"","","INSTL","","Product Totals","1656.00","647.59","1008.41","60.89","0.00","RICHT",
+
+"12670","01/13/26","MISC","5680","SIGN MANAGER","2394.73","1027.72","1367.01","57.08","","RICHT","","","","","","7","Caribou Coffee-Sign Manager","Des Moines","IA",
+"","","MISC","","Product Totals","2394.73","1027.72","1367.01","57.08","0.00","RICHT",
+
+"12692","01/27/26","OUTS","4708","SCHEELS ALL SPORTS","6269.86","2721.03","3548.83","56.60","","RICHT","","","","","","DEFAULT","Scheels All Sports","West Des Moines","IA",
+"","","OUTS","","Product Totals","6269.86","2721.03","3548.83","56.60","0.00","RICHT",
+
+"12726","02/11/26","REPFCE","3582","EVERBRITE LLC","714.21","0.00","714.21","100.00","","RICHT","","","","","","33","Dollar General-Everbrite","Madrid","IA",
+"","","REPFCE","","Product Totals","714.21","0.00","714.21","100.00","0.00","RICHT",
+
+"12676","01/08/26","SRVCE","6037","RUGGLES SIGN","0.00","70.38","-70.38","","","RICHT","","","","","","6","KAY JEWELERS-RUGGLES SIGN","DES MOINES","IA",
+"SC8523","01/16/26","SRVCE","3223","FIRST PRESBYTERIAN CHURCH","3072.50","2698.28","374.22","12.18","","RICHT","","","","","","DEFAULT","FIRST PRESBYTERIAN CHURCH","DALLAS CENTER","IA",
+"SC8534","01/15/26","SRVCE","4598","WESTAR FOODS","1061.71","672.53","389.18","36.66","","RICHT","","","","","","6","HARDEE´S # 915- WESTAR FOODS","DES MOINES","IA",
+"SC8536","01/21/26","SRVCE","4598","WESTAR FOODS","0.00","48.62","-48.62","","","RICHT","","","","","","5","HARDEE´S #2- WESTAR FOODS","DES MOINES","IA",
+"SC8550-2","01/28/26","SRVCE","3561","DES MOINES PUBLIC SCHOOLS","3362.50","3499.94","-137.44","-4.09","","RICHT","","","","","","2","CATTELL ELEMENTARY SCHOOL-DMPS","DES MOINES","IA",
+"SC8561","01/28/26","SRVCE","3642","PERKINS","1063.87","941.44","122.43","11.51","","RICHT","","","","","","6","PERKINS #1233","WEST DES MOINES","IA",
+"SC8567","01/15/26","SRVCE","5793","VIXXO CORP.","366.90","217.47","149.43","40.73","","RICHT","","","","","","4","COSMOPROF #86042- VIXXO","URBANDALE","IA",
+"SC8570","01/16/26","SRVCE","6418","JOE FRANZ","172.50","112.24","60.26","34.93","","RICHT","","","","","","DEFAULT","JOE FRANZ","CLIVE","IA",
+"SC8577","02/06/26","SRVCE","5680","SIGN MANAGER","796.00","840.99","-44.99","-5.65","","RICHT","","","","","","8","CARIBOU COFFEE-SIGN MANAGER","GRIMES","IA",
+"SC8578","01/13/26","SRVCE","3671","TRIANGLE SIGN AND SERVICE","165.00","92.83","72.17","43.74","","RICHT","","","","","","6","VISION FOR LESS- TRIANGLE SIGN","DES MOINES","IA",
+"SC8583","01/19/26","SRVCE","6337","CAMPBELL SUPPLY CO","440.00","251.02","188.98","42.95","","RICHT","","","","","","DEFAULT","CAMPBELL SUPPLY CO","DES MOINES","IA",
+"SC8584","02/03/26","SRVCE","6037","RUGGLES SIGN","522.50","319.28","203.22","38.89","","RICHT","","","","","","6","KAY JEWELERS-RUGGLES SIGN","DES MOINES","IA",
+"SC8585","01/23/26","SRVCE","2371","COAST SIGN LLC","275.00","154.17","120.83","43.94","","RICHT","","","","","","42","ROSS DRESS FOR LESS # 2031 - COAST SIGN","DES MOINES","IA",
+"SC8589","02/03/26","SRVCE","2371","COAST SIGN LLC","192.50","114.32","78.18","40.61","","RICHT","","","","","","47","ROSS DRESS FOR LESS - COAST SIGN","DES MOINES","IA",
+"SC8590","01/23/26","SRVCE","2535","ATLAS SIGN INDUSTRIES","331.47","191.43","140.04","42.25","","RICHT","","","","","","97","STARBUCKS-ATLAS","ANKENY","IA",
+"SC8601","02/10/26","SRVCE","6343","HOLIDAY INN","165.00","136.68","28.32","17.16","","RICHT","","","","","","DEFAULT","HOLIDAY INN","DES MOINES","IA",
+"SC8607","02/10/26","SRVCE","2788","JEANNIE'S BOTTLE","967.83","530.58","437.25","45.18","","RICHT","","","","","","DEFAULT","JEANNIE´S BOTTLE","DES MOINES","IA",
+"SC8608","02/10/26","SRVCE","4018","SIGNTECH ELECTRICAL ADVERTISING  INC.","337.88","187.17","150.71","44.60","","RICHT","","","","","","36","WELLS FARGO-SIGNTECH","MARSHALLTOWN","IA",
+"SC8612","02/12/26","SRVCE","4598","WESTAR FOODS","127.00","0.00","127.00","100.00","","RICHT","","","","","","4","HARDEE´S - WESTAR FOODS","DES MOINES","IA",
+"","","SRVCE","","Product Totals","13420.16","11079.37","2340.79","17.44","0.00","RICHT",
+
+"12692","01/27/26","WARMFG","4708","SCHEELS ALL SPORTS","0.00","990.76","-990.76","","","RICHT","","","","","","DEFAULT","Scheels All Sports","West Des Moines","IA",
+"","","WARMFG","","Product Totals","0.00","990.76","-990.76","","0.00","RICHT",
+
+"","","","","Salesperson RICHT Totals","24454.96","16466.47","7988.49","32.67","0.00","RICHT",
+
+"","","","","GRAND TOTALS","500402.03","283742.25","216659.78","43.30","22360.71",

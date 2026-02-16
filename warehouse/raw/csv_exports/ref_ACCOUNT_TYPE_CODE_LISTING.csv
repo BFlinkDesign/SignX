@@ -1,0 +1,8 @@
+Code,Description,Account Class
+C,Customer,Customer
+F,Future Vendor,Vendor
+N,Pending Customer,Customer
+P,Prospect,Customer
+S,Suspect,Customer
+V,Vendor,Vendor
+X,Prior Customer,Customer

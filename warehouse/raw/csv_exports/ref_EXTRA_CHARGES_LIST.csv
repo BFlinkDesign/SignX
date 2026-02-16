@@ -1,0 +1,17 @@
+Code,Description,Account,Tax
+ADJ,ADJUST SALES TAX,2140,N
+ADVEXP,Advertising Expense Credit,5020,N
+DEL,Delivery,3130,N
+DN,Donation,5050,N
+ENGR,Engineered Drawings,3010,N
+FININS,Final Inspection Fee,3010,N
+FRT,Freight,3140,N
+FRTTAX,Taxable Freight,3140,Y
+LMPDSP,LAMP AND BULB DISPOSAL,3130,Y
+PERAC,Permit Acquisition Fee,3010,N
+PERMIT,Permit Fees,3110,N
+RUSH,Rush Job,9999,N
+SDEX,South Dakota Excise Tax,2140,N
+TRVL,TRAVEL,4033,Y
+UTX,Sales Tax,2140,N
+WARMAT,Warranty Material - Vendor,3010,N
