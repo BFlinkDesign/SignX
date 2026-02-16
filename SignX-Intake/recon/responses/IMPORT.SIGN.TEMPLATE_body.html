@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>Import Sign Templates</title>
+<link rel="stylesheet" href="/general-style.css">
+<script>
+function loadValues(){
+   url="/module/general/fileupload.aspx"
+  url+="?ACCT_NAME=eaglesign" 
+   url+="&MULTIPLE=N"
+   url+="&EXTENSION_REQUIRED=txt"
+   url+="&EXECUTE_URL=IMPORT.SIGN.TEMPLATE" 
+   url+="&NAME_CHANGE=BRADYF_TEMPLATE.TXT" 
+  self.location=url
+}
+</script>
+</head>
+<body class="workingforms" onLoad="loadValues();">
+</body>
+</html>

@@ -4,12 +4,12 @@
       "email_subject": "UPDATED - VIXXO CORP. - Quote #40646 - BID REQUEST.",
       "folder": "Rich Thompson",
       "extraction": {
-        "quote_name": "CosmoProf #86042 Channel Letter Survey",
+        "quote_name": "CosmoProf Urbandale Channel Letter Survey",
         "customer": "VIXXO CORP.",
         "location": "Urbandale, IA",
         "sign_type": "CHANNEL_LETTERS",
         "estimated_value": null,
-        "description": "Survey information for existing channel letters at CosmoProf location. Measurements provided for lowercase 'm' (21-9/16\" tall, 7-3/4\" stroke) and uppercase 'P' (31-5/8\" tall, 8-1/4\" stroke).",
+        "description": "Survey information for existing channel letters at CosmoProf location. Lowercase 'm' measures 21-9/16\" tall with 7-3/4\" stroke, uppercase 'P' measures 31-5/8\" tall with 8-1/4\" stroke.",
         "sq_ft": null,
         "faces": null,
         "cabinet_dims": null,
@@ -107,10 +107,10 @@
         "location": "Grimes, IA",
         "sign_type": "CABINET_ILLUMINATED",
         "estimated_value": null,
-        "description": "Replace existing cabinet face with new 15.18\"H x 137.42\"W white polycarbonate face featuring 3M standard blue reverse cut vinyl and black trim cap.",
+        "description": "Replacement face for existing cabinet sign. Furnish and install new 15.18\"H x 137.42\"W white polycarbonate face with 3M standard blue reverse cut vinyl and black trim cap.",
         "sq_ft": 14.5,
         "faces": 1,
-        "cabinet_dims": "137.42 x 15.18",
+        "cabinet_dims": "137.42\" x 15.18\"",
         "pixel_pitch": null,
         "delivery_date": "2026-02-05",
         "is_redo": false,
@@ -138,7 +138,7 @@
         "location": "Ames, IA",
         "sign_type": "CHANNEL_LETTERS",
         "estimated_value": null,
-        "description": "Replace existing real neon tubing with LED faux neon tubing on G2G Aurora Flex sign. Price subject to change pending survey findings.",
+        "description": "Replace existing real neon tubing with LED faux neon tubing on G2G Aurora Flex sign. Price subject to change pending site survey findings.",
         "sq_ft": null,
         "faces": null,
         "cabinet_dims": null,
@@ -148,7 +148,7 @@
         "has_drawings": false,
         "has_specs": false,
         "blocking": [
-          "needs_specs"
+          "needs_drawings"
         ]
       },
       "validation": {
@@ -202,7 +202,7 @@
         "location": "Des Moines, IA",
         "sign_type": "MASONRY_SUB",
         "estimated_value": null,
-        "description": "Masonry repairs including damaged concrete retaining wall and stone veneer restoration at mall location.",
+        "description": "Masonry repairs including damaged concrete retaining wall and stone veneer restoration at Merle Hay Mall.",
         "sq_ft": null,
         "faces": null,
         "cabinet_dims": null,
@@ -235,7 +235,7 @@
         "location": "Waukee, IA",
         "sign_type": "CHANNEL_LOGO",
         "estimated_value": null,
-        "description": "Fabricate and install 27\" LED illuminated channel letters spelling 'LOGO PANCHEROS MEXICAN GRILL' on east elevation. 5\" returns painted PMS180C with 1\" brown trimcap, faces decorated per drawings.",
+        "description": "Fabricate and install LED illuminated channel letter set reading 'LOGO PANCHEROS MEXICAN GRILL' at 27\" height with 5\" painted returns (PMS180C) and 1\" brown trimcap on east elevation.",
         "sq_ft": 48.242,
         "faces": null,
         "cabinet_dims": null,
@@ -243,10 +243,8 @@
         "delivery_date": "2026-04-15",
         "is_redo": false,
         "has_drawings": true,
-        "has_specs": false,
-        "blocking": [
-          "needs_drawings"
-        ]
+        "has_specs": true,
+        "blocking": []
       },
       "validation": {
         "valid_json": true,
@@ -267,8 +265,8 @@
         "customer": "Grain Millers",
         "location": "Lake Mills, IA",
         "sign_type": null,
-        "estimated_value": 1,
-        "description": "Furnish and ship black vinyl lettering for metal door: 2\" 'OFFICE' letters and 1.2\" 'SHIPPING/DELIVERIES/VISITORS' letters. Customer to obtain permit and install.",
+        "estimated_value": null,
+        "description": "Furnish and ship black vinyl lettering for metal door: 2\" letters 'OFFICE' and 1.2\" letters 'SHIPPING / DELIVERIES / VISITORS'. Customer to obtain permit and install.",
         "sq_ft": null,
         "faces": null,
         "cabinet_dims": null,
@@ -298,7 +296,7 @@
         "customer": "Grain Millers",
         "location": "Lake Mills, IA",
         "sign_type": null,
-        "estimated_value": 1,
+        "estimated_value": null,
         "description": "Furnish and ship black vinyl lettering for metal doors at employee entrance. 2\" letters for 'EMPLOYEES ENTRANCE' and 3/4\" letters for directional text. Customer to handle permits and installation.",
         "sq_ft": null,
         "faces": null,
@@ -330,7 +328,7 @@
         "location": "Carroll, IA",
         "sign_type": "EMC_MONUMENT",
         "estimated_value": null,
-        "description": "Double-faced 6mm full color Watchfire EMC monument with custom aluminum base, columns, and perforated panels for airflow. Includes structural foundation, steel poles, and acrylic logo below message center.",
+        "description": "Double-faced 6mm full color Watchfire EMC monument with custom aluminum base, columns, and perforated panels for airflow. Includes structural foundation, pole installation, and acrylic logo.",
         "sq_ft": 160,
         "faces": 2,
         "cabinet_dims": "10' x 16'",
@@ -338,7 +336,7 @@
         "delivery_date": "2026-04-15",
         "is_redo": false,
         "has_drawings": false,
-        "has_specs": true,
+        "has_specs": false,
         "blocking": [
           "watchfire_pricing"
         ]
@@ -363,5 +361,5 @@
     "gate_passed": true,
     "failure_details": []
   },
-  "tested_at": "2026-02-15T06:11:41.355258+00:00"
+  "tested_at": "2026-02-15T06:21:55.935693+00:00"
 }

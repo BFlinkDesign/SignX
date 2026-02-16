@@ -1,0 +1,136 @@
+{
+  "session": "informer-gwtrpc-recon",
+  "completed_at": "2026-02-15T08:00:00Z",
+  "phases": {
+    "phase_1_auth": {
+      "status": "completed",
+      "notes": "ERP login via chrome-devtools MCP. SESSIONID obtained and verified via WEB.MENU (200 OK, 33KB). Informer SSO authenticated with JSESSIONID."
+    },
+    "phase_2_endpoints": {
+      "status": "completed",
+      "notes": "All 6 EXPORT endpoints BLOCKED (unresolved MVI template tokens). All 5 IMPORT endpoints mapped to shared ASP.NET fileupload.aspx."
+    },
+    "phase_3_gwtrpc": {
+      "status": "completed",
+      "notes": "Full GWT-RPC auth flow cracked. 23/30 reports accessible via lookupReportAndSample. Quote Status Report (1441869) sample data extracted with quote numbers, status codes, dollar amounts."
+    },
+    "phase_4_cost_parser": {
+      "status": "completed",
+      "notes": "Verified: 168 HTML batches, 7,858 data rows in cost_detail_labor.csv (918KB), proper CSV structure."
+    },
+    "phase_5_documentation": {
+      "status": "completed",
+      "notes": "Updated LEGACY-KEYEDIN-INTEL.md, KEYEDIN-COMPLETE-INTELLIGENCE.md, KEYEDIN-PIPELINE-STATUS.md. Wrote this checkpoint."
+    }
+  },
+
+  "informer_auth_flow": {
+    "step_1": "ERP direct login -> SESSIONID cookie",
+    "step_2": "GET /eaglesign/sso?u=BRADYF&t={SESSIONID} -> JSESSIONID cookie",
+    "step_3": "POST getActiveSession(true) to AuthenticationRPCService (NOT protected endpoint) -> ClientSession response",
+    "step_4": "Extract 3rd UUID from response (string table position 19) -> authToken",
+    "step_5": "All protected RPC calls use URL: ?authToken={uuid}&clientId={any-uuid}",
+    "auth_token": "1f4517bf-60a5-45a2-853f-8dc64df05c3c (persistent per-user)",
+    "gwt_permutation": "6823F3E0DFFF554BC1A7951AA98B182D"
+  },
+
+  "rpc_services": {
+    "AuthenticationRPCService": {
+      "policy_key": "51B059033C002274BD4151F7D17FC702",
+      "endpoint": "rpc/AuthenticationRPCService",
+      "protected": false,
+      "status": "WORKING"
+    },
+    "ReportRPCService": {
+      "policy_key": "F94C0FA52A7B058D7077BFA6B82FF792",
+      "endpoint": "rpc/protected/ReportRPCService",
+      "protected": true,
+      "status": "WORKING",
+      "key_methods": ["lookupReportAndSample(int, boolean, boolean)", "getReports(LoadOptions)"]
+    },
+    "ViewRPCService": {
+      "policy_key": "327E0F303D0CA463050DC31340CFE01D",
+      "endpoint": "rpc/protected/ViewRPCService",
+      "protected": true,
+      "status": "WORKING",
+      "key_methods": ["getData(ViewToken[], LoadOptions[])"]
+    },
+    "CommandRPCService": {
+      "policy_key": "81D82B6C6154989542DE45F20CEB3EF0",
+      "endpoint": "rpc/protected/CommandRPCService",
+      "protected": true,
+      "status": "UNTESTED"
+    },
+    "DocumentTemplateRPCService": {
+      "policy_key": "05E06838523AECED1434383744A449D0",
+      "endpoint": "rpc/protected/DocumentTemplateRPCService",
+      "protected": true,
+      "status": "UNTESTED"
+    }
+  },
+
+  "accessible_reports": {
+    "count": 23,
+    "denied_count": 7,
+    "id_range": "1441850-1441878",
+    "key_reports": {
+      "1441869": {
+        "name": "Quote Status Report",
+        "columns": ["QUOTENO", "QT.DATE", "SALESPERSON", "CURR.STATUS", "ACCTID", "COMPANY", "WONO", "CALC.PRICE", "OVERRIDE.PRICE", "DEFAULT.SHIP", "EXP.DATE", "SALES.STAGE", "QTY.ORDERED"],
+        "sample_status_codes": ["110 (NEW PROSPECT)", "190 (BID COMPLETED)", "250 (NO DECISION - CLOSED)"],
+        "priority": "HIGHEST - unlocks win/loss analysis"
+      },
+      "1441870": {
+        "name": "Sales Cost Detail Report",
+        "columns": ["CUSTOMER.NBR", "SALESPERSON", "INVOICE.DATE", "GROSS.SALES", "TOTAL.COST"],
+        "priority": "HIGH - margin analysis"
+      },
+      "1441877": {
+        "name": "Sales Summary by Customer",
+        "columns": ["CUSTOMER.NBR", "CUST.NAME", "GROSS.SALES", "TOTAL.COST"],
+        "priority": "MEDIUM"
+      }
+    }
+  },
+
+  "export_endpoints": {
+    "status": "ALL_BLOCKED",
+    "count": 6,
+    "blocker": "MVI template tokens [ACTION], <!--HIDDEN-->, <!--SCRIPT--> not resolved via direct HTTP GET",
+    "mitigation": "Browser automation (Playwright persistent context)"
+  },
+
+  "import_endpoints": {
+    "status": "MECHANISM_MAPPED",
+    "count": 5,
+    "upload_url": "/module/general/fileupload.aspx",
+    "account": "eaglesign",
+    "formats": "4x .txt, 1x .csv",
+    "blocker": "File format/field layout unknown"
+  },
+
+  "artifacts_created": [
+    "recon/informer_gwtrpc_extract.py",
+    "recon/parse_informer_reports.py",
+    "recon/informer_report_inventory.json",
+    "recon/keyedin-export-audit.json",
+    "recon/responses/informer_reports/ (23 report files)",
+    "recon/responses/getActiveSession_full.txt",
+    "recon/responses/lookupReportAndSample_1441869_OK.txt",
+    "recon/informer_cache.js (5.4MB GWT compiled JS)"
+  ],
+
+  "intel_docs_updated": [
+    "LEGACY-KEYEDIN-INTEL.md",
+    "KEYEDIN-COMPLETE-INTELLIGENCE.md",
+    "KEYEDIN-PIPELINE-STATUS.md"
+  ],
+
+  "next_steps": [
+    "Build getData payloads for Quote Status Report (1441869) to extract ALL quote rows",
+    "Construct ViewTokens for each of the 23 accessible reports",
+    "Test Playwright browser automation for the 6 blocked EXPORT endpoints",
+    "Contact KIMCO for import file format documentation",
+    "Integrate Informer data into signx-warehouse SQLite database"
+  ]
+}

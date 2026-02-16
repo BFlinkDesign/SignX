@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>Import Physical Inventory Count</title>
+<link rel="stylesheet" href="/general-style.css">
+<script>
+function loadValues(){
+   url="/module/general/fileupload.aspx"
+  url+="?ACCT_NAME=eaglesign" 
+   url+="&MULTIPLE=N"
+   url+="&EXTENSION_REQUIRED=txt"
+   url+="&EXECUTE_URL=IMPORT.PARTS" 
+   url+="&NAME_CHANGE=PARTS.TXT" 
+  self.location=url
+}
+</script>
+</head>
+<body class="workingforms" onLoad="loadValues();">
+</body>
+</html>

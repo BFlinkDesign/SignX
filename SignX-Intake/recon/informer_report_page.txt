@@ -1,0 +1,157 @@
+uid=9_0 RootWebArea "KeyedInSignBI - Quote Status Report" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441869&launch=false"
+  uid=9_1 Iframe
+    uid=9_2 RootWebArea url="about:blank"
+  uid=9_3 Iframe
+    uid=9_4 RootWebArea url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US"
+  uid=9_5 StaticText " "
+  uid=9_6 StaticText " "
+  uid=9_7 link "Home" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=Home"
+    uid=9_8 StaticText "Home"
+  uid=9_9 StaticText " "
+  uid=10_0 link "Reports" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportsHome"
+    uid=10_1 StaticText "Reports"
+  uid=10_2 StaticText " "
+  uid=10_3 link "Quote Status Report" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441869"
+    uid=10_4 StaticText "Quote Status Report"
+  uid=10_5 StaticText " "
+  uid=10_6 link "Report Results" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441869&launch=false"
+    uid=10_7 StaticText "Report Results"
+  uid=9_15 StaticText " "
+  uid=9_16 StaticText " "
+  uid=9_17 link "Reports" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportsHome"
+    uid=9_18 StaticText "Reports"
+  uid=9_19 StaticText " "
+  uid=9_20 StaticText " "
+  uid=9_21 StaticText " "
+  uid=9_22 StaticText " "
+  uid=9_23 StaticText "Logged in as: Brady Flink"
+  uid=9_24 StaticText "|"
+  uid=9_25 link "Documentation" url="http://keyedinsupport.com/keyedinsign"
+    uid=9_26 StaticText "Documentation"
+  uid=9_27 StaticText "|"
+  uid=9_28 link "Contact Support" url="mailto:support@keyedinsign.com"
+    uid=9_29 StaticText "Contact Support"
+  uid=9_30 StaticText "|"
+  uid=9_31 StaticText "Toggle Display"
+  uid=9_32 StaticText "|"
+  uid=9_33 StaticText "Sign out"
+  uid=9_34 StaticText " "
+  uid=10_8 link "REPORT TEMPLATE" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441869"
+    uid=10_9 StaticText "REPORT TEMPLATE"
+  uid=10_10 StaticText " "
+  uid=10_11 link "DATA" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441869&launch=false"
+    uid=10_12 StaticText "DATA"
+  uid=10_13 StaticText " "
+  uid=10_14 link "USER SETTINGS" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportCustomize&reportId=1441869"
+    uid=10_15 StaticText "USER SETTINGS"
+  uid=10_16 StaticText " "
+  uid=10_17 link "SCHEDULES" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportSchedules&reportId=1441869"
+    uid=10_18 StaticText "SCHEDULES"
+  uid=10_19 StaticText " "
+  uid=10_20 link "LIVE EXCELS" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportEmbeddableList&reportId=1441869"
+    uid=10_21 StaticText "LIVE EXCELS"
+  uid=10_22 StaticText " "
+  uid=10_23 StaticText " "
+  uid=10_24 StaticText "Quote Status Report"
+  uid=10_25 StaticText " "
+  uid=10_26 StaticText "Report Results"
+  uid=10_27 StaticText " "
+  uid=10_28 StaticText "Listing of active quotes in the system."
+  uid=10_29 StaticText " "
+  uid=10_30 generic
+    uid=10_31 textbox
+    uid=10_32 StaticText "Export Results"
+  uid=10_33 StaticText " "
+  uid=10_34 generic
+    uid=10_35 textbox
+    uid=10_36 StaticText "Runtime Parameters"
+  uid=10_37 StaticText "Quote Date"
+  uid=10_38 StaticText "*"
+  uid=10_39 textbox focusable focused
+  uid=10_40 StaticText " "
+  uid=10_41 button
+    uid=10_42 textbox
+  uid=10_43 StaticText "-"
+  uid=10_44 textbox value="end date"
+  uid=10_45 StaticText " "
+  uid=10_46 button
+    uid=10_47 textbox
+  uid=10_48 StaticText " "
+  uid=10_49 button "+"
+    uid=10_50 textbox
+  uid=10_51 button "-"
+    uid=10_52 textbox
+  uid=10_53 StaticText "Account ID"
+  uid=10_54 StaticText " "
+  uid=10_55 textbox
+  uid=10_56 StaticText " "
+  uid=10_57 button "..."
+    uid=10_58 textbox
+  uid=10_59 checkbox "Ignore case" checked
+  uid=10_60 StaticText "Salesperson"
+  uid=10_61 StaticText " "
+  uid=10_62 StaticText "select an item"
+  uid=10_63 StaticText " "
+  uid=10_64 button "..."
+    uid=10_65 textbox
+  uid=10_66 StaticText "Quote Sales Stage"
+  uid=10_67 StaticText " "
+  uid=10_68 textbox
+  uid=10_69 StaticText " "
+  uid=10_70 button "..."
+    uid=10_71 textbox
+  uid=10_72 StaticText "Quote Status"
+  uid=10_73 StaticText " "
+  uid=10_74 textbox
+  uid=10_75 StaticText " "
+  uid=10_76 button "..."
+    uid=10_77 textbox
+  uid=10_78 checkbox "Ignore case" checked
+  uid=10_79 StaticText "Show Quotes Classified as Loss (enter'Y')"
+  uid=10_80 StaticText " "
+  uid=10_81 textbox
+  uid=10_82 checkbox "Ignore case" checked
+  uid=10_83 StaticText "Show Quotes Marked Inactive (enter 'Y')"
+  uid=10_84 StaticText " "
+  uid=10_85 textbox
+  uid=10_86 checkbox "Ignore case" checked
+  uid=10_87 button
+    uid=10_88 textbox
+  uid=10_89 StaticText " "
+  uid=10_90 StaticText "Report Results"
+  uid=10_91 button
+    uid=10_92 textbox
+  uid=10_93 button
+    uid=10_94 textbox
+  uid=10_95 button
+    uid=10_96 textbox
+  uid=10_97 checkbox "Summary Only"
+  uid=10_98 StaticText "Drag columns here to group"
+  uid=10_99 textbox value="Search"
+  uid=10_100 button "x" description="Clear Search"
+    uid=10_101 textbox
+  uid=10_102 StaticText " "
+  uid=10_103 StaticText "Active"
+  uid=10_104 StaticText "Quote Nbr"
+  uid=10_105 StaticText "Salesperson"
+  uid=10_106 StaticText "Quote Date"
+  uid=10_107 StaticText "Install Date"
+  uid=10_108 StaticText "Expire Date"
+  uid=10_109 StaticText "Account ID"
+  uid=10_110 StaticText "Company"
+  uid=10_111 StaticText "Description"
+  uid=10_112 StaticText "Ext Price"
+  uid=10_113 StaticText "Sales Stage"
+  uid=10_114 StaticText "Quote Status"
+  uid=10_115 StaticText "Status Date"
+  uid=10_116 StaticText "Status Time"
+  uid=10_117 StaticText "WO Nbr"
+  uid=10_118 StaticText "No items listed"
+  uid=10_119 StaticText "Refresh"
+  uid=10_120 StaticText "Display Paged"
+  uid=10_121 StaticText "First"
+  uid=10_122 StaticText "Previous"
+  uid=10_123 StaticText "Page 0 of 0"
+  uid=10_124 StaticText "Next"
+  uid=10_125 StaticText "Last"
+  uid=10_126 StaticText "Display All"

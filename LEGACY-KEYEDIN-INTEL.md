@@ -331,12 +331,71 @@ com.entrinsik.gwt.data.shared.ViewToken/3777265110|
 | 26 | Sales Order Status by Customer | Sales Orders |
 | ... | *(71 total — see `Keyedin/GWT Google Web Toolkit/keyedin_extraction_20251112_162438/extraction_summary.txt`)* | Various |
 
+### GWT-RPC Authentication Flow (Cracked 2026-02-15)
+
+The complete Informer authentication flow has been reverse-engineered and scripted:
+
+```
+1. ERP Login → SESSIONID cookie (e.g., wcigmhbbjkzq4xlomork1bzg)
+2. SSO URL: /eaglesign/sso?u=BRADYF&t={SESSIONID} → JSESSIONID cookie
+3. getActiveSession(true) on AuthenticationRPCService (NOT protected) → returns ClientSession
+4. Extract 3rd UUID from response (string table position 19) → authToken
+   - authToken is PERSISTENT per-user (1f4517bf-60a5-45a2-853f-8dc64df05c3c)
+5. Protected RPC calls use URL: ?authToken={uuid}&clientId={any-uuid}
+```
+
+**Key discovery**: The `authToken` must be passed as a URL query parameter, not as a cookie or header. The `clientId` can be any UUID (generated fresh per session).
+
+### RPC Service Policy Keys (Confirmed)
+
+| Service | Policy Key | Status |
+|---------|-----------|--------|
+| AuthenticationRPCService | `51B059033C002274BD4151F7D17FC702` | WORKING |
+| ReportRPCService | `F94C0FA52A7B058D7077BFA6B82FF792` | WORKING |
+| ViewRPCService | `327E0F303D0CA463050DC31340CFE01D` | WORKING |
+| CommandRPCService | `81D82B6C6154989542DE45F20CEB3EF0` | UNTESTED |
+| DocumentTemplateRPCService | `05E06838523AECED1434383744A449D0` | UNTESTED |
+| SecurityRPCService | (unknown) | UNTESTED |
+| ScheduleRPCService | (unknown) | UNTESTED |
+| LoggingRPCService | (unknown) | UNTESTED |
+
+### Informer Report Inventory (23 Accessible via lookupReportAndSample)
+
+| Report ID | Report Name | Key Columns | Size |
+|-----------|-------------|-------------|------|
+| 1441850 | Customer Listing | CUST.NO, ADMIN | 10,737 |
+| 1441851 | Customer Listing Export | CUST.NO, NAME, ADDRESS, CITY, STATE, ZIP, CONTACT, PHONE | 10,374 |
+| 1441852 | Customer Location Listing | CUSTNO, CM.SHIP.TO | 14,184 |
+| 1441853 | Customer Location Listing Export | CUSTNO, SHIPTO.NAME, SHIPTO.ADDRESS, SHIPTO.CITY, SHIPTO.STATE | 15,958 |
+| 1441854 | Inventory Parts | PART.NBR, DESCRIPTION, INV.TYPE, SALES.CODE | 11,356 |
+| 1441855 | Inventory List Export | PART.NBR, DESCRIPTION | 26,271 |
+| 1441856 | Inventory Transaction History | PART.NBR, TRAN.DATE, WHSE, TRAN.CODE, QTY | 13,010 |
+| 1441857 | Invoice Register | INV.NBR, CUST.NBR, CUST.NAME, INVOICE.DATE, LINE.TOT | 13,677 |
+| 1441859 | Open Sales Order Backlog | SONO, SO.DATE, CUST.NBR, CUST.NAME, PARTNO, DELIVERY.DATE | 15,366 |
+| 1441860 | Open Sales Orders | SONO, SO.DATE, CUST.NBR, DEL.QTY, BAL.QTY, UNIT.PRICE | 13,851 |
+| 1441861 | Open Work Orders | DIV, WONO, WO.TYPE, CUSTNO, CUST.NAME | 14,503 |
+| 1441862 | Planned Part Activity | PART.NBR, INV.TYPE, DESCRIPTION | 42,424 |
+| 1441865 | Purchase History | DIV.NO, PO.NBR, BUYER | 18,033 |
+| 1441866 | Purchase Order Detail | PO.NBR, PO.DATE, VENDOR.NBR, VEN.NAME, PART.NBR, UNIT.PRICE | 18,773 |
+| 1441868 | Purchased Part Variance | PONO, VENDNO, PART.NBR, INV.QTY, INV.AMT, PO.CLR.AMT | 15,498 |
+| 1441869 | **Quote Status Report** | QUOTENO, QT.DATE, SALESPERSON, CURR.STATUS, ACCTID, COMPANY, WONO | 17,573 |
+| 1441870 | Sales Cost Detail Report | CUSTOMER.NBR, SALESPERSON, INVOICE.DATE, GROSS.SALES, TOTAL.COST | 17,412 |
+| 1441872 | SO Bookings By Line Date | DIVNO, SOH, SOD | 13,757 |
+| 1441873 | SO Bookings By SO Date | DIVNO, SOH | 11,222 |
+| 1441874 | Sales Order Detail | SONO, SO.DATE, CUST.NBR, PARTNO, DELIVERY.DATE, ACTUAL.SHIP.DATE | 19,192 |
+| 1441875 | Sales Order Status by Customer | CUST.NBR, CUST.NAME, PONO, SONO, INVOICE | 12,774 |
+| 1441877 | Sales Summary by Customer | CUSTOMER.NBR, CUST.NAME, GROSS.SALES, TOTAL.COST | 8,868 |
+| 1441878 | Sales Summary by Product Type | PROD.TYPE, SALES.CODE.DESC, GROSS.SALES, TOTAL.COST | 8,373 |
+
+**Note**: Report IDs 1441842-1441849 (AR reports, Cash Receipts) and 1441883-1441887 (Vendor Listing, WO Listing) returned ACCESS_DENIED via lookupReportAndSample. They may require different security groups.
+
 ### Informer Extraction Status
 
-- **Report catalog discovery:** SUCCESSFUL (71 reports found)
-- **Authentication with Informer:** SUCCESSFUL
-- **GWT-RPC API calls:** SUCCESSFUL (returned `//OK` responses)
-- **Actual data extraction from reports:** NOT COMPLETED — requires building `getData` payloads for each specific report and parsing GWT-RPC response format
+- **Report catalog discovery:** SUCCESSFUL (30 reports found in browser, 23 accessible via RPC)
+- **Authentication with Informer:** SUCCESSFUL (full SSO + authToken flow cracked)
+- **GWT-RPC API calls:** SUCCESSFUL (lookupReportAndSample returns `//OK` with metadata + sample data)
+- **Actual data extraction from reports:** PARTIALLY COMPLETED — lookupReportAndSample returns report definitions and sample data rows. Full bulk extraction would require getData with ViewToken payloads.
+- **Extraction script:** `informer_gwtrpc_extract.py` in `SignX-Intake/recon/` — complete auth + scan + single-report extraction
 
 ---
 
@@ -430,11 +489,14 @@ The menu reveals built-in import endpoints:
 - **Why:** This process name doesn't exist in the system's VOC (Vocabulary). The correct endpoint may be `WO.STATUS.SUM` or `WO.COST.SUMMARY`.
 - **Fix:** Use the correct process names from the menu structure.
 
-### Failed Attempt: Informer Data Extraction
+### RESOLVED: Informer Data Extraction (2026-02-15)
 
-- **Status:** Authenticated and discovered reports, but did NOT extract actual data rows
-- **Why:** Extracting data requires building specific `getData` GWT-RPC payloads for each report, and parsing the GWT-RPC serialized response format
-- **What's needed:** A GWT-RPC serializer/deserializer, or intercepting the browser's own requests during report viewing
+- **Status:** **WORKING** -- lookupReportAndSample returns report metadata + sample data for 23/30 reports
+- **Previous blocker:** Auth flow was incomplete (missing authToken in URL query params)
+- **Resolution:** Reverse-engineered full auth flow from GWT compiled JS (5.4MB). authToken = 3rd UUID from getActiveSession, passed as URL query param on protected endpoints.
+- **Results:** 23 reports accessible, all saved. Quote Status Report (1441869) returns quote numbers, status codes, dollar amounts.
+- **Script:** `informer_gwtrpc_extract.py` in `SignX-Intake/recon/`
+- **Remaining:** Full bulk extraction via getData requires ViewToken payloads (complex but feasible)
 
 ### Failed Attempt: SQL Server Direct Access
 
@@ -540,13 +602,13 @@ The menu reveals built-in import endpoints:
 
 | Attribute | Status |
 |-----------|--------|
-| **Feasibility** | **6/10 — Authentication works, data extraction incomplete** |
-| **Status** | Authenticated, 71 reports discovered, 0 data rows extracted |
-| **Blocker** | GWT-RPC serialization format is complex to parse |
-| **What's needed** | GWT-RPC deserializer or use Informer's built-in export features |
-| **Read capability** | YES (once parsing works) |
+| **Feasibility** | **9/10 — Authentication cracked, sample data extraction working** |
+| **Status** | Full auth flow documented. 23/30 reports accessible via lookupReportAndSample. Sample data extracted. |
+| **Auth Flow** | SSO URL -> JSESSIONID -> getActiveSession(true) -> authToken (3rd UUID, position 19) -> URL query params |
+| **Read capability** | YES — lookupReportAndSample returns metadata + sample rows. Full getData requires ViewToken construction. |
 | **Write capability** | NO — Informer is read-only BI reporting |
-| **Tools built** | `MASTER_EXTRACTOR.ps1`, `keyedin_complete_extraction.py`, `keyedin_enhanced_extractor.py` |
+| **Tools built** | `informer_gwtrpc_extract.py` (complete auth+scan+extract), `parse_informer_reports.py` (response parser) |
+| **Key report** | Quote Status (ID 1441869) — unlocks win/loss analysis |
 
 ### Vector C: Built-in Informer Export
 

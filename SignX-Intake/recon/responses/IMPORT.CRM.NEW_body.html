@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>Import CRM New</title>
+<link rel="stylesheet" href="/general-style.css">
+<script>
+function loadValues(){
+   url="/module/general/fileupload.aspx"
+  url+="?ACCT_NAME=eaglesign" 
+   url+="&MULTIPLE=N"
+   url+="&EXTENSION_REQUIRED=csv"
+   url+="&EXECUTE_URL=IMPORT.CRM.NEW"
+   url+="&NAME_CHANGE=CRM.IMPORT.NEW.CSV" 
+  self.location=url
+}
+</script>
+</head>
+<body class="workingforms" onLoad="loadValues();">
+</body>
+</html>

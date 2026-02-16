@@ -1,0 +1,485 @@
+uid=9_0 RootWebArea "KeyedInSignBI - KeyedInSignBI" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=Home"
+  uid=9_1 Iframe
+    uid=9_2 RootWebArea url="about:blank"
+  uid=9_3 Iframe
+    uid=9_4 RootWebArea url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US"
+  uid=9_5 StaticText " "
+  uid=9_6 StaticText " "
+  uid=9_7 link "Home" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=Home"
+    uid=9_8 StaticText "Home"
+  uid=9_9 StaticText " "
+  uid=9_10 link "Reports" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportsHome"
+    uid=9_11 StaticText "Reports"
+  uid=9_12 StaticText " "
+  uid=9_13 link "Reports Home" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportsHome"
+    uid=9_14 StaticText "Reports Home"
+  uid=9_15 StaticText " "
+  uid=9_16 StaticText " "
+  uid=9_17 link "Reports" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportsHome"
+    uid=9_18 StaticText "Reports"
+  uid=9_19 StaticText " "
+  uid=9_20 StaticText " "
+  uid=9_21 StaticText " "
+  uid=9_22 StaticText " "
+  uid=9_23 StaticText "Logged in as: Brady Flink"
+  uid=9_24 StaticText "|"
+  uid=9_25 link "Documentation" url="http://keyedinsupport.com/keyedinsign"
+    uid=9_26 StaticText "Documentation"
+  uid=9_27 StaticText "|"
+  uid=9_28 link "Contact Support" url="mailto:support@keyedinsign.com"
+    uid=9_29 StaticText "Contact Support"
+  uid=9_30 StaticText "|"
+  uid=9_31 StaticText "Toggle Display"
+  uid=9_32 StaticText "|"
+  uid=9_33 StaticText "Sign out"
+  uid=9_34 StaticText " "
+  uid=9_35 link "REPORTS" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportsHome"
+    uid=9_36 StaticText "REPORTS"
+  uid=9_37 StaticText " "
+  uid=9_38 link "ARCHIVES" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ArchivesHome"
+    uid=9_39 StaticText "ARCHIVES"
+  uid=9_40 StaticText " "
+  uid=9_41 link "DASHBOARDS" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=DashboardsHome"
+    uid=9_42 StaticText "DASHBOARDS"
+  uid=9_43 StaticText " "
+  uid=9_44 button
+    uid=9_45 textbox
+  uid=9_46 StaticText "Reports Home"
+  uid=9_47 StaticText " "
+  uid=9_48 StaticText "Reporting Dashboard"
+  uid=9_49 StaticText " "
+  uid=9_50 StaticText "Manage your Reports"
+  uid=9_51 StaticText " "
+  uid=9_52 StaticText "Filter Reports"
+  uid=9_53 button "Clear Filter" disableable disabled
+  uid=9_54 StaticText "30"
+  uid=9_55 generic
+    uid=9_56 textbox
+    uid=9_57 generic
+      uid=9_58 textbox
+    uid=9_59 StaticText "My Favorites"
+    uid=9_60 StaticText "1"
+  uid=9_61 generic
+    uid=9_62 textbox
+    uid=9_63 generic
+      uid=9_64 textbox
+    uid=9_65 StaticText "My Reports"
+    uid=9_66 StaticText "0"
+  uid=9_67 generic
+    uid=9_68 textbox
+    uid=9_69 generic
+      uid=9_70 textbox
+    uid=9_71 StaticText "Recently Added"
+    uid=9_72 StaticText "0"
+  uid=9_73 link "Datasources" url="javascript:void(0);"
+    uid=9_74 StaticText "Datasources"
+  uid=9_75 generic
+    uid=9_76 textbox
+    uid=9_77 generic
+      uid=9_78 textbox
+    uid=9_79 StaticText "KeyedInSign"
+    uid=9_80 StaticText "30"
+  uid=9_81 link "Tags" url="javascript:void(0);"
+    uid=9_82 StaticText "Tags"
+  uid=9_83 generic
+    uid=9_84 textbox
+    uid=9_85 StaticText "Accounts Payable"
+    uid=9_86 StaticText "3"
+  uid=9_87 generic
+    uid=9_88 textbox
+    uid=9_89 StaticText "Accounts Receivable"
+    uid=9_90 StaticText "8"
+  uid=9_91 generic
+    uid=9_92 textbox
+    uid=9_93 StaticText "Estimating & Proposals"
+    uid=9_94 StaticText "1"
+  uid=9_95 generic
+    uid=9_96 textbox
+    uid=9_97 StaticText "Export"
+    uid=9_98 StaticText "4"
+  uid=9_99 generic
+    uid=9_100 textbox
+    uid=9_101 StaticText "Inventory and Parts"
+    uid=9_102 StaticText "4"
+  uid=9_103 generic
+    uid=9_104 textbox
+    uid=9_105 StaticText "Invoicing"
+    uid=9_106 StaticText "1"
+  uid=9_107 generic
+    uid=9_108 textbox
+    uid=9_109 StaticText "Production"
+    uid=9_110 StaticText "2"
+  uid=9_111 generic
+    uid=9_112 textbox
+    uid=9_113 StaticText "Purchasing"
+    uid=9_114 StaticText "3"
+  uid=9_115 generic
+    uid=9_116 textbox
+    uid=9_117 StaticText "Sales Analysis"
+    uid=9_118 StaticText "3"
+  uid=9_119 generic
+    uid=9_120 textbox
+    uid=9_121 StaticText "Sales Orders"
+    uid=9_122 StaticText "6"
+  uid=9_123 StaticText " "
+  uid=9_124 StaticText " "
+  uid=9_125 StaticText "Reports Listing"
+  uid=9_126 StaticText " "
+  uid=9_127 generic
+    uid=9_128 textbox
+    uid=9_129 generic
+      uid=9_130 textbox
+  uid=9_131 textbox value="Search Reports"
+  uid=9_132 button "x" description="Clear Search"
+    uid=9_133 textbox
+  uid=9_134 StaticText " "
+  uid=9_135 generic
+    uid=9_136 textbox
+    uid=9_137 StaticText "x"
+  uid=9_138 StaticText " "
+  uid=9_139 button "Tags" disableable disabled
+  uid=9_140 button "Favorite" disableable disabled
+  uid=9_141 button "Delete" disableable disabled
+  uid=9_142 button "Change owner" disableable disabled
+  uid=9_143 button "Package" disableable disabled
+  uid=9_144 StaticText " "
+  uid=9_145 StaticText " "
+  uid=9_146 StaticText "Report Title"
+  uid=9_147 StaticText "Options"
+  uid=9_148 StaticText "Favorite"
+  uid=9_149 StaticText "Created by"
+  uid=9_150 StaticText "Last Executed"
+  uid=9_151 generic
+    uid=9_152 textbox
+  uid=9_153 link "AR Invoice Details" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441842"
+    uid=9_154 StaticText "AR Invoice Details"
+  uid=9_155 link "Launch" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441842&launch=false"
+    uid=9_156 StaticText "Launch"
+  uid=9_157 StaticText " "
+  uid=9_158 link "Details" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441842"
+    uid=9_159 StaticText "Details"
+  uid=9_160 StaticText " "
+  uid=9_161 StaticText "System Administrator"
+  uid=9_162 StaticText "2/2/26"
+  uid=9_163 StaticText "Account Receivable Invoice GL transaction detail. Selectable by Date Range, Invoice Number, Customer and Open/Closed status."
+  uid=9_164 generic
+    uid=9_165 textbox
+  uid=9_166 link "AR Invoice Listing" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441843"
+    uid=9_167 StaticText "AR Invoice Listing"
+  uid=9_168 link "Launch" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441843&launch=false"
+    uid=9_169 StaticText "Launch"
+  uid=9_170 StaticText " "
+  uid=9_171 link "Details" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441843"
+    uid=9_172 StaticText "Details"
+  uid=9_173 StaticText " "
+  uid=9_174 StaticText "System Administrator"
+  uid=9_175 StaticText "10/2/25"
+  uid=9_176 StaticText "Account Receivable invoice listing with balance and payment information. Selectable by Customer, date range and open/closed status."
+  uid=9_177 generic
+    uid=9_178 textbox
+  uid=9_179 link "AR Open Invoices" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441844"
+    uid=9_180 StaticText "AR Open Invoices"
+  uid=9_181 link "Launch" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441844&launch=false"
+    uid=9_182 StaticText "Launch"
+  uid=9_183 StaticText " "
+  uid=9_184 link "Details" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441844"
+    uid=9_185 StaticText "Details"
+  uid=9_186 StaticText " "
+  uid=9_187 StaticText "System Administrator"
+  uid=9_188 StaticText "2/5/26"
+  uid=9_189 StaticText "Accounts Receivable open invoice listing sorted by due date."
+  uid=9_190 generic
+    uid=9_191 textbox
+  uid=9_192 link "Cash Receipts" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441849"
+    uid=9_193 StaticText "Cash Receipts"
+  uid=9_194 link "Launch" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441849&launch=false"
+    uid=9_195 StaticText "Launch"
+  uid=9_196 StaticText " "
+  uid=9_197 link "Details" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441849"
+    uid=9_198 StaticText "Details"
+  uid=9_199 StaticText " "
+  uid=9_200 StaticText "System Administrator"
+  uid=9_201 StaticText "2/5/26"
+  uid=9_202 StaticText "Cash Receipts selected by date range. Sorted by Division, Bank, Payment Date, Payor."
+  uid=9_203 generic
+    uid=9_204 textbox
+  uid=9_205 link "Customer Listing" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441850"
+    uid=9_206 StaticText "Customer Listing"
+  uid=9_207 link "Launch" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441850&launch=false"
+    uid=9_208 StaticText "Launch"
+  uid=9_209 StaticText " "
+  uid=9_210 link "Details" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441850"
+    uid=9_211 StaticText "Details"
+  uid=9_212 StaticText " "
+  uid=9_213 StaticText "System Administrator"
+  uid=9_214 StaticText "2/5/26"
+  uid=9_215 StaticText "Customer listing selectable by Name, Customer Number, State or Zip code."
+  uid=9_216 generic
+    uid=9_217 textbox
+  uid=9_218 link "Customer Listing (Export)" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441851"
+    uid=9_219 StaticText "Customer Listing (Export)"
+  uid=9_220 link "Launch" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441851&launch=false"
+    uid=9_221 StaticText "Launch"
+  uid=9_222 StaticText " "
+  uid=9_223 link "Details" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441851"
+    uid=9_224 StaticText "Details"
+  uid=9_225 StaticText " "
+  uid=9_226 StaticText "System Administrator"
+  uid=9_227 StaticText "2/5/26"
+  uid=9_228 StaticText "Customer listing selectable by Name, Customer Number, State or Zip code. Formatted for export to Excel."
+  uid=9_229 generic
+    uid=9_230 textbox
+  uid=9_231 link "Customer Location LIsting" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441852"
+    uid=9_232 StaticText "Customer Location LIsting"
+  uid=9_233 link "Launch" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441852&launch=false"
+    uid=9_234 StaticText "Launch"
+  uid=9_235 StaticText " "
+  uid=9_236 link "Details" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441852"
+    uid=9_237 StaticText "Details"
+  uid=9_238 StaticText " "
+  uid=9_239 StaticText "System Administrator"
+  uid=9_240 StaticText "2/5/26"
+  uid=9_241 StaticText "Customer Location listing selectable by Name, Customer Number, State or Zip code."
+  uid=9_242 generic
+    uid=9_243 textbox
+  uid=9_244 link "Customer Location Listing (Export)" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441853"
+    uid=9_245 StaticText "Customer Location Listing (Export)"
+  uid=9_246 link "Launch" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441853&launch=false"
+    uid=9_247 StaticText "Launch"
+  uid=9_248 StaticText " "
+  uid=9_249 link "Details" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441853"
+    uid=9_250 StaticText "Details"
+  uid=9_251 StaticText " "
+  uid=9_252 StaticText "System Administrator"
+  uid=9_253 StaticText "2/5/26"
+  uid=9_254 StaticText "Customer Location listing selectable by Name, Customer Number, State or Zip code. Formatted for export to Excel."
+  uid=9_255 generic
+    uid=9_256 textbox
+  uid=9_257 link "Inventory List" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441854"
+    uid=9_258 StaticText "Inventory List"
+  uid=9_259 link "Launch" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441854&launch=false"
+    uid=9_260 StaticText "Launch"
+  uid=9_261 StaticText " "
+  uid=9_262 link "Details" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441854"
+    uid=9_263 StaticText "Details"
+  uid=9_264 StaticText " "
+  uid=9_265 StaticText "System Administrator"
+  uid=9_266 StaticText "2/5/26"
+  uid=9_267 StaticText "Listing of Inventory Parts with quantity and cost information. Selectable by Inventory Type, Sales Code or Eng Status."
+  uid=9_268 generic
+    uid=9_269 textbox
+  uid=9_270 link "Inventory List (Export)" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441855"
+    uid=9_271 StaticText "Inventory List (Export)"
+  uid=9_272 link "Launch" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441855&launch=false"
+    uid=9_273 StaticText "Launch"
+  uid=9_274 StaticText " "
+  uid=9_275 link "Details" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441855"
+    uid=9_276 StaticText "Details"
+  uid=9_277 StaticText " "
+  uid=9_278 StaticText "System Administrator"
+  uid=9_279 StaticText "2/5/26"
+  uid=9_280 StaticText "Listing of Inventory Parts with quantity and cost information. Selectable by Inventory Type, Sales Code or Eng Status. Formatted for export to Excel."
+  uid=9_281 generic
+    uid=9_282 textbox
+  uid=9_283 link "Inventory Transaction History" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441856"
+    uid=9_284 StaticText "Inventory Transaction History"
+  uid=9_285 link "Launch" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441856&launch=false"
+    uid=9_286 StaticText "Launch"
+  uid=9_287 StaticText " "
+  uid=9_288 link "Details" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441856"
+    uid=9_289 StaticText "Details"
+  uid=9_290 StaticText " "
+  uid=9_291 StaticText "System Administrator"
+  uid=9_292 StaticText "10/5/25"
+  uid=9_293 StaticText "Inventory Transaction History selectable by Transaction Date, Part Number or Transaction Code."
+  uid=9_294 generic
+    uid=9_295 textbox
+  uid=9_296 link "Invoice Register" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441857"
+    uid=9_297 StaticText "Invoice Register"
+  uid=9_298 link "Launch" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441857&launch=false"
+    uid=9_299 StaticText "Launch"
+  uid=9_300 StaticText " "
+  uid=9_301 link "Details" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441857"
+    uid=9_302 StaticText "Details"
+  uid=9_303 StaticText " "
+  uid=9_304 StaticText "System Administrator"
+  uid=9_305 StaticText "2/5/26"
+  uid=9_306 StaticText "Invoice Register listing selectable by Invoice Date or Entry Date."
+  uid=9_307 generic
+    uid=9_308 textbox
+  uid=9_309 link "Open Sales Order Backlog" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441859"
+    uid=9_310 StaticText "Open Sales Order Backlog"
+  uid=9_311 link "Launch" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441859&launch=false"
+    uid=9_312 StaticText "Launch"
+  uid=9_313 StaticText " "
+  uid=9_314 link "Details" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441859"
+    uid=9_315 StaticText "Details"
+  uid=9_316 StaticText " "
+  uid=9_317 StaticText "System Administrator"
+  uid=9_318 StaticText "2/5/26"
+  uid=9_319 StaticText "Open Sales Order Backlog with Past Due, 0-30, 31-60, 61-90 day and Beyond buckets."
+  uid=9_320 generic
+    uid=9_321 textbox
+  uid=9_322 link "Open Sales Orders" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441860"
+    uid=9_323 StaticText "Open Sales Orders"
+  uid=9_324 link "Launch" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441860&launch=false"
+    uid=9_325 StaticText "Launch"
+  uid=9_326 StaticText " "
+  uid=9_327 link "Details" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441860"
+    uid=9_328 StaticText "Details"
+  uid=9_329 StaticText " "
+  uid=9_330 StaticText "System Administrator"
+  uid=9_331 StaticText "2/6/26"
+  uid=9_332 StaticText "Open Sales Order listed by delivery date."
+  uid=9_333 generic
+    uid=9_334 textbox
+  uid=9_335 link "Open Work Orders" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441861"
+    uid=9_336 StaticText "Open Work Orders"
+  uid=9_337 link "Launch" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441861&launch=false"
+    uid=9_338 StaticText "Launch"
+  uid=9_339 StaticText " "
+  uid=9_340 link "Details" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441861"
+    uid=9_341 StaticText "Details"
+  uid=9_342 StaticText " "
+  uid=9_343 StaticText "System Administrator"
+  uid=9_344 StaticText "2/5/26"
+  uid=9_345 StaticText "List of all Open Work Orders. Sorted by Due Date."
+  uid=9_346 generic
+    uid=9_347 textbox
+  uid=9_348 link "Planned Part Activity" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441862"
+    uid=9_349 StaticText "Planned Part Activity"
+  uid=9_350 link "Launch" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441862&launch=false"
+    uid=9_351 StaticText "Launch"
+  uid=9_352 StaticText " "
+  uid=9_353 link "Details" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441862"
+    uid=9_354 StaticText "Details"
+  uid=9_355 StaticText " "
+  uid=9_356 StaticText "System Administrator"
+  uid=9_357 StaticText "2/5/26"
+  uid=9_358 StaticText "Expected receipts and demands by Part Number."
+  uid=9_359 generic
+    uid=9_360 textbox
+  uid=9_361 link "Purchase History" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441865"
+    uid=9_362 StaticText "Purchase History"
+  uid=9_363 link "Launch" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441865&launch=false"
+    uid=9_364 StaticText "Launch"
+  uid=9_365 StaticText " "
+  uid=9_366 link "Details" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441865"
+    uid=9_367 StaticText "Details"
+  uid=9_368 StaticText " "
+  uid=9_369 StaticText "System Administrator"
+  uid=9_370 StaticText "1/21/26"
+  uid=9_371 StaticText "Purchasing History selectable by PO Date, Part Number, Vendor, Buyer or Type."
+  uid=9_372 generic
+    uid=9_373 textbox
+  uid=9_374 link "Purchase Order Detail" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441866"
+    uid=9_375 StaticText "Purchase Order Detail"
+  uid=9_376 link "Launch" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441866&launch=false"
+    uid=9_377 StaticText "Launch"
+  uid=9_378 StaticText " "
+  uid=9_379 link "Details" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441866"
+    uid=9_380 StaticText "Details"
+  uid=9_381 StaticText " "
+  uid=9_382 StaticText "System Administrator"
+  uid=9_383 StaticText "10/16/25"
+  uid=9_384 StaticText "Detailed Purchase Order information."
+  uid=9_385 generic
+    uid=9_386 textbox
+  uid=9_387 link "Purchased Part Variance" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441868"
+    uid=9_388 StaticText "Purchased Part Variance"
+  uid=9_389 link "Launch" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441868&launch=false"
+    uid=9_390 StaticText "Launch"
+  uid=9_391 StaticText " "
+  uid=9_392 link "Details" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441868"
+    uid=9_393 StaticText "Details"
+  uid=9_394 StaticText " "
+  uid=9_395 StaticText "System Administrator"
+  uid=9_396 StaticText "Never"
+  uid=9_397 StaticText "Purchased Part Variance report selectable by G/L Date, Received Date, Part Number, Inventory Type or Vendor Number."
+  uid=9_398 generic
+    uid=9_399 textbox
+  uid=9_400 link "Quote Status Report" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441869"
+    uid=9_401 StaticText "Quote Status Report"
+  uid=9_402 link "Launch" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441869&launch=false"
+    uid=9_403 StaticText "Launch"
+  uid=9_404 StaticText " "
+  uid=9_405 link "Details" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441869"
+    uid=9_406 StaticText "Details"
+  uid=9_407 StaticText " "
+  uid=9_408 StaticText "System Administrator"
+  uid=9_409 StaticText "1/6/26"
+  uid=9_410 StaticText "Listing of active quotes in the system."
+  uid=9_411 generic
+    uid=9_412 textbox
+  uid=9_413 link "Sales Cost Detail Report" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441870"
+    uid=9_414 StaticText "Sales Cost Detail Report"
+  uid=9_415 link "Launch" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441870&launch=false"
+    uid=9_416 StaticText "Launch"
+  uid=9_417 StaticText " "
+  uid=9_418 link "Details" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441870"
+    uid=9_419 StaticText "Details"
+  uid=9_420 StaticText " "
+  uid=9_421 StaticText "System Administrator"
+  uid=9_422 StaticText "1/5/26"
+  uid=9_423 StaticText "Detailed Sales, Cost and Gross Margin for specified time period."
+  uid=9_424 generic
+    uid=9_425 textbox
+  uid=9_426 link "Sales Order Bookings - By Order Line Date" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441872"
+    uid=9_427 StaticText "Sales Order Bookings - By Order Line Date"
+  uid=9_428 link "Launch" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441872&launch=false"
+    uid=9_429 StaticText "Launch"
+  uid=9_430 StaticText " "
+  uid=9_431 link "Details" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441872"
+    uid=9_432 StaticText "Details"
+  uid=9_433 StaticText " "
+  uid=9_434 StaticText "System Administrator"
+  uid=9_435 StaticText "Never"
+  uid=9_436 StaticText "Sales Order summary by Line Item Date. Selectable by Date Added, Customer or Salesperson."
+  uid=9_437 generic
+    uid=9_438 textbox
+  uid=9_439 link "Sales Order Bookings - By Sales Order Date" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441873"
+    uid=9_440 StaticText "Sales Order Bookings - By Sales Order Date"
+  uid=9_441 link "Launch" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441873&launch=false"
+    uid=9_442 StaticText "Launch"
+  uid=9_443 StaticText " "
+  uid=9_444 link "Details" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441873"
+    uid=9_445 StaticText "Details"
+  uid=9_446 StaticText " "
+  uid=9_447 StaticText "System Administrator"
+  uid=9_448 StaticText "8/22/25"
+  uid=9_449 StaticText "Sales Order summary by Order Date. Selectable by Sales Order date, Customer or Salesperson."
+  uid=9_450 generic
+    uid=9_451 textbox
+  uid=9_452 link "Sales Order Detail" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441874"
+    uid=9_453 StaticText "Sales Order Detail"
+  uid=9_454 link "Launch" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441874&launch=false"
+    uid=9_455 StaticText "Launch"
+  uid=9_456 StaticText " "
+  uid=9_457 link "Details" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441874"
+    uid=9_458 StaticText "Details"
+  uid=9_459 StaticText " "
+  uid=9_460 StaticText "System Administrator"
+  uid=9_461 StaticText "11/12/25"
+  uid=9_462 StaticText "Sales Order Details selectable by Customer, SO Number or Customer PO."
+  uid=9_463 generic
+    uid=9_464 textbox
+  uid=9_465 link "Sales Order Status by Customer" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441875"
+    uid=9_466 StaticText "Sales Order Status by Customer"
+  uid=9_467 link "Launch" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441875&launch=false"
+    uid=9_468 StaticText "Launch"
+  uid=9_469 StaticText " "
+  uid=9_470 link "Details" url="https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportDetails&reportId=1441875"
+    uid=9_471 StaticText "Details"
+  uid=9_472 StaticText " "
+  uid=9_473 StaticText "System Administrator"
+  uid=9_474 StaticText "7/18/25"
+  uid=9_475 StaticText "Sales order status information by Customer. Shows open, closed or all orders."
+  uid=9_476 StaticText "Refresh"
+  uid=9_477 StaticText " "
+  uid=9_478 StaticText "Display Paged"
+  uid=9_479 StaticText "First"
+  uid=9_480 StaticText "Previous"
+  uid=9_481 StaticText "Page 1 of 2"
+  uid=9_482 StaticText "Next"
+  uid=9_483 StaticText "Last"
+  uid=9_484 StaticText "Display All"

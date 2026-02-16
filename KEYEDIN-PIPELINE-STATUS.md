@@ -126,36 +126,37 @@
 
 ---
 
-### 3. Informer BI Capture
+### 3. Informer BI Capture & GWT-RPC Replay
 
 | Attribute | Value |
 |-----------|-------|
-| **Status** | WORKING (capture complete, replay untested) |
-| **Capture Location** | `C:\Scripts\keyedin-capture\reports\` |
-| **Reports Captured** | 30/30 |
+| **Status** | **WORKING** (auth cracked, lookupReportAndSample verified) |
+| **Capture Location** | `C:\Scripts\keyedin-capture\reports\` (original payloads) |
+| **Extraction Location** | `C:\Users\Brady.EAGLE\Desktop\SignX\SignX-Intake\recon\responses\informer_reports\` (23 report responses) |
+| **Reports Accessible** | 23/30 via lookupReportAndSample (7 ACCESS_DENIED) |
 | **Protocol** | GWT-RPC v7 (pipe-delimited) |
-| **Endpoint** | `https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ViewRPCService` |
-| **Session Doc** | `C:\Scripts\keyedin-capture\SESSION_HANDOFF.md` |
-| **Dependencies** | VPN + active Informer session cookie |
-| **Test Status** | CAPTURE VERIFIED, REPLAY UNTESTED |
-
-**Capture assets**:
-| File Pattern | Count | Status |
-|-------------|-------|--------|
-| `report_*_view_request.txt` | 30 | VERIFIED |
-| `report_*_view_response.txt` | varies | PARTIAL |
-| `report_*_cmd_request.txt` | varies | PARTIAL |
-| `raw_captures.json` | 1 | VERIFIED |
+| **Auth Flow** | SSO URL -> JSESSIONID -> getActiveSession(true) -> authToken (3rd UUID) -> URL query params |
+| **authToken** | `1f4517bf-60a5-45a2-853f-8dc64df05c3c` (persistent per-user) |
+| **Dependencies** | VPN + ERP SESSIONID cookie for SSO |
+| **Test Status** | **AUTH VERIFIED, REPLAY VERIFIED** (2026-02-15) |
 
 **Replay/automation scripts**:
 | Script | Path | Status |
 |--------|------|--------|
+| `informer_gwtrpc_extract.py` | `SignX-Intake/recon/` | **WORKING** — full auth + scan + extract |
+| `parse_informer_reports.py` | `SignX-Intake/recon/` | **WORKING** — parses GWT-RPC string tables |
 | `scrape_informer.py` | `C:\Scripts\signx-warehouse\scripts\` | EXISTS — untested end-to-end |
 | `capture_all_reports.py` | `C:\Scripts\signx-warehouse\scripts\` | EXISTS — untested |
-| `split_captures.py` | `C:\Scripts\signx-warehouse\scripts\` | WORKING — splits raw_captures.json |
-| `capture_hook.js` | `C:\Scripts\signx-warehouse\scripts\` (claimed) | NOT VERIFIED |
 
-**GWT Protocol tooling**:
+**Extracted data**:
+| File | Content | Status |
+|------|---------|--------|
+| `informer_report_inventory.json` | 23 reports with columns, sizes | VERIFIED |
+| `report_1441850.txt` - `report_1441878.txt` | 23 raw GWT-RPC responses | VERIFIED |
+| `getActiveSession_full.txt` | Full session with user info, groups, license | VERIFIED |
+| `informer_cache.js` | 5.4MB GWT compiled JS (method signatures) | REFERENCE |
+
+**GWT Protocol tooling** (older, in signx-warehouse):
 | Script | Path | Status |
 |--------|------|--------|
 | `gwt_parser.py` | `C:\Scripts\signx-warehouse\scripts\` | EXISTS |
@@ -387,7 +388,7 @@ Key scripts:
 | **Capture scripts** | 9 | 9 | 0 | 0 | 0 |
 | **Phase 1 (HTML parse)** | 1 | 1 | 0 | 0 | 0 |
 | **Informer capture** | 30 reports | 30 | 0 | 0 | 0 |
-| **Informer replay** | 4 scripts | 0 | 4 | 0 | 0 |
+| **Informer replay** | 2 scripts (new) + 2 (old) | 2 | 2 | 0 | 0 |
 | **GWT tooling** | 4 scripts | 0 | 4 | 0 | 0 |
 | **Phase 4 (local ingest)** | 1 | 1 | 0 | 0 | 0 |
 | **Phase 5 (warehouse)** | 1 | 1 | 0 | 0 | 0 |
@@ -425,13 +426,13 @@ Key scripts:
 
 | Gap | Impact | Severity | Mitigation |
 |-----|--------|----------|------------|
-| No quote/estimating data | Cannot do win/loss analysis | HIGH | Requires Main ERP capture (Quote module) |
-| Informer replay untested | Can't refresh BI data automatically | MEDIUM | Test `scrape_informer.py` with valid session |
-| GWT tools untested | Can't decode Informer responses | MEDIUM | Test `gwt_parser.py` against captured responses |
+| Quote data not yet bulk-extracted | Cannot do win/loss analysis at scale | HIGH | Report 1441869 (Quote Status) accessible via lookupReportAndSample — need getData for full rows |
+| ~~Informer replay untested~~ | ~~Can't refresh BI data~~ | ~~MEDIUM~~ | **RESOLVED 2026-02-15** — `informer_gwtrpc_extract.py` works end-to-end |
+| ~~GWT tools untested~~ | ~~Can't decode Informer~~ | ~~MEDIUM~~ | **RESOLVED 2026-02-15** — auth flow cracked, 23 reports extracted |
+| Export endpoints blocked | MVI templates unresolved via direct HTTP | MEDIUM | All 6 return forms with `[ACTION]` tokens — need browser automation |
+| Import file formats unknown | Cannot automate data write | MEDIUM | Upload mechanism mapped (ASP.NET fileupload.aspx) but field layouts unknown |
 | 13 analysis scripts untested | Unknown utility | LOW | Audit each for usefulness |
-| SignX integration stubs | No live ERP connection | LOW | Blocked by VPN/proxy |
 | No AP/GL data captured | Incomplete financial picture | MEDIUM | Requires Main ERP capture |
-| No vendor detail | Missing supply chain data | LOW | Available in Informer (vendor_listing captured) |
 | Warehouse is static snapshot | Data from 2026-01-30 only | HIGH | Need automated refresh pipeline |
 
 ---

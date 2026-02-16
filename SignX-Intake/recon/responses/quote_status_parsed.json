@@ -1,0 +1,1461 @@
+{
+  "report_info": {
+    "report_id": "1441869",
+    "report_name": "Quote Status Report",
+    "method": "lookupReportAndSample",
+    "total_string_entries": 248
+  },
+  "categorized": {
+    "view_tokens": [
+      {
+        "index": 53,
+        "value": "Salesperson"
+      },
+      {
+        "index": 80,
+        "value": "Company"
+      },
+      {
+        "index": 84,
+        "value": "Description"
+      },
+      {
+        "index": 118,
+        "value": "Inactive"
+      }
+    ],
+    "quote_numbers": [
+      {
+        "index": 202,
+        "value": "016243"
+      },
+      {
+        "index": 210,
+        "value": "007557"
+      },
+      {
+        "index": 226,
+        "value": "015190"
+      },
+      {
+        "index": 236,
+        "value": "007546"
+      }
+    ],
+    "status_codes": [
+      {
+        "index": 38,
+        "value": "199-239-217-167-202-125-210-198-107-3-35-201-211-151-216-173-188-40-94-147-211-97-81-149"
+      },
+      {
+        "index": 204,
+        "value": "0 - null"
+      },
+      {
+        "index": 212,
+        "value": "110 - NEW PROSPECT INCOMING PHONE"
+      },
+      {
+        "index": 221,
+        "value": "190 - BID COMPLETED"
+      },
+      {
+        "index": 229,
+        "value": "250 - NO DECISION - CLOSED"
+      }
+    ],
+    "company_names": [
+      {
+        "index": 213,
+        "value": "NEW PROSPECT INCOMING PHONE"
+      },
+      {
+        "index": 222,
+        "value": "BID COMPLETED"
+      },
+      {
+        "index": 230,
+        "value": "NO DECISION - CLOSED"
+      },
+      {
+        "index": 233,
+        "value": "CITY OF URBANDALE DOUGLAS AVE BEAUTIFICATION PROJECT"
+      }
+    ],
+    "field_names": [
+      {
+        "index": 56,
+        "value": "QT.DATE"
+      },
+      {
+        "index": 60,
+        "value": "DEFAULT.SHIP"
+      },
+      {
+        "index": 64,
+        "value": "EXP.DATE"
+      },
+      {
+        "index": 81,
+        "value": "SPEC.INST"
+      },
+      {
+        "index": 97,
+        "value": "CURR.STATUS.DATE"
+      },
+      {
+        "index": 103,
+        "value": "CURR.STATUS.TIME"
+      },
+      {
+        "index": 119,
+        "value": "CURR.STATUS"
+      },
+      {
+        "index": 129,
+        "value": "QUOTE.STATUS.CODES"
+      },
+      {
+        "index": 132,
+        "value": "SALES.STAGE"
+      },
+      {
+        "index": 139,
+        "value": "QUOTE.SALES.STAGE.CODES"
+      },
+      {
+        "index": 143,
+        "value": "QTY.ORDERED"
+      },
+      {
+        "index": 148,
+        "value": "CALC.PRICE"
+      },
+      {
+        "index": 153,
+        "value": "OVERRIDE.PRICE"
+      },
+      {
+        "index": 165,
+        "value": "CLASSIFY.AS.LOSS"
+      }
+    ],
+    "column_names": [
+      {
+        "index": 31,
+        "value": "Quote ID number."
+      },
+      {
+        "index": 47,
+        "value": "Quote Header"
+      },
+      {
+        "index": 48,
+        "value": "Quote Nbr"
+      },
+      {
+        "index": 55,
+        "value": "Role1 (Salesperson)"
+      },
+      {
+        "index": 57,
+        "value": "qtDate"
+      },
+      {
+        "index": 58,
+        "value": "Date of quote."
+      },
+      {
+        "index": 59,
+        "value": "Quote Date"
+      },
+      {
+        "index": 62,
+        "value": "Installation date."
+      },
+      {
+        "index": 63,
+        "value": "Install Date"
+      },
+      {
+        "index": 65,
+        "value": "expDate"
+      },
+      {
+        "index": 67,
+        "value": "Quote Expiration Date"
+      },
+      {
+        "index": 68,
+        "value": "Expire Date"
+      },
+      {
+        "index": 69,
+        "value": "ACCTID"
+      },
+      {
+        "index": 72,
+        "value": "CRM account ID code."
+      },
+      {
+        "index": 73,
+        "value": "CRM Account ID"
+      },
+      {
+        "index": 74,
+        "value": "Account ID"
+      },
+      {
+        "index": 79,
+        "value": "CRM Company Name"
+      },
+      {
+        "index": 83,
+        "value": "Quote description."
+      },
+      {
+        "index": 87,
+        "value": "extPrice"
+      },
+      {
+        "index": 88,
+        "value": "Ext Price"
+      },
+      {
+        "index": 90,
+        "value": " + quoteSalesStage_assoc_descr;"
+      },
+      {
+        "index": 92,
+        "value": "Sales Stage"
+      },
+      {
+        "index": 93,
+        "value": "currStatus+\\"
+      },
+      {
+        "index": 94,
+        "value": "+quoteStatusCodes_assoc_descr"
+      },
+      {
+        "index": 95,
+        "value": "statusCode\\x26Description"
+      },
+      {
+        "index": 96,
+        "value": "Quote Status"
+      },
+      {
+        "index": 98,
+        "value": "currStatusDate"
+      },
+      {
+        "index": 99,
+        "value": "Date current quote status was set."
+      },
+      {
+        "index": 100,
+        "value": "Status Date (Current)"
+      },
+      {
+        "index": 101,
+        "value": "currStatusDate2"
+      },
+      {
+        "index": 102,
+        "value": "Status Date"
+      },
+      {
+        "index": 106,
+        "value": "Status Time (Current)"
+      },
+      {
+        "index": 107,
+        "value": "Status Time"
+      },
+      {
+        "index": 108,
+        "value": "WONO"
+      },
+      {
+        "index": 111,
+        "value": "WO Nbr"
+      },
+      {
+        "index": 117,
+        "value": "Quote Status Date"
+      },
+      {
+        "index": 120,
+        "value": "currStatus"
+      },
+      {
+        "index": 121,
+        "value": "Quote Status Codes"
+      },
+      {
+        "index": 123,
+        "value": "Status Code (Current)"
+      },
+      {
+        "index": 124,
+        "value": "Status Code"
+      },
+      {
+        "index": 125,
+        "value": "quoteStatusCodes_assoc"
+      },
+      {
+        "index": 128,
+        "value": "Quote status code description"
+      },
+      {
+        "index": 131,
+        "value": "quoteStatusCodes_assoc_descr"
+      },
+      {
+        "index": 134,
+        "value": "Quote Sales Stages"
+      },
+      {
+        "index": 135,
+        "value": "Sales stage code."
+      },
+      {
+        "index": 136,
+        "value": "Sales Stage Code"
+      },
+      {
+        "index": 137,
+        "value": "quoteSalesStage_assoc"
+      },
+      {
+        "index": 138,
+        "value": "Sales stage description."
+      },
+      {
+        "index": 140,
+        "value": "Quote Sales Stage Codes"
+      },
+      {
+        "index": 141,
+        "value": "quoteSalesStage_assoc_descr"
+      },
+      {
+        "index": 142,
+        "value": "Quote Sales Stage Descr"
+      },
+      {
+        "index": 147,
+        "value": "Qty Quoted"
+      },
+      {
+        "index": 151,
+        "value": "Price (Calculated) Ea"
+      },
+      {
+        "index": 152,
+        "value": "Est Price Ea"
+      },
+      {
+        "index": 154,
+        "value": "sellingPrice"
+      },
+      {
+        "index": 156,
+        "value": "Price (Override) Ea"
+      },
+      {
+        "index": 157,
+        "value": "Selling Price Ea"
+      },
+      {
+        "index": 164,
+        "value": "Quote Sales Stage"
+      },
+      {
+        "index": 169,
+        "value": "Show Quotes Classified as Loss (enter\\x27Y\\x27)"
+      },
+      {
+        "index": 172,
+        "value": "Show Quotes Marked Inactive (enter \\x27Y\\x27)"
+      },
+      {
+        "index": 176,
+        "value": "Quote Status Report"
+      },
+      {
+        "index": 216,
+        "value": "java.util.Date/3385151746"
+      }
+    ],
+    "java_classes": [
+      {
+        "index": 0,
+        "value": "com.entrinsik.informer.core.domain.report.ReportAndSample/505516092"
+      },
+      {
+        "index": 1,
+        "value": "com.entrinsik.informer.core.domain.report.Report/904899800"
+      },
+      {
+        "index": 4,
+        "value": "com.entrinsik.informer.core.domain.report.CalculatedColumn/3862168558"
+      },
+      {
+        "index": 9,
+        "value": "com.entrinsik.informer.core.domain.report.CalculatedColumn$Type/1611139324"
+      },
+      {
+        "index": 11,
+        "value": "com.entrinsik.informer.core.domain.report.Alignment/1293994093"
+      },
+      {
+        "index": 12,
+        "value": "com.entrinsik.informer.core.domain.report.ColumnWidth/4003402521"
+      },
+      {
+        "index": 14,
+        "value": "com.entrinsik.informer.core.domain.report.ColumnWidth$WidthType/3950298933"
+      },
+      {
+        "index": 15,
+        "value": "com.entrinsik.informer.core.domain.metadata.DataType/132312708"
+      },
+      {
+        "index": 16,
+        "value": "com.entrinsik.informer.core.domain.value.ValueFormatter/3314938087"
+      },
+      {
+        "index": 18,
+        "value": "com.entrinsik.informer.core.domain.value.ValueFormatter$DateFormat/2879495239"
+      },
+      {
+        "index": 19,
+        "value": "com.entrinsik.informer.core.domain.value.ValueFormatter$NegativeFormat/3102681171"
+      },
+      {
+        "index": 21,
+        "value": "com.entrinsik.informer.core.domain.report.PropertyColumn/2690652026"
+      },
+      {
+        "index": 22,
+        "value": "com.entrinsik.informer.core.domain.metadata.PropertyPath/3780551534"
+      },
+      {
+        "index": 23,
+        "value": "com.entrinsik.informer.core.domain.impl.u2.U2Property/4086802101"
+      },
+      {
+        "index": 24,
+        "value": "com.entrinsik.informer.core.domain.impl.u2.ConversionCode/909969109"
+      }
+    ]
+  },
+  "sample_data": {
+    "dollar_amounts": [
+      110.0,
+      300.0,
+      516.26,
+      3481.08,
+      10789.85,
+      38198.33,
+      64739.1
+    ]
+  },
+  "all_string_table": [
+    {
+      "index": 0,
+      "value": "com.entrinsik.informer.core.domain.report.ReportAndSample/505516092"
+    },
+    {
+      "index": 1,
+      "value": "com.entrinsik.informer.core.domain.report.Report/904899800"
+    },
+    {
+      "index": 2,
+      "value": "rO0ABXcEAAAAAA\\x3D\\x3D"
+    },
+    {
+      "index": 3,
+      "value": "java.util.ArrayList/4159755760"
+    },
+    {
+      "index": 4,
+      "value": "com.entrinsik.informer.core.domain.report.CalculatedColumn/3862168558"
+    },
+    {
+      "index": 5,
+      "value": "var result \\x3D \\"
+    },
+    {
+      "index": 6,
+      "value": ";\\nif(inactive \\x3D\\x3D \\"
+    },
+    {
+      "index": 7,
+      "value": ") {\\n    result \\x3D \\"
+    },
+    {
+      "index": 8,
+      "value": ";\\n}\\nresult;\\n"
+    },
+    {
+      "index": 9,
+      "value": "com.entrinsik.informer.core.domain.report.CalculatedColumn$Type/1611139324"
+    },
+    {
+      "index": 10,
+      "value": "inactiveMsg"
+    },
+    {
+      "index": 11,
+      "value": "com.entrinsik.informer.core.domain.report.Alignment/1293994093"
+    },
+    {
+      "index": 12,
+      "value": "com.entrinsik.informer.core.domain.report.ColumnWidth/4003402521"
+    },
+    {
+      "index": 13,
+      "value": "java.lang.Integer/3438268394"
+    },
+    {
+      "index": 14,
+      "value": "com.entrinsik.informer.core.domain.report.ColumnWidth$WidthType/3950298933"
+    },
+    {
+      "index": 15,
+      "value": "com.entrinsik.informer.core.domain.metadata.DataType/132312708"
+    },
+    {
+      "index": 16,
+      "value": "com.entrinsik.informer.core.domain.value.ValueFormatter/3314938087"
+    },
+    {
+      "index": 17,
+      "value": ""
+    },
+    {
+      "index": 18,
+      "value": "com.entrinsik.informer.core.domain.value.ValueFormatter$DateFormat/2879495239"
+    },
+    {
+      "index": 19,
+      "value": "com.entrinsik.informer.core.domain.value.ValueFormatter$NegativeFormat/3102681171"
+    },
+    {
+      "index": 20,
+      "value": "Active"
+    },
+    {
+      "index": 21,
+      "value": "com.entrinsik.informer.core.domain.report.PropertyColumn/2690652026"
+    },
+    {
+      "index": 22,
+      "value": "com.entrinsik.informer.core.domain.metadata.PropertyPath/3780551534"
+    },
+    {
+      "index": 23,
+      "value": "com.entrinsik.informer.core.domain.impl.u2.U2Property/4086802101"
+    },
+    {
+      "index": 24,
+      "value": "com.entrinsik.informer.core.domain.impl.u2.ConversionCode/909969109"
+    },
+    {
+      "index": 25,
+      "value": "QUOTENO"
+    },
+    {
+      "index": 26,
+      "value": "D"
+    },
+    {
+      "index": 27,
+      "value": "quoteno"
+    },
+    {
+      "index": 28,
+      "value": "System Administrator"
+    },
+    {
+      "index": 29,
+      "value": "java.sql.Timestamp/3040052672"
+    },
+    {
+      "index": 30,
+      "value": "com.entrinsik.informer.core.domain.value.ValueFormatter$CodeFileDisplay/3888014294"
+    },
+    {
+      "index": 31,
+      "value": "Quote ID number."
+    },
+    {
+      "index": 32,
+      "value": "java.lang.Boolean/476441737"
+    },
+    {
+      "index": 33,
+      "value": "com.entrinsik.informer.core.domain.metadata.Mapping/1386769038"
+    },
+    {
+      "index": 34,
+      "value": "QTH"
+    },
+    {
+      "index": 35,
+      "value": "com.entrinsik.informer.core.domain.impl.u2.U2Datasource/2473631848"
+    },
+    {
+      "index": 36,
+      "value": "d:\\\\datasign_accts\\\\eaglesign"
+    },
+    {
+      "index": 37,
+      "value": "com.entrinsik.gwt.data.shared.MonthDayYearFormat/2260269792"
+    },
+    {
+      "index": 38,
+      "value": "199-239-217-167-202-125-210-198-107-3-35-201-211-151-216-173-188-40-94-147-211-97-81-149"
+    },
+    {
+      "index": 39,
+      "value": "localhost"
+    },
+    {
+      "index": 40,
+      "value": "BITool_App_User2"
+    },
+    {
+      "index": 41,
+      "value": "KeyedInSign Database"
+    },
+    {
+      "index": 42,
+      "value": "KeyedInSign"
+    },
+    {
+      "index": 43,
+      "value": "com.entrinsik.informer.u2"
+    },
+    {
+      "index": 44,
+      "value": "com.entrinsik.informer.core.domain.security.principal.PrincipalReference/274259219"
+    },
+    {
+      "index": 45,
+      "value": "ADMIN"
+    },
+    {
+      "index": 46,
+      "value": "com.entrinsik.informer.core.domain.security.principal.PrincipalType/2036077978"
+    },
+    {
+      "index": 47,
+      "value": "Quote Header"
+    },
+    {
+      "index": 48,
+      "value": "Quote Nbr"
+    },
+    {
+      "index": 49,
+      "value": "com.entrinsik.informer.core.domain.metadata.Property$SuggestType/3632198418"
+    },
+    {
+      "index": 50,
+      "value": "SALESPERSON"
+    },
+    {
+      "index": 51,
+      "value": "salesperson"
+    },
+    {
+      "index": 52,
+      "value": "com.entrinsik.informer.core.domain.codes.CodeFileReference/2876311566"
+    },
+    {
+      "index": 53,
+      "value": "Salesperson"
+    },
+    {
+      "index": 54,
+      "value": "Role 1 from Quote Entry screen.\\nAlways the Salesperson role."
+    },
+    {
+      "index": 55,
+      "value": "Role1 (Salesperson)"
+    },
+    {
+      "index": 56,
+      "value": "QT.DATE"
+    },
+    {
+      "index": 57,
+      "value": "qtDate"
+    },
+    {
+      "index": 58,
+      "value": "Date of quote."
+    },
+    {
+      "index": 59,
+      "value": "Quote Date"
+    },
+    {
+      "index": 60,
+      "value": "DEFAULT.SHIP"
+    },
+    {
+      "index": 61,
+      "value": "defaultShip"
+    },
+    {
+      "index": 62,
+      "value": "Installation date."
+    },
+    {
+      "index": 63,
+      "value": "Install Date"
+    },
+    {
+      "index": 64,
+      "value": "EXP.DATE"
+    },
+    {
+      "index": 65,
+      "value": "expDate"
+    },
+    {
+      "index": 66,
+      "value": "Expiration date."
+    },
+    {
+      "index": 67,
+      "value": "Quote Expiration Date"
+    },
+    {
+      "index": 68,
+      "value": "Expire Date"
+    },
+    {
+      "index": 69,
+      "value": "ACCTID"
+    },
+    {
+      "index": 70,
+      "value": "acctid"
+    },
+    {
+      "index": 71,
+      "value": "CRM Accounts"
+    },
+    {
+      "index": 72,
+      "value": "CRM account ID code."
+    },
+    {
+      "index": 73,
+      "value": "CRM Account ID"
+    },
+    {
+      "index": 74,
+      "value": "Account ID"
+    },
+    {
+      "index": 75,
+      "value": "COMPANY"
+    },
+    {
+      "index": 76,
+      "value": "I"
+    },
+    {
+      "index": 77,
+      "value": "company"
+    },
+    {
+      "index": 78,
+      "value": "CRM company name."
+    },
+    {
+      "index": 79,
+      "value": "CRM Company Name"
+    },
+    {
+      "index": 80,
+      "value": "Company"
+    },
+    {
+      "index": 81,
+      "value": "SPEC.INST"
+    },
+    {
+      "index": 82,
+      "value": "specInst"
+    },
+    {
+      "index": 83,
+      "value": "Quote description."
+    },
+    {
+      "index": 84,
+      "value": "Description"
+    },
+    {
+      "index": 85,
+      "value": "specInst2"
+    },
+    {
+      "index": 86,
+      "value": "var qty \\x3D 1;\\nif(qtyOrdered \\x3E 0) {\\n\\tqty \\x3D qtyOrdered;\\n}\\nvar unitPrice \\x3D salesTotal;\\nif(sellingPrice \\x3E 0) {\\n\\tunitPrice \\x3D sellingPrice;\\n}\\nqty * unitPrice;\\n\\n"
+    },
+    {
+      "index": 87,
+      "value": "extPrice"
+    },
+    {
+      "index": 88,
+      "value": "Ext Price"
+    },
+    {
+      "index": 89,
+      "value": "salesStage + \\"
+    },
+    {
+      "index": 90,
+      "value": " + quoteSalesStage_assoc_descr;"
+    },
+    {
+      "index": 91,
+      "value": "salesStage2"
+    },
+    {
+      "index": 92,
+      "value": "Sales Stage"
+    },
+    {
+      "index": 93,
+      "value": "currStatus+\\"
+    },
+    {
+      "index": 94,
+      "value": "+quoteStatusCodes_assoc_descr"
+    },
+    {
+      "index": 95,
+      "value": "statusCode\\x26Description"
+    },
+    {
+      "index": 96,
+      "value": "Quote Status"
+    },
+    {
+      "index": 97,
+      "value": "CURR.STATUS.DATE"
+    },
+    {
+      "index": 98,
+      "value": "currStatusDate"
+    },
+    {
+      "index": 99,
+      "value": "Date current quote status was set."
+    },
+    {
+      "index": 100,
+      "value": "Status Date (Current)"
+    },
+    {
+      "index": 101,
+      "value": "currStatusDate2"
+    },
+    {
+      "index": 102,
+      "value": "Status Date"
+    },
+    {
+      "index": 103,
+      "value": "CURR.STATUS.TIME"
+    },
+    {
+      "index": 104,
+      "value": "statusTime_2"
+    },
+    {
+      "index": 105,
+      "value": "Time current quote status was set."
+    },
+    {
+      "index": 106,
+      "value": "Status Time (Current)"
+    },
+    {
+      "index": 107,
+      "value": "Status Time"
+    },
+    {
+      "index": 108,
+      "value": "WONO"
+    },
+    {
+      "index": 109,
+      "value": "wono"
+    },
+    {
+      "index": 110,
+      "value": "Work order number if quote has been converted."
+    },
+    {
+      "index": 111,
+      "value": "WO Nbr"
+    },
+    {
+      "index": 112,
+      "value": "INACTIVE"
+    },
+    {
+      "index": 113,
+      "value": "inactive"
+    },
+    {
+      "index": 114,
+      "value": "Inactive flag.\\nEMPTY \\x3D Active\\n\\x27Y\\x27 \\x3D Inactive"
+    },
+    {
+      "index": 115,
+      "value": "Inactive Flag"
+    },
+    {
+      "index": 116,
+      "value": "inactive2"
+    },
+    {
+      "index": 117,
+      "value": "Quote Status Date"
+    },
+    {
+      "index": 118,
+      "value": "Inactive"
+    },
+    {
+      "index": 119,
+      "value": "CURR.STATUS"
+    },
+    {
+      "index": 120,
+      "value": "currStatus"
+    },
+    {
+      "index": 121,
+      "value": "Quote Status Codes"
+    },
+    {
+      "index": 122,
+      "value": "Current quote status code."
+    },
+    {
+      "index": 123,
+      "value": "Status Code (Current)"
+    },
+    {
+      "index": 124,
+      "value": "Status Code"
+    },
+    {
+      "index": 125,
+      "value": "quoteStatusCodes_assoc"
+    },
+    {
+      "index": 126,
+      "value": "DESCR"
+    },
+    {
+      "index": 127,
+      "value": "descr"
+    },
+    {
+      "index": 128,
+      "value": "Quote status code description"
+    },
+    {
+      "index": 129,
+      "value": "QUOTE.STATUS.CODES"
+    },
+    {
+      "index": 130,
+      "value": "Desc"
+    },
+    {
+      "index": 131,
+      "value": "quoteStatusCodes_assoc_descr"
+    },
+    {
+      "index": 132,
+      "value": "SALES.STAGE"
+    },
+    {
+      "index": 133,
+      "value": "salesStage"
+    },
+    {
+      "index": 134,
+      "value": "Quote Sales Stages"
+    },
+    {
+      "index": 135,
+      "value": "Sales stage code."
+    },
+    {
+      "index": 136,
+      "value": "Sales Stage Code"
+    },
+    {
+      "index": 137,
+      "value": "quoteSalesStage_assoc"
+    },
+    {
+      "index": 138,
+      "value": "Sales stage description."
+    },
+    {
+      "index": 139,
+      "value": "QUOTE.SALES.STAGE.CODES"
+    },
+    {
+      "index": 140,
+      "value": "Quote Sales Stage Codes"
+    },
+    {
+      "index": 141,
+      "value": "quoteSalesStage_assoc_descr"
+    },
+    {
+      "index": 142,
+      "value": "Quote Sales Stage Descr"
+    },
+    {
+      "index": 143,
+      "value": "QTY.ORDERED"
+    },
+    {
+      "index": 144,
+      "value": "qtyOrdered"
+    },
+    {
+      "index": 145,
+      "value": "Quantity quoted."
+    },
+    {
+      "index": 146,
+      "value": "Qty"
+    },
+    {
+      "index": 147,
+      "value": "Qty Quoted"
+    },
+    {
+      "index": 148,
+      "value": "CALC.PRICE"
+    },
+    {
+      "index": 149,
+      "value": "salesTotal"
+    },
+    {
+      "index": 150,
+      "value": "Calculated selling price."
+    },
+    {
+      "index": 151,
+      "value": "Price (Calculated) Ea"
+    },
+    {
+      "index": 152,
+      "value": "Est Price Ea"
+    },
+    {
+      "index": 153,
+      "value": "OVERRIDE.PRICE"
+    },
+    {
+      "index": 154,
+      "value": "sellingPrice"
+    },
+    {
+      "index": 155,
+      "value": "User entered selling price. Overrides the calculated selling price."
+    },
+    {
+      "index": 156,
+      "value": "Price (Override) Ea"
+    },
+    {
+      "index": 157,
+      "value": "Selling Price Ea"
+    },
+    {
+      "index": 158,
+      "value": "com.entrinsik.informer.core.domain.report.CompoundCondition/4242450701"
+    },
+    {
+      "index": 159,
+      "value": "com.entrinsik.informer.core.domain.report.PropertyCondition/2740387370"
+    },
+    {
+      "index": 160,
+      "value": "com.entrinsik.informer.core.domain.report.PropertyConditionType/2174904511"
+    },
+    {
+      "index": 161,
+      "value": "com.entrinsik.informer.core.domain.report.PropertyConditionValue/3739029125"
+    },
+    {
+      "index": 162,
+      "value": "com.entrinsik.informer.core.domain.report.ConditionInput/3998120786"
+    },
+    {
+      "index": 163,
+      "value": "com.entrinsik.informer.core.domain.report.PropertyConditionValue$Mode/2725259297"
+    },
+    {
+      "index": 164,
+      "value": "Quote Sales Stage"
+    },
+    {
+      "index": 165,
+      "value": "CLASSIFY.AS.LOSS"
+    },
+    {
+      "index": 166,
+      "value": "classifyAsLoss"
+    },
+    {
+      "index": 167,
+      "value": "Contains \\x27Y\\x27 if the sales stage is considered a lost quote."
+    },
+    {
+      "index": 168,
+      "value": "Classify As Loss"
+    },
+    {
+      "index": 169,
+      "value": "Show Quotes Classified as Loss (enter\\x27Y\\x27)"
+    },
+    {
+      "index": 170,
+      "value": "Y"
+    },
+    {
+      "index": 171,
+      "value": "com.entrinsik.informer.core.domain.report.CompoundCondition$Type/4029231537"
+    },
+    {
+      "index": 172,
+      "value": "Show Quotes Marked Inactive (enter \\x27Y\\x27)"
+    },
+    {
+      "index": 173,
+      "value": "Listing of active quotes in the system."
+    },
+    {
+      "index": 174,
+      "value": "com.entrinsik.informer.core.domain.report.GroupCalculate/4023031814"
+    },
+    {
+      "index": 175,
+      "value": "com.entrinsik.informer.core.domain.report.Report$MultipleTableMode/1025761587"
+    },
+    {
+      "index": 176,
+      "value": "Quote Status Report"
+    },
+    {
+      "index": 177,
+      "value": "com.entrinsik.informer.core.domain.security.principal.AdminUser/2269656559"
+    },
+    {
+      "index": 178,
+      "value": "administrator"
+    },
+    {
+      "index": 179,
+      "value": "com.entrinsik.informer.core.domain.security.SecurableHierarchy/3498287576"
+    },
+    {
+      "index": 180,
+      "value": "com.entrinsik.informer.core.domain.security.SecurableKey/590808606"
+    },
+    {
+      "index": 181,
+      "value": "com.entrinsik.informer.core.domain.security.SecurableType/2236040490"
+    },
+    {
+      "index": 182,
+      "value": "com.entrinsik.informer.core.domain.report.Report$ShareMode/1388098759"
+    },
+    {
+      "index": 183,
+      "value": "java.util.HashSet/3273092938"
+    },
+    {
+      "index": 184,
+      "value": "com.entrinsik.informer.core.domain.report.ReportShare/3769454709"
+    },
+    {
+      "index": 185,
+      "value": "SALES"
+    },
+    {
+      "index": 186,
+      "value": "ACCOUNTING"
+    },
+    {
+      "index": 187,
+      "value": "MANAGEMENT"
+    },
+    {
+      "index": 188,
+      "value": "com.entrinsik.informer.core.domain.security.principal.ExternalGroup/3667832282"
+    },
+    {
+      "index": 189,
+      "value": "G*MANAGEMENT"
+    },
+    {
+      "index": 190,
+      "value": "G*SALES"
+    },
+    {
+      "index": 191,
+      "value": "G*ACCOUNTING"
+    },
+    {
+      "index": 192,
+      "value": "com.entrinsik.informer.core.domain.report.Sort/720786184"
+    },
+    {
+      "index": 193,
+      "value": "[Lcom.entrinsik.informer.core.domain.report.TableOptions;/3540094754"
+    },
+    {
+      "index": 194,
+      "value": "com.entrinsik.informer.core.domain.report.Tag/27427584"
+    },
+    {
+      "index": 195,
+      "value": "Estimating \\x26 Proposals"
+    },
+    {
+      "index": 196,
+      "value": "com.entrinsik.informer.core.domain.report.ReportUserDetails/3258143322"
+    },
+    {
+      "index": 197,
+      "value": "BRADYF"
+    },
+    {
+      "index": 198,
+      "value": "com.entrinsik.gwt.data.shared.Row/3617919146"
+    },
+    {
+      "index": 199,
+      "value": "java.util.HashMap/1797211028"
+    },
+    {
+      "index": 200,
+      "value": "java.lang.String/2004016611"
+    },
+    {
+      "index": 201,
+      "value": "com.entrinsik.gwt.data.shared.values.StringValue/2414534542"
+    },
+    {
+      "index": 202,
+      "value": "016243"
+    },
+    {
+      "index": 203,
+      "value": "com.entrinsik.gwt.data.shared.values.NullValue/2880996259"
+    },
+    {
+      "index": 204,
+      "value": "0 - null"
+    },
+    {
+      "index": 205,
+      "value": "null - null"
+    },
+    {
+      "index": 206,
+      "value": "com.entrinsik.gwt.data.shared.values.NumberValue/438907711"
+    },
+    {
+      "index": 207,
+      "value": "java.lang.Double/858496421"
+    },
+    {
+      "index": 208,
+      "value": "@ID"
+    },
+    {
+      "index": 209,
+      "value": "Vibrant Insurance - Downing"
+    },
+    {
+      "index": 210,
+      "value": "007557"
+    },
+    {
+      "index": 211,
+      "value": "INSTALL (26) INTERIOR TAPE MOUNTED SIGNS ON DRYWALL. ALL MOUNTING TAPE/MATERIALS PROVIDED BY CUSTOMER AND ON SIGNS PRIOR TO MAILING TO EAGLE SIGN CO. LOCATION IS WESTOWN PARKWAY, WEST DES MOINES, IA. PRICE ASSUMES NORMAL BUSINESS HOURS INSTALLATION. PERMIT, TAXES ARE ADDITIONAL FEES."
+    },
+    {
+      "index": 212,
+      "value": "110 - NEW PROSPECT INCOMING PHONE"
+    },
+    {
+      "index": 213,
+      "value": "NEW PROSPECT INCOMING PHONE"
+    },
+    {
+      "index": 214,
+      "value": "com.entrinsik.gwt.data.shared.values.DateValue/2214205814"
+    },
+    {
+      "index": 215,
+      "value": "300"
+    },
+    {
+      "index": 216,
+      "value": "java.util.Date/3385151746"
+    },
+    {
+      "index": 217,
+      "value": "com.entrinsik.gwt.data.shared.values.TimeValue/469883734"
+    },
+    {
+      "index": 218,
+      "value": "360"
+    },
+    {
+      "index": 219,
+      "value": "java.sql.Time/1816797103"
+    },
+    {
+      "index": 220,
+      "value": "RICHT"
+    },
+    {
+      "index": 221,
+      "value": "190 - BID COMPLETED"
+    },
+    {
+      "index": 222,
+      "value": "BID COMPLETED"
+    },
+    {
+      "index": 223,
+      "value": "190"
+    },
+    {
+      "index": 224,
+      "value": "11113"
+    },
+    {
+      "index": 225,
+      "value": "290 SIGN SYSTEMS"
+    },
+    {
+      "index": 226,
+      "value": "015190"
+    },
+    {
+      "index": 227,
+      "value": "MEDIAN SCULPTURES: Item includes all labor, material, and equipment to fabricate and install one group of five Median Sculptures and footings.  MEDIAN SCULPTURE STEEL SHALL BE HOT DIPPED GALVANIZED. ALL HARDWARE SHALL BE STAINLESS STEEL. STEEL SHALL BE HAND TOOLED CLEANED (SSPC-SP2) OR POWER TOOL CLEANED (SSPC-SP3) PRIOR TO PAINTING. SCULPTURES ARE MOUNTED TO CONCRETE FOOTINGS USING BREAKAWAY ANCHOR BOLTS."
+    },
+    {
+      "index": 228,
+      "value": "JOEP"
+    },
+    {
+      "index": 229,
+      "value": "250 - NO DECISION - CLOSED"
+    },
+    {
+      "index": 230,
+      "value": "NO DECISION - CLOSED"
+    },
+    {
+      "index": 231,
+      "value": "250"
+    },
+    {
+      "index": 232,
+      "value": "33339"
+    },
+    {
+      "index": 233,
+      "value": "CITY OF URBANDALE DOUGLAS AVE BEAUTIFICATION PROJECT"
+    },
+    {
+      "index": 234,
+      "value": "LIGHT COLUMNS: Item includes all labor, material, and equipment to fabricate and install one double sided Light Column and footing, including internal lighting and cutoff switch. LIGHT COLUMN DIFFUSER PANELS SHALL BE CLEAR IMPACT- RESISTANT ACRYLIC. COLORED TRANSLUCENT VINYL SHALL BE 3M SCOTCHCAL TRANSLUCENT GRAPHIC FILM. ALL PAINTED FINISHES SHALL BE TWO-PART POLYURETHANE PAINT. ALL HARDWARE SHALL BE STAINLESS STEEL. LIGHTING AND ELECTRICAL CONTROLS SHALL BE INSTALLED INSIDE SIGN CABINET. ACCESS PANELS SHALL BE FLUSH WITH CABINET AND AFFIXED TO VANDAL-RESISTANT HARDWARE AND PAINTED TO MATCH ADJACENT CABINET FACE. SCULPTURES ARE MOUNTED TO CONCRETE FOOTINGS USING BREAKAWAY ANCHOR BOLTS."
+    },
+    {
+      "index": 235,
+      "value": "33340"
+    },
+    {
+      "index": 236,
+      "value": "007546"
+    },
+    {
+      "index": 237,
+      "value": "fabricate (1) d/f 31\\"
+    },
+    {
+      "index": 238,
+      "value": "x10\\"
+    },
+    {
+      "index": 239,
+      "value": ","
+    },
+    {
+      "index": 240,
+      "value": ","
+    },
+    {
+      "index": 241,
+      "value": ","
+    },
+    {
+      "index": 242,
+      "value": ","
+    },
+    {
+      "index": 243,
+      "value": ","
+    },
+    {
+      "index": 244,
+      "value": ","
+    },
+    {
+      "index": 245,
+      "value": ","
+    },
+    {
+      "index": 246,
+      "value": ","
+    },
+    {
+      "index": 247,
+      "value": ","
+    }
+  ]
+}

@@ -1,0 +1,426 @@
+{
+  "1441850": {
+    "name": "System Administrator",
+    "size": 10737,
+    "columns": [
+      "CUST.NO",
+      "ADMIN"
+    ],
+    "num_strings": 45
+  },
+  "1441851": {
+    "name": "System Administrator",
+    "size": 10374,
+    "columns": [
+      "CUST.NO",
+      "ADMIN",
+      "NAME",
+      "ADDRESS",
+      "ADDRESS2",
+      "CITY",
+      "STATE",
+      "ZIP",
+      "COUNTRY",
+      "CONTACT",
+      "PHONE",
+      "TAX.CODE",
+      "DESC",
+      "TERMS.CODES",
+      "SALESPERSON",
+      "MANAGEMENT",
+      "ACCOUNTING",
+      "BRADYF"
+    ],
+    "num_strings": 137
+  },
+  "1441852": {
+    "name": "System Administrator",
+    "size": 14184,
+    "columns": [
+      "CUSTNO",
+      "CM.SHIP.TO",
+      "ADMIN"
+    ],
+    "num_strings": 46
+  },
+  "1441853": {
+    "name": "System Administrator",
+    "size": 15958,
+    "columns": [
+      "SHIP.NBR.FLAG",
+      "CM.SHIP.TO",
+      "ADMIN",
+      "SHIP.NBR",
+      "CUSTNO",
+      "OLD.CUSTNO",
+      "SHIPTO.NAME",
+      "SHIPTO.ADDRESS",
+      "SHIPTO.ADDRESS2",
+      "SHIPTO.CITY",
+      "SHIPTO.STATE",
+      "SHIPTO.ZIP",
+      "SHIPTO.COUNTRY",
+      "SHIPTO.PHONE",
+      "FAX.NUMBER",
+      "SHIPTO.CONTACT",
+      "CONTACT.EMAIL",
+      "TERRITORY",
+      "SHIP.EARLY",
+      "SALES.TAX.CD"
+    ],
+    "num_strings": 212
+  },
+  "1441854": {
+    "name": "Inventory Parts",
+    "size": 11356,
+    "columns": [
+      "PART.NBR",
+      "ADMIN",
+      "IPL",
+      "DESCRIPTION",
+      "INV.TYPE",
+      "SALES.CODE",
+      "LTC",
+      "ENGR.STATUS"
+    ],
+    "num_strings": 80
+  },
+  "1441855": {
+    "name": "System Administrator",
+    "size": 26271,
+    "columns": [
+      "OLD.PARTNO",
+      "ADMIN",
+      "IPL",
+      "PART.NBR",
+      "DESCRIPTION"
+    ],
+    "num_strings": 60
+  },
+  "1441856": {
+    "name": "Inventory Parts",
+    "size": 13010,
+    "columns": [
+      "PART.NBR",
+      "ADMIN",
+      "DESCRIPTION",
+      "TRAN.DATE",
+      "DIVNO",
+      "WHSE.LOCATION",
+      "WHSE",
+      "INV.TYPE",
+      "IPL",
+      "LOGON",
+      "TRAN.CODE",
+      "REFERENCE",
+      "MATERIAL",
+      "QTY",
+      "MANAGEMENT",
+      "ACCOUNTING",
+      "PRODUCTION",
+      "SHOP",
+      "BRADYF"
+    ],
+    "num_strings": 167
+  },
+  "1441857": {
+    "name": "System Administrator",
+    "size": 13677,
+    "columns": [
+      "DIVNO",
+      "INVOICE.KEY",
+      "ADMIN",
+      "INV.NBR",
+      "CUST.NBR",
+      "CUST.NAME",
+      "INVOICE.DATE",
+      "ENTRY.DATE",
+      "LINE.TOT"
+    ],
+    "num_strings": 72
+  },
+  "1441859": {
+    "name": "System Administrator",
+    "size": 15366,
+    "columns": [
+      "SONO",
+      "SOD",
+      "ADMIN",
+      "SO.DATE",
+      "SOH",
+      "ITM",
+      "PONO",
+      "CUST.NBR",
+      "CUST.NAME",
+      "PARTNO",
+      "DESC",
+      "DELIVERY.DATE"
+    ],
+    "num_strings": 98
+  },
+  "1441860": {
+    "name": "System Administrator",
+    "size": 13851,
+    "columns": [
+      "SONO",
+      "SOD",
+      "ADMIN",
+      "SO.DATE",
+      "SOH",
+      "ITM",
+      "PONO",
+      "CUST.NBR",
+      "CUST.NAME",
+      "PARTNO",
+      "DESC",
+      "DELIVERY.DATE",
+      "DEL.QTY",
+      "BAL.QTY",
+      "UNIT.PRICE",
+      "COMP",
+      "SALES",
+      "MANAGEMENT"
+    ],
+    "num_strings": 184
+  },
+  "1441861": {
+    "name": "Company Divisions",
+    "size": 14503,
+    "columns": [
+      "DIV",
+      "ADMIN",
+      "WONO",
+      "WO.TYPE",
+      "CUSTNO",
+      "CUST.NAME"
+    ],
+    "num_strings": 68
+  },
+  "1441862": {
+    "name": "Inventory Parts",
+    "size": 42424,
+    "columns": [
+      "PART.NBR",
+      "IPL",
+      "ADMIN",
+      "INV.TYPE",
+      "DESCRIPTION"
+    ],
+    "num_strings": 55
+  },
+  "1441865": {
+    "name": "Company Divisions",
+    "size": 18033,
+    "columns": [
+      "DIV.NO",
+      "POH",
+      "ADMIN",
+      "POD",
+      "BUYER",
+      "PO.NBR"
+    ],
+    "num_strings": 61
+  },
+  "1441866": {
+    "name": "Company Divisions",
+    "size": 18773,
+    "columns": [
+      "DIV.NO",
+      "POH",
+      "ADMIN",
+      "POD",
+      "BUYER",
+      "PO.NBR",
+      "PO.DATE",
+      "PODL",
+      "VENDOR.NBR",
+      "VEN.NAME",
+      "COMP",
+      "DESC",
+      "DEL.DATE",
+      "DEL.QTY",
+      "RECD.DATE",
+      "RECD.QTY",
+      "BAL.QTY",
+      "UNIT.PRICE",
+      "TYPE",
+      "PART.NBR"
+    ],
+    "num_strings": 151
+  },
+  "1441868": {
+    "name": "System Administrator",
+    "size": 15498,
+    "columns": [
+      "BUYER",
+      "POD",
+      "ADMIN",
+      "PONO",
+      "VENDNO",
+      "PART.NBR",
+      "INVENTORY.TYPE",
+      "RECD.DATE",
+      "INV.GL.DATE",
+      "INVOICES",
+      "INV.QTY",
+      "INV.AMT",
+      "PO.CLR.AMT",
+      "VENDOR.NAME",
+      "WHSE",
+      "DIV.NO",
+      "TYPE",
+      "PRODUCTION",
+      "MANAGEMENT"
+    ],
+    "num_strings": 173
+  },
+  "1441869": {
+    "name": "System Administrator",
+    "size": 17573,
+    "columns": [
+      "QUOTENO",
+      "QTH",
+      "ADMIN",
+      "SALESPERSON",
+      "QT.DATE",
+      "DEFAULT.SHIP",
+      "EXP.DATE",
+      "ACCTID",
+      "COMPANY",
+      "SPEC.INST",
+      "CURR.STATUS.DATE",
+      "CURR.STATUS.TIME",
+      "WONO",
+      "INACTIVE",
+      "CURR.STATUS",
+      "DESCR",
+      "QUOTE.STATUS.CODES",
+      "SALES.STAGE",
+      "QUOTE.SALES.STAGE.CODES",
+      "QTY.ORDERED"
+    ],
+    "num_strings": 206
+  },
+  "1441870": {
+    "name": "System Administrator",
+    "size": 17412,
+    "columns": [
+      "CUSTOMER.NBR",
+      "ADMIN",
+      "CUST.NAME",
+      "DIVNO",
+      "TERRITORY.CODE",
+      "SALESPERSON",
+      "ESTIMATED.BY",
+      "QTH",
+      "CUST.TYPE",
+      "PROD.TYPE",
+      "INVOICE.DATE",
+      "INVOICE.NBR",
+      "ITEM.NBR",
+      "PART.NBR",
+      "GROSS.SALES",
+      "TOT.MAT.COST",
+      "TOT.LAB.COST",
+      "TOT.BUR.COST",
+      "TOT.OUT.COST",
+      "TOTAL.COST"
+    ],
+    "num_strings": 225
+  },
+  "1441872": {
+    "name": "Company Divisions",
+    "size": 13757,
+    "columns": [
+      "DIVNO",
+      "SOH",
+      "ADMIN",
+      "SOD"
+    ],
+    "num_strings": 50
+  },
+  "1441873": {
+    "name": "Company Divisions",
+    "size": 11222,
+    "columns": [
+      "DIVNO",
+      "SOH",
+      "ADMIN"
+    ],
+    "num_strings": 46
+  },
+  "1441874": {
+    "name": "System Administrator",
+    "size": 19192,
+    "columns": [
+      "SONO",
+      "SOD",
+      "ADMIN",
+      "SO.DATE",
+      "SOH",
+      "ITM",
+      "PONO",
+      "CUST.NBR",
+      "CUST.NAME",
+      "PARTNO",
+      "DESC",
+      "DEL.QTY",
+      "DELIVERY.DATE",
+      "ACTUAL.SHIP.QTY",
+      "ACTUAL.SHIP.DATE",
+      "BAL.QTY"
+    ],
+    "num_strings": 108
+  },
+  "1441875": {
+    "name": "System Administrator",
+    "size": 12774,
+    "columns": [
+      "CUST.NBR",
+      "SOH",
+      "ADMIN",
+      "CUST.NAME",
+      "PONO",
+      "SONO",
+      "SO.DATE",
+      "DEFAULT.SHIP",
+      "INVOICE",
+      "ITEM.NBR",
+      "ITEM.COMPL"
+    ],
+    "num_strings": 92
+  },
+  "1441877": {
+    "name": "System Administrator",
+    "size": 8868,
+    "columns": [
+      "CUSTOMER.NBR",
+      "ADMIN",
+      "CUST.NAME",
+      "CUST.TYPE",
+      "GROSS.SALES",
+      "TOTAL.COST",
+      "INVOICE.DATE",
+      "MANAGEMENT",
+      "SALES",
+      "BRADYF"
+    ],
+    "num_strings": 127
+  },
+  "1441878": {
+    "name": "Sales Product Codes",
+    "size": 8373,
+    "columns": [
+      "PROD.TYPE",
+      "ADMIN",
+      "SALES.CODE.DESC",
+      "GROSS.SALES",
+      "TOTAL.COST",
+      "INVOICE.DATE",
+      "MANAGEMENT",
+      "SALES",
+      "BRADYF"
+    ],
+    "num_strings": 116
+  }
+}

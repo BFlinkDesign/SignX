@@ -40,8 +40,9 @@
 | Direct POST login | Main ERP | WORKING | `USERNAME=BradyF&PASSWORD=***&SECURE=TRUE` to base URL |
 | Session cookies | Main ERP | WORKING | SESSIONID, ASP.NET_SessionId, user, secure, IMPERSONATE |
 | Google SSO | Informer BI | BLOCKED | Bot detection encountered (SESSION_SUMMARY.md) |
-| Informer SSO pass-through | Informer BI | WORKING | `/eaglesign/sso` returns authToken + clientId |
-| authToken + clientId | Informer RPC | WORKING | Query params on RPC calls, GUID format |
+| Informer SSO pass-through | Informer BI | **WORKING** | `/eaglesign/sso?u=BRADYF&t={SESSIONID}` -> JSESSIONID cookie |
+| getActiveSession(true) | Informer RPC | **WORKING** | AuthenticationRPCService (unprotected) returns ClientSession with authToken |
+| authToken + clientId | Informer RPC | **WORKING** | authToken = 3rd UUID from getActiveSession (string table pos 19), clientId = any UUID. Passed as URL query params `?authToken=...&clientId=...` on protected endpoints |
 
 ### Network Topology
 
@@ -335,7 +336,7 @@ Desktop app config: `AppData\Local\KeyedIn Desktop\config.json` — auto-launche
 | Tier | Source | Status |
 |------|--------|--------|
 | 1 | erp_fresh_scrape (live CGI) | NOT IMPLEMENTED |
-| 2 | informer_bi_export (GWT-RPC) | PARTIALLY WORKING (1/30 reports automated) |
+| 2 | informer_bi_export (GWT-RPC) | **WORKING** (23/30 reports accessible via lookupReportAndSample, auth flow cracked 2026-02-15) |
 | 3 | html_reparse (local HTML files) | **FULLY WORKING** — 1.25M rows extracted |
 | 4 | local_excel_csv (manual exports) | **FULLY WORKING** — 120K+ rows ingested |
 
@@ -434,6 +435,13 @@ Desktop app config: `AppData\Local\KeyedIn Desktop\config.json` — auto-launche
 | **2026-02-03** | Contract PDFs added to keyedin-capture | **STORED** — Eagle Sign Contract + KIMCO Terms |
 | **2026-02-06** | Informer report capture: All 30 payloads | **SUCCESS** — GWT-RPC request/response payloads saved |
 | **2026-02-14** | Export endpoint test script written | **BLOCKED** — cannot reach KeyedIn from cloud sandbox (proxy whitelist) |
+| **2026-02-15** | ERP login via chrome-devtools MCP | **SUCCESS** — SESSIONID obtained, WEB.MENU verified |
+| **2026-02-15** | Export endpoint testing (6 endpoints) | **BLOCKED** — all 6 return HTML forms with unresolved MVI template tokens `[ACTION]` |
+| **2026-02-15** | Import endpoint testing (5 endpoints) | **MAPPED** — all 5 use shared ASP.NET `fileupload.aspx` upload page |
+| **2026-02-15** | Informer GWT-RPC auth flow reverse-engineered | **SUCCESS** — full SSO -> JSESSIONID -> getActiveSession -> authToken flow cracked |
+| **2026-02-15** | GWT compiled JS analyzed (5.4MB cache.js) | **SUCCESS** — 100+ RPC methods mapped across 8 services |
+| **2026-02-15** | lookupReportAndSample on all report IDs | **SUCCESS** — 23/30 reports accessible, all saved with metadata + columns |
+| **2026-02-15** | Quote Status Report (1441869) sample data | **SUCCESS** — quote numbers, status codes, dollar amounts extracted |
 
 ### What Failed and Why
 
@@ -441,8 +449,8 @@ Desktop app config: `AppData\Local\KeyedIn Desktop\config.json` — auto-launche
 |---------|-------------|------------|
 | Google SSO login via requests | Bot detection | Google blocks automated OAuth flows |
 | Direct POST login from cloud sandbox | Connection refused | eaglesign.keyedinsign.com not on proxy whitelist |
-| GWT-RPC getData automation | Partial parse | GWT serialization format complex, pipe-delimited v7 |
-| Informer report CSV export | Only 1/30 automated | GWT response parsing incomplete for most report types |
+| ~~GWT-RPC getData automation~~ | ~~Partial parse~~ | **RESOLVED 2026-02-15** — auth flow was the blocker, not parsing. lookupReportAndSample now works for 23/30 reports. |
+| ~~Informer report CSV export~~ | ~~Only 1/30 automated~~ | **RESOLVED 2026-02-15** — 23/30 reports now accessible via `informer_gwtrpc_extract.py` |
 | keyedin.py Playwright | Never tested | Contains typo (mvt.exe instead of mvi.exe) |
 
 ---
@@ -466,7 +474,7 @@ Desktop app config: `AppData\Local\KeyedIn Desktop\config.json` — auto-launche
 
 | Gap | Impact | How to Fill |
 |-----|--------|-------------|
-| Quote data (Won/Lost/Void/Cancelled) | Cannot compute win/loss ratio | Automate Informer report ID 1441869 (Quote Status) |
+| Quote data (Won/Lost/Void/Cancelled) | Cannot compute win/loss ratio | Report 1441869 (Quote Status) is **ACCESSIBLE** — sample data shows QUOTENO, CURR.STATUS, CALC.PRICE. Need full getData extraction for all rows. |
 | Real-time WO status | Only historical data | Need live ERP scraping (Phase 3) or export endpoint |
 | Employee cost rates | Cannot validate labor costs | Not exposed in current HTML capture |
 | Bill of Materials (BOM) | Cannot do should-cost analysis | Test IMPORT.BOM endpoint for structure |
@@ -504,26 +512,30 @@ Extracted from `keyedin_site_map.json` (2025-05-22 Puppeteer scrape).
 
 **Full 288-function JSON**: `C:\Scripts\keyedin-automation\discovery\keyedin\keyedin_site_map.json`
 
-### Export Endpoints (6 total) [NOT YET TESTED]
+### Export Endpoints (6 total) [TESTED 2026-02-15 — ALL BLOCKED]
 
-| Endpoint | Purpose | Test Status |
-|----------|---------|-------------|
-| `CUST.PROD.EXPORT` | Sales by Customer by Product | UNTESTED |
-| `GM.BY.INV.EXPORT` | Gross Margin by Invoice | UNTESTED |
-| `SLSPER.PROD.EXPORT` | GM by Salesperson | UNTESTED |
-| `USAGE.ANAL.FILE` | Part Usage Export | UNTESTED |
-| `EXPORT.WO.LABOR.ANALYSIS` | WO Labor Analysis | UNTESTED |
-| `EXPORT.WIP.SUMMARY` | WIP Summary (Open or Closed) | UNTESTED |
+| Endpoint | Purpose | Test Status | Notes |
+|----------|---------|-------------|-------|
+| `CUST.PROD.EXPORT` | Sales by Customer by Product | **BLOCKED** | 830 bytes, unresolved `[ACTION]` template |
+| `GM.BY.INV.EXPORT` | Gross Margin by Invoice | **BLOCKED** | 803 bytes, unresolved `[ACTION]` template |
+| `SLSPER.PROD.EXPORT` | GM by Salesperson | **BLOCKED** | 817 bytes, unresolved `[ACTION]` template |
+| `USAGE.ANAL.FILE` | Part Usage Export | **BLOCKED** | 1,237 bytes, needs selection criteria |
+| `EXPORT.WO.LABOR.ANALYSIS` | WO Labor Analysis | **BLOCKED** | 1,309 bytes, needs date range |
+| `EXPORT.WIP.SUMMARY` | WIP Summary (Open or Closed) | **BLOCKED** | 1,269 bytes, needs selection criteria |
 
-### Import Endpoints (5 total) [NOT YET TESTED]
+**Root cause**: MVI template tokens `[ACTION]`, `<!--HIDDEN-->`, `<!--SCRIPT-->` are NOT resolved when endpoints are accessed directly via HTTP GET. They must be loaded through the ERP's internal menu/AJAX navigation system. Browser automation (Playwright persistent context) is the recommended path.
 
-| Endpoint | Purpose | Test Status |
-|----------|---------|-------------|
-| `IMPORT.PARTS` | Part master import | UNTESTED |
-| `IMPORT.BOM` | Bill of Materials import | UNTESTED |
-| `IMPORT.ROUTING` | Routing/operations import | UNTESTED |
-| `IMPORT.CRM.NEW` | CRM contact import | UNTESTED |
-| `IMPORT.SIGN.TEMPLATE` | Sign template import | UNTESTED |
+### Import Endpoints (5 total) [TESTED 2026-02-15 — MECHANISM MAPPED]
+
+| Endpoint | Purpose | Upload File | Format |
+|----------|---------|-------------|--------|
+| `IMPORT.PARTS` | Physical Inventory Count | `PARTS.TXT` | .txt |
+| `IMPORT.BOM` | Bill of Materials | `BRADYF_BOM.TXT` | .txt |
+| `IMPORT.ROUTING` | Routing/operations | `BRADYF_ROUTING.TXT` | .txt |
+| `IMPORT.CRM.NEW` | CRM contact import | `CRM.IMPORT.NEW.CSV` | .csv |
+| `IMPORT.SIGN.TEMPLATE` | Sign template import | `BRADYF_TEMPLATE.TXT` | .txt |
+
+**Shared upload mechanism**: All 5 redirect to `/module/general/fileupload.aspx` with `ACCT_NAME=eaglesign`. Standard ASP.NET multipart upload. File format/field layout still unknown — need sample files or KIMCO documentation.
 
 ### Quote Entry [NOT YET TESTED]
 
@@ -536,16 +548,26 @@ Extracted from `keyedin_site_map.json` (2025-05-22 Puppeteer scrape).
 
 See Section 2.D above for complete list with IDs.
 
-**RPC Endpoints:**
+**RPC Endpoints (discovered from GWT compiled JS, 2026-02-15):**
 
-| Service | URL | Protocol |
-|---------|-----|----------|
-| ViewRPCService | `/eaglesign/informer/rpc/protected/ViewRPCService` | GWT-RPC v7, POST |
-| ReportRPCService | `/eaglesign/informer/rpc/protected/ReportRPCService` | GWT-RPC v7, POST |
-| FunctionRPCService | Not yet tested | GWT-RPC v7 |
-| CodeFileRPCService | Not yet tested | GWT-RPC v7 |
-| LoggingRPCService | Not yet tested | GWT-RPC v7 |
-| MetadataRPCService | Not yet tested | GWT-RPC v7 |
+| Service | URL | Policy Key | Status |
+|---------|-----|-----------|--------|
+| AuthenticationRPCService | `/rpc/AuthenticationRPCService` (NOT protected) | `51B059033C002274BD4151F7D17FC702` | **WORKING** |
+| ReportRPCService | `/rpc/protected/ReportRPCService` | `F94C0FA52A7B058D7077BFA6B82FF792` | **WORKING** |
+| ViewRPCService | `/rpc/protected/ViewRPCService` | `327E0F303D0CA463050DC31340CFE01D` | **WORKING** |
+| CommandRPCService | `/rpc/protected/CommandRPCService` | `81D82B6C6154989542DE45F20CEB3EF0` | Not yet tested |
+| DocumentTemplateRPCService | `/rpc/protected/DocumentTemplateRPCService` | `05E06838523AECED1434383744A449D0` | Not yet tested |
+| SecurityRPCService | `/rpc/protected/SecurityRPCService` | (unknown) | Not yet tested |
+| ScheduleRPCService | `/rpc/protected/ScheduleRPCService` | (unknown) | Not yet tested |
+| LoggingRPCService | `/rpc/protected/LoggingRPCService` | (unknown) | Not yet tested |
+
+**Key RPC methods (from GWT JS analysis):**
+- `getActiveSession(boolean)` — returns full ClientSession with authToken
+- `lookupReportAndSample(int reportId, boolean, boolean)` — returns report definition + sample data
+- `getData(ViewToken[], LoadOptions[])` — full data extraction (requires ViewToken construction)
+- `getReports(LoadOptions)` — report catalog search
+- `view(int)` — on LoggingRPCService (NOT ViewRPCService)
+- `exportView(...)` — export functionality
 
 ---
 
@@ -559,9 +581,9 @@ The 211MB SQLite database at `C:\Scripts\signx-warehouse\warehouse\production\ea
 
 The 6 EXPORT endpoints (`CUST.PROD.EXPORT`, `GM.BY.INV.EXPORT`, `SLSPER.PROD.EXPORT`, `USAGE.ANAL.FILE`, `EXPORT.WO.LABOR.ANALYSIS`, `EXPORT.WIP.SUMMARY`) likely return direct CSV/Excel downloads. A test script exists at `~/Desktop/SignX/test_export_endpoints.py`. Requires running from VPN-connected PC.
 
-### Rank C: Automate Remaining Informer Reports (2-4 hours, requires VPN)
+### Rank C: Bulk Extract Informer Reports via getData (2-4 hours, requires VPN)
 
-30 GWT-RPC payloads are captured. The `scrape_informer.py` script successfully automated 1 report (customer_listing). Extending to remaining 29 reports requires fixing GWT deserialization for each report's column structure. The `Quote Status Report` (ID 1441869) is highest priority — it unlocks win/loss ratio analysis.
+**UPDATE 2026-02-15**: Auth flow cracked. 23/30 reports accessible via `lookupReportAndSample` (returns metadata + sample rows). Full bulk extraction requires constructing `getData(ViewToken[], LoadOptions[])` payloads — ViewTokens must be obtained per-report. The `informer_gwtrpc_extract.py` script handles auth and scanning. Quote Status Report (1441869) sample data confirms quote numbers, status codes (110=NEW PROSPECT, 190=BID COMPLETED, 250=NO DECISION), and dollar amounts are available.
 
 ### Rank D: Re-parse HTML for Additional Fields (1-2 hours, no network)
 
