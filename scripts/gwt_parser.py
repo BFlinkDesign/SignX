@@ -24,10 +24,60 @@ This module exposes five public helpers:
 
 from __future__ import annotations
 
+import datetime
 import json
 import logging
 import re
 from typing import Any
+
+# ---------------------------------------------------------------------------
+# GWT base-64 long decoder
+# ---------------------------------------------------------------------------
+# GWT-RPC encodes Java longs as base-64 strings using the alphabet:
+#   A=0 .. Z=25, a=26 .. z=51, 0=52 .. 9=61, _=62, $=63
+# A leading '$' indicates a negative value.
+
+_GWT_B64_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_$"
+_GWT_B64_CHARMAP: dict[str, int] = {c: i for i, c in enumerate(_GWT_B64_ALPHABET)}
+
+
+def _decode_gwt_long(encoded: str) -> int | None:
+    """Decode a GWT base-64 encoded long to a Python int."""
+    if not encoded or not isinstance(encoded, str):
+        return None
+    neg = encoded[0] == "$"
+    s = encoded[1:] if neg else encoded
+    val = 0
+    for c in s:
+        v = _GWT_B64_CHARMAP.get(c)
+        if v is None:
+            return None
+        val = val * 64 + v
+    return -val if neg else val
+
+
+def _gwt_timestamp_to_date(encoded: str) -> str | None:
+    """Decode a GWT timestamp string to YYYY-MM-DD format."""
+    ms = _decode_gwt_long(encoded)
+    if ms is None:
+        return None
+    try:
+        dt = datetime.datetime.fromtimestamp(ms / 1000, tz=datetime.timezone.utc)
+        return dt.strftime("%Y-%m-%d")
+    except (OSError, ValueError, OverflowError):
+        return None
+
+
+def _gwt_timestamp_to_time(encoded: str) -> str | None:
+    """Decode a GWT timestamp string to HH:MM:SS format."""
+    ms = _decode_gwt_long(encoded)
+    if ms is None:
+        return None
+    try:
+        dt = datetime.datetime.fromtimestamp(ms / 1000, tz=datetime.timezone.utc)
+        return dt.strftime("%H:%M:%S")
+    except (OSError, ValueError, OverflowError):
+        return None
 
 __all__ = [
     "GwtParseError",
@@ -410,6 +460,11 @@ def _rtl_read_value(
     NULLVAL_REF = type_refs.get("NullValue")
     ARRVAL_REF = type_refs.get("ArrayValue")
     DOUBLE_REF = type_refs.get("Double")
+    DATEVAL_REF = type_refs.get("DateValue")
+    TIMEVAL_REF = type_refs.get("TimeValue")
+    DATE_REF = type_refs.get("Date")
+    TIME_REF = type_refs.get("Time")
+    ENUMVAL_REF = type_refs.get("EnumValue")
 
     if pos < 0:
         return None, pos
@@ -446,6 +501,91 @@ def _rtl_read_value(
 
     elif val_token == NULLVAL_REF:
         # NullValue: no payload
+        return None, pos
+
+    elif val_token == DATEVAL_REF:
+        # DateValue has 3 serialized fields (RTL):
+        #   1. dateCode string ref  (writeString - format ID like "300")
+        #   2. intermediate object  (writeObject - usually null=0)
+        #   3. java.util.Date object (writeObject - type_ref + GWT-b64 timestamp)
+        date_val = None
+        if pos >= 0:
+            # 1. dateCode string ref (skip - just a format ID)
+            str_ref = data[pos]
+            pos -= 1
+            # 2. intermediate object (usually null=0, could be backref)
+            if pos >= 0:
+                mid_token = data[pos]
+                pos -= 1
+                if mid_token == DATE_REF:
+                    # No intermediate field - this IS the Date type ref
+                    if pos >= 0:
+                        ts = data[pos]
+                        pos -= 1
+                        date_val = _gwt_timestamp_to_date(ts) if isinstance(ts, str) else None
+                elif mid_token == 0 or (isinstance(mid_token, int) and mid_token < 0):
+                    # Null or backref intermediate - now read the Date object
+                    if pos >= 0:
+                        date_type = data[pos]
+                        pos -= 1
+                        if date_type == DATE_REF:
+                            if pos >= 0:
+                                ts = data[pos]
+                                pos -= 1
+                                date_val = _gwt_timestamp_to_date(ts) if isinstance(ts, str) else None
+                        elif date_type == 0:
+                            pass  # null Date
+                        elif isinstance(date_type, int) and date_type < 0:
+                            pass  # backref to a previously seen Date
+        return date_val, pos
+
+    elif val_token == TIMEVAL_REF:
+        # TimeValue has 3 serialized fields (RTL):
+        #   1. timeCode string ref  (writeString - format ID like "360")
+        #   2. intermediate object  (writeObject - usually null=0)
+        #   3. java.sql.Time object (writeObject - type_ref + GWT-b64 timestamp)
+        time_val = None
+        if pos >= 0:
+            # 1. timeCode string ref (skip - just a format ID)
+            str_ref = data[pos]
+            pos -= 1
+            # 2. intermediate object (usually null=0, could be backref)
+            if pos >= 0:
+                mid_token = data[pos]
+                pos -= 1
+                if mid_token == TIME_REF:
+                    # No intermediate field - this IS the Time type ref
+                    if pos >= 0:
+                        ts = data[pos]
+                        pos -= 1
+                        time_val = _gwt_timestamp_to_time(ts) if isinstance(ts, str) else None
+                elif mid_token == 0 or (isinstance(mid_token, int) and mid_token < 0):
+                    # Null or backref intermediate - now read the Time object
+                    if pos >= 0:
+                        time_type = data[pos]
+                        pos -= 1
+                        if time_type == TIME_REF:
+                            if pos >= 0:
+                                ts = data[pos]
+                                pos -= 1
+                                time_val = _gwt_timestamp_to_time(ts) if isinstance(ts, str) else None
+                        elif time_type == 0:
+                            pass  # null Time
+                        elif isinstance(time_type, int) and time_type < 0:
+                            pass  # backref to a previously seen Time
+        return time_val, pos
+
+    elif val_token == ENUMVAL_REF:
+        # EnumValue: enum_type_ref, ordinal
+        if pos >= 0:
+            _enum_type = data[pos]
+            pos -= 1
+            if pos >= 0:
+                ordinal = data[pos]
+                pos -= 1
+                if isinstance(ordinal, int) and 0 < ordinal <= len(strings):
+                    return strings[ordinal - 1], pos
+                return str(ordinal) if ordinal is not None else None, pos
         return None, pos
 
     elif isinstance(val_token, int) and val_token < 0:

@@ -16,6 +16,7 @@ venv/
 .env
 *.credentials
 **/secrets/
+warehouse/raw/informer_session.json
 
 # Large files
 *.db
@@ -24,7 +25,13 @@ venv/
 # Temp
 *.tmp
 *.log
-*.db
 
-# Large data files
+# Large data files / raw dumps
 warehouse/raw/**/material_detail.csv
+warehouse/raw/so_contracts/
+warehouse/raw/so_contract_raw/
+warehouse/raw/csv_exports/
+warehouse/raw/spooled_samples/
+warehouse/raw/wo_batches/
+warehouse/raw/2026-*/
+esc_file_index.csv

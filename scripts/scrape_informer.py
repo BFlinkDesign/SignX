@@ -138,6 +138,37 @@ CAPTURED_VIEW_TOKEN = "52a0a4c6-2ca7-40cf-9d79-15a008c76149"
 # These are the HashMap key names from the GWT Row serialisation.
 
 REPORT_FIELDS: dict[int, list[str]] = {
+    # Quote Status Report (ID: 1441869)
+    1441869: [
+        "quoteno",
+        "salesperson",
+        "qtDate",
+        "defaultShip",
+        "expDate",
+        "acctid",
+        "company",
+        "specInst",
+        "extPrice",
+        "salesStage2",
+        "statusCode&Description",
+        "currStatusDate2",
+        "statusTime_2",
+        "wono",
+        "inactiveMsg",
+        "currStatus",
+        "quoteStatusCodes_assoc_descr",
+        "salesStage",
+        "quoteSalesStage_assoc_descr",
+        "qtyOrdered",
+        "salesTotal",
+        "sellingPrice",
+        "classifyAsLoss",
+        "inactive",
+        "inactive2",
+        "specInst2",
+        "currStatusDate",
+        "descr",
+    ],
     # Customer Listing (ID: 1441850)
     1441850: [
         "custNo",
@@ -785,45 +816,61 @@ class InformerClient:
         return resp, view_token
 
     def get_view_data(self, view_token: str, offset: int, limit: int) -> str:
-        """Fetch a page of data from a ViewToken via ViewRPCService.getData."""
+        """Fetch a page of data from a ViewToken via ViewRPCService.getData.
+
+        Uses array-based parameter types: getData(ViewToken[], LoadOptions[])
+        which matches the server's actual method signature (captured from browser).
+        Includes a wildcard search filter (name MATCHES **) and ReportSearchOptions
+        as the browser does.
+        """
         payload = build_gwt_payload(
             strings=[
-                MODULE_BASE,
-                POLICY_KEYS["view"],
-                "com.entrinsik.informer.core.client.service.ViewRPCService",
-                "getData",
-                "com.entrinsik.gwt.data.shared.ViewToken/3777265110",
-                "com.entrinsik.gwt.data.shared.LoadOptions/4020437150",
-                view_token,
-                "java.util.HashMap/1797211028",
-                "en_US",
-                "com.entrinsik.gwt.data.shared.Order/1651361273",
+                MODULE_BASE,                                                          # 1
+                POLICY_KEYS["view"],                                                  # 2
+                "com.entrinsik.informer.core.client.service.ViewRPCService",          # 3
+                "getData",                                                            # 4
+                "[Lcom.entrinsik.gwt.data.shared.ViewToken;/2990910562",              # 5
+                "[Lcom.entrinsik.gwt.data.shared.LoadOptions;/2486573562",            # 6
+                "com.entrinsik.gwt.data.shared.ViewToken/3777265110",                 # 7
+                view_token,                                                           # 8
+                "com.entrinsik.gwt.data.shared.LoadOptions/4020437150",               # 9
+                "java.util.HashMap/1797211028",                                       # 10
+                "com.entrinsik.gwt.data.shared.criteria.impl.JunctionImpl/346417575", # 11
+                "java.util.ArrayList/4159755760",                                     # 12
+                "com.entrinsik.gwt.data.shared.criteria.Operator/2483661797",         # 13
+                "com.entrinsik.gwt.data.shared.criteria.impl.ValueExpressionImpl/3874770769",  # 14
+                "name",                                                               # 15
+                "com.entrinsik.gwt.data.shared.criteria.Quantifier/3325804167",       # 16
+                "com.entrinsik.gwt.data.shared.values.StringValue/2414534542",        # 17
+                "**",                                                                 # 18
+                "com.entrinsik.informer.core.domain.report.ReportSearchOptions/1133289605",    # 19
+                "en_US",                                                              # 20
+                "com.entrinsik.gwt.data.shared.Order/1651361273",                     # 21
+                "com.entrinsik.gwt.data.shared.values.NullValue/2880996259",          # 22
             ],
             refs=[
-                1,
-                2,
-                3,
-                4,
-                2,
-                5,
-                6,
-                5,
-                7,
-                6,
-                8,
-                0,
-                0,
-                0,
-                0,
-                limit,
-                9,
-                0,
-                10,
-                0,
-                0,
-                0,
-                offset,
-                0,
+                1, 2, 3, 4,         # header: moduleBase, policyKey, service, method
+                2, 5, 6,            # 2 params, types: ViewToken[], LoadOptions[]
+                5, 1, 7, 8,         # ViewToken array: size=1, ViewToken(uuid)
+                6, 1,               # LoadOptions array: size=1
+                9, 10, 0,           # LoadOptions, HashMap(0 entries)
+                11, 12, 2,          # JunctionImpl(AND), ArrayList(size=2)
+                11, 12, 1,          #   inner JunctionImpl, ArrayList(size=1)
+                11, 12, 0,          #     innermost JunctionImpl, ArrayList(size=0)
+                13, 9,              #   Operator(MATCHES)
+                13, 8,              #   Operator(LIKE)
+                14, 1,              #   ValueExpressionImpl
+                13, 2,              #   Operator(EQ)
+                15, 16,             #   "name", Quantifier
+                0, 17, 18,          #   0, StringValue("**")
+                -13, 0,             #   backreference, 0
+                19,                 # ReportSearchOptions
+                12, 0, 0, 0, 0,    # ArrayList, 4 zeros
+                offset, limit,      # pagination: offset, limit
+                20,                 # "en_US"
+                12, 1, 21, 1,      # ArrayList(size=1), Order, direction=1
+                15, 1,              # "name", ascending=1
+                0, 22, 0, 0,       # 0, NullValue, 0, 0 (trailing)
             ],
         )
 
