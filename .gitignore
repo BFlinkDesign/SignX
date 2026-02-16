@@ -20,6 +20,8 @@ warehouse/raw/informer_session.json
 
 # Large files
 *.db
+*.duckdb
+*.duckdb.wal
 *.sqlite
 
 # Temp
