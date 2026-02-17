@@ -123,6 +123,19 @@ esc_file_index*.csv
 *.output
 
 ############################
+# Runtime / server logs
+############################
+server.err
+server.out
+*.log
+*.pid
+
+############################
+# Standalone UI dev artifacts
+############################
+ui/
+
+############################
 # Documentation builds
 ############################
 docs/_build/
