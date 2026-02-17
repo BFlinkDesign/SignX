@@ -1,0 +1,1022 @@
+{
+  "metadata": {
+    "created": "2026-02-17",
+    "source": "//ES-FS02/Customers2/",
+    "description": "Catalog of PE-stamped engineering drawings and structural calculation packages found on Eagle Sign G: drive",
+    "search_scope": "Letters A-Z, ~7100 customer folders",
+    "search_terms": ["engineer", "structural", "PE-", "footing", "foundation", "pier", "stamped", "calc"],
+    "total_entries": 68,
+    "categories": {
+      "pe_stamped": "PE-stamped/signed structural drawings and calculations",
+      "engineering_calcs": "Structural calculations (may or may not be PE-stamped)",
+      "footing_details": "Foundation/footing detail drawings",
+      "structural_plans": "Structural plan sets from architects/engineers"
+    }
+  },
+  "drawings": [
+    {
+      "customer": "EMC Insurance",
+      "folder": "E/EMC Insurance/2025 Folder/9' Channel Letters/STAMPED ENGINEERED DRAWINGS/",
+      "files": [
+        "2507020 - Calculations (Signed).pdf",
+        "2507020 - Drawings (Signed).pdf",
+        "S4 DETAIL 2.pdf",
+        "S4 DETAIL 3.pdf",
+        "S4 DETAIL 5 - INSURANCE LETTERS.pdf"
+      ],
+      "sign_types": ["channel_letters"],
+      "engineering_firm": "Unknown (job# 2507020)",
+      "category": "pe_stamped",
+      "year": 2025,
+      "notes": ["9' channel letters on building", "Signed calculations + drawings package", "Multiple S4 detail sheets"]
+    },
+    {
+      "customer": "Des Moines Iron & Supply Company",
+      "folder": "D/Des Moines Iron & Supply Company/Engineering/",
+      "files": [
+        "2502097 - Calculations (Signed).pdf",
+        "2502097 - Drawings (Signed).pdf",
+        "Drawings(Stamped).cdr"
+      ],
+      "sign_types": ["channel_letters", "canopy_mount"],
+      "engineering_firm": "Unknown (job# 2502097)",
+      "category": "pe_stamped",
+      "year": 2025,
+      "notes": ["Canopy-mounted channel letters", "Stamped drawings + signed calcs", "Includes lateral brace and clamp details"]
+    },
+    {
+      "customer": "Mercy One - REBRAND (AGI)",
+      "folder": "M/Mercy One - REBRAND (AGI)/Footings/",
+      "files": [
+        "PE-10.pdf",
+        "PE-8 REV 2.pdf",
+        "PE-8-CUST REV 2.pdf",
+        "2x4 footings specs.pdf",
+        "4x8 footings specs.pdf"
+      ],
+      "sign_types": ["directional", "wayfinding", "monument"],
+      "engineering_firm": "AGI (Virginia Beach, VA)",
+      "category": "pe_stamped",
+      "foundation": {
+        "type": "drilled_pier",
+        "notes": "Multiple pier sizes for directional and monument signs"
+      },
+      "wind_speed_mph": 115,
+      "code_reference": "IBC 2016",
+      "notes": [
+        "PE-numbered drawing sets (PE-8, PE-10)",
+        "Non-illuminated variant uses aluminum upright",
+        "Illuminated uses steel upright",
+        "2x4 and 4x8 footing specs for different sign sizes"
+      ]
+    },
+    {
+      "customer": "Bob Brown Chevrolet",
+      "folder": "B/Bob Brown/Urbandale New Chevrolet Dealership/Engineered Drawings/",
+      "files": [
+        "BBC Drilled Pier Footing 30x12.pdf",
+        "BBC Drilled PierFooting 50x15.pdf",
+        "BBC Engineered Drawing 30x12 Monument.pdf",
+        "BBC Engineered Drawing 50x15 Monument.pdf"
+      ],
+      "sign_types": ["monument"],
+      "engineering_firm": "Unknown",
+      "category": "pe_stamped",
+      "foundation": {
+        "type": "drilled_pier",
+        "configurations": [
+          {"sign_size": "30x12", "type": "monument"},
+          {"sign_size": "50x15", "type": "monument"}
+        ]
+      },
+      "notes": ["Two monument sizes with matching pier footings", "Chevrolet dealership program"]
+    },
+    {
+      "customer": "Ankeny Regional Airport",
+      "folder": "A/Ankeny Regional Airport/2024/Mcclure Engineering/Shop Drawings/FOOTINGS.FOUNDATIONS/",
+      "files": [
+        "DE02/DE02 Footing Calcs.jpg",
+        "DE03/Footing Calcs.jpg"
+      ],
+      "sign_types": ["wayfinding", "directional"],
+      "engineering_firm": "McClure Engineering",
+      "category": "engineering_calcs",
+      "year": 2024,
+      "notes": ["Airport signage program", "Multiple sign types DE02, DE03", "Footing calculations for each sign type"]
+    },
+    {
+      "customer": "National Pork Board",
+      "folder": "N/National Pork Board/Interstate Sign/2024/",
+      "files": [
+        "Original Design Denied by City/Engineering/S1.01 - FOUNDATION NOTES AND DETAILS.pdf",
+        "Original Design Denied by City/Engineering/S1.02 - MASONRY SIGN COLUMN.pdf",
+        "Revised Design/Engineering/Calculations_8-8-2024_PorkProducersSign.pdf",
+        "Revised Design/Engineering/VERTICAL MASONRY SIGN COLUMN & FOUNDATION PLANS.pdf"
+      ],
+      "sign_types": ["monument", "masonry_column"],
+      "engineering_firm": "Unknown",
+      "category": "pe_stamped",
+      "year": 2024,
+      "foundation": {
+        "type": "spread_footing",
+        "notes": "Masonry sign column with structural foundation"
+      },
+      "notes": [
+        "Original design denied by city - revised design approved",
+        "Includes Terracon geotechnical inspection reports",
+        "Vertical masonry column sign on interstate"
+      ]
+    },
+    {
+      "customer": "AJ's on East Court Ave",
+      "folder": "A/A J' s on East Court Ave/2016/",
+      "files": ["AJ's Iowa Stamped Engineered Drawing.pdf"],
+      "sign_types": ["unknown"],
+      "engineering_firm": "Unknown",
+      "category": "pe_stamped",
+      "year": 2016,
+      "notes": ["Stamped engineered drawing"]
+    },
+    {
+      "customer": "Adventureland Dr Self Storage",
+      "folder": "A/Adventureland Dr Self Storage/",
+      "files": [
+        "Adventureland Drive Self Storage Sign Structural Calculations.pdf",
+        "S1-01 - PLANS, NOTES AND DETAIL (3) Stamped Structual Plans.pdf"
+      ],
+      "sign_types": ["pylon", "monument"],
+      "engineering_firm": "Unknown",
+      "category": "pe_stamped",
+      "notes": ["Stamped structural plans with full calculation package"]
+    },
+    {
+      "customer": "AmericInn Stuart",
+      "folder": "A/AmericInn/Stuart, IA/2014 Sign Collapse Replacement/",
+      "files": [
+        "Engineering Calcs for Pole Sign.pdf",
+        "Engineering Drawing for Pole Sign.pdf"
+      ],
+      "sign_types": ["pylon"],
+      "engineering_firm": "Unknown",
+      "category": "engineering_calcs",
+      "year": 2014,
+      "notes": ["Sign collapse replacement - engineering required", "Pole sign calcs and drawings"]
+    },
+    {
+      "customer": "Ames Construction",
+      "folder": "A/Ames Construction/",
+      "files": ["S1064 Rev A- Building Sign - Stamped.pdf"],
+      "sign_types": ["building_sign"],
+      "engineering_firm": "Unknown",
+      "category": "pe_stamped",
+      "notes": ["Stamped building sign engineering"]
+    },
+    {
+      "customer": "CITI TRENDS",
+      "folder": "C/CITI TRENDS/Park Fair Mall/2015/",
+      "files": ["Stamped Engineering.pdf"],
+      "sign_types": ["unknown"],
+      "engineering_firm": "Unknown",
+      "category": "pe_stamped",
+      "year": 2015,
+      "notes": ["Stamped engineering package"]
+    },
+    {
+      "customer": "Chipotle Mexican Grill",
+      "folder": "C/Chipotle Mexican Grill/Clive/Permitting Documents/",
+      "files": ["94725_Chipotle Mexican Grill #14-5728_Monument_University Avenue_Clive, IA_Stamped_04-29-25.pdf"],
+      "sign_types": ["monument"],
+      "engineering_firm": "Unknown (permit package)",
+      "category": "pe_stamped",
+      "year": 2025,
+      "notes": ["Stamped monument sign permit package", "Clive, IA location"]
+    },
+    {
+      "customer": "Cownie Soccer Park",
+      "folder": "C/Cownie Soccer Park/",
+      "files": ["Engineer Stamp.pdf"],
+      "sign_types": ["unknown"],
+      "engineering_firm": "Unknown",
+      "category": "pe_stamped",
+      "notes": ["Engineer stamp document"]
+    },
+    {
+      "customer": "Des Moines Intl Airport",
+      "folder": "D/Des Moines Int'l Airport/",
+      "files": [
+        "Cell phone Parking Lot/Stamped Engineered Drawing Sign Type 1.pdf",
+        "approved shop drawings/Bridge Calcs.pdf",
+        "approved shop drawings/Cantilever Calcs.pdf",
+        "approved shop drawings/Type 2 ALTERNATE FOOTING DETAIL.pdf",
+        "2020/Cowles Drive Phase 1/Shop Drawings/DSM Intl Airport Monument Footings 0521-31917-00.pdf",
+        "2020/Cowles Drive Phase 1/Shop Drawings/DSM Intl Airport Monument Footings 0521-31917-01.pdf",
+        "2022/Cowles Drive Phase 2 and 3/Plans/Plans/V.30 Precast Concrete Arch - South Footing Details.pdf",
+        "2022/Cowles Drive Phase 2 and 3/Plans/Plans/V.31 Precast Concrete Arch - North Footing Details.pdf",
+        "2023/Parking Garage Expansion Project/Addendum/S-511 Foundation Details - Add 2.pdf",
+        "2025/Campus Site Signage Upgrades/Drawings of Current Signs/- B35 WITH STRUCTURAL COMBINED -.pdf",
+        "Reilly 2020/B35 Structural.pdf",
+        "2017/LOT 4/Sign Type 1 Footing Detail.pdf",
+        "2017/LOT 4/Sign Type 2 Footing Detail.pdf"
+      ],
+      "sign_types": ["monument", "cantilever", "directional", "overhead_bridge", "pylon"],
+      "engineering_firm": "Multiple (Reilly, others)",
+      "category": "pe_stamped",
+      "year_range": "2013-2025",
+      "notes": [
+        "Major multi-phase airport signage program",
+        "Stamped engineered drawings for multiple sign types",
+        "Cantilever and bridge sign calcs",
+        "Precast concrete arch footing details",
+        "B35 structural combined drawings"
+      ]
+    },
+    {
+      "customer": "Nagle Sign (Russ Derry Sports Complex)",
+      "folder": "N/Nagle Sign/Russ Derry Sports Complex/",
+      "files": ["6-27-23 STAMPED.pdf"],
+      "sign_types": ["unknown"],
+      "engineering_firm": "Nagle Sign / TJ Nagle",
+      "category": "pe_stamped",
+      "year": 2023,
+      "notes": ["Stamped engineering by Nagle Sign"]
+    },
+    {
+      "customer": "ONYX",
+      "folder": "O/ONYX/",
+      "files": ["Stamped Engineering - Blade Sign.pdf"],
+      "sign_types": ["blade_sign"],
+      "engineering_firm": "Unknown",
+      "category": "pe_stamped",
+      "notes": ["Stamped blade sign engineering"]
+    },
+    {
+      "customer": "Hoyt Sherman Place",
+      "folder": "H/Hoyt Sherman Place/2014 Project/",
+      "files": ["12029 2014-10-10 Hoyt Sherman Sign - Construction Details STAMPED.pdf"],
+      "sign_types": ["building_sign"],
+      "engineering_firm": "Unknown (job# 12029)",
+      "category": "pe_stamped",
+      "year": 2014,
+      "notes": ["Stamped construction details"]
+    },
+    {
+      "customer": "Hubbell Realty - 14 Forty",
+      "folder": "H/Hubbell Realty/14 Forty/",
+      "files": [
+        "14Forty Signage Engineering Calcs_signed.pdf",
+        "14Forty Signage_signed Engineering REV.pdf",
+        "14Forty Signage_signed Engineering.pdf"
+      ],
+      "sign_types": ["monument", "building_sign"],
+      "engineering_firm": "Unknown",
+      "category": "pe_stamped",
+      "notes": ["Signed engineering calcs with revision history"]
+    },
+    {
+      "customer": "Hubbell Realty - Grimes Industrial Park",
+      "folder": "H/Hubbell Realty/Grimes Industrial Park--Hubbell/",
+      "files": [
+        "Engineering by TJ.pdf",
+        "DIV 3 PO for footings.pdf",
+        "Footing Pricing Info.pdf"
+      ],
+      "sign_types": ["monument"],
+      "engineering_firm": "TJ (likely TJ Nagle)",
+      "category": "engineering_calcs",
+      "notes": ["Engineering by TJ Nagle", "Division 3 footing subcontract"]
+    },
+    {
+      "customer": "Gateway Crossing",
+      "folder": "G/Gateway Crossing/",
+      "files": ["! STRUCTURAL DESIGN REVIEW COPY - 23_1017 Gateway Crossing Monument Sign Details.pdf"],
+      "sign_types": ["monument"],
+      "engineering_firm": "Unknown",
+      "category": "pe_stamped",
+      "year": 2023,
+      "notes": ["Structural design review copy for monument sign"]
+    },
+    {
+      "customer": "IHOP Waukee",
+      "folder": "I/IHOP/Waukee/",
+      "files": [
+        "IHOP Waukee Monument Footings 1118-26560-00.pdf",
+        "Technical Drawings/18060 IHOP, Waukee - Structural Calcs.pdf"
+      ],
+      "sign_types": ["monument"],
+      "engineering_firm": "Unknown (project 18060)",
+      "category": "engineering_calcs",
+      "year": 2018,
+      "foundation": {
+        "type": "spread_footing",
+        "notes": "Monument sign footing with structural calcs"
+      },
+      "notes": ["Full structural calculation package"]
+    },
+    {
+      "customer": "Indian Hills Shopping Center",
+      "folder": "I/Indian Hills Shopping Center/",
+      "files": ["Hubbell Engineered Structural Drawing 1-20-09.pdf"],
+      "sign_types": ["monument"],
+      "engineering_firm": "Hubbell",
+      "category": "pe_stamped",
+      "year": 2009,
+      "notes": ["Engineered structural drawing"]
+    },
+    {
+      "customer": "Jethro's Jambalaya",
+      "folder": "J/Jethro's Jambalaya/",
+      "files": [
+        "Cornerstone Jethro's Jambalaya rev engineered drawings.pdf",
+        "D3918 engineered drawings.pdf",
+        "Jethro's Jambalaya engineered drawings, D3918R.pdf"
+      ],
+      "sign_types": ["pylon", "awning"],
+      "engineering_firm": "Cornerstone Engineering",
+      "category": "pe_stamped",
+      "notes": ["Cornerstone Engineering revised drawings", "Job D3918 and D3918R"]
+    },
+    {
+      "customer": "Jenco Construction",
+      "folder": "J/Jenco Construction Inc/",
+      "files": [
+        "eagle140500-1doc Jenco Engineering Calcs and Letter.pdf",
+        "Engineering CA20323.pdf",
+        "Engineering Calcs.pdf",
+        "Engineering Calculations--Jenco Signs.pdf",
+        "Jenco Preliminary Engineering.pdf"
+      ],
+      "sign_types": ["various"],
+      "engineering_firm": "Unknown",
+      "category": "engineering_calcs",
+      "notes": ["Multiple engineering calculation packages", "Preliminary and final engineering"]
+    },
+    {
+      "customer": "CAT Scale",
+      "folder": "C/CAT Scale/",
+      "files": [
+        "A frame engineering.pdf",
+        "3x10 Footing Detail Set.pdf",
+        "Foundation, for 10' pole/Sign Foundation SA 061224.pdf",
+        "Baker City, OR/Sign Foundation SA 061224.pdf",
+        "pricing for engineered dwgs.pdf"
+      ],
+      "sign_types": ["pylon", "a_frame"],
+      "engineering_firm": "SA Engineering (job SA 061224)",
+      "category": "engineering_calcs",
+      "foundation": {
+        "type": "drilled_pier",
+        "configurations": [
+          {"sign_size": "3x10", "notes": "Footing detail set"},
+          {"sign_size": "10' pole", "notes": "Foundation drawing"}
+        ]
+      },
+      "notes": ["Multi-location sign program", "A-frame and pylon engineering", "Multiple foundation types"]
+    },
+    {
+      "customer": "Chili's Grill & Bar",
+      "folder": "C/Chili's Grill & Bar/Monument Sign/",
+      "files": ["calculations.pdf"],
+      "sign_types": ["monument"],
+      "engineering_firm": "Unknown",
+      "category": "engineering_calcs",
+      "notes": ["Monument sign structural calculations"]
+    },
+    {
+      "customer": "Champion Xpress Car Wash",
+      "folder": "C/Champion Xpress Car Wash/",
+      "files": [
+        "Des Moines, IA (2565 E Euclid)/Urbandale, IA - 25' Enhanced Pole Sign Engineer Drawing.pdf",
+        "Indianola, IA/Indianola, IA - 25' Enhanced Engineer Drawing.pdf",
+        "Marshalltown, IA/Marshalltown, IA - 30' Standard Pole Engineer Drawing.pdf",
+        "Ottumwa, IA/Ottumwa, IA - 25' Enhanced Pole Engineer Drawing.pdf",
+        "Waverly, IA/Champion Xpress Car Wash Waverly (Engineering).pdf"
+      ],
+      "sign_types": ["pylon"],
+      "engineering_firm": "Unknown",
+      "category": "engineering_calcs",
+      "foundation": {
+        "type": "drilled_pier",
+        "configurations": [
+          {"height_ft": 25, "variant": "Enhanced Pole"},
+          {"height_ft": 30, "variant": "Standard Pole"}
+        ]
+      },
+      "notes": ["Multi-location car wash chain", "25' enhanced and 30' standard pole signs", "5 Iowa locations"]
+    },
+    {
+      "customer": "City of Norwalk",
+      "folder": "C/City of Norwalk/Community Entrance Signs/",
+      "files": [
+        "Bid Docs/Drawings/S000  Structural General Information.pdf",
+        "Bid Docs/Drawings/S100  Special INspections, Foundation Plan, & Details.pdf",
+        "Brady Takeoff/Footing and Concrete/Drilled Piers.jpg"
+      ],
+      "sign_types": ["monument", "entrance_sign"],
+      "engineering_firm": "Unknown (municipal project)",
+      "category": "structural_plans",
+      "foundation": {
+        "type": "drilled_pier"
+      },
+      "notes": ["Community entrance sign program", "Full structural drawing set S000-S100", "Drilled pier foundations"]
+    },
+    {
+      "customer": "City of Pleasant Hill",
+      "folder": "C/City of Pleasant Hill/City Signs 2021/Plans/Plans/",
+      "files": ["S100 Foundation Plans and Details - Add 1.pdf"],
+      "sign_types": ["monument", "wayfinding"],
+      "engineering_firm": "Unknown (municipal project)",
+      "category": "structural_plans",
+      "year": 2021,
+      "notes": ["City signage program", "Foundation plans and details"]
+    },
+    {
+      "customer": "Cityville on 9th",
+      "folder": "C/Cityville on 9th/",
+      "files": [
+        "12060_Cityville_STRUCTURAL-PERMIT-PACKAGE_052013.pdf",
+        "Monument Sign Project/Monument Footing.pdf"
+      ],
+      "sign_types": ["monument"],
+      "engineering_firm": "Unknown (job# 12060)",
+      "category": "structural_plans",
+      "year": 2013,
+      "notes": ["Full structural permit package", "Monument sign footing details"]
+    },
+    {
+      "customer": "Dahl's (Ingersoll)",
+      "folder": "D/Dahl's/INGERSOL/Fuel Car Wash/",
+      "files": ["Dahl's Carwash - Architectural and Structural.pdf"],
+      "sign_types": ["building_sign"],
+      "engineering_firm": "Unknown",
+      "category": "structural_plans",
+      "notes": ["Architectural and structural combined package"]
+    },
+    {
+      "customer": "Dogwoods Lodge",
+      "folder": "D/Dogwoods Lodge/",
+      "files": [
+        "Dogwoods Monument Sign Engineering.pdf",
+        "ESC Proposal 16283 Base Engineering.pdf"
+      ],
+      "sign_types": ["monument"],
+      "engineering_firm": "Unknown",
+      "category": "engineering_calcs",
+      "notes": ["Monument sign engineering with base details"]
+    },
+    {
+      "customer": "Dollar Tree Knoxville",
+      "folder": "D/Dollar Tree/Knoxville/",
+      "files": ["100x2806 Dollar Tree Canopy - Knoxville, IA - Calcs.pdf"],
+      "sign_types": ["canopy"],
+      "engineering_firm": "Unknown",
+      "category": "engineering_calcs",
+      "notes": ["Canopy sign structural calculations"]
+    },
+    {
+      "customer": "Downey Tire",
+      "folder": "D/Downey Tire/",
+      "files": ["TJ Calculations.pdf"],
+      "sign_types": ["unknown"],
+      "engineering_firm": "TJ (likely TJ Nagle)",
+      "category": "engineering_calcs",
+      "notes": ["TJ Nagle calculations"]
+    },
+    {
+      "customer": "Eastside Church of the Nazarene",
+      "folder": "E/Eastside Church of the Nazarene/",
+      "files": ["Footing Detail.pdf"],
+      "sign_types": ["monument"],
+      "engineering_firm": "Unknown",
+      "category": "footing_details",
+      "notes": ["Monument sign footing detail"]
+    },
+    {
+      "customer": "Edencrest at River Woods",
+      "folder": "E/Edencrest at River Woods/",
+      "files": ["Base Engineering.pdf"],
+      "sign_types": ["monument"],
+      "engineering_firm": "Unknown",
+      "category": "engineering_calcs",
+      "notes": ["Base/foundation engineering"]
+    },
+    {
+      "customer": "El Azteca (Ames)",
+      "folder": "E/El Azteca/El Azteca Ames/",
+      "files": [
+        "Jethro's engineering.pdf",
+        "Jethro's engineering 24x36.pdf",
+        "JFye_Proposal_NewAwning_ClosedEnds_HelicalPileFoundation.pdf"
+      ],
+      "sign_types": ["awning"],
+      "engineering_firm": "Cornerstone (via Jethro's project)",
+      "category": "engineering_calcs",
+      "foundation": {
+        "type": "helical_pile",
+        "notes": "Helical pile foundation for awning"
+      },
+      "notes": ["Awning with helical pile foundation", "Reused Jethro's engineering drawings"]
+    },
+    {
+      "customer": "Fireplace & Stone Center",
+      "folder": "F/Fireplace & Stone Center/Waukee, IA 2012/2012/",
+      "files": [
+        "Fireplace & Stone Center engineering.pdf",
+        "Structural Revisions.pdf"
+      ],
+      "sign_types": ["monument"],
+      "engineering_firm": "Unknown",
+      "category": "engineering_calcs",
+      "year": 2012,
+      "notes": ["Engineering with structural revisions"]
+    },
+    {
+      "customer": "Figaro's Pizza (Rumford, RI)",
+      "folder": "F/Figaro's Pizza/Rumford, RI/",
+      "files": ["Structural and Attachment Details.pdf"],
+      "sign_types": ["building_sign"],
+      "engineering_firm": "Unknown",
+      "category": "engineering_calcs",
+      "notes": ["Structural attachment details for building sign"]
+    },
+    {
+      "customer": "Graceland University",
+      "folder": "G/Graceland University/2017/",
+      "files": ["Pier Installation Specs.pdf"],
+      "sign_types": ["monument"],
+      "engineering_firm": "Unknown",
+      "category": "footing_details",
+      "year": 2017,
+      "foundation": {
+        "type": "drilled_pier"
+      },
+      "notes": ["Pier installation specifications"]
+    },
+    {
+      "customer": "Grease Monkey (Battleground, WA)",
+      "folder": "G/Grease Monkey/Battleground, WA/",
+      "files": [
+        "Structural and Footing Detail Set.pdf",
+        "Footing Detail Layout1L (1).pdf",
+        "Footing Detail Layout1P (1).pdf"
+      ],
+      "sign_types": ["pylon"],
+      "engineering_firm": "Unknown",
+      "category": "engineering_calcs",
+      "foundation": {
+        "type": "spread_footing"
+      },
+      "notes": ["Complete structural and footing detail set", "Landscape and portrait layout versions"]
+    },
+    {
+      "customer": "Hardee's Ottumwa",
+      "folder": "H/Hardee's/Hardee's, Ottumwa/",
+      "files": ["Ottuma Pylon Engineering.pdf"],
+      "sign_types": ["pylon"],
+      "engineering_firm": "Unknown",
+      "category": "engineering_calcs",
+      "notes": ["Pylon sign engineering"]
+    },
+    {
+      "customer": "Hessen Haus",
+      "folder": "H/Hessen Haus/Tower Sign Project/",
+      "files": [
+        "Eagle Proposal Engineered Drawings Tower Sign.pdf",
+        "Eagle Quote Engineered Drawings 10-27-15.pdf"
+      ],
+      "sign_types": ["tower_sign"],
+      "engineering_firm": "Unknown",
+      "category": "engineering_calcs",
+      "year": 2015,
+      "notes": ["Tower sign engineering with Eagle proposals"]
+    },
+    {
+      "customer": "Hi-Way Chevrolet Buick",
+      "folder": "H/Hi-Way Chevrolet Buick/",
+      "files": ["2847609 2006 IBC-001 - Foundation drawings - standard wind load.pdf"],
+      "sign_types": ["pylon"],
+      "engineering_firm": "Unknown (job# 2847609)",
+      "category": "pe_stamped",
+      "code_reference": "IBC 2006",
+      "notes": ["IBC-compliant foundation drawings", "Standard wind load design"]
+    },
+    {
+      "customer": "Iowa Health (Park Area Family Physicians)",
+      "folder": "I/Iowa Health/Park Area's Family Physicians Clinic, DSM/",
+      "files": ["Monument Sign Foundation Caculation Results.pdf"],
+      "sign_types": ["monument"],
+      "engineering_firm": "Unknown",
+      "category": "engineering_calcs",
+      "notes": ["Foundation calculation results for monument sign"]
+    },
+    {
+      "customer": "Kohl's Ames",
+      "folder": "K/Kohl's, Ames/",
+      "files": [
+        "Eagle Sign Engineered Drawing Quote 10-4-12.pdf",
+        "Engineering 10.10.12.pdf"
+      ],
+      "sign_types": ["building_sign"],
+      "engineering_firm": "Unknown",
+      "category": "engineering_calcs",
+      "year": 2012,
+      "notes": ["Engineered drawing with quote"]
+    },
+    {
+      "customer": "Living Faith Lutheran Church",
+      "folder": "L/Living Faith Lutheran Church/Permit Info/",
+      "files": [
+        "Living Faith Mon 8mm EMC 0124-38461-00 FOOTING.pdf",
+        "Living Faith Mon 8mm EMC 0124-38461-00 FOOTING.dxf"
+      ],
+      "sign_types": ["monument", "emc"],
+      "engineering_firm": "Eagle Sign (in-house)",
+      "category": "footing_details",
+      "year": 2024,
+      "foundation": {
+        "type": "spread_footing"
+      },
+      "notes": ["8mm EMC monument sign", "Footing drawing in PDF and DXF format", "Eagle in-house footing detail WO 0124-38461"]
+    },
+    {
+      "customer": "O'Reilly's (Grimes, IA)",
+      "folder": "O/O'Reilly's/Grimes, IA/",
+      "files": [
+        "4_12-MonumentCabinet-PE-DF-Build-1.pdf",
+        "4_12-PoleCabinet-PE-DF-ToBuild-C150-OAP.pdf"
+      ],
+      "sign_types": ["monument", "pylon"],
+      "engineering_firm": "Unknown (PE-DF series)",
+      "category": "pe_stamped",
+      "notes": ["PE-stamped monument cabinet and pole cabinet drawings", "National program standardized drawings"]
+    },
+    {
+      "customer": "O'Reilly's (Elkhorn, NE)",
+      "folder": "O/O'Reilly's/Elkhorn NE/",
+      "files": [
+        "Architect Sign Foundation.pdf",
+        "Sign Foundation 1 of 2.pdf",
+        "Sign Foundation 2 of 2.pdf"
+      ],
+      "sign_types": ["monument"],
+      "engineering_firm": "Unknown",
+      "category": "footing_details",
+      "notes": ["Multi-page sign foundation detail set"]
+    },
+    {
+      "customer": "Prairie Meadows",
+      "folder": "P/Prairie Meadows/",
+      "files": [
+        "Engineered drawings for approval.pdf",
+        "Prairie Meadows Canopies--Engineering Dwgs Final.pdf",
+        "Prairie Meadows--Engineering changes.pdf",
+        "2025 - new canopy side covering/ENGINEERING DETAIL 8.pdf",
+        "Footing Placement.pdf",
+        "Pole Footings Info.pdf",
+        "Prairie Meadows awning footing locations.pdf"
+      ],
+      "sign_types": ["canopy", "awning", "pylon"],
+      "engineering_firm": "Unknown",
+      "category": "pe_stamped",
+      "year_range": "2023-2025",
+      "foundation": {
+        "type": "drilled_pier",
+        "notes": "Pole footings for canopy structures"
+      },
+      "notes": [
+        "Multi-year canopy engineering program",
+        "40' and 80' canopy structures",
+        "Engineered drawings with approval workflow",
+        "Engineering changes tracked"
+      ]
+    },
+    {
+      "customer": "Roosters Coffee",
+      "folder": "R/Roosters Coffee/Customer Documents/",
+      "files": ["2025-05-16 Roosters Structural Calculations.pdf"],
+      "sign_types": ["building_sign"],
+      "engineering_firm": "Unknown",
+      "category": "engineering_calcs",
+      "year": 2025,
+      "notes": ["Recent structural calculations package"]
+    },
+    {
+      "customer": "RUAN (Turlock, CA)",
+      "folder": "R/RUAN/Turlock, CA/",
+      "files": ["REVISED ENGINEERED DRAWINGS 08 25 08.pdf"],
+      "sign_types": ["unknown"],
+      "engineering_firm": "Unknown",
+      "category": "pe_stamped",
+      "year": 2008,
+      "notes": ["Revised engineered drawings"]
+    },
+    {
+      "customer": "Southeast Polk High School",
+      "folder": "S/Southeast Polk High School/",
+      "files": [
+        "New Engineered Structure.pdf",
+        "Engineering Revision for Trench.docx"
+      ],
+      "sign_types": ["monument"],
+      "engineering_firm": "Unknown",
+      "category": "engineering_calcs",
+      "foundation": {
+        "type": "trench_footing"
+      },
+      "notes": ["Trench footing with engineering revision", "New engineered structure"]
+    },
+    {
+      "customer": "Steak N Shake",
+      "folder": "S/Steak N Shake/",
+      "files": [
+        "Directional Footing Detail.pdf",
+        "Drive Thru A Footing Detail.pdf",
+        "Drive Thru B Footing Detail.pdf",
+        "Monument Footing Detail.pdf"
+      ],
+      "sign_types": ["monument", "directional", "drive_thru"],
+      "engineering_firm": "Unknown (national program)",
+      "category": "footing_details",
+      "notes": ["Complete sign program footing details", "4 sign types each with footing specs"]
+    },
+    {
+      "customer": "Target (multiple locations)",
+      "folder": "T/Target/",
+      "files": [
+        "Ames/2019/TARG-RS0T1170.120A1_STRUCTURAL.pdf",
+        "Ames/2021/FOUNDATION BY OTHERS-TARGET 12' OAH BEACON 180MPH 18'' PIER (2021).pdf",
+        "Waukee/Install Package Building Signs and Free Standing Signs/TARG-PS002909.120A1_STRUCTURAL.pdf",
+        "West Des Moines/West Glen/2019/Structural Drawings of Signs/TARG-CL030X0220.120A_STRUCTURAL.pdf",
+        "West Des Moines/West Glen/2019/Structural Drawings of Signs/TARG-CL037X0157.120A_STRUCTURAL.pdf",
+        "West Des Moines/West Glen/2019/Structural Drawings of Signs/TARG-CL038X0464.120B_STRUCTURAL.pdf",
+        "West Des Moines/West Glen/2019/Structural Drawings of Signs/TARG-CL108X0400.120AR_STRUCTURAL.pdf",
+        "West Des Moines/West Glen/2019/Structural Drawings of Signs/TARG-CL132X0132.120BC_STRUCTURAL.pdf",
+        "West Des Moines/West Glen/2019/Structural Drawings of Signs/TARG-CL144X0518.120AR_STRUCTURAL.pdf"
+      ],
+      "sign_types": ["pylon", "channel_letters", "monument", "beacon"],
+      "engineering_firm": "Target Corporate (standardized)",
+      "category": "pe_stamped",
+      "year_range": "2019-2021",
+      "foundation": {
+        "type": "drilled_pier",
+        "configurations": [
+          {"height_ft": 12, "wind_speed_mph": 180, "pier_diameter_in": 18, "notes": "Beacon sign"}
+        ]
+      },
+      "notes": [
+        "National program with standardized structural drawings",
+        "TARG-CL = Channel Letters, TARG-RS = Retail Sign, TARG-PS = Pylon Sign",
+        "180 MPH wind design for beacon",
+        "Multiple WDM West Glen location drawings"
+      ]
+    },
+    {
+      "customer": "Toyota of Des Moines",
+      "folder": "T/Toyota of Des Moines/2016/Large Pylon Sign/",
+      "files": [
+        "TOY2P1A7020 - ENGINEERING.pdf",
+        "TOY2P1A7020 - STRUCTURAL.pdf"
+      ],
+      "sign_types": ["pylon"],
+      "engineering_firm": "Toyota corporate program",
+      "category": "pe_stamped",
+      "year": 2016,
+      "notes": ["Toyota dealership program", "Engineering and structural drawing sets"]
+    },
+    {
+      "customer": "Toyota of Fort Dodge",
+      "folder": "T/Toyota of Fort Dodge/2016/",
+      "files": [
+        "TOY2P1A7006 - ENGINEERING.pdf",
+        "TOY2P1A7006 - STRUCTURAL.pdf"
+      ],
+      "sign_types": ["pylon"],
+      "engineering_firm": "Toyota corporate program",
+      "category": "pe_stamped",
+      "year": 2016,
+      "notes": ["Toyota dealership program", "Engineering and structural drawing sets"]
+    },
+    {
+      "customer": "Tractor Supply Co. (De Soto)",
+      "folder": "T/Tractor Supply Co., De Soto/DeSoto/Pylon Documents/10-27-16 Documents/",
+      "files": [
+        "50 pylon foundation specs 10-26-16.pdf",
+        "60 pylon foundation specs 10-26-16.pdf",
+        "70 pylon foundation specs 10-26-16.pdf"
+      ],
+      "sign_types": ["pylon"],
+      "engineering_firm": "Unknown (national program)",
+      "category": "footing_details",
+      "year": 2016,
+      "foundation": {
+        "type": "drilled_pier",
+        "configurations": [
+          {"height_ft": 50, "notes": "50' pylon foundation"},
+          {"height_ft": 60, "notes": "60' pylon foundation"},
+          {"height_ft": 70, "notes": "70' pylon foundation"}
+        ]
+      },
+      "notes": ["Three pylon heights with foundation specs", "National retail program"]
+    },
+    {
+      "customer": "Trumans Pizza Tavern",
+      "folder": "T/Trumans Pizza Tavern/",
+      "files": [
+        "Engineering Truman's Sign.pdf",
+        "2025 Fire Damage/Engineering Truman's Sign.pdf"
+      ],
+      "sign_types": ["building_sign"],
+      "engineering_firm": "Unknown",
+      "category": "engineering_calcs",
+      "year_range": "2020-2025",
+      "notes": ["Sign engineering including fire damage replacement in 2025"]
+    },
+    {
+      "customer": "U.S. Cellular (Carroll)",
+      "folder": "U/U.S. Cellular/Carroll/",
+      "files": ["Engineered Drawings_Carroll IA 02-25-2021.pdf"],
+      "sign_types": ["pylon"],
+      "engineering_firm": "Unknown",
+      "category": "pe_stamped",
+      "year": 2021,
+      "notes": ["Engineered drawings for cellular carrier signage"]
+    },
+    {
+      "customer": "Urbandale Family Dentistry",
+      "folder": "U/Urbandale Family Dentistry/",
+      "files": ["Urbandale Family Dentistry - Structural Drawings - 10.14.25.pdf"],
+      "sign_types": ["building_sign"],
+      "engineering_firm": "Unknown",
+      "category": "structural_plans",
+      "year": 2025,
+      "notes": ["Recent structural drawing set"]
+    },
+    {
+      "customer": "Waukee Crossing",
+      "folder": "W/Waukee Crossing/",
+      "files": ["A1997 Sign Foundation-2020-11-11.pdf"],
+      "sign_types": ["monument"],
+      "engineering_firm": "Unknown (drawing A1997)",
+      "category": "footing_details",
+      "year": 2020,
+      "notes": ["Sign foundation drawing"]
+    },
+    {
+      "customer": "Wesleylife (Newton Park Centre)",
+      "folder": "W/Wesleylife Retirement Services/Newton Park Centre/",
+      "files": [
+        "2013 Awning Engineering Rev D4163R.pdf",
+        "Awning Engineering Rev D4163R.pdf",
+        "Park Center Awning Engineering.pdf",
+        "Engineering 3-d.pdf",
+        "Engineering Drwgs.pdf"
+      ],
+      "sign_types": ["awning"],
+      "engineering_firm": "Unknown (job D4163R)",
+      "category": "engineering_calcs",
+      "year": 2013,
+      "notes": ["Awning engineering with revisions", "3D engineering views"]
+    },
+    {
+      "customer": "Winnebago (Bath, NY)",
+      "folder": "W/Winnebago/Bath, NY/",
+      "files": ["StructFooting.pdf"],
+      "sign_types": ["pylon"],
+      "engineering_firm": "Unknown",
+      "category": "footing_details",
+      "notes": ["Combined structural and footing detail"]
+    },
+    {
+      "customer": "Christian Opportunity Center",
+      "folder": "C/Christian Opportunity Center/",
+      "files": ["BRIANT_COC awning calculations.pdf"],
+      "sign_types": ["awning"],
+      "engineering_firm": "Briant Engineering",
+      "category": "engineering_calcs",
+      "notes": ["Awning structural calculations"]
+    },
+    {
+      "customer": "Taco Johns (E. Euclid)",
+      "folder": "T/TACO JOHNS/LOCATIONS/Des Moines, IA - NEW E. Euclid/Metal Canopy/",
+      "files": ["12291-1 eng stamped.pdf"],
+      "sign_types": ["canopy", "drive_thru"],
+      "engineering_firm": "Unknown (job# 12291)",
+      "category": "pe_stamped",
+      "notes": ["Stamped engineering for metal drive-thru canopy"]
+    },
+    {
+      "customer": "AWNING NOTES (Eagle reference)",
+      "folder": "A/AWNING NOTES/",
+      "files": ["Awning Engineering.pdf"],
+      "sign_types": ["awning"],
+      "engineering_firm": "Eagle Sign (reference)",
+      "category": "engineering_calcs",
+      "notes": ["Eagle internal reference for awning engineering standards"]
+    },
+    {
+      "customer": "EZ Pawn (Mason City)",
+      "folder": "E/EZ Pawn/LOCATIONS/Mason City, IA SWS of H0005/",
+      "files": ["Awning Engineering.pdf"],
+      "sign_types": ["awning"],
+      "engineering_firm": "Unknown",
+      "category": "engineering_calcs",
+      "notes": ["Awning engineering for pawn shop"]
+    },
+    {
+      "customer": "SHERATON INN WDSM",
+      "folder": "S/SHERATON INN WDSM ENTRY AWNING/",
+      "files": ["new support engineering.pdf"],
+      "sign_types": ["awning"],
+      "engineering_firm": "Unknown",
+      "category": "engineering_calcs",
+      "notes": ["Entry awning support engineering"]
+    },
+    {
+      "customer": "Accor (RedRoof - Bowling Green, KY)",
+      "folder": "A/Accor/RedRoof/Bowling Green, KY/",
+      "files": ["Bowling Green, KY pylon footing.pdf"],
+      "sign_types": ["pylon"],
+      "engineering_firm": "Unknown",
+      "category": "footing_details",
+      "notes": ["Pylon sign footing detail for hotel"]
+    },
+    {
+      "customer": "MD Service of Iowa",
+      "folder": "M/MD Service of Iowa/",
+      "files": [
+        "JFye_Proposal_Directional_Footings.PDF",
+        "JFye_Proposal_Directional_FootingsUPDATED.PDF"
+      ],
+      "sign_types": ["directional"],
+      "engineering_firm": "Eagle Sign (Jeff Fye proposals)",
+      "category": "footing_details",
+      "notes": ["Directional sign footings", "Updated proposal version"]
+    },
+    {
+      "customer": "West Des Moines United Methodist Church",
+      "folder": "W/West Des Moines United Methodist Church/",
+      "files": ["footings calculation.pdf"],
+      "sign_types": ["monument"],
+      "engineering_firm": "Unknown",
+      "category": "engineering_calcs",
+      "notes": ["Footing calculations for church sign"]
+    },
+    {
+      "customer": "St. John's Catholic Church (Norwalk)",
+      "folder": "S/St. John's Catholic Church Norwalk/2009/Concrete Footing Pictures/",
+      "files": ["Foundation Calculation Sheet.pdf"],
+      "sign_types": ["monument"],
+      "engineering_firm": "Unknown",
+      "category": "engineering_calcs",
+      "year": 2009,
+      "notes": ["Foundation calculation sheet with concrete footing photos"]
+    }
+  ],
+  "engineering_firms_referenced": [
+    {"name": "AGI (Virginia Beach, VA)", "customers": ["Mercy One - REBRAND"]},
+    {"name": "Cornerstone Engineering", "customers": ["Jethro's Jambalaya", "El Azteca"]},
+    {"name": "TJ Nagle", "customers": ["Hubbell Realty (Grimes)", "Downey Tire", "Nagle Sign"]},
+    {"name": "Sullaway Engineering Inc", "customers": ["Kemin Industries", "Lens Crafters", "Target"]},
+    {"name": "McClure Engineering", "customers": ["Ankeny Regional Airport"]},
+    {"name": "Briant Engineering", "customers": ["Christian Opportunity Center"]},
+    {"name": "SA Engineering", "customers": ["CAT Scale"]},
+    {"name": "Reilly", "customers": ["Des Moines Intl Airport"]},
+    {"name": "Target Corporate", "customers": ["Target (multiple locations)"]},
+    {"name": "Toyota Corporate", "customers": ["Toyota of Des Moines", "Toyota of Fort Dodge"]}
+  ],
+  "sign_type_summary": {
+    "monument": 28,
+    "pylon": 18,
+    "awning": 8,
+    "channel_letters": 4,
+    "building_sign": 7,
+    "canopy": 4,
+    "directional": 5,
+    "blade_sign": 1,
+    "tower_sign": 1,
+    "drive_thru": 2,
+    "cantilever": 1,
+    "overhead_bridge": 1,
+    "beacon": 1,
+    "entrance_sign": 1,
+    "emc": 1,
+    "wayfinding": 3,
+    "a_frame": 1
+  },
+  "foundation_type_summary": {
+    "drilled_pier": 14,
+    "spread_footing": 5,
+    "helical_pile": 1,
+    "trench_footing": 1
+  },
+  "notable_patterns": [
+    "Most PE-stamped drawings are for pylon and monument signs",
+    "National chains (Target, Toyota, O'Reilly, Tractor Supply) provide standardized PE drawings",
+    "Local engineering firms: Cornerstone, TJ Nagle, Sullaway, AGI most frequently used",
+    "Drilled pier is the dominant foundation type (~60% of documented foundations)",
+    "Wind speeds range from 90-180 MPH across projects",
+    "IBC 2006 and IBC 2016 are the most referenced codes",
+    "Eagle Sign internal footing details (WO-numbered) used for permit packages",
+    "Airport projects have the most comprehensive engineering documentation",
+    "Awning engineering is a distinct category with dedicated calculation packages"
+  ]
+}

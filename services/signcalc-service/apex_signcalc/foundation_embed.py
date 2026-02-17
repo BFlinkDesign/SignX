@@ -5,6 +5,8 @@ Methods implemented:
      cohesionless soils.
   2. IBC 1807.3.1 nonconstrained — direct formula for unconstrained poles.
   3. Simplified Brinch Hansen — passive pressure integration via Kq/Kc.
+  4. Czerniak (1957) — short rigid pier/caisson with shaft self-weight
+     contribution; most conservative of the common methods.
 
 All safety factors are computed, never capped.
 All outputs carry a full audit trail keyed to calibration version.
@@ -15,6 +17,8 @@ Reference:
   IBC 2021 Section 1807.3.1
   Hansen, J.B. (1961). "The Ultimate Resistance of Rigid Piles Against
       Transversal Forces." Danish Geotech. Inst. Bull. 12.
+  Czerniak, E. (1957). "Resistance to Overturning of Single, Short Piles."
+      J. Struct. Div., ASCE 83(ST2):1017-1.
 """
 
 from __future__ import annotations
@@ -25,7 +29,7 @@ from typing import Any, Dict, Optional, Tuple
 # ---------------------------------------------------------------------------
 # Calibration version — bump when any constant changes
 # ---------------------------------------------------------------------------
-CALIBRATION_VERSION = "footing_v2_broms_ibc_hansen"
+CALIBRATION_VERSION = "footing_v3_broms_ibc_hansen_czerniak"
 
 # ---------------------------------------------------------------------------
 # Soil property database
@@ -48,6 +52,8 @@ SOIL_PROPERTIES: Dict[str, Dict[str, float]] = {
 CONCRETE_PCF = 150.0
 # Target safety factor for Broms iteration
 BROMS_SF_TARGET = 2.0
+# Target safety factor for Czerniak iteration (higher — method is most conservative)
+CZERNIAK_SF_TARGET = 2.5
 # Iteration bounds (feet)
 _L_MIN_FT = 1.0
 _L_MAX_FT = 30.0
@@ -325,6 +331,127 @@ def _brinch_hansen(
     return L_design, audit
 
 
+def _czerniak(
+    gamma_pcf: float,
+    phi_deg: float,
+    cu_psf: float,
+    D_ft: float,
+    P_lbf: float,
+    h_ft: float,
+) -> Tuple[float, Dict[str, Any]]:
+    """Czerniak (1957) method for short rigid pier/caisson foundations.
+
+    Developed specifically for sign structures, utility poles, and other
+    short free-head piers embedded in soil.  Typically the most conservative
+    of the common methods.  Unique advantage: includes the stabilising
+    contribution of the concrete shaft self-weight.
+
+    Reference: Czerniak, E. (1957). "Resistance to Overturning of Single,
+    Short Piles." J. Struct. Div., ASCE 83(ST2):1017-1.
+
+    Soil resistance model
+    ---------------------
+    Equivalent fluid pressure (triangular passive, zero at surface):
+        gamma_s  = gamma * Kp      (cohesionless)
+        gamma_s  = 9 * cu / L      (cohesive — depth-averaged, per iteration)
+
+    Passive pressure resultant over embedded length L (triangular):
+        R_p = 0.5 * gamma_s * D * L^2
+        Acts at 2*L/3 from the groundline surface (i.e. L/3 from tip).
+
+    Moment equilibrium about the groundline
+    ----------------------------------------
+    Resisting moments:
+        M_passive = R_p * (2*L/3)
+                  = (1/3) * gamma_s * D * L^3
+        M_W       = W * (D/2)             shaft self-weight stabilising moment
+                  where W = gamma_concrete * (pi/4) * D^2 * L
+
+    Overturning moment (conservative: lateral load P contributes along
+    embedded depth via equivalent arm L/2):
+        M_ot = P * (h + L/2)
+
+    Safety factor:
+        SF = (M_passive + M_W) / M_ot
+
+    Bisection finds L such that SF >= CZERNIAK_SF_TARGET (2.5).
+    """
+    Kp = _kp(phi_deg) if phi_deg > 0 else 1.0
+
+    def _gamma_s(L: float) -> float:
+        """Equivalent fluid unit weight for passive resistance."""
+        if cu_psf > 0:
+            # Cohesive: uniform equivalent pressure 9*cu spread over L
+            # (depth-averaged gamma_s so that 0.5*gs*D*L^2 = 9*cu*D*L)
+            return 9.0 * cu_psf / max(L, 0.001)
+        else:
+            return gamma_pcf * Kp
+
+    def _passive_resultant(L: float, gs: float) -> float:
+        """Total passive force (lbf) from triangular pressure over depth L."""
+        return 0.5 * gs * D_ft * (L ** 2)
+
+    def _shaft_weight(L: float) -> float:
+        return CONCRETE_PCF * (math.pi / 4.0) * (D_ft ** 2) * L
+
+    def _resisting_moment(L: float) -> float:
+        gs = _gamma_s(L)
+        R_p = _passive_resultant(L, gs)
+        # Triangular resultant acts at 2L/3 from surface
+        M_passive = R_p * (2.0 * L / 3.0)
+        W = _shaft_weight(L)
+        M_W = W * (D_ft / 2.0)
+        return M_passive + M_W
+
+    def _demand_moment(L: float) -> float:
+        # Conservative: P contributes h above grade plus L/2 equivalent arm
+        return P_lbf * (h_ft + L / 2.0)
+
+    def _f(L: float) -> float:
+        return _resisting_moment(L) - CZERNIAK_SF_TARGET * _demand_moment(L)
+
+    lo, hi = _L_MIN_FT, _L_MAX_FT
+    if _f(hi) < 0:
+        L_design = hi
+    else:
+        while (hi - lo) > _L_TOL_FT:
+            mid = (lo + hi) / 2.0
+            if _f(mid) < 0:
+                lo = mid
+            else:
+                hi = mid
+        L_design = hi
+
+    gs_final = _gamma_s(L_design)
+    Rp_final = _passive_resultant(L_design, gs_final)
+    W_final = _shaft_weight(L_design)
+    rm_final = _resisting_moment(L_design)
+    dm_final = _demand_moment(L_design)
+    sf_actual = rm_final / dm_final if dm_final > 0 else float("inf")
+    ld_ratio = L_design / D_ft
+
+    audit: Dict[str, Any] = {
+        "method": "Czerniak_1957",
+        "Kp": round(Kp, 4),
+        "phi_deg": phi_deg,
+        "cu_psf": cu_psf,
+        "gamma_pcf": gamma_pcf,
+        "gamma_s_equivalent": round(gs_final, 4),
+        "D_ft": D_ft,
+        "L_design_ft": round(L_design, 3),
+        "L_over_D": round(ld_ratio, 2),
+        "passive_resultant_lbf": round(Rp_final, 1),
+        "shaft_weight_lbf": round(W_final, 1),
+        "resisting_moment_ftlb": round(rm_final, 1),
+        "demand_moment_ftlb": round(dm_final, 1),
+        "safety_factor": round(sf_actual, 3),
+        "sf_target": CZERNIAK_SF_TARGET,
+        "short_pile_check": "OK" if ld_ratio <= 6.0 else "LONG_PILE_WARNING",
+        "calibration_version": CALIBRATION_VERSION,
+    }
+    return L_design, audit
+
+
 # ---------------------------------------------------------------------------
 # Secondary outputs
 # ---------------------------------------------------------------------------
@@ -400,10 +527,11 @@ def design_foundation(
         Override soil properties.  Must contain keys: cu_psf, gamma_pcf,
         phi_deg, S1_psf_per_ft.  When provided, soil_type is ignored.
     method : str
-        "all" (default) — run all three methods, return governing (maximum) depth.
+        "all" (default) — run all four methods, return governing (maximum) depth.
         "broms"         — Broms only.
         "ibc"           — IBC 1807.3.1 only.
         "hansen"        — Brinch Hansen only.
+        "czerniak"      — Czerniak (1957) only.
 
     Returns
     -------
@@ -464,6 +592,7 @@ def design_foundation(
     run_broms = method in ("all", "broms")
     run_ibc = method in ("all", "ibc")
     run_hansen = method in ("all", "hansen")
+    run_czerniak = method in ("all", "czerniak")
 
     if run_broms:
         if cu_psf > 0:
@@ -487,6 +616,13 @@ def design_foundation(
         )
         all_results["hansen"] = audit_h
         depths["hansen"] = L_h
+
+    if run_czerniak:
+        L_c, audit_c = _czerniak(
+            gamma_pcf, phi_deg, cu_psf, D_ft, P_lbf, h_eff_ft
+        )
+        all_results["czerniak"] = audit_c
+        depths["czerniak"] = L_c
 
     if not depths:
         raise ValueError("No methods produced a valid result.")

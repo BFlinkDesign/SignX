@@ -1,0 +1,766 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "created": "2026-02-17",
+    "description": "Comprehensive US standards knowledge base for sign engineering"
+  },
+  "standards": [
+    {
+      "id": "ASCE_7_22",
+      "name": "ASCE 7-22",
+      "full_title": "Minimum Design Loads and Associated Criteria for Buildings and Other Structures",
+      "category": "structural",
+      "applicable_to": ["monument", "blade", "pylon", "channel_letter", "cabinet"],
+      "key_sections": [
+        {"section": "Chapter 26", "topic": "Wind Load Parameters"},
+        {"section": "Chapter 29", "topic": "Other Structures and Building Appurtenances (Signs)"},
+        {"section": "Chapter 30", "topic": "Components and Cladding"}
+      ],
+      "sign_relevance": "Primary wind load standard. Ch 29 for monument/pylon MWFRS, Ch 30 for blade/cabinet C&C. 2022 edition adds tornado provisions (Ch 32). Exposure categories B/C/D, topographic factors, directionality.",
+      "version_year": 2022,
+      "status": "current",
+      "supersedes": "ASCE 7-16"
+    },
+    {
+      "id": "IBC_2024",
+      "name": "IBC 2024",
+      "full_title": "International Building Code",
+      "category": "structural",
+      "applicable_to": ["monument", "blade", "pylon", "channel_letter", "cabinet"],
+      "key_sections": [
+        {"section": "Appendix H", "topic": "Signs (Structural, Electrical, Fire Safety)"},
+        {"section": "Chapter 16", "topic": "Structural Design (Load Combinations, LRFD/ASD)"},
+        {"section": "Section 1807", "topic": "Embedded Foundation Piers (1807.3.1 lateral, 1807.3.2 uplift)"},
+        {"section": "Section 1806", "topic": "Presumptive Load-Bearing Values (Table 1806.2)"},
+        {"section": "Chapter 32", "topic": "Encroachments into Public Right-of-Way"}
+      ],
+      "sign_relevance": "Primary building code for sign permitting. Appendix H covers sign-specific structural/electrical/fire. Section 1807.3.1 simplified lateral pier formula (wood posts, NOT concrete caissons). Ch 16 load combos reference ASCE 7. Most jurisdictions adopt IBC with local amendments.",
+      "version_year": 2024,
+      "status": "current",
+      "supersedes": "IBC 2021"
+    },
+    {
+      "id": "AASHTO_LRFD_LTS_1",
+      "name": "AASHTO LRFD-LTS (1st Ed)",
+      "full_title": "LRFD Specifications for Structural Supports for Highway Signs, Luminaires, and Traffic Signals",
+      "category": "structural",
+      "applicable_to": ["pylon", "monument", "blade"],
+      "key_sections": [
+        {"section": "Chapter 3", "topic": "Loads (Wind, Dead, Ice)"},
+        {"section": "Chapter 4", "topic": "Analysis and Design"},
+        {"section": "Chapter 5", "topic": "Steel Design"},
+        {"section": "Chapter 6", "topic": "Aluminum Design"},
+        {"section": "Chapter 13", "topic": "Foundation Design"}
+      ],
+      "sign_relevance": "Highway sign support standard. LRFD methodology. Applies to signs in right-of-way. Chapter 3 wind provisions differ from ASCE 7 (drag coefficients Cd for sign panels). Foundation design in Ch 13 uses Broms method. First edition supersedes AASHTO LTS-6 (ASD).",
+      "version_year": 2015,
+      "status": "current",
+      "supersedes": "AASHTO LTS-6"
+    },
+    {
+      "id": "AASHTO_MASH",
+      "name": "AASHTO MASH",
+      "full_title": "Manual for Assessing Safety Hardware",
+      "category": "structural",
+      "applicable_to": ["pylon", "monument"],
+      "key_sections": [
+        {"section": "Chapter 1", "topic": "Testing and Evaluation Procedures"},
+        {"section": "Chapter 2", "topic": "Test Matrices for Sign Supports"},
+        {"section": "Chapter 3", "topic": "Evaluation Criteria (Occupant Risk)"}
+      ],
+      "sign_relevance": "Crashworthiness standard for roadside sign supports. Required for signs within clear zone of highways. Breakaway support testing. FHWA Letter CC-73A eligibility. Supersedes NCHRP 350.",
+      "version_year": 2016,
+      "status": "current",
+      "supersedes": "NCHRP Report 350"
+    },
+    {
+      "id": "AISC_360_22",
+      "name": "AISC 360-22",
+      "full_title": "Specification for Structural Steel Buildings",
+      "category": "structural",
+      "applicable_to": ["monument", "blade", "pylon", "cabinet"],
+      "key_sections": [
+        {"section": "Chapter B", "topic": "Design Requirements (Width-to-Thickness Ratios)"},
+        {"section": "Chapter D", "topic": "Design of Members for Tension"},
+        {"section": "Chapter E", "topic": "Design of Members for Compression"},
+        {"section": "Chapter F", "topic": "Design of Members for Flexure (F7 for HSS)"},
+        {"section": "Chapter G", "topic": "Design of Members for Shear"},
+        {"section": "Chapter H", "topic": "Combined Forces (Interaction Equations H1-1a/b)"},
+        {"section": "Chapter J", "topic": "Design of Connections (Bolts, Welds, Base Plates)"},
+        {"section": "Chapter K", "topic": "HSS and Box Member Connections"}
+      ],
+      "sign_relevance": "Steel design standard for HSS tube, W-shapes, angles used in sign structures. Chapter F Section F7 governs square/rectangular HSS flexure. Chapter H interaction equations for combined wind+gravity. Chapter J for baseplate and anchor bolt design. Eagle Sign prefers HSS over round pipe.",
+      "version_year": 2022,
+      "status": "current",
+      "supersedes": "AISC 360-16"
+    },
+    {
+      "id": "ACI_318_19",
+      "name": "ACI 318-19",
+      "full_title": "Building Code Requirements for Structural Concrete",
+      "category": "structural",
+      "applicable_to": ["monument", "pylon", "blade"],
+      "key_sections": [
+        {"section": "Chapter 13", "topic": "Foundations"},
+        {"section": "Section 14.3.6.3.1", "topic": "Drilled Shaft Reinforcement Minimums (0.5% Ag)"},
+        {"section": "Section 10.7.6.1", "topic": "Tie Spacing (16 x db longitudinal bar diameter)"},
+        {"section": "Chapter 17", "topic": "Anchoring to Concrete (Cast-in, Post-installed)"},
+        {"section": "Chapter 25", "topic": "Reinforcement Details (Development, Splices, Cover)"}
+      ],
+      "sign_relevance": "Concrete foundation design for sign piers/caissons. Section 14.3.6.3.1 mandates 0.5% Ag minimum steel for drilled shafts. Ch 17 for anchor bolt embedment and breakout capacity. Ch 25 for rebar development lengths and minimum cover (3\" for cast against earth).",
+      "version_year": 2019,
+      "status": "current",
+      "supersedes": "ACI 318-14"
+    },
+    {
+      "id": "TMS_402_602_22",
+      "name": "TMS 402/602-22",
+      "full_title": "Building Code Requirements and Specification for Masonry Structures",
+      "category": "structural",
+      "applicable_to": ["monument"],
+      "key_sections": [
+        {"section": "Chapter 5", "topic": "Structural Design (ASD)"},
+        {"section": "Chapter 9", "topic": "Strength Design (LRFD equivalent)"},
+        {"section": "Section 3.1", "topic": "Mortar and Grout Requirements"},
+        {"section": "Section 3.3", "topic": "Metal Reinforcement and Accessories"}
+      ],
+      "sign_relevance": "Masonry monument base design. CMU block walls with grout-filled cells around sign supports. Applies when monument base uses structural masonry veneer or full-depth masonry. Mortar types M/S for structural applications.",
+      "version_year": 2022,
+      "status": "current",
+      "supersedes": "TMS 402/602-16"
+    },
+    {
+      "id": "ADM_2020",
+      "name": "ADM 2020",
+      "full_title": "Aluminum Design Manual",
+      "category": "structural",
+      "applicable_to": ["cabinet", "channel_letter", "blade"],
+      "key_sections": [
+        {"section": "Part I, Ch B", "topic": "Design Requirements"},
+        {"section": "Part I, Ch D", "topic": "Member Design (Tension)"},
+        {"section": "Part I, Ch F", "topic": "Member Design (Flexure)"},
+        {"section": "Part I, Ch J", "topic": "Connections"},
+        {"section": "Part I, Ch L", "topic": "Fatigue"}
+      ],
+      "sign_relevance": "Aluminum extrusion and sheet design for sign cabinets, channel letter returns, and blade sign frames. 6061-T6 and 6063-T5 most common alloys. Fatigue provisions critical for wind-loaded aluminum sign components.",
+      "version_year": 2020,
+      "status": "current",
+      "supersedes": "ADM 2015"
+    },
+    {
+      "id": "AWS_D1_1",
+      "name": "AWS D1.1",
+      "full_title": "Structural Welding Code — Steel",
+      "category": "structural",
+      "applicable_to": ["monument", "blade", "pylon", "cabinet"],
+      "key_sections": [
+        {"section": "Clause 2", "topic": "Design of Welded Connections"},
+        {"section": "Clause 4", "topic": "Prequalified WPS (Fillet, CJP, PJP)"},
+        {"section": "Clause 6", "topic": "Inspection (VT, UT, MT, RT)"},
+        {"section": "Clause 8", "topic": "Statically Loaded Structures"},
+        {"section": "Clause 9", "topic": "Tubular Structures (HSS)"}
+      ],
+      "sign_relevance": "Weld design and fabrication standard for sign structures. Clause 9 specifically addresses tubular (HSS) connections. Fillet weld sizing per applied loads. CJP welds at baseplate-to-post connections. Most sign welds are Clause 8 (static) unless fatigue governs.",
+      "version_year": 2024,
+      "status": "current",
+      "supersedes": "AWS D1.1/D1.1M:2020"
+    },
+    {
+      "id": "NEC_2026",
+      "name": "NEC 2026 / NFPA 70",
+      "full_title": "National Electrical Code",
+      "category": "electrical",
+      "applicable_to": ["monument", "blade", "pylon", "channel_letter", "cabinet"],
+      "key_sections": [
+        {"section": "Article 600", "topic": "Electric Signs and Outline Lighting"},
+        {"section": "Section 600.4", "topic": "Markings (UL label, voltage, amperage)"},
+        {"section": "Section 600.5", "topic": "Branch Circuits (20A dedicated)"},
+        {"section": "Section 600.6", "topic": "Disconnects (within sight, lockable)"},
+        {"section": "Section 600.7", "topic": "Grounding and Bonding"},
+        {"section": "Section 600.12", "topic": "Field-Installed Skeleton Tubing"},
+        {"section": "Section 600.32", "topic": "LED Sign Illumination Systems"},
+        {"section": "Section 600.33", "topic": "LED Sign Driver Requirements"}
+      ],
+      "sign_relevance": "Primary electrical code for all illuminated signs. Article 600 is THE sign-specific article. Requires UL listing (UL 48), dedicated 20A branch circuit, disconnect within sight, proper grounding. Section 600.32/33 added for LED systems.",
+      "version_year": 2026,
+      "status": "current",
+      "supersedes": "NEC 2023"
+    },
+    {
+      "id": "UL_48",
+      "name": "UL 48",
+      "full_title": "Standard for Electric Signs",
+      "category": "electrical",
+      "applicable_to": ["monument", "blade", "pylon", "channel_letter", "cabinet"],
+      "key_sections": [
+        {"section": "Section 1", "topic": "Scope and General"},
+        {"section": "Section 18", "topic": "Performance Tests (Rain, Wind, Thermal)"},
+        {"section": "Section 32", "topic": "LED Modules and Arrays"},
+        {"section": "Section 40", "topic": "Wiring and Components"},
+        {"section": "Section 55", "topic": "Marking Requirements"}
+      ],
+      "sign_relevance": "UL listing standard for electric signs. Required by NEC Article 600. Covers construction, wiring, performance testing. UL label must be visible on installed sign. Applies to all illuminated signs regardless of light source type.",
+      "version_year": 2023,
+      "status": "current",
+      "supersedes": null
+    },
+    {
+      "id": "UL_879",
+      "name": "UL 879 / UL 879A",
+      "full_title": "Standard for Electrode Receptacles and Electrode Receptacle Assemblies / LED Sign and Sign Retrofit Kits",
+      "category": "electrical",
+      "applicable_to": ["channel_letter", "cabinet"],
+      "key_sections": [
+        {"section": "UL 879 Section 1", "topic": "Neon Electrode Receptacles"},
+        {"section": "UL 879A Section 1", "topic": "LED Sign and Retrofit Kits"},
+        {"section": "UL 879A Section 15", "topic": "LED Module Performance"}
+      ],
+      "sign_relevance": "UL 879 covers neon electrode receptacles (GTO housings). UL 879A covers LED sign illumination modules and retrofit kits for converting neon to LED. Most new signs use UL 879A-listed LED modules.",
+      "version_year": 2020,
+      "status": "current",
+      "supersedes": null
+    },
+    {
+      "id": "UL_969",
+      "name": "UL 969",
+      "full_title": "Standard for Marking and Labeling Systems",
+      "category": "electrical",
+      "applicable_to": ["monument", "blade", "pylon", "channel_letter", "cabinet"],
+      "key_sections": [
+        {"section": "Section 1", "topic": "Scope (Permanent Markings)"},
+        {"section": "Section 7", "topic": "Outdoor Durability Requirements"},
+        {"section": "Section 10", "topic": "Adhesion Tests"},
+        {"section": "Section 12", "topic": "UV Exposure and Weathering"}
+      ],
+      "sign_relevance": "Standard for marking and labeling systems used on signs. Covers vinyl graphics, decals, nameplates. UL 969 recognition ensures markings survive outdoor exposure. Required for UL-labeled sign nameplate adhesion.",
+      "version_year": 2021,
+      "status": "current",
+      "supersedes": null
+    },
+    {
+      "id": "ASME_Y14_5_2018",
+      "name": "ASME Y14.5-2018",
+      "full_title": "Dimensioning and Tolerancing",
+      "category": "drafting",
+      "applicable_to": ["monument", "blade", "pylon", "channel_letter", "cabinet"],
+      "key_sections": [
+        {"section": "Section 1", "topic": "Scope and Definitions"},
+        {"section": "Section 5", "topic": "Dimensioning (Placement, Spacing, Extension Lines)"},
+        {"section": "Section 7", "topic": "Tolerancing (Form, Position, Profile)"},
+        {"section": "Section 8", "topic": "Datum System"},
+        {"section": "Section 11", "topic": "GD&T Symbols"}
+      ],
+      "sign_relevance": "Primary dimensioning standard. Governs dimension placement, extension line gaps, spacing between parallel dimensions, leader usage. GD&T for critical mating surfaces (baseplate holes, anchor bolt patterns). Most sign drawings use basic dimensioning (Section 5) without full GD&T.",
+      "version_year": 2018,
+      "status": "current",
+      "supersedes": "ASME Y14.5-2009"
+    },
+    {
+      "id": "ASME_Y14_2_2023",
+      "name": "ASME Y14.2-2023",
+      "full_title": "Line Conventions and Lettering",
+      "category": "drafting",
+      "applicable_to": ["monument", "blade", "pylon", "channel_letter", "cabinet"],
+      "key_sections": [
+        {"section": "Section 3", "topic": "Line Types and Weights"},
+        {"section": "Section 3.2.2", "topic": "Dimension Line Terminators (Tick Marks vs Arrowheads)"},
+        {"section": "Section 4", "topic": "Leaders and Callouts"},
+        {"section": "Section 5", "topic": "Lettering (Minimum Heights, Styles)"}
+      ],
+      "sign_relevance": "Defines line weights (thick/medium/thin), leader conventions (30-60 degree angle, never horizontal/vertical), and lettering standards. Section 3.2.2 allows tick marks as dimension terminators (structural convention used by SignX). Section 4 governs leader shelf placement.",
+      "version_year": 2023,
+      "status": "current",
+      "supersedes": "ASME Y14.2-2014"
+    },
+    {
+      "id": "ASME_Y14_3_2012_R2023",
+      "name": "ASME Y14.3-2012(R2023)",
+      "full_title": "Orthographic and Pictorial Views",
+      "category": "drafting",
+      "applicable_to": ["monument", "blade", "pylon", "channel_letter", "cabinet"],
+      "key_sections": [
+        {"section": "Section 3", "topic": "Arrangement of Views (Front, Top, Right Side)"},
+        {"section": "Section 4", "topic": "Section Views (Full, Half, Broken-Out, Removed)"},
+        {"section": "Section 5", "topic": "Hatching (Material-Specific Patterns)"},
+        {"section": "Section 6", "topic": "Auxiliary and Detail Views"},
+        {"section": "Section 7", "topic": "Pictorial Views (Isometric, Perspective)"}
+      ],
+      "sign_relevance": "Governs view arrangement and section hatching on sign drawings. Section 5 defines material-specific hatch patterns (ANSI31 for concrete, ANSI32 for steel). Adjacent same-material sections use mirrored angle (45/135). Foundation section views follow Section 4 conventions.",
+      "version_year": 2012,
+      "status": "current (reaffirmed 2023)",
+      "supersedes": "ASME Y14.3-2003"
+    },
+    {
+      "id": "ASME_Y14_41_2019",
+      "name": "ASME Y14.41-2019",
+      "full_title": "Digital Product Definition Data Practices",
+      "category": "drafting",
+      "applicable_to": ["monument", "blade", "pylon", "channel_letter", "cabinet"],
+      "key_sections": [
+        {"section": "Section 3", "topic": "General Requirements for 3D Models"},
+        {"section": "Section 4", "topic": "Annotation Planes and Saved Views"},
+        {"section": "Section 5", "topic": "Model-Based Definition (MBD)"}
+      ],
+      "sign_relevance": "Standard for 3D model-based definition. Relevant for DXF/DWG/STEP deliverables where PMI (Product Manufacturing Information) is embedded in 3D models rather than 2D drawings. Future direction for sign fabrication drawings.",
+      "version_year": 2019,
+      "status": "current",
+      "supersedes": "ASME Y14.41-2012"
+    },
+    {
+      "id": "ASME_Y14_100_2024",
+      "name": "ASME Y14.100-2024",
+      "full_title": "Engineering Drawing Practices",
+      "category": "drafting",
+      "applicable_to": ["monument", "blade", "pylon", "channel_letter", "cabinet"],
+      "key_sections": [
+        {"section": "Section 4", "topic": "Types of Engineering Drawings"},
+        {"section": "Section 5", "topic": "Drawing Format and Title Blocks"},
+        {"section": "Section 6", "topic": "Drawing Notes and Revisions"},
+        {"section": "Section 7", "topic": "Parts Lists and BOMs"}
+      ],
+      "sign_relevance": "Master standard governing overall drawing practices. Title block requirements, revision tracking (triangle symbol), general notes placement, BOM format. All sign engineering drawings should conform to Y14.100 for general practices.",
+      "version_year": 2024,
+      "status": "current",
+      "supersedes": "ASME Y14.100-2017"
+    },
+    {
+      "id": "ASME_Y14_1_2020",
+      "name": "ASME Y14.1-2020",
+      "full_title": "Decimal Inch Drawing Sheet Size and Format",
+      "category": "drafting",
+      "applicable_to": ["monument", "blade", "pylon", "channel_letter", "cabinet"],
+      "key_sections": [
+        {"section": "Section 2", "topic": "Sheet Sizes (A through J)"},
+        {"section": "Section 3", "topic": "Drawing Format (Border, Title Block Zones)"},
+        {"section": "Section 4", "topic": "Zoning and Revision Block"}
+      ],
+      "sign_relevance": "Defines ANSI sheet sizes. Sign drawings typically use ANSI D (22x34) or ANSI C (17x22). Title block zone placement. Border line weights. Zoning for large multi-view drawings.",
+      "version_year": 2020,
+      "status": "current",
+      "supersedes": "ASME Y14.1-2012"
+    },
+    {
+      "id": "ASME_Y14_34_2020",
+      "name": "ASME Y14.34-2020",
+      "full_title": "Associated Lists Practices",
+      "category": "drafting",
+      "applicable_to": ["monument", "blade", "pylon", "channel_letter", "cabinet"],
+      "key_sections": [
+        {"section": "Section 2", "topic": "Parts Lists (BOM Format)"},
+        {"section": "Section 3", "topic": "Data Lists"},
+        {"section": "Section 4", "topic": "Index Lists and Wire/Cable Lists"}
+      ],
+      "sign_relevance": "Governs BOM/parts list format on sign drawings. Item balloons, quantity columns, material callouts. Used for sign component breakdowns (poles, panels, fasteners, electrical components).",
+      "version_year": 2020,
+      "status": "current",
+      "supersedes": "ASME Y14.34-2013"
+    },
+    {
+      "id": "ASME_Y14_36M",
+      "name": "ASME Y14.36M",
+      "full_title": "Surface Texture Symbols",
+      "category": "drafting",
+      "applicable_to": ["monument", "blade", "pylon"],
+      "key_sections": [
+        {"section": "Section 3", "topic": "Surface Texture Symbols"},
+        {"section": "Section 4", "topic": "Application of Symbols on Drawings"},
+        {"section": "Section 5", "topic": "Surface Roughness Parameters (Ra, Rz)"}
+      ],
+      "sign_relevance": "Surface finish specification for machined sign components (baseplates, milled aluminum faces). Ra callouts on critical bearing surfaces. Generally applies to CNC-machined components, not fabricated sheet/tube.",
+      "version_year": 2018,
+      "status": "current",
+      "supersedes": "ASME Y14.36M-2012"
+    },
+    {
+      "id": "ASME_Y14_5_1_2019",
+      "name": "ASME Y14.5.1-2019",
+      "full_title": "Mathematical Definition of Dimensioning and Tolerancing Principles",
+      "category": "drafting",
+      "applicable_to": ["monument", "blade", "pylon"],
+      "key_sections": [
+        {"section": "Section 3", "topic": "Geometric Definitions (True Position, Profile)"},
+        {"section": "Section 5", "topic": "Mathematical Models for Tolerance Zones"}
+      ],
+      "sign_relevance": "Mathematical companion to Y14.5. Defines rigorous tolerance zone math for CNC and CMM verification. Applicable when sign components require precision machining (anchor bolt patterns, mating surfaces).",
+      "version_year": 2019,
+      "status": "current",
+      "supersedes": "ASME Y14.5.1-1994"
+    },
+    {
+      "id": "ASME_Y14_43_2011_R2021",
+      "name": "ASME Y14.43-2011(R2021)",
+      "full_title": "Dimensioning and Tolerancing Principles for Gages and Fixtures",
+      "category": "drafting",
+      "applicable_to": ["monument", "pylon"],
+      "key_sections": [
+        {"section": "Section 3", "topic": "Gage Tolerancing Principles"},
+        {"section": "Section 5", "topic": "Functional Gage Design"}
+      ],
+      "sign_relevance": "Gage and fixture tolerancing for sign manufacturing QC. Applicable when fabrication jigs are used for repetitive sign production (anchor bolt templates, baseplate drilling jigs).",
+      "version_year": 2011,
+      "status": "current (reaffirmed 2021)",
+      "supersedes": null
+    },
+    {
+      "id": "ASME_Y14_8_2022",
+      "name": "ASME Y14.8-2022",
+      "full_title": "Castings, Forgings, and Molded Parts",
+      "category": "drafting",
+      "applicable_to": ["monument", "pylon"],
+      "key_sections": [
+        {"section": "Section 3", "topic": "Casting Drawing Practices"},
+        {"section": "Section 4", "topic": "Draft Angles and Parting Lines"},
+        {"section": "Section 5", "topic": "Machining Allowances"}
+      ],
+      "sign_relevance": "Drawing practices for cast sign components (decorative bases, ornamental brackets). Draft angles, parting line indication, machining stock allowance specification.",
+      "version_year": 2022,
+      "status": "current",
+      "supersedes": "ASME Y14.8-2009"
+    },
+    {
+      "id": "ASME_Y14_46",
+      "name": "ASME Y14.46",
+      "full_title": "Product Definition for Additive Manufacturing",
+      "category": "drafting",
+      "applicable_to": ["channel_letter", "cabinet"],
+      "key_sections": [
+        {"section": "Section 3", "topic": "AM-Specific Drawing Requirements"},
+        {"section": "Section 4", "topic": "Build Orientation and Support Structures"}
+      ],
+      "sign_relevance": "Additive manufacturing drawing practices. Emerging relevance for 3D-printed sign components (decorative elements, custom letterforms, LED housings). Build orientation and surface finish callouts.",
+      "version_year": 2022,
+      "status": "current",
+      "supersedes": null
+    },
+    {
+      "id": "AWS_A2_4_2020",
+      "name": "AWS A2.4:2020",
+      "full_title": "Standard Symbols for Welding, Brazing, and Nondestructive Examination",
+      "category": "drafting",
+      "applicable_to": ["monument", "blade", "pylon", "cabinet"],
+      "key_sections": [
+        {"section": "Section 3", "topic": "Welding Symbol Components (Arrow, Reference Line, Tail)"},
+        {"section": "Section 4", "topic": "Fillet Weld Symbols"},
+        {"section": "Section 5", "topic": "Groove Weld Symbols (CJP, PJP)"},
+        {"section": "Section 7", "topic": "Supplementary Symbols (Field Weld, All Around)"},
+        {"section": "Section 9", "topic": "NDE Symbols"}
+      ],
+      "sign_relevance": "Weld symbol standard for sign fabrication drawings. Fillet weld sizing (3/16 min for structural, 1/4 typical for HSS-to-baseplate). CJP symbols at critical baseplate connections. Field weld flag for site-installed components. All-around symbol for continuous perimeter welds.",
+      "version_year": 2020,
+      "status": "current",
+      "supersedes": "AWS A2.4:2012"
+    },
+    {
+      "id": "NCS_V7",
+      "name": "NCS V7",
+      "full_title": "National CAD Standard Version 7",
+      "category": "drafting",
+      "applicable_to": ["monument", "blade", "pylon", "channel_letter", "cabinet"],
+      "key_sections": [
+        {"section": "Module 1", "topic": "Uniform Drawing System (Sheet Organization)"},
+        {"section": "Module 2", "topic": "Plotting Guidelines (Lineweights, Colors)"},
+        {"section": "Module 3", "topic": "Layer Guidelines (Discipline-Major-Minor-Status)"},
+        {"section": "Module 4", "topic": "Symbols Library"},
+        {"section": "Module 5", "topic": "Terms and Abbreviations"}
+      ],
+      "sign_relevance": "National layer naming standard. Format: Discipline-Major-Minor-Status (e.g., S-SIGN-DIMS). Disciplines: S=Structural, C=Civil, E=Electrical, A=Architectural. Used for DXF layer naming in SignX drawing output.",
+      "version_year": 2022,
+      "status": "current",
+      "supersedes": "NCS V6"
+    },
+    {
+      "id": "ADA_2010",
+      "name": "ADA 2010",
+      "full_title": "2010 ADA Standards for Accessible Design",
+      "category": "accessibility",
+      "applicable_to": ["monument", "blade", "pylon"],
+      "key_sections": [
+        {"section": "Section 307", "topic": "Protruding Objects (4\" max below 27\" AFF, 12\" max above 27\" AFF)"},
+        {"section": "Section 308", "topic": "Reach Ranges"},
+        {"section": "Section 402", "topic": "Accessible Routes (Clear Width)"},
+        {"section": "Section 703", "topic": "Signs (Tactile, Visual Characters, Braille)"},
+        {"section": "Section 703.5", "topic": "Visual Characters (Contrast, Height, Finish)"}
+      ],
+      "sign_relevance": "Accessibility standard for signs on accessible routes. Section 307 limits protruding sign elements. Section 703 governs wayfinding sign character height, contrast, and tactile requirements. Section 703.5 specifies minimum character height based on viewing distance. Monument signs near pedestrian paths must comply.",
+      "version_year": 2010,
+      "status": "current",
+      "supersedes": "ADA 1991 ADAAG"
+    },
+    {
+      "id": "MUTCD_11",
+      "name": "MUTCD 11th Edition",
+      "full_title": "Manual on Uniform Traffic Control Devices",
+      "category": "accessibility",
+      "applicable_to": ["pylon", "monument", "blade"],
+      "key_sections": [
+        {"section": "Part 2", "topic": "Signs (Regulatory, Warning, Guide)"},
+        {"section": "Section 2A.06", "topic": "Mounting Height Requirements"},
+        {"section": "Section 2A.07", "topic": "Lateral Offset from Roadway"},
+        {"section": "Section 2A.14", "topic": "Retroreflectivity and Illumination"},
+        {"section": "Part 2L", "topic": "Changeable Message Signs"}
+      ],
+      "sign_relevance": "FHWA standard for traffic control signs. Governs height, setback, retroreflectivity for signs in right-of-way. 11th Edition (2023) is current. Applies to directional and wayfinding signs visible from public roads. Retroreflectivity requirements affect sign face material selection.",
+      "version_year": 2023,
+      "status": "current",
+      "supersedes": "MUTCD 10th Edition (2009)"
+    },
+    {
+      "id": "OSHA_1926_200",
+      "name": "OSHA 1926.200",
+      "full_title": "Accident Prevention Signs and Tags (Construction)",
+      "category": "safety",
+      "applicable_to": ["monument", "blade", "pylon"],
+      "key_sections": [
+        {"section": "1926.200(a)", "topic": "Signs and Symbols General"},
+        {"section": "1926.200(b)", "topic": "Danger Signs"},
+        {"section": "1926.200(c)", "topic": "Caution Signs"},
+        {"section": "1926.200(d)", "topic": "Exit Signs"},
+        {"section": "1926.200(h)", "topic": "Safety Instruction Signs"}
+      ],
+      "sign_relevance": "OSHA construction safety sign requirements. Applies during sign installation on construction sites. Danger, caution, and safety instruction sign specifications. Not directly about sign products but governs signage used during sign installation projects.",
+      "version_year": 2012,
+      "status": "current",
+      "supersedes": null
+    },
+    {
+      "id": "OSHA_1910_145",
+      "name": "OSHA 1910.145",
+      "full_title": "Specifications for Accident Prevention Signs and Tags (General Industry)",
+      "category": "safety",
+      "applicable_to": ["monument", "blade", "pylon", "channel_letter", "cabinet"],
+      "key_sections": [
+        {"section": "1910.145(c)", "topic": "Design Requirements (Color, Format)"},
+        {"section": "1910.145(d)", "topic": "Sign Classification (Danger, Caution, Safety Instruction)"},
+        {"section": "1910.145(e)", "topic": "Sign Wording"},
+        {"section": "1910.145(f)", "topic": "Biological Hazard Signs"}
+      ],
+      "sign_relevance": "General industry safety sign specifications. Applies to safety signs fabricated by sign companies for client facilities. Color coding (red=danger, yellow=caution, green=safety). ANSI Z535 series provides more detailed guidance.",
+      "version_year": 2012,
+      "status": "current",
+      "supersedes": null
+    },
+    {
+      "id": "MIL_STD_31000B",
+      "name": "MIL-STD-31000B",
+      "full_title": "Technical Data Packages",
+      "category": "safety",
+      "applicable_to": ["monument", "pylon"],
+      "key_sections": [
+        {"section": "Section 4", "topic": "Technical Data Package Requirements"},
+        {"section": "Section 5", "topic": "Drawing Practices and Formats"},
+        {"section": "Appendix A", "topic": "3D Model-Based Definition"}
+      ],
+      "sign_relevance": "Military/government TDP standard. Applies when fabricating signs for federal/DOD facilities. Specifies complete technical data package format including drawings, specs, and quality requirements. STEP AP242 for 3D deliverables.",
+      "version_year": 2018,
+      "status": "current",
+      "supersedes": "MIL-STD-31000A"
+    },
+    {
+      "id": "AASHTO_M_268",
+      "name": "AASHTO M 268",
+      "full_title": "Standard Specification for Aluminum Overhead Sign Structures",
+      "category": "safety",
+      "applicable_to": ["pylon", "blade"],
+      "key_sections": [
+        {"section": "Section 4", "topic": "Materials (6061-T6 Aluminum)"},
+        {"section": "Section 5", "topic": "Fabrication Requirements"},
+        {"section": "Section 6", "topic": "Assembly and Erection"},
+        {"section": "Section 7", "topic": "Inspection and Testing"}
+      ],
+      "sign_relevance": "AASHTO material specification for aluminum overhead sign structures. Covers alloy requirements, fabrication tolerances, weld procedures for aluminum sign supports. Applies to highway overhead sign structures.",
+      "version_year": 2020,
+      "status": "current",
+      "supersedes": null
+    },
+    {
+      "id": "AASHTO_M_120",
+      "name": "AASHTO M 120",
+      "full_title": "Standard Specification for Zinc (Hot-Dip Galvanized) Coatings on Iron and Steel Products",
+      "category": "safety",
+      "applicable_to": ["monument", "blade", "pylon"],
+      "key_sections": [
+        {"section": "Section 4", "topic": "Materials and Manufacture"},
+        {"section": "Section 5", "topic": "Coating Requirements (Grade/Class)"},
+        {"section": "Section 7", "topic": "Inspection (Thickness, Adhesion)"}
+      ],
+      "sign_relevance": "Hot-dip galvanizing specification for steel sign components. Governs zinc coating thickness and quality for corrosion protection. Most steel sign poles and structures are hot-dip galvanized per this standard (or ASTM A123 equivalent).",
+      "version_year": 2019,
+      "status": "current",
+      "supersedes": null
+    }
+  ],
+  "hatch_patterns": {
+    "ANSI31": {
+      "material": "concrete/masonry",
+      "angle": 45,
+      "description": "45-degree diagonal lines - standard section hatch for concrete and masonry",
+      "asme_ref": "Y14.3 Section 5"
+    },
+    "ANSI32": {
+      "material": "steel",
+      "angle": 45,
+      "description": "Double diagonal lines for steel sections",
+      "asme_ref": "Y14.3 Section 5"
+    },
+    "ANSI33": {
+      "material": "brass/bronze/copper",
+      "angle": 45,
+      "description": "Diagonal lines with alternating spacing for brass, bronze, and copper sections",
+      "asme_ref": "Y14.3 Section 5"
+    },
+    "EARTH": {
+      "material": "soil/earth",
+      "angle": 0,
+      "description": "Earth fill pattern with irregular short lines",
+      "asme_ref": "Y14.3 Section 5"
+    },
+    "AR-CONC": {
+      "material": "concrete",
+      "angle": 0,
+      "description": "AutoCAD proprietary concrete pattern with random aggregates - DEPRECATED, use ANSI31 for cross-platform compatibility and matplotlib preview rendering",
+      "deprecated": true
+    },
+    "AR-SAND": {
+      "material": "sand/gravel",
+      "angle": 0,
+      "description": "AutoCAD proprietary sand pattern - NOT suitable for steel sections, use ANSI32 instead",
+      "deprecated": true
+    },
+    "GRAVEL": {
+      "material": "gravel/aggregate",
+      "angle": 0,
+      "description": "Gravel fill pattern with rounded aggregate shapes",
+      "asme_ref": "Y14.3 Section 5"
+    },
+    "GRATE": {
+      "material": "perforated metal",
+      "angle": 0,
+      "description": "Perforated/grated metal panel pattern with crossed lines",
+      "asme_ref": "Y14.3 Section 5"
+    }
+  },
+  "layer_conventions": {
+    "ncs_v7": {
+      "format": "Discipline-Major-Minor-Status",
+      "disciplines": {
+        "S": "Structural",
+        "C": "Civil",
+        "E": "Electrical",
+        "A": "Architectural"
+      },
+      "major_groups": {
+        "SIGN": "Sign structure",
+        "FNDN": "Foundation"
+      },
+      "layers": {
+        "S-SIGN-DIMS": "Primary structural dimensions",
+        "S-SIGN-ANNO-RDIM": "Radial dimensions",
+        "C-SIGN-SETB": "Civil setback dimensions",
+        "S-SIGN-ANNO-LEDR": "Leaders to structural components",
+        "S-SIGN-ANNO-TEXT": "General notes and text",
+        "E-SIGN-ANNO-KEYN": "Electrical keyed notes",
+        "S-FNDN-HATCH": "Foundation hatching (ANSI31)",
+        "S-SIGN-HATCH-STEL": "Steel section hatching (ANSI32)",
+        "C-SIGN-HATCH-ERTH": "Civil earth hatching",
+        "S-SIGN-ANNO-SYMB": "Weld symbols, section cuts, north arrows",
+        "A-SIGN-ANNO-TTLB": "Title block",
+        "A-SIGN-ANNO-TAGS": "Sign type identification tags"
+      }
+    },
+    "signx_current": {
+      "note": "Current SignX layer names for backward compatibility",
+      "layers": {
+        "CONCRETE": "S-FNDN-CONC equivalent",
+        "STEEL": "S-SIGN-STRU equivalent",
+        "REBAR": "S-FNDN-REINF equivalent",
+        "DIMENSIONS": "S-SIGN-DIMS equivalent",
+        "NOTES": "S-SIGN-ANNO-TEXT equivalent",
+        "HATCH": "S-FNDN-HATCH equivalent",
+        "CENTERLINE": "S-SIGN-CNTR equivalent",
+        "HIDDEN": "S-SIGN-HIDN equivalent",
+        "BORDER": "A-SIGN-BRDR equivalent",
+        "TITLEBLOCK": "A-SIGN-ANNO-TTLB equivalent"
+      }
+    }
+  },
+  "drafting_rules": {
+    "line_weights_mm": {
+      "thick": {
+        "min": 0.50,
+        "max": 0.70,
+        "use": "Object outlines, visible edges"
+      },
+      "medium": {
+        "min": 0.35,
+        "max": 0.50,
+        "use": "Construction lines, steel frames"
+      },
+      "thin": {
+        "min": 0.25,
+        "max": 0.35,
+        "use": "Dimensions, notes, hidden lines, hatching"
+      }
+    },
+    "text_heights_inches": {
+      "general_notes": {
+        "min": 0.09,
+        "recommended": 0.10,
+        "sheet": "ANSI D"
+      },
+      "dimensions": {
+        "min": 0.10,
+        "recommended": 0.10
+      },
+      "titles": {
+        "min": 0.14,
+        "recommended": 0.18
+      },
+      "company_name": {
+        "min": 0.14,
+        "recommended": 0.20
+      },
+      "leader_callouts": {
+        "min": 0.09,
+        "recommended": 0.09
+      }
+    },
+    "dimension_spacing": {
+      "first_from_object_mm": 10,
+      "between_parallel_mm": 6,
+      "extension_gap_mm": 1,
+      "extension_beyond_mm": 3,
+      "reference": "ASME Y14.5-2018"
+    },
+    "leader_rules": {
+      "angle_range_deg": [30, 60],
+      "never_horizontal": true,
+      "never_vertical": true,
+      "shelf_length_inches": {
+        "min": 0.25,
+        "max": 0.50
+      },
+      "arrowhead": "points toward geometry",
+      "text_position": "above shelf, left-aligned",
+      "reference": "ASME Y14.2-2023 Section 4"
+    },
+    "hatching_rules": {
+      "default_angle": 45,
+      "adjacent_same_material": "mirror angle (45/135)",
+      "must_not_overlap": ["dimensions", "leaders", "visible_lines"],
+      "boundary_mask": "required around text",
+      "reference": "ASME Y14.3 Section 5"
+    },
+    "dimension_terminators": {
+      "structural": {
+        "type": "tick_marks",
+        "size_inches": 0.05,
+        "asme_ref": "Y14.2-2023 Section 3.2.2"
+      },
+      "civil": {
+        "type": "closed_filled_arrowheads",
+        "size_inches": 0.10
+      },
+      "note": "SignX uses tick marks (structural convention)"
+    }
+  }
+}
