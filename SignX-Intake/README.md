@@ -10,7 +10,7 @@ Power Automate cloud flows (M365 Business Standard license) → Anthropic IP con
 
 - Power Automate (make.powerautomate.com)
 - Anthropic API key (Premium connector, included in M365 Business Standard license)
-- Notion integration token (ntn_52048...)
+- Notion integration token (set via NOTION_TOKEN env var)
 - Office 365 Outlook (brady@eaglesign.net)
 - BID REQUEST subfolder structure: Inbox/BID REQUEST/{salesperson}
 

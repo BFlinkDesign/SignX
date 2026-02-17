@@ -21,7 +21,7 @@ Eagle Sign receives bid requests via email across multiple salespeople (Jeff Fye
 | Jeff Bid Request to Task | ON (dormant) | Created Sep 2025, no recent runs. MUST INVESTIGATE before building |
 | Joe Bid Requests to Tasks | ON (dormant) | Same. Could be sending to To-Do/Planner |
 | Notion Bid Pipeline DB | Active | 21 quotes, $516K. ID: 304c1e58d2dd814aae63c6a0d44e6679 |
-| Notion API token | Active | ntn_5204874518193...c8 |
+| Notion API token | Active | Set via NOTION_TOKEN env var |
 | Notion IP connector | Confirmed available | Premium, covered by M365 license |
 | HTTP connector (for Anthropic API) | Confirmed available | Premium, covered by M365 license. POST to api.anthropic.com/v1/messages with x-api-key header. Anthropic IP connector confirmed NOT available in PA (Chrome ext audit 2026-02-14). |
 | Office 365 Outlook | Connected (x2) | Auto-authenticates to brady@eaglesign.net |

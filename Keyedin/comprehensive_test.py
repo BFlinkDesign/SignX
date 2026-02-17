@@ -73,8 +73,8 @@ def test_api_initialization():
     try:
         api = KeyedInAPIEnhanced(
             cookies_file='keyedin_chrome_session.json',
-            username='BradyF',
-            password='[REDACTED]',
+            username=os.environ.get('KEYEDIN_USERNAME', 'BradyF'),
+            password=os.environ.get('KEYEDIN_PASSWORD', ''),
             auto_refresh=False  # Disable for testing
         )
         
@@ -251,13 +251,13 @@ def test_cdp_extractor():
     
     try:
         extractor = KeyedInCDPExtractor(
-            username='BradyF',
-            password='[REDACTED]'
+            username=os.environ.get('KEYEDIN_USERNAME', 'BradyF'),
+            password=os.environ.get('KEYEDIN_PASSWORD', '')
         )
-        
+
         assert extractor.base_url == 'https://eaglesign.keyedinsign.com', "Base URL incorrect"
-        assert extractor.username == 'BradyF', "Username incorrect"
-        assert extractor.password == '[REDACTED]', "Password incorrect"
+        assert extractor.username, "Username not set"
+        assert extractor.password, "Password not set (use KEYEDIN_PASSWORD env var)"
         
         print("[OK] CDP Extractor initialized successfully")
         print(f"[OK] Base URL: {extractor.base_url}")

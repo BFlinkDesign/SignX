@@ -11,7 +11,7 @@ print('=' * 80)
 api = KeyedInAPIEnhanced(
     cookies_file='keyedin_chrome_session.json',
     username='BradyF',
-    password='[REDACTED]',
+    password=os.environ.get('KEYEDIN_PASSWORD', ''),
     auto_refresh=False  # Disable for testing
 )
 

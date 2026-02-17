@@ -108,7 +108,7 @@ pip install -e .
 1. Create `.env` file:
 ```bash
 KEYEDIN_USERNAME=BradyF
-KEYEDIN_PASSWORD=[REDACTED]
+KEYEDIN_PASSWORD=[REDACTED - use KEYEDIN_PASSWORD env var]
 KEYEDIN_BASE_URL=https://eaglesign.keyedinsign.com
 ```
 

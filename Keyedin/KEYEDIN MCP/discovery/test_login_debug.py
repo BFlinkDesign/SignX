@@ -20,7 +20,7 @@ with sync_playwright() as p:
         print(f"✗ Could not fill USERNAME: {e}")
     
     try:
-        page.fill('input[name="PASSWORD"]', '[REDACTED]')
+        page.fill('input[name="PASSWORD"]', os.environ.get('KEYEDIN_PASSWORD', ''))
         print("✓ Filled PASSWORD")
     except Exception as e:
         print(f"✗ Could not fill PASSWORD: {e}")

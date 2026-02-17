@@ -15,7 +15,7 @@ try:
     
     print('\n Please LOGIN MANUALLY in the browser window')
     print('   Username: BradyF')
-    print('   Password: [REDACTED]')
+    print('   Password: (use KEYEDIN_PASSWORD env var)')
     print()
     print('After logging in, come back here and press Enter...')
     

@@ -24,7 +24,7 @@ try:
     
     print('\n Please LOGIN MANUALLY in Chrome')
     print('   Username: BradyF')
-    print('   Password: [REDACTED]')
+    print('   Password: (use KEYEDIN_PASSWORD env var)')
     print()
     print(' TIP: Press F12 to open Chrome DevTools')
     print('   - Go to Network tab to see all requests')

@@ -23,7 +23,7 @@ else:
             break
 
 username = os.getenv('KEYEDIN_USERNAME', 'BradyF')
-password = os.getenv('KEYEDIN_PASSWORD', '[REDACTED]')
+password = os.getenv('KEYEDIN_PASSWORD', '')
 base_url = os.getenv('KEYEDIN_BASE_URL', 'https://eaglesign.keyedinsign.com')
 
 print('=' * 80)

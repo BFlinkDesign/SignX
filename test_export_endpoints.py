@@ -18,9 +18,9 @@ BASE_URL = "https://eaglesign.keyedinsign.com"
 CGI_BASE = f"{BASE_URL}/cgi-bin/mvi.exe"
 RESULTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "export-test-results")
 
-# Credentials from existing repo scripts
-USERNAME = "BradyF"
-PASSWORD = "[REDACTED]"
+# Credentials from environment variables
+USERNAME = os.environ.get("KEYEDIN_USERNAME", "")
+PASSWORD = os.environ.get("KEYEDIN_PASSWORD", "")
 
 EXPORT_ENDPOINTS = [
     "CUST.PROD.EXPORT",

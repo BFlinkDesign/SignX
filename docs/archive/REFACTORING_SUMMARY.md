@@ -320,7 +320,7 @@ The platform/ and modules/ I built are:
 **Fill in the blanks** - **don't start over!**
 
 ### **3. Gemini is Your Secret Weapon**
-With your API key (AIzaSyDtPu7Q...) and 834 curated docs:
+With your API key (set via GOOGLE_API_KEY env var) and 834 curated docs:
 - Free tier: 1,500 requests/day
 - Query cost: $0 (FREE!)
 - Storage cost: $0 (FREE!)

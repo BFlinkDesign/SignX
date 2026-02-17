@@ -9,6 +9,7 @@ on:
 jobs:
   api-checks:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     defaults:
       run:
         working-directory: services/api
@@ -29,8 +30,8 @@ jobs:
         run: mypy src
       - name: Pytest with coverage
         run: |
-          uv pip install --system pytest pytest-cov pytest-asyncio
-          python -m pytest tests/ -v --cov=src --cov-report=xml --cov-fail-under=80
+          uv pip install --system pytest pytest-cov pytest-asyncio pytest-timeout
+          python -m pytest tests/ -v --timeout=30 --timeout-method=thread --cov=src --cov-report=xml --cov-fail-under=80
       - name: Upload coverage
         uses: codecov/codecov-action@v4
         with:
@@ -40,6 +41,7 @@ jobs:
 
   docker-build:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: api-checks
     steps:
       - uses: actions/checkout@v4
@@ -62,6 +64,7 @@ jobs:
 
   acceptance:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     needs: docker-build
     steps:
       - uses: actions/checkout@v4
@@ -90,19 +93,19 @@ jobs:
         env:
           APEX_OPENAPI_URL: http://localhost:8000/openapi.json
         run: |
-          python -m pytest -q tests/contract/test_openapi_contract.py
+          python -m pytest -q --timeout=30 tests/contract/test_openapi_contract.py
       - name: Envelope schema parity
         run: |
-          python -m pytest -q tests/contract/test_envelope_schema.py
+          python -m pytest -q --timeout=30 tests/contract/test_envelope_schema.py
       - name: Rate limit gate
         run: |
-          python -m pytest -q tests/contract/test_rate_limit.py
+          python -m pytest -q --timeout=30 tests/contract/test_rate_limit.py
       - name: E2E tests
         run: |
-          uv pip install --system httpx pytest pytest-asyncio
+          uv pip install --system httpx pytest pytest-asyncio pytest-timeout
           docker compose -f docker-compose.test.yml up -d
           sleep 30  # Wait for services to be healthy
-          python -m pytest tests/e2e/ -v --maxfail=3
+          python -m pytest tests/e2e/ -v --timeout=30 --maxfail=3
           docker compose -f docker-compose.test.yml down -v
       - name: k6 smoke
         uses: grafana/k6-action@v0.3.1
@@ -121,5 +124,3 @@ jobs:
           format: table
           exit-code: '1'
           ignore-unfixed: true
-
-
