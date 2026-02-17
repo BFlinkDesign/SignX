@@ -43,14 +43,82 @@ CRITICAL CONVENTIONS:
 
 from __future__ import annotations
 
+import json
 import math
 import re
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Optional
+from pathlib import Path
+from typing import Any, Optional
 
 # numpy/pandas imported lazily inside robust_z_mad/baseline_for_group
 # to avoid 30s+ cold-start penalty on every engine load
+
+# ── Auto-Calibration ──────────────────────────────────────────────────────────
+# Load calibration.json on module import. If missing, use hardcoded defaults.
+# Recalibrate via: python calibrate.py (or POST /api/calibrate)
+_CALIBRATION_FILE = Path(__file__).parent / "data" / "calibration.json"
+_CALIBRATION: dict[str, Any] = {}
+
+def _load_calibration() -> dict[str, Any]:
+    """Load calibration data from JSON. Returns empty dict if unavailable."""
+    global _CALIBRATION
+    if _CALIBRATION_FILE.exists():
+        try:
+            _CALIBRATION = json.loads(
+                _CALIBRATION_FILE.read_text(encoding="utf-8")
+            )
+        except (json.JSONDecodeError, OSError):
+            _CALIBRATION = {}
+    return _CALIBRATION
+
+def reload_calibration() -> dict[str, Any]:
+    """Force reload calibration (called after recalibrate)."""
+    global _CALIBRATION
+    _CALIBRATION = {}
+    return _load_calibration()
+
+def _cal_install_floor(sign_type: str) -> float:
+    """Get install floor from calibration, falling back to INSTALL_FLOOR dict."""
+    cal = _CALIBRATION or _load_calibration()
+    floors = cal.get("install_floors", {})
+    if sign_type in floors:
+        return floors[sign_type]["value"]
+    return INSTALL_FLOOR.get(sign_type, cal.get("defaults", {}).get("install_floor", 4.80))
+
+def _cal_removal_floor(sign_type: str) -> float:
+    """Get removal floor from calibration, falling back to REMOVAL_FLOOR dict."""
+    cal = _CALIBRATION or _load_calibration()
+    floors = cal.get("removal_floors", {})
+    if sign_type in floors:
+        return floors[sign_type]["value"]
+    return REMOVAL_FLOOR.get(sign_type, cal.get("defaults", {}).get("removal_floor", REMOVAL_DEFAULT))
+
+def _cal_ot_factors(sign_type: str) -> tuple[float, float, float, float, float]:
+    """Get OT factors from calibration, falling back to OT_FACTORS dict."""
+    cal = _CALIBRATION or _load_calibration()
+    ot = cal.get("ot_factors", {}).get(sign_type, {})
+    if ot:
+        return (
+            ot.get("fab_ot_probability", 0.0),
+            ot.get("fab_ot_mean", 0.0),
+            ot.get("install_ot_probability", 0.0),
+            ot.get("install_ot_mean", 0.0),
+            ot.get("expected_total", 0.0),
+        )
+    # Fallback to hardcoded OT_FACTORS
+    return OT_FACTORS.get(sign_type, (0.0, 0.0, 0.0, 0.0, 0.0))
+
+def _cal_work_code_median(sign_type: str, work_code: str) -> float | None:
+    """Get warehouse P50 for a sign_type + work_code from calibration."""
+    cal = _CALIBRATION or _load_calibration()
+    medians = cal.get("work_code_medians", {})
+    if sign_type in medians and work_code in medians[sign_type]:
+        return medians[sign_type][work_code]["p50"]
+    return None
+
+# Initialize calibration on import
+_load_calibration()
 
 
 # ── Enums ────────────────────────────────────────────────────────────────────
@@ -95,6 +163,7 @@ class SignType(str, Enum):
     LED = "LED"           # LED Conversion/Retrofit
     ALULIT = "ALULIT"     # Aluminum Cabinet Illuminated
     ALUNON = "ALUNON"     # Aluminum Cabinet Non-Illuminated
+    FLATPNL = "FLATPNL"   # Flat Panel (alum/steel sheet + vinyl, face-mount)
     VINYL = "VINYL"       # Vinyl Graphics
     NEON = "NEON"         # Neon (legacy)
     OTHER = "OTHER"       # Other/Miscellaneous
@@ -337,7 +406,51 @@ INSTALL_FLOOR: dict[str, float] = {
     "GEMINI": 4.20,   # warehouse P50=3.50 × 1.20 = 4.20, n=104
     "LED":    4.50,   # warehouse P50=3.75 × 1.20 = 4.50, n=47
     "ALULIT": 4.80,   # warehouse P50=4.00 × 1.20 = 4.80, n=3 [LOW CONFIDENCE]
+    "FLATPNL": 2.40,  # estimated: simple face-mount, 1-man, n=0 [NO WAREHOUSE DATA]
 }
+
+# CORRECTION 1B: Removal — warehouse P50 x 1.20 buffer (two-tier system)
+# Calibrated from signx.duckdb so_contract_labor work_code='0625' actual_hours, 452 jobs
+# Calibration date: 2026-02-17
+# WARNING: These are crew-speed snapshots. Recalibrate when crew composition changes.
+# Recalibration query:
+#   SELECT sign_type, MEDIAN(actual_hours) FROM so_contract_labor l
+#   JOIN so_contracts c ON l.wo_number = c.work_order
+#   WHERE l.work_code = '0625' AND l.actual_hours > 0
+#   GROUP BY sign_type
+#
+# Tier 1: Warehouse P50 x 1.20 (known sign types)
+# Tier 2: PF-based ABC formula fallback (unknown types with PF data)
+# Tier 3: Overall P50 x 1.20 default (no data at all)
+REMOVAL_FLOOR: dict[str, float] = {
+    "CLLIT":  3.90,   # warehouse P50=3.25 x 1.20, n=69,  calibrated 2026-02
+    "MONDF":  2.40,   # warehouse P50=2.00 x 1.20, n=33,  calibrated 2026-02
+    "POLLIT": 2.70,   # warehouse P50=2.25 x 1.20, n=28,  calibrated 2026-02
+    "OTHER":  4.20,   # warehouse P50=3.50 x 1.20, n=16,  calibrated 2026-02
+    "BLDILL": 2.40,   # warehouse P50=2.00 x 1.20, n=13,  calibrated 2026-02
+    "GEMINI": 1.80,   # warehouse P50=1.50 x 1.20, n=13,  calibrated 2026-02
+    "DIRECT": 1.50,   # warehouse P50=1.25 x 1.20, n=11,  calibrated 2026-02
+    "VINYL":  1.20,   # warehouse P50=1.00 x 1.20, n=9,   calibrated 2026-02
+    "LED":    2.10,   # warehouse P50=1.75 x 1.20, n=9,   calibrated 2026-02
+    "POLNON": 1.20,   # warehouse P50=1.00 x 1.20, n=9,   calibrated 2026-02
+    "CLNON":  1.50,   # warehouse P50=1.25 x 1.20, n=8,   calibrated 2026-02
+    "BLDNON": 3.60,   # warehouse P50=3.00 x 1.20, n=5,   calibrated 2026-02
+    "AWNNON": 3.00,   # warehouse P50=2.50 x 1.20, n=4,   calibrated 2026-02
+    "MONSF": 10.20,   # warehouse P50=8.50 x 1.20, n=3,   calibrated 2026-02 [HIGH VARIANCE]
+}
+REMOVAL_DEFAULT = 2.40  # Overall P50 ~2.0 x 1.20 (Tier 3 fallback)
+
+# ── Auto-populate from calibration.json (overrides hardcoded values above) ───
+# Hardcoded dicts above serve as Tier 2 fallback if calibration is unavailable.
+# When calibration.json exists, its values take precedence (newer warehouse data).
+if _CALIBRATION:
+    for _st, _data in _CALIBRATION.get("install_floors", {}).items():
+        INSTALL_FLOOR[_st] = _data["value"]
+    for _st, _data in _CALIBRATION.get("removal_floors", {}).items():
+        REMOVAL_FLOOR[_st] = _data["value"]
+    _cal_defaults = _CALIBRATION.get("defaults", {})
+    if "removal_floor" in _cal_defaults:
+        REMOVAL_DEFAULT = _cal_defaults["removal_floor"]
 
 # CORRECTION 2: CLLIT 0270 misc fab — catch-all code anomaly
 # Warehouse: mean=63.00h, est=6.12h, variance=+56.88h (228 jobs)
@@ -358,6 +471,17 @@ OT_FACTORS: dict[str, tuple[float, float, float, float, float]] = {
     "GEMINI": (0.0,   0.0,  0.478, 1.81, 0.87),
     "LED":    (0.0,   0.0,  0.453, 1.76, 0.80),
 }
+
+# Auto-populate OT_FACTORS from calibration (adds sign types not in hardcoded dict)
+if _CALIBRATION:
+    for _st, _ot in _CALIBRATION.get("ot_factors", {}).items():
+        OT_FACTORS[_st] = (
+            _ot.get("fab_ot_probability", 0.0),
+            _ot.get("fab_ot_mean", 0.0),
+            _ot.get("install_ot_probability", 0.0),
+            _ot.get("install_ot_mean", 0.0),
+            _ot.get("expected_total", 0.0),
+        )
 
 
 # ── MONDF Correction Factors ─────────────────────────────────────────────────
@@ -1239,15 +1363,17 @@ def estimate(job: JobInput) -> EstimateResult:
         section="Standard",
     ))
 
-    # ── 0625 Removal (optional) ──────────────────────────────────────────
+    # ── 0625 Removal (optional) — warehouse P50 x 1.20 ───────────────────
     if job.include_removal:
-        removal_hrs = install_crew_hrs * 0.65 * 2
+        _rem_key = job.sign_type.value
+        removal_hrs = REMOVAL_FLOOR.get(_rem_key, REMOVAL_DEFAULT)
+        _rem_src = f"REMOVAL_FLOOR[{_rem_key}]" if _rem_key in REMOVAL_FLOOR else f"REMOVAL_DEFAULT (type {_rem_key})"
         install.append(LaborLine(
             work_code="0625", description="Removal",
             hours=round(removal_hrs, 2), unit_type="man-hrs",
             department="Installation (600)",
-            formula=f"Install crew-hrs ({install_crew_hrs:.2f}) x 0.65 x 2",
-            section="Standard",
+            formula=f"{_rem_src} = {removal_hrs}h (warehouse P50 x 1.20)",
+            section="Warehouse removal floor",
         ))
 
     # Phase 0 CORRECTION 3: Install overtime (9600) — probability-weighted
@@ -1608,14 +1734,15 @@ def estimate_monument(job: JobInput) -> EstimateResult:
             section="MONDF correction",
         ))
 
-    # 0625 Removal (optional)
+    # 0625 Removal (optional) — warehouse P50 x 1.20
     if job.include_removal:
+        _mondf_rem = REMOVAL_FLOOR.get("MONDF", REMOVAL_DEFAULT)
         install.append(LaborLine(
             work_code="0625", description="Removal",
-            hours=round(MONDF_0625_MEDIAN, 2), unit_type="man-hrs",
+            hours=round(_mondf_rem, 2), unit_type="man-hrs",
             department="Installation (600)",
-            formula=f"Warehouse median {MONDF_0625_MEDIAN}h (n=23, NONLIT)",
-            section="MONDF correction",
+            formula=f"REMOVAL_FLOOR[MONDF] = {_mondf_rem}h (warehouse P50 x 1.20, n=33)",
+            section="Warehouse removal floor",
         ))
 
     # 0605 Footing (optional, self-performed)
@@ -1654,7 +1781,7 @@ def estimate_monument(job: JobInput) -> EstimateResult:
 def estimate_removal(job: JobInput) -> EstimateResult:
     """
     Estimate labor for a standalone sign removal job.
-    Uses install floor x 0.65 x 2 (ABC formula) or warehouse median.
+    Two-tier: warehouse P50 x 1.20 (primary) or PF-based ABC fallback.
     """
     sign_type_key = job.sign_type.value
     result = EstimateResult(
@@ -1663,16 +1790,22 @@ def estimate_removal(job: JobInput) -> EstimateResult:
     )
     install: list[LaborLine] = []
 
-    # 0625 Removal
-    floor = INSTALL_FLOOR.get(sign_type_key)
-    if floor:
-        removal_hrs = floor * 0.65 * 2
-        formula = f"Install floor {floor}h x 0.65 x 2"
-        section = "ABC (install x 0.65 x 2)"
+    # 0625 Removal — two-tier: warehouse P50 primary, PF formula fallback
+    removal_floor = REMOVAL_FLOOR.get(sign_type_key)
+    if removal_floor:
+        removal_hrs = removal_floor
+        formula = f"Warehouse P50 x 1.20 = {removal_floor}h (calibrated 2026-02)"
+        section = "Warehouse removal floor"
     else:
-        removal_hrs = MONDF_0625_MEDIAN
-        formula = f"Warehouse median {MONDF_0625_MEDIAN}h (n=23, NONLIT)"
-        section = "MONDF correction"
+        pf = job.pf_manual or job.pf_from_pdf or 0
+        if pf > 0:
+            removal_hrs = round(pf * 0.051 / 2 + 0.5, 2)
+            formula = f"ABC fallback: {pf:.1f} PF x 0.051 / 2 + 0.5 = {removal_hrs:.2f}h"
+            section = "ABC removal formula (no warehouse data)"
+        else:
+            removal_hrs = REMOVAL_DEFAULT
+            formula = f"Default {REMOVAL_DEFAULT}h (overall warehouse P50 x 1.20)"
+            section = "Warehouse removal floor (default)"
 
     install.append(LaborLine(
         work_code="0625", description="Removal",
@@ -1702,17 +1835,19 @@ def estimate_removal(job: JobInput) -> EstimateResult:
             section="Standard",
         ))
 
-    # 9600 Install OT
-    ot_inst_rate = MONDF_OT_INSTALL_LIT if job.is_illuminated else MONDF_OT_INSTALL_NONLIT
-    inst_ot = round(removal_hrs * ot_inst_rate, 2)
-    if inst_ot >= 0.50:
-        install.append(LaborLine(
-            work_code="9600", description=f"Install Overtime ({ot_inst_rate:.1%} median)",
-            hours=inst_ot, unit_type="man-hrs",
-            department="Installation (600)",
-            formula=f"Removal {removal_hrs:.2f}h x {ot_inst_rate} ({'lit' if job.is_illuminated else 'non-lit'})",
-            section="MONDF correction",
-        ))
+    # 9600 Install OT — use OT_FACTORS if available for sign type
+    ot = OT_FACTORS.get(sign_type_key)
+    if ot:
+        inst_prob, inst_mean = ot[2], ot[3]
+        inst_ot = round(inst_prob * inst_mean, 2)
+        if inst_ot >= 0.50:
+            install.append(LaborLine(
+                work_code="9600", description="Install Overtime (probability-weighted)",
+                hours=inst_ot, unit_type="man-hrs",
+                department="Installation (600)",
+                formula=f"{inst_prob:.0%} prob x {inst_mean:.1f}h avg ({sign_type_key})",
+                section="Warehouse removal floor",
+            ))
 
     result.install_lines = install
     result.total_man_hours = round(
@@ -2176,14 +2311,15 @@ def estimate_pylon(job: JobInput) -> EstimateResult:
             section="POLLIT correction",
         ))
 
-    # 0625 Removal (optional)
+    # 0625 Removal (optional) — warehouse P50 x 1.20
     if job.include_removal:
+        _pol_rem = REMOVAL_FLOOR.get("POLLIT", REMOVAL_DEFAULT)
         install.append(LaborLine(
             work_code="0625", description="Removal",
-            hours=round(POLLIT_0625_MEDIAN, 2), unit_type="man-hrs",
+            hours=round(_pol_rem, 2), unit_type="man-hrs",
             department="Installation (600)",
-            formula=f"Warehouse median {POLLIT_0625_MEDIAN}h (POLLIT)",
-            section="POLLIT correction",
+            formula=f"REMOVAL_FLOOR[POLLIT] = {_pol_rem}h (warehouse P50 x 1.20, n=28)",
+            section="Warehouse removal floor",
         ))
 
     # 9600 Install Overtime (POLLIT OT ratio)
@@ -2460,14 +2596,16 @@ def estimate_cabinet(job: JobInput) -> EstimateResult:
         section="ALULIT correction",
     ))
 
-    # 0625 Removal (optional)
+    # 0625 Removal (optional) — warehouse P50 x 1.20
     if job.include_removal:
+        _alu_rem = REMOVAL_FLOOR.get("ALULIT", REMOVAL_DEFAULT)
+        _alu_src = "REMOVAL_FLOOR[ALULIT]" if "ALULIT" in REMOVAL_FLOOR else "REMOVAL_DEFAULT (ALULIT)"
         install.append(LaborLine(
             work_code="0625", description="Removal",
-            hours=round(ALULIT_0625_MEDIAN, 2), unit_type="man-hrs",
+            hours=round(_alu_rem, 2), unit_type="man-hrs",
             department="Installation (600)",
-            formula=f"Warehouse median {ALULIT_0625_MEDIAN}h (ALULIT)",
-            section="ALULIT correction",
+            formula=f"{_alu_src} = {_alu_rem}h (warehouse P50 x 1.20)",
+            section="Warehouse removal floor",
         ))
 
     # 9600 Install Overtime (ALULIT OT ratio)
@@ -2679,15 +2817,15 @@ def estimate_directional(job: JobInput) -> EstimateResult:
         section="DIRECT warehouse",
     ))
 
-    # 0625 Removal (optional)
+    # 0625 Removal (optional) — warehouse P50 x 1.20
     if job.include_removal:
-        removal_hrs = round(install_hrs * 0.65 * 2, 2)
+        _dir_rem = REMOVAL_FLOOR.get("DIRECT", REMOVAL_DEFAULT)
         install.append(LaborLine(
             work_code="0625", description="Removal",
-            hours=removal_hrs, unit_type="man-hrs",
+            hours=round(_dir_rem, 2), unit_type="man-hrs",
             department="Installation (600)",
-            formula=f"Install {install_hrs}h x 0.65 x 2 [PROVISIONAL]",
-            section="DIRECT warehouse",
+            formula=f"REMOVAL_FLOOR[DIRECT] = {_dir_rem}h (warehouse P50 x 1.20, n=11)",
+            section="Warehouse removal floor",
         ))
 
     # 9600 Install Overtime (from OT_FACTORS: 0.593 prob x 2.52 mean / ~25 normalizer)
@@ -2847,15 +2985,15 @@ def estimate_dimensional(job: JobInput) -> EstimateResult:
         section="GEMINI warehouse",
     ))
 
-    # 0625 Removal (optional)
+    # 0625 Removal (optional) — warehouse P50 x 1.20
     if job.include_removal:
-        removal_hrs = round(install_hrs * 0.65 * 2, 2)
+        _gem_rem = REMOVAL_FLOOR.get("GEMINI", REMOVAL_DEFAULT)
         install.append(LaborLine(
             work_code="0625", description="Removal",
-            hours=removal_hrs, unit_type="man-hrs",
+            hours=round(_gem_rem, 2), unit_type="man-hrs",
             department="Installation (600)",
-            formula=f"Install {install_hrs}h x 0.65 x 2 [PROVISIONAL]",
-            section="GEMINI warehouse",
+            formula=f"REMOVAL_FLOOR[GEMINI] = {_gem_rem}h (warehouse P50 x 1.20, n=13)",
+            section="Warehouse removal floor",
         ))
 
     # 9600 Install Overtime (from OT_FACTORS: 0.478 prob x 1.81 mean)
@@ -2886,5 +3024,184 @@ def estimate_dimensional(job: JobInput) -> EstimateResult:
     result.warnings.append(
         "[PROVISIONAL] -- no ABC section. Rates from warehouse P50 (n=115). "
         "Gemini letters = purchased, minimal fab. Treat as provisional."
+    )
+    return result
+
+
+# ── FLAT PANEL ESTIMATOR ────────────────────────────────────────────────────
+# Flat aluminum/steel panels with vinyl graphics, face-screwed to fascia.
+# NOT a cabinet — no extrusions, no routing, no framing, no LED.
+# Example: Home Depot ENTRANCE/EXIT clearance-height panels
+#   .080 pre-finished white aluminum, 3M 3630-44 vinyl, tapcons to fascia.
+# ─────────────────────────────────────────────────────────────────────────────
+
+def estimate_flatpanel(job: JobInput) -> EstimateResult:
+    """Estimate flat panel sign (FLATPNL).
+
+    Flat sheet metal (aluminum or steel) with applied vinyl graphics.
+    Face-mounted to fascia/wall with tapcons. No cabinet construction,
+    no extrusions, no routing, no electrical.
+
+    Uses panel_sf derived from job.face_sf_override, job.cabinet_sf,
+    or job.sign_sf_per_face (first non-zero wins).
+    """
+    # Flat panels are single-face sheet goods — SF input IS total panel area.
+    # No num_faces multiplier (unlike cabinets/monuments).
+    total_sf = (
+        job.face_sf_override
+        or job.cabinet_sf
+        or job.sign_sf_per_face
+        or 0.0
+    )
+
+    result = EstimateResult(
+        total_pf=0.0,
+        pf_source="N/A (flat panel — SF-based, not PF)",
+        construction="flatpanel_FLATPNL",
+        height_category="N/A",
+        letter_count=0,
+    )
+
+    if total_sf <= 0:
+        result.warnings.append("panel SF required for flat panel estimate (set cabinet_sf, face_sf_override, or sign_sf_per_face).")
+        return result
+
+    labor: list[LaborLine] = []
+    install: list[LaborLine] = []
+    fab_total = 0.0
+
+    # ── 0110 Design/Layout ──────────────────────────────────────────────
+    design_hrs = 1.0
+    labor.append(LaborLine(
+        work_code="0110", description="Design / Layout",
+        hours=round(design_hrs, 2), unit_type="man-hrs",
+        department="Art/Design (100)",
+        formula="1.0h standard (template from customer exhibit)",
+        section="FLATPNL design",
+    ))
+    fab_total += design_hrs
+
+    # ── 0210 Sheet Metal ────────────────────────────────────────────────
+    sheet_hrs = max(1.0, total_sf * 0.033)
+    labor.append(LaborLine(
+        work_code="0210", description="Sheet Metal - Shear & Deburr",
+        hours=round(sheet_hrs, 2), unit_type="man-hrs",
+        department="Fabrication (200)",
+        formula=f"max(1.0, {total_sf:.1f} SF x 0.033) = {sheet_hrs:.2f}h",
+        section="FLATPNL sheet metal",
+    ))
+    fab_total += sheet_hrs
+
+    # ── 0410 Prime & Finish ─────────────────────────────────────────────
+    # SKIP if substrate is pre-finished (e.g. .080 pre-painted aluminum)
+    if job.substrate != "pre-finished":
+        paint_hrs = 1.0 + total_sf * 0.017
+        labor.append(LaborLine(
+            work_code="0410", description="Prime & Finish",
+            hours=round(paint_hrs, 2), unit_type="man-hrs",
+            department="Paint/Finish (400)",
+            formula=f"1.0 + {total_sf:.1f} SF x 0.017 = {paint_hrs:.2f}h",
+            section="FLATPNL paint",
+        ))
+        fab_total += paint_hrs
+
+    # ── 0520 Cut / Weed Vinyl ───────────────────────────────────────────
+    vinyl_cut_hrs = 1.0 + total_sf * 0.02
+    labor.append(LaborLine(
+        work_code="0520", description="Cut / Weed Vinyl",
+        hours=round(vinyl_cut_hrs, 2), unit_type="man-hrs",
+        department="Vinyl (500)",
+        formula=f"1.0 + {total_sf:.1f} SF x 0.02 = {vinyl_cut_hrs:.2f}h",
+        section="FLATPNL vinyl cut",
+    ))
+    fab_total += vinyl_cut_hrs
+
+    # ── 0550 Vinyl Application ──────────────────────────────────────────
+    vinyl_app_hrs = 1.0 + total_sf * 0.03
+    labor.append(LaborLine(
+        work_code="0550", description="Vinyl Application",
+        hours=round(vinyl_app_hrs, 2), unit_type="man-hrs",
+        department="Vinyl (500)",
+        formula=f"1.0 + {total_sf:.1f} SF x 0.03 = {vinyl_app_hrs:.2f}h",
+        section="FLATPNL vinyl apply",
+    ))
+    fab_total += vinyl_app_hrs
+
+    # ── 9200 Fab Overtime (4% of fab total, same as ALULIT) ─────────────
+    fab_ot = round(fab_total * 0.04, 2)
+    if fab_ot >= 0.25:
+        labor.append(LaborLine(
+            work_code="9200", description="Fab Overtime (4% FLATPNL)",
+            hours=fab_ot, unit_type="man-hrs",
+            department="Fabrication (200)",
+            formula=f"fab_total {fab_total:.2f}h x 0.04 = {fab_ot:.2f}h",
+            section="FLATPNL OT",
+        ))
+
+    # ── INSTALLATION ────────────────────────────────────────────────────
+
+    # ── 0630 1 Man & Truck Install ──────────────────────────────────────
+    install_hrs = max(1.50, total_sf * 0.05)
+    install_floor = INSTALL_FLOOR.get("FLATPNL", 2.40)
+    if install_hrs < install_floor:
+        install_hrs = install_floor
+    install.append(LaborLine(
+        work_code="0630", description="1 Man & Truck - Install",
+        hours=round(install_hrs, 2), unit_type="man-hrs",
+        department="Installation (600)",
+        formula=f"max(1.50, {total_sf:.1f} SF x 0.05) floored to INSTALL_FLOOR={install_floor}h = {install_hrs:.2f}h",
+        section="FLATPNL install",
+    ))
+
+    # ── 0610 Load / Unload ──────────────────────────────────────────────
+    load_hrs = 1.0 + 0.5 * max(0, job.num_units - 1)
+    install.append(LaborLine(
+        work_code="0610", description="Load / Unload",
+        hours=round(load_hrs, 2), unit_type="man-hrs",
+        department="Installation (600)",
+        formula=f"1.0 + 0.5 x ({job.num_units} - 1) additional units",
+        section="Standard",
+    ))
+
+    # ── 0620 Travel ─────────────────────────────────────────────────────
+    if job.miles_one_way > 0:
+        travel_hrs = round(job.miles_one_way * 2 / 45, 2)
+        travel_hrs = max(travel_hrs, 0.50)
+        install.append(LaborLine(
+            work_code="0620", description="Travel",
+            hours=round(travel_hrs, 2), unit_type="man-hrs",
+            department="Installation (600)",
+            formula=f"{job.miles_one_way} mi x 2 / 45 mph = {travel_hrs:.2f}h (min 0.50)",
+            section="Standard travel",
+        ))
+
+    # ── 0625 Removal (optional) ─────────────────────────────────────────
+    if job.include_removal:
+        _fp_rem = REMOVAL_FLOOR.get("FLATPNL", REMOVAL_DEFAULT)
+        install.append(LaborLine(
+            work_code="0625", description="Removal",
+            hours=round(_fp_rem, 2), unit_type="man-hrs",
+            department="Installation (600)",
+            formula=f"REMOVAL_FLOOR.get('FLATPNL', REMOVAL_DEFAULT) = {_fp_rem}h",
+            section="FLATPNL removal",
+        ))
+
+    # ── Assemble result ─────────────────────────────────────────────────
+    result.labor_lines = labor
+    result.install_lines = install
+    result.total_man_hours = round(
+        sum(l.hours for l in labor if l.unit_type == "man-hrs")
+        + sum(l.hours for l in install if l.unit_type == "man-hrs"),
+        2
+    )
+    result.total_crew_hours = round(
+        sum(l.hours for l in install if l.unit_type == "CREW-hrs"),
+        2
+    )
+
+    result.warnings.append(
+        "[PROVISIONAL] -- no warehouse data for FLATPNL. "
+        "Rates estimated from similar types (ALULIT sheet metal, VINYL graphics). "
+        "Treat as provisional until warehouse calibration available."
     )
     return result

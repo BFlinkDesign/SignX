@@ -287,6 +287,7 @@
     <div class="nav-tab" data-section="sec-pipeline" style="color:var(--green);">Bid Pipeline</div>
     <div class="nav-tab" data-section="sec-structural">Engineering</div>
     <div class="nav-tab" data-section="sec-intel" style="color:var(--accent2);">Intelligence</div>
+    <div class="nav-tab" data-section="sec-calibration" style="color:var(--yellow);">Calibration</div>
   </nav>
 
   <!-- ════════════════════════════════════════════════════════════════════════ -->
@@ -1120,6 +1121,59 @@
       <svg style="width:64px;height:64px;color:var(--text-dim);margin-bottom:1rem;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
       <h3 style="color:var(--text-dim);margin-bottom:0.5rem;">Intelligence Dashboard</h3>
       <p style="font-size:0.85rem;">Enter a customer name and click "Build Dossier" to load relationship history, market benchmarks, similar jobs, project files, and active bids. Or use the Drawing Search below.</p>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION: Calibration                                                    -->
+  <!-- ════════════════════════════════════════════════════════════════════════ -->
+  <div class="main-section" id="sec-calibration">
+    <div class="grid" style="grid-template-columns: 1fr 1fr;">
+
+      <!-- LEFT: Controls -->
+      <div class="card">
+        <h2>Engine Calibration <span class="badge" style="background:var(--yellow);color:#000;">LIVE</span></h2>
+        <p style="color:var(--text-dim);margin-bottom:1rem;">Auto-calibrated from Eagle warehouse data. All estimators consume these values.</p>
+
+        <div style="display:flex;gap:0.75rem;margin-bottom:1rem;">
+          <button class="btn btn-primary" onclick="runCalibration(false)" id="cal-run-btn">Recalibrate Now</button>
+          <button class="btn" onclick="runCalibration(true)" style="background:var(--surface2);">Dry Run</button>
+        </div>
+
+        <div style="display:flex;gap:1rem;margin-bottom:1rem;">
+          <label style="font-size:0.8rem;">
+            Buffer multiplier
+            <input type="number" id="cal-buffer" value="1.20" step="0.05" min="1.0" max="2.0"
+              style="width:80px;padding:0.3rem;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:4px;">
+          </label>
+          <label style="font-size:0.8rem;">
+            Sign type (blank=all)
+            <input type="text" id="cal-sign-type" placeholder="e.g. CLLIT"
+              style="width:100px;padding:0.3rem;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:4px;">
+          </label>
+        </div>
+
+        <div id="cal-status" style="margin-bottom:1rem;font-size:0.85rem;color:var(--text-dim);"></div>
+
+        <!-- Metadata -->
+        <div id="cal-meta" style="font-size:0.8rem;color:var(--text-dim);border-top:1px solid var(--border);padding-top:0.75rem;">
+          Loading calibration data...
+        </div>
+      </div>
+
+      <!-- RIGHT: Data tables -->
+      <div class="card" style="max-height:600px;overflow-y:auto;">
+        <h2>Calibration Matrix</h2>
+        <div class="tabs" style="margin-bottom:0.75rem;">
+          <div class="tab active" onclick="showCalTab('install')" id="cal-tab-install">Install Floors</div>
+          <div class="tab" onclick="showCalTab('removal')" id="cal-tab-removal">Removal Floors</div>
+          <div class="tab" onclick="showCalTab('ot')" id="cal-tab-ot">OT Factors</div>
+        </div>
+        <div id="cal-table-install"></div>
+        <div id="cal-table-removal" style="display:none;"></div>
+        <div id="cal-table-ot" style="display:none;"></div>
+      </div>
+
     </div>
   </div>
 
@@ -3786,6 +3840,140 @@ async function lookupBidDrawings(customer, signType) {
     // Scroll to drawing search
     document.getElementById('draw-results').scrollIntoView({behavior: 'smooth'});
 }
+
+// ======================================================================
+// CALIBRATION PANEL
+// ======================================================================
+
+let calData = null;
+
+async function loadCalibration() {
+    try {
+        const resp = await fetch('/api/calibration');
+        calData = await resp.json();
+        renderCalMeta();
+        renderCalTable('install');
+    } catch(e) {
+        document.getElementById('cal-meta').textContent = 'Failed to load calibration: ' + e.message;
+    }
+}
+
+function renderCalMeta() {
+    if (!calData || !calData.ok) return;
+    const d = new Date(calData.calibration_date);
+    const age = Math.floor((Date.now() - d.getTime()) / 86400000);
+    const ageColor = age > 7 ? 'var(--red)' : age > 3 ? 'var(--yellow)' : 'var(--green)';
+    document.getElementById('cal-meta').innerHTML = `
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;">
+            <div>Last calibrated: <strong style="color:${ageColor}">${d.toLocaleDateString()} ${d.toLocaleTimeString()}</strong></div>
+            <div>Age: <strong style="color:${ageColor}">${age} day${age!==1?'s':''}</strong></div>
+            <div>Sign types: <strong>${calData.sign_types}</strong></div>
+            <div>Total data cells: <strong>${calData.total_cells}</strong></div>
+            <div>Buffer: <strong>${calData.buffer}x</strong></div>
+            <div>Install types: <strong>${Object.keys(calData.install_floors).length}</strong> | Removal: <strong>${Object.keys(calData.removal_floors).length}</strong></div>
+        </div>
+        ${calData.warnings.length ? '<div style="color:var(--yellow);margin-top:0.5rem;">Warnings: ' + calData.warnings.join(', ') + '</div>' : ''}
+    `;
+}
+
+function confBadge(conf) {
+    const colors = {HIGH: 'var(--green)', MEDIUM: 'var(--yellow)', LOW: 'var(--red)', DEFAULT: 'var(--text-dim)'};
+    return `<span style="color:${colors[conf]||'var(--text-dim)'};font-size:0.7rem;font-weight:600;">${conf}</span>`;
+}
+
+function renderCalTable(type) {
+    if (!calData) return;
+
+    if (type === 'install') {
+        const floors = calData.install_floors;
+        let html = '<table style="width:100%;font-size:0.8rem;border-collapse:collapse;"><thead><tr><th style="text-align:left;padding:0.3rem;">Type</th><th>Floor (h)</th><th>P50</th><th>n</th><th>Conf</th></tr></thead><tbody>';
+        for (const [st, d] of Object.entries(floors).sort((a,b) => b[1].n - a[1].n)) {
+            html += `<tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:0.3rem;font-weight:600;">${st}</td>
+                <td style="text-align:center;">${d.value}</td>
+                <td style="text-align:center;color:var(--text-dim);">${d.p50}</td>
+                <td style="text-align:center;">${d.n}</td>
+                <td style="text-align:center;">${confBadge(d.confidence)}</td>
+            </tr>`;
+        }
+        html += '</tbody></table>';
+        document.getElementById('cal-table-install').innerHTML = html;
+    }
+    else if (type === 'removal') {
+        const floors = calData.removal_floors;
+        let html = '<table style="width:100%;font-size:0.8rem;border-collapse:collapse;"><thead><tr><th style="text-align:left;padding:0.3rem;">Type</th><th>Floor (h)</th><th>P50</th><th>n</th><th>Conf</th></tr></thead><tbody>';
+        for (const [st, d] of Object.entries(floors).sort((a,b) => b[1].n - a[1].n)) {
+            html += `<tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:0.3rem;font-weight:600;">${st}</td>
+                <td style="text-align:center;">${d.value}</td>
+                <td style="text-align:center;color:var(--text-dim);">${d.p50}</td>
+                <td style="text-align:center;">${d.n}</td>
+                <td style="text-align:center;">${confBadge(d.confidence)}</td>
+            </tr>`;
+        }
+        html += '</tbody></table>';
+        document.getElementById('cal-table-removal').innerHTML = html;
+    }
+    else if (type === 'ot') {
+        const ot = calData.ot_factors;
+        let html = '<table style="width:100%;font-size:0.8rem;border-collapse:collapse;"><thead><tr><th style="text-align:left;padding:0.3rem;">Type</th><th>Fab OT %</th><th>Install OT %</th><th>Expected</th><th>Jobs</th></tr></thead><tbody>';
+        for (const [st, d] of Object.entries(ot).sort((a,b) => b[1].n - a[1].n)) {
+            html += `<tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:0.3rem;font-weight:600;">${st}</td>
+                <td style="text-align:center;">${(d.fab_prob*100).toFixed(1)}%</td>
+                <td style="text-align:center;">${(d.inst_prob*100).toFixed(1)}%</td>
+                <td style="text-align:center;">${d.expected.toFixed(1)}h</td>
+                <td style="text-align:center;">${d.n}</td>
+            </tr>`;
+        }
+        html += '</tbody></table>';
+        document.getElementById('cal-table-ot').innerHTML = html;
+    }
+}
+
+function showCalTab(type) {
+    ['install','removal','ot'].forEach(t => {
+        document.getElementById('cal-table-'+t).style.display = t===type ? '' : 'none';
+        document.getElementById('cal-tab-'+t).classList.toggle('active', t===type);
+    });
+    renderCalTable(type);
+}
+
+async function runCalibration(dryRun) {
+    const btn = document.getElementById('cal-run-btn');
+    const status = document.getElementById('cal-status');
+    const buffer = parseFloat(document.getElementById('cal-buffer').value) || 1.2;
+    const signType = document.getElementById('cal-sign-type').value.trim() || null;
+
+    btn.disabled = true;
+    status.innerHTML = '<span style="color:var(--accent);">Running calibration...</span>';
+
+    try {
+        const resp = await fetch('/api/calibrate', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({dry_run: dryRun, buffer: buffer, sign_type: signType})
+        });
+        const data = await resp.json();
+
+        if (data.ok) {
+            const msg = dryRun ? 'Dry run complete' : 'Calibration updated!';
+            status.innerHTML = `<span style="color:var(--green);">${msg}</span> - ${data.sign_types} types, ${data.total_cells} cells, ${data.install_floors_count} install floors`;
+            if (!dryRun) {
+                await loadCalibration();
+            }
+        } else {
+            status.innerHTML = '<span style="color:var(--red);">Error: ' + JSON.stringify(data) + '</span>';
+        }
+    } catch(e) {
+        status.innerHTML = '<span style="color:var(--red);">Failed: ' + e.message + '</span>';
+    }
+    btn.disabled = false;
+}
+
+// Load calibration data on page load
+loadCalibration();
+
 </script>
 </body>
 </html>

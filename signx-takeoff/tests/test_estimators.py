@@ -124,7 +124,9 @@ class TestRegression:
 
     def test_removal_cllit(self):
         r = estimate_removal(_removal_job(SignType.CLLIT))
-        assert r.total_man_hours == pytest.approx(13.87, rel=0.05)
+        # Warehouse P50 x 1.20: removal=3.90 + load=1.0 + OT=2.60 = 7.50
+        # OT: 37.3% prob x 7.0h avg = 2.60h (calibrated from warehouse)
+        assert r.total_man_hours == pytest.approx(7.50, rel=0.05)
 
     def test_pylon_8x6_df_25ft_48sf(self):
         r = estimate_pylon(_pylon_job(sf_per_face=48.0, num_faces=2, height_ft=25.0))

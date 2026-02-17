@@ -524,6 +524,80 @@ def _format_estimate_result(result, bench_data):
 
 # ── Structural: Wind Load (ASCE 7-22 Section 29.3) ─────────────────────────
 
+# ── Calibration Endpoints ────────────────────────────────────────────────────
+
+
+@app.get("/api/calibration")
+async def get_calibration():
+    """Get current calibration data and metadata."""
+    from calibrate import load_calibration
+    cal = load_calibration()
+    meta = cal.get("metadata", {})
+    return {
+        "ok": True,
+        "calibration_date": meta.get("calibration_date"),
+        "sign_types": meta.get("total_sign_types", 0),
+        "total_cells": meta.get("total_cells", 0),
+        "buffer": meta.get("buffer_multiplier", 1.2),
+        "warnings": meta.get("warnings", []),
+        "install_floors": cal.get("install_floors", {}),
+        "removal_floors": cal.get("removal_floors", {}),
+        "ot_factors": {
+            k: {
+                "fab_prob": v.get("fab_ot_probability", 0),
+                "inst_prob": v.get("install_ot_probability", 0),
+                "expected": v.get("expected_total", 0),
+                "n": v.get("total_jobs", 0),
+            }
+            for k, v in cal.get("ot_factors", {}).items()
+        },
+        "defaults": cal.get("defaults", {}),
+    }
+
+
+class CalibrateRequest(BaseModel):
+    sign_type: str | None = Field(None, description="Recalibrate single sign type (or all)")
+    buffer: float = Field(1.2, description="Buffer multiplier (P50 * buffer = floor)")
+    dry_run: bool = Field(False, description="Preview without writing to disk")
+
+
+@app.post("/api/calibrate")
+async def run_calibration(req: CalibrateRequest):
+    """Trigger recalibration from warehouse data."""
+    import asyncio
+    from calibrate import recalibrate
+
+    def _run():
+        return recalibrate(
+            sign_type=req.sign_type,
+            buffer=req.buffer,
+            dry_run=req.dry_run,
+        )
+
+    cal = await asyncio.to_thread(_run)
+
+    # Reload into abc_engine if not dry run
+    if not req.dry_run:
+        from abc_engine import reload_calibration
+        reload_calibration()
+
+    meta = cal.get("metadata", {})
+    return {
+        "ok": True,
+        "dry_run": req.dry_run,
+        "calibration_date": meta.get("calibration_date"),
+        "sign_types": meta.get("total_sign_types", 0),
+        "total_cells": meta.get("total_cells", 0),
+        "warnings": meta.get("warnings", []),
+        "install_floors_count": len(cal.get("install_floors", {})),
+        "removal_floors_count": len(cal.get("removal_floors", {})),
+        "ot_factors_count": len(cal.get("ot_factors", {})),
+    }
+
+
+# ── Structural Endpoints ────────────────────────────────────────────────────
+
+
 class WindRequest(BaseModel):
     V_mph: float = Field(115.0, description="Basic wind speed (mph)")
     sign_width_ft: float = Field(10.0, description="Sign width (ft)")
