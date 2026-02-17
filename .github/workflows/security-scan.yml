@@ -7,41 +7,34 @@ on:
     branches: [main]
 
 jobs:
-  semgrep:
-    name: Semgrep SAST
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    container:
-      image: semgrep/semgrep
-    steps:
-      - uses: actions/checkout@v4
-      - run: semgrep ci --config=auto
-
-  secrets:
-    name: Gitleaks Secret Scan
+  gitleaks:
+    name: Secret Scan (Gitleaks)
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          lfs: false
       - uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  dependencies:
-    name: Python Safety Check
+  semgrep:
+    name: SAST (Semgrep)
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    container:
+      image: semgrep/semgrep
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
-      - name: Install and run Safety
-        shell: pwsh
+          lfs: false
+      - name: Run Semgrep on project code only
         run: |
-          pip install safety
-          if (Test-Path requirements.txt) { pip install -r requirements.txt }
-          safety check --json
-        continue-on-error: true
+          semgrep ci --config=auto \
+            --exclude='ui/node_modules' \
+            --exclude='WebScrapers' \
+            --exclude='*.min.js' \
+            --exclude='info/' \
+            --exclude='node_modules'

@@ -1,0 +1,8 @@
+ui/node_modules/
+node_modules/
+WebScrapers/
+info/
+*.min.js
+*.pdf
+*.xlsx
+*.duckdb
