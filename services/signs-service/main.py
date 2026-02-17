@@ -9,11 +9,9 @@ from fastapi import FastAPI, HTTPException
 from contracts.signs import (
     BomItem,
     ComplianceFinding,
-    ElectricalInput,
+    ElectricalSpec,
     GraphicsSpec,
-    Jurisdiction,
     MechanicalSpec,
-    MountingParams,
     SignRequest,
     SignResponse,
     Spec,
@@ -129,7 +127,7 @@ def build_spec(req: SignRequest) -> Dict[str, Any]:
         max_input_current_A=max(0.1, float(req.electrical.available_circuit_A) * 0.8 if req.illumination != "none" else 0.0),
         branch_circuit_A=max(15.0, float(req.electrical.available_circuit_A)),
         listing_category=listing_category,
-        required_field_labels=[l["name"] for l in label_defs],
+        required_field_labels=[lbl["name"] for lbl in label_defs],
     )
     mechanical_spec = MechanicalSpec(
         mounting_pattern=mech["mounting_pattern"],

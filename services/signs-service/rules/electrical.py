@@ -134,9 +134,7 @@ def nec_checks(elec: ElectricalInput, illumination: str) -> Tuple[bool, List[Dic
     )
 
     # --- 600.5 Branch Circuits ---
-    circuit_ok = True
     if elec.available_circuit_A < 15.0:
-        circuit_ok = False
         ok = False
         findings.append(
             {
@@ -212,7 +210,6 @@ def nec_checks(elec: ElectricalInput, illumination: str) -> Tuple[bool, List[Dic
     # --- 600.10 GFCI Protection ---
     # 600.10(C)(2): GFCI required for cord-connected portable signs in wet/damp locations
     # 600.10(D): GFCI required for fixed outdoor signs within 6 ft of grade accessible to public
-    needs_gfci = getattr(elec, "location_type", None) in ("wet", "damp", "outdoor") or True
     findings.append(
         {
             "source": "NEC 600",
