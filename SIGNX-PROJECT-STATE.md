@@ -1,9 +1,9 @@
 # SIGNX PROJECT STATE
 
-**Updated:** 2026-02-17 19:30
+**Updated:** 2026-02-17 20:35
 **Repo:** `EAGLE605/SignX` (main)
-**Last Commit:** `cdd109e` — batch travel dedup + raceway removal adder
-**Server:** `signx-takeoff/app.py` on port 8765 (46 API endpoints)
+**Last Commit:** `4d13ab7` — CI/CD fully green
+**Server:** `signx-takeoff/app.py` on port 8765 (47 API endpoints)
 
 ---
 
@@ -15,9 +15,9 @@
 
 | Issue | Tab | Severity | Details |
 |-------|-----|----------|---------|
-| **Bid Pipeline stale** | Bid Pipeline | HIGH | No way to change project status. Data may not reflect current Notion state. |
+| ~~**Bid Pipeline stale**~~ | Bid Pipeline | FIXED | Inline stage dropdown + PATCH /api/notion/bid. Real-time Notion updates. |
 | **Intelligence dossier incomplete** | Intelligence | HIGH | "Build Dossier" returns halfassed results. Warehouse missing data for some customers. Drawing search can't find CAT Scale. |
-| **Drawing search weak** | Intelligence | HIGH | Should auto-pull relevant drawings per quote/project. Multi-location customers (like CAT Scale) need location breakout. |
+| ~~**Drawing search weak**~~ | Intelligence | FIXED | Fuzzy matching with difflib + 13 customer aliases. CAT Scale resolves correctly. |
 | **Engineering tab confusing** | Engineering | MEDIUM | "Elevation" field is jargon. Too many manual inputs. Should auto-fill from sign type + Iowa defaults. |
 | **Pole signs missing** | Estimating | MEDIUM | No separate pole sign tab. POLLIT exists under "Pylon" but no POLNON. Non-illuminated pole signs need their own estimator or the Pylon tab needs a non-illuminated toggle. |
 | **No autonomous pipeline** | ALL | HIGH | Every tab is a separate manual calculator. Need: single intake → auto-route → complete output. |
@@ -38,14 +38,14 @@
 | **Cabinet** | WORKING | `/api/estimate/cabinet` | ALULIT/ALUNON, warehouse-corrected. |
 | **Directional** | PROVISIONAL | `/api/estimate/directional` | Warehouse data sparse, marked provisional. |
 | **Dimensional** | PROVISIONAL | `/api/estimate/dimensional` | GEMINI letters, provisional. |
-| **Bid Pipeline** | STALE | `/api/notion/bids`, `/api/notion/takeoff` | Reads from Notion but can't update status. No inline editing. |
+| **Bid Pipeline** | WORKING | `/api/notion/bids`, `/api/notion/takeoff`, `/api/notion/bid` | Inline stage dropdown PATCHes Notion. Status updates live. |
 | **Engineering** | PARTIAL | 6 structural endpoints | Wind, foundation, member, anchors. Too many manual fields. "Elevation" confusing. |
 | **Intelligence** | STALE | `/api/dossier`, `/api/intel/*`, `/api/bid/*` | Dossier incomplete, drawing search weak, no multi-location breakout. |
 | **Calibration** | WORKING | `/api/calibration`, `/api/calibrate` | New: auto-calibration from warehouse P50. 30 types, 497 cells. |
 
 ---
 
-## API Endpoints (46 total)
+## API Endpoints (47 total)
 
 ### Estimation (8)
 - `POST /api/extract-pf` — PDF peripheral foot extraction
@@ -76,9 +76,10 @@
 - `GET /api/drawings/search` — G: drive drawing search
 - `POST /api/drawings/bid-lookup` — Drawing lookup by bid
 
-### Notion/Pipeline (4)
+### Notion/Pipeline (5)
 - `GET /api/notion/bids` — Bid pipeline from Notion
 - `POST /api/notion/takeoff` — Run takeoff for Notion bid
+- `PATCH /api/notion/bid` — Update bid status/value/salesman/blocking in Notion
 - `POST /api/notify/bid-ready` — SMS notification
 - `GET /api/notion/flow-status` — PA Flow status
 
@@ -157,7 +158,7 @@
 | Bid Scoring (ML) | `bid_model.py` | PRODUCTION | Logistic regression, AUC 0.80, 10 features |
 | Customer Intel | `customer_intel.py` | PARTIAL | Profiles, similar jobs, market intel. Missing multi-location breakout. |
 | Project Files | `project_files.py` | WORKING | G: drive scanner with TTL cache. Weak on fuzzy matching. |
-| Drawing Search | `drawing_search.py` | WEAK | os.scandir optimization. Can't find "CAT Scale" → needs fuzzy/alias matching. |
+| Drawing Search | `drawing_search.py` | WORKING | Fuzzy matching (difflib), 13 aliases, os.scandir + folder cache. CAT Scale resolves. |
 
 ### Win Rate Cross-Validation (2026-02-17)
 - Naive: 93.0% → Cross-validated: 76.0% → Actual (2022-2025): 32-50%
@@ -199,7 +200,8 @@ Six research agents scanned ISA, WSA, Signs101, SignCraft, vendor install guides
 
 | Date | Work | Commits |
 |------|------|---------|
-| 2026-02-17 | Auto-calibration engine (30 types, 497 cells). Batch travel dedup. Raceway removal adder. 8 estimators refactored with shared helpers. Calibration UI panel + API. 6 industry research agents completed. 49/49 tests passing. | `9a9f802`, `cdd109e` |
+| 2026-02-17 (PM) | Bid Pipeline status updates (PATCH /api/notion/bid + inline dropdown). Fuzzy drawing search (difflib + 13 aliases + folder cache). CI/CD rewrite — all 3 jobs green. Security scan green (Semgrep + Gitleaks). | `6f6290d`, `4d13ab7` |
+| 2026-02-17 (AM) | Auto-calibration engine (30 types, 497 cells). Batch travel dedup. Raceway removal adder. 8 estimators refactored with shared helpers. Calibration UI panel + API. 6 industry research agents completed. 49/49 tests passing. | `9a9f802`, `cdd109e` |
 | 2026-02-16 | SpaceX UI redesign. ML model time-decay + cyclical features. Intelligence platform wiring. Sprint E completion. | `2b9ef1f`, `734f67a`, `b51c673` |
 | 2026-02-15 | Sprints C-D. Pylon + cabinet estimators. Directional + dimensional. Bid Pipeline + Notion integration. 49-test pytest suite. | `407c6e5`, `44d30d2`, `ba8fe35` |
 | 2026-02-14 | PE-stampable structural (wind, foundation, anchors, members). Signs-service compliance. Import sweep. | `05b27d4`, `c681b4a` |
@@ -210,12 +212,13 @@ Six research agents scanned ISA, WSA, Signs101, SignCraft, vendor install guides
 ## Next Actions (Sprint F)
 
 1. **Autonomous intake pipeline** — Single flow: drop PDF or type customer → auto-detect sign type → estimate + engineering + BOM + drawing
-2. **Fix Bid Pipeline** — Add inline status change (dropdown → PATCH to Notion). Auto-refresh. Show stale indicator.
+2. ~~**Fix Bid Pipeline**~~ DONE — Inline stage dropdown + PATCH to Notion. Real-time status updates.
 3. **Fix Intelligence dossier** — Auto-pull ALL data (warehouse, drawings, project files, quotes). Multi-location breakout (CAT Scale). Natural language search for non-technical users.
-4. **Fix drawing search** — Fuzzy matching, alias support ("CAT Scale" → "CAT SCALE COMPANY" folder). Auto-attach relevant drawings to quotes.
+4. ~~**Fix drawing search**~~ DONE — Fuzzy matching (difflib + 13 aliases + folder cache). CAT Scale resolves. Auto-attach still TODO.
 5. **Add pole sign support** — POLNON sign type + non-illuminated toggle on Pylon tab, or separate Pole Sign tab.
 6. **Engineering tab simplification** — Auto-fill Iowa defaults (115mph, Exposure C, 800ft). Hide jargon behind "Engineering Details" collapsible. Only show for sign types that need structural.
 7. **PDF dimension detection** — Parse dimension callouts and title block text instead of measuring shapes on paper.
+8. ~~**CI/CD**~~ DONE — 3 CI jobs (takeoff tests, signcalc smoke, ruff lint) + security scan (Semgrep + Gitleaks). All green.
 
 ---
 
