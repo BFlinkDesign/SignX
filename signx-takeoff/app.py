@@ -29,9 +29,13 @@ from abc_engine import (
     FontType,
     JobInput,
     MountLocation,
+    SignType,
     calculate_logo_pf,
     calculate_pf_from_chart,
     estimate,
+    estimate_awning,
+    estimate_monument,
+    estimate_removal,
     get_footage_chart,
     interpolate_pf,
 )
@@ -175,25 +179,133 @@ async def run_estimate(req: EstimateRequest):
         job.letter_height_inches = req.height_inches
 
     result = estimate(job)
-
-    # Warehouse benchmark
     total_est_hours = result.total_man_hours + result.total_crew_hours
     bench = benchmark(total_est_hours)
-    bench_data = None
-    if bench:
-        bench_data = {
-            "matching_jobs": bench.matching_jobs,
-            "avg_hours": bench.avg_labor_hours,
-            "median_hours": bench.median_labor_hours,
-            "std_dev": bench.std_dev,
-            "min_hours": bench.min_hours,
-            "max_hours": bench.max_hours,
-            "avg_revenue": bench.avg_revenue,
-            "avg_margin_pct": bench.avg_margin_pct,
-            "confidence": bench.confidence,
-            "similar_jobs": bench.similar_jobs[:5],
-        }
+    bench_data = _format_benchmark(bench) if bench else None
+    return _format_estimate_result(result, bench_data)
 
+
+# ── Monument Estimate ────────────────────────────────────────────────────────
+
+class MonumentRequest(BaseModel):
+    width_ft: float = Field(8.0, description="Sign face width (ft)")
+    height_ft: float = Field(4.0, description="Sign face height (ft)")
+    face_area_sf: Optional[float] = Field(None, description="Override face area (SF)")
+    num_faces: int = Field(2, description="Number of faces (1=single, 2=double)")
+    illuminated: bool = Field(False, description="Has illumination")
+    has_vinyl: bool = Field(True, description="Has vinyl graphics")
+    install_height_ft: float = Field(6.0, description="Monument top height (ft)")
+    miles: float = Field(0.0, description="One-way travel miles")
+    crew_size: int = Field(2, description="Crew size")
+
+
+@app.post("/api/estimate/monument")
+async def run_monument_estimate(req: MonumentRequest):
+    """Run monument sign estimation engine."""
+    sf = req.face_area_sf if req.face_area_sf and req.face_area_sf > 0 else req.width_ft * req.height_ft
+    job = JobInput(
+        sign_type=SignType.MONDF if req.num_faces >= 2 else SignType.MONSF,
+        sign_sf_per_face=sf,
+        num_faces=req.num_faces,
+        is_illuminated=req.illuminated,
+        has_vinyl=req.has_vinyl,
+        install_height_ft=req.install_height_ft,
+        miles_one_way=req.miles,
+        crew_size=req.crew_size,
+    )
+    result = estimate_monument(job)
+    total_est_hours = result.total_man_hours + result.total_crew_hours
+    bench = benchmark(total_est_hours)
+    bench_data = _format_benchmark(bench) if bench else None
+    return _format_estimate_result(result, bench_data)
+
+
+# ── Awning Estimate ──────────────────────────────────────────────────────────
+
+class AwningRequest(BaseModel):
+    width_ft: float = Field(10.0, description="Awning width (ft)")
+    projection_ft: float = Field(3.0, description="Horizontal projection (ft)")
+    valance_height_in: float = Field(12.0, description="Valance face height (in)")
+    num_bays: int = Field(1, description="Number of structural bays")
+    face_area_sf: Optional[float] = Field(None, description="Override face area (SF)")
+    install_height_ft: float = Field(10.0, description="Bottom of awning (ft)")
+    miles: float = Field(0.0, description="One-way travel miles")
+    crew_size: int = Field(2, description="Crew size")
+
+
+@app.post("/api/estimate/awning")
+async def run_awning_estimate(req: AwningRequest):
+    """Run awning estimation engine."""
+    if req.face_area_sf and req.face_area_sf > 0:
+        sf = req.face_area_sf
+    else:
+        sf = req.width_ft * (req.valance_height_in / 12.0)
+    job = JobInput(
+        sign_type=SignType.AWNNON,
+        sign_sf_per_face=sf,
+        num_faces=1,
+        install_height_ft=req.install_height_ft,
+        miles_one_way=req.miles,
+        crew_size=req.crew_size,
+    )
+    result = estimate_awning(job)
+    total_est_hours = result.total_man_hours + result.total_crew_hours
+    bench = benchmark(total_est_hours)
+    bench_data = _format_benchmark(bench) if bench else None
+    return _format_estimate_result(result, bench_data)
+
+
+# ── Removal Estimate ─────────────────────────────────────────────────────────
+
+class RemovalRequest(BaseModel):
+    sign_type: str = Field("CLLIT", description="Type of sign being removed")
+    num_units: int = Field(1, description="Number of sign units to remove")
+    face_area_sf: float = Field(0.0, description="Total face area (SF)")
+    remove_height_ft: float = Field(15.0, description="Sign height (ft)")
+    miles: float = Field(0.0, description="One-way travel miles")
+    crew_size: int = Field(2, description="Crew size")
+
+
+@app.post("/api/estimate/removal")
+async def run_removal_estimate(req: RemovalRequest):
+    """Run removal estimation engine."""
+    try:
+        st = SignType(req.sign_type)
+    except ValueError:
+        st = SignType.CLLIT
+    job = JobInput(
+        sign_type=st,
+        num_units=req.num_units,
+        face_sf_override=req.face_area_sf if req.face_area_sf > 0 else None,
+        install_height_ft=req.remove_height_ft,
+        miles_one_way=req.miles,
+        crew_size=req.crew_size,
+    )
+    result = estimate_removal(job)
+    total_est_hours = result.total_man_hours + result.total_crew_hours
+    bench = benchmark(total_est_hours)
+    bench_data = _format_benchmark(bench) if bench else None
+    return _format_estimate_result(result, bench_data)
+
+
+# ── Shared formatters ────────────────────────────────────────────────────────
+
+def _format_benchmark(bench):
+    return {
+        "matching_jobs": bench.matching_jobs,
+        "avg_hours": bench.avg_labor_hours,
+        "median_hours": bench.median_labor_hours,
+        "std_dev": bench.std_dev,
+        "min_hours": bench.min_hours,
+        "max_hours": bench.max_hours,
+        "avg_revenue": bench.avg_revenue,
+        "avg_margin_pct": bench.avg_margin_pct,
+        "confidence": bench.confidence,
+        "similar_jobs": bench.similar_jobs[:5],
+    }
+
+
+def _format_estimate_result(result, bench_data):
     return {
         "total_pf": result.total_pf,
         "pf_source": result.pf_source,
@@ -202,25 +314,17 @@ async def run_estimate(req: EstimateRequest):
         "letter_count": result.letter_count,
         "labor": [
             {
-                "code": l.work_code,
-                "desc": l.description,
-                "hours": l.hours,
-                "unit": l.unit_type,
-                "dept": l.department,
-                "formula": l.formula,
-                "section": l.section,
+                "code": l.work_code, "desc": l.description,
+                "hours": l.hours, "unit": l.unit_type,
+                "dept": l.department, "formula": l.formula, "section": l.section,
             }
             for l in result.labor_lines
         ],
         "install": [
             {
-                "code": l.work_code,
-                "desc": l.description,
-                "hours": l.hours,
-                "unit": l.unit_type,
-                "dept": l.department,
-                "formula": l.formula,
-                "section": l.section,
+                "code": l.work_code, "desc": l.description,
+                "hours": l.hours, "unit": l.unit_type,
+                "dept": l.department, "formula": l.formula, "section": l.section,
             }
             for l in result.install_lines
         ],
@@ -446,7 +550,7 @@ async def list_sections(family: Optional[str] = None, limit: int = 50):
     return {
         "total": len(sections),
         "sections": [
-            {"designation": s.designation, "family": s.family, "W_plf": s.W_plf,
+            {"designation": s.designation, "family": s.family, "W_plf": s.weight_plf,
              "d_in": s.d_in, "Ix_in4": s.Ix_in4, "Sx_in3": s.Sx_in3}
             for s in sections[:limit]
         ],

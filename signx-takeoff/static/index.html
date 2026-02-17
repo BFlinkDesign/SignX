@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SignX-Takeoff — Channel Letter Estimator</title>
+<title>SignX-Takeoff</title>
 <style>
   :root {
     --bg: #0f172a; --surface: #1e293b; --surface2: #334155;
@@ -16,10 +16,18 @@
   .container { max-width: 1400px; margin: 0 auto; padding: 1rem; }
 
   /* Header */
-  header { display: flex; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; }
+  header { display: flex; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--border); margin-bottom: 0; }
   header h1 { font-size: 1.5rem; font-weight: 700; }
   header h1 span { color: var(--accent); }
   header .subtitle { color: var(--text-dim); font-size: 0.85rem; }
+
+  /* Main Nav Tabs */
+  .main-nav { display: flex; gap: 0; border-bottom: 2px solid var(--border); margin-bottom: 1.5rem; background: var(--surface); border-radius: 0.5rem 0.5rem 0 0; overflow-x: auto; }
+  .main-nav .nav-tab { padding: 0.75rem 1.5rem; cursor: pointer; color: var(--text-dim); font-size: 0.9rem; font-weight: 600; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.15s; white-space: nowrap; }
+  .main-nav .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); background: rgba(59,130,246,0.08); }
+  .main-nav .nav-tab:hover { color: var(--text); background: rgba(255,255,255,0.03); }
+  .main-section { display: none; }
+  .main-section.active { display: block; }
 
   /* Layout */
   .grid { display: grid; grid-template-columns: 400px 1fr; gap: 1.5rem; }
@@ -44,7 +52,7 @@
   .btn-primary:hover { background: #2563eb; }
   .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 
-  /* Tabs */
+  /* Sub Tabs (PF tabs, structural sub-tabs) */
   .tabs { display: flex; gap: 0; border-bottom: 2px solid var(--border); margin-bottom: 1rem; }
   .tab { padding: 0.5rem 1rem; cursor: pointer; color: var(--text-dim); font-size: 0.85rem; font-weight: 500; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.15s; }
   .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
@@ -111,6 +119,21 @@
 
   /* Separator */
   hr { border: none; border-top: 1px solid var(--surface2); margin: 1rem 0; }
+
+  /* Structural cards */
+  .struct-card { background: var(--surface); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.25rem; margin-bottom: 1rem; }
+  .struct-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+  .badge-pass { font-size: 0.7rem; padding: 0.15rem 0.6rem; border-radius: 9999px; background: var(--green); color: #000; font-weight: 700; }
+  .badge-fail { font-size: 0.7rem; padding: 0.15rem 0.6rem; border-radius: 9999px; background: var(--red); color: #fff; font-weight: 700; }
+  .struct-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 900px) { .struct-grid { grid-template-columns: 1fr; } }
+  .struct-val { font-size: 1.3rem; font-weight: 700; color: var(--accent); }
+  .struct-lbl { font-size: 0.7rem; color: var(--text-dim); }
+  .struct-row { display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px solid var(--surface2); font-size: 0.82rem; }
+  .struct-row:last-child { border-bottom: none; }
+
+  /* Error display */
+  .error-msg { background: rgba(239,68,68,0.1); border: 1px solid var(--red); border-radius: 0.5rem; padding: 0.75rem; margin-bottom: 0.75rem; font-size: 0.85rem; color: var(--red); }
 </style>
 </head>
 <body>
@@ -118,264 +141,597 @@
   <header>
     <div>
       <h1><span>SignX</span>-Takeoff</h1>
-      <div class="subtitle">Channel Letter Estimation &mdash; ABC Section 4B/4C/10B &mdash; KeyedIn Ready</div>
+      <div class="subtitle">Eagle Sign Co</div>
     </div>
   </header>
 
-  <div class="grid">
-    <!-- ═══ LEFT: INPUT PANEL ═══ -->
-    <div class="input-panel">
+  <!-- ═══ MAIN NAVIGATION ═══ -->
+  <nav class="main-nav" id="main-nav">
+    <div class="nav-tab active" data-section="sec-channel">Channel Letters</div>
+    <div class="nav-tab" data-section="sec-monument">Monument</div>
+    <div class="nav-tab" data-section="sec-awning">Awning</div>
+    <div class="nav-tab" data-section="sec-removal">Removal</div>
+    <div class="nav-tab" data-section="sec-structural">Engineering</div>
+  </nav>
 
-      <!-- PF Source -->
-      <div class="card">
-        <h2>Peripheral Feet (PF) <span class="badge">INPUT</span></h2>
-        <div class="tabs" id="pf-tabs">
-          <div class="tab active" data-tab="pdf">PDF Upload</div>
-          <div class="tab" data-tab="chart">Footage Chart</div>
-          <div class="tab" data-tab="manual">Manual PF</div>
+  <!-- ════════════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION: Channel Letters                                                -->
+  <!-- ════════════════════════════════════════════════════════════════════════ -->
+  <div class="main-section active" id="sec-channel">
+    <div class="grid">
+      <!-- LEFT: INPUT PANEL -->
+      <div class="input-panel">
+        <!-- PF Source -->
+        <div class="card">
+          <h2>Peripheral Feet (PF) <span class="badge">INPUT</span></h2>
+          <div class="tabs" id="pf-tabs">
+            <div class="tab active" data-tab="pdf">PDF Upload</div>
+            <div class="tab" data-tab="chart">Footage Chart</div>
+            <div class="tab" data-tab="manual">Manual PF</div>
+          </div>
+
+          <!-- PDF Upload -->
+          <div class="tab-content active" id="tab-pdf">
+            <div class="dropzone" id="dropzone">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 16V4m0 0l-4 4m4-4l4 4M4 20h16"/></svg>
+              <p>Drop PDF here (Gemini Art, cut file, or conceptual)<br>or click to browse</p>
+              <div class="filename" id="pdf-filename"></div>
+            </div>
+            <input type="file" id="pdf-input" accept=".pdf" style="display:none">
+            <div class="form-row" style="margin-top:0.75rem">
+              <div><label>Scale Factor (0 = auto)</label>
+                <input type="number" id="pdf-scale" value="0" min="0" max="10" step="0.25">
+              </div>
+              <div><label>Known Letter Height (in)</label>
+                <input type="number" id="pdf-known-height" value="0" min="0" max="120" step="0.5">
+              </div>
+            </div>
+            <p style="font-size:0.7rem;color:var(--text-dim);margin-bottom:0.5rem;">Gemini Art / cut files: leave at 0. Conceptual PDFs on letter paper: try 2.75, or enter known height.</p>
+            <div id="pdf-result" style="display:none">
+              <div style="font-size:0.8rem;color:var(--text-dim);" id="pdf-info"></div>
+            </div>
+          </div>
+
+          <!-- Footage Chart -->
+          <div class="tab-content" id="tab-chart">
+            <div class="form-row-3">
+              <div><label>Letters</label><input type="number" id="chart-count" value="10" min="1" max="100"></div>
+              <div><label>Height (in)</label><input type="number" id="chart-height" value="12" min="3" max="120" step="0.5"></div>
+              <div><label>Font</label>
+                <select id="chart-font">
+                  <option value="block">Block</option>
+                  <option value="serif">Serif</option>
+                  <option value="script">Script</option>
+                </select>
+              </div>
+            </div>
+            <button class="btn-primary" onclick="calcFromChart()" style="margin-top:0.5rem">Calculate PF from Chart</button>
+            <div id="chart-result" style="margin-top:0.5rem;font-size:0.8rem;color:var(--text-dim);"></div>
+          </div>
+
+          <!-- Manual -->
+          <div class="tab-content" id="tab-manual">
+            <div class="form-group">
+              <label>Total Peripheral Feet</label>
+              <input type="number" id="manual-pf" step="0.01" placeholder="e.g. 78.64">
+            </div>
+            <div class="form-group">
+              <label>Face Area (SF) &mdash; optional</label>
+              <input type="number" id="manual-face-sf" step="0.01" placeholder="Leave blank to auto-calculate">
+            </div>
+            <p style="font-size:0.75rem;color:var(--text-dim);">Paste PF from CorelDRAW macro or Bluebeam measurement.</p>
+          </div>
+
+          <!-- PF Result Display -->
+          <div class="pf-display" id="pf-display" style="display:none">
+            <div class="value" id="pf-value">0.00</div>
+            <div class="label">Peripheral Feet</div>
+            <div class="source" id="pf-source"></div>
+          </div>
         </div>
 
-        <!-- PDF Upload -->
-        <div class="tab-content active" id="tab-pdf">
-          <div class="dropzone" id="dropzone">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 16V4m0 0l-4 4m4-4l4 4M4 20h16"/></svg>
-            <p>Drop PDF here (Gemini Art, cut file, or conceptual)<br>or click to browse</p>
-            <div class="filename" id="pdf-filename"></div>
-          </div>
-          <input type="file" id="pdf-input" accept=".pdf" style="display:none">
-          <div class="form-row" style="margin-top:0.75rem">
-            <div><label>Scale Factor (0 = auto)</label>
-              <input type="number" id="pdf-scale" value="0" min="0" max="10" step="0.25">
+        <!-- Sign Specs -->
+        <div class="card">
+          <h2>Sign Specifications</h2>
+          <div class="form-row">
+            <div><label>Construction Type</label>
+              <select id="construction">
+                <option value="face_lit">Face-Lit (Pan Channel)</option>
+                <option value="halo">Halo (Reverse Channel)</option>
+                <option value="strip">Strip Channel (25"+)</option>
+                <option value="open_face">Open Face</option>
+              </select>
             </div>
-            <div><label>Known Letter Height (in)</label>
-              <input type="number" id="pdf-known-height" value="0" min="0" max="120" step="0.5">
+            <div><label>Letter Height (in)</label>
+              <input type="number" id="spec-height" value="12" min="3" max="120" step="0.5">
             </div>
           </div>
-          <p style="font-size:0.7rem;color:var(--text-dim);margin-bottom:0.5rem;">Gemini Art / cut files: leave at 0. Conceptual PDFs on letter paper: try 2.75, or enter known height.</p>
-          <div id="pdf-result" style="display:none">
-            <div style="font-size:0.8rem;color:var(--text-dim);" id="pdf-info"></div>
+          <div class="form-row">
+            <div><label>Return Depth (in)</label>
+              <input type="number" id="return-depth" value="5" min="2" max="12" step="0.5">
+            </div>
+            <div><label>Logo PF (additional)</label>
+              <input type="number" id="logo-pf" value="0" min="0" step="0.1">
+            </div>
           </div>
         </div>
 
-        <!-- Footage Chart -->
-        <div class="tab-content" id="tab-chart">
-          <div class="form-row-3">
-            <div><label>Letters</label><input type="number" id="chart-count" value="10" min="1" max="100"></div>
-            <div><label>Height (in)</label><input type="number" id="chart-height" value="12" min="3" max="120" step="0.5"></div>
-            <div><label>Font</label>
-              <select id="chart-font">
-                <option value="block">Block</option>
-                <option value="serif">Serif</option>
-                <option value="script">Script</option>
+        <!-- Installation -->
+        <div class="card">
+          <h2>Installation</h2>
+          <div class="form-row">
+            <div><label>Mount Height (ft)</label>
+              <input type="number" id="install-height" value="15" min="0" max="200">
+            </div>
+            <div><label>Substrate</label>
+              <select id="substrate">
+                <option value="standard">Standard</option>
+                <option value="eifs_unknown">EIFS/Unknown (x1.15)</option>
+                <option value="old_masonry">Old Masonry (x1.20)</option>
+                <option value="steel">Steel (x1.25)</option>
               </select>
             </div>
           </div>
-          <button class="btn-primary" onclick="calcFromChart()" style="margin-top:0.5rem">Calculate PF from Chart</button>
-          <div id="chart-result" style="margin-top:0.5rem;font-size:0.8rem;color:var(--text-dim);"></div>
+          <div class="form-row-3">
+            <div><label>Raceway (LF)</label>
+              <input type="number" id="raceway-lf" value="0" min="0" step="0.5">
+            </div>
+            <div><label>Miles (one-way)</label>
+              <input type="number" id="miles" value="0" min="0">
+            </div>
+            <div><label>Crew Size</label>
+              <select id="crew-size">
+                <option value="2" selected>2 Men</option>
+                <option value="3">3 Men</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div><label># Sign Units</label>
+              <input type="number" id="num-units" value="1" min="1" max="20">
+            </div>
+            <div class="checkbox-group" style="align-self:end;padding-bottom:0.5rem;">
+              <input type="checkbox" id="include-removal">
+              <label for="include-removal">Include Removal</label>
+            </div>
+          </div>
         </div>
 
-        <!-- Manual -->
-        <div class="tab-content" id="tab-manual">
-          <div class="form-group">
-            <label>Total Peripheral Feet</label>
-            <input type="number" id="manual-pf" step="0.01" placeholder="e.g. 78.64">
-          </div>
-          <div class="form-group">
-            <label>Face Area (SF) &mdash; optional</label>
-            <input type="number" id="manual-face-sf" step="0.01" placeholder="Leave blank to auto-calculate">
-          </div>
-          <p style="font-size:0.75rem;color:var(--text-dim);">Paste PF from CorelDRAW macro or Bluebeam measurement.</p>
-        </div>
-
-        <!-- PF Result Display -->
-        <div class="pf-display" id="pf-display" style="display:none">
-          <div class="value" id="pf-value">0.00</div>
-          <div class="label">Peripheral Feet</div>
-          <div class="source" id="pf-source"></div>
-        </div>
+        <!-- Run Button -->
+        <button class="btn-primary" id="run-btn" onclick="runEstimate()">
+          Generate Estimate
+        </button>
       </div>
 
-      <!-- Sign Specs -->
-      <div class="card">
-        <h2>Sign Specifications</h2>
-        <div class="form-row">
-          <div><label>Construction Type</label>
-            <select id="construction">
-              <option value="face_lit">Face-Lit (Pan Channel)</option>
-              <option value="halo">Halo (Reverse Channel)</option>
-              <option value="strip">Strip Channel (25"+)</option>
-              <option value="open_face">Open Face</option>
-            </select>
-          </div>
-          <div><label>Letter Height (in)</label>
-            <input type="number" id="spec-height" value="12" min="3" max="120" step="0.5">
-          </div>
-        </div>
-        <div class="form-row">
-          <div><label>Return Depth (in)</label>
-            <input type="number" id="return-depth" value="5" min="2" max="12" step="0.5">
-          </div>
-          <div><label>Logo PF (additional)</label>
-            <input type="number" id="logo-pf" value="0" min="0" step="0.1">
-          </div>
+      <!-- RIGHT: RESULTS PANEL -->
+      <div class="results-panel">
+        <div class="results" id="cl-results"></div>
+        <!-- Placeholder when no results -->
+        <div id="cl-placeholder" class="card" style="text-align:center;padding:4rem 2rem;">
+          <svg style="width:64px;height:64px;color:var(--text-dim);margin-bottom:1rem;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+          <h3 style="color:var(--text-dim);margin-bottom:0.5rem;">Ready to Estimate</h3>
+          <p style="color:var(--text-dim);font-size:0.85rem;">Upload a PDF, use the footage chart, or enter PF manually.<br>Then click "Generate Estimate" to see KeyedIn-ready line items.</p>
         </div>
       </div>
+    </div>
+  </div>
 
-      <!-- Installation -->
-      <div class="card">
-        <h2>Installation</h2>
-        <div class="form-row">
-          <div><label>Mount Height (ft)</label>
-            <input type="number" id="install-height" value="15" min="0" max="200">
+  <!-- ════════════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION: Monument                                                       -->
+  <!-- ════════════════════════════════════════════════════════════════════════ -->
+  <div class="main-section" id="sec-monument">
+    <div class="grid">
+      <div class="input-panel">
+        <div class="card">
+          <h2>Monument Sign <span class="badge">INPUT</span></h2>
+          <div class="form-row">
+            <div><label>Width (ft)</label><input type="number" id="mon-width" value="8" min="1" max="40" step="0.5"></div>
+            <div><label>Height (ft)</label><input type="number" id="mon-height" value="4" min="1" max="20" step="0.5"></div>
           </div>
-          <div><label>Substrate</label>
-            <select id="substrate">
-              <option value="standard">Standard</option>
-              <option value="eifs_unknown">EIFS/Unknown (x1.15)</option>
-              <option value="old_masonry">Old Masonry (x1.20)</option>
-              <option value="steel">Steel (x1.25)</option>
-            </select>
+          <div class="form-row">
+            <div><label>Number of Faces</label>
+              <select id="mon-faces">
+                <option value="1">1 (Single-Face)</option>
+                <option value="2" selected>2 (Double-Face)</option>
+              </select>
+            </div>
+            <div><label>Install Height (ft)</label><input type="number" id="mon-install-height" value="6" min="1" max="30"></div>
+          </div>
+          <div class="form-row">
+            <div class="checkbox-group" style="padding-top:1.2rem;">
+              <input type="checkbox" id="mon-illuminated">
+              <label for="mon-illuminated">Illuminated</label>
+            </div>
+            <div class="checkbox-group" style="padding-top:1.2rem;">
+              <input type="checkbox" id="mon-vinyl" checked>
+              <label for="mon-vinyl">Has Vinyl</label>
+            </div>
+          </div>
+          <div class="form-row">
+            <div><label>Miles (one-way)</label><input type="number" id="mon-miles" value="0" min="0"></div>
+            <div><label>Crew Size</label>
+              <select id="mon-crew">
+                <option value="2" selected>2 Men</option>
+                <option value="3">3 Men</option>
+              </select>
+            </div>
           </div>
         </div>
-        <div class="form-row-3">
-          <div><label>Raceway (LF)</label>
-            <input type="number" id="raceway-lf" value="0" min="0" step="0.5">
+        <button class="btn-primary" id="mon-btn" onclick="runMonument()">Estimate Monument</button>
+      </div>
+      <div class="results-panel">
+        <div class="results" id="mon-results"></div>
+        <div id="mon-placeholder" class="card" style="text-align:center;padding:4rem 2rem;">
+          <h3 style="color:var(--text-dim);margin-bottom:0.5rem;">Monument Estimator</h3>
+          <p style="color:var(--text-dim);font-size:0.85rem;">Configure monument sign parameters and click "Estimate Monument".</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION: Awning                                                         -->
+  <!-- ════════════════════════════════════════════════════════════════════════ -->
+  <div class="main-section" id="sec-awning">
+    <div class="grid">
+      <div class="input-panel">
+        <div class="card">
+          <h2>Awning <span class="badge">INPUT</span></h2>
+          <div class="form-row">
+            <div><label>Width (ft)</label><input type="number" id="awn-width" value="10" min="1" max="60" step="0.5"></div>
+            <div><label>Projection (ft)</label><input type="number" id="awn-projection" value="3" min="0.5" max="15" step="0.5"></div>
           </div>
-          <div><label>Miles (one-way)</label>
-            <input type="number" id="miles" value="0" min="0">
+          <div class="form-row">
+            <div><label>Valance Height (in)</label><input type="number" id="awn-valance" value="12" min="4" max="36" step="1"></div>
+            <div><label>Number of Bays</label><input type="number" id="awn-bays" value="1" min="1" max="20"></div>
           </div>
-          <div><label>Crew Size</label>
-            <select id="crew-size">
+          <div class="form-row">
+            <div><label>Install Height (ft)</label><input type="number" id="awn-install-height" value="10" min="1" max="40"></div>
+            <div><label>Miles (one-way)</label><input type="number" id="awn-miles" value="0" min="0"></div>
+          </div>
+          <div class="form-group">
+            <label>Crew Size</label>
+            <select id="awn-crew">
               <option value="2" selected>2 Men</option>
               <option value="3">3 Men</option>
             </select>
           </div>
         </div>
-        <div class="form-row">
-          <div><label># Sign Units</label>
-            <input type="number" id="num-units" value="1" min="1" max="20">
-          </div>
-          <div class="checkbox-group" style="align-self:end;padding-bottom:0.5rem;">
-            <input type="checkbox" id="include-removal">
-            <label for="include-removal">Include Removal</label>
-          </div>
-        </div>
+        <button class="btn-primary" id="awn-btn" onclick="runAwning()">Estimate Awning</button>
       </div>
-
-      <!-- Run Button -->
-      <button class="btn-primary" id="run-btn" onclick="runEstimate()">
-        Generate Estimate
-      </button>
-    </div>
-
-    <!-- ═══ RIGHT: RESULTS PANEL ═══ -->
-    <div class="results-panel">
-      <div class="results" id="results">
-
-        <!-- Summary -->
-        <div class="summary-grid">
-          <div class="summary-box accent"><div class="val" id="sum-pf">—</div><div class="lbl">Peripheral Ft</div></div>
-          <div class="summary-box green"><div class="val" id="sum-man">—</div><div class="lbl">Man-Hours</div></div>
-          <div class="summary-box orange"><div class="val" id="sum-crew">—</div><div class="lbl">Crew-Hours</div></div>
-          <div class="summary-box purple"><div class="val" id="sum-items">—</div><div class="lbl">BOM Items</div></div>
+      <div class="results-panel">
+        <div class="results" id="awn-results"></div>
+        <div id="awn-placeholder" class="card" style="text-align:center;padding:4rem 2rem;">
+          <h3 style="color:var(--text-dim);margin-bottom:0.5rem;">Awning Estimator</h3>
+          <p style="color:var(--text-dim);font-size:0.85rem;">Configure awning parameters and click "Estimate Awning".</p>
         </div>
-
-        <!-- Warnings -->
-        <div id="warnings-container"></div>
-
-        <!-- Labor Table -->
-        <div class="card">
-          <div class="section-header">
-            <h3>Fabrication Labor &mdash; KeyedIn Entry</h3>
-            <span style="font-size:0.7rem;color:var(--text-dim);" id="labor-section"></span>
-          </div>
-          <table>
-            <thead><tr>
-              <th>Code</th><th>Description</th><th class="right">Hours</th><th>Unit</th><th>Dept</th><th>Formula (ABC)</th>
-            </tr></thead>
-            <tbody id="labor-body"></tbody>
-            <tfoot id="labor-foot"></tfoot>
-          </table>
-        </div>
-
-        <!-- Install Table -->
-        <div class="card">
-          <div class="section-header">
-            <h3>Installation Labor &mdash; KeyedIn Entry</h3>
-            <span style="font-size:0.7rem;color:var(--orange);">0640/0650 = CREW-hours!</span>
-          </div>
-          <table>
-            <thead><tr>
-              <th>Code</th><th>Description</th><th class="right">Hours</th><th>Unit</th><th>Dept</th><th>Formula (ABC)</th>
-            </tr></thead>
-            <tbody id="install-body"></tbody>
-            <tfoot id="install-foot"></tfoot>
-          </table>
-        </div>
-
-        <!-- LED Spec -->
-        <div class="card">
-          <h2>LED System Specification</h2>
-          <div id="led-spec" style="font-size:0.85rem;"></div>
-        </div>
-
-        <!-- Material BOM -->
-        <div class="card">
-          <h2>Material BOM</h2>
-          <table>
-            <thead><tr>
-              <th>Item</th><th>Part #</th><th class="right">Qty</th><th>Unit</th><th>Waste</th><th>Formula</th>
-            </tr></thead>
-            <tbody id="bom-body"></tbody>
-          </table>
-        </div>
-
-        <!-- Warehouse Benchmark -->
-        <div class="card" id="benchmark-card" style="display:none;">
-          <h2>Warehouse Benchmark <span class="badge" style="background:var(--accent2);">HISTORICAL</span></h2>
-          <div id="benchmark-content"></div>
-        </div>
-
-        <!-- Export -->
-        <div class="card" style="text-align:center;">
-          <button class="btn-primary" onclick="copyToClipboard()" style="width:auto;display:inline-block;margin-right:0.5rem;">
-            Copy KeyedIn Lines
-          </button>
-          <button class="btn-primary" onclick="exportCSV()" style="width:auto;display:inline-block;background:var(--accent2);">
-            Export CSV
-          </button>
-        </div>
-
-      </div>
-
-      <!-- Placeholder when no results -->
-      <div id="placeholder" class="card" style="text-align:center;padding:4rem 2rem;">
-        <svg style="width:64px;height:64px;color:var(--text-dim);margin-bottom:1rem;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-        <h3 style="color:var(--text-dim);margin-bottom:0.5rem;">Ready to Estimate</h3>
-        <p style="color:var(--text-dim);font-size:0.85rem;">Upload a PDF, use the footage chart, or enter PF manually.<br>Then click "Generate Estimate" to see KeyedIn-ready line items.</p>
       </div>
     </div>
   </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION: Removal                                                        -->
+  <!-- ════════════════════════════════════════════════════════════════════════ -->
+  <div class="main-section" id="sec-removal">
+    <div class="grid">
+      <div class="input-panel">
+        <div class="card">
+          <h2>Removal <span class="badge">INPUT</span></h2>
+          <div class="form-row">
+            <div><label>What are we removing?</label>
+              <select id="rem-type">
+                <option value="CLLIT">Channel Letters (Lit)</option>
+                <option value="CLNON">Channel Letters (Non-Lit)</option>
+                <option value="MONDF">Monument (Double-Face)</option>
+                <option value="MONSF">Monument (Single-Face)</option>
+                <option value="POLLIT">Pole Sign (Lit)</option>
+                <option value="AWNNON">Awning</option>
+              </select>
+            </div>
+            <div><label>Number of Units</label><input type="number" id="rem-units" value="1" min="1" max="20"></div>
+          </div>
+          <div class="form-row">
+            <div><label>Face Area (SF)</label><input type="number" id="rem-area" value="0" min="0" step="0.5"></div>
+            <div><label>Removal Height (ft)</label><input type="number" id="rem-height" value="15" min="0" max="200"></div>
+          </div>
+          <div class="form-row">
+            <div><label>Miles (one-way)</label><input type="number" id="rem-miles" value="0" min="0"></div>
+            <div><label>Crew Size</label>
+              <select id="rem-crew">
+                <option value="2" selected>2 Men</option>
+                <option value="3">3 Men</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <button class="btn-primary" id="rem-btn" onclick="runRemoval()">Estimate Removal</button>
+      </div>
+      <div class="results-panel">
+        <div class="results" id="rem-results"></div>
+        <div id="rem-placeholder" class="card" style="text-align:center;padding:4rem 2rem;">
+          <h3 style="color:var(--text-dim);margin-bottom:0.5rem;">Removal Estimator</h3>
+          <p style="color:var(--text-dim);font-size:0.85rem;">Configure removal parameters and click "Estimate Removal".</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION: Structural                                                     -->
+  <!-- ════════════════════════════════════════════════════════════════════════ -->
+  <div class="main-section" id="sec-structural">
+    <!-- Structural Sub-tabs -->
+    <div class="tabs" id="struct-tabs">
+      <div class="tab active" data-stab="stab-full">Complete Design</div>
+      <div class="tab" data-stab="stab-wind">Wind Load</div>
+      <div class="tab" data-stab="stab-member">Support Post</div>
+      <div class="tab" data-stab="stab-foundation">Foundation</div>
+      <div class="tab" data-stab="stab-anchors">Anchor Bolts</div>
+    </div>
+
+    <!-- Full Design Sub-tab -->
+    <div class="tab-content active" id="stab-full">
+      <div class="grid">
+        <div class="input-panel">
+          <div class="card">
+            <h2>Complete Sign Design</h2>
+            <div class="form-row">
+              <div><label>Sign Width (ft)</label><input type="number" id="fd-width" value="10" min="1" max="100" step="0.5"></div>
+              <div><label>Sign Height (ft)</label><input type="number" id="fd-height" value="5" min="1" max="50" step="0.5"></div>
+            </div>
+            <div class="form-row">
+              <div><label>Height to Top (ft)</label><input type="number" id="fd-top" value="20" min="5" max="200" step="1"></div>
+              <div><label>Wind Speed (mph)</label><input type="number" id="fd-v" value="115" min="85" max="200" step="5"></div>
+            </div>
+            <div class="form-row">
+              <div><label>Location Type</label>
+                <select id="fd-exposure">
+                  <option value="B">Urban / Suburban</option>
+                  <option value="C" selected>Open Terrain</option>
+                  <option value="D">Coastal / Flat</option>
+                </select>
+              </div>
+              <div><label>Elevation (ft)</label><input type="number" id="fd-elev" value="0" min="0" max="15000" step="100"></div>
+            </div>
+            <div class="form-row">
+              <div><label>Anchor Bolt Strength</label>
+                <select id="fd-bolt">
+                  <option value="A307">Standard (A307)</option>
+                  <option value="F1554-36" selected>36 ksi (F1554-36)</option>
+                  <option value="F1554-55">55 ksi (F1554-55)</option>
+                  <option value="F1554-105">105 ksi (F1554-105)</option>
+                  <option value="A36">Structural (A36)</option>
+                </select>
+              </div>
+              <div><label>Concrete Strength (psi)</label><input type="number" id="fd-fc" value="3000" min="2500" max="8000" step="500"></div>
+            </div>
+          </div>
+          <button class="btn-primary" id="fd-btn" onclick="runFullDesign()">Design This Sign</button>
+        </div>
+        <div class="results-panel">
+          <div id="fd-results" style="display:none;"></div>
+          <div id="fd-placeholder" class="card" style="text-align:center;padding:4rem 2rem;">
+            <h3 style="color:var(--text-dim);margin-bottom:0.5rem;">Complete Sign Design</h3>
+            <p style="color:var(--text-dim);font-size:0.85rem;">Enter sign dimensions and site conditions. We'll figure out the wind load, pick a support post, size the foundation, and spec the anchor bolts.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wind Sub-tab -->
+    <div class="tab-content" id="stab-wind">
+      <div class="grid">
+        <div class="input-panel">
+          <div class="card">
+            <h2>Wind Load Analysis</h2>
+            <div class="form-row">
+              <div><label>Wind Speed (mph)</label><input type="number" id="wnd-v" value="115" min="85" max="200" step="5"></div>
+              <div><label>Sign Width (ft)</label><input type="number" id="wnd-width" value="10" min="1" max="100" step="0.5"></div>
+            </div>
+            <div class="form-row">
+              <div><label>Sign Height (ft)</label><input type="number" id="wnd-height" value="5" min="1" max="50" step="0.5"></div>
+              <div><label>Height to Top (ft)</label><input type="number" id="wnd-top" value="20" min="5" max="200" step="1"></div>
+            </div>
+            <div class="form-row">
+              <div><label>Location Type</label>
+                <select id="wnd-exposure">
+                  <option value="B">Urban / Suburban</option>
+                  <option value="C" selected>Open Terrain</option>
+                  <option value="D">Coastal / Flat</option>
+                </select>
+              </div>
+              <div><label>Terrain Factor</label><input type="number" id="wnd-kzt" value="1.0" min="0.5" max="3.0" step="0.05"></div>
+            </div>
+            <div class="form-row">
+              <div><label>Elevation (ft)</label><input type="number" id="wnd-elev" value="0" min="0" max="15000" step="100"></div>
+              <div><label>Risk Category</label>
+                <select id="wnd-risk">
+                  <option value="I">I</option>
+                  <option value="II" selected>II</option>
+                  <option value="III">III</option>
+                  <option value="IV">IV</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <button class="btn-primary" id="wnd-btn" onclick="runWind()">Calculate Wind</button>
+        </div>
+        <div class="results-panel">
+          <div id="wnd-results" style="display:none;"></div>
+          <div id="wnd-placeholder" class="card" style="text-align:center;padding:4rem 2rem;">
+            <h3 style="color:var(--text-dim);margin-bottom:0.5rem;">Wind Load Calculator</h3>
+            <p style="color:var(--text-dim);font-size:0.85rem;">Calculate how much wind force pushes on your sign.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Member Sub-tab -->
+    <div class="tab-content" id="stab-member">
+      <div class="grid">
+        <div class="input-panel">
+          <div class="card">
+            <h2>Check a Support Post</h2>
+            <div class="form-group">
+              <label>Steel Section (e.g. Pipe4STD, HSS6X6X1/4)</label>
+              <input type="text" id="mem-desig" value="Pipe4STD" placeholder="Pipe4STD">
+            </div>
+            <div class="form-row">
+              <div><label>Bending Moment (in-lb)</label><input type="number" id="mem-m" value="0" step="100"></div>
+              <div><label>Shear Force (lbf)</label><input type="number" id="mem-v" value="0" step="10"></div>
+            </div>
+            <div class="form-row">
+              <div><label>Post Length (in)</label><input type="number" id="mem-l" value="240" min="1" step="1"></div>
+              <div><label>Axial Load (lbf)</label><input type="number" id="mem-p" value="0" step="10"></div>
+            </div>
+            <div class="form-row">
+              <div><label>End Condition Factor</label><input type="number" id="mem-k" value="1.0" min="0.5" max="3.0" step="0.1"></div>
+              <div><label>Load Type</label>
+                <select id="mem-load">
+                  <option value="cantilever" selected>Cantilever</option>
+                  <option value="cantilever_udl">Cantilever UDL</option>
+                  <option value="simple_point">Simple - Point</option>
+                  <option value="simple_udl">Simple - UDL</option>
+                  <option value="fixed_point">Fixed - Point</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <button class="btn-primary" id="mem-btn" onclick="runMemberCheck()">Check This Post</button>
+        </div>
+        <div class="results-panel">
+          <div id="mem-results" style="display:none;"></div>
+          <div id="mem-placeholder" class="card" style="text-align:center;padding:4rem 2rem;">
+            <h3 style="color:var(--text-dim);margin-bottom:0.5rem;">Support Post Check</h3>
+            <p style="color:var(--text-dim);font-size:0.85rem;">Check if a specific steel post is strong enough for your loads.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Foundation Sub-tab -->
+    <div class="tab-content" id="stab-foundation">
+      <div class="grid">
+        <div class="input-panel">
+          <div class="card">
+            <h2>Foundation Design</h2>
+            <div class="form-row">
+              <div><label>Wind Push Force (lbf)</label><input type="number" id="fnd-f" value="0" step="10"></div>
+              <div><label>Tipping Moment (in-lb)</label><input type="number" id="fnd-m" value="0" step="100"></div>
+            </div>
+            <div class="form-row">
+              <div><label>Max Hole Diameter (in)</label><input type="number" id="fnd-dia" value="" placeholder="Auto" step="1"></div>
+              <div><label>Max Hole Depth (in)</label><input type="number" id="fnd-embed" value="" placeholder="Auto" step="1"></div>
+            </div>
+          </div>
+          <button class="btn-primary" id="fnd-btn" onclick="runFoundation()">Size Foundation</button>
+        </div>
+        <div class="results-panel">
+          <div id="fnd-results" style="display:none;"></div>
+          <div id="fnd-placeholder" class="card" style="text-align:center;padding:4rem 2rem;">
+            <h3 style="color:var(--text-dim);margin-bottom:0.5rem;">Foundation Design</h3>
+            <p style="color:var(--text-dim);font-size:0.85rem;">Size the drilled concrete pier that holds your sign up.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Anchors Sub-tab -->
+    <div class="tab-content" id="stab-anchors">
+      <div class="grid">
+        <div class="input-panel">
+          <div class="card">
+            <h2>Anchor Bolts &amp; Base Plate</h2>
+            <div class="form-row">
+              <div><label>Shear Force (lbf)</label><input type="number" id="anc-f" value="0" step="10"></div>
+              <div><label>Tipping Moment (in-lb)</label><input type="number" id="anc-m" value="0" step="100"></div>
+            </div>
+            <div class="form-row">
+              <div><label>Downward Load (lbf)</label><input type="number" id="anc-p" value="0" step="10"></div>
+              <div><label>Concrete Strength (psi)</label><input type="number" id="anc-fc" value="3000" min="2500" max="8000" step="500"></div>
+            </div>
+            <div class="form-row">
+              <div><label>Anchor Bolt Strength</label>
+                <select id="anc-bolt">
+                  <option value="A307">Standard (A307)</option>
+                  <option value="F1554-36" selected>36 ksi (F1554-36)</option>
+                  <option value="F1554-55">55 ksi (F1554-55)</option>
+                  <option value="F1554-105">105 ksi (F1554-105)</option>
+                  <option value="A36">Structural (A36)</option>
+                </select>
+              </div>
+              <div><label>Number of Bolts</label>
+                <select id="anc-n">
+                  <option value="4" selected>4</option>
+                  <option value="6">6</option>
+                  <option value="8">8</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <button class="btn-primary" id="anc-btn" onclick="runAnchors()">Size Bolts &amp; Plate</button>
+        </div>
+        <div class="results-panel">
+          <div id="anc-results" style="display:none;"></div>
+          <div id="anc-placeholder" class="card" style="text-align:center;padding:4rem 2rem;">
+            <h3 style="color:var(--text-dim);margin-bottom:0.5rem;">Anchor Bolts &amp; Base Plate</h3>
+            <p style="color:var(--text-dim);font-size:0.85rem;">Size the bolts and plate that connect your post to the foundation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <script>
-// ── State ───────────────────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════════
+// MAIN NAVIGATION
+// ══════════════════════════════════════════════════════════════════════════════
+document.querySelectorAll('#main-nav .nav-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('#main-nav .nav-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.main-section').forEach(s => s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.section).classList.add('active');
+  });
+});
+
+// ══════════════════════════════════════════════════════════════════════════════
+// STRUCTURAL SUB-TABS
+// ══════════════════════════════════════════════════════════════════════════════
+document.querySelectorAll('#struct-tabs .tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('#struct-tabs .tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('#sec-structural > .tab-content').forEach(c => c.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.stab).classList.add('active');
+  });
+});
+
+// ══════════════════════════════════════════════════════════════════════════════
+// CHANNEL LETTER STATE & LOGIC (preserved from original)
+// ══════════════════════════════════════════════════════════════════════════════
 let currentPF = 0;
 let currentPFSource = '';
 let currentFaceSF = 0;
 let lastResult = null;
 
-// ── Tabs ────────────────────────────────────────────────────────────────
+// ── PF Tabs ─────────────────────────────────────────────────────────────────
 document.querySelectorAll('#pf-tabs .tab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('#pf-tabs .tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
     tab.classList.add('active');
+    document.querySelectorAll('#pf-tabs').forEach(() => {
+      document.getElementById('tab-pdf').classList.remove('active');
+      document.getElementById('tab-chart').classList.remove('active');
+      document.getElementById('tab-manual').classList.remove('active');
+    });
     document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
   });
 });
 
-// ── PDF Upload ──────────────────────────────────────────────────────────
+// ── PDF Upload ──────────────────────────────────────────────────────────────
 const dropzone = document.getElementById('dropzone');
 const pdfInput = document.getElementById('pdf-input');
 
@@ -411,7 +767,6 @@ async function handlePDF(file) {
     if (data.warnings.length) info += '<br><span style="color:var(--orange)">' + data.warnings.join('<br>') + '</span>';
     document.getElementById('pdf-info').innerHTML = info;
 
-    // Auto-fill height if detected
     if (data.max_height_inches > 0) {
       document.getElementById('spec-height').value = Math.round(data.max_height_inches);
       document.getElementById('chart-height').value = Math.round(data.max_height_inches);
@@ -421,7 +776,7 @@ async function handlePDF(file) {
   }
 }
 
-// ── Footage Chart ───────────────────────────────────────────────────────
+// ── Footage Chart ───────────────────────────────────────────────────────────
 async function calcFromChart() {
   const count = parseInt(document.getElementById('chart-count').value);
   const height = parseFloat(document.getElementById('chart-height').value);
@@ -445,7 +800,7 @@ async function calcFromChart() {
   }
 }
 
-// ── Show PF ─────────────────────────────────────────────────────────────
+// ── Show PF ─────────────────────────────────────────────────────────────────
 function showPF(pf, source) {
   const disp = document.getElementById('pf-display');
   disp.style.display = 'block';
@@ -453,13 +808,12 @@ function showPF(pf, source) {
   document.getElementById('pf-source').textContent = source;
 }
 
-// ── Run Estimate ────────────────────────────────────────────────────────
+// ── Run Channel Letter Estimate ─────────────────────────────────────────────
 async function runEstimate() {
   const btn = document.getElementById('run-btn');
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span> Calculating...';
 
-  // Determine PF source
   const activeTab = document.querySelector('#pf-tabs .tab.active').dataset.tab;
   let pfSource = 'manual';
   let pfValue = 0;
@@ -513,7 +867,7 @@ async function runEstimate() {
       body: JSON.stringify(body),
     });
     lastResult = await resp.json();
-    renderResults(lastResult);
+    renderEstimateResults('cl-results', 'cl-placeholder', lastResult);
   } catch (err) {
     alert('Estimation error: ' + err.message);
   }
@@ -522,124 +876,262 @@ async function runEstimate() {
   btn.textContent = 'Generate Estimate';
 }
 
-// ── Render Results ──────────────────────────────────────────────────────
-function renderResults(r) {
-  document.getElementById('results').classList.add('show');
-  document.getElementById('placeholder').style.display = 'none';
+// ══════════════════════════════════════════════════════════════════════════════
+// MONUMENT
+// ══════════════════════════════════════════════════════════════════════════════
+async function runMonument() {
+  const btn = document.getElementById('mon-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Calculating...';
 
-  // Summary
-  document.getElementById('sum-pf').textContent = r.total_pf.toFixed(2);
-  document.getElementById('sum-man').textContent = r.total_man_hours.toFixed(2);
-  document.getElementById('sum-crew').textContent = r.total_crew_hours.toFixed(2);
-  document.getElementById('sum-items').textContent = r.materials.length;
+  const body = {
+    width_ft: parseFloat(document.getElementById('mon-width').value) || 8,
+    height_ft: parseFloat(document.getElementById('mon-height').value) || 4,
+    num_faces: parseInt(document.getElementById('mon-faces').value) || 2,
+    illuminated: document.getElementById('mon-illuminated').checked,
+    has_vinyl: document.getElementById('mon-vinyl').checked,
+    install_height_ft: parseFloat(document.getElementById('mon-install-height').value) || 6,
+    miles: parseFloat(document.getElementById('mon-miles').value) || 0,
+    crew_size: parseInt(document.getElementById('mon-crew').value) || 2,
+  };
 
-  // Update PF display
-  showPF(r.total_pf, r.pf_source);
-
-  // Warnings
-  const wc = document.getElementById('warnings-container');
-  wc.innerHTML = '';
-  for (const w of r.warnings) {
-    wc.innerHTML += `<div class="warning">${w}</div>`;
+  try {
+    const resp = await fetch('/api/estimate/monument', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const result = await resp.json();
+    renderEstimateResults('mon-results', 'mon-placeholder', result);
+  } catch (err) {
+    alert('Monument estimation error: ' + err.message);
   }
 
-  // Section label
-  document.getElementById('labor-section').textContent =
-    `ABC ${r.construction.replace('_', '-')} | ${r.height_category}" | ${r.total_pf} PF`;
+  btn.disabled = false;
+  btn.textContent = 'Estimate Monument';
+}
 
-  // Labor table
-  renderTable('labor-body', 'labor-foot', r.labor, 'Fab Subtotal');
+// ══════════════════════════════════════════════════════════════════════════════
+// AWNING
+// ══════════════════════════════════════════════════════════════════════════════
+async function runAwning() {
+  const btn = document.getElementById('awn-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Calculating...';
 
-  // Install table
-  renderTable('install-body', 'install-foot', r.install, 'Install Subtotal');
+  const body = {
+    width_ft: parseFloat(document.getElementById('awn-width').value) || 10,
+    projection_ft: parseFloat(document.getElementById('awn-projection').value) || 3,
+    valance_height_in: parseFloat(document.getElementById('awn-valance').value) || 12,
+    num_bays: parseInt(document.getElementById('awn-bays').value) || 1,
+    install_height_ft: parseFloat(document.getElementById('awn-install-height').value) || 10,
+    miles: parseFloat(document.getElementById('awn-miles').value) || 0,
+    crew_size: parseInt(document.getElementById('awn-crew').value) || 2,
+  };
 
-  // LED spec
-  const led = r.led;
-  document.getElementById('led-spec').innerHTML = `
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;">
+  try {
+    const resp = await fetch('/api/estimate/awning', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const result = await resp.json();
+    renderEstimateResults('awn-results', 'awn-placeholder', result);
+  } catch (err) {
+    alert('Awning estimation error: ' + err.message);
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Estimate Awning';
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// REMOVAL
+// ══════════════════════════════════════════════════════════════════════════════
+async function runRemoval() {
+  const btn = document.getElementById('rem-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Calculating...';
+
+  const body = {
+    sign_type: document.getElementById('rem-type').value,
+    num_units: parseInt(document.getElementById('rem-units').value) || 1,
+    face_area_sf: parseFloat(document.getElementById('rem-area').value) || 0,
+    remove_height_ft: parseFloat(document.getElementById('rem-height').value) || 15,
+    miles: parseFloat(document.getElementById('rem-miles').value) || 0,
+    crew_size: parseInt(document.getElementById('rem-crew').value) || 2,
+  };
+
+  try {
+    const resp = await fetch('/api/estimate/removal', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const result = await resp.json();
+    renderEstimateResults('rem-results', 'rem-placeholder', result);
+  } catch (err) {
+    alert('Removal estimation error: ' + err.message);
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Estimate Removal';
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// SHARED ESTIMATE RESULT RENDERER
+// ══════════════════════════════════════════════════════════════════════════════
+function renderEstimateResults(containerId, placeholderId, r) {
+  const container = document.getElementById(containerId);
+  const placeholder = document.getElementById(placeholderId);
+  placeholder.style.display = 'none';
+  container.classList.add('show');
+  container.style.display = 'block';
+
+  const hasLed = r.led && r.led.modules > 0;
+  const hasMaterials = r.materials && r.materials.length > 0;
+  const hasLabor = r.labor && r.labor.length > 0;
+  const hasInstall = r.install && r.install.length > 0;
+
+  let html = '';
+
+  // Summary boxes
+  html += '<div class="summary-grid">';
+  html += `<div class="summary-box accent"><div class="val">${r.total_pf != null ? r.total_pf.toFixed(2) : '--'}</div><div class="lbl">Peripheral Ft</div></div>`;
+  html += `<div class="summary-box green"><div class="val">${r.total_man_hours != null ? r.total_man_hours.toFixed(2) : '--'}</div><div class="lbl">Man-Hours</div></div>`;
+  html += `<div class="summary-box orange"><div class="val">${r.total_crew_hours != null ? r.total_crew_hours.toFixed(2) : '--'}</div><div class="lbl">Crew-Hours</div></div>`;
+  html += `<div class="summary-box purple"><div class="val">${hasMaterials ? r.materials.length : '0'}</div><div class="lbl">BOM Items</div></div>`;
+  html += '</div>';
+
+  // Warnings
+  if (r.warnings && r.warnings.length > 0) {
+    for (const w of r.warnings) {
+      html += `<div class="warning">${w}</div>`;
+    }
+  }
+
+  // Fabrication Labor
+  if (hasLabor) {
+    html += '<div class="card">';
+    html += '<div class="section-header">';
+    html += '<h3>Fabrication Labor &mdash; KeyedIn Entry</h3>';
+    html += `<span style="font-size:0.7rem;color:var(--text-dim);">ABC ${(r.construction || '').replace('_', '-')} | ${r.height_category || ''}" | ${r.total_pf != null ? r.total_pf : '--'} PF</span>`;
+    html += '</div>';
+    html += renderLaborTable(r.labor, 'Fab Subtotal');
+    html += '</div>';
+  }
+
+  // Installation Labor
+  if (hasInstall) {
+    html += '<div class="card">';
+    html += '<div class="section-header">';
+    html += '<h3>Installation Labor &mdash; KeyedIn Entry</h3>';
+    html += '<span style="font-size:0.7rem;color:var(--orange);">0640/0650 = CREW-hours!</span>';
+    html += '</div>';
+    html += renderLaborTable(r.install, 'Install Subtotal');
+    html += '</div>';
+  }
+
+  // LED Spec (only if modules > 0)
+  if (hasLed) {
+    const led = r.led;
+    html += '<div class="card">';
+    html += '<h2>LED System Specification</h2>';
+    html += `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;">
       <div><div style="font-size:1.2rem;font-weight:700;color:var(--accent)">${led.modules}</div><div style="font-size:0.7rem;color:var(--text-dim)">LED Modules</div></div>
       <div><div style="font-size:1.2rem;font-weight:700;color:var(--orange)">${led.watts}W</div><div style="font-size:0.7rem;color:var(--text-dim)">Total Watts</div></div>
       <div><div style="font-size:1.2rem;font-weight:700;color:var(--green)">${led.ps_spec}</div><div style="font-size:0.7rem;color:var(--text-dim)">Power Supply (${led.ps_part})</div></div>
     </div>
     <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--text-dim);">
-      Capacity needed: ${led.capacity_needed}W | ${led.ps_count} supply unit(s) | PF x ${r.construction === 'halo' ? '1.0' : '1.2'} x 1.05 waste
-    </div>
-  `;
-
-  // BOM table
-  const bomBody = document.getElementById('bom-body');
-  bomBody.innerHTML = '';
-  for (const m of r.materials) {
-    bomBody.innerHTML += `<tr>
-      <td>${m.item}</td>
-      <td class="mono">${m.part}</td>
-      <td class="right mono">${m.qty}</td>
-      <td>${m.unit}</td>
-      <td>${m.waste}</td>
-      <td style="font-size:0.75rem;color:var(--text-dim)">${m.formula}</td>
-    </tr>`;
+      Capacity needed: ${led.capacity_needed}W | ${led.ps_count} supply unit(s)
+    </div>`;
+    html += '</div>';
   }
 
-  // Benchmark
-  const benchCard = document.getElementById('benchmark-card');
-  const benchContent = document.getElementById('benchmark-content');
+  // Material BOM
+  if (hasMaterials) {
+    html += '<div class="card"><h2>Material BOM</h2>';
+    html += '<table><thead><tr><th>Item</th><th>Part #</th><th class="right">Qty</th><th>Unit</th><th>Waste</th><th>Formula</th></tr></thead><tbody>';
+    for (const m of r.materials) {
+      html += `<tr>
+        <td>${m.item}</td>
+        <td class="mono">${m.part}</td>
+        <td class="right mono">${m.qty}</td>
+        <td>${m.unit}</td>
+        <td>${m.waste}</td>
+        <td style="font-size:0.75rem;color:var(--text-dim)">${m.formula}</td>
+      </tr>`;
+    }
+    html += '</tbody></table></div>';
+  }
+
+  // Warehouse Benchmark
   if (r.benchmark) {
-    benchCard.style.display = 'block';
     const b = r.benchmark;
-    const abcTotal = r.total_man_hours + r.total_crew_hours;
+    const abcTotal = (r.total_man_hours || 0) + (r.total_crew_hours || 0);
     const diff = abcTotal - b.avg_hours;
-    const diffPct = ((diff / b.avg_hours) * 100).toFixed(1);
+    const diffPct = b.avg_hours > 0 ? ((diff / b.avg_hours) * 100).toFixed(1) : '0.0';
     const diffColor = Math.abs(diff) < b.std_dev ? 'var(--green)' : 'var(--orange)';
 
-    benchContent.innerHTML = `
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.75rem;margin-bottom:1rem;">
-        <div style="text-align:center;">
-          <div style="font-size:1.5rem;font-weight:700;color:var(--accent)">${abcTotal.toFixed(1)}</div>
-          <div style="font-size:0.7rem;color:var(--text-dim)">ABC Estimate (hrs)</div>
-        </div>
-        <div style="text-align:center;">
-          <div style="font-size:1.5rem;font-weight:700;color:var(--accent2)">${b.avg_hours}</div>
-          <div style="font-size:0.7rem;color:var(--text-dim)">Warehouse Avg (hrs)</div>
-        </div>
-        <div style="text-align:center;">
-          <div style="font-size:1.5rem;font-weight:700;color:${diffColor}">${diff > 0 ? '+' : ''}${diff.toFixed(1)} (${diffPct}%)</div>
-          <div style="font-size:0.7rem;color:var(--text-dim)">Difference</div>
-        </div>
+    html += '<div class="card">';
+    html += '<h2>Warehouse Benchmark <span class="badge" style="background:var(--accent2);">HISTORICAL</span></h2>';
+    html += `<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.75rem;margin-bottom:1rem;">
+      <div style="text-align:center;">
+        <div style="font-size:1.5rem;font-weight:700;color:var(--accent)">${abcTotal.toFixed(1)}</div>
+        <div style="font-size:0.7rem;color:var(--text-dim)">ABC Estimate (hrs)</div>
       </div>
-      <div style="font-size:0.8rem;color:var(--text-dim);margin-bottom:0.75rem;">
-        Based on <strong>${b.matching_jobs}</strong> similar channel letter jobs |
-        Median: ${b.median_hours} hrs | Range: ${b.min_hours} - ${b.max_hours} hrs |
-        StdDev: &plusmn;${b.std_dev} | Confidence: <strong>${b.confidence}</strong> |
-        Avg Revenue: $${b.avg_revenue.toLocaleString()} | Avg GM: ${b.avg_margin_pct}%
+      <div style="text-align:center;">
+        <div style="font-size:1.5rem;font-weight:700;color:var(--accent2)">${b.avg_hours}</div>
+        <div style="font-size:0.7rem;color:var(--text-dim)">Warehouse Avg (hrs)</div>
       </div>
-      ${b.similar_jobs.length ? `
-        <details><summary>Closest matching jobs</summary>
-        <table style="margin-top:0.5rem;">
-          <thead><tr><th>WO</th><th>Customer</th><th class="right">Est Hours</th><th class="right">Revenue</th><th class="right">GM%</th></tr></thead>
-          <tbody>${b.similar_jobs.map(j => `<tr>
-            <td class="mono">${j.wo}</td>
-            <td>${j.customer}</td>
-            <td class="right">${j.hours_est}</td>
-            <td class="right">$${j.revenue.toLocaleString()}</td>
-            <td class="right">${j.gm}%</td>
-          </tr>`).join('')}</tbody>
-        </table></details>` : ''}
-    `;
-  } else {
-    benchCard.style.display = 'none';
+      <div style="text-align:center;">
+        <div style="font-size:1.5rem;font-weight:700;color:${diffColor}">${diff > 0 ? '+' : ''}${diff.toFixed(1)} (${diffPct}%)</div>
+        <div style="font-size:0.7rem;color:var(--text-dim)">Difference</div>
+      </div>
+    </div>
+    <div style="font-size:0.8rem;color:var(--text-dim);margin-bottom:0.75rem;">
+      Based on <strong>${b.matching_jobs}</strong> similar jobs |
+      Median: ${b.median_hours} hrs | Range: ${b.min_hours} - ${b.max_hours} hrs |
+      StdDev: &plusmn;${b.std_dev} | Confidence: <strong>${b.confidence}</strong> |
+      Avg Revenue: $${typeof b.avg_revenue === 'number' ? b.avg_revenue.toLocaleString() : b.avg_revenue} | Avg GM: ${b.avg_margin_pct}%
+    </div>`;
+    if (b.similar_jobs && b.similar_jobs.length > 0) {
+      html += `<details><summary>Closest matching jobs</summary>
+      <table style="margin-top:0.5rem;">
+        <thead><tr><th>WO</th><th>Customer</th><th class="right">Est Hours</th><th class="right">Revenue</th><th class="right">GM%</th></tr></thead>
+        <tbody>${b.similar_jobs.map(j => `<tr>
+          <td class="mono">${j.wo}</td>
+          <td>${j.customer}</td>
+          <td class="right">${j.hours_est}</td>
+          <td class="right">$${typeof j.revenue === 'number' ? j.revenue.toLocaleString() : j.revenue}</td>
+          <td class="right">${j.gm}%</td>
+        </tr>`).join('')}</tbody>
+      </table></details>`;
+    }
+    html += '</div>';
   }
+
+  // Export buttons
+  html += `<div class="card" style="text-align:center;">
+    <button class="btn-primary" onclick="copyResultToClipboard('${containerId}')" style="width:auto;display:inline-block;margin-right:0.5rem;">
+      Copy KeyedIn Lines
+    </button>
+    <button class="btn-primary" onclick="exportResultCSV('${containerId}')" style="width:auto;display:inline-block;background:var(--accent2);">
+      Export CSV
+    </button>
+  </div>`;
+
+  container.innerHTML = html;
+  container._data = r;
 }
 
-function renderTable(bodyId, footId, rows, subtotalLabel) {
-  const body = document.getElementById(bodyId);
-  const foot = document.getElementById(footId);
-  body.innerHTML = '';
+function renderLaborTable(rows, subtotalLabel) {
   let totalMan = 0, totalCrew = 0;
-
+  let html = '<table><thead><tr><th>Code</th><th>Description</th><th class="right">Hours</th><th>Unit</th><th>Dept</th><th>Formula (ABC)</th></tr></thead><tbody>';
   for (const l of rows) {
     const isCrew = l.unit.includes('CREW');
     const unitClass = isCrew ? 'unit-crew' : 'unit-man';
-    body.innerHTML += `<tr>
+    html += `<tr>
       <td class="mono">${l.code}</td>
       <td>${l.desc}</td>
       <td class="right mono" style="font-weight:600">${l.hours.toFixed(2)}</td>
@@ -650,38 +1142,47 @@ function renderTable(bodyId, footId, rows, subtotalLabel) {
     if (isCrew) totalCrew += l.hours;
     else totalMan += l.hours;
   }
-
-  let footHtml = '';
-  if (totalMan > 0) footHtml += `<tr><td colspan="2" style="font-weight:600">${subtotalLabel} (man-hrs)</td><td class="right mono" style="font-weight:700;color:var(--green)">${totalMan.toFixed(2)}</td><td class="unit-man">man-hrs</td><td colspan="2"></td></tr>`;
-  if (totalCrew > 0) footHtml += `<tr><td colspan="2" style="font-weight:600">${subtotalLabel} (crew-hrs)</td><td class="right mono" style="font-weight:700;color:var(--orange)">${totalCrew.toFixed(2)}</td><td class="unit-crew">CREW-hrs</td><td colspan="2"></td></tr>`;
-  foot.innerHTML = footHtml;
+  html += '</tbody><tfoot>';
+  if (totalMan > 0) html += `<tr><td colspan="2" style="font-weight:600">${subtotalLabel} (man-hrs)</td><td class="right mono" style="font-weight:700;color:var(--green)">${totalMan.toFixed(2)}</td><td class="unit-man">man-hrs</td><td colspan="2"></td></tr>`;
+  if (totalCrew > 0) html += `<tr><td colspan="2" style="font-weight:600">${subtotalLabel} (crew-hrs)</td><td class="right mono" style="font-weight:700;color:var(--orange)">${totalCrew.toFixed(2)}</td><td class="unit-crew">CREW-hrs</td><td colspan="2"></td></tr>`;
+  html += '</tfoot></table>';
+  return html;
 }
 
-// ── Export ───────────────────────────────────────────────────────────────
-function copyToClipboard() {
-  if (!lastResult) return;
+// ══════════════════════════════════════════════════════════════════════════════
+// EXPORT FUNCTIONS (shared)
+// ══════════════════════════════════════════════════════════════════════════════
+function copyResultToClipboard(containerId) {
+  const el = document.getElementById(containerId);
+  const r = el._data;
+  if (!r) return;
   let lines = 'Code\tDescription\tHours\tUnit\n';
-  for (const l of [...lastResult.labor, ...lastResult.install]) {
+  for (const l of [...(r.labor || []), ...(r.install || [])]) {
     lines += `${l.code}\t${l.desc}\t${l.hours.toFixed(2)}\t${l.unit}\n`;
   }
   navigator.clipboard.writeText(lines).then(() => alert('Copied to clipboard!'));
 }
 
-function exportCSV() {
-  if (!lastResult) return;
+function exportResultCSV(containerId) {
+  const el = document.getElementById(containerId);
+  const r = el._data;
+  if (!r) return;
   let csv = 'Type,Code,Description,Hours,Unit,Department,Formula,Section\n';
-  for (const l of lastResult.labor) {
-    csv += `Fabrication,${l.code},"${l.desc}",${l.hours.toFixed(2)},${l.unit},"${l.dept}","${l.formula}","${l.section}"\n`;
+  for (const l of (r.labor || [])) {
+    csv += `Fabrication,${l.code},"${l.desc}",${l.hours.toFixed(2)},${l.unit},"${l.dept}","${l.formula}","${l.section || ''}"\n`;
   }
-  for (const l of lastResult.install) {
-    csv += `Installation,${l.code},"${l.desc}",${l.hours.toFixed(2)},${l.unit},"${l.dept}","${l.formula}","${l.section}"\n`;
+  for (const l of (r.install || [])) {
+    csv += `Installation,${l.code},"${l.desc}",${l.hours.toFixed(2)},${l.unit},"${l.dept}","${l.formula}","${l.section || ''}"\n`;
   }
-  csv += '\nMaterials\nItem,Part,Qty,Unit,Waste,Formula\n';
-  for (const m of lastResult.materials) {
-    csv += `"${m.item}",${m.part},${m.qty},${m.unit},${m.waste},"${m.formula}"\n`;
+  if (r.materials && r.materials.length > 0) {
+    csv += '\nMaterials\nItem,Part,Qty,Unit,Waste,Formula\n';
+    for (const m of r.materials) {
+      csv += `"${m.item}",${m.part},${m.qty},${m.unit},${m.waste},"${m.formula}"\n`;
+    }
   }
-  csv += `\nLED Modules,${lastResult.led.modules}\nLED Watts,${lastResult.led.watts}\nPower Supply,${lastResult.led.ps_spec}\n`;
-
+  if (r.led && r.led.modules > 0) {
+    csv += `\nLED Modules,${r.led.modules}\nLED Watts,${r.led.watts}\nPower Supply,${r.led.ps_spec}\n`;
+  }
   const blob = new Blob([csv], { type: 'text/csv' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -689,6 +1190,378 @@ function exportCSV() {
   a.download = `signx-estimate-${new Date().toISOString().slice(0,10)}.csv`;
   a.click();
   URL.revokeObjectURL(url);
+}
+
+// Legacy aliases so original CL export buttons still work
+function copyToClipboard() { copyResultToClipboard('cl-results'); }
+function exportCSV() { exportResultCSV('cl-results'); }
+
+// ══════════════════════════════════════════════════════════════════════════════
+// STRUCTURAL: Full Design
+// ══════════════════════════════════════════════════════════════════════════════
+async function runFullDesign() {
+  const btn = document.getElementById('fd-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Running full design...';
+
+  const body = {
+    sign_width_ft: parseFloat(document.getElementById('fd-width').value) || 10,
+    sign_height_ft: parseFloat(document.getElementById('fd-height').value) || 5,
+    height_to_top_ft: parseFloat(document.getElementById('fd-top').value) || 20,
+    V_mph: parseFloat(document.getElementById('fd-v').value) || 115,
+    exposure: document.getElementById('fd-exposure').value,
+    elevation_ft: parseFloat(document.getElementById('fd-elev').value) || 0,
+    bolt_grade: document.getElementById('fd-bolt').value,
+    f_c_psi: parseFloat(document.getElementById('fd-fc').value) || 3000,
+  };
+
+  try {
+    const resp = await fetch('/api/structural/full-design', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const data = await resp.json();
+    if (!data.ok) throw new Error(data.error || 'Full design failed');
+    renderFullDesign(data);
+  } catch (err) {
+    document.getElementById('fd-results').style.display = 'block';
+    document.getElementById('fd-results').innerHTML = `<div class="error-msg">Error: ${err.message}</div>`;
+    document.getElementById('fd-placeholder').style.display = 'none';
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Design This Sign';
+}
+
+function renderFullDesign(data) {
+  document.getElementById('fd-placeholder').style.display = 'none';
+  const el = document.getElementById('fd-results');
+  el.style.display = 'block';
+
+  const w = data.wind || {};
+  const m = data.member || {};
+  const f = data.foundation || {};
+  const a = data.anchors || {};
+
+  let html = '<div class="struct-grid">';
+
+  // Wind card
+  html += '<div class="struct-card">';
+  html += '<h3>Wind Loading</h3>';
+  html += `<div style="margin-bottom:0.75rem;"><span class="struct-val">${fmt(w.governing_F_lbf)} lbf</span> <span class="struct-lbl">Wind Push Force</span></div>`;
+  html += `<div style="margin-bottom:0.75rem;"><span class="struct-val">${fmt(w.governing_M_ftlbf)} ft-lb</span> <span class="struct-lbl">Tipping Moment</span></div>`;
+  if (w.cases) {
+    for (const c of w.cases) {
+      html += `<div class="struct-row"><span>${c.label || c.case || 'Case'}</span><span>${fmt(c.F_lbf)} lbf / ${fmt(c.M_ftlbf)} ft-lb</span></div>`;
+    }
+  }
+  if (w.Cf != null) html += `<div class="struct-row"><span>Cf</span><span>${w.Cf}</span></div>`;
+  if (w.qz_psf != null) html += `<div class="struct-row"><span>qz</span><span>${w.qz_psf} psf</span></div>`;
+  html += '</div>';
+
+  // Member card
+  html += '<div class="struct-card">';
+  if (m && m.designation) {
+    const mPass = m.checks && m.checks.passes !== false;
+    html += `<h3>Support Member <span class="${mPass ? 'badge-pass' : 'badge-fail'}">${mPass ? 'PASS' : 'FAIL'}</span></h3>`;
+    html += `<div style="margin-bottom:0.75rem;"><span class="struct-val">${m.designation}</span> <span class="struct-lbl">${m.family || ''}</span></div>`;
+    html += `<div class="struct-row"><span>Weight</span><span>${m.weight_plf} plf</span></div>`;
+    if (m.checks) {
+      if (m.checks.utilization_bending != null) html += `<div class="struct-row"><span>Bending Capacity Used</span><span>${(m.checks.utilization_bending * 100).toFixed(1)}%</span></div>`;
+      if (m.checks.utilization_shear != null) html += `<div class="struct-row"><span>Shear Capacity Used</span><span>${(m.checks.utilization_shear * 100).toFixed(1)}%</span></div>`;
+      if (m.checks.utilization_combined != null) html += `<div class="struct-row"><span>Overall Capacity Used</span><span>${(m.checks.utilization_combined * 100).toFixed(1)}%</span></div>`;
+      if (m.checks.deflection_in != null) html += `<div class="struct-row"><span>Deflection</span><span>${m.checks.deflection_in.toFixed(3)}" / ${m.checks.deflection_limit_in ? m.checks.deflection_limit_in.toFixed(3) + '"' : '--'}</span></div>`;
+    }
+  } else {
+    html += '<h3>Support Member <span class="badge-fail">NO MEMBER</span></h3>';
+    html += '<p style="color:var(--text-dim);font-size:0.85rem;">No passing member found for these loads.</p>';
+  }
+  html += '</div>';
+
+  // Foundation card
+  html += '<div class="struct-card">';
+  const fGeo = f.geometry || {};
+  const fChk = f.checks || {};
+  const fPass = fChk.passes !== false;
+  html += `<h3>Foundation <span class="${fPass ? 'badge-pass' : 'badge-fail'}">${fPass ? 'PASS' : 'FAIL'}</span></h3>`;
+  if (fGeo.diameter_in != null) html += `<div class="struct-row"><span>Diameter</span><span>${fGeo.diameter_in}" (${(fGeo.diameter_in / 12).toFixed(1)} ft)</span></div>`;
+  if (fGeo.depth_in != null) html += `<div class="struct-row"><span>Hole Depth</span><span>${fGeo.depth_in}" (${(fGeo.depth_in / 12).toFixed(1)} ft)</span></div>`;
+  if (fChk.safety_factor != null) html += `<div class="struct-row"><span>Safety Factor</span><span>${fChk.safety_factor.toFixed(2)}</span></div>`;
+  if (fGeo.volume_cy != null) html += `<div class="struct-row"><span>Concrete Volume</span><span>${fGeo.volume_cy.toFixed(2)} CY</span></div>`;
+  html += '</div>';
+
+  // Anchors card
+  html += '<div class="struct-card">';
+  if (a.error) {
+    html += `<h3>Anchors <span class="badge-fail">ERROR</span></h3>`;
+    html += `<p style="color:var(--red);font-size:0.85rem;">${a.error}</p>`;
+  } else {
+    const aGeo = a.geometry || {};
+    const aChk = a.checks || {};
+    const aPass = aChk.passes !== false;
+    html += `<h3>Anchor Bolts &amp; Base Plate <span class="${aPass ? 'badge-pass' : 'badge-fail'}">${aPass ? 'PASS' : 'FAIL'}</span></h3>`;
+    if (aGeo.n_bolts != null) html += `<div class="struct-row"><span>Number of Bolts</span><span>${aGeo.n_bolts}</span></div>`;
+    if (aGeo.bolt_dia_in != null) html += `<div class="struct-row"><span>Bolt Size</span><span>${aGeo.bolt_dia_in}"</span></div>`;
+    if (aGeo.plate_width_in != null) html += `<div class="struct-row"><span>Base Plate</span><span>${aGeo.plate_width_in}" x ${aGeo.plate_depth_in || aGeo.plate_width_in}" x ${aGeo.plate_thickness_in}"</span></div>`;
+    if (aChk.interaction_ratio != null) html += `<div class="struct-row"><span>Capacity Used</span><span>${(aChk.interaction_ratio * 100).toFixed(1)}%</span></div>`;
+    if (aGeo.bolt_circle_dia_in != null) html += `<div class="struct-row"><span>Bolt Pattern</span><span>${aGeo.bolt_circle_dia_in}" circle</span></div>`;
+  }
+  html += '</div>';
+
+  html += '</div>'; // close struct-grid
+  el.innerHTML = html;
+}
+
+function fmt(v) {
+  if (v == null) return '--';
+  return typeof v === 'number' ? v.toLocaleString(undefined, { maximumFractionDigits: 1 }) : v;
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// STRUCTURAL: Wind
+// ══════════════════════════════════════════════════════════════════════════════
+async function runWind() {
+  const btn = document.getElementById('wnd-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Calculating...';
+
+  const body = {
+    V_mph: parseFloat(document.getElementById('wnd-v').value) || 115,
+    sign_width_ft: parseFloat(document.getElementById('wnd-width').value) || 10,
+    sign_height_ft: parseFloat(document.getElementById('wnd-height').value) || 5,
+    height_to_top_ft: parseFloat(document.getElementById('wnd-top').value) || 20,
+    exposure: document.getElementById('wnd-exposure').value,
+    Kzt: parseFloat(document.getElementById('wnd-kzt').value) || 1.0,
+    elevation_ft: parseFloat(document.getElementById('wnd-elev').value) || 0,
+    risk_category: document.getElementById('wnd-risk').value,
+  };
+
+  try {
+    const resp = await fetch('/api/structural/wind', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const data = await resp.json();
+    if (!data.ok) throw new Error(data.error || 'Wind calculation failed');
+    renderWindResult(data.result);
+  } catch (err) {
+    document.getElementById('wnd-results').style.display = 'block';
+    document.getElementById('wnd-results').innerHTML = `<div class="error-msg">Error: ${err.message}</div>`;
+    document.getElementById('wnd-placeholder').style.display = 'none';
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Calculate Wind';
+}
+
+function renderWindResult(r) {
+  document.getElementById('wnd-placeholder').style.display = 'none';
+  const el = document.getElementById('wnd-results');
+  el.style.display = 'block';
+
+  let html = '<div class="struct-card">';
+  html += '<h3>Wind Load Results</h3>';
+  html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+    <div><span class="struct-val">${fmt(r.governing_F_lbf)} lbf</span><br><span class="struct-lbl">Wind Push Force</span></div>
+    <div><span class="struct-val">${fmt(r.governing_M_ftlbf)} ft-lb</span><br><span class="struct-lbl">Tipping Moment</span></div>
+  </div>`;
+  if (r.A_sf != null) html += `<div class="struct-row"><span>Sign Area</span><span>${r.A_sf} sf</span></div>`;
+  if (r.qz_psf != null) html += `<div class="struct-row"><span>Wind Pressure</span><span>${r.qz_psf} psf</span></div>`;
+  html += `<details style="margin-top:0.5rem;"><summary>Engineering Details</summary>`;
+  if (r.Cf != null) html += `<div class="struct-row"><span>Cf (Force Coefficient)</span><span>${r.Cf}</span></div>`;
+  if (r.Kz != null) html += `<div class="struct-row"><span>Kz (Exposure)</span><span>${r.Kz}</span></div>`;
+  if (r.Ke != null) html += `<div class="struct-row"><span>Ke (Elevation)</span><span>${r.Ke}</span></div>`;
+  html += `</details>`;
+  html += '<hr>';
+
+  if (r.cases) {
+    html += '<h3 style="font-size:0.9rem;margin:0.75rem 0;">Loading Cases</h3>';
+    for (const c of r.cases) {
+      html += `<div class="struct-row"><span style="font-weight:600;">${c.label || c.case || 'Case'}</span><span>${fmt(c.F_lbf)} lbf / ${fmt(c.M_ftlbf)} ft-lb</span></div>`;
+    }
+  }
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// STRUCTURAL: Member Check
+// ══════════════════════════════════════════════════════════════════════════════
+async function runMemberCheck() {
+  const btn = document.getElementById('mem-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Checking...';
+
+  const body = {
+    designation: document.getElementById('mem-desig').value || 'Pipe4STD',
+    M_inlb: parseFloat(document.getElementById('mem-m').value) || 0,
+    V_lbf: parseFloat(document.getElementById('mem-v').value) || 0,
+    L_in: parseFloat(document.getElementById('mem-l').value) || 240,
+    P_lbf: parseFloat(document.getElementById('mem-p').value) || 0,
+    K: parseFloat(document.getElementById('mem-k').value) || 1.0,
+    load_type: document.getElementById('mem-load').value,
+  };
+
+  try {
+    const resp = await fetch('/api/structural/member-check', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const data = await resp.json();
+    if (!data.ok) throw new Error(data.error || 'Member check failed');
+    renderMemberResult(data);
+  } catch (err) {
+    document.getElementById('mem-results').style.display = 'block';
+    document.getElementById('mem-results').innerHTML = `<div class="error-msg">Error: ${err.message}</div>`;
+    document.getElementById('mem-placeholder').style.display = 'none';
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Check This Post';
+}
+
+function renderMemberResult(data) {
+  document.getElementById('mem-placeholder').style.display = 'none';
+  const el = document.getElementById('mem-results');
+  el.style.display = 'block';
+
+  const pass = data.passes;
+  const c = data.checks || {};
+
+  let html = '<div class="struct-card">';
+  html += `<h3>${data.designation} <span class="${pass ? 'badge-pass' : 'badge-fail'}">${pass ? 'PASS' : 'FAIL'}</span></h3>`;
+  if (c.utilization_bending != null) html += `<div class="struct-row"><span>Bending Capacity Used</span><span>${(c.utilization_bending * 100).toFixed(1)}%</span></div>`;
+  if (c.utilization_shear != null) html += `<div class="struct-row"><span>Shear Capacity Used</span><span>${(c.utilization_shear * 100).toFixed(1)}%</span></div>`;
+  if (c.utilization_combined != null) html += `<div class="struct-row"><span>Overall Capacity Used</span><span>${(c.utilization_combined * 100).toFixed(1)}%</span></div>`;
+  html += `<details style="margin-top:0.5rem;"><summary>Engineering Details</summary>`;
+  if (c.phi_Mn_inlb != null) html += `<div class="struct-row"><span>Bending Strength</span><span>${fmt(c.phi_Mn_inlb)} in-lb</span></div>`;
+  if (c.phi_Vn_lbf != null) html += `<div class="struct-row"><span>Shear Strength</span><span>${fmt(c.phi_Vn_lbf)} lbf</span></div>`;
+  html += `</details>`;
+  if (c.deflection_in != null) html += `<div class="struct-row"><span>Deflection</span><span>${c.deflection_in.toFixed(3)}" / ${c.deflection_limit_in ? c.deflection_limit_in.toFixed(3) + '"' : '--'}</span></div>`;
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// STRUCTURAL: Foundation
+// ══════════════════════════════════════════════════════════════════════════════
+async function runFoundation() {
+  const btn = document.getElementById('fnd-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Designing...';
+
+  const body = {
+    F_lbf: parseFloat(document.getElementById('fnd-f').value) || 0,
+    M_inlb: parseFloat(document.getElementById('fnd-m').value) || 0,
+  };
+  const dia = parseFloat(document.getElementById('fnd-dia').value);
+  if (dia > 0) body.max_dia_in = dia;
+  const embed = parseFloat(document.getElementById('fnd-embed').value);
+  if (embed > 0) body.max_embed_in = embed;
+
+  try {
+    const resp = await fetch('/api/structural/foundation', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const data = await resp.json();
+    if (!data.ok) throw new Error(data.error || 'Foundation design failed');
+    renderFoundationResult(data);
+  } catch (err) {
+    document.getElementById('fnd-results').style.display = 'block';
+    document.getElementById('fnd-results').innerHTML = `<div class="error-msg">Error: ${err.message}</div>`;
+    document.getElementById('fnd-placeholder').style.display = 'none';
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Size Foundation';
+}
+
+function renderFoundationResult(data) {
+  document.getElementById('fnd-placeholder').style.display = 'none';
+  const el = document.getElementById('fnd-results');
+  el.style.display = 'block';
+
+  const g = data.geometry || {};
+  const c = data.checks || {};
+  const pass = c.passes !== false;
+
+  let html = '<div class="struct-card">';
+  html += `<h3>Foundation Design <span class="${pass ? 'badge-pass' : 'badge-fail'}">${pass ? 'PASS' : 'FAIL'}</span></h3>`;
+  if (g.diameter_in != null) html += `<div class="struct-row"><span>Hole Diameter</span><span>${g.diameter_in}" (${(g.diameter_in / 12).toFixed(1)} ft)</span></div>`;
+  if (g.depth_in != null) html += `<div class="struct-row"><span>Hole Depth</span><span>${g.depth_in}" (${(g.depth_in / 12).toFixed(1)} ft)</span></div>`;
+  if (c.safety_factor != null) html += `<div class="struct-row"><span>Safety Margin</span><span>${c.safety_factor.toFixed(2)}x</span></div>`;
+  if (g.volume_cy != null) html += `<div class="struct-row"><span>Concrete Needed</span><span>${g.volume_cy.toFixed(2)} cubic yards</span></div>`;
+  if (g.rebar != null) html += `<div class="struct-row"><span>Rebar</span><span>${g.rebar}</span></div>`;
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// STRUCTURAL: Anchors
+// ══════════════════════════════════════════════════════════════════════════════
+async function runAnchors() {
+  const btn = document.getElementById('anc-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Designing...';
+
+  const body = {
+    F_lbf: parseFloat(document.getElementById('anc-f').value) || 0,
+    M_inlb: parseFloat(document.getElementById('anc-m').value) || 0,
+    P_lbf: parseFloat(document.getElementById('anc-p').value) || 0,
+    f_c_psi: parseFloat(document.getElementById('anc-fc').value) || 3000,
+    bolt_grade: document.getElementById('anc-bolt').value,
+    n_bolts: parseInt(document.getElementById('anc-n').value) || 4,
+  };
+
+  try {
+    const resp = await fetch('/api/structural/anchors', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const data = await resp.json();
+    if (!data.ok) throw new Error(data.error || 'Anchor design failed');
+    renderAnchorResult(data);
+  } catch (err) {
+    document.getElementById('anc-results').style.display = 'block';
+    document.getElementById('anc-results').innerHTML = `<div class="error-msg">Error: ${err.message}</div>`;
+    document.getElementById('anc-placeholder').style.display = 'none';
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Size Bolts & Plate';
+}
+
+function renderAnchorResult(data) {
+  document.getElementById('anc-placeholder').style.display = 'none';
+  const el = document.getElementById('anc-results');
+  el.style.display = 'block';
+
+  const g = data.geometry || {};
+  const c = data.checks || {};
+  const pass = c.passes !== false;
+
+  let html = '<div class="struct-card">';
+  html += `<h3>Anchor Bolts &amp; Base Plate <span class="${pass ? 'badge-pass' : 'badge-fail'}">${pass ? 'PASS' : 'FAIL'}</span></h3>`;
+  if (g.n_bolts != null) html += `<div class="struct-row"><span>Number of Bolts</span><span>${g.n_bolts}</span></div>`;
+  if (g.bolt_dia_in != null) html += `<div class="struct-row"><span>Bolt Size</span><span>${g.bolt_dia_in}"</span></div>`;
+  if (g.bolt_grade != null) html += `<div class="struct-row"><span>Bolt Strength</span><span>${g.bolt_grade}</span></div>`;
+  if (g.plate_width_in != null) html += `<div class="struct-row"><span>Plate Width</span><span>${g.plate_width_in}"</span></div>`;
+  if (g.plate_depth_in != null) html += `<div class="struct-row"><span>Plate Depth</span><span>${g.plate_depth_in}"</span></div>`;
+  if (g.plate_thickness_in != null) html += `<div class="struct-row"><span>Plate Thickness</span><span>${g.plate_thickness_in}"</span></div>`;
+  if (g.bolt_circle_dia_in != null) html += `<div class="struct-row"><span>Bolt Pattern</span><span>${g.bolt_circle_dia_in}" circle</span></div>`;
+  if (c.interaction_ratio != null) html += `<div class="struct-row"><span>Capacity Used</span><span>${(c.interaction_ratio * 100).toFixed(1)}%</span></div>`;
+  html += `<details style="margin-top:0.5rem;"><summary>Engineering Details</summary>`;
+  if (c.tension_ratio != null) html += `<div class="struct-row"><span>Tension Ratio</span><span>${c.tension_ratio.toFixed(3)}</span></div>`;
+  if (c.shear_ratio != null) html += `<div class="struct-row"><span>Shear Ratio</span><span>${c.shear_ratio.toFixed(3)}</span></div>`;
+  html += `</details>`;
+  html += '</div>';
+  el.innerHTML = html;
 }
 </script>
 </body>
