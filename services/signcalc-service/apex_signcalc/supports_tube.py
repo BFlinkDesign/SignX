@@ -1,16 +1,38 @@
+"""
+HSS/tube member checks — thin wrapper around supports_pipe.py.
+
+All AISC 360-22 LRFD logic lives in supports_pipe.check_section() and
+supports_pipe.select_member().  This module re-exports both functions so
+that callers using the 'tube' or 'HSS' terminology still find a coherent
+module without any duplicated calculation code.
+
+Typical usage
+-------------
+from apex_signcalc.supports_tube import check_section, select_member
+
+passed, audit = check_section(sec, M_inlb=240_000, V_lbf=3_000, L_in=144)
+best, audit   = select_member(M_inlb=240_000, V_lbf=3_000, L_in=144,
+                               families=["HSS_square"])
+"""
 from __future__ import annotations
 
-from typing import Dict, Tuple
+# Re-export the full public API from the canonical implementation.
+from .supports_pipe import (  # noqa: F401
+    check_section,
+    select_member,
+    PHI_B,
+    PHI_V,
+    PHI_C,
+    E_PSI,
+    DEF_LIMIT,
+)
 
-from .sections import Section
-
-
-def check_section(sec: Section, M_inlb: float, V_lbf: float, L_in: float) -> Tuple[bool, Dict[str, float]]:
-    fb = M_inlb / max(sec.Sx_in3, 1e-6)
-    allow = 0.6 * sec.fy_psi
-    ir = fb / allow
-    E = 29_000_000.0
-    delta_in = (V_lbf * (L_in ** 3)) / (48.0 * E * max(sec.Ix_in4, 1e-6))
-    return ir <= 1.0 and delta_in <= L_in / 120.0, {"IR_bend": ir, "DEF_in": delta_in}
-
-
+__all__ = [
+    "check_section",
+    "select_member",
+    "PHI_B",
+    "PHI_V",
+    "PHI_C",
+    "E_PSI",
+    "DEF_LIMIT",
+]

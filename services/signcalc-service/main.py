@@ -16,7 +16,7 @@ from apex_signcalc.contracts import (
     Foundation,
     Checks,
 )
-from apex_signcalc.wind_asce7 import interpolate_kz, qz_psf
+from apex_signcalc.wind_asce7 import wind_force_on_sign, load_combinations
 from apex_signcalc.wind_en1991 import qb_pa, qp_pa
 from apex_signcalc.sections import catalogs_for_order
 from apex_signcalc.supports_pipe import check_section as check_pipe
@@ -109,12 +109,24 @@ def design(req: SignDesignRequest) -> SignDesignResponse:
     area_ft2 = req.sign.width_ft * req.sign.height_ft
     if req.jurisdiction == "US" and req.standard.code == "ASCE7":
         std = _load_yaml(PACKS_DIR / "us.asce7-16" / "wind.yaml")
-        kz = interpolate_kz(std["Kz"], req.site.exposure, req.sign.centroid_height_ft)
         V_basic_used = std.get("V_default_mph", 100)
-        q = qz_psf(V_basic=V_basic_used, kz=kz, kzt=1.0, kd=0.85, G=0.85)
-        cf = float(std.get("cf_sign", 1.8))
-        F = q * cf * area_ft2
-        loads = {"V_basic": V_basic_used, "qz_psf": q, "F_w_sign_lbf": F}
+        # height_to_top_ft = centroid + half sign height (centroid is mid-panel)
+        height_to_top_ft = req.sign.centroid_height_ft + req.sign.height_ft / 2.0
+        wind = wind_force_on_sign(
+            V_mph=V_basic_used,
+            sign_width_ft=req.sign.width_ft,
+            sign_height_ft=req.sign.height_ft,
+            height_to_top_ft=height_to_top_ft,
+            exposure=req.site.exposure,
+        )
+        F = wind["governing_F_lbf"]
+        loads = {
+            "V_basic": V_basic_used,
+            "qz_psf": wind["qz_psf"],
+            "F_w_sign_lbf": F,
+            "governing_case": wind["governing_case"],
+            "governing_M_ftlbf": wind["governing_M_ftlbf"],
+        }
         assumptions.append("ASCE 7 pack used (us.asce7-16)")
     elif req.jurisdiction == "EU" and req.standard.code == "EN1991":
         std = _load_yaml(PACKS_DIR / "eu.en1991-1-4" / "wind.yaml")
@@ -129,7 +141,11 @@ def design(req: SignDesignRequest) -> SignDesignResponse:
         raise HTTPException(status_code=422, detail="unsupported jurisdiction/standard")
 
     # Member selection (iterate catalogs by order)
-    M = loads["F_w_sign_lbf"] * (req.sign.centroid_height_ft * 12.0)  # in-lb
+    # M in in-lb: use governing_M_ftlbf if available (ASCE7 path), else derive from F
+    if "governing_M_ftlbf" in loads:
+        M = loads["governing_M_ftlbf"] * 12.0  # ft-lbf -> in-lb
+    else:
+        M = loads["F_w_sign_lbf"] * (req.sign.centroid_height_ft * 12.0)  # in-lb
     V = loads["F_w_sign_lbf"]
     L = req.sign.centroid_height_ft * 12.0
     chosen = None

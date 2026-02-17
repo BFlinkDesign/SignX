@@ -1,0 +1,368 @@
+{
+  "$schema": "https://signx.local/schemas/compliance-checklist/v1",
+  "standard": "OSHA 29 CFR 1910.145",
+  "title": "Specifications for Accident Prevention Signs and Tags",
+  "cfr_citation": "29 CFR Part 1910, Subpart J, Section 1910.145",
+  "issuing_body": "Occupational Safety and Health Administration (OSHA), U.S. Department of Labor",
+  "scope": "Safety signs, tags, and accident prevention markings used in general industry workplaces. Governs color coding, legend wording, signal word usage, and construction of accident prevention signage.",
+  "companion_standards": [
+    "ANSI Z535.1 — Safety Color Code",
+    "ANSI Z535.2 — Environmental and Facility Safety Signs",
+    "ANSI Z535.3 — Criteria for Safety Symbols",
+    "ANSI Z535.4 — Product Safety Signs and Labels",
+    "ANSI Z535.5 — Safety Tags and Barricade Tapes",
+    "ANSI Z535.6 — Product Safety Information in Product Manuals"
+  ],
+  "note": "OSHA 1910.145 was written before ANSI Z535 (1991). OSHA formally recognizes ANSI Z535 series as acceptable compliance method. For new installations ANSI Z535 is preferred; it is a superset of 1910.145 requirements.",
+  "sections": [
+    {
+      "section": "1910.145(a)",
+      "title": "Scope and Application",
+      "requirements": [
+        "1910.145(a)(1): Applies to all accident prevention signs, tags, and similar devices used to prevent accidental injury or illness.",
+        "1910.145(a)(2): Does not apply to highway signs, fire-protection markings, or signals covered by other standards.",
+        "1910.145(a)(3): Signs must be used to prevent injury; safety signs are not a substitute for hazard elimination."
+      ],
+      "checklist": [
+        {
+          "id": "OSHA-145-A1",
+          "item": "Confirm sign use is for accident prevention in a general industry workplace (not highway TCD).",
+          "mandatory": true,
+          "code_ref": "1910.145(a)(1)"
+        },
+        {
+          "id": "OSHA-145-A2",
+          "item": "Hazard has been evaluated — sign supplements, not replaces, hazard engineering controls.",
+          "mandatory": true,
+          "code_ref": "1910.145(a)(3)",
+          "notes": "Hierarchy of controls: eliminate > substitute > engineer > admin > PPE > signage."
+        }
+      ]
+    },
+    {
+      "section": "1910.145(b)",
+      "title": "Definitions",
+      "definitions": [
+        {
+          "term": "Accident Prevention Sign",
+          "definition": "A visual alerting device which gives warning of hazard or hazardous condition that may be life threatening."
+        },
+        {
+          "term": "Biological Hazard (Biohazard)",
+          "definition": "Health hazard presenting risk of infection from organisms or their toxins."
+        },
+        {
+          "term": "Sign",
+          "definition": "A surface on which lettering or symbols are placed to convey a safety message."
+        },
+        {
+          "term": "Tag",
+          "definition": "A device usually made of card, paper, pasteboard, or plastic affixed to a hazardous item by string, wire, or adhesive."
+        }
+      ]
+    },
+    {
+      "section": "1910.145(c)",
+      "title": "Classification of Signs by Use",
+      "subsections": [
+        {
+          "subsection": "1910.145(c)(1)",
+          "title": "Danger Signs",
+          "requirements": [
+            "Used where an immediate hazard exists that WILL result in death or serious injury if not avoided.",
+            "Colors: RED background on header panel; WHITE lettering for signal word DANGER; BLACK body text on WHITE panel.",
+            "ANSI Z535 equivalent: Signal word DANGER, red signal word panel (Pantone 185C / RAL 3020).",
+            "No other design or color scheme shall be used for DANGER signs."
+          ],
+          "color_spec": {
+            "signal_word": "DANGER",
+            "header_background": "#DA0000 (Safety Red per ANSI Z535.1 Color No. 11)",
+            "header_text": "#FFFFFF (White)",
+            "body_background": "#FFFFFF (White)",
+            "body_text": "#000000 (Black)"
+          },
+          "checklist": [
+            {
+              "id": "OSHA-145-C1-A",
+              "item": "DANGER sign uses RED header panel with WHITE 'DANGER' signal word.",
+              "mandatory": true,
+              "code_ref": "1910.145(c)(1)"
+            },
+            {
+              "id": "OSHA-145-C1-B",
+              "item": "DANGER sign is used only for IMMEDIATE hazards (not for caution or general notice).",
+              "mandatory": true,
+              "code_ref": "1910.145(c)(1)",
+              "notes": "Misuse of DANGER for non-immediate hazards is a common citation."
+            }
+          ]
+        },
+        {
+          "subsection": "1910.145(c)(2)",
+          "title": "Caution Signs",
+          "requirements": [
+            "Used to warn against potential hazards OR unsafe practices that may result in minor-to-moderate injury.",
+            "Colors: YELLOW background; BLACK lettering; BLACK upper panel with YELLOW CAUTION signal word.",
+            "ANSI Z535 equivalent: Signal word CAUTION, orange-yellow signal word panel.",
+            "Standard body: yellow background with black text; border black.",
+            "1910.145(c)(2)(ii): Yellow must be the predominant background color."
+          ],
+          "color_spec": {
+            "signal_word": "CAUTION",
+            "header_background": "#F5C800 (Safety Yellow per ANSI Z535.1 Color No. 69)",
+            "header_text": "#000000 (Black)",
+            "body_background": "#F5C800 (Yellow) or #FFFFFF (White)",
+            "body_text": "#000000 (Black)",
+            "border": "#000000 (Black)"
+          },
+          "checklist": [
+            {
+              "id": "OSHA-145-C2-A",
+              "item": "CAUTION sign uses YELLOW background (predominant color) with BLACK CAUTION signal word.",
+              "mandatory": true,
+              "code_ref": "1910.145(c)(2)"
+            },
+            {
+              "id": "OSHA-145-C2-B",
+              "item": "CAUTION used for hazards that MAY result in injury (not for immediate life threats — use DANGER).",
+              "mandatory": true,
+              "code_ref": "1910.145(c)(2)"
+            }
+          ]
+        },
+        {
+          "subsection": "1910.145(c)(3)",
+          "title": "Safety Instruction Signs",
+          "requirements": [
+            "Used to provide general safety instructions and suggestions (not immediate or potential hazards).",
+            "Colors: WHITE background; GREEN panel with WHITE lettering for signal word; BLACK body text.",
+            "ANSI Z535 equivalent: NOTICE (blue) for informational, or SAFETY INSTRUCTIONS (green).",
+            "Example uses: Emergency exit routes, first aid locations, safety policy reminders."
+          ],
+          "color_spec": {
+            "signal_word": "SAFETY FIRST or NOTICE",
+            "header_background": "#007A00 (Safety Green per ANSI Z535.1 Color No. 71) or #0052A5 (Safety Blue for NOTICE)",
+            "header_text": "#FFFFFF (White)",
+            "body_background": "#FFFFFF (White)",
+            "body_text": "#000000 (Black)"
+          },
+          "checklist": [
+            {
+              "id": "OSHA-145-C3-A",
+              "item": "Safety instruction sign uses GREEN header with WHITE text on WHITE body.",
+              "mandatory": true,
+              "code_ref": "1910.145(c)(3)"
+            }
+          ]
+        },
+        {
+          "subsection": "1910.145(c)(4)",
+          "title": "Slow-Moving Vehicle Emblem",
+          "requirements": [
+            "Fluorescent orange triangle with dark red border — used on vehicles moving ≤ 25 mph.",
+            "Must comply with ASAE S276 standard dimensions.",
+            "Not applicable to static signs."
+          ],
+          "checklist": []
+        },
+        {
+          "subsection": "1910.145(c)(5)",
+          "title": "Biological Hazard Signs",
+          "requirements": [
+            "Universal biohazard symbol must be used.",
+            "Colors: Fluorescent orange or orange-red background; BLACK biohazard symbol.",
+            "Must be used to identify equipment, containers, rooms, materials, or combinations thereof that contain or are contaminated with viable hazardous agents."
+          ],
+          "color_spec": {
+            "signal_word": "BIOHAZARD",
+            "background": "#FF6600 (Fluorescent Orange)",
+            "symbol": "#000000 (Black biohazard symbol)"
+          },
+          "checklist": [
+            {
+              "id": "OSHA-145-C5-A",
+              "item": "Biohazard symbol (ISO 7010 W009) used with fluorescent orange/orange-red background.",
+              "mandatory": false,
+              "conditional": "hazard_type == biological",
+              "code_ref": "1910.145(c)(5)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section": "1910.145(d)",
+      "title": "Design Requirements — Signs",
+      "requirements": [
+        "1910.145(d)(1): Signs must be visible at all times when hazard exists; must be removed or covered when hazard no longer exists.",
+        "1910.145(d)(2): Wording must be concise, easy to understand, and accurately convey the message intended.",
+        "1910.145(d)(3): Illustrations and pictographs should supplement text where text alone is insufficient.",
+        "1910.145(d)(4): Signs must be legible from a safe viewing distance to warn of hazard before entering danger zone.",
+        "1910.145(d)(5): Letter height based on viewing distance — minimum per ANSI Z535.2 Table 1.",
+        "1910.145(d)(6): All signs must be free from sharp edges, burrs, or points that could cause injury during installation."
+      ],
+      "letter_height_table": [
+        {"viewing_distance_ft": 10, "min_letter_height_in": 0.5},
+        {"viewing_distance_ft": 25, "min_letter_height_in": 1.0},
+        {"viewing_distance_ft": 50, "min_letter_height_in": 2.0},
+        {"viewing_distance_ft": 100, "min_letter_height_in": 4.0},
+        {"viewing_distance_ft": 150, "min_letter_height_in": 6.0},
+        {"viewing_distance_ft": 200, "min_letter_height_in": 8.0}
+      ],
+      "note": "Letter height table is per ANSI Z535.2 Table 1 (OSHA 1910.145(d)(5) references same proportions).",
+      "checklist": [
+        {
+          "id": "OSHA-145-D1",
+          "item": "Sign is visible from the hazard approach point; not obscured by equipment or materials.",
+          "mandatory": true,
+          "code_ref": "1910.145(d)(1)"
+        },
+        {
+          "id": "OSHA-145-D2",
+          "item": "Sign wording is concise and uses positive action language (e.g., 'WEAR HARD HAT' not 'Hard hats must be worn').",
+          "mandatory": true,
+          "code_ref": "1910.145(d)(2)"
+        },
+        {
+          "id": "OSHA-145-D3",
+          "item": "Where workers may not read English: pictogram/symbol supplements text or replaces it.",
+          "mandatory": false,
+          "code_ref": "1910.145(d)(3)",
+          "notes": "ISO 7010 safety symbols preferred for international comprehension."
+        },
+        {
+          "id": "OSHA-145-D4",
+          "item": "Letter height is appropriate for the expected viewing distance (per ANSI Z535.2 Table 1 above).",
+          "mandatory": true,
+          "code_ref": "1910.145(d)(4)-(5)"
+        },
+        {
+          "id": "OSHA-145-D5",
+          "item": "Sign has no sharp edges or burrs on any accessible surfaces.",
+          "mandatory": true,
+          "code_ref": "1910.145(d)(6)"
+        }
+      ]
+    },
+    {
+      "section": "1910.145(e)",
+      "title": "Construction and Durability",
+      "requirements": [
+        "1910.145(e)(1): Signs must be made of material suitable for the environment of use.",
+        "1910.145(e)(2): Outdoor signs: UV-stable substrate (aluminum, galvanized steel, or rigid UV-stable plastic).",
+        "1910.145(e)(3): Indoor corrosive-environment signs: stainless steel, anodized aluminum, or coated steel.",
+        "1910.145(e)(4): Signs in wet or food processing areas: stainless steel or sealed substrate; no cardboard.",
+        "Minimum substrate gauge (aluminum): 0.040-in for rigid signs; 0.063-in for signs subject to wind loading.",
+        "Reflective sheeting: ASTM D4956 Type I minimum for indoor; Type III for outdoor/low-light areas."
+      ],
+      "substrate_guide": [
+        {"environment": "indoor_dry", "recommended_substrate": "0.040-in aluminum or PVC foam board", "finish": "Digital print with UV laminate"},
+        {"environment": "indoor_wet", "recommended_substrate": "0.040-in 5052-H32 aluminum (anodized) or 316 SS", "finish": "Polyester print, UV laminate"},
+        {"environment": "outdoor_sheltered", "recommended_substrate": "0.063-in aluminum with powdercoat", "finish": "3M IJ40 vinyl or painted"},
+        {"environment": "outdoor_exposed", "recommended_substrate": "0.080-in 5052-H32 aluminum with Kynar 500 coat or reflective", "finish": "High-intensity prismatic sheeting (ASTM D4956 Type III)"},
+        {"environment": "chemical", "recommended_substrate": "316 SS 14-ga with electropolish or HDPE", "finish": "Subsurface printed or engraved"}
+      ],
+      "checklist": [
+        {
+          "id": "OSHA-145-E1",
+          "item": "Sign substrate is appropriate for the installation environment (see substrate guide).",
+          "mandatory": true,
+          "code_ref": "1910.145(e)(1)-(3)"
+        },
+        {
+          "id": "OSHA-145-E2",
+          "item": "Outdoor sign: UV-stable substrate and UV-stable print/laminate.",
+          "mandatory": false,
+          "conditional": "location_type in [outdoor, exposed]",
+          "code_ref": "1910.145(e)(2)"
+        },
+        {
+          "id": "OSHA-145-E3",
+          "item": "Wet-area sign: no cardboard, paper, or untreated wood substrate.",
+          "mandatory": false,
+          "conditional": "location_type in [wet, food_processing]",
+          "code_ref": "1910.145(e)(4)"
+        },
+        {
+          "id": "OSHA-145-E4",
+          "item": "Sign fastening hardware is stainless steel or zinc-plated for corrosion resistance.",
+          "mandatory": true,
+          "code_ref": "1910.145(e)(1)"
+        }
+      ]
+    },
+    {
+      "section": "1910.145(f)",
+      "title": "Tags",
+      "requirements": [
+        "1910.145(f)(1): Tags must be used as a temporary means of warning of an existing hazard — they DO NOT replace safety signs.",
+        "1910.145(f)(2): Tags must be affixed as close as safely possible to the hazard they identify.",
+        "1910.145(f)(3): Tags must be readable and understandable by all employees who may encounter them.",
+        "1910.145(f)(4): Tags must be made of material (card, pasteboard, plastic) of minimum 14-mil (0.014-in) thickness.",
+        "1910.145(f)(5): Tag classification by color (same signal word scheme as signs):",
+        "  DANGER: red/white/black; WARNING: orange/black; CAUTION: yellow/black; BIOHAZARD: fluorescent orange.",
+        "1910.145(f)(6): Tags must be attached with a non-reusable, self-locking device or equivalent.",
+        "1910.145(f)(7): Hazard identified on tag must be addressed before tag is removed; only authorized personnel may remove."
+      ],
+      "checklist": [
+        {
+          "id": "OSHA-145-F1",
+          "item": "Lockout/tagout tags are temporary only — hazard must be corrected before tag removal.",
+          "mandatory": true,
+          "code_ref": "1910.145(f)(1)"
+        },
+        {
+          "id": "OSHA-145-F2",
+          "item": "Tag attached as close as safely possible to the hazardous point.",
+          "mandatory": true,
+          "code_ref": "1910.145(f)(2)"
+        },
+        {
+          "id": "OSHA-145-F4",
+          "item": "Tag material is min 14-mil thick card stock, pasteboard, or plastic.",
+          "mandatory": true,
+          "code_ref": "1910.145(f)(4)"
+        },
+        {
+          "id": "OSHA-145-F6",
+          "item": "Tag is attached with non-reusable, self-locking device (nylon zip-tie or equivalent).",
+          "mandatory": true,
+          "code_ref": "1910.145(f)(6)"
+        },
+        {
+          "id": "OSHA-145-F7",
+          "item": "Tag removal authorization: only trained and authorized employee may remove tag.",
+          "mandatory": true,
+          "code_ref": "1910.145(f)(7)",
+          "notes": "OSHA 1910.147 (lockout/tagout) governs energy control procedures for equipment."
+        }
+      ]
+    }
+  ],
+  "common_citation_patterns": [
+    "1910.145(c)(1): Using DANGER sign for non-immediate hazards (incorrect signal word).",
+    "1910.145(d)(4): Sign not visible from safe approach distance before entering hazard zone.",
+    "1910.145(d)(2): Wording is unclear, wordy, or in a language workers cannot read.",
+    "1910.145(e)(4): Paper or cardboard signs used in wet processing areas.",
+    "1910.145(f)(7): Tags left in place after hazard is corrected, or removed by unauthorized personnel."
+  ],
+  "install_notes": [
+    "For new sign designs: use ANSI Z535 series — it is current, more detailed, and OSHA-accepted.",
+    "Verify sign visibility under all lighting conditions including emergency lighting only.",
+    "Include signs in facility Emergency Action Plan (EAP) map for evacuation routes.",
+    "Conduct annual sign condition inspection — replace faded, damaged, or illegible signs.",
+    "For bilingual workforces: provide signs in English and any language spoken by ≥10% of workers on site."
+  ],
+  "references": [
+    "OSHA 29 CFR 1910.145 — Specifications for Accident Prevention Signs and Tags",
+    "OSHA 29 CFR 1910.147 — Control of Hazardous Energy (Lockout/Tagout)",
+    "ANSI Z535.1-2017 — Safety Color Code",
+    "ANSI Z535.2-2023 — Environmental and Facility Safety Signs",
+    "ANSI Z535.3-2011 — Criteria for Safety Symbols",
+    "ANSI Z535.4-2023 — Product Safety Signs and Labels",
+    "ANSI Z535.5-2017 — Safety Tags and Barricade Tapes",
+    "ISO 7010:2019 — Safety Signs and Symbols",
+    "ASTM D4956 — Standard Specification for Retroreflective Sheeting for Traffic Control",
+    "OSHA 1910.145 Compliance Guide — OSHA Publication 3077"
+  ]
+}

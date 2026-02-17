@@ -8,6 +8,8 @@ range of warehouse P50 values.
 Source data: signx.duckdb (so_contract_labor + so_contracts)
 """
 
+import pytest
+
 from abc_engine import (
     CabinetFace,
     CabinetFrame,
@@ -27,191 +29,168 @@ from abc_engine import (
 )
 
 
-def test_enums():
-    """Task #2: All new enums have expected members."""
-    results = []
+# ── Task #2: Enums ────────────────────────────────────────────────────────────
 
-    # SignType
-    expected_types = [
+def test_sign_type_enum_members():
+    """All expected SignType enum members are present."""
+    expected_types = {
         "CLLIT", "CLNON", "MONDF", "MONSF", "POLLIT", "DIRECT",
         "BLDILL", "BLDNON", "AWNNON", "GEMINI", "LED",
         "ALULIT", "ALUNON", "VINYL", "NEON", "OTHER",
-    ]
-    actual = [s.value for s in SignType]
-    if set(expected_types) == set(actual):
-        results.append({"name": "SignType enum", "status": "PASS",
-                        "detail": f"{len(actual)} members"})
-    else:
-        missing = set(expected_types) - set(actual)
-        extra = set(actual) - set(expected_types)
-        results.append({"name": "SignType enum", "status": "FAIL",
-                        "detail": f"Missing: {missing}, Extra: {extra}"})
-
-    # CabinetShape
-    shapes = [s.value for s in CabinetShape]
-    if set(shapes) == {"rectangular", "semi_irregular", "intricate"}:
-        results.append({"name": "CabinetShape enum", "status": "PASS",
-                        "detail": f"{shapes}"})
-    else:
-        results.append({"name": "CabinetShape enum", "status": "FAIL",
-                        "detail": f"Got: {shapes}"})
-
-    # CabinetFrame
-    frames = [f.value for f in CabinetFrame]
-    if set(frames) == {"light", "heavy", "none"}:
-        results.append({"name": "CabinetFrame enum", "status": "PASS",
-                        "detail": f"{frames}"})
-    else:
-        results.append({"name": "CabinetFrame enum", "status": "FAIL",
-                        "detail": f"Got: {frames}"})
-
-    # CabinetFace
-    faces = [f.value for f in CabinetFace]
-    if set(faces) == {"single_face", "double_face"}:
-        results.append({"name": "CabinetFace enum", "status": "PASS",
-                        "detail": f"{faces}"})
-    else:
-        results.append({"name": "CabinetFace enum", "status": "FAIL",
-                        "detail": f"Got: {faces}"})
-
-    return results
+    }
+    actual = {s.value for s in SignType}
+    assert actual == expected_types, (
+        f"Missing: {expected_types - actual}, Extra: {actual - expected_types}"
+    )
 
 
-def test_rate_dicts():
-    """Task #3: Rate dicts match ABC guide values."""
-    results = []
+def test_cabinet_shape_enum_members():
+    """CabinetShape has exactly rectangular, semi_irregular, intricate."""
+    shapes = {s.value for s in CabinetShape}
+    assert shapes == {"rectangular", "semi_irregular", "intricate"}
 
-    # Section 2: spot-check SF Light Rectangular
+
+def test_cabinet_frame_enum_members():
+    """CabinetFrame has exactly light, heavy, none."""
+    frames = {f.value for f in CabinetFrame}
+    assert frames == {"light", "heavy", "none"}
+
+
+def test_cabinet_face_enum_members():
+    """CabinetFace has exactly single_face, double_face."""
+    faces = {f.value for f in CabinetFace}
+    assert faces == {"single_face", "double_face"}
+
+
+# ── Task #3: Rate Dicts ───────────────────────────────────────────────────────
+
+def test_section2_sf_light_rectangular():
+    """Section 2 SF Light Rectangular rate matches ABC guide values."""
     key = (CabinetFace.SINGLE, CabinetFrame.LIGHT, CabinetShape.RECTANGULAR)
     rate = SECTION_2_RATES.get(key)
-    if rate and rate["labor"] == 0.184 and rate["material"] == 1.80:
-        results.append({"name": "Section 2 SF Light Rect", "status": "PASS",
-                        "detail": f"labor={rate['labor']}, material=${rate['material']}"})
-    else:
-        results.append({"name": "Section 2 SF Light Rect", "status": "FAIL",
-                        "detail": f"Got: {rate}"})
+    assert rate is not None, "Key not found in SECTION_2_RATES"
+    assert rate["labor"] == 0.184, f"Expected labor=0.184, got {rate['labor']}"
+    assert rate["material"] == 1.80, f"Expected material=1.80, got {rate['material']}"
 
-    # Section 2: DF Heavy Rectangular
+
+def test_section2_df_heavy_rectangular():
+    """Section 2 DF Heavy Rectangular labor rate matches ABC guide."""
     key = (CabinetFace.DOUBLE, CabinetFrame.HEAVY, CabinetShape.RECTANGULAR)
     rate = SECTION_2_RATES.get(key)
-    if rate and rate["labor"] == 0.265:
-        results.append({"name": "Section 2 DF Heavy Rect", "status": "PASS",
-                        "detail": f"labor={rate['labor']}"})
-    else:
-        results.append({"name": "Section 2 DF Heavy Rect", "status": "FAIL",
-                        "detail": f"Got: {rate}"})
+    assert rate is not None, "Key not found in SECTION_2_RATES"
+    assert rate["labor"] == 0.265, f"Expected labor=0.265, got {rate['labor']}"
 
-    # Section 2E: raceway straight
+
+def test_section2e_raceway_straight():
+    """Section 2E raceway straight labor rate matches ABC guide."""
     rate = SECTION_2E_RATES.get(("raceway", "straight"))
-    if rate and rate["labor"] == 0.208:
-        results.append({"name": "Section 2E Raceway Straight", "status": "PASS",
-                        "detail": f"labor={rate['labor']}/LF"})
-    else:
-        results.append({"name": "Section 2E Raceway Straight", "status": "FAIL",
-                        "detail": f"Got: {rate}"})
+    assert rate is not None, "Key ('raceway','straight') not found in SECTION_2E_RATES"
+    assert rate["labor"] == 0.208, f"Expected labor=0.208/LF, got {rate['labor']}"
 
-    # Section 5A: 1 color
+
+def test_section5a_1_color():
+    """Section 5A 1-color rates match ABC guide."""
     rate = SECTION_5A_RATES.get(1)
-    if rate and rate["constant"] == 1.0 and rate["labor"] == 0.017:
-        results.append({"name": "Section 5A 1-color", "status": "PASS",
-                        "detail": f"const={rate['constant']}h, labor={rate['labor']}/SF"})
-    else:
-        results.append({"name": "Section 5A 1-color", "status": "FAIL",
-                        "detail": f"Got: {rate}"})
+    assert rate is not None, "Key 1 not found in SECTION_5A_RATES"
+    assert rate["constant"] == 1.0, f"Expected constant=1.0h, got {rate['constant']}"
+    assert rate["labor"] == 0.017, f"Expected labor=0.017/SF, got {rate['labor']}"
 
-    # Section 5A: 5 colors
+
+def test_section5a_5_colors():
+    """Section 5A 5-color rates match ABC guide."""
     rate = SECTION_5A_RATES.get(5)
-    if rate and rate["constant"] == 3.0 and rate["labor"] == 0.050:
-        results.append({"name": "Section 5A 5-color", "status": "PASS",
-                        "detail": f"const={rate['constant']}h, labor={rate['labor']}/SF"})
-    else:
-        results.append({"name": "Section 5A 5-color", "status": "FAIL",
-                        "detail": f"Got: {rate}"})
+    assert rate is not None, "Key 5 not found in SECTION_5A_RATES"
+    assert rate["constant"] == 3.0, f"Expected constant=3.0h, got {rate['constant']}"
+    assert rate["labor"] == 0.050, f"Expected labor=0.050/SF, got {rate['labor']}"
 
-    # Section 10A: SF plastic first
+
+def test_section10a_sf_plastic_first():
+    """Section 10A SF plastic first rates match ABC guide."""
     rate = SECTION_10A_RATES.get(("sf_plastic", "first"))
-    if rate and rate["constant"] == 1.50 and rate["wall"] == 0.036:
-        results.append({"name": "Section 10A SF Plastic 1st", "status": "PASS",
-                        "detail": f"const={rate['constant']}h, wall={rate['wall']}/SF"})
-    else:
-        results.append({"name": "Section 10A SF Plastic 1st", "status": "FAIL",
-                        "detail": f"Got: {rate}"})
+    assert rate is not None, "Key ('sf_plastic','first') not found in SECTION_10A_RATES"
+    assert rate["constant"] == 1.50, f"Expected constant=1.50h, got {rate['constant']}"
+    assert rate["wall"] == 0.036, f"Expected wall=0.036/SF, got {rate['wall']}"
 
-    # Section 10A: letters on deck
+
+def test_section10a_letters_on_deck():
+    """Section 10A letters on deck rates match ABC guide."""
     rate = SECTION_10A_RATES.get(("letters_on_deck", "first"))
-    if rate and rate["constant"] == 2.00 and rate["wall"] == 0.040:
-        results.append({"name": "Section 10A Letters on Deck", "status": "PASS",
-                        "detail": f"const={rate['constant']}h, wall={rate['wall']}/SF"})
-    else:
-        results.append({"name": "Section 10A Letters on Deck", "status": "FAIL",
-                        "detail": f"Got: {rate}"})
-
-    return results
+    assert rate is not None, "Key ('letters_on_deck','first') not found in SECTION_10A_RATES"
+    assert rate["constant"] == 2.00, f"Expected constant=2.00h, got {rate['constant']}"
+    assert rate["wall"] == 0.040, f"Expected wall=0.040/SF, got {rate['wall']}"
 
 
-def test_jobinput_fields():
-    """Task #4: New fields on JobInput with correct defaults."""
-    results = []
-    j = JobInput()
+# ── Task #4: JobInput Fields ──────────────────────────────────────────────────
 
-    checks = [
-        ("sign_type", j.sign_type, SignType.CLLIT),
-        ("cabinet_sf", j.cabinet_sf, 0.0),
-        ("cabinet_face", j.cabinet_face, CabinetFace.SINGLE),
-        ("cabinet_shape", j.cabinet_shape, CabinetShape.RECTANGULAR),
-        ("cabinet_frame", j.cabinet_frame, CabinetFrame.LIGHT),
-        ("paint_colors", j.paint_colors, 1),
-        ("paint_sf", j.paint_sf, 0.0),
-        ("install_mount_type", j.install_mount_type, "wall"),
-        ("is_first_sign", j.is_first_sign, True),
-    ]
-
-    for name, actual, expected in checks:
-        if actual == expected:
-            results.append({"name": f"JobInput.{name}", "status": "PASS",
-                            "detail": f"default={actual}"})
-        else:
-            results.append({"name": f"JobInput.{name}", "status": "FAIL",
-                            "detail": f"expected={expected}, got={actual}"})
-
-    return results
+def test_jobinput_default_sign_type():
+    assert JobInput().sign_type == SignType.CLLIT
 
 
-def test_install_correction():
-    """CORRECTION 1: Install floor fires and matches warehouse P50 x 1.20."""
-    results = []
+def test_jobinput_default_cabinet_sf():
+    assert JobInput().cabinet_sf == 0.0
 
-    # CLLIT with small PF (42 PF = 10 letters 12")
+
+def test_jobinput_default_cabinet_face():
+    assert JobInput().cabinet_face == CabinetFace.SINGLE
+
+
+def test_jobinput_default_cabinet_shape():
+    assert JobInput().cabinet_shape == CabinetShape.RECTANGULAR
+
+
+def test_jobinput_default_cabinet_frame():
+    assert JobInput().cabinet_frame == CabinetFrame.LIGHT
+
+
+def test_jobinput_default_paint_colors():
+    assert JobInput().paint_colors == 1
+
+
+def test_jobinput_default_paint_sf():
+    assert JobInput().paint_sf == 0.0
+
+
+def test_jobinput_default_install_mount_type():
+    assert JobInput().install_mount_type == "wall"
+
+
+def test_jobinput_default_is_first_sign():
+    assert JobInput().is_first_sign is True
+
+
+# ── Correction 1: Install Floor ───────────────────────────────────────────────
+
+def test_cllit_install_floor_small_pf():
+    """CLLIT install floor fires for small 42 PF job (10 letters 12")."""
     job = JobInput(
         letter_count=10, letter_height_inches=12, font_type=FontType.BLOCK,
         construction=ConstructionType.FACE_LIT, install_height_ft=15,
         sign_type=SignType.CLLIT,
     )
     r = estimate(job)
-
-    # Find 0640 install line
     install_hrs = next(
         (l.hours for l in r.install_lines if l.work_code == "0640"), 0
     )
     floor = INSTALL_FLOOR["CLLIT"]  # 9.90
+    assert install_hrs >= floor, (
+        f"CLLIT install hours {install_hrs}h < floor {floor}h for 42 PF job"
+    )
 
-    if install_hrs >= floor:
-        results.append({"name": "CLLIT install floor (42 PF)", "status": "PASS",
-                        "detail": f"install={install_hrs}h >= floor={floor}h"})
-    else:
-        results.append({"name": "CLLIT install floor (42 PF)", "status": "FAIL",
-                        "detail": f"install={install_hrs}h < floor={floor}h"})
 
-    # Verify correction warning present
+def test_cllit_install_correction_warning_present():
+    """Correction warning is emitted when install floor fires."""
+    job = JobInput(
+        letter_count=10, letter_height_inches=12, font_type=FontType.BLOCK,
+        construction=ConstructionType.FACE_LIT, install_height_ft=15,
+        sign_type=SignType.CLLIT,
+    )
+    r = estimate(job)
     has_warning = any("Install corrected" in w for w in r.warnings)
-    if has_warning:
-        results.append({"name": "CLLIT install warning", "status": "PASS",
-                        "detail": "Correction warning present"})
-    else:
-        results.append({"name": "CLLIT install warning", "status": "FAIL",
-                        "detail": "No correction warning found"})
+    assert has_warning, "Expected 'Install corrected' warning but none found"
 
-    # Large PF (200 PF) should exceed floor naturally
+
+def test_cllit_install_floor_large_pf():
+    """CLLIT install floor still applies at 200 PF (ABC raw 8.70h < floor 9.90h)."""
     job_large = JobInput(
         pf_manual=200.0, letter_height_inches=24,
         construction=ConstructionType.FACE_LIT, install_height_ft=15,
@@ -221,23 +200,16 @@ def test_install_correction():
     large_install = next(
         (l.hours for l in r_large.install_lines if l.work_code == "0640"), 0
     )
-    abc_raw = 1.50 + 200.0 * 0.036  # 8.70 crew-hrs... still below floor of 9.90
-    # With floor=9.90, even 200 PF will be corrected
-    if large_install >= floor:
-        results.append({"name": "CLLIT install floor (200 PF)", "status": "PASS",
-                        "detail": f"install={large_install}h (ABC raw={abc_raw:.2f}h, floor={floor}h)"})
-    else:
-        results.append({"name": "CLLIT install floor (200 PF)", "status": "FAIL",
-                        "detail": f"install={large_install}h < floor={floor}h"})
-
-    return results
+    floor = INSTALL_FLOOR["CLLIT"]  # 9.90
+    assert large_install >= floor, (
+        f"CLLIT install hours {large_install}h < floor {floor}h for 200 PF job"
+    )
 
 
-def test_cllit_0270_correction():
-    """CORRECTION 2: CLLIT 0270 floor fires for small PF jobs."""
-    results = []
+# ── Correction 2: CLLIT 0270 Floor ───────────────────────────────────────────
 
-    # Small job: 42 PF, rate=0.021 -> ABC=0.88h, should be floored to 2.10h
+def test_cllit_0270_floor_fires_for_small_pf():
+    """CLLIT 0270 floor fires: 42 PF ABC raw=0.88h should be raised to floor."""
     job = JobInput(
         letter_count=10, letter_height_inches=12, font_type=FontType.BLOCK,
         construction=ConstructionType.FACE_LIT, sign_type=SignType.CLLIT,
@@ -246,15 +218,13 @@ def test_cllit_0270_correction():
     mount_hrs = next(
         (l.hours for l in r.labor_lines if l.work_code == "0270"), 0
     )
+    assert mount_hrs >= CLLIT_0270_FLOOR, (
+        f"CLLIT 0270 hours {mount_hrs}h < floor {CLLIT_0270_FLOOR}h (ABC raw ~0.88h)"
+    )
 
-    if mount_hrs >= CLLIT_0270_FLOOR:
-        results.append({"name": "CLLIT 0270 floor (42 PF)", "status": "PASS",
-                        "detail": f"0270={mount_hrs}h >= floor={CLLIT_0270_FLOOR}h (ABC raw=0.88h)"})
-    else:
-        results.append({"name": "CLLIT 0270 floor (42 PF)", "status": "FAIL",
-                        "detail": f"0270={mount_hrs}h < floor={CLLIT_0270_FLOOR}h"})
 
-    # Non-CLLIT type should NOT have the correction
+def test_non_cllit_0270_not_corrected():
+    """Non-CLLIT sign types do NOT have the 0270 floor correction applied."""
     job_other = JobInput(
         letter_count=10, letter_height_inches=12, font_type=FontType.BLOCK,
         construction=ConstructionType.FACE_LIT, sign_type=SignType.OTHER,
@@ -263,102 +233,100 @@ def test_cllit_0270_correction():
     mount_other = next(
         (l.hours for l in r_other.labor_lines if l.work_code == "0270"), 0
     )
-    if mount_other < CLLIT_0270_FLOOR:
-        results.append({"name": "Non-CLLIT 0270 unchanged", "status": "PASS",
-                        "detail": f"OTHER 0270={mount_other}h (no correction applied)"})
-    else:
-        results.append({"name": "Non-CLLIT 0270 unchanged", "status": "INFO",
-                        "detail": f"OTHER 0270={mount_other}h (above floor naturally)"})
-
-    return results
+    # Should be below the CLLIT correction floor (correction not applied to OTHER)
+    assert mount_other < CLLIT_0270_FLOOR, (
+        f"OTHER sign type 0270={mount_other}h is unexpectedly at or above CLLIT floor {CLLIT_0270_FLOOR}h"
+    )
 
 
-def test_ot_probability():
-    """CORRECTION 3: OT probability lines added for sign types with data."""
-    results = []
+# ── Correction 3: OT Probability ─────────────────────────────────────────────
 
-    # CLLIT should have both 9200 and 9600
+def test_cllit_fab_ot_line_present():
+    """CLLIT estimate includes a 9200 (fab OT) line with correct probability hours."""
     job = JobInput(
         letter_count=10, letter_height_inches=12, font_type=FontType.BLOCK,
         construction=ConstructionType.FACE_LIT, sign_type=SignType.CLLIT,
     )
     r = estimate(job)
-
     fab_ot = next((l for l in r.labor_lines if l.work_code == "9200"), None)
-    inst_ot = next((l for l in r.install_lines if l.work_code == "9600"), None)
-
     ot = OT_FACTORS["CLLIT"]
     expected_fab = round(ot[0] * ot[1], 2)  # 0.346 * 8.09 = 2.80
+    assert fab_ot is not None, "Expected 9200 fab OT line not found"
+    assert abs(fab_ot.hours - expected_fab) < 0.01, (
+        f"CLLIT 9200 hours: expected {expected_fab}h, got {fab_ot.hours}h"
+    )
+
+
+def test_cllit_install_ot_line_present():
+    """CLLIT estimate includes a 9600 (install OT) line with correct probability hours."""
+    job = JobInput(
+        letter_count=10, letter_height_inches=12, font_type=FontType.BLOCK,
+        construction=ConstructionType.FACE_LIT, sign_type=SignType.CLLIT,
+    )
+    r = estimate(job)
+    inst_ot = next((l for l in r.install_lines if l.work_code == "9600"), None)
+    ot = OT_FACTORS["CLLIT"]
     expected_inst = round(ot[2] * ot[3], 2)  # 0.471 * 4.43 = 2.09
+    assert inst_ot is not None, "Expected 9600 install OT line not found"
+    assert abs(inst_ot.hours - expected_inst) < 0.01, (
+        f"CLLIT 9600 hours: expected {expected_inst}h, got {inst_ot.hours}h"
+    )
 
-    if fab_ot and abs(fab_ot.hours - expected_fab) < 0.01:
-        results.append({"name": "CLLIT fab OT (9200)", "status": "PASS",
-                        "detail": f"{fab_ot.hours}h (35% prob x 8.09h)"})
-    else:
-        results.append({"name": "CLLIT fab OT (9200)", "status": "FAIL",
-                        "detail": f"Expected {expected_fab}h, got {fab_ot.hours if fab_ot else 'None'}"})
 
-    if inst_ot and abs(inst_ot.hours - expected_inst) < 0.01:
-        results.append({"name": "CLLIT install OT (9600)", "status": "PASS",
-                        "detail": f"{inst_ot.hours}h (47% prob x 4.43h)"})
-    else:
-        results.append({"name": "CLLIT install OT (9600)", "status": "FAIL",
-                        "detail": f"Expected {expected_inst}h, got {inst_ot.hours if inst_ot else 'None'}"})
-
-    # GEMINI should only have install OT (no fab OT)
+def test_gemini_no_fab_ot():
+    """GEMINI sign type has no 9200 fab OT line (prob=0%)."""
     job_gem = JobInput(
         letter_count=10, letter_height_inches=12, font_type=FontType.BLOCK,
         construction=ConstructionType.FACE_LIT, sign_type=SignType.GEMINI,
     )
     r_gem = estimate(job_gem)
     gem_fab = next((l for l in r_gem.labor_lines if l.work_code == "9200"), None)
+    assert gem_fab is None, f"Unexpected 9200 fab OT line for GEMINI: {gem_fab}"
+
+
+def test_gemini_has_install_ot():
+    """GEMINI sign type has a 9600 install OT line with hours > 0."""
+    job_gem = JobInput(
+        letter_count=10, letter_height_inches=12, font_type=FontType.BLOCK,
+        construction=ConstructionType.FACE_LIT, sign_type=SignType.GEMINI,
+    )
+    r_gem = estimate(job_gem)
     gem_inst = next((l for l in r_gem.install_lines if l.work_code == "9600"), None)
+    assert gem_inst is not None and gem_inst.hours > 0, (
+        "Expected GEMINI install OT (9600) line with hours > 0"
+    )
 
-    if gem_fab is None:
-        results.append({"name": "GEMINI no fab OT", "status": "PASS",
-                        "detail": "No 9200 line (correct, prob=0%)"})
-    else:
-        results.append({"name": "GEMINI no fab OT", "status": "FAIL",
-                        "detail": f"Unexpected 9200 line: {gem_fab.hours}h"})
 
-    if gem_inst and gem_inst.hours > 0:
-        results.append({"name": "GEMINI install OT (9600)", "status": "PASS",
-                        "detail": f"{gem_inst.hours}h (48% prob x 1.81h)"})
-    else:
-        results.append({"name": "GEMINI install OT (9600)", "status": "FAIL",
-                        "detail": f"Expected install OT line"})
-
-    # OTHER should have NO OT lines (not in OT_FACTORS)
+def test_other_sign_type_no_ot_lines():
+    """OTHER sign type (not in OT_FACTORS) has no 9200 or 9600 lines."""
     job_other = JobInput(
         letter_count=10, letter_height_inches=12, font_type=FontType.BLOCK,
         construction=ConstructionType.FACE_LIT, sign_type=SignType.OTHER,
     )
     r_other = estimate(job_other)
-    other_ot = [l for l in r_other.labor_lines + r_other.install_lines
-                if l.work_code in ("9200", "9600")]
-    if not other_ot:
-        results.append({"name": "OTHER no OT lines", "status": "PASS",
-                        "detail": "No OT lines for untracked type"})
-    else:
-        results.append({"name": "OTHER no OT lines", "status": "FAIL",
-                        "detail": f"Unexpected OT lines: {[l.work_code for l in other_ot]}"})
-
-    return results
+    ot_lines = [
+        l for l in r_other.labor_lines + r_other.install_lines
+        if l.work_code in ("9200", "9600")
+    ]
+    assert not ot_lines, (
+        f"Unexpected OT lines for OTHER type: {[l.work_code for l in ot_lines]}"
+    )
 
 
-def test_warehouse_validation():
-    """Validate correction factors against DuckDB warehouse P50 values."""
-    results = []
-    try:
-        import duckdb
-        db = duckdb.connect(
-            "C:/Scripts/signx-warehouse/warehouse/signx.duckdb", read_only=True
-        )
-    except Exception as e:
-        return [{"name": "DuckDB connection", "status": "BLOCKED",
-                 "detail": str(e)}]
+# ── Warehouse Validation (requires DuckDB) ────────────────────────────────────
 
-    # Install P50 validation
+@pytest.mark.skipif(
+    not __import__("pathlib").Path(
+        "C:/Scripts/signx-warehouse/warehouse/signx.duckdb"
+    ).exists(),
+    reason="DuckDB warehouse not available",
+)
+def test_install_floors_within_15pct_of_warehouse_p50():
+    """Install floor values are within 15% of warehouse P50 * 1.20 for each sign type."""
+    import duckdb
+    db = duckdb.connect(
+        "C:/Scripts/signx-warehouse/warehouse/signx.duckdb", read_only=True
+    )
     rows = db.execute("""
         SELECT
             c.sign_type,
@@ -370,94 +338,52 @@ def test_warehouse_validation():
             AND c.sign_type IN ('CLLIT','POLLIT','MONDF','MONSF','DIRECT','AWNNON','GEMINI','LED','ALULIT')
         GROUP BY c.sign_type
     """).fetchall()
+    db.close()
 
+    failures = []
     for st, n, p50 in rows:
         floor = INSTALL_FLOOR.get(st)
         if floor is None:
             continue
         expected_floor = round(p50 * 1.20, 2)
-        tolerance = 0.15  # 15% tolerance on the floor calculation
-        ratio = floor / expected_floor if expected_floor > 0 else 0
+        if expected_floor <= 0:
+            continue
+        ratio = floor / expected_floor
+        tolerance = 0.15
+        if not (1.0 - tolerance <= ratio <= 1.0 + tolerance):
+            failures.append(
+                f"{st}: floor={floor}h, P50*1.20={expected_floor}h, ratio={ratio:.2f}x (n={n})"
+            )
 
-        if 1.0 - tolerance <= ratio <= 1.0 + tolerance:
-            results.append({
-                "name": f"{st} install floor vs P50",
-                "status": "PASS",
-                "detail": f"floor={floor}h, P50*1.20={expected_floor}h, ratio={ratio:.2f}x (n={n})",
-            })
-        else:
-            results.append({
-                "name": f"{st} install floor vs P50",
-                "status": "WARN",
-                "detail": f"floor={floor}h, P50*1.20={expected_floor}h, ratio={ratio:.2f}x (n={n})",
-            })
+    assert not failures, "Install floors outside 15% tolerance:\n" + "\n".join(failures)
 
-    # CLLIT 0270 P50 validation
-    r = db.execute("""
+
+@pytest.mark.skipif(
+    not __import__("pathlib").Path(
+        "C:/Scripts/signx-warehouse/warehouse/signx.duckdb"
+    ).exists(),
+    reason="DuckDB warehouse not available",
+)
+def test_cllit_0270_floor_within_15pct_of_warehouse_p50():
+    """CLLIT 0270 floor is within 15% of warehouse P50 * 1.20."""
+    import duckdb
+    db = duckdb.connect(
+        "C:/Scripts/signx-warehouse/warehouse/signx.duckdb", read_only=True
+    )
+    row = db.execute("""
         SELECT
             round(percentile_cont(0.50) WITHIN GROUP (ORDER BY l.actual_hours), 2) as p50
         FROM so_contract_labor l
         JOIN so_contracts c ON l.wo_number = c.work_order
         WHERE c.sign_type = 'CLLIT' AND l.work_code = '0270' AND l.actual_hours > 0
     """).fetchone()
-    if r:
-        p50 = r[0]
-        expected = round(p50 * 1.20, 2)
-        ratio = CLLIT_0270_FLOOR / expected if expected > 0 else 0
-        if 0.85 <= ratio <= 1.15:
-            results.append({
-                "name": "CLLIT 0270 floor vs P50",
-                "status": "PASS",
-                "detail": f"floor={CLLIT_0270_FLOOR}h, P50*1.20={expected}h, ratio={ratio:.2f}x",
-            })
-        else:
-            results.append({
-                "name": "CLLIT 0270 floor vs P50",
-                "status": "WARN",
-                "detail": f"floor={CLLIT_0270_FLOOR}h, P50*1.20={expected}h, ratio={ratio:.2f}x",
-            })
-
     db.close()
-    return results
 
-
-# ── Run All ─────────────────────────────────────────────────────────────────
-
-if __name__ == "__main__":
-    print("=" * 80)
-    print("  Phase 1 Validation Suite")
-    print("=" * 80)
-
-    all_results = []
-    tests = [
-        ("Task #2: Enums", test_enums),
-        ("Task #3: Rate Dicts", test_rate_dicts),
-        ("Task #4: JobInput Fields", test_jobinput_fields),
-        ("Correction 1: Install Floor", test_install_correction),
-        ("Correction 2: CLLIT 0270", test_cllit_0270_correction),
-        ("Correction 3: OT Probability", test_ot_probability),
-        ("Warehouse Validation", test_warehouse_validation),
-    ]
-
-    for section_name, test_fn in tests:
-        print(f"\n--- {section_name} ---")
-        section_results = test_fn()
-        all_results.extend(section_results)
-        for r in section_results:
-            print(f"  [{r['status']:<8s}] {r['name']}")
-            print(f"            {r['detail']}")
-
-    # Scorecard
-    print("\n" + "=" * 80)
-    print("  PHASE 1 SCORECARD")
-    print("=" * 80)
-    pass_count = sum(1 for r in all_results if r["status"] == "PASS")
-    warn_count = sum(1 for r in all_results if r["status"] == "WARN")
-    fail_count = sum(1 for r in all_results if r["status"] == "FAIL")
-    total = len(all_results)
-    print(f"  PASS: {pass_count}/{total}")
-    if warn_count:
-        print(f"  WARN: {warn_count}/{total}")
-    if fail_count:
-        print(f"  FAIL: {fail_count}/{total}")
-    print("=" * 80)
+    assert row is not None, "No CLLIT 0270 data in warehouse"
+    p50 = row[0]
+    expected = round(p50 * 1.20, 2)
+    assert expected > 0
+    ratio = CLLIT_0270_FLOOR / expected
+    assert 0.85 <= ratio <= 1.15, (
+        f"CLLIT 0270 floor={CLLIT_0270_FLOOR}h, P50*1.20={expected}h, ratio={ratio:.2f}x — outside 15% tolerance"
+    )

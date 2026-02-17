@@ -5,7 +5,11 @@ from pathlib import Path
 from typing import Dict, Tuple
 
 import ezdxf
-from weasyprint import HTML
+
+try:
+    from weasyprint import HTML as _WeasyHTML
+except ModuleNotFoundError:  # optional dep — PDF rendering disabled until installed
+    _WeasyHTML = None  # type: ignore[assignment]
 
 
 def _store_blob(root: Path, data: bytes, ext: str) -> Tuple[str, Path]:
@@ -154,7 +158,11 @@ def render_pdf(root: Path, title: str, calc_data: Dict) -> Tuple[str, str]:
       </div>
     </body></html>
     """.strip()
-    pdf_bytes = HTML(string=html).write_pdf()
+    if _WeasyHTML is None:
+        raise RuntimeError(
+            "weasyprint is not installed. Install it with: pip install weasyprint"
+        )
+    pdf_bytes = _WeasyHTML(string=html).write_pdf()
     h, path = _store_blob(root, pdf_bytes, "pdf")
     return h, f"blobs/{h[:2]}/{h}.pdf"
 

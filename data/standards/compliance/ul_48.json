@@ -1,0 +1,341 @@
+{
+  "$schema": "https://signx.local/schemas/compliance-checklist/v1",
+  "standard": "UL 48",
+  "edition": "UL 48 — Standard for Electric Signs (14th Edition, current as of 2023)",
+  "scope": "Electric signs and assemblies including illuminated channel letters, LED cabinet signs, neon signs, and electronic message centers",
+  "issuing_body": "Underwriters Laboratories (UL) / UL Standards & Engagement",
+  "naics_code": "339950",
+  "note": "UL 48 is the primary product safety standard for electric signs manufactured under NAICS 339950. Compliance is required for NEC 600.3 listing requirement.",
+  "companion_standards": [
+    "UL 879 — Electric Sign Components (LED drivers, ballasts)",
+    "UL 879A — LED-Based Sign Components",
+    "UL 969 — Marking and Labeling Systems (adhesive labels/nameplates)",
+    "UL 8750 — Light Emitting Diode (LED) Equipment for Use in Lighting Products",
+    "UL 2108 — Low Voltage Lighting Systems"
+  ],
+  "sections": [
+    {
+      "section": "§ 1",
+      "title": "Scope",
+      "requirements": [
+        "Covers electric signs that are complete assemblies including enclosures, wiring, and illumination sources.",
+        "Applies to signs rated 600 V or less.",
+        "Covers indoor, outdoor, and wet-location signs.",
+        "Does not cover signs using high-intensity discharge (HID) lamps unless specifically investigated."
+      ],
+      "checklist": [
+        {
+          "id": "UL48-1-A",
+          "item": "Confirm sign is within UL 48 scope (rated ≤600 V, complete assembly).",
+          "mandatory": true
+        },
+        {
+          "id": "UL48-1-B",
+          "item": "If HID lamps used: confirm supplemental investigation with AHJ/NRTL.",
+          "mandatory": false,
+          "conditional": "illumination == HID"
+        }
+      ]
+    },
+    {
+      "section": "§ 4",
+      "title": "General Construction Requirements",
+      "requirements": [
+        "§4.1: Sign enclosure (cabinet) must be constructed of materials suitable for the installation environment.",
+        "§4.2: Outdoor signs must use corrosion-resistant materials (aluminum, galvanized steel, or stainless steel for fasteners in coastal environments).",
+        "§4.3: All wiring within sign enclosure must be rated for the operating temperature and voltage.",
+        "§4.4: Minimum conductor size #18 AWG for internal sign wiring unless component is Listed for smaller gauge.",
+        "§4.5: Access panels and wiring compartments must be secured with tool-required fasteners (not accessible without tools).",
+        "§4.6: Internal wiring must be protected from sharp edges, heat sources, and moving parts."
+      ],
+      "checklist": [
+        {
+          "id": "UL48-4-1",
+          "item": "Cabinet material is appropriate for environment (aluminum, galvanized, or 316 SS for coastal).",
+          "mandatory": true,
+          "code_ref": "UL 48 §4.2"
+        },
+        {
+          "id": "UL48-4-2",
+          "item": "Internal wiring rated for operating temperature (min 60°C, 90°C preferred for LED cabinets).",
+          "mandatory": true,
+          "code_ref": "UL 48 §4.3"
+        },
+        {
+          "id": "UL48-4-3",
+          "item": "Minimum #18 AWG internal conductors used throughout.",
+          "mandatory": true,
+          "code_ref": "UL 48 §4.4"
+        },
+        {
+          "id": "UL48-4-4",
+          "item": "Access panels require a tool to open (screwdriver, hex key) — not hand-operable.",
+          "mandatory": true,
+          "code_ref": "UL 48 §4.5"
+        },
+        {
+          "id": "UL48-4-5",
+          "item": "Internal wiring is secured and protected from cabinet edges (grommets, conduit where required).",
+          "mandatory": true,
+          "code_ref": "UL 48 §4.6"
+        }
+      ]
+    },
+    {
+      "section": "§ 5",
+      "title": "LED Sign Requirements",
+      "requirements": [
+        "§5.1: LED drivers (power supplies) must be Listed under UL 879 or UL 879A for sign use.",
+        "§5.2: LED modules must be Listed under UL 879A or UL 8750.",
+        "§5.3: LED driver output voltage must not exceed the listed voltage of the LED modules.",
+        "§5.4: LED drivers must be rated for ambient temperature of installation (typically -40°C to +50°C for outdoor).",
+        "§5.5: LED module power density must not exceed the thermal management capacity of the sign enclosure.",
+        "§5.6: LED dimming controls must be Listed and compatible with the driver.",
+        "§5.7: Maximum LED module or driver case temperature during normal operation: 90°C on accessible surfaces."
+      ],
+      "checklist": [
+        {
+          "id": "UL48-5-1",
+          "item": "All LED drivers are Listed under UL 879 or UL 879A — UL file number confirmed.",
+          "mandatory": true,
+          "code_ref": "UL 48 §5.1",
+          "notes": "Check UL Product iQ database at iq.ul.com for valid E-number."
+        },
+        {
+          "id": "UL48-5-2",
+          "item": "LED modules are Listed under UL 879A or UL 8750 — UL file number confirmed.",
+          "mandatory": true,
+          "code_ref": "UL 48 §5.2"
+        },
+        {
+          "id": "UL48-5-3",
+          "item": "LED driver output voltage ≤ rated input voltage of LED modules (no overvoltage).",
+          "mandatory": true,
+          "code_ref": "UL 48 §5.3"
+        },
+        {
+          "id": "UL48-5-4",
+          "item": "LED driver ambient temperature rating covers installation range (outdoor: -40°C to +50°C).",
+          "mandatory": true,
+          "code_ref": "UL 48 §5.4",
+          "notes": "Verify driver datasheet for Ta rating."
+        },
+        {
+          "id": "UL48-5-5",
+          "item": "Thermal management adequate — cabinet venting or heat sink prevents LED driver case exceeding 90°C.",
+          "mandatory": true,
+          "code_ref": "UL 48 §5.7"
+        }
+      ]
+    },
+    {
+      "section": "§ 6",
+      "title": "Neon Sign Requirements",
+      "requirements": [
+        "§6.1: Neon transformers and electronic power supplies (EPS) for neon must be Listed under UL 2161.",
+        "§6.2: EPS must be rated at or above the actual tube load (mA and voltage).",
+        "§6.3: Secondary circuit wiring outside glass tubing must be GTO-15 cable (15 kV rated, flexible, high-temp insulation).",
+        "§6.4: Glass tubing must be supported at intervals not exceeding 4 ft (1.2 m) for tubes ≥ 15 mm diameter.",
+        "§6.5: Electrode connections must use crimped or compression-type connectors; soldered connections not permitted on secondary side.",
+        "§6.6: Maximum secondary open-circuit voltage from transformer: 15 kV rms.",
+        "§6.7: All metal parts of neon sign enclosure must be grounded; GTO-15 cable must not be subject to mechanical damage."
+      ],
+      "checklist": [
+        {
+          "id": "UL48-6-1",
+          "item": "Neon transformer/EPS is Listed under UL 2161 — UL file number on transformer label.",
+          "mandatory": true,
+          "code_ref": "UL 48 §6.1"
+        },
+        {
+          "id": "UL48-6-2",
+          "item": "EPS mA and voltage rating matches or exceeds tube load (don't underrate).",
+          "mandatory": true,
+          "code_ref": "UL 48 §6.2"
+        },
+        {
+          "id": "UL48-6-3",
+          "item": "GTO-15 cable used for all secondary conductor runs outside glass tubing.",
+          "mandatory": true,
+          "code_ref": "UL 48 §6.3"
+        },
+        {
+          "id": "UL48-6-4",
+          "item": "Neon tube supports at max 4-ft intervals for tubes ≥ 15 mm diameter.",
+          "mandatory": true,
+          "code_ref": "UL 48 §6.4"
+        },
+        {
+          "id": "UL48-6-5",
+          "item": "Electrode connections are crimped or compression type (no soldered secondary connections).",
+          "mandatory": true,
+          "code_ref": "UL 48 §6.5"
+        },
+        {
+          "id": "UL48-6-6",
+          "item": "Open-circuit secondary voltage does not exceed 15 kV rms.",
+          "mandatory": true,
+          "code_ref": "UL 48 §6.6"
+        }
+      ]
+    },
+    {
+      "section": "§ 7",
+      "title": "Enclosure and Environmental Protection",
+      "requirements": [
+        "§7.1: Outdoor signs must have an ingress protection rating of at least IP54 (IEC 60529) or equivalent NEMA 3R.",
+        "§7.2: Wet-location signs must be rated IP55 or NEMA 4 minimum.",
+        "§7.3: Gaskets must be EPDM, neoprene, or silicone rated for outdoor UV and temperature cycling.",
+        "§7.4: Drain holes (weep holes) must be provided in outdoor enclosures to prevent water accumulation.",
+        "§7.5: Sign face (acrylic or polycarbonate) must be UV-stabilized for outdoor use.",
+        "§7.6: Electronic message center (EMC) LED matrices must have conformal coating on PCBs for outdoor/wet locations."
+      ],
+      "checklist": [
+        {
+          "id": "UL48-7-1",
+          "item": "Outdoor sign enclosure rated min IP54 / NEMA 3R.",
+          "mandatory": true,
+          "code_ref": "UL 48 §7.1"
+        },
+        {
+          "id": "UL48-7-2",
+          "item": "Wet-location sign enclosure rated min IP55 / NEMA 4.",
+          "mandatory": false,
+          "conditional": "location_type == wet",
+          "code_ref": "UL 48 §7.2"
+        },
+        {
+          "id": "UL48-7-3",
+          "item": "Gasket material is EPDM, neoprene, or silicone (not foam weatherstripping).",
+          "mandatory": true,
+          "code_ref": "UL 48 §7.3"
+        },
+        {
+          "id": "UL48-7-4",
+          "item": "Drain/weep holes present at bottom of outdoor enclosure.",
+          "mandatory": true,
+          "code_ref": "UL 48 §7.4"
+        },
+        {
+          "id": "UL48-7-5",
+          "item": "Sign face (acrylic/polycarbonate) is UV-stabilized grade.",
+          "mandatory": true,
+          "code_ref": "UL 48 §7.5"
+        },
+        {
+          "id": "UL48-7-6",
+          "item": "EMC/LED matrix PCBs have conformal coating for outdoor/wet use.",
+          "mandatory": false,
+          "conditional": "sign_type == EMC OR location_type in [outdoor, wet]",
+          "code_ref": "UL 48 §7.6"
+        }
+      ]
+    },
+    {
+      "section": "§ 8",
+      "title": "Markings and Labels",
+      "requirements": [
+        "§8.1: Nameplate must include: manufacturer name/trademark, voltage, current, frequency, number of signs.",
+        "§8.2: UL Listing mark must appear on sign exterior, adjacent to nameplate.",
+        "§8.3: Indoor/Outdoor/Wet Location classification must appear on nameplate or adjacent label.",
+        "§8.4: High-voltage warning labels required on access panels covering neon secondary conductors or terminals.",
+        "§8.5: Labels must be durable and legible throughout the sign's life — adhesive labels must meet UL 969.",
+        "§8.6: Maximum allowable conductor temperature markings required if wiring exceeds 60°C."
+      ],
+      "checklist": [
+        {
+          "id": "UL48-8-1",
+          "item": "Nameplate affixed to sign exterior with all required data (manufacturer, V, A, Hz).",
+          "mandatory": true,
+          "code_ref": "UL 48 §8.1"
+        },
+        {
+          "id": "UL48-8-2",
+          "item": "UL Listing mark (cUL, cULus, or ETL equivalent) visible on sign exterior.",
+          "mandatory": true,
+          "code_ref": "UL 48 §8.2"
+        },
+        {
+          "id": "UL48-8-3",
+          "item": "Location use classification (Indoor/Outdoor/Wet) marked on sign.",
+          "mandatory": true,
+          "code_ref": "UL 48 §8.3"
+        },
+        {
+          "id": "UL48-8-4",
+          "item": "HIGH VOLTAGE warning label on all access panels covering neon secondary wiring.",
+          "mandatory": false,
+          "conditional": "illumination == neon",
+          "code_ref": "UL 48 §8.4"
+        },
+        {
+          "id": "UL48-8-5",
+          "item": "All adhesive labels meet UL 969 permanence requirements (UV, heat, moisture tested).",
+          "mandatory": true,
+          "code_ref": "UL 48 §8.5"
+        }
+      ]
+    },
+    {
+      "section": "§ 9",
+      "title": "Performance and Dielectric Tests",
+      "requirements": [
+        "§9.1: Dielectric voltage-withstand test: 1000 V + 2× rated voltage applied for 1 minute between live parts and enclosure.",
+        "§9.2: Ground continuity: bonding resistance ≤ 0.1 Ω between any accessible metal part and ground terminal.",
+        "§9.3: Leakage current: ≤ 0.5 mA for portable signs; ≤ 3.5 mA for fixed signs.",
+        "§9.4: Temperature test: verify no component exceeds rated temperature after 1-hour steady-state operation.",
+        "§9.5: Rain test (outdoor signs): IP54 test — no water ingress after spray test per IEC 60529."
+      ],
+      "checklist": [
+        {
+          "id": "UL48-9-1",
+          "item": "Dielectric hi-pot test passed at (1000 V + 2× rated voltage) for 1 min without breakdown.",
+          "mandatory": true,
+          "code_ref": "UL 48 §9.1",
+          "notes": "Performed by manufacturer at end-of-line; document test results."
+        },
+        {
+          "id": "UL48-9-2",
+          "item": "Ground continuity: bonding resistance ≤ 0.1 Ω from enclosure to ground terminal.",
+          "mandatory": true,
+          "code_ref": "UL 48 §9.2"
+        },
+        {
+          "id": "UL48-9-3",
+          "item": "Leakage current ≤ 3.5 mA (fixed sign) or ≤ 0.5 mA (portable sign).",
+          "mandatory": true,
+          "code_ref": "UL 48 §9.3"
+        },
+        {
+          "id": "UL48-9-4",
+          "item": "Temperature test: no component exceeds rated temperature after 1-hour steady state.",
+          "mandatory": true,
+          "code_ref": "UL 48 §9.4"
+        },
+        {
+          "id": "UL48-9-5",
+          "item": "Outdoor signs: IP54 rain test passed (IEC 60529 method).",
+          "mandatory": false,
+          "conditional": "location_type in [outdoor, wet]",
+          "code_ref": "UL 48 §9.5"
+        }
+      ]
+    }
+  ],
+  "install_notes": [
+    "UL 48 listing is a factory-certification standard; field modifications may void listing.",
+    "Any field modification to a Listed sign requires re-evaluation by the original NRTL or AHJ field labeling.",
+    "Keep UL 48 listing documentation (UL file number, category code) on file for AHJ permit submissions.",
+    "UL Product iQ database (iq.ul.com) allows public verification of valid UL listings."
+  ],
+  "references": [
+    "UL 48 Standard for Electric Signs, 14th Edition — UL Standards & Engagement",
+    "UL 879 / UL 879A — Electric Sign Components / LED-Based Sign Components",
+    "UL 969 — Marking and Labeling Systems",
+    "UL 2161 — Neon Sign Transformers and Electronic Power Supplies",
+    "UL 8750 — Light Emitting Diode (LED) Equipment for Lighting Products",
+    "IEC 60529 — Degrees of Protection Provided by Enclosures (IP Code)",
+    "NFPA 70 — NEC 600.3 (listing requirement reference)",
+    "UL Product iQ: https://iq.ul.com"
+  ]
+}

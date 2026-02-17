@@ -16,9 +16,13 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from signx_platform.registry import registry, ModuleDefinition
 from typing import List, Optional, Dict, Any
-import google.generativeai as genai
 import os
 from datetime import datetime
+
+try:
+    import google.generativeai as genai  # deprecated; migrate to google.genai when ready
+except Exception:  # pragma: no cover
+    genai = None  # type: ignore[assignment]
 
 
 # Module definition

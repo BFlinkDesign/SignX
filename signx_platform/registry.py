@@ -6,8 +6,8 @@ Allows modules to register themselves with the platform and discover each other.
 import logging
 from typing import Dict, List, Optional
 from fastapi import APIRouter
-from pydantic import BaseModel, Field
-from datetime import datetime
+from pydantic import BaseModel, ConfigDict, Field
+from datetime import datetime, timezone
 
 logger = logging.getLogger(__name__)
 
@@ -37,11 +37,13 @@ class ModuleDefinition(BaseModel):
     events_published: List[str] = Field(default_factory=list, description="Events this module emits")
     
     # Metadata
-    registered_at: datetime = Field(default_factory=datetime.utcnow)
+    registered_at: datetime = Field(
+        default_factory=lambda: datetime.now(timezone.utc)
+    )
     enabled: bool = Field(default=True)
-    
-    class Config:
-        json_schema_extra = {
+
+    model_config = ConfigDict(
+        json_schema_extra={
             "example": {
                 "name": "engineering",
                 "version": "1.0.0",
@@ -52,9 +54,10 @@ class ModuleDefinition(BaseModel):
                 "nav_order": 2,
                 "icon": "calculator",
                 "events_consumed": ["project.created", "design.updated"],
-                "events_published": ["calculations.completed", "design.approved"]
+                "events_published": ["calculations.completed", "design.approved"],
             }
         }
+    )
 
 
 class ModuleRegistry:

@@ -1,0 +1,311 @@
+{
+  "$schema": "https://signx.local/schemas/compliance-checklist/v1",
+  "standard": "NEC Article 600",
+  "edition": "National Electrical Code (NFPA 70) — 2023 Edition",
+  "scope": "Electric signs, outline lighting systems, and neon tubing installations",
+  "effective_date": "2023",
+  "issuing_body": "National Fire Protection Association (NFPA)",
+  "adoption_note": "Adopted by reference in most US jurisdictions; verify local AHJ amendment cycle (many jurisdictions on 2020 or 2017 NEC).",
+  "sections": [
+    {
+      "section": "600.1",
+      "title": "Scope",
+      "requirements": [
+        "Covers electric signs, outline lighting, neon tubing and associated equipment.",
+        "Applies to equipment rated 600 V or less.",
+        "Excludes signs exempted by 600.2 (portable, battery-powered, etc.)."
+      ],
+      "checklist": [
+        {
+          "id": "NEC600-1-A",
+          "item": "Confirm installation is an electric sign or outline lighting system as defined in 600.2.",
+          "mandatory": true,
+          "notes": "If portable battery-powered sign: Article 600 may not apply; verify with AHJ."
+        }
+      ]
+    },
+    {
+      "section": "600.3",
+      "title": "Listing",
+      "requirements": [
+        "All electric signs and outline lighting systems must be Listed and marked for outdoor or indoor use.",
+        "Field-assembled signs may use a field evaluation/labeling program if factory listing is not feasible.",
+        "Exception: signs rated ≤ 600 V in industrial occupancies may be field-wired without listing if qualified persons maintain them."
+      ],
+      "checklist": [
+        {
+          "id": "NEC600-3-A",
+          "item": "Verify sign bears UL Listing mark (or equivalent NRTL mark: ETL, CSA, etc.).",
+          "mandatory": true,
+          "notes": "Accept UL 48, UL 879, UL 879A as applicable listing standards."
+        },
+        {
+          "id": "NEC600-3-B",
+          "item": "If unlisted field-assembled sign: confirm field evaluation label from NRTL is obtained before energizing.",
+          "mandatory": true,
+          "notes": "AHJ may require inspection and field labeling per 600.3 Exception No. 1."
+        },
+        {
+          "id": "NEC600-3-C",
+          "item": "Confirm Indoor/Outdoor rating matches installation location.",
+          "mandatory": true,
+          "notes": "Outdoor-rated sign required for any exposure to rain, weather, or humidity."
+        }
+      ]
+    },
+    {
+      "section": "600.4",
+      "title": "Markings",
+      "requirements": [
+        "600.4(A): Nameplate must show manufacturer name or trademark, supply voltage (V), full-load current (A), frequency (Hz), number of signs if multiple on circuit.",
+        "600.4(B): Sign must be marked Indoor, Outdoor, or Wet Location as applicable.",
+        "600.4(C): Neon tubing sections must be identified to match transformer output rating.",
+        "Nameplate must be visible and legible after installation without requiring disassembly."
+      ],
+      "checklist": [
+        {
+          "id": "NEC600-4-A1",
+          "item": "Nameplate shows manufacturer name/trademark.",
+          "mandatory": true,
+          "code_ref": "600.4(A)(1)"
+        },
+        {
+          "id": "NEC600-4-A2",
+          "item": "Nameplate shows supply voltage rating.",
+          "mandatory": true,
+          "code_ref": "600.4(A)(2)"
+        },
+        {
+          "id": "NEC600-4-A3",
+          "item": "Nameplate shows full-load ampere rating.",
+          "mandatory": true,
+          "code_ref": "600.4(A)(3)"
+        },
+        {
+          "id": "NEC600-4-A4",
+          "item": "Nameplate shows frequency (Hz) for AC supplies.",
+          "mandatory": true,
+          "code_ref": "600.4(A)(4)"
+        },
+        {
+          "id": "NEC600-4-B",
+          "item": "Sign is marked Indoor / Outdoor / Wet Location per installation type.",
+          "mandatory": true,
+          "code_ref": "600.4(B)"
+        },
+        {
+          "id": "NEC600-4-C",
+          "item": "Neon sections identified to match transformer/EPS output rating (if neon).",
+          "mandatory": false,
+          "conditional": "illumination == neon",
+          "code_ref": "600.4(C)"
+        }
+      ]
+    },
+    {
+      "section": "600.5",
+      "title": "Branch Circuits",
+      "requirements": [
+        "600.5(A): Each commercial building or commercial occupancy accessible to pedestrians must have at least one outlet for a sign or outline lighting system in the entrance/exit area.",
+        "600.5(B): Branch circuits supplying signs must be rated 20 A or less.",
+        "600.5(C): The branch circuit for a sign must not supply other loads.",
+        "600.5(D): The ampacity of conductors must not be less than the load served."
+      ],
+      "checklist": [
+        {
+          "id": "NEC600-5-A",
+          "item": "Commercial occupancy with pedestrian access has outlet for sign at entrance (min one outlet per entrance).",
+          "mandatory": true,
+          "code_ref": "600.5(A)"
+        },
+        {
+          "id": "NEC600-5-B",
+          "item": "Branch circuit is rated 15 A or 20 A (not > 20 A for sign circuits).",
+          "mandatory": true,
+          "code_ref": "600.5(B)",
+          "notes": "20 A preferred for LED signs; 15 A acceptable for low-wattage signs."
+        },
+        {
+          "id": "NEC600-5-C",
+          "item": "Sign branch circuit is dedicated — no other loads on the circuit.",
+          "mandatory": true,
+          "code_ref": "600.5(C)"
+        },
+        {
+          "id": "NEC600-5-D",
+          "item": "Conductor ampacity ≥ sign full-load current (plus derating factors).",
+          "mandatory": true,
+          "code_ref": "600.5(D) / NEC 310.15"
+        }
+      ]
+    },
+    {
+      "section": "600.6",
+      "title": "Disconnecting Means",
+      "requirements": [
+        "600.6(A)(1): A disconnecting means must be within sight of the sign and within 50 ft of it.",
+        "600.6(A)(2): The disconnect must be capable of being locked in the open (off) position.",
+        "600.6(A)(3): Only one disconnecting means per sign or outline lighting system.",
+        "600.6(B): The disconnect must open all ungrounded conductors simultaneously.",
+        "Exception: If the disconnect is in a locked room accessible only to qualified persons, the within-sight requirement is waived."
+      ],
+      "checklist": [
+        {
+          "id": "NEC600-6-A1",
+          "item": "Disconnect is within sight (visible without obstruction) and within 50 ft of sign.",
+          "mandatory": true,
+          "code_ref": "600.6(A)(1)"
+        },
+        {
+          "id": "NEC600-6-A2",
+          "item": "Disconnect can be locked in open position (hasp, built-in lock, or lockable enclosure).",
+          "mandatory": true,
+          "code_ref": "600.6(A)(2)",
+          "notes": "NFPA 70E lockout/tagout provisions apply during maintenance."
+        },
+        {
+          "id": "NEC600-6-B",
+          "item": "Disconnect opens all ungrounded conductors simultaneously (single operation).",
+          "mandatory": true,
+          "code_ref": "600.6(B)"
+        },
+        {
+          "id": "NEC600-6-C",
+          "item": "Only one disconnecting means per sign (not multiple in series).",
+          "mandatory": true,
+          "code_ref": "600.6(A)(3)"
+        }
+      ]
+    },
+    {
+      "section": "600.7",
+      "title": "Grounding and Bonding",
+      "requirements": [
+        "600.7(A): Metal parts of a sign, including enclosures, must be grounded.",
+        "600.7(B): Metal parts must be bonded together and to the equipment grounding conductor (EGC).",
+        "600.7(C): Bonding conductor must be copper or other corrosion-resistant material sized per Table 250.122.",
+        "600.7(D): Bonding jumpers required for metal parts not part of continuous metal raceway."
+      ],
+      "checklist": [
+        {
+          "id": "NEC600-7-A",
+          "item": "All exposed metal parts (cabinet, back-pan, channel letters) are grounded.",
+          "mandatory": true,
+          "code_ref": "600.7(A)"
+        },
+        {
+          "id": "NEC600-7-B",
+          "item": "Metal sign enclosure is bonded to EGC of supply circuit.",
+          "mandatory": true,
+          "code_ref": "600.7(B)",
+          "notes": "EGC must be sized per NEC Table 250.122 based on OCPD rating."
+        },
+        {
+          "id": "NEC600-7-C",
+          "item": "Bonding conductor is copper, sized ≥ EGC of supply circuit.",
+          "mandatory": true,
+          "code_ref": "600.7(C)"
+        },
+        {
+          "id": "NEC600-7-D",
+          "item": "Isolated metal sections have individual bonding jumpers to EGC.",
+          "mandatory": true,
+          "code_ref": "600.7(D)"
+        }
+      ]
+    },
+    {
+      "section": "600.10",
+      "title": "GFCI Protection",
+      "requirements": [
+        "600.10(A): Portable cord-connected signs must have GFCI protection for the cord.",
+        "600.10(C)(2): Portable signs used in damp or wet locations must have GFCI protection.",
+        "600.10(D): Fixed outdoor signs within 6 ft of grade that are accessible to the public must have GFCI protection.",
+        "600.10(E): Signs within 6 ft of a pool, spa, fountain, or similar body of water must have GFCI protection."
+      ],
+      "checklist": [
+        {
+          "id": "NEC600-10-A",
+          "item": "Cord-connected portable sign: GFCI protection provided (GFCI outlet or GFCI cord set).",
+          "mandatory": false,
+          "conditional": "sign_type == cord_connected_portable",
+          "code_ref": "600.10(A)"
+        },
+        {
+          "id": "NEC600-10-C2",
+          "item": "Portable sign in damp or wet location: GFCI protection confirmed.",
+          "mandatory": false,
+          "conditional": "location_type in [wet, damp]",
+          "code_ref": "600.10(C)(2)"
+        },
+        {
+          "id": "NEC600-10-D",
+          "item": "Fixed outdoor sign within 6 ft of finished grade accessible to public: GFCI breaker or GFCI outlet at connection point.",
+          "mandatory": false,
+          "conditional": "fixed_outdoor AND height_from_grade_ft <= 6",
+          "code_ref": "600.10(D)",
+          "notes": "GFCI at panel (breaker type) or at first outlet serving the sign is acceptable."
+        },
+        {
+          "id": "NEC600-10-E",
+          "item": "Sign within 6 ft of pool/spa/fountain: GFCI protection confirmed.",
+          "mandatory": false,
+          "conditional": "near_water_feature",
+          "code_ref": "600.10(E)"
+        }
+      ]
+    },
+    {
+      "section": "600.12",
+      "title": "Field-Installed Secondary Wiring",
+      "requirements": [
+        "600.12(A): Field-installed secondary circuit wiring in a sign must be Listed wiring for the application.",
+        "600.12(B): Secondary wiring from neon transformers must be GTO-15 (high-voltage, gas tube) cable rated 15 kV.",
+        "600.12(C): LED driver secondary wiring must be rated for the operating temperature and voltage.",
+        "Secondary wiring must be protected from physical damage (raceway or conduit if exposed)."
+      ],
+      "checklist": [
+        {
+          "id": "NEC600-12-A",
+          "item": "All field-installed secondary wiring is Listed for the sign application.",
+          "mandatory": true,
+          "code_ref": "600.12(A)"
+        },
+        {
+          "id": "NEC600-12-B",
+          "item": "Neon secondary wiring is GTO-15 (15 kV rated) for any runs outside glass tubing.",
+          "mandatory": false,
+          "conditional": "illumination == neon",
+          "code_ref": "600.12(B)"
+        },
+        {
+          "id": "NEC600-12-C",
+          "item": "LED driver secondary wiring rated for operating voltage and min 60°C (preferably 90°C in enclosed cabinets).",
+          "mandatory": false,
+          "conditional": "illumination == internal-LED",
+          "code_ref": "600.12(C)"
+        },
+        {
+          "id": "NEC600-12-D",
+          "item": "Secondary wiring in areas accessible to public is in conduit or otherwise protected.",
+          "mandatory": true,
+          "code_ref": "600.12(A) / NEC 300.4"
+        }
+      ]
+    }
+  ],
+  "install_notes": [
+    "Verify local jurisdiction's NEC adoption year — many use 2017 or 2020 NEC, not 2023.",
+    "Pull permit and schedule AHJ inspection before energizing any new sign installation.",
+    "Provide as-built drawing showing disconnect location relative to sign for inspector.",
+    "NFPA 70E applies to maintenance — use lockout/tagout procedure before servicing."
+  ],
+  "references": [
+    "NFPA 70 National Electrical Code 2023 — Article 600",
+    "NFPA 70E Standard for Electrical Safety in the Workplace 2024",
+    "NFPA 70 Table 250.122 — EGC sizing",
+    "NFPA 70 Table 310.15 — Conductor ampacity",
+    "International Sign Association (ISA) NEC 600 Installation Guide",
+    "NFPA.org — NEC Article 600 public draft documents"
+  ]
+}

@@ -1,18 +1,21 @@
 """
-SignX-Takeoff — Unified Channel Letter Takeoff & Estimation Server.
+SignX-Takeoff — Unified Channel Letter Takeoff, Estimation & Structural Server.
 
 Run:  python app.py
 Open: http://localhost:8765
 
-Combines PDF → PF extraction (PyMuPDF), ABC formula engine, and
-KeyedIn-ready output into a single web application.
+Combines PDF → PF extraction (PyMuPDF), ABC formula engine,
+structural engineering (ASCE 7-22, AISC 360, ACI 318-19),
+and KeyedIn-ready output into a single web application.
 """
 
 from __future__ import annotations
 
 import json
 import os
+import sys
 from pathlib import Path
+from typing import List, Optional
 
 import uvicorn
 from fastapi import FastAPI, File, UploadFile
@@ -35,7 +38,18 @@ from abc_engine import (
 from extract_pf_from_pdf import extract_pf_from_pdf
 from warehouse import benchmark
 
-app = FastAPI(title="SignX-Takeoff", version="1.0.0")
+# Add signcalc-service to path for structural modules
+_SIGNCALC_DIR = str(Path(__file__).resolve().parent.parent / "services" / "signcalc-service")
+if _SIGNCALC_DIR not in sys.path:
+    sys.path.insert(0, _SIGNCALC_DIR)
+
+from apex_signcalc.wind_asce7 import wind_force_on_sign, load_combinations
+from apex_signcalc.foundation_embed import design_embed
+from apex_signcalc.anchors_baseplate import design_anchors
+from apex_signcalc.supports_pipe import check_section, select_member
+from apex_signcalc.sections import get_section, load_catalog
+
+app = FastAPI(title="SignX-Takeoff", version="2.0.0")
 
 STATIC_DIR = Path(__file__).parent / "static"
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
@@ -219,7 +233,229 @@ async def run_estimate(req: EstimateRequest):
     }
 
 
+# ── Structural: Wind Load (ASCE 7-22 Section 29.3) ─────────────────────────
+
+class WindRequest(BaseModel):
+    V_mph: float = Field(115.0, description="Basic wind speed (mph)")
+    sign_width_ft: float = Field(10.0, description="Sign width (ft)")
+    sign_height_ft: float = Field(5.0, description="Sign height (ft)")
+    height_to_top_ft: float = Field(20.0, description="Height to top of sign (ft)")
+    exposure: str = Field("C", description="Exposure category: B, C, or D")
+    Kzt: float = Field(1.0, description="Topographic factor")
+    elevation_ft: float = Field(0.0, description="Site elevation above sea level (ft)")
+    risk_category: str = Field("II", description="Risk category: I, II, III, or IV")
+
+
+@app.post("/api/structural/wind")
+async def calc_wind(req: WindRequest):
+    """ASCE 7-22 Section 29.3 wind load on freestanding sign."""
+    try:
+        result = wind_force_on_sign(
+            V_mph=req.V_mph,
+            sign_width_ft=req.sign_width_ft,
+            sign_height_ft=req.sign_height_ft,
+            height_to_top_ft=req.height_to_top_ft,
+            exposure=req.exposure,
+            Kzt=req.Kzt,
+            elevation_ft=req.elevation_ft,
+            risk_category=req.risk_category,
+        )
+        return {"ok": True, "result": result}
+    except Exception as e:
+        return JSONResponse(status_code=422, content={"ok": False, "error": str(e)})
+
+
+# ── Structural: Foundation Design (Broms / IBC 1807.3.1) ───────────────────
+
+class FoundationRequest(BaseModel):
+    F_lbf: float = Field(..., description="Lateral force at base (lbf)")
+    M_inlb: float = Field(..., description="Overturning moment at base (in-lb)")
+    max_dia_in: Optional[float] = Field(None, description="Max foundation diameter (in)")
+    max_embed_in: Optional[float] = Field(None, description="Max embedment depth (in)")
+
+
+@app.post("/api/structural/foundation")
+async def calc_foundation(req: FoundationRequest):
+    """Foundation design using Broms/IBC 1807.3.1 methods."""
+    try:
+        constraints = {}
+        if req.max_dia_in is not None:
+            constraints["max_foundation_dia_in"] = req.max_dia_in
+        if req.max_embed_in is not None:
+            constraints["max_embed_in"] = req.max_embed_in
+        geometry, checks = design_embed(req.F_lbf, req.M_inlb, constraints or None)
+        return {"ok": True, "geometry": geometry, "checks": checks}
+    except Exception as e:
+        return JSONResponse(status_code=422, content={"ok": False, "error": str(e)})
+
+
+# ── Structural: Anchor / Baseplate Design (ACI 318-19 Ch 17) ───────────────
+
+class AnchorRequest(BaseModel):
+    F_lbf: float = Field(..., description="Shear force (lbf)")
+    M_inlb: float = Field(..., description="Overturning moment (in-lb)")
+    P_lbf: float = Field(0.0, description="Axial compression (lbf)")
+    f_c_psi: float = Field(3000.0, description="Concrete compressive strength (psi)")
+    bolt_grade: str = Field("F1554-36", description="Bolt grade: A307, F1554-36, F1554-55, F1554-105, A36")
+    n_bolts: int = Field(4, description="Number of anchor bolts")
+
+
+@app.post("/api/structural/anchors")
+async def calc_anchors(req: AnchorRequest):
+    """Anchor bolt + base plate design per ACI 318-19 Chapter 17."""
+    try:
+        geometry, checks = design_anchors(
+            F_lbf=req.F_lbf,
+            M_inlb=req.M_inlb,
+            P_lbf=req.P_lbf,
+            f_c_psi=req.f_c_psi,
+            bolt_grade=req.bolt_grade,
+            n_bolts=req.n_bolts,
+        )
+        return {"ok": True, "geometry": geometry, "checks": checks}
+    except ValueError as e:
+        return JSONResponse(status_code=422, content={"ok": False, "error": str(e)})
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"ok": False, "error": str(e)})
+
+
+# ── Structural: Member Selection (AISC 360-22) ─────────────────────────────
+
+class MemberCheckRequest(BaseModel):
+    designation: str = Field(..., description="AISC section designation (e.g. Pipe4STD, W14X22, HSS6X6X1/4)")
+    M_inlb: float = Field(..., description="Required moment (in-lb)")
+    V_lbf: float = Field(..., description="Required shear (lbf)")
+    L_in: float = Field(..., description="Unbraced length (in)")
+    P_lbf: float = Field(0.0, description="Axial force (lbf)")
+    K: float = Field(1.0, description="Effective length factor")
+    load_type: str = Field("cantilever", description="cantilever, cantilever_udl, simple_point, simple_udl, fixed_point")
+
+
+@app.post("/api/structural/member-check")
+async def calc_member_check(req: MemberCheckRequest):
+    """Check a specific AISC section per AISC 360-22."""
+    try:
+        sec = get_section(req.designation)
+        if sec is None:
+            return JSONResponse(status_code=404, content={"ok": False, "error": f"Section '{req.designation}' not found"})
+        ok, data = check_section(sec, req.M_inlb, req.V_lbf, req.L_in,
+                                  P_lbf=req.P_lbf, K=req.K, load_type=req.load_type)
+        return {"ok": True, "passes": ok, "designation": sec.designation, "checks": data}
+    except Exception as e:
+        return JSONResponse(status_code=422, content={"ok": False, "error": str(e)})
+
+
+class MemberSelectRequest(BaseModel):
+    M_inlb: float = Field(..., description="Required moment (in-lb)")
+    V_lbf: float = Field(..., description="Required shear (lbf)")
+    L_in: float = Field(..., description="Unbraced length (in)")
+    P_lbf: float = Field(0.0, description="Axial force (lbf)")
+    K: float = Field(1.0, description="Effective length factor")
+    load_type: str = Field("cantilever", description="Load configuration")
+    families: Optional[List[str]] = Field(None, description="Shape families to search: pipe, W, HSS_square, HSS_round, etc.")
+
+
+@app.post("/api/structural/member-select")
+async def calc_member_select(req: MemberSelectRequest):
+    """Auto-select lightest passing AISC section per AISC 360-22."""
+    try:
+        sec, data = select_member(
+            M_inlb=req.M_inlb, V_lbf=req.V_lbf, L_in=req.L_in,
+            P_lbf=req.P_lbf, K=req.K, load_type=req.load_type,
+            families=req.families,
+        )
+        if sec is None:
+            return JSONResponse(status_code=422, content={"ok": False, "error": "No passing section found"})
+        return {"ok": True, "designation": sec.designation, "family": sec.family,
+                "weight_plf": sec.W_plf, "checks": data}
+    except Exception as e:
+        return JSONResponse(status_code=422, content={"ok": False, "error": str(e)})
+
+
+# ── Structural: Full Sign Design (Wind → Member → Foundation → Anchors) ────
+
+class FullDesignRequest(BaseModel):
+    sign_width_ft: float = Field(..., description="Sign width (ft)")
+    sign_height_ft: float = Field(..., description="Sign height (ft)")
+    height_to_top_ft: float = Field(..., description="Height to top of sign (ft)")
+    V_mph: float = Field(115.0, description="Basic wind speed (mph)")
+    exposure: str = Field("C", description="Exposure category")
+    elevation_ft: float = Field(0.0, description="Site elevation (ft)")
+    support_families: Optional[List[str]] = Field(None, description="Preferred support types")
+    f_c_psi: float = Field(3000.0, description="Concrete strength (psi)")
+    bolt_grade: str = Field("F1554-36", description="Anchor bolt grade")
+
+
+@app.post("/api/structural/full-design")
+async def full_sign_design(req: FullDesignRequest):
+    """Complete sign structural design: wind → member → foundation → anchors."""
+    try:
+        # 1. Wind loads
+        wind = wind_force_on_sign(
+            V_mph=req.V_mph, sign_width_ft=req.sign_width_ft,
+            sign_height_ft=req.sign_height_ft, height_to_top_ft=req.height_to_top_ft,
+            exposure=req.exposure, elevation_ft=req.elevation_ft,
+        )
+
+        F = wind["governing_F_lbf"]
+        M_ftlb = wind["governing_M_ftlbf"]
+        M_inlb = M_ftlb * 12.0
+        L_in = req.height_to_top_ft * 12.0
+
+        # 2. Member selection
+        sec, member_checks = select_member(
+            M_inlb=M_inlb, V_lbf=F, L_in=L_in,
+            families=req.support_families, load_type="cantilever",
+        )
+        member_result = None
+        if sec:
+            member_result = {"designation": sec.designation, "family": sec.family,
+                             "weight_plf": sec.W_plf, "checks": member_checks}
+
+        # 3. Foundation
+        geo, fnd_checks = design_embed(F, M_inlb)
+
+        # 4. Anchors
+        try:
+            anc_geo, anc_checks = design_anchors(
+                F_lbf=F, M_inlb=M_inlb, f_c_psi=req.f_c_psi, bolt_grade=req.bolt_grade,
+            )
+            anchor_result = {"geometry": anc_geo, "checks": anc_checks}
+        except ValueError as e:
+            anchor_result = {"error": str(e)}
+
+        return {
+            "ok": True,
+            "wind": wind,
+            "member": member_result,
+            "foundation": {"geometry": geo, "checks": fnd_checks},
+            "anchors": anchor_result,
+        }
+    except Exception as e:
+        return JSONResponse(status_code=422, content={"ok": False, "error": str(e)})
+
+
+# ── Sections Database ───────────────────────────────────────────────────────
+
+@app.get("/api/structural/sections")
+async def list_sections(family: Optional[str] = None, limit: int = 50):
+    """List available AISC sections, optionally filtered by family."""
+    sections = load_catalog()
+    if family:
+        sections = [s for s in sections if s.family and s.family.lower() == family.lower()]
+    return {
+        "total": len(sections),
+        "sections": [
+            {"designation": s.designation, "family": s.family, "W_plf": s.W_plf,
+             "d_in": s.d_in, "Ix_in4": s.Ix_in4, "Sx_in3": s.Sx_in3}
+            for s in sections[:limit]
+        ],
+    }
+
+
 if __name__ == "__main__":
-    print("\n  SignX-Takeoff Server")
-    print("  http://localhost:8765\n")
+    print("\n  SignX-Takeoff Server v2.0")
+    print("  http://localhost:8765")
+    print("  Endpoints: /api/estimate, /api/structural/wind, /api/structural/full-design, ...")
+    print()
     uvicorn.run(app, host="0.0.0.0", port=8765, log_level="info")
