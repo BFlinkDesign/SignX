@@ -54,11 +54,18 @@ _MODEL_BUNDLE: Optional["ModelBundle"] = None
 _TRAINING_DONE: bool = False
 _TRAINING_ERROR: Optional[str] = None
 
+# Time-decay half-life for sample weighting (years)
+# 5 years: conservative — preserves historical signal while downweighting oldest data
+# (3 years was too aggressive, pushed accuracy to 44.6%)
+_HALF_LIFE_YEARS = 5.0
+
 # Feature names in the order the model expects them
 _FEATURE_NAMES = [
     "price_log",
     "salesperson_encoded",
     "quarter",
+    "month_sin",
+    "month_cos",
     "days_to_expiry",
     "customer_job_count",
     "customer_total_revenue_log",
@@ -72,6 +79,8 @@ _FEATURE_DESCRIPTIONS = {
     "price_log":                  "Quote price (log-scaled)",
     "salesperson_encoded":        "Salesperson historical win rate",
     "quarter":                    "Quote quarter (1-4)",
+    "month_sin":                  "Seasonal month (sin component)",
+    "month_cos":                  "Seasonal month (cos component)",
     "days_to_expiry":             "Days from quote date to expiry",
     "customer_job_count":         "Past jobs for this customer",
     "customer_total_revenue_log": "Customer lifetime revenue (log-scaled)",
@@ -346,7 +355,7 @@ def train_model() -> ModelBundle:
     print("[bid_model] Engineering features...")
 
     def _engineer_features(r: dict) -> list[float]:
-        """Produce the 10-element feature vector for a labeled row."""
+        """Produce the 12-element feature vector for a labeled row."""
         # price_log
         price_log = math.log1p(max(0, r["ext_price"]))
 
@@ -354,9 +363,15 @@ def train_model() -> ModelBundle:
         sp = r["salesperson"] or "UNKNOWN"
         sp_enc = salesperson_win_rates.get(sp, overall_win_rate)
 
-        # quarter
+        # quarter + cyclical month (sin/cos captures Dec≈Jan proximity)
         qt_dt = _parse_date(r["qt_date"])
-        quarter = float((qt_dt.month - 1) // 3 + 1) if qt_dt else 2.5  # median fallback
+        quarter = float((qt_dt.month - 1) // 3 + 1) if qt_dt else 2.5
+        if qt_dt:
+            month_sin = math.sin(2 * math.pi * qt_dt.month / 12)
+            month_cos = math.cos(2 * math.pi * qt_dt.month / 12)
+        else:
+            month_sin = 0.0
+            month_cos = 0.0
 
         # days_to_expiry
         exp_dt = _parse_date(r["exp_date"])
@@ -366,7 +381,6 @@ def train_model() -> ModelBundle:
             days_to_expiry = 30.0  # median fallback
 
         # Customer stats
-        cname_norm = _normalize_name(r["company"]) if r["company"] else ""
         ckey = _fuzzy_lookup(r["company"], customer_stats) if r["company"] else None
         cstats = customer_stats.get(ckey) if ckey else None
 
@@ -397,6 +411,8 @@ def train_model() -> ModelBundle:
             price_log,
             sp_enc,
             quarter,
+            month_sin,
+            month_cos,
             days_to_expiry,
             customer_job_count,
             customer_total_revenue_log,
@@ -408,24 +424,55 @@ def train_model() -> ModelBundle:
 
     X_raw: list[list[float]] = []
     y: list[int] = []
+    qt_dates: list[Optional[datetime]] = []
     for r in labeled_rows:
         feats = _engineer_features(r)
         X_raw.append(feats)
         y.append(r["label"])
+        qt_dates.append(_parse_date(r["qt_date"]))
 
     # ── 7. Scale ───────────────────────────────────────────────────────────────
     scaler = StandardScaler()
     X = scaler.fit_transform(X_raw)
 
-    # ── 8. Cross-validated metrics ─────────────────────────────────────────────
-    print("[bid_model] Running 5-fold stratified cross-validation...")
-    model_cv = LogisticRegression(
-        class_weight="balanced", C=1.0, max_iter=1000, random_state=42
-    )
-    cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-    y_prob_cv = cross_val_predict(model_cv, X, y, cv=cv, method="predict_proba")[:, 1]
-    y_pred_cv = (y_prob_cv >= 0.5).astype(int)
+    # ── 7b. Compute time-decay sample weights ────────────────────────────────
+    # Exponential decay: w = 0.5^(years_ago / half_life)
+    # Mitigates data artifact (old lost quotes purged → inflated win rates)
+    # Combined with class weights for balanced + time-aware training
+    from sklearn.utils.class_weight import compute_sample_weight
 
+    gamma = 0.5 ** (1.0 / _HALF_LIFE_YEARS)
+    time_weights = []
+    for dt in qt_dates:
+        if dt:
+            years_ago = (now - dt).days / 365.25
+            time_weights.append(gamma ** max(0, years_ago))
+        else:
+            time_weights.append(0.5)  # unknown date → median weight
+
+    class_weights = compute_sample_weight("balanced", y)
+    combined_weights = [cw * tw for cw, tw in zip(class_weights, time_weights)]
+
+    avg_tw = sum(time_weights) / len(time_weights)
+    print(f"[bid_model]   Time-decay: half_life={_HALF_LIFE_YEARS}y, "
+          f"avg_weight={avg_tw:.3f}, min={min(time_weights):.4f}, max={max(time_weights):.4f}")
+
+    # ── 8. Cross-validated metrics (manual loop to pass sample_weight) ────────
+    import numpy as np
+
+    print("[bid_model] Running 5-fold stratified cross-validation...")
+    cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+    X_np = np.array(X)
+    y_np = np.array(y)
+    w_np = np.array(combined_weights)
+    y_prob_cv = np.zeros(len(y))
+
+    for train_idx, test_idx in cv.split(X_np, y_np):
+        fold_model = LogisticRegression(C=1.0, max_iter=1000, random_state=42)
+        fold_model.fit(X_np[train_idx], y_np[train_idx], sample_weight=w_np[train_idx])
+        y_prob_cv[test_idx] = fold_model.predict_proba(X_np[test_idx])[:, 1]
+
+    y_pred_cv = (y_prob_cv >= 0.5).astype(int)
     auc = roc_auc_score(y, y_prob_cv)
     brier = brier_score_loss(y, y_prob_cv)
     accuracy = sum(int(p == t) for p, t in zip(y_pred_cv, y)) / len(y)
@@ -434,12 +481,12 @@ def train_model() -> ModelBundle:
     print(f"[bid_model]   CV Brier   : {brier:.4f}")
     print(f"[bid_model]   CV Accuracy: {accuracy:.4f}")
 
-    # ── 9. Fit final model on all data ─────────────────────────────────────────
-    print("[bid_model] Training final model on full dataset...")
+    # ── 9. Fit final model on all data with combined weights ──────────────────
+    print("[bid_model] Training final model on full dataset (time-decay weighted)...")
     model = LogisticRegression(
-        class_weight="balanced", C=1.0, max_iter=1000, random_state=42
+        C=1.0, max_iter=1000, random_state=42
     )
-    model.fit(X, y)
+    model.fit(X, y, sample_weight=combined_weights)
 
     # ── 10. Coefficients ───────────────────────────────────────────────────────
     coefs = dict(zip(_FEATURE_NAMES, model.coef_[0].tolist()))
@@ -451,14 +498,16 @@ def train_model() -> ModelBundle:
         print(f"  {direction}{abs(coef):.4f}  {fname:<30}  ({desc})")
 
     metrics = {
-        "auc_roc":         round(auc, 4),
-        "brier_score":     round(brier, 4),
-        "cv_accuracy":     round(accuracy, 4),
-        "n_train":         len(y),
-        "n_wins":          n_wins,
-        "n_losses":        n_losses,
-        "overall_win_rate": round(overall_win_rate, 4),
-        "n_features":      len(_FEATURE_NAMES),
+        "auc_roc":            round(auc, 4),
+        "brier_score":        round(brier, 4),
+        "cv_accuracy":        round(accuracy, 4),
+        "n_train":            len(y),
+        "n_wins":             n_wins,
+        "n_losses":           n_losses,
+        "overall_win_rate":   round(overall_win_rate, 4),
+        "n_features":         len(_FEATURE_NAMES),
+        "time_decay_half_life_years": _HALF_LIFE_YEARS,
+        "avg_time_weight":    round(avg_tw, 4),
     }
 
     bundle = ModelBundle(
@@ -509,7 +558,7 @@ def _build_inference_features(
     qt_date: Optional[datetime] = None,
     exp_date: Optional[datetime] = None,
 ) -> list[float]:
-    """Build the 10-element feature vector for a new bid."""
+    """Build the 12-element feature vector for a new bid."""
     # price_log
     price_log = math.log1p(max(0, price))
 
@@ -517,11 +566,15 @@ def _build_inference_features(
     sp = (salesperson or "").strip().upper() or "UNKNOWN"
     sp_enc = bundle.salesperson_win_rates.get(sp, bundle.overall_win_rate)
 
-    # quarter
+    # quarter + cyclical month
     if qt_date:
         quarter = float((qt_date.month - 1) // 3 + 1)
+        month_sin = math.sin(2 * math.pi * qt_date.month / 12)
+        month_cos = math.cos(2 * math.pi * qt_date.month / 12)
     else:
         quarter = 2.5
+        month_sin = 0.0
+        month_cos = 0.0
 
     # days_to_expiry
     if qt_date and exp_date:
@@ -558,6 +611,8 @@ def _build_inference_features(
         price_log,
         sp_enc,
         quarter,
+        month_sin,
+        month_cos,
         days_to_expiry,
         customer_job_count,
         customer_total_revenue_log,
