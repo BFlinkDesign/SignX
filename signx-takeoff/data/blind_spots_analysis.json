@@ -1,0 +1,2030 @@
+{
+  "_metadata": {
+    "generated": "2026-02-16",
+    "source": "signx.duckdb",
+    "purpose": "Phase 0 Part E blind spots"
+  },
+  "E1_overtime": {
+    "data": [
+      {
+        "sign_type": null,
+        "work_code": "9800",
+        "jobs": 1378,
+        "total_ot_hours": 2218.0,
+        "avg_ot_per_job": 1.61
+      },
+      {
+        "sign_type": "CLLIT",
+        "work_code": "9200",
+        "jobs": 123,
+        "total_ot_hours": 1773.3,
+        "avg_ot_per_job": 10.02
+      },
+      {
+        "sign_type": "CLLIT",
+        "work_code": "9600",
+        "jobs": 186,
+        "total_ot_hours": 1651.3,
+        "avg_ot_per_job": 6.97
+      },
+      {
+        "sign_type": "POLLIT",
+        "work_code": "9200",
+        "jobs": 118,
+        "total_ot_hours": 785.0,
+        "avg_ot_per_job": 4.56
+      },
+      {
+        "sign_type": null,
+        "work_code": "9600",
+        "jobs": 410,
+        "total_ot_hours": 772.3,
+        "avg_ot_per_job": 1.84
+      },
+      {
+        "sign_type": "DIRECT",
+        "work_code": "9200",
+        "jobs": 57,
+        "total_ot_hours": 569.5,
+        "avg_ot_per_job": 4.25
+      },
+      {
+        "sign_type": "MONDF",
+        "work_code": "9200",
+        "jobs": 62,
+        "total_ot_hours": 402.3,
+        "avg_ot_per_job": 4.1
+      },
+      {
+        "sign_type": "DIRECT",
+        "work_code": "9600",
+        "jobs": 49,
+        "total_ot_hours": 391.3,
+        "avg_ot_per_job": 3.76
+      },
+      {
+        "sign_type": "MONDF",
+        "work_code": "9600",
+        "jobs": 60,
+        "total_ot_hours": 362.5,
+        "avg_ot_per_job": 3.66
+      },
+      {
+        "sign_type": "POLLIT",
+        "work_code": "9600",
+        "jobs": 61,
+        "total_ot_hours": 311.8,
+        "avg_ot_per_job": 3.9
+      },
+      {
+        "sign_type": "MONSF",
+        "work_code": "9200",
+        "jobs": 20,
+        "total_ot_hours": 305.0,
+        "avg_ot_per_job": 8.71
+      },
+      {
+        "sign_type": "AWNNON",
+        "work_code": "9600",
+        "jobs": 19,
+        "total_ot_hours": 254.5,
+        "avg_ot_per_job": 6.21
+      },
+      {
+        "sign_type": "POLLIT",
+        "work_code": "9400",
+        "jobs": 29,
+        "total_ot_hours": 222.5,
+        "avg_ot_per_job": 3.48
+      },
+      {
+        "sign_type": null,
+        "work_code": "9200",
+        "jobs": 133,
+        "total_ot_hours": 218.5,
+        "avg_ot_per_job": 1.48
+      },
+      {
+        "sign_type": "BLDILL",
+        "work_code": "9600",
+        "jobs": 40,
+        "total_ot_hours": 216.5,
+        "avg_ot_per_job": 4.25
+      },
+      {
+        "sign_type": "CLLIT",
+        "work_code": "9300",
+        "jobs": 56,
+        "total_ot_hours": 198.8,
+        "avg_ot_per_job": 2.62
+      },
+      {
+        "sign_type": "AWNNON",
+        "work_code": "9200",
+        "jobs": 23,
+        "total_ot_hours": 196.5,
+        "avg_ot_per_job": 4.18
+      },
+      {
+        "sign_type": "OTHER",
+        "work_code": "9600",
+        "jobs": 52,
+        "total_ot_hours": 190.5,
+        "avg_ot_per_job": 3.28
+      },
+      {
+        "sign_type": "CLLIT",
+        "work_code": "9500",
+        "jobs": 35,
+        "total_ot_hours": 138.8,
+        "avg_ot_per_job": 2.24
+      },
+      {
+        "sign_type": "BLDILL",
+        "work_code": "9200",
+        "jobs": 34,
+        "total_ot_hours": 122.8,
+        "avg_ot_per_job": 2.27
+      },
+      {
+        "sign_type": "CLLIT",
+        "work_code": "9800",
+        "jobs": 37,
+        "total_ot_hours": 120.5,
+        "avg_ot_per_job": 2.56
+      },
+      {
+        "sign_type": "CLLIT",
+        "work_code": "9400",
+        "jobs": 30,
+        "total_ot_hours": 119.3,
+        "avg_ot_per_job": 2.09
+      },
+      {
+        "sign_type": "OTHER",
+        "work_code": "9200",
+        "jobs": 20,
+        "total_ot_hours": 97.0,
+        "avg_ot_per_job": 3.88
+      },
+      {
+        "sign_type": "DIRECT",
+        "work_code": "9500",
+        "jobs": 34,
+        "total_ot_hours": 88.8,
+        "avg_ot_per_job": 1.2
+      },
+      {
+        "sign_type": "POLLIT",
+        "work_code": "9300",
+        "jobs": 15,
+        "total_ot_hours": 86.5,
+        "avg_ot_per_job": 2.4
+      },
+      {
+        "sign_type": "DIRECT",
+        "work_code": "9400",
+        "jobs": 23,
+        "total_ot_hours": 83.8,
+        "avg_ot_per_job": 2.15
+      },
+      {
+        "sign_type": "VINYL",
+        "work_code": "9600",
+        "jobs": 52,
+        "total_ot_hours": 64.3,
+        "avg_ot_per_job": 1.19
+      },
+      {
+        "sign_type": "GEMINI",
+        "work_code": "9600",
+        "jobs": 27,
+        "total_ot_hours": 63.8,
+        "avg_ot_per_job": 1.68
+      },
+      {
+        "sign_type": "MONDF",
+        "work_code": "9400",
+        "jobs": 33,
+        "total_ot_hours": 58.5,
+        "avg_ot_per_job": 0.91
+      },
+      {
+        "sign_type": "POLLIT",
+        "work_code": "9500",
+        "jobs": 44,
+        "total_ot_hours": 56.3,
+        "avg_ot_per_job": 0.82
+      },
+      {
+        "sign_type": null,
+        "work_code": "9400",
+        "jobs": 43,
+        "total_ot_hours": 55.3,
+        "avg_ot_per_job": 1.11
+      },
+      {
+        "sign_type": "POLNON",
+        "work_code": "9600",
+        "jobs": 11,
+        "total_ot_hours": 51.5,
+        "avg_ot_per_job": 3.68
+      },
+      {
+        "sign_type": "MONSF",
+        "work_code": "9400",
+        "jobs": 11,
+        "total_ot_hours": 43.8,
+        "avg_ot_per_job": 1.68
+      },
+      {
+        "sign_type": "LED",
+        "work_code": "9600",
+        "jobs": 18,
+        "total_ot_hours": 42.3,
+        "avg_ot_per_job": 1.76
+      },
+      {
+        "sign_type": null,
+        "work_code": "9300",
+        "jobs": 14,
+        "total_ot_hours": 41.0,
+        "avg_ot_per_job": 2.28
+      },
+      {
+        "sign_type": "BLDNON",
+        "work_code": "9600",
+        "jobs": 9,
+        "total_ot_hours": 37.5,
+        "avg_ot_per_job": 2.08
+      },
+      {
+        "sign_type": "BLDILL",
+        "work_code": "9500",
+        "jobs": 19,
+        "total_ot_hours": 32.8,
+        "avg_ot_per_job": 1.09
+      },
+      {
+        "sign_type": "LED",
+        "work_code": "9300",
+        "jobs": 6,
+        "total_ot_hours": 32.0,
+        "avg_ot_per_job": 4.57
+      },
+      {
+        "sign_type": "OVRLAY",
+        "work_code": "9200",
+        "jobs": 1,
+        "total_ot_hours": 30.3,
+        "avg_ot_per_job": 30.25
+      },
+      {
+        "sign_type": "POLLIT",
+        "work_code": "9800",
+        "jobs": 7,
+        "total_ot_hours": 29.5,
+        "avg_ot_per_job": 2.95
+      },
+      {
+        "sign_type": null,
+        "work_code": "9500",
+        "jobs": 51,
+        "total_ot_hours": 29.3,
+        "avg_ot_per_job": 0.54
+      },
+      {
+        "sign_type": "AWNNON",
+        "work_code": "9400",
+        "jobs": 2,
+        "total_ot_hours": 27.3,
+        "avg_ot_per_job": 5.45
+      },
+      {
+        "sign_type": "RTLT",
+        "work_code": "9600",
+        "jobs": 9,
+        "total_ot_hours": 26.8,
+        "avg_ot_per_job": 2.97
+      },
+      {
+        "sign_type": "MONDF",
+        "work_code": "9500",
+        "jobs": 28,
+        "total_ot_hours": 25.8,
+        "avg_ot_per_job": 0.49
+      },
+      {
+        "sign_type": "PRNGRA",
+        "work_code": "9600",
+        "jobs": 8,
+        "total_ot_hours": 25.8,
+        "avg_ot_per_job": 2.15
+      },
+      {
+        "sign_type": "MONDF",
+        "work_code": "9800",
+        "jobs": 16,
+        "total_ot_hours": 24.3,
+        "avg_ot_per_job": 1.05
+      },
+      {
+        "sign_type": "BLDILL",
+        "work_code": "9300",
+        "jobs": 11,
+        "total_ot_hours": 24.3,
+        "avg_ot_per_job": 1.43
+      },
+      {
+        "sign_type": "MONSF",
+        "work_code": "9600",
+        "jobs": 13,
+        "total_ot_hours": 23.3,
+        "avg_ot_per_job": 1.37
+      },
+      {
+        "sign_type": "DIRECT",
+        "work_code": "9300",
+        "jobs": 4,
+        "total_ot_hours": 22.5,
+        "avg_ot_per_job": 3.21
+      },
+      {
+        "sign_type": "MONSF",
+        "work_code": "9300",
+        "jobs": 5,
+        "total_ot_hours": 21.5,
+        "avg_ot_per_job": 1.19
+      },
+      {
+        "sign_type": "CLNON",
+        "work_code": "9200",
+        "jobs": 3,
+        "total_ot_hours": 20.5,
+        "avg_ot_per_job": 6.83
+      },
+      {
+        "sign_type": "OTHER",
+        "work_code": "9300",
+        "jobs": 1,
+        "total_ot_hours": 20.5,
+        "avg_ot_per_job": 10.25
+      },
+      {
+        "sign_type": "POLNON",
+        "work_code": "9200",
+        "jobs": 4,
+        "total_ot_hours": 19.5,
+        "avg_ot_per_job": 1.77
+      },
+      {
+        "sign_type": "BLDILL",
+        "work_code": "9400",
+        "jobs": 10,
+        "total_ot_hours": 17.3,
+        "avg_ot_per_job": 0.75
+      },
+      {
+        "sign_type": "DIRECT",
+        "work_code": "9100",
+        "jobs": 17,
+        "total_ot_hours": 17.0,
+        "avg_ot_per_job": 0.65
+      },
+      {
+        "sign_type": "OTHER",
+        "work_code": "9400",
+        "jobs": 6,
+        "total_ot_hours": 16.5,
+        "avg_ot_per_job": 2.36
+      },
+      {
+        "sign_type": "CLNON",
+        "work_code": "9800",
+        "jobs": 1,
+        "total_ot_hours": 16.5,
+        "avg_ot_per_job": 16.5
+      },
+      {
+        "sign_type": "LED",
+        "work_code": "9200",
+        "jobs": 2,
+        "total_ot_hours": 16.5,
+        "avg_ot_per_job": 8.25
+      },
+      {
+        "sign_type": "VINYL",
+        "work_code": "9500",
+        "jobs": 28,
+        "total_ot_hours": 14.8,
+        "avg_ot_per_job": 0.34
+      },
+      {
+        "sign_type": "MONDF",
+        "work_code": "9300",
+        "jobs": 10,
+        "total_ot_hours": 14.3,
+        "avg_ot_per_job": 1.19
+      },
+      {
+        "sign_type": "CLNON",
+        "work_code": "9600",
+        "jobs": 5,
+        "total_ot_hours": 13.5,
+        "avg_ot_per_job": 2.7
+      },
+      {
+        "sign_type": "DIRECT",
+        "work_code": "9800",
+        "jobs": 2,
+        "total_ot_hours": 13.5,
+        "avg_ot_per_job": 1.13
+      },
+      {
+        "sign_type": "BLDNON",
+        "work_code": "9200",
+        "jobs": 11,
+        "total_ot_hours": 13.0,
+        "avg_ot_per_job": 0.72
+      },
+      {
+        "sign_type": "BLDNON",
+        "work_code": "9400",
+        "jobs": 6,
+        "total_ot_hours": 12.5,
+        "avg_ot_per_job": 1.14
+      },
+      {
+        "sign_type": "OTHER",
+        "work_code": "9800",
+        "jobs": 7,
+        "total_ot_hours": 11.8,
+        "avg_ot_per_job": 1.68
+      },
+      {
+        "sign_type": "BLDNON",
+        "work_code": "9500",
+        "jobs": 11,
+        "total_ot_hours": 11.5,
+        "avg_ot_per_job": 0.61
+      },
+      {
+        "sign_type": "FLAG",
+        "work_code": "9600",
+        "jobs": 3,
+        "total_ot_hours": 11.0,
+        "avg_ot_per_job": 2.2
+      },
+      {
+        "sign_type": "ALULIT",
+        "work_code": "9200",
+        "jobs": 3,
+        "total_ot_hours": 10.8,
+        "avg_ot_per_job": 3.58
+      },
+      {
+        "sign_type": "LETPLA",
+        "work_code": "9800",
+        "jobs": 2,
+        "total_ot_hours": 10.8,
+        "avg_ot_per_job": 5.38
+      },
+      {
+        "sign_type": "OTHER",
+        "work_code": "9500",
+        "jobs": 14,
+        "total_ot_hours": 10.0,
+        "avg_ot_per_job": 0.59
+      },
+      {
+        "sign_type": "GEMINI",
+        "work_code": "9200",
+        "jobs": 9,
+        "total_ot_hours": 10.0,
+        "avg_ot_per_job": 1.0
+      },
+      {
+        "sign_type": "ALULIT",
+        "work_code": "9600",
+        "jobs": 3,
+        "total_ot_hours": 9.5,
+        "avg_ot_per_job": 3.17
+      },
+      {
+        "sign_type": "MONSF",
+        "work_code": "9500",
+        "jobs": 8,
+        "total_ot_hours": 9.3,
+        "avg_ot_per_job": 1.03
+      },
+      {
+        "sign_type": null,
+        "work_code": "9100",
+        "jobs": 10,
+        "total_ot_hours": 8.8,
+        "avg_ot_per_job": 0.44
+      },
+      {
+        "sign_type": "JOBPRN",
+        "work_code": "9200",
+        "jobs": 3,
+        "total_ot_hours": 8.0,
+        "avg_ot_per_job": 1.6
+      },
+      {
+        "sign_type": "CLLIT",
+        "work_code": "9100",
+        "jobs": 10,
+        "total_ot_hours": 7.8,
+        "avg_ot_per_job": 0.46
+      },
+      {
+        "sign_type": "POLNON",
+        "work_code": "9800",
+        "jobs": 2,
+        "total_ot_hours": 7.8,
+        "avg_ot_per_job": 1.94
+      },
+      {
+        "sign_type": "POLNON",
+        "work_code": "9500",
+        "jobs": 5,
+        "total_ot_hours": 7.5,
+        "avg_ot_per_job": 0.63
+      },
+      {
+        "sign_type": "VINYL",
+        "work_code": "9100",
+        "jobs": 9,
+        "total_ot_hours": 7.5,
+        "avg_ot_per_job": 0.3
+      },
+      {
+        "sign_type": "VINYL",
+        "work_code": "9200",
+        "jobs": 5,
+        "total_ot_hours": 7.5,
+        "avg_ot_per_job": 1.5
+      },
+      {
+        "sign_type": "POLLIT",
+        "work_code": "9100",
+        "jobs": 6,
+        "total_ot_hours": 7.5,
+        "avg_ot_per_job": 0.44
+      },
+      {
+        "sign_type": "CLNON",
+        "work_code": "9300",
+        "jobs": 1,
+        "total_ot_hours": 7.5,
+        "avg_ot_per_job": 7.5
+      },
+      {
+        "sign_type": "ALULIT",
+        "work_code": "9300",
+        "jobs": 3,
+        "total_ot_hours": 6.3,
+        "avg_ot_per_job": 2.08
+      },
+      {
+        "sign_type": "GEMINI",
+        "work_code": "9500",
+        "jobs": 6,
+        "total_ot_hours": 5.5,
+        "avg_ot_per_job": 0.69
+      },
+      {
+        "sign_type": "LED",
+        "work_code": "9400",
+        "jobs": 2,
+        "total_ot_hours": 5.3,
+        "avg_ot_per_job": 2.63
+      },
+      {
+        "sign_type": "NEON",
+        "work_code": "9600",
+        "jobs": 2,
+        "total_ot_hours": 5.0,
+        "avg_ot_per_job": 2.5
+      },
+      {
+        "sign_type": "PRNGRA",
+        "work_code": "9500",
+        "jobs": 3,
+        "total_ot_hours": 4.8,
+        "avg_ot_per_job": 0.79
+      },
+      {
+        "sign_type": "MONDF",
+        "work_code": "9100",
+        "jobs": 4,
+        "total_ot_hours": 4.8,
+        "avg_ot_per_job": 0.68
+      },
+      {
+        "sign_type": "GEMINI",
+        "work_code": "9100",
+        "jobs": 8,
+        "total_ot_hours": 4.3,
+        "avg_ot_per_job": 0.35
+      },
+      {
+        "sign_type": "BLDILL",
+        "work_code": "9100",
+        "jobs": 4,
+        "total_ot_hours": 4.3,
+        "avg_ot_per_job": 0.85
+      },
+      {
+        "sign_type": "LED",
+        "work_code": "9800",
+        "jobs": 3,
+        "total_ot_hours": 4.0,
+        "avg_ot_per_job": 1.33
+      },
+      {
+        "sign_type": "JOBPRN",
+        "work_code": "9600",
+        "jobs": 1,
+        "total_ot_hours": 4.0,
+        "avg_ot_per_job": 2.0
+      },
+      {
+        "sign_type": "LETPLA",
+        "work_code": "9600",
+        "jobs": 2,
+        "total_ot_hours": 3.8,
+        "avg_ot_per_job": 1.88
+      },
+      {
+        "sign_type": "RTLT",
+        "work_code": "9200",
+        "jobs": 3,
+        "total_ot_hours": 3.8,
+        "avg_ot_per_job": 1.25
+      },
+      {
+        "sign_type": "FFACE",
+        "work_code": "9200",
+        "jobs": 5,
+        "total_ot_hours": 3.5,
+        "avg_ot_per_job": 0.44
+      },
+      {
+        "sign_type": "BLDILL",
+        "work_code": "9800",
+        "jobs": 4,
+        "total_ot_hours": 3.5,
+        "avg_ot_per_job": 0.58
+      },
+      {
+        "sign_type": "MONSF",
+        "work_code": "9100",
+        "jobs": 1,
+        "total_ot_hours": 3.0,
+        "avg_ot_per_job": 3.0
+      },
+      {
+        "sign_type": "AWNREC",
+        "work_code": "9600",
+        "jobs": 2,
+        "total_ot_hours": 3.0,
+        "avg_ot_per_job": 1.5
+      },
+      {
+        "sign_type": "BANPRN",
+        "work_code": "9100",
+        "jobs": 3,
+        "total_ot_hours": 3.0,
+        "avg_ot_per_job": 0.33
+      },
+      {
+        "sign_type": "NEON",
+        "work_code": "9200",
+        "jobs": 1,
+        "total_ot_hours": 3.0,
+        "avg_ot_per_job": 3.0
+      },
+      {
+        "sign_type": "RTLT",
+        "work_code": "9400",
+        "jobs": 4,
+        "total_ot_hours": 2.8,
+        "avg_ot_per_job": 0.69
+      },
+      {
+        "sign_type": "BANPRN",
+        "work_code": "9600",
+        "jobs": 1,
+        "total_ot_hours": 2.5,
+        "avg_ot_per_job": 2.5
+      },
+      {
+        "sign_type": "FFACE",
+        "work_code": "9500",
+        "jobs": 2,
+        "total_ot_hours": 2.3,
+        "avg_ot_per_job": 1.13
+      },
+      {
+        "sign_type": "BANPRN",
+        "work_code": "9800",
+        "jobs": 2,
+        "total_ot_hours": 2.3,
+        "avg_ot_per_job": 0.45
+      },
+      {
+        "sign_type": "OTHER",
+        "work_code": "9100",
+        "jobs": 4,
+        "total_ot_hours": 2.3,
+        "avg_ot_per_job": 0.45
+      },
+      {
+        "sign_type": "GEMINI",
+        "work_code": "9400",
+        "jobs": 5,
+        "total_ot_hours": 2.3,
+        "avg_ot_per_job": 0.45
+      },
+      {
+        "sign_type": "JOBVIN",
+        "work_code": "9400",
+        "jobs": 1,
+        "total_ot_hours": 2.0,
+        "avg_ot_per_job": 2.0
+      },
+      {
+        "sign_type": "AWNREC",
+        "work_code": "9200",
+        "jobs": 3,
+        "total_ot_hours": 2.0,
+        "avg_ot_per_job": 0.67
+      },
+      {
+        "sign_type": "AWNNON",
+        "work_code": "9500",
+        "jobs": 1,
+        "total_ot_hours": 2.0,
+        "avg_ot_per_job": 2.0
+      },
+      {
+        "sign_type": "BLDNON",
+        "work_code": "9800",
+        "jobs": 2,
+        "total_ot_hours": 2.0,
+        "avg_ot_per_job": 1.0
+      },
+      {
+        "sign_type": "JOBVIN",
+        "work_code": "9200",
+        "jobs": 1,
+        "total_ot_hours": 1.8,
+        "avg_ot_per_job": 1.75
+      },
+      {
+        "sign_type": "CASMET",
+        "work_code": "9300",
+        "jobs": 1,
+        "total_ot_hours": 1.8,
+        "avg_ot_per_job": 1.75
+      },
+      {
+        "sign_type": "VINYL",
+        "work_code": "9400",
+        "jobs": 1,
+        "total_ot_hours": 1.8,
+        "avg_ot_per_job": 1.75
+      },
+      {
+        "sign_type": "NEON",
+        "work_code": "9300",
+        "jobs": 1,
+        "total_ot_hours": 1.8,
+        "avg_ot_per_job": 1.75
+      },
+      {
+        "sign_type": "CASMET",
+        "work_code": "9200",
+        "jobs": 1,
+        "total_ot_hours": 1.5,
+        "avg_ot_per_job": 1.5
+      },
+      {
+        "sign_type": "FFACE",
+        "work_code": "9600",
+        "jobs": 2,
+        "total_ot_hours": 1.5,
+        "avg_ot_per_job": 0.75
+      },
+      {
+        "sign_type": "JOBVIN",
+        "work_code": "9600",
+        "jobs": 1,
+        "total_ot_hours": 1.5,
+        "avg_ot_per_job": 1.5
+      },
+      {
+        "sign_type": "OVRLAY",
+        "work_code": "9600",
+        "jobs": 2,
+        "total_ot_hours": 1.5,
+        "avg_ot_per_job": 0.75
+      },
+      {
+        "sign_type": "ILLUM",
+        "work_code": "9200",
+        "jobs": 1,
+        "total_ot_hours": 1.5,
+        "avg_ot_per_job": 1.5
+      },
+      {
+        "sign_type": "LETPLA",
+        "work_code": "9200",
+        "jobs": 2,
+        "total_ot_hours": 1.3,
+        "avg_ot_per_job": 0.63
+      },
+      {
+        "sign_type": "AWNREC",
+        "work_code": "9500",
+        "jobs": 1,
+        "total_ot_hours": 1.3,
+        "avg_ot_per_job": 1.25
+      },
+      {
+        "sign_type": "MONSF",
+        "work_code": "9800",
+        "jobs": 2,
+        "total_ot_hours": 1.3,
+        "avg_ot_per_job": 0.63
+      },
+      {
+        "sign_type": "BLANK",
+        "work_code": "9600",
+        "jobs": 1,
+        "total_ot_hours": 1.3,
+        "avg_ot_per_job": 1.25
+      },
+      {
+        "sign_type": "JOBPRN",
+        "work_code": "9500",
+        "jobs": 1,
+        "total_ot_hours": 1.0,
+        "avg_ot_per_job": 0.5
+      },
+      {
+        "sign_type": "BANPRN",
+        "work_code": "9500",
+        "jobs": 1,
+        "total_ot_hours": 1.0,
+        "avg_ot_per_job": 1.0
+      },
+      {
+        "sign_type": "GEMINI",
+        "work_code": "9800",
+        "jobs": 2,
+        "total_ot_hours": 1.0,
+        "avg_ot_per_job": 0.33
+      },
+      {
+        "sign_type": "RTLT",
+        "work_code": "9800",
+        "jobs": 1,
+        "total_ot_hours": 1.0,
+        "avg_ot_per_job": 1.0
+      },
+      {
+        "sign_type": "OVRLAY",
+        "work_code": "9300",
+        "jobs": 1,
+        "total_ot_hours": 0.8,
+        "avg_ot_per_job": 0.75
+      },
+      {
+        "sign_type": "ALULIT",
+        "work_code": "9400",
+        "jobs": 1,
+        "total_ot_hours": 0.8,
+        "avg_ot_per_job": 0.75
+      },
+      {
+        "sign_type": "BLDNON",
+        "work_code": "9100",
+        "jobs": 1,
+        "total_ot_hours": 0.8,
+        "avg_ot_per_job": 0.25
+      },
+      {
+        "sign_type": "POLNON",
+        "work_code": "9400",
+        "jobs": 2,
+        "total_ot_hours": 0.8,
+        "avg_ot_per_job": 0.38
+      },
+      {
+        "sign_type": "RTLT",
+        "work_code": "9500",
+        "jobs": 3,
+        "total_ot_hours": 0.8,
+        "avg_ot_per_job": 0.25
+      },
+      {
+        "sign_type": "CLNON",
+        "work_code": "9500",
+        "jobs": 2,
+        "total_ot_hours": 0.8,
+        "avg_ot_per_job": 0.38
+      },
+      {
+        "sign_type": "BANSTK",
+        "work_code": "9600",
+        "jobs": 1,
+        "total_ot_hours": 0.5,
+        "avg_ot_per_job": 0.5
+      },
+      {
+        "sign_type": "VINYL",
+        "work_code": "9800",
+        "jobs": 1,
+        "total_ot_hours": 0.5,
+        "avg_ot_per_job": 0.5
+      },
+      {
+        "sign_type": "AWNILL",
+        "work_code": "9500",
+        "jobs": 1,
+        "total_ot_hours": 0.5,
+        "avg_ot_per_job": 0.5
+      },
+      {
+        "sign_type": "CLNON",
+        "work_code": "9400",
+        "jobs": 1,
+        "total_ot_hours": 0.5,
+        "avg_ot_per_job": 0.5
+      },
+      {
+        "sign_type": "CASMET",
+        "work_code": "9600",
+        "jobs": 1,
+        "total_ot_hours": 0.5,
+        "avg_ot_per_job": 0.5
+      },
+      {
+        "sign_type": "NEON",
+        "work_code": "9400",
+        "jobs": 1,
+        "total_ot_hours": 0.5,
+        "avg_ot_per_job": 0.5
+      },
+      {
+        "sign_type": "ALULIT",
+        "work_code": "9500",
+        "jobs": 1,
+        "total_ot_hours": 0.3,
+        "avg_ot_per_job": 0.25
+      },
+      {
+        "sign_type": "JOBVIN",
+        "work_code": "9100",
+        "jobs": 1,
+        "total_ot_hours": 0.3,
+        "avg_ot_per_job": 0.25
+      },
+      {
+        "sign_type": "JOBVIN",
+        "work_code": "9500",
+        "jobs": 1,
+        "total_ot_hours": 0.3,
+        "avg_ot_per_job": 0.25
+      },
+      {
+        "sign_type": "NEON",
+        "work_code": "9800",
+        "jobs": 1,
+        "total_ot_hours": 0.3,
+        "avg_ot_per_job": 0.25
+      },
+      {
+        "sign_type": "PRNGRA",
+        "work_code": "9100",
+        "jobs": 1,
+        "total_ot_hours": 0.3,
+        "avg_ot_per_job": 0.25
+      },
+      {
+        "sign_type": "FFACE",
+        "work_code": "9100",
+        "jobs": 1,
+        "total_ot_hours": 0.3,
+        "avg_ot_per_job": 0.25
+      },
+      {
+        "sign_type": "FFACE",
+        "work_code": "9800",
+        "jobs": 1,
+        "total_ot_hours": 0.3,
+        "avg_ot_per_job": 0.25
+      },
+      {
+        "sign_type": "ILLUM",
+        "work_code": "9300",
+        "jobs": 1,
+        "total_ot_hours": 0.3,
+        "avg_ot_per_job": 0.25
+      },
+      {
+        "sign_type": "OVRLAY",
+        "work_code": "9800",
+        "jobs": 1,
+        "total_ot_hours": 0.3,
+        "avg_ot_per_job": 0.25
+      },
+      {
+        "sign_type": "ILLUM",
+        "work_code": "9500",
+        "jobs": 1,
+        "total_ot_hours": 0.3,
+        "avg_ot_per_job": 0.25
+      },
+      {
+        "sign_type": "ADA",
+        "work_code": "9600",
+        "jobs": 1,
+        "total_ot_hours": 0.3,
+        "avg_ot_per_job": 0.25
+      },
+      {
+        "sign_type": "BLANK",
+        "work_code": "9500",
+        "jobs": 1,
+        "total_ot_hours": 0.3,
+        "avg_ot_per_job": 0.25
+      },
+      {
+        "sign_type": "CASMET",
+        "work_code": "9800",
+        "jobs": 1,
+        "total_ot_hours": 0.3,
+        "avg_ot_per_job": 0.25
+      }
+    ],
+    "current_state": "13310.9 overtime hours across 152 sign_type/work_code combinations",
+    "impact": "$432,604 in overtime premium (at 1.5x, $65 base)",
+    "recommendation": "Add overtime multiplier to estimator for high-risk work codes (9200, 9600) and sign types (CLLIT, POLLIT, DIRECT)"
+  },
+  "E2_redo_rework": {
+    "data": [
+      {
+        "sign_type": null,
+        "total_jobs": 12678,
+        "redo_count": 3408,
+        "redo_pct": 26.9
+      },
+      {
+        "sign_type": "FLAG",
+        "total_jobs": 38,
+        "redo_count": 2,
+        "redo_pct": 5.3
+      },
+      {
+        "sign_type": "NEON",
+        "total_jobs": 74,
+        "redo_count": 2,
+        "redo_pct": 2.7
+      },
+      {
+        "sign_type": "AWNREC",
+        "total_jobs": 49,
+        "redo_count": 1,
+        "redo_pct": 2.0
+      },
+      {
+        "sign_type": "DIRECT",
+        "total_jobs": 981,
+        "redo_count": 18,
+        "redo_pct": 1.8
+      },
+      {
+        "sign_type": "MONSF",
+        "total_jobs": 281,
+        "redo_count": 4,
+        "redo_pct": 1.4
+      },
+      {
+        "sign_type": "AWNNON",
+        "total_jobs": 380,
+        "redo_count": 5,
+        "redo_pct": 1.3
+      },
+      {
+        "sign_type": "MONDF",
+        "total_jobs": 1214,
+        "redo_count": 15,
+        "redo_pct": 1.2
+      },
+      {
+        "sign_type": "FFACE",
+        "total_jobs": 82,
+        "redo_count": 1,
+        "redo_pct": 1.2
+      },
+      {
+        "sign_type": "CLNON",
+        "total_jobs": 82,
+        "redo_count": 1,
+        "redo_pct": 1.2
+      },
+      {
+        "sign_type": "BLDNON",
+        "total_jobs": 441,
+        "redo_count": 5,
+        "redo_pct": 1.1
+      },
+      {
+        "sign_type": "AWNILL",
+        "total_jobs": 96,
+        "redo_count": 1,
+        "redo_pct": 1.0
+      },
+      {
+        "sign_type": "CLLIT",
+        "total_jobs": 2835,
+        "redo_count": 15,
+        "redo_pct": 0.5
+      },
+      {
+        "sign_type": "BLDILL",
+        "total_jobs": 924,
+        "redo_count": 5,
+        "redo_pct": 0.5
+      },
+      {
+        "sign_type": "POLLIT",
+        "total_jobs": 2883,
+        "redo_count": 15,
+        "redo_pct": 0.5
+      },
+      {
+        "sign_type": "OTHER",
+        "total_jobs": 1801,
+        "redo_count": 8,
+        "redo_pct": 0.4
+      },
+      {
+        "sign_type": "GEMINI",
+        "total_jobs": 642,
+        "redo_count": 1,
+        "redo_pct": 0.2
+      },
+      {
+        "sign_type": "VINYL",
+        "total_jobs": 1450,
+        "redo_count": 1,
+        "redo_pct": 0.1
+      },
+      {
+        "sign_type": "POLNON",
+        "total_jobs": 107,
+        "redo_count": 0,
+        "redo_pct": 0.0
+      },
+      {
+        "sign_type": "PRNGRA",
+        "total_jobs": 183,
+        "redo_count": 0,
+        "redo_pct": 0.0
+      },
+      {
+        "sign_type": "ADA",
+        "total_jobs": 39,
+        "redo_count": 0,
+        "redo_pct": 0.0
+      },
+      {
+        "sign_type": "JOBPRN",
+        "total_jobs": 20,
+        "redo_count": 0,
+        "redo_pct": 0.0
+      },
+      {
+        "sign_type": "LED",
+        "total_jobs": 279,
+        "redo_count": 0,
+        "redo_pct": 0.0
+      },
+      {
+        "sign_type": "OVRLAY",
+        "total_jobs": 29,
+        "redo_count": 0,
+        "redo_pct": 0.0
+      },
+      {
+        "sign_type": "ILLUM",
+        "total_jobs": 32,
+        "redo_count": 0,
+        "redo_pct": 0.0
+      },
+      {
+        "sign_type": "BANSTK",
+        "total_jobs": 43,
+        "redo_count": 0,
+        "redo_pct": 0.0
+      },
+      {
+        "sign_type": "RTLT",
+        "total_jobs": 173,
+        "redo_count": 0,
+        "redo_pct": 0.0
+      },
+      {
+        "sign_type": "ALULIT",
+        "total_jobs": 33,
+        "redo_count": 0,
+        "redo_pct": 0.0
+      },
+      {
+        "sign_type": "CASMET",
+        "total_jobs": 20,
+        "redo_count": 0,
+        "redo_pct": 0.0
+      },
+      {
+        "sign_type": "BANPRN",
+        "total_jobs": 212,
+        "redo_count": 0,
+        "redo_pct": 0.0
+      }
+    ],
+    "current_state": "3508 redos out of 28101 jobs (12.5% overall)",
+    "impact": "$1,824,160 in unplanned rework labor (assuming 8 hrs avg per redo)",
+    "recommendation": "Add 15% contingency for NULL sign_type (26.9% redo rate); investigate FLAG (5.3%) and NEON (2.7%)"
+  },
+  "E3_learning_curve": {
+    "data": "NO EMPLOYEE DATA - Cannot compute learning curve without employee tracking",
+    "current_state": "so_contract_labor lacks employee field; wo_labor has no employee tracking",
+    "impact": "UNKNOWN - Learning curve typically 10-30% efficiency gain on repeat work",
+    "recommendation": "NEEDS MORE DATA - Add employee tracking to labor records for learning curve analysis"
+  },
+  "E4_seasonality": {
+    "data": [
+      {
+        "month": 1,
+        "work_code": "0605",
+        "avg_hours": 3.0,
+        "jobs": 1
+      },
+      {
+        "month": 2,
+        "work_code": "0605",
+        "avg_hours": 2.89,
+        "jobs": 7
+      },
+      {
+        "month": 4,
+        "work_code": "0605",
+        "avg_hours": 7.5,
+        "jobs": 2
+      },
+      {
+        "month": 5,
+        "work_code": "0605",
+        "avg_hours": 3.75,
+        "jobs": 4
+      },
+      {
+        "month": 6,
+        "work_code": "0605",
+        "avg_hours": 2.5,
+        "jobs": 2
+      },
+      {
+        "month": 7,
+        "work_code": "0605",
+        "avg_hours": 4.0,
+        "jobs": 4
+      },
+      {
+        "month": 8,
+        "work_code": "0605",
+        "avg_hours": 11.0,
+        "jobs": 2
+      },
+      {
+        "month": 9,
+        "work_code": "0605",
+        "avg_hours": 1.75,
+        "jobs": 2
+      },
+      {
+        "month": 10,
+        "work_code": "0605",
+        "avg_hours": 2.0,
+        "jobs": 1
+      },
+      {
+        "month": 11,
+        "work_code": "0605",
+        "avg_hours": 4.0,
+        "jobs": 1
+      },
+      {
+        "month": 12,
+        "work_code": "0605",
+        "avg_hours": 1.58,
+        "jobs": 3
+      },
+      {
+        "month": 1,
+        "work_code": "0630",
+        "avg_hours": 5.23,
+        "jobs": 109
+      },
+      {
+        "month": 2,
+        "work_code": "0630",
+        "avg_hours": 14.1,
+        "jobs": 98
+      },
+      {
+        "month": 3,
+        "work_code": "0630",
+        "avg_hours": 5.88,
+        "jobs": 116
+      },
+      {
+        "month": 4,
+        "work_code": "0630",
+        "avg_hours": 8.0,
+        "jobs": 154
+      },
+      {
+        "month": 5,
+        "work_code": "0630",
+        "avg_hours": 8.33,
+        "jobs": 207
+      },
+      {
+        "month": 6,
+        "work_code": "0630",
+        "avg_hours": 5.68,
+        "jobs": 226
+      },
+      {
+        "month": 7,
+        "work_code": "0630",
+        "avg_hours": 5.45,
+        "jobs": 194
+      },
+      {
+        "month": 8,
+        "work_code": "0630",
+        "avg_hours": 5.38,
+        "jobs": 138
+      },
+      {
+        "month": 9,
+        "work_code": "0630",
+        "avg_hours": 6.43,
+        "jobs": 128
+      },
+      {
+        "month": 10,
+        "work_code": "0630",
+        "avg_hours": 6.31,
+        "jobs": 162
+      },
+      {
+        "month": 11,
+        "work_code": "0630",
+        "avg_hours": 6.98,
+        "jobs": 98
+      },
+      {
+        "month": 12,
+        "work_code": "0630",
+        "avg_hours": 5.48,
+        "jobs": 133
+      },
+      {
+        "month": 3,
+        "work_code": "0640",
+        "avg_hours": 3.5,
+        "jobs": 1
+      },
+      {
+        "month": 4,
+        "work_code": "0640",
+        "avg_hours": 3.63,
+        "jobs": 2
+      },
+      {
+        "month": 5,
+        "work_code": "0640",
+        "avg_hours": 1.63,
+        "jobs": 2
+      },
+      {
+        "month": 6,
+        "work_code": "0640",
+        "avg_hours": 1.83,
+        "jobs": 3
+      },
+      {
+        "month": 7,
+        "work_code": "0640",
+        "avg_hours": 4.83,
+        "jobs": 6
+      },
+      {
+        "month": 8,
+        "work_code": "0640",
+        "avg_hours": 1.33,
+        "jobs": 3
+      },
+      {
+        "month": 9,
+        "work_code": "0640",
+        "avg_hours": 5.69,
+        "jobs": 4
+      },
+      {
+        "month": 10,
+        "work_code": "0640",
+        "avg_hours": 3.63,
+        "jobs": 2
+      },
+      {
+        "month": 11,
+        "work_code": "0640",
+        "avg_hours": 1.38,
+        "jobs": 2
+      },
+      {
+        "month": 12,
+        "work_code": "0640",
+        "avg_hours": 3.0,
+        "jobs": 1
+      },
+      {
+        "month": 11,
+        "work_code": "0650",
+        "avg_hours": 2.5,
+        "jobs": 2
+      }
+    ],
+    "current_state": "34 month/work_code combinations; max variance 9.4 hours (0605); Feb peak for 0630",
+    "impact": "$30,615 potential over/under-staffing cost annually (50 jobs at peak variance)",
+    "recommendation": "Add 1.5x multiplier for Feb installs (0630); monitor 0605 for high variance (11.0 vs 1.58 hrs)"
+  },
+  "E5_customer_complexity": {
+    "data": [
+      {
+        "customer_name": "TEMPLE REAL ESTATE SERVICES / MARKET PLACE 4820, LLC",
+        "total_jobs": 5,
+        "avg_overrun_ratio": 11.6,
+        "variance": 5.82
+      },
+      {
+        "customer_name": "AURORA SIGN CO.",
+        "total_jobs": 11,
+        "avg_overrun_ratio": 7.89,
+        "variance": 4.78
+      },
+      {
+        "customer_name": "SIGNTECH ELECTRICAL ADVERTISING, INC.",
+        "total_jobs": 11,
+        "avg_overrun_ratio": 7.48,
+        "variance": 11.2
+      },
+      {
+        "customer_name": "TACO JOHN'S",
+        "total_jobs": 29,
+        "avg_overrun_ratio": 7.15,
+        "variance": 15.18
+      },
+      {
+        "customer_name": "TACO JOHN'S OF IOWA",
+        "total_jobs": 10,
+        "avg_overrun_ratio": 7.04,
+        "variance": 8.42
+      },
+      {
+        "customer_name": "TRIANGLE SIGN AND SERVICE",
+        "total_jobs": 6,
+        "avg_overrun_ratio": 6.98,
+        "variance": 3.31
+      },
+      {
+        "customer_name": "COLDWELL BANKER MID AMERICA",
+        "total_jobs": 5,
+        "avg_overrun_ratio": 6.55,
+        "variance": 4.69
+      },
+      {
+        "customer_name": "ARCHITECTURAL GRAPHICS, INC.",
+        "total_jobs": 43,
+        "avg_overrun_ratio": 6.18,
+        "variance": 9.45
+      },
+      {
+        "customer_name": "COAST SIGN LLC",
+        "total_jobs": 9,
+        "avg_overrun_ratio": 6.14,
+        "variance": 11.97
+      },
+      {
+        "customer_name": "BEISSER LUMBER COMPANY",
+        "total_jobs": 8,
+        "avg_overrun_ratio": 5.93,
+        "variance": 5.84
+      },
+      {
+        "customer_name": "EVERBRITE LLC",
+        "total_jobs": 6,
+        "avg_overrun_ratio": 5.5,
+        "variance": 4.31
+      },
+      {
+        "customer_name": "RESTAURANT STRATEGIES GROUP",
+        "total_jobs": 9,
+        "avg_overrun_ratio": 5.43,
+        "variance": 7.76
+      },
+      {
+        "customer_name": "EXTRA INNINGS SPORTS BAR & PATIO",
+        "total_jobs": 5,
+        "avg_overrun_ratio": 5.31,
+        "variance": 5.26
+      },
+      {
+        "customer_name": "ATLAS SIGN INDUSTRIES",
+        "total_jobs": 40,
+        "avg_overrun_ratio": 5.1,
+        "variance": 5.91
+      },
+      {
+        "customer_name": "FIRST REALTY GMAC REAL ESTATE",
+        "total_jobs": 6,
+        "avg_overrun_ratio": 4.81,
+        "variance": 5.92
+      },
+      {
+        "customer_name": "CARPET ONE",
+        "total_jobs": 6,
+        "avg_overrun_ratio": 4.5,
+        "variance": 6.02
+      },
+      {
+        "customer_name": "COLITE INTERNATIONAL",
+        "total_jobs": 22,
+        "avg_overrun_ratio": 4.38,
+        "variance": 5.5
+      },
+      {
+        "customer_name": "VAN METER INC",
+        "total_jobs": 16,
+        "avg_overrun_ratio": 4.35,
+        "variance": 2.86
+      },
+      {
+        "customer_name": "STRATUS",
+        "total_jobs": 13,
+        "avg_overrun_ratio": 4.18,
+        "variance": 6.06
+      },
+      {
+        "customer_name": "JONES SIGN CO",
+        "total_jobs": 5,
+        "avg_overrun_ratio": 4.17,
+        "variance": 6.62
+      },
+      {
+        "customer_name": "HUBBELL CONSTRUCTION SERVICES",
+        "total_jobs": 8,
+        "avg_overrun_ratio": 3.95,
+        "variance": 4.54
+      },
+      {
+        "customer_name": "KNAPP PROPERTIES",
+        "total_jobs": 5,
+        "avg_overrun_ratio": 3.88,
+        "variance": 3.03
+      },
+      {
+        "customer_name": "KEEN PROJECT SOLUTIONS",
+        "total_jobs": 5,
+        "avg_overrun_ratio": 3.81,
+        "variance": 2.74
+      },
+      {
+        "customer_name": "NEBRASKA FURNITURE MART",
+        "total_jobs": 5,
+        "avg_overrun_ratio": 3.75,
+        "variance": 2.46
+      },
+      {
+        "customer_name": "PENTA PARTNERS LLC",
+        "total_jobs": 15,
+        "avg_overrun_ratio": 3.39,
+        "variance": 4.02
+      },
+      {
+        "customer_name": "COLBY INTERESTS",
+        "total_jobs": 10,
+        "avg_overrun_ratio": 3.34,
+        "variance": 4.9
+      },
+      {
+        "customer_name": "DOWNING INC.",
+        "total_jobs": 29,
+        "avg_overrun_ratio": 3.31,
+        "variance": 3.24
+      },
+      {
+        "customer_name": "AVAILA BANK",
+        "total_jobs": 9,
+        "avg_overrun_ratio": 3.29,
+        "variance": 5.57
+      },
+      {
+        "customer_name": "ASSOCIATED INTEGRATED SUPPLY CHAIN SOLUTIONS",
+        "total_jobs": 6,
+        "avg_overrun_ratio": 3.29,
+        "variance": 1.57
+      },
+      {
+        "customer_name": "STORAGE MART",
+        "total_jobs": 20,
+        "avg_overrun_ratio": 3.27,
+        "variance": 5.07
+      },
+      {
+        "customer_name": "SILICON SIGNS(BILLING)",
+        "total_jobs": 5,
+        "avg_overrun_ratio": 3.24,
+        "variance": 2.3
+      },
+      {
+        "customer_name": "ZORA",
+        "total_jobs": 5,
+        "avg_overrun_ratio": 3.18,
+        "variance": 0.49
+      },
+      {
+        "customer_name": "PRIDE SIGNS",
+        "total_jobs": 28,
+        "avg_overrun_ratio": 3.1,
+        "variance": 4.82
+      },
+      {
+        "customer_name": "ALLEN INDUSTRIES , INC",
+        "total_jobs": 24,
+        "avg_overrun_ratio": 2.71,
+        "variance": 1.67
+      },
+      {
+        "customer_name": "CARPER BURROW",
+        "total_jobs": 5,
+        "avg_overrun_ratio": 2.63,
+        "variance": 1.54
+      },
+      {
+        "customer_name": "COOL BASIL",
+        "total_jobs": 10,
+        "avg_overrun_ratio": 2.63,
+        "variance": 2.03
+      },
+      {
+        "customer_name": "JOURNEY CREDIT UNION",
+        "total_jobs": 7,
+        "avg_overrun_ratio": 2.52,
+        "variance": 2.38
+      },
+      {
+        "customer_name": "CRESCENT ELECTRIC SUPPLY COMPANY",
+        "total_jobs": 8,
+        "avg_overrun_ratio": 2.43,
+        "variance": 1.88
+      },
+      {
+        "customer_name": "PATTISONID",
+        "total_jobs": 11,
+        "avg_overrun_ratio": 2.42,
+        "variance": 2.66
+      },
+      {
+        "customer_name": "CITY OF DES MOINES/ DEPT. OF FINANCE. ACCOUNTS PAYABLE",
+        "total_jobs": 45,
+        "avg_overrun_ratio": 2.34,
+        "variance": 2.01
+      },
+      {
+        "customer_name": "DES MOINES INTERNATIONAL AIRPO",
+        "total_jobs": 19,
+        "avg_overrun_ratio": 2.26,
+        "variance": 1.53
+      },
+      {
+        "customer_name": "LOVING CUP, LLC- DBA: SCOOTER'S COFFEE",
+        "total_jobs": 6,
+        "avg_overrun_ratio": 2.22,
+        "variance": 0.8
+      },
+      {
+        "customer_name": "IOWA ORTHODONTIC SOLUTIONS POWERED BY SMILE DOCTORS",
+        "total_jobs": 7,
+        "avg_overrun_ratio": 2.11,
+        "variance": 1.86
+      },
+      {
+        "customer_name": "PACIFIC NEON",
+        "total_jobs": 6,
+        "avg_overrun_ratio": 2.05,
+        "variance": 1.8
+      },
+      {
+        "customer_name": "WEST DES MOINES HUMAN SERVICES BUILDING",
+        "total_jobs": 10,
+        "avg_overrun_ratio": 2.04,
+        "variance": 1.43
+      },
+      {
+        "customer_name": "MEMBERS 1ST CREDIT UNION",
+        "total_jobs": 18,
+        "avg_overrun_ratio": 1.99,
+        "variance": 1.4
+      },
+      {
+        "customer_name": "KEMIN INDUSTRIES",
+        "total_jobs": 16,
+        "avg_overrun_ratio": 1.96,
+        "variance": 1.17
+      },
+      {
+        "customer_name": "IMAGE ONE INDUSTRIES, INC",
+        "total_jobs": 6,
+        "avg_overrun_ratio": 1.81,
+        "variance": 1.23
+      },
+      {
+        "customer_name": "HUBBELL REALTY",
+        "total_jobs": 6,
+        "avg_overrun_ratio": 1.81,
+        "variance": 1.72
+      },
+      {
+        "customer_name": "CAT SCALE",
+        "total_jobs": 21,
+        "avg_overrun_ratio": 1.72,
+        "variance": 0.96
+      }
+    ],
+    "current_state": "50 customers analyzed; 50 with avg overrun >1.2x",
+    "impact": "$1,249,462 in overruns from high-complexity customers (est 10hr avg jobs)",
+    "recommendation": "Add 2.0x multiplier for customers with >5x overrun history (TEMPLE, AURORA, SIGNTECH, TACO JOHNS)"
+  },
+  "E6_subcontractor_costs": {
+    "data": [
+      {
+        "sign_type": "POLLIT",
+        "jobs": 953,
+        "total_cost": 1450268.74,
+        "avg_cost": 1521.79
+      },
+      {
+        "sign_type": null,
+        "jobs": 1803,
+        "total_cost": 944931.27,
+        "avg_cost": 524.09
+      },
+      {
+        "sign_type": "MONDF",
+        "jobs": 243,
+        "total_cost": 858511.37,
+        "avg_cost": 3532.97
+      },
+      {
+        "sign_type": "CLLIT",
+        "jobs": 553,
+        "total_cost": 627707.25,
+        "avg_cost": 1135.09
+      },
+      {
+        "sign_type": "OTHER",
+        "jobs": 375,
+        "total_cost": 514042.1,
+        "avg_cost": 1370.78
+      },
+      {
+        "sign_type": "DIRECT",
+        "jobs": 137,
+        "total_cost": 310927.2,
+        "avg_cost": 2269.54
+      },
+      {
+        "sign_type": "MONSF",
+        "jobs": 56,
+        "total_cost": 273661.75,
+        "avg_cost": 4886.82
+      },
+      {
+        "sign_type": "BLDILL",
+        "jobs": 119,
+        "total_cost": 105846.33,
+        "avg_cost": 889.46
+      },
+      {
+        "sign_type": "AWNNON",
+        "jobs": 73,
+        "total_cost": 101752.08,
+        "avg_cost": 1393.86
+      },
+      {
+        "sign_type": "GEMINI",
+        "jobs": 119,
+        "total_cost": 94496.34,
+        "avg_cost": 794.09
+      },
+      {
+        "sign_type": "POLNON",
+        "jobs": 16,
+        "total_cost": 39880.65,
+        "avg_cost": 2492.54
+      },
+      {
+        "sign_type": "BLDNON",
+        "jobs": 39,
+        "total_cost": 34495.76,
+        "avg_cost": 884.51
+      },
+      {
+        "sign_type": "RTLT",
+        "jobs": 33,
+        "total_cost": 29367.41,
+        "avg_cost": 889.92
+      },
+      {
+        "sign_type": "VINYL",
+        "jobs": 72,
+        "total_cost": 24833.88,
+        "avg_cost": 344.92
+      },
+      {
+        "sign_type": "NEON",
+        "jobs": 30,
+        "total_cost": 24208.07,
+        "avg_cost": 806.94
+      },
+      {
+        "sign_type": "LED",
+        "jobs": 28,
+        "total_cost": 23450.05,
+        "avg_cost": 837.5
+      },
+      {
+        "sign_type": "AWNREC",
+        "jobs": 27,
+        "total_cost": 20699.38,
+        "avg_cost": 766.64
+      },
+      {
+        "sign_type": "BANPRN",
+        "jobs": 26,
+        "total_cost": 19742.44,
+        "avg_cost": 759.32
+      },
+      {
+        "sign_type": "OVRLAY",
+        "jobs": 3,
+        "total_cost": 14921.94,
+        "avg_cost": 4973.98
+      },
+      {
+        "sign_type": "FLAG",
+        "jobs": 15,
+        "total_cost": 14080.96,
+        "avg_cost": 938.73
+      },
+      {
+        "sign_type": "FORMED",
+        "jobs": 2,
+        "total_cost": 13557.5,
+        "avg_cost": 6778.75
+      },
+      {
+        "sign_type": "CLNON",
+        "jobs": 11,
+        "total_cost": 11675.63,
+        "avg_cost": 1061.42
+      },
+      {
+        "sign_type": "LETPLA",
+        "jobs": 5,
+        "total_cost": 10328.43,
+        "avg_cost": 2065.69
+      },
+      {
+        "sign_type": "FFACE",
+        "jobs": 15,
+        "total_cost": 7917.69,
+        "avg_cost": 527.85
+      },
+      {
+        "sign_type": "JOBPRN",
+        "jobs": 4,
+        "total_cost": 7063.4,
+        "avg_cost": 1765.85
+      },
+      {
+        "sign_type": "AWNILL",
+        "jobs": 14,
+        "total_cost": 6393.29,
+        "avg_cost": 456.66
+      },
+      {
+        "sign_type": "ALUNON",
+        "jobs": 7,
+        "total_cost": 4043.63,
+        "avg_cost": 577.66
+      },
+      {
+        "sign_type": "ALULIT",
+        "jobs": 8,
+        "total_cost": 2836.57,
+        "avg_cost": 354.57
+      },
+      {
+        "sign_type": "PRNGRA",
+        "jobs": 9,
+        "total_cost": 2387.56,
+        "avg_cost": 265.28
+      },
+      {
+        "sign_type": "CASMET",
+        "jobs": 4,
+        "total_cost": 1780.78,
+        "avg_cost": 445.2
+      },
+      {
+        "sign_type": "ILLUM",
+        "jobs": 3,
+        "total_cost": 1195.37,
+        "avg_cost": 398.46
+      },
+      {
+        "sign_type": "BANSTK",
+        "jobs": 5,
+        "total_cost": 1009.36,
+        "avg_cost": 201.87
+      },
+      {
+        "sign_type": "ADA",
+        "jobs": 4,
+        "total_cost": 763.23,
+        "avg_cost": 190.81
+      },
+      {
+        "sign_type": "BLANK",
+        "jobs": 3,
+        "total_cost": 438.74,
+        "avg_cost": 146.25
+      },
+      {
+        "sign_type": "JOBVIN",
+        "jobs": 2,
+        "total_cost": 366.26,
+        "avg_cost": 183.13
+      },
+      {
+        "sign_type": "STLNON",
+        "jobs": 1,
+        "total_cost": 217.0,
+        "avg_cost": 217.0
+      },
+      {
+        "sign_type": "MAGNET",
+        "jobs": 1,
+        "total_cost": 77.41,
+        "avg_cost": 77.41
+      }
+    ],
+    "current_state": "37 sign types with outplant costs; $5,599,876.82 total",
+    "impact": "$5,599,877 in subcontractor costs (currently tracked)",
+    "recommendation": "Ensure outplant costs in estimator; add markup validation for POLLIT ($1.5M), MONDF ($858K)"
+  },
+  "E7_material_waste": {
+    "data_source": "NO DATA SOURCE",
+    "current_state": "Warehouse lacks actual vs planned material usage data",
+    "impact": "UNKNOWN - abc-labor-rates-complete.md shows waste factors (Acrylic 15%, Return 5%, Trim 5%, Back 10%, LED 5%) but no validation possible",
+    "recommendation": "FLAG ONLY - Need material tracking system to validate waste factors in estimator"
+  },
+  "E8_crew_composition": {
+    "data": "PROXY DATA ONLY - Using work_dept as proxy for crew (no employee field)",
+    "current_state": "so_contract_labor lacks employee field; all install jobs single-dept tracked",
+    "impact": "UNKNOWN - Crew size affects efficiency but no employee-level tracking exists",
+    "recommendation": "NEEDS MORE DATA - Add employee tracking to measure crew efficiency; estimate 2-person crews for 0640/0650"
+  }
+}

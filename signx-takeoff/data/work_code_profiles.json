@@ -1,0 +1,249 @@
+{
+  "_metadata": {
+    "generated": "2026-02-16",
+    "source": "signx.duckdb warehouse queries on so_contract_labor JOIN so_contracts",
+    "purpose": "Work code fingerprints per sign type — frequency, avg hours, percentiles, estimation variance",
+    "units": "All hours are man-hours EXCEPT 0640/0650 which are crew-hours",
+    "variance_note": "Positive variance = actual > estimated (underestimation). Negative = overestimation."
+  },
+
+  "MONDF": {
+    "label": "Monument Double-Face",
+    "total_jobs_with_labor": 188,
+    "work_codes": [
+      {"code": "0630", "desc": "1 MAN & TRUCK INSTALL",  "n": 164, "freq_pct": 87.2, "mean": 7.29, "p25": 1.75, "p50": 3.75, "p75": 9.88, "est": 0.44, "variance": "+6.85"},
+      {"code": "0610", "desc": "LOAD/UNLOAD",            "n": 123, "freq_pct": 65.4, "mean": 2.54, "p25": 0.75, "p50": 1.50, "p75": 2.50, "est": 1.49, "variance": "+1.05"},
+      {"code": "0520", "desc": "CUT AND/OR WEED VINYL",  "n": 123, "freq_pct": 65.4, "mean": 1.73, "p25": 0.75, "p50": 1.00, "p75": 2.00, "est": 1.10, "variance": "+0.63"},
+      {"code": "0410", "desc": "CLEAN AND ETCH",          "n": 114, "freq_pct": 60.6, "mean": 4.00, "p25": 1.25, "p50": 2.88, "p75": 7.69, "est": 4.31, "variance": "-0.31"},
+      {"code": "0420", "desc": "PRIME AND FINISH",        "n": 110, "freq_pct": 58.5, "mean": 4.97, "p25": 1.50, "p50": 2.50, "p75": 9.94, "est": 5.00, "variance": "-0.03"},
+      {"code": "0620", "desc": "TRAVEL",                  "n": 110, "freq_pct": 58.5, "mean": 1.80, "p25": 0.75, "p50": 1.00, "p75": 2.19, "est": 1.22, "variance": "+0.58"},
+      {"code": "9600", "desc": "INSTALL OVERTIME 1 MAN",  "n": 99,  "freq_pct": 52.7, "mean": 3.66, "p25": 1.25, "p50": 2.75, "p75": 5.00, "est": 0.00, "variance": "+3.66"},
+      {"code": "9200", "desc": "FABRICATION OVERTIME",    "n": 98,  "freq_pct": 52.1, "mean": 4.10, "p25": 1.00, "p50": 3.00, "p75": 5.00, "est": 0.00, "variance": "+4.10"},
+      {"code": "0550", "desc": "VINYL APPLICATION",       "n": 98,  "freq_pct": 52.1, "mean": 1.93, "p25": 0.75, "p50": 1.13, "p75": 2.50, "est": 2.04, "variance": "-0.11"},
+      {"code": "0270", "desc": "MISC FABRICATION",        "n": 91,  "freq_pct": 48.4, "mean": 13.17,"p25": 1.88, "p50": 6.00, "p75": 13.25,"est": 5.94, "variance": "+7.23"},
+      {"code": "0260", "desc": "FACES",                   "n": 86,  "freq_pct": 45.7, "mean": 3.95, "p25": 1.00, "p50": 2.25, "p75": 4.50, "est": 4.91, "variance": "-0.96"},
+      {"code": "9400", "desc": "PAINT DEPT OVERTIME",     "n": 64,  "freq_pct": 34.0, "mean": 0.91, "p25": 0.50, "p50": 0.75, "p75": 1.06, "est": 0.00, "variance": "+0.91"},
+      {"code": "0110", "desc": "SKETCHING",               "n": 63,  "freq_pct": 33.5, "mean": 1.09, "p25": 0.50, "p50": 0.75, "p75": 1.25, "est": 0.98, "variance": "+0.11"},
+      {"code": "0215", "desc": "STRUCTURAL STEEL",        "n": 61,  "freq_pct": 32.4, "mean": 4.32, "p25": 1.50, "p50": 2.00, "p75": 4.50, "est": 6.08, "variance": "-1.76"},
+      {"code": "0220", "desc": "EXTRUSIONS",              "n": 48,  "freq_pct": 25.5, "mean": 12.09,"p25": 3.69, "p50": 7.25, "p75": 21.50,"est": 8.14, "variance": "+3.95"},
+      {"code": "0200", "desc": "FABRICATION LAYOUT",      "n": 47,  "freq_pct": 25.0, "mean": 6.54, "p25": 1.00, "p50": 4.00, "p75": 6.50, "est": 1.81, "variance": "+4.73"},
+      {"code": "0235", "desc": "ROUTING",                 "n": 45,  "freq_pct": 23.9, "mean": 4.63, "p25": 1.50, "p50": 4.25, "p75": 4.50, "est": 7.91, "variance": "-3.28"},
+      {"code": "0625", "desc": "REMOVAL",                 "n": 33,  "freq_pct": 17.6, "mean": 3.78, "p25": 1.25, "p50": 2.00, "p75": 3.00, "est": 2.27, "variance": "+1.51"},
+      {"code": "0310", "desc": "BALLAST WIRING",          "n": 18,  "freq_pct": 9.6,  "mean": 3.47, "p25": 1.81, "p50": 3.00, "p75": 4.50, "est": 3.25, "variance": "+0.22"},
+      {"code": "0210", "desc": "SHEET METAL",             "n": 17,  "freq_pct": 9.0,  "mean": 5.79, "p25": 1.00, "p50": 3.75, "p75": 12.00,"est": 4.82, "variance": "+0.97"},
+      {"code": "0230", "desc": "CHANNEL LETTERS",         "n": 16,  "freq_pct": 8.5,  "mean": 7.22, "p25": 1.69, "p50": 7.25, "p75": 10.13,"est": 0.00, "variance": "+7.22"},
+      {"code": "0340", "desc": "ELECTRICAL WIRING",       "n": 14,  "freq_pct": 7.4,  "mean": 5.48, "p25": 3.81, "p50": 5.00, "p75": 7.81, "est": 1.29, "variance": "+4.19"},
+      {"code": "0605", "desc": "FOOTING - INSTALLATION",  "n": 8,   "freq_pct": 4.3,  "mean": 2.94, "p25": 1.81, "p50": 2.00, "p75": 3.81, "est": 9.25, "variance": "-6.31"},
+      {"code": "0240", "desc": "FLAT CUT OUT LETTERS",    "n": 12,  "freq_pct": 6.4,  "mean": 9.98, "p25": 1.75, "p50": 3.50, "p75": 21.00,"est": 0.75, "variance": "+9.23"}
+    ],
+    "estimation_insights": {
+      "systematic_underestimates": ["0630 (install: +6.85h)", "0270 (misc fab: +7.23h)", "9600 (OT: +3.66h)", "9200 (fab OT: +4.10h)", "0200 (fab layout: +4.73h)"],
+      "systematic_overestimates": ["0605 (footing: -6.31h)", "0235 (routing: -3.28h)", "0215 (structural: -1.76h)"],
+      "never_estimated_but_always_appear": ["9600 (install OT, 52.7%)", "9200 (fab OT, 52.1%)", "9400 (paint OT, 34.0%)"]
+    }
+  },
+
+  "MONSF": {
+    "label": "Monument Single-Face",
+    "total_jobs_with_labor": 43,
+    "work_codes": [
+      {"code": "0630", "desc": "1 MAN & TRUCK INSTALL",  "n": 45,  "freq_pct": 100.0,"mean": 7.92, "p25": 4.00, "p50": 7.00, "p75": 10.75,"est": 0.79, "variance": "+7.13"},
+      {"code": "0610", "desc": "LOAD/UNLOAD",            "n": 39,  "freq_pct": 90.7, "mean": 2.49, "p25": 1.00, "p50": 1.50, "p75": 4.00, "est": 1.51, "variance": "+0.98"},
+      {"code": "0520", "desc": "CUT AND/OR WEED VINYL",  "n": 37,  "freq_pct": 86.0, "mean": 1.95, "p25": 0.75, "p50": 1.50, "p75": 3.00, "est": 0.66, "variance": "+1.29"},
+      {"code": "0410", "desc": "CLEAN AND ETCH",          "n": 37,  "freq_pct": 86.0, "mean": 2.61, "p25": 1.00, "p50": 2.75, "p75": 3.25, "est": 4.11, "variance": "-1.50"},
+      {"code": "9200", "desc": "FABRICATION OVERTIME",    "n": 35,  "freq_pct": 81.4, "mean": 8.71, "p25": 4.38, "p50": 9.75, "p75": 12.00,"est": 0.00, "variance": "+8.71"},
+      {"code": "0270", "desc": "MISC FABRICATION",        "n": 35,  "freq_pct": 81.4, "mean": 6.71, "p25": 2.25, "p50": 3.25, "p75": 9.63, "est": 4.48, "variance": "+2.23"},
+      {"code": "0420", "desc": "PRIME AND FINISH",        "n": 32,  "freq_pct": 74.4, "mean": 4.63, "p25": 2.19, "p50": 3.75, "p75": 5.56, "est": 7.63, "variance": "-3.00"},
+      {"code": "0220", "desc": "EXTRUSIONS",              "n": 29,  "freq_pct": 67.4, "mean": 16.28,"p25": 4.50, "p50": 13.50,"p75": 21.25,"est": 11.13,"variance": "+5.15"},
+      {"code": "0200", "desc": "FABRICATION LAYOUT",      "n": 28,  "freq_pct": 65.1, "mean": 2.08, "p25": 1.00, "p50": 2.25, "p75": 2.25, "est": 1.91, "variance": "+0.17"},
+      {"code": "0215", "desc": "STRUCTURAL STEEL",        "n": 21,  "freq_pct": 48.8, "mean": 5.46, "p25": 4.00, "p50": 5.50, "p75": 6.00, "est": 6.29, "variance": "-0.83"},
+      {"code": "0340", "desc": "ELECTRICAL WIRING",       "n": 21,  "freq_pct": 48.8, "mean": 5.10, "p25": 4.25, "p50": 4.25, "p75": 6.75, "est": 0.48, "variance": "+4.62"},
+      {"code": "0235", "desc": "ROUTING",                 "n": 19,  "freq_pct": 44.2, "mean": 3.28, "p25": 2.13, "p50": 2.75, "p75": 3.00, "est": 4.76, "variance": "-1.48"},
+      {"code": "0260", "desc": "FACES",                   "n": 19,  "freq_pct": 44.2, "mean": 2.25, "p25": 0.75, "p50": 1.00, "p75": 1.25, "est": 2.79, "variance": "-0.54"},
+      {"code": "0210", "desc": "SHEET METAL",             "n": 13,  "freq_pct": 30.2, "mean": 11.33,"p25": 8.00, "p50": 8.00, "p75": 21.75,"est": 8.81, "variance": "+2.52"},
+      {"code": "0230", "desc": "CHANNEL LETTERS",         "n": 7,   "freq_pct": 16.3, "mean": 9.21, "p25": 2.00, "p50": 15.00,"p75": 15.00,"est": 5.14, "variance": "+4.07"}
+    ],
+    "estimation_insights": {
+      "vs_MONDF": "MONSF has 2x fab overtime (8.71h vs 4.10h), 2x extrusion hours (16.28h vs 12.09h), and 6.5x electrical wiring frequency (48.8% vs 7.4%)",
+      "systematic_underestimates": ["0630 (install: +7.13h)", "9200 (fab OT: +8.71h)", "0220 (extrusions: +5.15h)", "0340 (electrical: +4.62h)"],
+      "systematic_overestimates": ["0420 (paint: -3.00h)", "0410 (clean/etch: -1.50h)", "0235 (routing: -1.48h)"]
+    }
+  },
+
+  "CLLIT": {
+    "label": "Channel Letter Illuminated",
+    "total_jobs_with_labor": 442,
+    "work_codes": [
+      {"code": "0630", "desc": "1 MAN & TRUCK INSTALL",  "n": 330, "freq_pct": 74.7, "mean": 14.40,"est": 1.87, "variance": "+12.54"},
+      {"code": "0610", "desc": "LOAD/UNLOAD",            "n": 316, "freq_pct": 71.5, "mean": 3.17, "est": 2.29, "variance": "+0.88"},
+      {"code": "0620", "desc": "TRAVEL",                  "n": 300, "freq_pct": 67.9, "mean": 2.69, "est": 1.71, "variance": "+0.98"},
+      {"code": "0260", "desc": "FACES",                   "n": 236, "freq_pct": 53.4, "mean": 12.00,"est": 10.88,"variance": "+1.12"},
+      {"code": "0230", "desc": "CHANNEL LETTERS",         "n": 230, "freq_pct": 52.0, "mean": 15.86,"est": 12.85,"variance": "+3.01"},
+      {"code": "0270", "desc": "MISC FABRICATION",        "n": 228, "freq_pct": 51.6, "mean": 63.00,"est": 6.12, "variance": "+56.88"},
+      {"code": "9600", "desc": "INSTALL OVERTIME 1 MAN",  "n": 208, "freq_pct": 47.1, "mean": 4.43, "est": 0.00, "variance": "+4.43"},
+      {"code": "0410", "desc": "CLEAN AND ETCH",          "n": 207, "freq_pct": 46.8, "mean": 5.95, "est": 4.42, "variance": "+1.53"},
+      {"code": "0420", "desc": "PRIME AND FINISH",        "n": 199, "freq_pct": 45.0, "mean": 5.82, "est": 3.88, "variance": "+1.94"},
+      {"code": "0520", "desc": "CUT AND/OR WEED VINYL",  "n": 191, "freq_pct": 43.2, "mean": 2.72, "est": 1.48, "variance": "+1.24"},
+      {"code": "0280", "desc": "CRATING & SHIPPING",      "n": 183, "freq_pct": 41.4, "mean": 6.31, "est": 3.91, "variance": "+2.40"},
+      {"code": "9200", "desc": "FABRICATION OVERTIME",    "n": 153, "freq_pct": 34.6, "mean": 8.09, "est": 0.00, "variance": "+8.09"},
+      {"code": "0310", "desc": "BALLAST WIRING",          "n": 137, "freq_pct": 31.0, "mean": 5.36, "est": 2.84, "variance": "+2.52"},
+      {"code": "0110", "desc": "SKETCHING",               "n": 120, "freq_pct": 27.1, "mean": 1.86, "est": 1.30, "variance": "+0.56"},
+      {"code": "0200", "desc": "FABRICATION LAYOUT",      "n": 105, "freq_pct": 23.8, "mean": 5.53, "est": 2.38, "variance": "+3.15"}
+    ],
+    "estimation_insights": {
+      "critical_alert": "Misc fabrication (0270) is underestimated by 56.88 hours on average. This is the largest systematic error in the entire warehouse.",
+      "systematic_underestimates": ["0270 (misc fab: +56.88h!!!)", "0630 (install: +12.54h)", "9200 (fab OT: +8.09h)", "9600 (install OT: +4.43h)"],
+      "overtime_as_indicator": "Fab overtime in 34.6% of jobs (8.09h avg) and install overtime in 47.1% (4.43h avg) = base estimates too low"
+    }
+  },
+
+  "POLLIT": {
+    "label": "Pole/Pylon Illuminated",
+    "total_jobs_with_labor": 461,
+    "work_codes": [
+      {"code": "0280", "desc": "CRATING & SHIPPING",      "n": 376, "freq_pct": 81.6, "mean": 5.51, "est": 3.65, "variance": "+1.86"},
+      {"code": "0630", "desc": "1 MAN & TRUCK INSTALL",  "n": 283, "freq_pct": 61.4, "mean": 9.07, "est": 3.05, "variance": "+6.02"},
+      {"code": "0610", "desc": "LOAD/UNLOAD",            "n": 267, "freq_pct": 57.9, "mean": 3.30, "est": 2.08, "variance": "+1.22"},
+      {"code": "0620", "desc": "TRAVEL",                  "n": 250, "freq_pct": 54.2, "mean": 2.71, "est": 1.60, "variance": "+1.11"},
+      {"code": "0260", "desc": "FACES",                   "n": 234, "freq_pct": 50.8, "mean": 9.99, "est": 6.46, "variance": "+3.53"},
+      {"code": "9600", "desc": "INSTALL OVERTIME 1 MAN",  "n": 178, "freq_pct": 38.6, "mean": 3.04, "est": 0.00, "variance": "+3.04"},
+      {"code": "0420", "desc": "PRIME AND FINISH",        "n": 177, "freq_pct": 38.4, "mean": 5.06, "est": 4.26, "variance": "+0.80"},
+      {"code": "0410", "desc": "CLEAN AND ETCH",          "n": 169, "freq_pct": 36.7, "mean": 5.89, "est": 3.84, "variance": "+2.05"},
+      {"code": "9200", "desc": "FABRICATION OVERTIME",    "n": 150, "freq_pct": 32.5, "mean": 6.43, "est": 0.00, "variance": "+6.43"},
+      {"code": "0520", "desc": "CUT AND/OR WEED VINYL",  "n": 145, "freq_pct": 31.5, "mean": 2.88, "est": 1.42, "variance": "+1.46"},
+      {"code": "0270", "desc": "MISC FABRICATION",        "n": 142, "freq_pct": 30.8, "mean": 9.22, "est": 6.32, "variance": "+2.90"},
+      {"code": "0220", "desc": "EXTRUSIONS",              "n": 119, "freq_pct": 25.8, "mean": 15.32,"est": 10.26,"variance": "+5.06"},
+      {"code": "0310", "desc": "BALLAST WIRING",          "n": 115, "freq_pct": 24.9, "mean": 5.50, "est": 2.19, "variance": "+3.31"},
+      {"code": "0110", "desc": "SKETCHING",               "n": 106, "freq_pct": 23.0, "mean": 2.30, "est": 1.16, "variance": "+1.14"},
+      {"code": "0215", "desc": "STRUCTURAL STEEL",        "n": 94,  "freq_pct": 20.4, "mean": 21.44,"est": 10.41,"variance": "+11.03"}
+    ],
+    "estimation_insights": {
+      "key_differentiator": "Crating/shipping appears in 81.6% of jobs — most POLLIT signs are manufactured and shipped, not locally installed.",
+      "systematic_underestimates": ["0215 (structural steel: +11.03h)", "0630 (install: +6.02h)", "9200 (fab OT: +6.43h)", "0220 (extrusions: +5.06h)"],
+      "structural_is_critical": "Structural steel avg 21.44h but estimated at only 10.41h — 11 hour systematic underestimate"
+    }
+  },
+
+  "DIRECT": {
+    "label": "Directional",
+    "total_jobs_with_labor": 162,
+    "work_codes": [
+      {"code": "0630", "desc": "1 MAN & TRUCK INSTALL",  "n": 162, "freq_pct": 100.0,"mean": 6.07, "est": 1.41, "variance": "+4.66"},
+      {"code": "0270", "desc": "MISC FABRICATION",        "n": 145, "freq_pct": 89.5, "mean": 2.46, "est": 1.46, "variance": "+1.00"},
+      {"code": "0520", "desc": "CUT AND/OR WEED VINYL",  "n": 139, "freq_pct": 85.8, "mean": 1.69, "est": 0.86, "variance": "+0.83"},
+      {"code": "0550", "desc": "VINYL APPLICATION",       "n": 123, "freq_pct": 75.9, "mean": 1.56, "est": 1.42, "variance": "+0.14"},
+      {"code": "0610", "desc": "LOAD/UNLOAD",            "n": 120, "freq_pct": 74.1, "mean": 2.39, "est": 0.90, "variance": "+1.49"},
+      {"code": "0620", "desc": "TRAVEL",                  "n": 113, "freq_pct": 69.8, "mean": 1.77, "est": 0.89, "variance": "+0.88"},
+      {"code": "0410", "desc": "CLEAN AND ETCH",          "n": 100, "freq_pct": 61.7, "mean": 1.70, "est": 1.35, "variance": "+0.35"},
+      {"code": "0420", "desc": "PRIME AND FINISH",        "n": 98,  "freq_pct": 60.5, "mean": 2.31, "est": 2.41, "variance": "-0.10"},
+      {"code": "9600", "desc": "INSTALL OVERTIME 1 MAN",  "n": 96,  "freq_pct": 59.3, "mean": 2.52, "est": 0.00, "variance": "+2.52"},
+      {"code": "0200", "desc": "FABRICATION LAYOUT",      "n": 81,  "freq_pct": 50.0, "mean": 1.19, "est": 0.80, "variance": "+0.39"}
+    ],
+    "estimation_insights": {
+      "key_differentiator": "100% require install. Very high vinyl frequency (85.8% cutting, 75.9% application). Lightweight fab profile.",
+      "install_overtime_problem": "Install OT in 59.3% of jobs — suggests directional installs consistently take longer than planned"
+    }
+  },
+
+  "ALULIT": {
+    "label": "Aluminum Cabinet Illuminated",
+    "total_jobs_with_labor": 31,
+    "sparse_data_warning": true,
+    "work_codes": [
+      {"code": "0220", "desc": "EXTRUSIONS",              "n": 4,   "mean": 30.00, "p25": 3.38, "p50": 16.38, "p75": 43.00, "est": 11.63, "variance": "+18.37"},
+      {"code": "0410", "desc": "CLEAN AND ETCH",          "n": 4,   "mean": 2.75, "p25": 1.63, "p50": 2.38, "p75": 3.50, "est": 2.63, "variance": "+0.12"},
+      {"code": "0420", "desc": "PRIME AND FINISH",        "n": 4,   "mean": 3.25, "p25": 0.88, "p50": 2.75, "p75": 5.13, "est": 5.00, "variance": "-1.75"},
+      {"code": "0260", "desc": "FACES",                   "n": 4,   "mean": 4.88, "p25": 1.25, "p50": 5.00, "p75": 8.63, "est": 3.00, "variance": "+1.88"},
+      {"code": "0550", "desc": "VINYL APPLICATION",       "n": 3,   "mean": 6.25, "p25": 4.50, "p50": 8.25, "p75": 9.00, "est": 4.67, "variance": "+1.58"},
+      {"code": "0630", "desc": "1 MAN & TRUCK INSTALL",  "n": 3,   "mean": 5.08, "p25": 3.13, "p50": 4.00, "p75": 6.50, "est": 3.00, "variance": "+2.08"},
+      {"code": "0215", "desc": "STRUCTURAL STEEL",        "n": 3,   "mean": 3.25, "p25": 1.88, "p50": 2.50, "p75": 4.25, "est": 4.00, "variance": "-0.75"}
+    ],
+    "estimation_insights": {
+      "sparse_data": "Only 31 WOs total. No work code has more than 4 occurrences. Use MONDF profiles as fallback.",
+      "extrusion_bimodal": "Extrusions range from 3.38h (P25) to 43h (P75) — clearly mixing small retrofits with large builds"
+    }
+  },
+
+  "ALUNON": {
+    "label": "Aluminum Cabinet Non-Illuminated",
+    "total_jobs_with_labor": 13,
+    "sparse_data_warning": true,
+    "work_codes": [
+      {"code": "0410", "desc": "CLEAN AND ETCH",          "n": 2, "mean": 3.00, "est": 0.50},
+      {"code": "0420", "desc": "PRIME AND FINISH",        "n": 2, "mean": 3.25, "est": 0.00},
+      {"code": "0550", "desc": "VINYL APPLICATION",       "n": 2, "mean": 1.75, "est": 1.00},
+      {"code": "0610", "desc": "LOAD/UNLOAD",            "n": 2, "mean": 7.38, "est": 1.00},
+      {"code": "0520", "desc": "CUT AND/OR WEED VINYL",  "n": 2, "mean": 2.88, "est": 0.50},
+      {"code": "0210", "desc": "SHEET METAL",             "n": 1, "mean": 21.00,"est": 0.00},
+      {"code": "0220", "desc": "EXTRUSIONS",              "n": 1, "mean": 11.75,"est": 6.00}
+    ],
+    "estimation_insights": {
+      "too_sparse": "Only 13 WOs, max 2 occurrences per code. Cannot derive reliable estimates. Use MONDF + 20% buffer as [PROVISIONAL]."
+    }
+  },
+
+  "GEMINI": {
+    "label": "Dimensional Letters (Gemini-style)",
+    "total_jobs_with_labor": 115,
+    "work_codes": [
+      {"code": "0630", "desc": "1 MAN & TRUCK INSTALL",  "n": 104, "freq_pct": 90.4, "mean": 4.08, "est": 1.11, "variance": "+2.97"},
+      {"code": "0610", "desc": "LOAD/UNLOAD",            "n": 83,  "freq_pct": 72.2, "mean": 1.49, "est": 0.73, "variance": "+0.76"},
+      {"code": "0620", "desc": "TRAVEL",                  "n": 80,  "freq_pct": 69.6, "mean": 1.70, "est": 0.81, "variance": "+0.89"},
+      {"code": "0110", "desc": "SKETCHING",               "n": 69,  "freq_pct": 60.0, "mean": 0.73, "est": 0.48, "variance": "+0.25"},
+      {"code": "9600", "desc": "INSTALL OVERTIME 1 MAN",  "n": 55,  "freq_pct": 47.8, "mean": 1.81, "est": 0.00, "variance": "+1.81"},
+      {"code": "0520", "desc": "CUT AND/OR WEED VINYL",  "n": 50,  "freq_pct": 43.5, "mean": 1.13, "est": 0.60, "variance": "+0.53"}
+    ],
+    "estimation_insights": {
+      "lightweight_profile": "Shortest average install hours (4.08h). Sketching in 60% of jobs (design-intensive). Minimal electrical or structural work.",
+      "good_candidate_for_flat_rate": "Narrow variance band makes GEMINI suitable for simplified flat-rate estimation."
+    }
+  },
+
+  "LED": {
+    "label": "LED Conversion/Retrofit",
+    "total_jobs_with_labor": 53,
+    "work_codes": [
+      {"code": "0630", "desc": "1 MAN & TRUCK INSTALL",  "n": 47,  "freq_pct": 88.7, "mean": 5.03, "est": 3.59, "variance": "+1.45"},
+      {"code": "9600", "desc": "INSTALL OVERTIME 1 MAN",  "n": 24,  "freq_pct": 45.3, "mean": 1.76, "est": 0.00, "variance": "+1.76"},
+      {"code": "0620", "desc": "TRAVEL",                  "n": 19,  "freq_pct": 35.8, "mean": 2.99, "est": 1.55, "variance": "+1.43"},
+      {"code": "0610", "desc": "LOAD/UNLOAD",            "n": 17,  "freq_pct": 32.1, "mean": 1.06, "est": 0.71, "variance": "+0.35"},
+      {"code": "0820", "desc": "SERVICE LABOR",           "n": 13,  "freq_pct": 24.5, "mean": 2.08, "est": 0.00, "variance": "+2.08"},
+      {"code": "0625", "desc": "REMOVAL",                 "n": 9,   "freq_pct": 17.0, "mean": 2.31, "est": 0.00, "variance": "+2.31"},
+      {"code": "0340", "desc": "ELECTRICAL WIRING",       "n": 6,   "freq_pct": 11.3, "mean": 18.08,"est": 0.67, "variance": "+17.42"}
+    ],
+    "estimation_insights": {
+      "install_focused": "88.7% install, 45.3% overtime. Primarily field work, not shop fabrication.",
+      "electrical_alert": "When electrical wiring (0340) appears, it averages 18.08h but was estimated at only 0.67h — massive underestimate",
+      "service_component": "24.5% include service labor — LED retrofits often require troubleshooting existing systems"
+    }
+  },
+
+  "AWNNON": {
+    "label": "Awning Non-Illuminated",
+    "total_jobs_with_labor": 48,
+    "work_codes": [
+      {"code": "0250", "desc": "AWNING",                  "n": 66,  "freq_pct": 137.5,"mean": 12.40,"est": 6.38, "variance": "+6.02"},
+      {"code": "0630", "desc": "1 MAN & TRUCK INSTALL",  "n": 44,  "freq_pct": 91.7, "mean": 16.63,"est": 2.65, "variance": "+13.98"},
+      {"code": "0610", "desc": "LOAD/UNLOAD",            "n": 36,  "freq_pct": 75.0, "mean": 2.43, "est": 1.21, "variance": "+1.22"},
+      {"code": "0620", "desc": "TRAVEL",                  "n": 35,  "freq_pct": 72.9, "mean": 2.32, "est": 0.93, "variance": "+1.39"},
+      {"code": "9600", "desc": "INSTALL OVERTIME 1 MAN",  "n": 30,  "freq_pct": 62.5, "mean": 6.14, "est": 0.00, "variance": "+6.14"}
+    ],
+    "estimation_insights": {
+      "awning_dominant": "Code 0250 appears 137.5% (multiple line items per job). Awning fab is monolithic — fewer sub-processes than sign fab.",
+      "install_massively_underestimated": "Install avg 16.63h but estimated at 2.65h — 14 hour systematic underestimate. Awning installs are labor-intensive."
+    }
+  },
+
+  "cross_type_patterns": {
+    "universal_underestimates": {
+      "0630_install": "Underestimated in EVERY type. Ranges from +1.45h (LED) to +13.98h (AWNNON). Installation is the single most consistently underestimated activity.",
+      "overtime_codes": "9200/9600 are never estimated (est=0.00) but appear in 30-80% of jobs. These represent ~5-10h of unaccounted labor per job.",
+      "travel_0620": "Underestimated by 0.88-1.43h in every type. Small per-job but adds up across hundreds of jobs."
+    },
+    "type_specific_alerts": {
+      "CLLIT_misc_fab": "0270 variance of +56.88h is an anomaly — likely includes jobs where misc fab was used as catch-all code",
+      "POLLIT_structural": "0215 structural steel underestimated by 11.03h — these are large structural fabrications",
+      "AWNNON_install": "Install underestimated by 14h — awning installations are much more labor-intensive than estimated"
+    }
+  }
+}

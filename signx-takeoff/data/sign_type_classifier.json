@@ -1,0 +1,181 @@
+{
+  "_metadata": {
+    "generated": "2026-02-16",
+    "source": "signx.duckdb warehouse + so_contract_wo_summary description analysis",
+    "purpose": "Map description keywords → Eagle sign_type codes for automated classification",
+    "total_types": 37,
+    "total_jobs_with_revenue": 12189
+  },
+
+  "types_by_revenue_rank": [
+    {"rank": 1,  "code": "POLLIT",  "label": "Pole/Pylon Illuminated",     "jobs": 2470, "total_revenue": 27300000, "avg_revenue": 11070, "avg_gm_pct": 45.2},
+    {"rank": 2,  "code": "CLLIT",   "label": "Channel Letter Illuminated",  "jobs": 2350, "total_revenue": 8300000,  "avg_revenue": 3550,  "avg_gm_pct": 49.4},
+    {"rank": 3,  "code": "MONDF",   "label": "Monument Double-Face",        "jobs": 954,  "total_revenue": 5900000,  "avg_revenue": 6169,  "avg_gm_pct": 47.3},
+    {"rank": 4,  "code": "OTHER",   "label": "Other/Miscellaneous",         "jobs": 1672, "total_revenue": 2700000,  "avg_revenue": 1623,  "avg_gm_pct": 52.2},
+    {"rank": 5,  "code": "DIRECT",  "label": "Directional",                 "jobs": 807,  "total_revenue": 2600000,  "avg_revenue": 3178,  "avg_gm_pct": 51.4},
+    {"rank": 6,  "code": "BLDILL",  "label": "Building Illuminated",        "jobs": 756,  "total_revenue": 2000000,  "avg_revenue": 2697,  "avg_gm_pct": 46.4},
+    {"rank": 7,  "code": "MONSF",   "label": "Monument Single-Face",        "jobs": 205,  "total_revenue": 1500000,  "avg_revenue": 7192,  "avg_gm_pct": 42.5},
+    {"rank": 8,  "code": "AWNNON",  "label": "Awning Non-Illuminated",      "jobs": 297,  "total_revenue": 1200000,  "avg_revenue": 3912,  "avg_gm_pct": 47.4},
+    {"rank": 9,  "code": "GEMINI",  "label": "Dimensional Letters",          "jobs": 560,  "total_revenue": 1100000,  "avg_revenue": 1905,  "avg_gm_pct": 47.5},
+    {"rank": 10, "code": "LED",     "label": "LED Conversion/Retrofit",     "jobs": 243,  "total_revenue": 1100000,  "avg_revenue": 4339,  "avg_gm_pct": 40.6}
+  ],
+
+  "classification_rules": {
+    "_note": "Ordered by specificity. First match wins. Patterns are case-insensitive regex.",
+
+    "POLLIT": {
+      "keywords": ["pylon", "pole sign", "pole mount", "highway sign", "freeway", "interstate", "canopy", "LED conversion kit"],
+      "patterns": ["\\bpylon\\b", "\\bpole\\s*(sign|mount)", "LED\\s*conversion\\s*kit", "\\bcanopy\\b.*\\bsign\\b", "5x20\\s*package", "115mph|hurricane"],
+      "description_examples": [
+        "LED conversion kits 100-pack",
+        "5x20 package 115mph/hurricane rated",
+        "Canopy sign structures",
+        "Watchfire EMC on pylon"
+      ],
+      "distinguishing_features": "Crating/shipping in 81.6% of jobs (shipped, not locally installed). Structural steel dominant fab task."
+    },
+
+    "CLLIT": {
+      "keywords": ["channel letter", "halo lit", "halo-lit", "reverse lit", "front lit", "LED letter", "raceway"],
+      "patterns": ["channel\\s*letter", "halo[- ]?lit", "reverse[- ]?lit", "front[- ]?lit", "\\braceway\\b"],
+      "description_examples": [
+        "Channel letter sets",
+        "Halo-lit backer panels",
+        "LED illuminated letters",
+        "Parking garage channel letters"
+      ],
+      "distinguishing_features": "Install in 74.7% of jobs. Channel letters (0230) and faces (0260) are core fab codes."
+    },
+
+    "CLNON": {
+      "keywords": ["channel letter non", "non-illuminated channel", "painted channel"],
+      "patterns": ["channel\\s*letter.*non[- ]?il", "non[- ]?il.*channel"],
+      "description_examples": ["Non-illuminated channel letters"],
+      "distinguishing_features": "Same as CLLIT minus electrical wiring (0310, 0340) codes."
+    },
+
+    "MONDF": {
+      "keywords": ["monument", "ground sign", "masonry", "brick sign", "stone sign", "caisson", "monument double"],
+      "patterns": ["\\bmonument\\b", "masonry.*sign", "\\bcaisson\\b", "ground\\s*sign", "\\bbrick\\s*sign\\b"],
+      "description_examples": [
+        "Masonry sign columns",
+        "Watchfire EMC on monument",
+        "Caisson footings with monument",
+        "Park signage monument program"
+      ],
+      "distinguishing_features": "Broadest work code coverage. Install 87.2%. Vinyl in 65%+. Misc fab (0270) median 6.0h."
+    },
+
+    "MONSF": {
+      "keywords": ["monument single", "tenant monument", "monument SF"],
+      "patterns": ["monument.*single", "tenant.*monument", "single[- ]?face.*monument"],
+      "description_examples": [
+        "Monument tenant signs",
+        "Reverse-lit wave monument",
+        "Monument with landscaping"
+      ],
+      "distinguishing_features": "Higher fab overtime (9200 median 9.75h). Electrical wiring in 48.8%. Extrusions median 13.5h."
+    },
+
+    "DIRECT": {
+      "keywords": ["directional", "wayfinding", "overhead sign", "information hub"],
+      "patterns": ["\\bdirectional\\b", "\\bwayfinding\\b", "overhead\\s*sign", "information\\s*hub"],
+      "description_examples": [
+        "Overhead directional signs",
+        "Secondary park signs",
+        "Information hubs",
+        "Shive-Hattery directional standards"
+      ],
+      "distinguishing_features": "100% have install. Misc fab 89.5%, vinyl 75.9%. Footing install estimates often inflated."
+    },
+
+    "BLDILL": {
+      "keywords": ["building sign illum", "wall sign illum", "facade sign", "building illuminated"],
+      "patterns": ["building.*illum", "wall.*sign.*illum", "facade.*sign"],
+      "description_examples": ["Building-mounted illuminated signage"],
+      "distinguishing_features": "Building-mounted signs with electrical. Mid-range margin (46.4%)."
+    },
+
+    "BLDNON": {
+      "keywords": ["building sign non", "wall sign non", "building non-illuminated"],
+      "patterns": ["building.*non[- ]?il", "wall.*sign.*non"],
+      "description_examples": ["Non-illuminated building signage"],
+      "distinguishing_features": "Same as BLDILL minus electrical codes."
+    },
+
+    "AWNNON": {
+      "keywords": ["awning", "canopy cover", "fabric awning"],
+      "patterns": ["\\bawning\\b", "fabric.*awning"],
+      "description_examples": ["Fabric awning installation"],
+      "distinguishing_features": "Dominated by awning code 0250 (137.5% freq = multiple line items). Install avg 16.6h."
+    },
+
+    "GEMINI": {
+      "keywords": ["dimensional letter", "flat cut", "routed letter", "stud mount", "gemini"],
+      "patterns": ["dimensional\\s*letter", "flat\\s*cut.*metal", "routed.*acrylic", "stud[- ]?mount", "\\bgemini\\b"],
+      "description_examples": [
+        "Flat cut metal letters 1/2\" deep",
+        "Routed acrylic letters",
+        "Stud-mounted dimensional letters"
+      ],
+      "distinguishing_features": "Lightest labor profile. Install avg 4.1h. Sketching 60% (design-intensive). Minimal electrical."
+    },
+
+    "LED": {
+      "keywords": ["LED retrofit", "LED conversion", "LED stick", "RGB LED", "LED lighting"],
+      "patterns": ["LED\\s*(retrofit|conversion|stick|lighting)", "RGB\\s*LED"],
+      "description_examples": [
+        "Bulk LED conversion kits",
+        "RGB LED lighting retrofit",
+        "LED stick conversions",
+        "Power supply orders"
+      ],
+      "distinguishing_features": "Install-focused (88.7%, 5.0h). Service labor in 24.5% (troubleshooting)."
+    },
+
+    "ALULIT": {
+      "keywords": ["aluminum cabinet illum", "cabinet illuminated", "sign cabinet lit"],
+      "patterns": ["aluminum.*cabinet.*illum", "cabinet.*illuminated", "sign\\s*cabinet.*lit"],
+      "description_examples": ["Illuminated aluminum cabinet sign"],
+      "distinguishing_features": "Extrusions mean 30h (massive spread). Only 31 total WOs. Vinyl application 6.25h (full wraps)."
+    },
+
+    "ALUNON": {
+      "keywords": ["aluminum cabinet non", "cabinet non-illuminated"],
+      "patterns": ["aluminum.*cabinet.*non", "cabinet.*non[- ]?il"],
+      "description_examples": ["Non-illuminated aluminum cabinet"],
+      "distinguishing_features": "Only 13 total WOs. Too sparse for reliable statistics."
+    },
+
+    "VINYL": {
+      "keywords": ["vinyl", "decal", "vehicle wrap", "window graphic", "wall graphic"],
+      "patterns": ["\\bvinyl\\b", "\\bdecal\\b", "vehicle\\s*wrap", "window\\s*graphic"],
+      "description_examples": ["Vinyl graphics", "Vehicle wraps", "Window decals"],
+      "distinguishing_features": "Vinyl cutting (0520) and application (0550) dominate."
+    },
+
+    "NEON": {
+      "keywords": ["neon", "glass tube", "neon repair"],
+      "patterns": ["\\bneon\\b", "glass\\s*tube"],
+      "description_examples": ["Neon sign repair", "Glass tube bending"],
+      "distinguishing_features": "Legacy type. Most new work is LED retrofit. See Section 3F in ABC guide."
+    }
+  },
+
+  "sparse_types_warning": {
+    "_note": "These types have too few jobs for statistical modeling. Use broader category defaults.",
+    "types": [
+      {"code": "ALULIT", "jobs": 31, "recommendation": "Group with MONDF for estimation"},
+      {"code": "ALUNON", "jobs": 13, "recommendation": "Group with MONDF for estimation"},
+      {"code": "FORMED", "jobs": 5, "recommendation": "Group with OTHER"},
+      {"code": "STLLIT", "jobs": 2, "recommendation": "Group with POLLIT"}
+    ]
+  },
+
+  "margin_tiers": {
+    "high_margin": {"min_gm_pct": 50, "types": ["OTHER", "DIRECT"]},
+    "standard_margin": {"min_gm_pct": 42, "types": ["CLLIT", "MONDF", "AWNNON", "GEMINI", "BLDILL", "POLLIT"]},
+    "low_margin": {"min_gm_pct": 30, "types": ["MONSF", "LED", "AWNILL", "ALULIT", "ALUNON"]},
+    "note": "Low-margin types need tighter estimation to avoid margin leaks."
+  }
+}
