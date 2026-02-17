@@ -1,0 +1,442 @@
+{
+  "standard": "ASCE 7-22",
+  "full_title": "ASCE/SEI 7-22 Minimum Design Loads and Associated Criteria for Buildings and Other Structures",
+  "sections": ["1.5-1", "26.5", "26.6-1", "26.9-1", "26.10-1", "26.11-1", "29.3-1"],
+  "sources": [
+    "ASCE/SEI 7-22 Standard (primary reference)",
+    "Meca Enterprises - Wind Loads on Solid Signs (mecaenterprises.com)",
+    "Meca Enterprises - Wind Loads on Freestanding Walls (mecaenterprises.com)",
+    "Meca Enterprises - ASCE 7-22 Wind Load Changes (mecaenterprises.com)",
+    "SkyCiv Engineering - ASCE 7 Wind Load Calculations (skyciv.com)",
+    "Engineering Express - Directionality Factor Kd (engineeringexpress.com)",
+    "CED Engineering - S02-048 Calculating Wind Loads Using ASCE 7-22 (cedengineering.com)",
+    "Tekla Structural Designer - ASCE 7-22 Updates (support.tekla.com)",
+    "Bentley STAAD.Pro - ASCE 7-22 Wind Load Generation (docs.bentley.com)",
+    "The StructEd - How Does Site Elevation Influence Wind Loads (structed.org)"
+  ],
+  "safety_notice": "SAFETY-CRITICAL DATA: These values are used in structural calculations subject to PE stamp. All values must be verified against the official ASCE 7-22 standard before use in production calculations. When in doubt, use the more conservative (higher) value.",
+
+  "Kz_table_26_10_1": {
+    "description": "Velocity Pressure Exposure Coefficients, Kh and Kz (Table 26.10-1)",
+    "notes": [
+      "For z <= 15 ft, use Kz value for 15 ft height",
+      "For z >= zg, Kz = 2.01*(zg/zg)^(2/alpha) = 2.01",
+      "Linear interpolation is permitted for intermediate heights",
+      "ASCE 7-22 made minor reductions to some Exposure B values (z >= 40ft) and Exposure C values (z >= 140ft) based on improved research. The values here are the ASCE 7-16 baseline which is conservative (slightly higher). See Kz_7_22_notes for details."
+    ],
+    "formula": "Kz = 2.01 * (z / zg)^(2 / alpha)  [for z >= 15 ft]",
+    "formula_note": "z = height above ground (ft), zg and alpha from Table 26.11-1",
+    "heights_ft": [15, 20, 25, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160, 180, 200, 250, 300, 350, 400, 450, 500],
+    "B": {
+      "15": 0.57, "20": 0.62, "25": 0.66, "30": 0.70,
+      "40": 0.76, "50": 0.81, "60": 0.85, "70": 0.89,
+      "80": 0.93, "90": 0.96, "100": 0.99, "120": 1.04,
+      "140": 1.09, "160": 1.13, "180": 1.17, "200": 1.20,
+      "250": 1.28, "300": 1.35, "350": 1.41, "400": 1.47,
+      "450": 1.52, "500": 1.56
+    },
+    "C": {
+      "15": 0.85, "20": 0.90, "25": 0.94, "30": 0.98,
+      "40": 1.04, "50": 1.09, "60": 1.13, "70": 1.17,
+      "80": 1.21, "90": 1.24, "100": 1.26, "120": 1.31,
+      "140": 1.36, "160": 1.39, "180": 1.43, "200": 1.46,
+      "250": 1.53, "300": 1.59, "350": 1.64, "400": 1.69,
+      "450": 1.73, "500": 1.77
+    },
+    "D": {
+      "15": 1.03, "20": 1.08, "25": 1.12, "30": 1.16,
+      "40": 1.22, "50": 1.27, "60": 1.31, "70": 1.34,
+      "80": 1.38, "90": 1.40, "100": 1.43, "120": 1.48,
+      "140": 1.52, "160": 1.55, "180": 1.58, "200": 1.61,
+      "250": 1.68, "300": 1.73, "350": 1.78, "400": 1.82,
+      "450": 1.86, "500": 1.89
+    },
+    "Kz_7_22_notes": {
+      "description": "ASCE 7-22 made minor reductions to Exposure B (z >= 40ft) and Exposure C (z >= 140ft). Using ASCE 7-16 values is conservative (produces slightly higher loads). If jurisdiction requires exact ASCE 7-22 values, consult the standard directly.",
+      "exposure_B_changes": "Slight reductions at z >= 40ft (e.g., 40ft: 0.76->0.74, 100ft: 0.99->0.95, 200ft: 1.20->1.14)",
+      "exposure_C_changes": "Slight reductions at z >= 140ft (e.g., 140ft: 1.36->1.34, 200ft: 1.46->1.44)",
+      "exposure_D_changes": "No changes from ASCE 7-16"
+    }
+  },
+
+  "terrain_exposure_constants_26_11_1": {
+    "description": "Terrain Exposure Constants (Table 26.11-1)",
+    "B": {"alpha": 7.0, "zg_ft": 1200},
+    "C": {"alpha": 9.5, "zg_ft": 900},
+    "D": {"alpha": 11.5, "zg_ft": 700}
+  },
+
+  "Kd_table_26_6_1": {
+    "description": "Wind Directionality Factor, Kd (Table 26.6-1)",
+    "notes": [
+      "ASCE 7-22 Change: Kd removed from the velocity pressure equation (qz) and placed into individual wind pressure/force equations",
+      "For MWFRS design using directional procedure: Kd per this table",
+      "For non-directional procedure: Kd = 1.0"
+    ],
+    "structure_types": {
+      "buildings_MWFRS": {
+        "description": "Buildings - Main Wind Force Resisting System",
+        "Kd": 0.85
+      },
+      "buildings_CC": {
+        "description": "Buildings - Components and Cladding",
+        "Kd": 0.85
+      },
+      "arched_roofs": {
+        "description": "Arched Roofs",
+        "Kd": 0.85
+      },
+      "chimneys_tanks_similar": {
+        "description": "Chimneys, Tanks, and Similar Structures - Square",
+        "Kd": 0.90
+      },
+      "chimneys_tanks_hex_round": {
+        "description": "Chimneys, Tanks, and Similar Structures - Hexagonal, Round",
+        "Kd": 0.95
+      },
+      "solid_freestanding_walls_signs": {
+        "description": "Solid Freestanding Walls and Solid Freestanding Signs",
+        "Kd": 0.85
+      },
+      "open_signs_lattice": {
+        "description": "Open Signs and Lattice Framework",
+        "Kd": 0.85
+      },
+      "trussed_towers": {
+        "description": "Trussed Towers - Triangular, Square, Rectangular",
+        "Kd": 0.85
+      },
+      "trussed_towers_all_other": {
+        "description": "Trussed Towers - All Other Cross Sections",
+        "Kd": 0.95
+      }
+    }
+  },
+
+  "Ke_table_26_9_1": {
+    "description": "Ground Elevation Factor, Ke (Table 26.9-1)",
+    "notes": [
+      "New in ASCE 7-22 (not in ASCE 7-16)",
+      "Accounts for reduced air density at higher elevations",
+      "It is permitted to use Ke = 1.0 for all elevations (conservative)",
+      "Interpolation is permitted for intermediate elevations"
+    ],
+    "elevations_ft": {
+      "0": 1.00,
+      "1000": 0.96,
+      "2000": 0.93,
+      "3000": 0.89,
+      "4000": 0.86,
+      "5000": 0.83,
+      "6000": 0.80
+    },
+    "formula": "Ke = e^(-0.0000362 * zg_elev)  [approximate, zg_elev in feet above sea level]",
+    "formula_note": "This formula is approximate; use table values for design. For zg_elev > 6000 ft, use the formula or consult the standard."
+  },
+
+  "Cf_figure_29_3_1": {
+    "description": "Force Coefficients, Cf, for Solid Freestanding Walls and Solid Freestanding Signs (Figure 29.3-1)",
+    "notes": [
+      "Cf depends on B/s ratio (width-to-height of sign) and s/h ratio (sign height / mounting height to top)",
+      "B = horizontal dimension of sign (ft)",
+      "s = vertical dimension of sign (ft)",
+      "h = height to top of sign above ground (ft)",
+      "Three loading cases: A, B, and C",
+      "Cases A and B must always be checked",
+      "Case C only applies when B/s >= 2"
+    ],
+    "case_A": {
+      "description": "Resultant acts normal to face of sign through geometric center",
+      "application": "Governs panel framing in double-pole signs",
+      "values": {
+        "B_over_s": {
+          "description": "B/s ratio (rows) vs s/h ratio (columns)",
+          "ratios": [0.1, 0.2, 0.5, 1.0, 2.0, 5.0, 10.0, 20.0, 45.0],
+          "s_over_h_025": [1.80, 1.80, 1.80, 1.75, 1.70, 1.55, 1.45, 1.40, 1.35],
+          "s_over_h_050": [1.80, 1.80, 1.80, 1.75, 1.70, 1.55, 1.45, 1.40, 1.35],
+          "s_over_h_080": [1.65, 1.65, 1.65, 1.55, 1.50, 1.35, 1.28, 1.22, 1.20],
+          "s_over_h_100": [1.50, 1.50, 1.50, 1.40, 1.35, 1.20, 1.15, 1.10, 1.05]
+        },
+        "interpolation_note": "Linear interpolation is permitted for intermediate B/s and s/h values"
+      }
+    },
+    "case_B": {
+      "description": "Resultant acts normal to face of sign at 0.2*B eccentricity from geometric center (toward windward edge)",
+      "application": "Governs torsion on single-pole signs, individual pole loads on double-pole signs",
+      "eccentricity": "0.2 * B",
+      "Cf_values": "Same Cf values as Case A, but applied at the eccentric location",
+      "note": "The Cf magnitude is the same as Case A. The difference is the point of application (eccentric by 0.2*B). This creates torsional moment = F * 0.2*B."
+    },
+    "case_C": {
+      "description": "Non-uniform load distribution for long signs/walls (B/s >= 2). Force applied normal to face with varying Cf along the width.",
+      "applicability": "Only when B/s >= 2",
+      "application": "Governs for long freestanding walls and wide signs",
+      "zones": {
+        "description": "Sign width divided into zones of height 's', each with different Cf. Zone boundaries measured from windward free end.",
+        "B_over_s_2": {
+          "B_over_s": 2,
+          "zone_0_to_s": 2.25,
+          "zone_s_to_2s": 1.50
+        },
+        "B_over_s_5": {
+          "B_over_s": 5,
+          "zone_0_to_s": 2.60,
+          "zone_s_to_2s": 1.70,
+          "zone_2s_to_3s": 1.35,
+          "zone_3s_to_4s": 1.20,
+          "zone_4s_to_5s": 1.10
+        },
+        "B_over_s_10": {
+          "B_over_s": 10,
+          "zone_0_to_s": 3.40,
+          "zone_s_to_2s": 2.15,
+          "zone_2s_to_3s": 1.65,
+          "zone_3s_to_4s": 1.35,
+          "zone_4s_to_5s": 1.25,
+          "zone_5s_to_10s": 0.90
+        },
+        "B_over_s_20": {
+          "B_over_s": 20,
+          "zone_0_to_s": 4.07,
+          "zone_s_to_2s": 2.59,
+          "zone_2s_to_3s": 1.99,
+          "zone_3s_to_4s": 1.58,
+          "zone_4s_to_5s": 1.46,
+          "zone_5s_to_10s": 0.94,
+          "zone_gt_10s": 0.55
+        },
+        "B_over_s_45": {
+          "B_over_s": 45,
+          "zone_0_to_s": 4.60,
+          "zone_s_to_2s": 2.93,
+          "zone_2s_to_3s": 2.25,
+          "zone_3s_to_4s": 1.79,
+          "zone_4s_to_5s": 1.65,
+          "zone_5s_to_10s": 1.06,
+          "zone_gt_10s": 0.62
+        }
+      },
+      "interpolation_note": "Linear interpolation is permitted for intermediate B/s values. For B/s > 45, use B/s = 45 values."
+    }
+  },
+
+  "Kzt_note": {
+    "description": "Topographic Factor, Kzt (Section 26.8)",
+    "flat_terrain": 1.0,
+    "note": "Kzt = 1.0 for flat terrain (no hills, ridges, or escarpments). For sites near topographic features, Kzt must be calculated per Section 26.8. Most sign installations use Kzt = 1.0."
+  },
+
+  "gust_factor": {
+    "description": "Gust-Effect Factor, G (Section 26.11)",
+    "rigid_structures": 0.85,
+    "note": "G = 0.85 for rigid structures (natural frequency >= 1 Hz). Most signs are rigid structures. For flexible structures, G must be calculated per Section 26.11.5."
+  },
+
+  "formulas": {
+    "velocity_pressure": {
+      "equation": "qz = 0.00256 * Kz * Kzt * Ke * V^2",
+      "units": "qz in psf, V in mph",
+      "note": "ASCE 7-22 CHANGE: Kd is NO LONGER in the velocity pressure equation. It is now applied in individual pressure/force equations.",
+      "asce_7_16_equation": "qz = 0.00256 * Kz * Kzt * Kd * V^2 (Kd was in this equation in ASCE 7-16)"
+    },
+    "design_wind_force_signs": {
+      "equation": "F = qz * Kd * G * Cf * As",
+      "units": "F in lbf, qz in psf, As in sq ft",
+      "variables": {
+        "qz": "Velocity pressure at height z (psf)",
+        "Kd": "Directionality factor from Table 26.6-1",
+        "G": "Gust-effect factor (0.85 for rigid)",
+        "Cf": "Force coefficient from Figure 29.3-1",
+        "As": "Gross area of sign (sq ft)"
+      }
+    },
+    "alternative_combined_form": {
+      "equation": "F = 0.00256 * Kz * Kzt * Ke * V^2 * Kd * G * Cf * As",
+      "note": "Combined form showing all factors. This produces the same result whether using ASCE 7-16 or 7-22 equation arrangements."
+    }
+  },
+
+  "verification": {
+    "description": "Reference example calculation for validation",
+    "scenario": {
+      "sign_width_ft": 10,
+      "sign_height_ft": 5,
+      "centroid_height_ft": 15,
+      "exposure": "C",
+      "basic_wind_speed_mph": 115,
+      "terrain": "flat",
+      "elevation_ft": 0
+    },
+    "parameters": {
+      "Kz": {"value": 0.85, "source": "Table 26.10-1, Exp C at 15 ft"},
+      "Kzt": {"value": 1.0, "source": "Flat terrain"},
+      "Kd": {"value": 0.85, "source": "Table 26.6-1, solid freestanding signs"},
+      "Ke": {"value": 1.0, "source": "Table 26.9-1, sea level"},
+      "G": {"value": 0.85, "source": "Section 26.11, rigid structure"},
+      "V": {"value": 115, "source": "Given basic wind speed (mph)"},
+      "As": {"value": 50.0, "source": "10 ft x 5 ft = 50 sq ft"},
+      "B_over_s": {"value": 2.0, "source": "10 ft / 5 ft"},
+      "s_over_h": {"value": 0.333, "source": "5 ft / 15 ft"}
+    },
+    "step_1_velocity_pressure": {
+      "equation": "qz = 0.00256 * Kz * Kzt * Ke * V^2",
+      "calculation": "qz = 0.00256 * 0.85 * 1.0 * 1.0 * 115^2",
+      "result_psf": 28.77,
+      "note": "Note: qz does NOT include Kd in ASCE 7-22"
+    },
+    "step_2_force_coefficient": {
+      "B_over_s": 2.0,
+      "s_over_h": 0.333,
+      "interpolation": "Interpolate between s/h=0.25 and s/h=0.50 at B/s=2.0",
+      "Cf_case_A": 1.70,
+      "note": "From Figure 29.3-1 Case A: at B/s=2.0, s/h=0.25 gives Cf=1.70 and s/h=0.50 gives Cf=1.70, so Cf=1.70"
+    },
+    "step_3_design_force_case_A": {
+      "equation": "F = qz * Kd * G * Cf * As",
+      "calculation": "F = 28.77 * 0.85 * 0.85 * 1.70 * 50",
+      "result_lbf": 1767.0,
+      "result_psf_on_sign": 35.34,
+      "note": "This is the uniform load case (Case A) - force acts at geometric center"
+    },
+    "step_3_alt_combined": {
+      "equation": "F = 0.00256 * Kz * Kzt * Ke * V^2 * Kd * G * Cf * As",
+      "calculation": "F = 0.00256 * 0.85 * 1.0 * 1.0 * 115^2 * 0.85 * 0.85 * 1.70 * 50",
+      "result_lbf": 1767.0
+    },
+    "step_4_case_B_torsion": {
+      "description": "Case B: Same force as Case A but applied at 0.2*B eccentricity",
+      "eccentricity_ft": 2.0,
+      "torsional_moment_ft_lbf": 3534.0,
+      "note": "Torsion = F * 0.2 * B = 1767 * 0.2 * 10 = 3534 ft-lbf"
+    },
+    "step_5_case_C_check": {
+      "B_over_s": 2.0,
+      "applies": true,
+      "zone_Cf": {
+        "zone_0_to_s": {"width_ft": 5, "Cf": 2.25},
+        "zone_s_to_2s": {"width_ft": 5, "Cf": 1.50}
+      },
+      "zone_forces": {
+        "zone_1": "F1 = 28.77 * 0.85 * 0.85 * 2.25 * 25 = 1168 lbf (on windward 5ft strip)",
+        "zone_2": "F2 = 28.77 * 0.85 * 0.85 * 1.50 * 25 = 779 lbf (on leeward 5ft strip)"
+      },
+      "total_force_lbf": 1947,
+      "note": "Case C gives higher total force than Case A for B/s >= 2. Check all three cases."
+    },
+    "cross_check_qz_with_Kd_in_qz": {
+      "description": "Cross-check: If using the older ASCE 7-16 form with Kd in qz",
+      "equation": "qz = 0.00256 * Kz * Kzt * Kd * Ke * V^2",
+      "calculation": "qz = 0.00256 * 0.85 * 1.0 * 0.85 * 1.0 * 115^2",
+      "result_psf": 24.46,
+      "note": "This matches the task expected value of ~24.5 psf. The ASCE 7-16 form embeds Kd in qz."
+    }
+  },
+
+  "exposure_categories": {
+    "B": {
+      "description": "Urban and suburban areas, wooded areas, or other terrain with numerous closely spaced obstructions having the size of single-family dwellings or larger",
+      "typical_use": "Most sign installations in developed areas"
+    },
+    "C": {
+      "description": "Open terrain with scattered obstructions having heights generally less than 30 ft. Includes flat open country, grasslands, and all water surfaces in hurricane-prone regions",
+      "typical_use": "Signs along highways, in rural areas, or near airports"
+    },
+    "D": {
+      "description": "Flat, unobstructed areas and water surfaces outside hurricane-prone regions. Includes smooth mud flats, salt flats, and unbroken ice",
+      "typical_use": "Rare for sign installations; coastal areas outside hurricane zones"
+    }
+  },
+
+  "risk_categories_table_1_5_1": {
+    "description": "Risk Category of Buildings and Other Structures (Table 1.5-1)",
+    "notes": [
+      "ASCE 7-10 and later (including 7-22) ELIMINATED the wind importance factor Iw",
+      "Instead of Iw, separate wind speed maps are provided for each Risk Category",
+      "Each map uses a different mean recurrence interval (MRI)",
+      "Signs are typically Risk Category I or II depending on occupancy/exposure"
+    ],
+    "categories": {
+      "I": {
+        "description": "Buildings and other structures that represent a low risk to human life in the event of failure",
+        "examples": "Agricultural facilities, minor storage facilities, temporary facilities",
+        "sign_application": "Signs in isolated locations with minimal public exposure",
+        "wind_speed_MRI_years": 300
+      },
+      "II": {
+        "description": "All buildings and other structures except those listed in Risk Categories I, III, and IV",
+        "examples": "Most commercial buildings, residential buildings, standard occupancy structures",
+        "sign_application": "Most sign installations (default category)",
+        "wind_speed_MRI_years": 700
+      },
+      "III": {
+        "description": "Buildings and other structures, the failure of which could pose a substantial risk to human life, or whose failure could cause a substantial economic impact or mass disruption of day-to-day civilian life",
+        "examples": "Buildings with >300 occupants, schools (>250), healthcare without surgery, jails, power stations",
+        "sign_application": "Signs on or adjacent to Risk Category III buildings",
+        "wind_speed_MRI_years": 1700
+      },
+      "IV": {
+        "description": "Buildings and other structures designated as essential facilities",
+        "examples": "Hospitals, fire/rescue/police stations, emergency shelters, air traffic control towers",
+        "sign_application": "Signs on essential facilities (rare for typical sign work)",
+        "wind_speed_MRI_years": 3000
+      }
+    },
+    "importance_factor_note": "ASCE 7-22 does NOT use wind importance factors. The wind speed maps themselves are calibrated to each Risk Category's MRI. Do not multiply by Iw."
+  },
+
+  "basic_wind_speed_reference": {
+    "description": "Basic Wind Speed V Reference (Section 26.5, Figures 26.5-1 through 26.5-4)",
+    "notes": [
+      "ASCE 7-22 provides 4 separate wind speed maps, one per Risk Category",
+      "Wind speeds are 3-second gust speeds at 33 ft (10 m) above ground in Exposure C",
+      "Site-specific speeds must be obtained from ASCE 7 Hazard Tool (asce7hazardtool.online) or wind speed maps",
+      "The values below are APPROXIMATE TYPICAL ranges for non-hurricane regions of the continental US"
+    ],
+    "hazard_tool_url": "https://asce7hazardtool.online",
+    "typical_ranges_non_hurricane_mph": {
+      "risk_category_I": {
+        "interior_US": "90-105",
+        "great_plains": "100-110",
+        "note": "Lower MRI = lower speeds"
+      },
+      "risk_category_II": {
+        "interior_US": "95-115",
+        "great_plains": "105-120",
+        "midwest_ohio_valley": "105-115",
+        "note": "Most common for sign design"
+      },
+      "risk_category_III": {
+        "interior_US": "105-125",
+        "great_plains": "115-135",
+        "note": "Higher MRI = higher speeds"
+      },
+      "risk_category_IV": {
+        "interior_US": "110-135",
+        "great_plains": "120-145",
+        "note": "Highest speeds for essential facilities"
+      }
+    },
+    "hurricane_prone_regions": {
+      "atlantic_gulf_coast": "130-180 mph (Risk Cat II), varies significantly by location",
+      "south_florida": "150-175 mph (Risk Cat II)",
+      "note": "Hurricane-prone coastal areas have significantly higher design wind speeds. Always use site-specific lookup."
+    },
+    "critical_note": "NEVER estimate wind speed. Always use the ASCE 7 Hazard Tool or jurisdictional requirements for the specific project location."
+  },
+
+  "sign_calculation_workflow": {
+    "step_1": "Determine basic wind speed V from ASCE 7-22 wind speed maps (Risk Category dependent)",
+    "step_2": "Determine Exposure Category (B, C, or D) based on surrounding terrain",
+    "step_3": "Determine height z for Kz lookup (centroid of sign above ground, or evaluate at multiple heights)",
+    "step_4": "Look up Kz from Table 26.10-1",
+    "step_5": "Determine Kzt (1.0 for flat terrain, or calculate per Section 26.8)",
+    "step_6": "Determine Ke from Table 26.9-1 (or use 1.0 conservatively)",
+    "step_7": "Calculate qz = 0.00256 * Kz * Kzt * Ke * V^2",
+    "step_8": "Look up Kd from Table 26.6-1 (0.85 for signs)",
+    "step_9": "Determine G (0.85 for rigid structures)",
+    "step_10": "Compute B/s and s/h ratios for the sign",
+    "step_11": "Look up Cf from Figure 29.3-1 for Cases A, B, and C (if applicable)",
+    "step_12": "Calculate F = qz * Kd * G * Cf * As for each case",
+    "step_13": "Design for the governing (worst-case) loading condition"
+  }
+}

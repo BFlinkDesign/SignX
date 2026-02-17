@@ -183,9 +183,6 @@ class CostPredictor:
         
         # Train
         import time
-import logging
-
-logger = logging.getLogger(__name__)
         start = time.time()
         
         self.model.fit(X_train, y_train)

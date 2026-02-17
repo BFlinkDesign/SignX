@@ -167,7 +167,7 @@ Easy to extend, hard to break:
 
 ```python
 # Add new module
-from platform.registry import registry, ModuleDefinition
+from signx_platform.registry import registry, ModuleDefinition
 
 module_def = ModuleDefinition(
     name="my_module",

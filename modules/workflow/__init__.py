@@ -10,8 +10,8 @@ This module automates the quote-to-project workflow:
 Status: 🔄 In development (converting PowerShell to Python)
 """
 from fastapi import APIRouter, BackgroundTasks
-from platform.registry import registry, ModuleDefinition
-from platform.events import event_bus, Event
+from signx_platform.registry import registry, ModuleDefinition
+from signx_platform.events import event_bus, Event
 import logging
 
 logger = logging.getLogger(__name__)

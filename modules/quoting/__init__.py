@@ -13,8 +13,8 @@ Status: 🚀 Core of the instant quoting system transformation
 """
 from fastapi import APIRouter, UploadFile, File, HTTPException, BackgroundTasks
 from pydantic import BaseModel, Field
-from platform.registry import registry, ModuleDefinition
-from platform.events import event_bus, Event
+from signx_platform.registry import registry, ModuleDefinition
+from signx_platform.events import event_bus, Event
 from typing import List, Optional, Dict, Any
 import asyncio
 from datetime import datetime, timedelta

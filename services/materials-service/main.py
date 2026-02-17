@@ -313,7 +313,7 @@ def pick_materials(req: MaterialPickRequest, response: Response) -> MaterialPick
     trace = Trace(
         request_hash=request_hash,
         code_version=f"git:{git['git_sha']}",
-        model_config={"scaler": "minmax_v1"},
+        model_configuration={"scaler": "minmax_v1"},
     )
 
     assumptions.extend([

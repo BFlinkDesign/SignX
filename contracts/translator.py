@@ -36,7 +36,7 @@ class Trace(BaseModel):
     span_id: str
     monotonic_ms: float
     code_version: Dict[str, str]
-    model_config: Dict[str, str]
+    model_configuration: Dict[str, str]
 
 
 class AskResponse(BaseModel):

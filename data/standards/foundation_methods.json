@@ -1,0 +1,507 @@
+{
+  "_metadata": {
+    "version": "1.0.0",
+    "created": "2026-02-17",
+    "purpose": "Foundation design methods knowledge base for rigid concrete caisson (sign foundation) design",
+    "sources": [
+      "Broms, B.B. (1964). Lateral Resistance of Piles in Cohesive Soils. JSMFD, ASCE, 90(SM2), 27-63",
+      "Broms, B.B. (1964). Lateral Resistance of Piles in Cohesionless Soils. JSMFD, ASCE, 90(SM3), 123-156",
+      "Brinch Hansen, J. (1961). The Ultimate Resistance of Rigid Piles Against Transversal Forces. Bulletin No. 12, Danish Geotechnical Institute",
+      "Czerniak, E. (1957). Resistance to Overturning of Single, Short Piles. ASCE J. Structural Division, 83(ST2), Paper 1188",
+      "IBC 2021, Chapter 18: Soils and Foundations, Sections 1806.2, 1807.3"
+    ]
+  },
+  "methods": {
+    "broms_1964": {
+      "name": "Broms' Method",
+      "author": "Bengt B. Broms",
+      "year": 1964,
+      "reference": "Lateral Resistance of Piles in Cohesive/Cohesionless Soils, JSMFD ASCE Vol 90",
+      "description": "Short rigid pile lateral capacity method. Distinguishes cohesive vs cohesionless soil, free-head vs fixed-head conditions. Widely used for single pile lateral load analysis.",
+      "applicability": "Short rigid piles (L/D < 10-12), single soil layer, uniform profile",
+      "cohesive_soil": {
+        "description": "Undrained analysis using undrained shear strength (cu/Su)",
+        "assumptions": [
+          "Top 1.5D of soil reaction ignored (surface wedge failure)",
+          "Ultimate soil reaction = 9 * Su * D along pile below 1.5D",
+          "Rigid pile rotates about a point near the toe"
+        ],
+        "formulas": {
+          "fixed_head_short_pile": {
+            "formula": "Hu = 9 * cu * D * (L - 1.5 * D)",
+            "variables": {
+              "Hu": "Ultimate lateral load capacity (lb or kN)",
+              "cu": "Undrained shear strength of soil (psf or kPa)",
+              "D": "Pile diameter (ft or m)",
+              "L": "Embedded pile length (ft or m)"
+            },
+            "notes": "Top 1.5D excluded from resistance zone"
+          },
+          "free_head_short_pile": {
+            "formula": "Hu solved from moment equilibrium: Hu * (e + 1.5*D + 0.5*f) = 9*Su*D*f*(L - 1.5*D - 0.5*f)",
+            "variables": {
+              "e": "Load eccentricity above ground (ft or m)",
+              "f": "Distance below 1.5D to max moment point: f = Hu / (9 * Su * D)"
+            },
+            "notes": "Requires iterative solution or Broms charts"
+          },
+          "max_bending_moment": {
+            "formula": "Mmax = Hu * (e + 1.5*D + 0.5*f)",
+            "notes": "Used to check pile structural capacity"
+          },
+          "subgrade_reaction_overconsolidated": {
+            "formula": "Kh = 67 * Su / D",
+            "notes": "Depth-independent for overconsolidated clays"
+          },
+          "subgrade_reaction_normally_consolidated": {
+            "formula": "Kh = nh * z / D",
+            "variables": {
+              "nh": "Coefficient of subgrade reaction (350-700 kN/m3 typical)",
+              "z": "Depth below ground surface"
+            }
+          }
+        }
+      },
+      "cohesionless_soil": {
+        "description": "Drained analysis using effective friction angle and unit weight",
+        "assumptions": [
+          "Soil resistance increases linearly with depth",
+          "Ultimate soil reaction = 3 * Kp * gamma * z * D",
+          "Kp = Rankine passive earth pressure coefficient"
+        ],
+        "formulas": {
+          "passive_pressure_coefficient": {
+            "formula": "Kp = (1 + sin(phi)) / (1 - sin(phi))",
+            "alternate": "Kp = tan^2(45 + phi/2)",
+            "variables": {
+              "phi": "Effective friction angle (degrees)"
+            }
+          },
+          "free_head_short_pile": {
+            "formula": "Hu = 0.5 * Kp * gamma * D * L^3 / (e + L)",
+            "variables": {
+              "Hu": "Ultimate lateral load capacity (lb or kN)",
+              "Kp": "Passive earth pressure coefficient",
+              "gamma": "Effective unit weight of soil (pcf or kN/m3)",
+              "D": "Pile diameter (ft or m)",
+              "L": "Embedded pile length (ft or m)",
+              "e": "Load eccentricity above ground (ft or m)"
+            }
+          },
+          "fixed_head_short_pile": {
+            "formula": "Hu = 1.5 * Kp * gamma * D * L^2",
+            "notes": "Conservative simplified form for fixed-head (restrained rotation at top)"
+          },
+          "soil_reaction_distribution": {
+            "formula": "p(z) = 3 * Kp * gamma * z * D",
+            "notes": "Linearly increasing with depth z"
+          }
+        }
+      },
+      "safety_factors": {
+        "typical_FS": 2.5,
+        "range": "2.0 to 3.0",
+        "notes": "Applied to Hu to get allowable lateral load Ha = Hu / FS"
+      }
+    },
+    "brinch_hansen_1961": {
+      "name": "Brinch Hansen's Method",
+      "author": "Jorgen Brinch Hansen",
+      "year": 1961,
+      "reference": "The Ultimate Resistance of Rigid Piles Against Transversal Forces, Bulletin No. 12, Danish Geotechnical Institute, Copenhagen",
+      "description": "Accounts for layered soil profiles using depth-dependent passive pressure coefficients Kq and Kc. More rigorous than Broms for complex soil conditions. Solves by moment equilibrium about rotation point.",
+      "applicability": "Short rigid piles, layered soils, combined c-phi soils",
+      "assumptions": [
+        "Pile is infinitely rigid",
+        "Pile rotates about a single point below ground surface",
+        "Soil resistance varies with depth via Kq and Kc coefficients",
+        "Horizontal force equilibrium and moment equilibrium both satisfied"
+      ],
+      "formulas": {
+        "ultimate_soil_resistance_per_unit_length": {
+          "formula": "pu(z) = sigma_v(z) * Kq(z) + c(z) * Kc(z)",
+          "variables": {
+            "pu": "Ultimate soil resistance per unit length at depth z (lb/ft or kN/m)",
+            "sigma_v": "Effective vertical overburden pressure at depth z (psf or kPa)",
+            "Kq": "Passive pressure coefficient for overburden (function of phi and z/D)",
+            "c": "Soil cohesion at depth z (psf or kPa)",
+            "Kc": "Passive pressure coefficient for cohesion (function of phi and z/D)"
+          }
+        },
+        "Kq_approximation": {
+          "description": "Kq increases with depth ratio z/D and friction angle phi",
+          "values_at_surface_z_D_0": {
+            "phi_0": 0,
+            "phi_10": 1.5,
+            "phi_20": 3.0,
+            "phi_30": 5.5,
+            "phi_35": 8.0,
+            "phi_40": 12.0
+          },
+          "values_at_depth_z_D_5": {
+            "phi_0": 0,
+            "phi_10": 2.5,
+            "phi_20": 7.0,
+            "phi_30": 18.0,
+            "phi_35": 30.0,
+            "phi_40": 55.0
+          },
+          "values_at_depth_z_D_10": {
+            "phi_0": 0,
+            "phi_10": 3.5,
+            "phi_20": 12.0,
+            "phi_30": 40.0,
+            "phi_35": 70.0,
+            "phi_40": 130.0
+          },
+          "values_at_depth_z_D_20": {
+            "phi_0": 0,
+            "phi_10": 5.0,
+            "phi_20": 20.0,
+            "phi_30": 80.0,
+            "phi_35": 150.0,
+            "phi_40": 300.0
+          }
+        },
+        "Kc_approximation": {
+          "description": "Kc also increases with depth ratio z/D and friction angle phi",
+          "values_at_surface_z_D_0": {
+            "phi_0": 2.0,
+            "phi_10": 3.0,
+            "phi_20": 5.0,
+            "phi_30": 9.0,
+            "phi_35": 12.0,
+            "phi_40": 18.0
+          },
+          "values_at_depth_z_D_5": {
+            "phi_0": 8.0,
+            "phi_10": 12.0,
+            "phi_20": 20.0,
+            "phi_30": 35.0,
+            "phi_35": 50.0,
+            "phi_40": 80.0
+          },
+          "values_at_depth_z_D_10": {
+            "phi_0": 10.0,
+            "phi_10": 18.0,
+            "phi_20": 35.0,
+            "phi_30": 65.0,
+            "phi_35": 100.0,
+            "phi_40": 170.0
+          }
+        },
+        "equilibrium_equations": {
+          "horizontal_force": "H = integral from 0 to x0 of pu(z)*D dz - integral from x0 to L of pu(z)*D dz",
+          "moment_about_rotation_point": "H*(e + x0) = integral from 0 to x0 of pu(z)*D*(x0-z) dz + integral from x0 to L of pu(z)*D*(z-x0) dz",
+          "variables": {
+            "H": "Applied horizontal load (lb or kN)",
+            "e": "Height of load above ground (ft or m)",
+            "x0": "Depth to rotation point (ft or m)",
+            "L": "Total embedded length (ft or m)"
+          },
+          "solution_method": "Iterative: assume x0, solve both equations, adjust until consistent"
+        }
+      },
+      "safety_factors": {
+        "typical_FS": 2.0,
+        "range": "1.5 to 3.0",
+        "notes": "Lower FS acceptable due to more rigorous analysis"
+      }
+    },
+    "czerniak_1957": {
+      "name": "Czerniak's Method",
+      "author": "Eli Czerniak",
+      "year": 1957,
+      "reference": "Resistance to Overturning of Single, Short Piles, ASCE J. Structural Division, Vol 83, ST2, Paper 1188",
+      "description": "Developed specifically for short rigid pier/caisson foundations typical of sign structures, utility poles, and refinery equipment supports. Most conservative of the common methods. Includes shaft self-weight contribution.",
+      "applicability": "Short rigid piers (L/D <= 10), sign foundations, utility poles, equipment supports",
+      "assumptions": [
+        "Foundation is short and rigid (L/D <= 10)",
+        "Rigid pier rotates about a point at distance 'a' below ground surface",
+        "All overturning loads resisted by passive pressure against embedment",
+        "Shaft self-weight (0.150 kcf for concrete) contributes to stability",
+        "Maximum shear at rotation point depth 'a'",
+        "Maximum moment at depth 'a/2'"
+      ],
+      "formulas": {
+        "rotation_point_depth": {
+          "formula": "a = L * [1 - sqrt(1 - (4*M_o)/(gamma_s * Kp * D * L^3))] / 2",
+          "simplified": "For uniform soil: a approximately = L/3 to L/2 depending on e/L ratio",
+          "variables": {
+            "a": "Depth from ground surface to rotation point (ft)",
+            "L": "Total embedment depth (ft)",
+            "M_o": "Total overturning moment about ground surface (ft-lb)",
+            "gamma_s": "Equivalent fluid pressure of soil (pcf)",
+            "Kp": "Passive earth pressure coefficient",
+            "D": "Pier diameter (ft)"
+          }
+        },
+        "overturning_moment_capacity": {
+          "formula": "M_resist = gamma_s * Kp * D * (a^2 * (L - a/3) - (L-a)^2 * (L - (2*L+a)/3)) / 2 + W_shaft * D/2",
+          "simplified": "M_resist = passive_pressure_moment + shaft_weight_moment",
+          "variables": {
+            "M_resist": "Resisting moment about ground surface (ft-lb)",
+            "W_shaft": "Weight of concrete shaft = 0.150 * pi/4 * D^2 * L (kips)"
+          }
+        },
+        "required_embedment": {
+          "description": "Iterative solution: find L such that M_resist >= FS * M_applied",
+          "method": "Trial embedment depth, compute M_resist, check >= FS * M_overturning"
+        },
+        "soil_pressure_check": {
+          "formula_at_a_over_2": "p(a/2) = gamma_s * Kp * (a/2)",
+          "formula_at_L": "p(L) = gamma_s * Kp * L",
+          "check": "Both must be <= allowable passive pressure at those depths"
+        },
+        "shaft_self_weight": {
+          "formula": "W = gamma_concrete * pi/4 * D^2 * L",
+          "gamma_concrete": 150,
+          "gamma_concrete_unit": "pcf",
+          "contribution": "Adds stabilizing moment = W * D/2 (acts at shaft center)"
+        }
+      },
+      "safety_factors": {
+        "typical_FS": 3.0,
+        "range": "2.5 to 3.5",
+        "notes": "Higher FS because method developed for critical infrastructure. Most conservative results among common methods."
+      }
+    },
+    "ibc_1807_3": {
+      "name": "IBC 1807.3 Embedded Posts and Poles",
+      "code": "International Building Code 2021",
+      "sections": ["1807.3.1", "1807.3.2.1"],
+      "reference_table": "Table 1806.2",
+      "description": "Prescriptive method for embedded post/pole foundations. Section 1807.3.2.1 provides the nonconstrained formula (Equation 18-1) for determining embedment depth. Limited to 12 ft max depth for lateral pressure computation.",
+      "applicability": "Posts and poles, nonconstrained (no floor slab restraint at grade), single uniform soil layer",
+      "ibc_1807_3_1_general": {
+        "description": "General requirements for embedded posts and poles",
+        "requirement": "Design by accepted engineering practice (PE stamp path) OR prescriptive IBC methods",
+        "pe_stamp_note": "IBC 1807.1 allows 'accepted engineering practice' path - enables Broms, Brinch Hansen, Czerniak, or FEM methods with PE certification"
+      },
+      "nonconstrained_equation_18_1": {
+        "formula": "d = 0.5 * A * (1 + sqrt(1 + 4.36 * h / A))",
+        "intermediate": "A = 2.34 * P / (S1 * b)",
+        "variables": {
+          "d": "Required depth of embedment (ft), max 12 ft for lateral pressure calc",
+          "A": "Intermediate coefficient (ft)",
+          "P": "Applied lateral force (lb)",
+          "h": "Height from ground surface to point of application of P (ft)",
+          "S1": "Allowable lateral soil-bearing pressure at depth = d/3, from Table 1806.2 (psf)",
+          "b": "Diameter of round post/footing or diagonal of square post (ft)"
+        },
+        "S1_calculation": "S1 = table_value * (d/3), where table_value from Table 1806.2, not to exceed 15x table_value"
+      },
+      "constrained_equation_18_2": {
+        "formula": "d = 4.25 * (P * h / (S3 * b))^0.5",
+        "variables": {
+          "S3": "Allowable lateral soil-bearing pressure at depth = 2*d/3 (psf)"
+        },
+        "notes": "Used when lateral constraint exists at ground surface (e.g., rigid floor slab)"
+      },
+      "limitations": [
+        "No moment capacity term - cannot handle eccentric loads",
+        "Depth limited to 12 ft for lateral pressure computation",
+        "No deflection output",
+        "Single soil layer only",
+        "Passive resistance doubling (IBC 1806.3.4) carries risk near slopes"
+      ],
+      "table_1806_2": {
+        "description": "Presumptive Load-Bearing Values of Soils",
+        "soil_classes": [
+          {
+            "class": 1,
+            "description": "Crystalline bedrock",
+            "vertical_bearing_psf": 12000,
+            "lateral_bearing_psf_per_ft": 1200,
+            "friction_coefficient": 0.70,
+            "cohesion_psf": null
+          },
+          {
+            "class": 2,
+            "description": "Sedimentary and foliated rock",
+            "vertical_bearing_psf": 4000,
+            "lateral_bearing_psf_per_ft": 400,
+            "friction_coefficient": 0.35,
+            "cohesion_psf": null
+          },
+          {
+            "class": 3,
+            "description": "Sandy gravel and gravel (GW, GP)",
+            "vertical_bearing_psf": 3000,
+            "lateral_bearing_psf_per_ft": 200,
+            "friction_coefficient": 0.35,
+            "cohesion_psf": null
+          },
+          {
+            "class": 4,
+            "description": "Sand, silty sand, clayey sand, silty gravel, clayey gravel (SW, SP, SM, SC, GM, GC)",
+            "vertical_bearing_psf": 2000,
+            "lateral_bearing_psf_per_ft": 150,
+            "friction_coefficient": 0.25,
+            "cohesion_psf": null
+          },
+          {
+            "class": 5,
+            "description": "Clay, sandy clay, silty clay, clayey silt, silt, sandy silt (CL, ML, MH, CH)",
+            "vertical_bearing_psf": 1500,
+            "lateral_bearing_psf_per_ft": 100,
+            "friction_coefficient": null,
+            "cohesion_psf": 130
+          }
+        ],
+        "depth_increase_rule": "Lateral bearing may increase by tabular value per additional foot of depth, up to 15x tabular value",
+        "load_combination_increase": "Values may increase by 1/3 when used with ASD combinations including wind or earthquake (IBC 1605.2)",
+        "sliding_restriction": "For clay soils (class 5), lateral sliding resistance shall not exceed 1/2 dead load"
+      }
+    }
+  },
+  "soil_parameters": {
+    "description": "Typical geotechnical parameters for foundation design",
+    "cohesive_soils": {
+      "soft_clay": {
+        "uscs": "CL, CH",
+        "cu_psf": {"min": 250, "typical": 500, "max": 750},
+        "cu_kPa": {"min": 12, "typical": 25, "max": 36},
+        "gamma_pcf": {"min": 100, "typical": 110, "max": 120},
+        "gamma_kN_m3": {"min": 15.7, "typical": 17.3, "max": 18.9},
+        "phi_degrees": 0,
+        "description": "Soft to firm clay, SPT N < 4"
+      },
+      "medium_clay": {
+        "uscs": "CL, CH",
+        "cu_psf": {"min": 750, "typical": 1500, "max": 2000},
+        "cu_kPa": {"min": 36, "typical": 72, "max": 96},
+        "gamma_pcf": {"min": 110, "typical": 120, "max": 130},
+        "gamma_kN_m3": {"min": 17.3, "typical": 18.9, "max": 20.4},
+        "phi_degrees": 0,
+        "description": "Medium stiff clay, SPT N = 4-8"
+      },
+      "stiff_clay": {
+        "uscs": "CL, CH",
+        "cu_psf": {"min": 2000, "typical": 3000, "max": 4000},
+        "cu_kPa": {"min": 96, "typical": 144, "max": 192},
+        "gamma_pcf": {"min": 120, "typical": 130, "max": 140},
+        "gamma_kN_m3": {"min": 18.9, "typical": 20.4, "max": 22.0},
+        "phi_degrees": 0,
+        "description": "Stiff to very stiff clay, SPT N = 8-30"
+      }
+    },
+    "cohesionless_soils": {
+      "loose_sand": {
+        "uscs": "SP, SW",
+        "phi_degrees": {"min": 28, "typical": 30, "max": 32},
+        "gamma_pcf": {"min": 90, "typical": 100, "max": 110},
+        "gamma_kN_m3": {"min": 14.1, "typical": 15.7, "max": 17.3},
+        "cu_psf": 0,
+        "Kp": {"min": 2.77, "typical": 3.00, "max": 3.25},
+        "description": "Loose sand, SPT N < 10"
+      },
+      "medium_sand": {
+        "uscs": "SP, SW, SM",
+        "phi_degrees": {"min": 32, "typical": 35, "max": 38},
+        "gamma_pcf": {"min": 110, "typical": 120, "max": 130},
+        "gamma_kN_m3": {"min": 17.3, "typical": 18.9, "max": 20.4},
+        "cu_psf": 0,
+        "Kp": {"min": 3.25, "typical": 3.69, "max": 4.20},
+        "description": "Medium dense sand, SPT N = 10-30"
+      },
+      "dense_sand": {
+        "uscs": "SP, SW, SM",
+        "phi_degrees": {"min": 38, "typical": 40, "max": 45},
+        "gamma_pcf": {"min": 120, "typical": 130, "max": 140},
+        "gamma_kN_m3": {"min": 18.9, "typical": 20.4, "max": 22.0},
+        "cu_psf": 0,
+        "Kp": {"min": 4.20, "typical": 4.60, "max": 5.83},
+        "description": "Dense sand, SPT N = 30-50"
+      },
+      "gravel": {
+        "uscs": "GP, GW, GM, GC",
+        "phi_degrees": {"min": 35, "typical": 38, "max": 42},
+        "gamma_pcf": {"min": 120, "typical": 130, "max": 145},
+        "gamma_kN_m3": {"min": 18.9, "typical": 20.4, "max": 22.8},
+        "cu_psf": 0,
+        "Kp": {"min": 3.69, "typical": 4.20, "max": 5.04},
+        "description": "Gravel/sandy gravel, SPT N > 30"
+      }
+    },
+    "rock": {
+      "weathered_rock": {
+        "vertical_bearing_psf": {"min": 4000, "typical": 8000, "max": 12000},
+        "lateral_bearing_psf_per_ft": {"min": 400, "typical": 800, "max": 1200},
+        "description": "Weathered/fractured rock, RQD < 50%"
+      },
+      "sound_rock": {
+        "vertical_bearing_psf": {"min": 12000, "typical": 20000, "max": 50000},
+        "lateral_bearing_psf_per_ft": {"min": 1200, "typical": 2000, "max": 5000},
+        "description": "Sound crystalline/ignite rock, RQD > 75%"
+      }
+    }
+  },
+  "design_factors": {
+    "skin_friction_uplift": {
+      "description": "Reduction factor for uplift capacity from skin friction along shaft",
+      "reduction_factor": {"min": 0.70, "max": 0.80, "typical": 0.75},
+      "reason": "Upward loading reduces confining pressure and thus friction capacity compared to compression",
+      "alpha_method": {
+        "description": "Adhesion factor for cohesive soils",
+        "alpha": {"soft_clay": 1.0, "medium_clay": 0.7, "stiff_clay": 0.4},
+        "formula": "f_s = alpha * cu",
+        "units": "psf"
+      },
+      "beta_method": {
+        "description": "Effective stress method for cohesionless soils",
+        "beta": {"loose_sand": 0.25, "medium_sand": 0.35, "dense_sand": 0.50},
+        "formula": "f_s = beta * sigma_v",
+        "units": "psf"
+      }
+    },
+    "dfm_threshold": {
+      "description": "Drillable Foundation Method cost threshold for sign industry",
+      "auger_drillable_max_ft": 3.0,
+      "auger_drillable_max_m": 0.91,
+      "cost_category_auger": "Standard cost - truck-mounted auger can drill and pour in one mobilization",
+      "cost_category_excavator": "Cost jump - requires excavator, shoring, possible dewatering",
+      "notes": [
+        "3 ft embedment is the practical boundary for standard auger equipment",
+        "Beyond 3 ft: cost increases 40-80% due to equipment change",
+        "Beyond 6 ft: requires engineered shoring per OSHA",
+        "Beyond 10 ft: typically requires caisson drilling rig"
+      ],
+      "typical_sign_foundation_depths": {
+        "small_ground_sign_ft": {"min": 2.0, "max": 3.0},
+        "medium_monument_sign_ft": {"min": 3.0, "max": 5.0},
+        "large_pylon_sign_ft": {"min": 5.0, "max": 12.0},
+        "highway_sign_ft": {"min": 8.0, "max": 20.0}
+      }
+    },
+    "ibc_1807_1_reference": {
+      "description": "IBC 1807.1 allows foundation design by 'accepted engineering practice'",
+      "implication": "PE-stamped calculations using Broms, Brinch Hansen, Czerniak, or FEM are valid alternatives to prescriptive IBC formulas",
+      "pe_stamp_required": true,
+      "accepted_methods": [
+        "Broms (1964)",
+        "Brinch Hansen (1961)",
+        "Czerniak (1957)",
+        "Finite Element Method (FEM/FEA)",
+        "p-y curve analysis (COM624/LPILE)",
+        "Characteristic load method (Duncan et al. 1994)"
+      ],
+      "notes": "This is the path Eagle Sign Co uses for engineered sign foundations - PE stamps with rational analysis methods rather than prescriptive IBC equations"
+    }
+  },
+  "method_comparison": {
+    "description": "Relative comparison of foundation methods for sign engineering",
+    "conservatism_ranking": [
+      {"rank": 1, "method": "Czerniak (1957)", "notes": "Most conservative - highest required embedment"},
+      {"rank": 2, "method": "IBC Eq 18-1", "notes": "Moderate - prescriptive, no moment term"},
+      {"rank": 3, "method": "Broms (1964)", "notes": "Moderate - well-validated, widely accepted"},
+      {"rank": 4, "method": "Brinch Hansen (1961)", "notes": "Least conservative - most rigorous, accounts for layered soils"}
+    ],
+    "recommended_for_sign_foundations": {
+      "simple_ground_signs": "IBC Eq 18-1 (prescriptive, no PE required if within limits)",
+      "standard_monument_signs": "Broms method with FS=2.5 (PE stamped)",
+      "large_pylon_signs": "Brinch Hansen or p-y analysis (PE stamped, geotechnical report required)",
+      "all_engineered_signs": "Czerniak as conservative check, Broms/Hansen for design optimization"
+    }
+  }
+}

@@ -48,7 +48,7 @@ def _trace(result: Dict[str, Any], inputs: str) -> Trace:
         span_id=uuid.uuid4().hex[:16],
         monotonic_ms=0.0,
         code_version=_git(),
-        model_config={"provider": "translator", "model": "indexer-v1", "temperature": "0", "max_tokens": "0"},
+        model_configuration={"provider": "translator", "model": "indexer-v1", "temperature": "0", "max_tokens": "0"},
     )
 
 

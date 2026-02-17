@@ -14,7 +14,7 @@ Status: 🚀 Ready to implement (leverages your Gemini subscription + API)
 """
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from platform.registry import registry, ModuleDefinition
+from signx_platform.registry import registry, ModuleDefinition
 from typing import List, Optional, Dict, Any
 import google.generativeai as genai
 import os

@@ -16,6 +16,7 @@ STATUS_PATH = RUNS_DIR / "status.jsonl"
 ART_DIR = Path("artifacts/eval")
 GOLDEN_DIR = Path("tests/e2e/golden")
 QUEUE_DIR = Path("queue")
+INBOX_DIR = QUEUE_DIR / "eval" / "inbox"
 
 
 def _append_status(event: str, task_id: str, extra: Dict[str, Any] | None = None) -> None:

@@ -36,7 +36,7 @@ def _trace(code_version: Dict[str, str], model_cfg: Dict[str, str], result: Dict
         span_id=uuid.uuid4().hex[:16],
         monotonic_ms=0.0,
         code_version=code_version,
-        model_config=model_cfg,
+        model_configuration=model_cfg,
     )
 
 

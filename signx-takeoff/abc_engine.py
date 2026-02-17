@@ -1652,13 +1652,14 @@ def estimate_removal(job: JobInput) -> EstimateResult:
         ))
 
     # 9600 Install OT
-    inst_ot = round(removal_hrs * MONDF_OT_INSTALL_FACTOR, 2)
+    ot_inst_rate = MONDF_OT_INSTALL_LIT if job.is_illuminated else MONDF_OT_INSTALL_NONLIT
+    inst_ot = round(removal_hrs * ot_inst_rate, 2)
     if inst_ot >= 0.50:
         install.append(LaborLine(
-            work_code="9600", description="Install Overtime (50% factor)",
+            work_code="9600", description=f"Install Overtime ({ot_inst_rate:.1%} median)",
             hours=inst_ot, unit_type="man-hrs",
             department="Installation (600)",
-            formula=f"Removal {removal_hrs:.2f}h x {MONDF_OT_INSTALL_FACTOR}",
+            formula=f"Removal {removal_hrs:.2f}h x {ot_inst_rate} ({'lit' if job.is_illuminated else 'non-lit'})",
             section="MONDF correction",
         ))
 

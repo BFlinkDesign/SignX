@@ -4,13 +4,17 @@ SignX Studio Platform API
 Main entry point for the integrated platform.
 All modules register their routes with this application.
 """
+import logging
+import os
+from typing import List
+
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from platform.registry import registry, ModuleDefinition, get_registry
-from platform.events import event_bus, Event, get_event_bus
-from typing import List
-import os
+from signx_platform.registry import registry, ModuleDefinition, get_registry
+from signx_platform.events import event_bus, Event, get_event_bus
+
+logger = logging.getLogger(__name__)
 
 
 # Create FastAPI application
@@ -180,9 +184,6 @@ async def startup_event():
 
 if __name__ == "__main__":
     import uvicorn
-import logging
-
-logger = logging.getLogger(__name__)
     uvicorn.run(
         app,
         host="0.0.0.0",

@@ -11,8 +11,8 @@ Status: 🔄 Integration in progress (merging SignX-Intel + Eagle Analyzer)
 """
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from platform.registry import registry, ModuleDefinition
-from platform.events import event_bus, Event
+from signx_platform.registry import registry, ModuleDefinition
+from signx_platform.events import event_bus, Event
 from typing import Dict, List, Optional
 import logging
 

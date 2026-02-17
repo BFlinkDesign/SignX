@@ -3,10 +3,13 @@ Module Registry - modular platform-style plugin system
 
 Allows modules to register themselves with the platform and discover each other.
 """
+import logging
 from typing import Dict, List, Optional
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
 from datetime import datetime
+
+logger = logging.getLogger(__name__)
 
 
 class ModuleDefinition(BaseModel):
@@ -82,11 +85,8 @@ class ModuleRegistry:
             
         Example:
             ```python
-            from platform.registry import registry, ModuleDefinition
-import logging
+            from signx_platform.registry import registry, ModuleDefinition
 
-logger = logging.getLogger(__name__)
-            
             module_def = ModuleDefinition(
                 name="engineering",
                 version="1.0.0",

@@ -67,7 +67,7 @@ class RankedMaterial(BaseModel):
 class Trace(BaseModel):
     request_hash: str
     code_version: str
-    model_config: Dict[str, str]
+    model_configuration: Dict[str, str]
     timestamp_utc: str = Field(default_factory=lambda: datetime.utcnow().isoformat()+"Z")
 
 
