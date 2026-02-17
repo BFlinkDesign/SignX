@@ -151,6 +151,8 @@
     <div class="nav-tab" data-section="sec-monument">Monument</div>
     <div class="nav-tab" data-section="sec-awning">Awning</div>
     <div class="nav-tab" data-section="sec-removal">Removal</div>
+    <div class="nav-tab" data-section="sec-pylon">Pylon</div>
+    <div class="nav-tab" data-section="sec-cabinet">Cabinet</div>
     <div class="nav-tab" data-section="sec-structural">Engineering</div>
   </nav>
 
@@ -457,6 +459,128 @@
   </div>
 
   <!-- ════════════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION: Pylon                                                          -->
+  <!-- ════════════════════════════════════════════════════════════════════════ -->
+  <div class="main-section" id="sec-pylon">
+    <div class="grid">
+      <div class="input-panel">
+        <div class="card">
+          <h2>Pylon Sign <span class="badge">INPUT</span></h2>
+          <form id="pylon-form">
+            <div class="form-row">
+              <div><label>Cabinet Width (ft)</label><input type="number" id="pylon-width" value="8" min="1" max="40" step="0.5"></div>
+              <div><label>Cabinet Height (ft)</label><input type="number" id="pylon-height" value="6" min="1" max="20" step="0.5"></div>
+            </div>
+            <div class="form-row">
+              <div><label>Face Area Override (SF)</label><input type="number" id="pylon-area-override" value="0" min="0" step="1"></div>
+              <div><label>Number of Faces</label>
+                <select id="pylon-faces">
+                  <option value="1">1 (Single Face)</option>
+                  <option value="2" selected>2 (Double Face)</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div><label>Pole Height (ft)</label><input type="number" id="pylon-pole-height" value="25" min="1" max="100" step="1"></div>
+              <div class="checkbox-group" style="padding-top:1.2rem;">
+                <input type="checkbox" id="pylon-vinyl" checked>
+                <label for="pylon-vinyl">Vinyl Graphics</label>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="checkbox-group" style="padding-top:0.2rem;">
+                <input type="checkbox" id="pylon-footing" checked>
+                <label for="pylon-footing">Self-Pour Footing</label>
+              </div>
+              <div><label>Travel (miles one-way)</label><input type="number" id="pylon-miles" value="0" min="0"></div>
+            </div>
+            <div class="form-group">
+              <label>Crew Size</label>
+              <select id="pylon-crew">
+                <option value="2">2 Men</option>
+                <option value="3" selected>3 Men</option>
+              </select>
+            </div>
+            <button type="submit" class="btn-primary">Estimate This Pylon</button>
+          </form>
+        </div>
+      </div>
+      <div class="results-panel">
+        <div class="results" id="pylon-results"></div>
+        <div id="pylon-placeholder" class="card" style="text-align:center;padding:4rem 2rem;">
+          <h3 style="color:var(--text-dim);margin-bottom:0.5rem;">Pylon Estimator</h3>
+          <p style="color:var(--text-dim);font-size:0.85rem;">Configure pylon sign parameters and click "Estimate This Pylon".</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION: Cabinet                                                        -->
+  <!-- ════════════════════════════════════════════════════════════════════════ -->
+  <div class="main-section" id="sec-cabinet">
+    <div class="grid">
+      <div class="input-panel">
+        <div class="card">
+          <h2>Cabinet Sign <span class="badge">INPUT</span></h2>
+          <form id="cabinet-form">
+            <div class="form-row">
+              <div><label>Cabinet Width (ft)</label><input type="number" id="cab-width" value="6" min="1" max="40" step="0.5"></div>
+              <div><label>Cabinet Height (ft)</label><input type="number" id="cab-height" value="4" min="1" max="20" step="0.5"></div>
+            </div>
+            <div class="form-row">
+              <div><label>Face Area Override (SF)</label><input type="number" id="cab-area-override" value="0" min="0" step="1"></div>
+              <div><label>Number of Faces</label>
+                <select id="cab-faces">
+                  <option value="1" selected>1 (Single Face)</option>
+                  <option value="2">2 (Double Face)</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="checkbox-group" style="padding-top:1.2rem;">
+                <input type="checkbox" id="cab-illuminated" checked>
+                <label for="cab-illuminated">Illuminated</label>
+              </div>
+              <div class="checkbox-group" style="padding-top:1.2rem;">
+                <input type="checkbox" id="cab-vinyl" checked>
+                <label for="cab-vinyl">Vinyl Graphics</label>
+              </div>
+            </div>
+            <div class="form-row">
+              <div><label>Mount Type</label>
+                <select id="cab-mount">
+                  <option value="wall" selected>Wall</option>
+                  <option value="roof">Roof</option>
+                  <option value="pipe_stand">Pipe Stand</option>
+                </select>
+              </div>
+              <div><label>Mounting Height (ft)</label><input type="number" id="cab-install-height" value="12" min="1" max="100"></div>
+            </div>
+            <div class="form-row">
+              <div><label>Travel (miles one-way)</label><input type="number" id="cab-miles" value="0" min="0"></div>
+              <div><label>Crew Size</label>
+                <select id="cab-crew">
+                  <option value="2" selected>2 Men</option>
+                  <option value="3">3 Men</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="btn-primary">Estimate This Cabinet</button>
+          </form>
+        </div>
+      </div>
+      <div class="results-panel">
+        <div class="results" id="cabinet-results"></div>
+        <div id="cabinet-placeholder" class="card" style="text-align:center;padding:4rem 2rem;">
+          <h3 style="color:var(--text-dim);margin-bottom:0.5rem;">Cabinet Estimator</h3>
+          <p style="color:var(--text-dim);font-size:0.85rem;">Configure cabinet sign parameters and click "Estimate This Cabinet".</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════════ -->
   <!-- SECTION: Structural                                                     -->
   <!-- ════════════════════════════════════════════════════════════════════════ -->
   <div class="main-section" id="sec-structural">
@@ -620,8 +744,8 @@
               <div><label>Tipping Moment (in-lb)</label><input type="number" id="fnd-m" value="0" step="100"></div>
             </div>
             <div class="form-row">
-              <div><label>Max Hole Diameter (in)</label><input type="number" id="fnd-dia" value="" placeholder="Auto" step="1"></div>
-              <div><label>Max Hole Depth (in)</label><input type="number" id="fnd-embed" value="" placeholder="Auto" step="1"></div>
+              <div><label>Max Foundation Diameter (in)</label><input type="number" id="fnd-dia" value="" placeholder="Auto" step="1"></div>
+              <div><label>Max Embedment Depth (in)</label><input type="number" id="fnd-embed" value="" placeholder="Auto" step="1"></div>
             </div>
           </div>
           <button class="btn-primary" id="fnd-btn" onclick="runFoundation()">Size Foundation</button>
@@ -979,6 +1103,73 @@ async function runRemoval() {
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
+// PYLON
+// ══════════════════════════════════════════════════════════════════════════════
+document.getElementById('pylon-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> Calculating...';
+
+    const body = {
+        width_ft: parseFloat(document.getElementById('pylon-width').value),
+        height_ft: parseFloat(document.getElementById('pylon-height').value),
+        face_area_sf: parseFloat(document.getElementById('pylon-area-override').value) || null,
+        num_faces: parseInt(document.getElementById('pylon-faces').value),
+        pole_height_ft: parseFloat(document.getElementById('pylon-pole-height').value),
+        has_vinyl: document.getElementById('pylon-vinyl').checked,
+        include_footing: document.getElementById('pylon-footing').checked,
+        miles: parseFloat(document.getElementById('pylon-miles').value),
+        crew_size: parseInt(document.getElementById('pylon-crew').value),
+    };
+
+    try {
+        const res = await fetch('/api/estimate/pylon', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)});
+        const data = await res.json();
+        renderEstimateResults('pylon-results', 'pylon-placeholder', data);
+    } catch (err) {
+        alert('Pylon estimation error: ' + err.message);
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'Estimate This Pylon';
+});
+
+// ══════════════════════════════════════════════════════════════════════════════
+// CABINET
+// ══════════════════════════════════════════════════════════════════════════════
+document.getElementById('cabinet-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> Calculating...';
+
+    const body = {
+        width_ft: parseFloat(document.getElementById('cab-width').value),
+        height_ft: parseFloat(document.getElementById('cab-height').value),
+        face_area_sf: parseFloat(document.getElementById('cab-area-override').value) || null,
+        num_faces: parseInt(document.getElementById('cab-faces').value),
+        illuminated: document.getElementById('cab-illuminated').checked,
+        has_vinyl: document.getElementById('cab-vinyl').checked,
+        mount_type: document.getElementById('cab-mount').value,
+        install_height_ft: parseFloat(document.getElementById('cab-install-height').value),
+        miles: parseFloat(document.getElementById('cab-miles').value),
+        crew_size: parseInt(document.getElementById('cab-crew').value),
+    };
+
+    try {
+        const res = await fetch('/api/estimate/cabinet', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)});
+        const data = await res.json();
+        renderEstimateResults('cabinet-results', 'cabinet-placeholder', data);
+    } catch (err) {
+        alert('Cabinet estimation error: ' + err.message);
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'Estimate This Cabinet';
+});
+
+// ══════════════════════════════════════════════════════════════════════════════
 // SHARED ESTIMATE RESULT RENDERER
 // ══════════════════════════════════════════════════════════════════════════════
 function renderEstimateResults(containerId, placeholderId, r) {
@@ -1286,7 +1477,7 @@ function renderFullDesign(data) {
   const fPass = fChk.passes !== false;
   html += `<h3>Foundation <span class="${fPass ? 'badge-pass' : 'badge-fail'}">${fPass ? 'PASS' : 'FAIL'}</span></h3>`;
   if (fGeo.diameter_in != null) html += `<div class="struct-row"><span>Diameter</span><span>${fGeo.diameter_in}" (${(fGeo.diameter_in / 12).toFixed(1)} ft)</span></div>`;
-  if (fGeo.depth_in != null) html += `<div class="struct-row"><span>Hole Depth</span><span>${fGeo.depth_in}" (${(fGeo.depth_in / 12).toFixed(1)} ft)</span></div>`;
+  if (fGeo.depth_in != null) html += `<div class="struct-row"><span>Embedment Depth</span><span>${fGeo.depth_in}" (${(fGeo.depth_in / 12).toFixed(1)} ft)</span></div>`;
   if (fChk.safety_factor != null) html += `<div class="struct-row"><span>Safety Factor</span><span>${fChk.safety_factor.toFixed(2)}</span></div>`;
   if (fGeo.volume_cy != null) html += `<div class="struct-row"><span>Concrete Volume</span><span>${fGeo.volume_cy.toFixed(2)} CY</span></div>`;
   html += '</div>';
@@ -1492,8 +1683,8 @@ function renderFoundationResult(data) {
 
   let html = '<div class="struct-card">';
   html += `<h3>Foundation Design <span class="${pass ? 'badge-pass' : 'badge-fail'}">${pass ? 'PASS' : 'FAIL'}</span></h3>`;
-  if (g.diameter_in != null) html += `<div class="struct-row"><span>Hole Diameter</span><span>${g.diameter_in}" (${(g.diameter_in / 12).toFixed(1)} ft)</span></div>`;
-  if (g.depth_in != null) html += `<div class="struct-row"><span>Hole Depth</span><span>${g.depth_in}" (${(g.depth_in / 12).toFixed(1)} ft)</span></div>`;
+  if (g.diameter_in != null) html += `<div class="struct-row"><span>Foundation Diameter</span><span>${g.diameter_in}" (${(g.diameter_in / 12).toFixed(1)} ft)</span></div>`;
+  if (g.depth_in != null) html += `<div class="struct-row"><span>Embedment Depth</span><span>${g.depth_in}" (${(g.depth_in / 12).toFixed(1)} ft)</span></div>`;
   if (c.safety_factor != null) html += `<div class="struct-row"><span>Safety Margin</span><span>${c.safety_factor.toFixed(2)}x</span></div>`;
   if (g.volume_cy != null) html += `<div class="struct-row"><span>Concrete Needed</span><span>${g.volume_cy.toFixed(2)} cubic yards</span></div>`;
   if (g.rebar != null) html += `<div class="struct-row"><span>Rebar</span><span>${g.rebar}</span></div>`;

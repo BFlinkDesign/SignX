@@ -34,7 +34,9 @@ from abc_engine import (
     calculate_pf_from_chart,
     estimate,
     estimate_awning,
+    estimate_cabinet,
     estimate_monument,
+    estimate_pylon,
     estimate_removal,
     get_footage_chart,
     interpolate_pf,
@@ -282,6 +284,81 @@ async def run_removal_estimate(req: RemovalRequest):
         crew_size=req.crew_size,
     )
     result = estimate_removal(job)
+    total_est_hours = result.total_man_hours + result.total_crew_hours
+    bench = benchmark(total_est_hours)
+    bench_data = _format_benchmark(bench) if bench else None
+    return _format_estimate_result(result, bench_data)
+
+
+# ── Pylon/Pole Estimate ─────────────────────────────────────────────────────
+
+class PylonRequest(BaseModel):
+    width_ft: float = Field(8.0, description="Cabinet face width (ft)")
+    height_ft: float = Field(6.0, description="Cabinet face height (ft)")
+    face_area_sf: Optional[float] = Field(None, description="Override face area (SF)")
+    num_faces: int = Field(2, description="Number of cabinet faces (1 or 2)")
+    pole_height_ft: float = Field(25.0, description="Total pole height to top of sign (ft)")
+    has_vinyl: bool = Field(True, description="Has vinyl graphics")
+    include_footing: bool = Field(True, description="Self-performed footing")
+    miles: float = Field(0.0, description="One-way travel miles")
+    crew_size: int = Field(3, description="Crew size (3 standard for crane)")
+
+
+@app.post("/api/estimate/pylon")
+async def run_pylon_estimate(req: PylonRequest):
+    """Run pylon/pole sign estimation engine."""
+    sf = req.face_area_sf if req.face_area_sf and req.face_area_sf > 0 else req.width_ft * req.height_ft
+    job = JobInput(
+        sign_type=SignType.POLLIT,
+        sign_sf_per_face=sf,
+        num_faces=req.num_faces,
+        is_illuminated=True,  # Pylons are always illuminated
+        has_vinyl=req.has_vinyl,
+        has_structural_steel=True,  # Pylons always have steel poles
+        has_footing=req.include_footing,
+        install_height_ft=req.pole_height_ft,
+        miles_one_way=req.miles,
+        crew_size=req.crew_size,
+    )
+    result = estimate_pylon(job)
+    total_est_hours = result.total_man_hours + result.total_crew_hours
+    bench = benchmark(total_est_hours)
+    bench_data = _format_benchmark(bench) if bench else None
+    return _format_estimate_result(result, bench_data)
+
+
+# ── Cabinet Estimate ────────────────────────────────────────────────────────
+
+class CabinetRequest(BaseModel):
+    width_ft: float = Field(6.0, description="Cabinet width (ft)")
+    height_ft: float = Field(4.0, description="Cabinet height (ft)")
+    face_area_sf: Optional[float] = Field(None, description="Override face area (SF)")
+    num_faces: int = Field(1, description="Number of faces (1=single, 2=double)")
+    illuminated: bool = Field(True, description="Has illumination")
+    has_vinyl: bool = Field(True, description="Has vinyl graphics")
+    mount_type: str = Field("wall", description="Mount type: wall, roof, or pipe")
+    install_height_ft: float = Field(12.0, description="Mounting height (ft)")
+    miles: float = Field(0.0, description="One-way travel miles")
+    crew_size: int = Field(2, description="Crew size")
+
+
+@app.post("/api/estimate/cabinet")
+async def run_cabinet_estimate(req: CabinetRequest):
+    """Run aluminum cabinet sign estimation engine."""
+    sf = req.face_area_sf if req.face_area_sf and req.face_area_sf > 0 else req.width_ft * req.height_ft
+    job = JobInput(
+        sign_type=SignType.ALULIT if req.illuminated else SignType.ALUNON,
+        sign_sf_per_face=sf,
+        num_faces=req.num_faces,
+        is_illuminated=req.illuminated,
+        has_vinyl=req.has_vinyl,
+        has_structural_steel=False,
+        install_height_ft=req.install_height_ft,
+        miles_one_way=req.miles,
+        crew_size=req.crew_size,
+        install_mount_type=req.mount_type,
+    )
+    result = estimate_cabinet(job)
     total_est_hours = result.total_man_hours + result.total_crew_hours
     bench = benchmark(total_est_hours)
     bench_data = _format_benchmark(bench) if bench else None

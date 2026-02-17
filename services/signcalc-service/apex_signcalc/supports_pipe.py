@@ -731,8 +731,9 @@ def select_member(
     My_inlb       : Required weak-axis moment, in-lb
     w_lbpin       : Distributed load for UDL deflection, lbf/in
     families      : List of section families to consider
-                    (e.g. ['pipe', 'W', 'HSS_square']).
-                    None = all families.
+                    (e.g. ['HSS_square', 'pipe', 'W']).
+                    None = defaults to ['HSS_square', 'pipe', 'W']
+                    (HSS preferred per Eagle standard practice).
     max_weight_plf: Optional upper weight filter, lb/ft
 
     Returns
@@ -740,10 +741,17 @@ def select_member(
     (best_section, audit_for_best_section)
     Returns (None, {}) if no section passes.
     """
+    # Default: HSS preferred over pipe per Eagle standard practice
+    if families is None:
+        families = ["HSS_square", "pipe", "W"]
     catalog = load_catalog(families=families)
 
-    # Sort lightest-first so first passing section is the answer
-    catalog_sorted = sorted(catalog, key=lambda s: s.weight_plf)
+    # Sort by family preference then lightest-first within each family
+    _fam_order = {f.lower(): i for i, f in enumerate(families)}
+    catalog_sorted = sorted(
+        catalog,
+        key=lambda s: (_fam_order.get(s.family.lower(), 99), s.weight_plf),
+    )
 
     if max_weight_plf is not None:
         catalog_sorted = [s for s in catalog_sorted if s.weight_plf <= max_weight_plf]
