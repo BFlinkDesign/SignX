@@ -134,6 +134,11 @@
 
   /* Error display */
   .error-msg { background: rgba(239,68,68,0.1); border: 1px solid var(--red); border-radius: 0.5rem; padding: 0.75rem; margin-bottom: 0.75rem; font-size: 0.85rem; color: var(--red); }
+
+  /* Pipeline table */
+  #pipeline-table th { position: sticky; top: 0; z-index: 1; }
+  #pipeline-table td { font-size: 0.82rem; vertical-align: middle; }
+  #pipeline-table tr:hover td { background: rgba(59,130,246,0.08); }
 </style>
 </head>
 <body>
@@ -153,6 +158,9 @@
     <div class="nav-tab" data-section="sec-removal">Removal</div>
     <div class="nav-tab" data-section="sec-pylon">Pylon</div>
     <div class="nav-tab" data-section="sec-cabinet">Cabinet</div>
+    <div class="nav-tab" data-section="sec-directional">Directional</div>
+    <div class="nav-tab" data-section="sec-dimensional">Dimensional</div>
+    <div class="nav-tab" data-section="sec-pipeline" style="color:var(--green);font-weight:700;">Bid Pipeline</div>
     <div class="nav-tab" data-section="sec-structural">Engineering</div>
   </nav>
 
@@ -576,6 +584,160 @@
           <h3 style="color:var(--text-dim);margin-bottom:0.5rem;">Cabinet Estimator</h3>
           <p style="color:var(--text-dim);font-size:0.85rem;">Configure cabinet sign parameters and click "Estimate This Cabinet".</p>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION: Directional                                                    -->
+  <!-- ════════════════════════════════════════════════════════════════════════ -->
+  <div class="main-section" id="sec-directional">
+    <div class="grid">
+      <div class="input-panel">
+        <div class="card">
+          <h2>Directional / Wayfinding <span class="badge">INPUT</span></h2>
+          <form id="directional-form">
+            <div class="form-row">
+              <div><label>Panel Width (ft)</label><input type="number" id="dir-width" value="4" min="0.5" max="20" step="0.5"></div>
+              <div><label>Panel Height (ft)</label><input type="number" id="dir-height" value="2" min="0.5" max="10" step="0.5"></div>
+            </div>
+            <div class="form-row">
+              <div><label>Face Area Override (SF)</label><input type="number" id="dir-area-override" value="0" min="0" step="0.5"></div>
+              <div><label>Number of Panels</label><input type="number" id="dir-units" value="1" min="1" max="50"></div>
+            </div>
+            <div class="form-row">
+              <div class="checkbox-group" style="padding-top:1.2rem;">
+                <input type="checkbox" id="dir-vinyl" checked>
+                <label for="dir-vinyl">Vinyl Graphics</label>
+              </div>
+              <div><label>Paint Colors</label><input type="number" id="dir-paint" value="1" min="1" max="5"></div>
+            </div>
+            <div class="form-row">
+              <div><label>Travel (miles one-way)</label><input type="number" id="dir-miles" value="0" min="0"></div>
+              <div><label>Crew Size</label>
+                <select id="dir-crew">
+                  <option value="1" selected>1 Man</option>
+                  <option value="2">2 Men</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="btn-primary">Estimate Directional</button>
+          </form>
+        </div>
+      </div>
+      <div class="results-panel">
+        <div class="results" id="dir-results"></div>
+        <div id="dir-placeholder" class="card" style="text-align:center;padding:4rem 2rem;">
+          <h3 style="color:var(--text-dim);margin-bottom:0.5rem;">Directional Estimator</h3>
+          <p style="color:var(--text-dim);font-size:0.85rem;">Wayfinding panels, info signs, simple flat panels.<br>162 warehouse jobs calibrated. [PROVISIONAL]</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION: Dimensional                                                    -->
+  <!-- ════════════════════════════════════════════════════════════════════════ -->
+  <div class="main-section" id="sec-dimensional">
+    <div class="grid">
+      <div class="input-panel">
+        <div class="card">
+          <h2>Dimensional Letters <span class="badge">INPUT</span></h2>
+          <form id="dimensional-form">
+            <div class="form-row">
+              <div><label>Number of Letters</label><input type="number" id="dim-count" value="10" min="1" max="100"></div>
+              <div><label>Letter Height (in)</label><input type="number" id="dim-height" value="8" min="2" max="60" step="0.5"></div>
+            </div>
+            <div class="form-row">
+              <div><label>Paint Colors</label><input type="number" id="dim-paint" value="1" min="1" max="5"></div>
+              <div><label>Travel (miles one-way)</label><input type="number" id="dim-miles" value="0" min="0"></div>
+            </div>
+            <div class="form-group">
+              <label>Crew Size</label>
+              <select id="dim-crew">
+                <option value="1" selected>1 Man</option>
+                <option value="2">2 Men</option>
+              </select>
+            </div>
+            <button type="submit" class="btn-primary">Estimate Dimensional</button>
+          </form>
+        </div>
+      </div>
+      <div class="results-panel">
+        <div class="results" id="dim-results"></div>
+        <div id="dim-placeholder" class="card" style="text-align:center;padding:4rem 2rem;">
+          <h3 style="color:var(--text-dim);margin-bottom:0.5rem;">Dimensional Letters (Gemini)</h3>
+          <p style="color:var(--text-dim);font-size:0.85rem;">Purchased dimensional letters — flat-cut acrylic, PVC, metal.<br>115 warehouse jobs calibrated. [PROVISIONAL]</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION: Bid Pipeline                                                   -->
+  <!-- ════════════════════════════════════════════════════════════════════════ -->
+  <div class="main-section" id="sec-pipeline">
+    <!-- Pipeline header stats -->
+    <div class="summary-grid" id="pipeline-stats" style="margin-bottom:1rem;">
+      <div class="summary-box accent"><div class="val" id="pip-total">--</div><div class="lbl">Total Bids</div></div>
+      <div class="summary-box green"><div class="val" id="pip-ready">--</div><div class="lbl">Ready for Takeoff</div></div>
+      <div class="summary-box orange"><div class="val" id="pip-value">--</div><div class="lbl">Pipeline Value</div></div>
+      <div class="summary-box purple"><div class="val" id="pip-done">--</div><div class="lbl">Takeoff Done</div></div>
+    </div>
+
+    <!-- PA Flow status bar -->
+    <div class="card" style="margin-bottom:1rem;padding:0.75rem 1.25rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <div style="width:10px;height:10px;border-radius:50%;background:var(--green);"></div>
+          <span style="font-size:0.85rem;font-weight:600;">PA Flow: CORRESPONDENCE-CLASSIFIER</span>
+          <span style="font-size:0.75rem;color:var(--text-dim);">Jeff Fye subfolder | Claude Sonnet extraction</span>
+        </div>
+        <div style="display:flex;gap:0.5rem;">
+          <button class="btn-primary" onclick="loadPipelineBids()" style="width:auto;padding:0.4rem 1rem;font-size:0.8rem;">Refresh Bids</button>
+          <button class="btn-primary" onclick="runAllReadyTakeoffs()" style="width:auto;padding:0.4rem 1rem;font-size:0.8rem;background:var(--green);">Run All Ready Takeoffs</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pipeline filter tabs -->
+    <div class="tabs" id="pipeline-tabs">
+      <div class="tab active" data-pfilter="all">All</div>
+      <div class="tab" data-pfilter="READY_TO_TAKEOFF">Ready</div>
+      <div class="tab" data-pfilter="NEEDS_INFO">Needs Info</div>
+      <div class="tab" data-pfilter="NEEDS_VENDOR_QUOTE">Vendor Quote</div>
+      <div class="tab" data-pfilter="IN_PROGRESS">In Progress</div>
+      <div class="tab" data-pfilter="QUOTED">Quoted</div>
+    </div>
+
+    <!-- Bid table -->
+    <div class="card" style="overflow-x:auto;">
+      <table id="pipeline-table">
+        <thead>
+          <tr>
+            <th>Quote #</th>
+            <th>Customer</th>
+            <th>Type</th>
+            <th class="right">SF</th>
+            <th class="right">Est. Value</th>
+            <th>Stage</th>
+            <th>Blocking</th>
+            <th>Age</th>
+            <th>Takeoff</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="pipeline-body">
+          <tr><td colspan="10" style="text-align:center;padding:3rem;color:var(--text-dim);">Click "Refresh Bids" to load from Notion</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Takeoff result panel (shown after running takeoff) -->
+    <div id="pipeline-takeoff-result" style="display:none;margin-top:1rem;">
+      <div class="card">
+        <h2>Takeoff Result</h2>
+        <div id="pipeline-takeoff-content"></div>
       </div>
     </div>
   </div>
@@ -1753,6 +1915,327 @@ function renderAnchorResult(data) {
   html += `</details>`;
   html += '</div>';
   el.innerHTML = html;
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// DIRECTIONAL
+// ══════════════════════════════════════════════════════════════════════════════
+document.getElementById('directional-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> Calculating...';
+
+    const body = {
+        width_ft: parseFloat(document.getElementById('dir-width').value),
+        height_ft: parseFloat(document.getElementById('dir-height').value),
+        face_area_sf: parseFloat(document.getElementById('dir-area-override').value) || null,
+        num_units: parseInt(document.getElementById('dir-units').value),
+        has_vinyl: document.getElementById('dir-vinyl').checked,
+        paint_colors: parseInt(document.getElementById('dir-paint').value),
+        miles: parseFloat(document.getElementById('dir-miles').value),
+        crew_size: parseInt(document.getElementById('dir-crew').value),
+    };
+
+    try {
+        const res = await fetch('/api/estimate/directional', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)});
+        const data = await res.json();
+        renderEstimateResults('dir-results', 'dir-placeholder', data);
+    } catch (err) {
+        alert('Directional estimation error: ' + err.message);
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'Estimate Directional';
+});
+
+// ══════════════════════════════════════════════════════════════════════════════
+// DIMENSIONAL
+// ══════════════════════════════════════════════════════════════════════════════
+document.getElementById('dimensional-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> Calculating...';
+
+    const body = {
+        letter_count: parseInt(document.getElementById('dim-count').value),
+        letter_height_inches: parseFloat(document.getElementById('dim-height').value),
+        paint_colors: parseInt(document.getElementById('dim-paint').value),
+        miles: parseFloat(document.getElementById('dim-miles').value),
+        crew_size: parseInt(document.getElementById('dim-crew').value),
+    };
+
+    try {
+        const res = await fetch('/api/estimate/dimensional', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)});
+        const data = await res.json();
+        renderEstimateResults('dim-results', 'dim-placeholder', data);
+    } catch (err) {
+        alert('Dimensional estimation error: ' + err.message);
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'Estimate Dimensional';
+});
+
+// ══════════════════════════════════════════════════════════════════════════════
+// BID PIPELINE (Notion Integration)
+// ══════════════════════════════════════════════════════════════════════════════
+let pipelineBids = [];
+let pipelineFilter = 'all';
+
+// Pipeline filter tabs
+document.querySelectorAll('#pipeline-tabs .tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        document.querySelectorAll('#pipeline-tabs .tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        pipelineFilter = tab.dataset.pfilter;
+        renderPipelineTable();
+    });
+});
+
+const STAGE_COLORS = {
+    'INTAKE': '#64748b',
+    'NEEDS_INFO': '#f59e0b',
+    'NEEDS_VENDOR_QUOTE': '#f97316',
+    'NEEDS_SUB_QUOTE': '#ef4444',
+    'READY_TO_TAKEOFF': '#22c55e',
+    'IN_PROGRESS': '#3b82f6',
+    'QUOTED': '#8b5cf6',
+    'WON': '#10b981',
+    'LOST': '#6b7280',
+};
+
+const TYPE_LABELS = {
+    'EMC_POLE': 'EMC Pole',
+    'EMC_MONUMENT': 'EMC Monument',
+    'EMC_RETROFIT': 'EMC Retrofit',
+    'EMC': 'EMC',
+    'CHANNEL_LETTERS': 'Channel Letters',
+    'CHANNEL_LOGO': 'Channel Logo',
+    'MONUMENT_BASE': 'Monument',
+    'MONUMENT_MANUAL_READER': 'Monument + Reader',
+    'CABINET_ILLUMINATED': 'Cabinet (Lit)',
+    'INFO_PANEL': 'Info Panel',
+    'MASONRY_SUB': 'Masonry Sub',
+    'REMOVAL': 'Removal',
+    'STRUCTURAL_BASE': 'Structural',
+};
+
+async function loadPipelineBids() {
+    const body = document.getElementById('pipeline-body');
+    body.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:2rem;"><span class="spinner"></span> Loading from Notion...</td></tr>';
+
+    try {
+        const resp = await fetch('/api/notion/bids');
+        const data = await resp.json();
+
+        if (data.error) {
+            body.innerHTML = `<tr><td colspan="10" style="text-align:center;padding:2rem;color:var(--red);">${data.error}</td></tr>`;
+            return;
+        }
+
+        pipelineBids = data.bids || [];
+
+        // Update stats
+        document.getElementById('pip-total').textContent = data.total || 0;
+        document.getElementById('pip-ready').textContent = (data.ready_to_takeoff || []).length;
+        document.getElementById('pip-value').textContent = '$' + ((data.total_pipeline_value || 0) / 1000).toFixed(0) + 'K';
+        document.getElementById('pip-done').textContent = pipelineBids.filter(b => b.takeoff_done).length;
+
+        renderPipelineTable();
+    } catch (err) {
+        body.innerHTML = `<tr><td colspan="10" style="text-align:center;padding:2rem;color:var(--red);">Error: ${err.message}</td></tr>`;
+    }
+}
+
+function renderPipelineTable() {
+    const body = document.getElementById('pipeline-body');
+    let filtered = pipelineBids;
+    if (pipelineFilter !== 'all') {
+        filtered = pipelineBids.filter(b => b.pipeline_stage === pipelineFilter);
+    }
+
+    if (filtered.length === 0) {
+        body.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:2rem;color:var(--text-dim);">No bids match this filter</td></tr>';
+        return;
+    }
+
+    body.innerHTML = filtered.map(b => {
+        const stageColor = STAGE_COLORS[b.pipeline_stage] || '#64748b';
+        const typeLabel = TYPE_LABELS[b.sign_type] || b.sign_type || '?';
+        const blocking = (b.blocking || []).map(x => `<span style="font-size:0.65rem;background:rgba(239,68,68,0.15);color:var(--red);padding:0.1rem 0.4rem;border-radius:4px;margin-right:0.25rem;">${x}</span>`).join('');
+        const canTakeoff = !b.takeoff_done && b.sign_type;
+        const takeoffBadge = b.takeoff_done
+            ? '<span style="color:var(--green);font-weight:700;font-size:0.8rem;">DONE</span>'
+            : '<span style="color:var(--text-dim);font-size:0.8rem;">pending</span>';
+        const actionBtns = canTakeoff
+            ? `<button onclick="runSingleTakeoff('${b.page_id}', this)" style="padding:0.25rem 0.6rem;font-size:0.75rem;background:var(--accent);color:#fff;border:none;border-radius:4px;cursor:pointer;">Run Takeoff</button>`
+            : b.takeoff_done
+                ? `<button onclick="formatForKeyedIn('${b.page_id}')" style="padding:0.25rem 0.6rem;font-size:0.75rem;background:var(--accent2);color:#fff;border:none;border-radius:4px;cursor:pointer;">KeyedIn</button>`
+                : '<span style="font-size:0.7rem;color:var(--text-dim);">--</span>';
+
+        return `<tr>
+            <td class="mono" style="font-weight:600;">${b.quote_number || '--'}</td>
+            <td>${b.customer || '--'}</td>
+            <td><span style="font-size:0.75rem;">${typeLabel}</span></td>
+            <td class="right mono">${b.sq_ft != null ? b.sq_ft : '--'}</td>
+            <td class="right mono">${b.est_value != null ? '$' + b.est_value.toLocaleString() : '--'}</td>
+            <td><span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;font-size:0.7rem;font-weight:600;background:${stageColor}20;color:${stageColor};border:1px solid ${stageColor}40;">${b.pipeline_stage || '?'}</span></td>
+            <td>${blocking || '<span style="font-size:0.7rem;color:var(--text-dim);">none</span>'}</td>
+            <td class="right" style="font-size:0.8rem;">${b.age_days != null ? b.age_days + 'd' : '--'}</td>
+            <td style="text-align:center;">${takeoffBadge}</td>
+            <td style="text-align:center;">${actionBtns}</td>
+        </tr>`;
+    }).join('');
+}
+
+async function runSingleTakeoff(pageId, btn) {
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span>';
+    }
+
+    try {
+        const resp = await fetch('/api/notion/takeoff', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({page_id: pageId}),
+        });
+        const data = await resp.json();
+
+        if (!data.ok) {
+            alert('Takeoff failed: ' + (data.error || 'Unknown error'));
+            if (btn) { btn.disabled = false; btn.textContent = 'Run Takeoff'; }
+            return;
+        }
+
+        // Show result
+        const resultDiv = document.getElementById('pipeline-takeoff-result');
+        resultDiv.style.display = 'block';
+        const bid = data.bid || {};
+        const est = data.estimate || {};
+        document.getElementById('pipeline-takeoff-content').innerHTML = `
+            <div style="margin-bottom:1rem;">
+                <strong>${bid.quote_number}</strong> (${bid.customer}) &mdash; ${data.estimator_used} estimator
+            </div>
+            <div class="summary-grid">
+                <div class="summary-box green"><div class="val">${est.total_man_hours != null ? est.total_man_hours.toFixed(2) : '--'}</div><div class="lbl">Man-Hours</div></div>
+                <div class="summary-box orange"><div class="val">${est.total_crew_hours != null ? est.total_crew_hours.toFixed(2) : '--'}</div><div class="lbl">Crew-Hours</div></div>
+                <div class="summary-box accent"><div class="val">${(est.labor || []).length + (est.install || []).length}</div><div class="lbl">Line Items</div></div>
+                <div class="summary-box purple"><div class="val">${data.notion_updated ? 'YES' : 'NO'}</div><div class="lbl">Notion Updated</div></div>
+            </div>
+        `;
+
+        // Store estimate for KeyedIn formatting
+        resultDiv._lastEstimate = data;
+
+        // Send notification
+        const totalHrs = (est.total_man_hours || 0) + (est.total_crew_hours || 0);
+        await fetch('/api/notify/bid-ready', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                quote_number: bid.quote_number || '',
+                customer: bid.customer || '',
+                total_hours: totalHrs,
+                estimator_type: data.estimator_used || '',
+            }),
+        });
+
+        // Refresh table
+        await loadPipelineBids();
+        resultDiv.scrollIntoView({behavior: 'smooth'});
+
+    } catch (err) {
+        alert('Takeoff error: ' + err.message);
+        if (btn) { btn.disabled = false; btn.textContent = 'Run Takeoff'; }
+    }
+}
+
+async function runAllReadyTakeoffs() {
+    const ready = pipelineBids.filter(b => b.pipeline_stage === 'READY_TO_TAKEOFF' && !b.takeoff_done && b.sign_type);
+    if (ready.length === 0) {
+        alert('No bids are READY_TO_TAKEOFF. Refresh bids first.');
+        return;
+    }
+    if (!confirm(`Run takeoff on ${ready.length} bid(s)?`)) return;
+
+    for (const bid of ready) {
+        await runSingleTakeoff(bid.page_id, null);
+    }
+    alert(`Completed ${ready.length} takeoff(s). Check results and Notion.`);
+}
+
+async function formatForKeyedIn(pageId) {
+    const bid = pipelineBids.find(b => b.page_id === pageId);
+    if (!bid) return;
+
+    // If we have a stored estimate, use it; otherwise run a fresh takeoff
+    const resultDiv = document.getElementById('pipeline-takeoff-result');
+    let estimate = null;
+    if (resultDiv._lastEstimate && resultDiv._lastEstimate.bid && resultDiv._lastEstimate.bid.page_id === pageId) {
+        estimate = resultDiv._lastEstimate.estimate;
+    }
+
+    if (!estimate) {
+        alert('Run the takeoff first, then click KeyedIn to format the results.');
+        return;
+    }
+
+    try {
+        const resp = await fetch('/api/keyedin/format', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                quote_number: bid.quote_number || '',
+                customer: bid.customer || '',
+                labor_lines: estimate.labor || [],
+                install_lines: estimate.install || [],
+            }),
+        });
+        const data = await resp.json();
+
+        // Show KeyedIn formatted output
+        let html = `<div style="margin-top:1rem;" class="card">`;
+        html += `<h2>KeyedIn Entry &mdash; ${data.quote_number}</h2>`;
+        html += `<p style="font-size:0.85rem;color:var(--text-dim);margin-bottom:1rem;">${data.instructions}</p>`;
+        html += `<table><thead><tr><th>Code</th><th>Description</th><th class="right">Hours</th><th>Unit</th><th>Dept</th></tr></thead><tbody>`;
+        for (const wo of data.work_orders) {
+            const isCrew = wo.unit_type.toUpperCase().includes('CREW');
+            html += `<tr>
+                <td class="mono">${wo.work_code}</td>
+                <td>${wo.description}</td>
+                <td class="right mono" style="font-weight:600;">${wo.hours.toFixed(2)}</td>
+                <td class="${isCrew ? 'unit-crew' : 'unit-man'}">${wo.unit_type}</td>
+                <td style="font-size:0.75rem;color:var(--text-dim);">${wo.department}</td>
+            </tr>`;
+        }
+        html += `</tbody><tfoot>`;
+        html += `<tr><td colspan="2" style="font-weight:600;">Total Man-Hrs</td><td class="right mono" style="font-weight:700;color:var(--green);">${data.total_man_hours}</td><td></td><td></td></tr>`;
+        html += `<tr><td colspan="2" style="font-weight:600;">Total Crew-Hrs</td><td class="right mono" style="font-weight:700;color:var(--orange);">${data.total_crew_hours}</td><td></td><td></td></tr>`;
+        html += `</tfoot></table>`;
+        html += `<div style="text-align:center;margin-top:1rem;">
+            <button class="btn-primary" onclick="copyKeyedInLines()" style="width:auto;display:inline-block;">Copy for KeyedIn</button>
+        </div>`;
+        html += `</div>`;
+
+        document.getElementById('pipeline-takeoff-content').innerHTML += html;
+        // Store for copy
+        document.getElementById('pipeline-takeoff-content')._keyedinData = data;
+    } catch (err) {
+        alert('KeyedIn format error: ' + err.message);
+    }
+}
+
+function copyKeyedInLines() {
+    const data = document.getElementById('pipeline-takeoff-content')._keyedinData;
+    if (!data) return;
+    let lines = 'Code\tDescription\tHours\tUnit\tDept\n';
+    for (const wo of data.work_orders) {
+        lines += `${wo.work_code}\t${wo.description}\t${wo.hours.toFixed(2)}\t${wo.unit_type}\t${wo.department}\n`;
+    }
+    navigator.clipboard.writeText(lines).then(() => alert('Copied! Paste into KeyedIn Quote Entry.'));
 }
 </script>
 </body>

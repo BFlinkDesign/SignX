@@ -12,16 +12,43 @@ and KeyedIn-ready output into a single web application.
 from __future__ import annotations
 
 import json
+import logging
 import os
 import sys
+from datetime import datetime
 from pathlib import Path
 from typing import List, Optional
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv(Path(__file__).resolve().parent.parent / ".env")
+except ImportError:
+    pass
+
+import httpx
 import uvicorn
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
+
+logger = logging.getLogger(__name__)
+
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
+NOTION_TOKEN = os.environ.get("NOTION_TOKEN", "")
+NOTION_BID_PIPELINE_DB = os.environ.get("NOTION_BID_PIPELINE", "")
+NOTION_HEADERS = {
+    "Authorization": f"Bearer {NOTION_TOKEN}",
+    "Notion-Version": "2022-06-28",
+    "Content-Type": "application/json",
+}
+
+NOTIFY_WEBHOOK_URL = os.environ.get("NOTIFY_WEBHOOK_URL", "")
 
 from abc_engine import (
     ConstructionType,
@@ -698,9 +725,373 @@ async def list_sections(family: Optional[str] = None, limit: int = 50):
     }
 
 
+# ══════════════════════════════════════════════════════════════════════════════
+# NOTION BID PIPELINE INTEGRATION
+# ══════════════════════════════════════════════════════════════════════════════
+
+logger = logging.getLogger("signx-takeoff")
+
+NOTION_TOKEN = os.environ.get("NOTION_TOKEN", "")
+NOTION_BID_PIPELINE_DB = os.environ.get("NOTION_BID_PIPELINE", "")
+NOTIFY_WEBHOOK_URL = os.environ.get("NOTIFY_WEBHOOK_URL", "")
+NOTION_HEADERS = {
+    "Authorization": f"Bearer {NOTION_TOKEN}",
+    "Notion-Version": "2022-06-28",
+    "Content-Type": "application/json",
+}
+
+# Sign type mapping: Notion sign_type → estimator function + default params
+SIGN_TYPE_MAP = {
+    "CHANNEL_LETTERS":          ("channel_letter", {}),
+    "CHANNEL_LOGO":             ("channel_letter", {"logo_pf": 5.0}),
+    "MONUMENT_BASE":            ("monument", {"illuminated": False}),
+    "MONUMENT_MANUAL_READER":   ("monument", {"illuminated": False, "num_faces": 2}),
+    "EMC_MONUMENT":             ("monument", {"illuminated": True}),
+    "EMC_POLE":                 ("pylon", {}),
+    "EMC_RETROFIT":             ("cabinet", {"illuminated": True}),
+    "EMC":                      ("cabinet", {"illuminated": True}),
+    "CABINET_ILLUMINATED":      ("cabinet", {"illuminated": True}),
+    "INFO_PANEL":               ("directional", {}),
+    "REMOVAL":                  ("removal", {}),
+    "STRUCTURAL_BASE":          ("pylon", {"include_footing": True}),
+    "MASONRY_SUB":              ("monument", {"illuminated": False}),
+}
+
+
+def _notion_prop(props: dict, key: str, ptype: str):
+    """Extract value from Notion property."""
+    p = props.get(key)
+    if not p:
+        return None
+    if ptype == "title":
+        t = p.get("title")
+        return t[0].get("plain_text", "") if t else ""
+    elif ptype == "rich_text":
+        t = p.get("rich_text")
+        return t[0].get("plain_text", "") if t else ""
+    elif ptype == "number":
+        return p.get("number")
+    elif ptype == "select":
+        s = p.get("select")
+        return s.get("name") if s else None
+    elif ptype == "checkbox":
+        return p.get("checkbox", False)
+    elif ptype == "date":
+        d = p.get("date")
+        return d.get("start") if d else None
+    elif ptype == "multi_select":
+        return [s.get("name") for s in p.get("multi_select", [])]
+    return None
+
+
+def _parse_notion_bid(entry: dict) -> dict:
+    """Parse a single Notion page into a clean bid dict."""
+    props = entry.get("properties", {})
+    return {
+        "page_id": entry.get("id", ""),
+        "quote_number": _notion_prop(props, "Quote #", "title"),
+        "customer": _notion_prop(props, "Customer", "rich_text"),
+        "description": _notion_prop(props, "Description", "rich_text"),
+        "sign_type": _notion_prop(props, "Sign Type", "select"),
+        "sq_ft": _notion_prop(props, "Sq Ft", "number"),
+        "faces": _notion_prop(props, "Faces", "number"),
+        "cabinet_dims": _notion_prop(props, "Cabinet Dims", "rich_text"),
+        "est_value": _notion_prop(props, "Est. Value", "number"),
+        "pipeline_stage": _notion_prop(props, "Pipeline Stage", "select"),
+        "status": _notion_prop(props, "Status", "select"),
+        "salesman": _notion_prop(props, "Salesman", "select"),
+        "location": _notion_prop(props, "Location", "rich_text"),
+        "email_received": _notion_prop(props, "Email Received", "date"),
+        "age_days": _notion_prop(props, "Age(Days)", "number"),
+        "blocking": _notion_prop(props, "Blocking", "multi_select"),
+        "blocking_owner": _notion_prop(props, "Blocking Owner", "select"),
+        "takeoff_done": _notion_prop(props, "\u2705 Takeoff Done", "checkbox"),
+        "quoted": _notion_prop(props, "\u2705 Quoted", "checkbox"),
+    }
+
+
+@app.get("/api/notion/bids")
+async def get_notion_bids():
+    """Fetch active bids from Notion Bid Pipeline."""
+    if not NOTION_TOKEN or not NOTION_BID_PIPELINE_DB:
+        return {"error": "Notion not configured. Set NOTION_TOKEN and NOTION_BID_PIPELINE in .env", "bids": []}
+    try:
+        async with httpx.AsyncClient(timeout=15.0) as client:
+            resp = await client.post(
+                f"https://api.notion.com/v1/databases/{NOTION_BID_PIPELINE_DB}/query",
+                headers=NOTION_HEADERS,
+                json={
+                    "sorts": [{"timestamp": "last_edited_time", "direction": "descending"}],
+                    "page_size": 50,
+                },
+            )
+            resp.raise_for_status()
+            data = resp.json()
+        bids = [_parse_notion_bid(entry) for entry in data.get("results", [])]
+        # Summary stats
+        stages = {}
+        for b in bids:
+            s = b.get("pipeline_stage") or "UNKNOWN"
+            stages[s] = stages.get(s, 0) + 1
+        total_value = sum(b.get("est_value") or 0 for b in bids)
+        return {
+            "bids": bids,
+            "total": len(bids),
+            "total_pipeline_value": total_value,
+            "stage_counts": stages,
+            "ready_to_takeoff": [b for b in bids if b.get("pipeline_stage") == "READY_TO_TAKEOFF" and not b.get("takeoff_done")],
+        }
+    except httpx.HTTPStatusError as e:
+        return JSONResponse(status_code=e.response.status_code, content={"error": f"Notion API error: {e.response.text}", "bids": []})
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": str(e), "bids": []})
+
+
+class TakeoffRequest(BaseModel):
+    page_id: str = Field(..., description="Notion page ID for the bid")
+
+
+@app.post("/api/notion/takeoff")
+async def run_notion_takeoff(req: TakeoffRequest):
+    """Run takeoff estimate for a Notion bid, mark it done, return results."""
+    if not NOTION_TOKEN:
+        return JSONResponse(status_code=400, content={"ok": False, "error": "Notion not configured"})
+    try:
+        # 1. Fetch the bid from Notion
+        async with httpx.AsyncClient(timeout=15.0) as client:
+            resp = await client.get(
+                f"https://api.notion.com/v1/pages/{req.page_id}",
+                headers=NOTION_HEADERS,
+            )
+            resp.raise_for_status()
+            page = resp.json()
+
+        bid = _parse_notion_bid(page)
+        sign_type_raw = bid.get("sign_type") or "CABINET_ILLUMINATED"
+        sq_ft = bid.get("sq_ft") or 24.0
+        faces = bid.get("faces") or 1
+
+        # 2. Map sign type to estimator
+        est_key, defaults = SIGN_TYPE_MAP.get(sign_type_raw, ("cabinet", {"illuminated": True}))
+
+        # 3. Build job and run estimator
+        if est_key == "channel_letter":
+            job = JobInput(
+                font_type=FontType.BLOCK,
+                construction=ConstructionType.FACE_LIT,
+                pf_manual=sq_ft * 2.5,  # rough PF estimate from SF
+                letter_height_inches=12.0,
+                logo_pf=defaults.get("logo_pf", 0.0),
+            )
+            result = estimate(job)
+        elif est_key == "monument":
+            job = JobInput(
+                sign_type=SignType.MONDF if faces >= 2 else SignType.MONSF,
+                sign_sf_per_face=sq_ft / max(faces, 1),
+                num_faces=faces,
+                is_illuminated=defaults.get("illuminated", False),
+                has_vinyl=True,
+            )
+            result = estimate_monument(job)
+        elif est_key == "pylon":
+            job = JobInput(
+                sign_type=SignType.POLLIT,
+                sign_sf_per_face=sq_ft / max(faces, 1),
+                num_faces=max(faces, 2),
+                is_illuminated=True,
+                has_vinyl=True,
+                has_structural_steel=True,
+                has_footing=defaults.get("include_footing", True),
+                install_height_ft=25.0,
+                crew_size=3,
+            )
+            result = estimate_pylon(job)
+        elif est_key == "cabinet":
+            job = JobInput(
+                sign_type=SignType.ALULIT if defaults.get("illuminated", True) else SignType.ALUNON,
+                sign_sf_per_face=sq_ft / max(faces, 1),
+                num_faces=faces,
+                is_illuminated=defaults.get("illuminated", True),
+                has_vinyl=True,
+            )
+            result = estimate_cabinet(job)
+        elif est_key == "directional":
+            job = JobInput(
+                sign_type=SignType.DIRECT,
+                sign_sf_per_face=sq_ft,
+                num_faces=1,
+                num_units=1,
+                has_vinyl=True,
+            )
+            result = estimate_directional(job)
+        elif est_key == "removal":
+            job = JobInput(
+                sign_type=SignType.CLLIT,
+                num_units=1,
+                face_sf_override=sq_ft if sq_ft else None,
+            )
+            result = estimate_removal(job)
+        else:
+            # Default fallback
+            job = JobInput(
+                sign_type=SignType.ALULIT,
+                sign_sf_per_face=sq_ft / max(faces, 1),
+                num_faces=faces,
+                is_illuminated=True,
+                has_vinyl=True,
+            )
+            result = estimate_cabinet(job)
+
+        # 4. Format result
+        total_est = result.total_man_hours + result.total_crew_hours
+        bench = benchmark(total_est)
+        bench_data = _format_benchmark(bench) if bench else None
+        estimate_data = _format_estimate_result(result, bench_data)
+
+        # 5. Mark takeoff done in Notion + update Pipeline Stage to IN_PROGRESS
+        async with httpx.AsyncClient(timeout=15.0) as client:
+            await client.patch(
+                f"https://api.notion.com/v1/pages/{req.page_id}",
+                headers=NOTION_HEADERS,
+                json={
+                    "properties": {
+                        "\u2705 Takeoff Done": {"checkbox": True},
+                        "Pipeline Stage": {"select": {"name": "IN_PROGRESS"}},
+                    }
+                },
+            )
+
+        return {
+            "ok": True,
+            "bid": bid,
+            "estimator_used": est_key,
+            "estimate": estimate_data,
+            "notion_updated": True,
+        }
+    except httpx.HTTPStatusError as e:
+        return JSONResponse(status_code=e.response.status_code, content={"ok": False, "error": f"Notion API: {e.response.text}"})
+    except Exception as e:
+        logger.exception("Takeoff failed for %s", req.page_id)
+        return JSONResponse(status_code=500, content={"ok": False, "error": str(e)})
+
+
+# ── Notification: SMS / Webhook ─────────────────────────────────────────────
+
+class NotifyRequest(BaseModel):
+    quote_number: str
+    customer: str
+    total_hours: float
+    estimator_type: str
+    message: str = ""
+
+
+@app.post("/api/notify/bid-ready")
+async def notify_bid_ready(req: NotifyRequest):
+    """Send notification that a bid takeoff is complete and ready for review.
+    Supports Power Automate HTTP trigger webhook or direct logging."""
+    payload = {
+        "event": "bid_takeoff_complete",
+        "quote_number": req.quote_number,
+        "customer": req.customer,
+        "total_hours": req.total_hours,
+        "estimator_type": req.estimator_type,
+        "message": req.message or f"Takeoff complete for {req.quote_number} ({req.customer}). {req.total_hours:.1f} total hours. Ready for KeyedIn entry and review.",
+        "timestamp": datetime.now().isoformat(),
+    }
+
+    webhook_sent = False
+    if NOTIFY_WEBHOOK_URL:
+        try:
+            async with httpx.AsyncClient(timeout=10.0) as client:
+                resp = await client.post(NOTIFY_WEBHOOK_URL, json=payload)
+                resp.raise_for_status()
+                webhook_sent = True
+        except Exception as e:
+            logger.warning("Webhook notification failed: %s", e)
+
+    logger.info("BID READY: %s %s — %.1f hrs (%s)", req.quote_number, req.customer, req.total_hours, req.estimator_type)
+
+    return {
+        "ok": True,
+        "webhook_sent": webhook_sent,
+        "payload": payload,
+        "instructions": "Configure NOTIFY_WEBHOOK_URL in .env to send SMS via Power Automate HTTP trigger.",
+    }
+
+
+# ── PA Flow Status ──────────────────────────────────────────────────────────
+
+@app.get("/api/notion/flow-status")
+async def get_flow_status():
+    """Return Power Automate flow integration status."""
+    return {
+        "flows": [
+            {
+                "name": "CORRESPONDENCE-CLASSIFIER",
+                "flow_id": "1a6f964f-54a8-47ba-bec8-a259227d1daa",
+                "status": "active",
+                "type": "BID-INTAKE-PROOF",
+                "description": "Watches Inbox/BID REQUEST/Jeff Fye, extracts bid fields via Claude Sonnet, creates Notion rows",
+                "scope": "Jeff Fye subfolder (Phase 1)",
+            },
+        ],
+        "planned_flows": [
+            {"name": "Phase 2: All Salespeople", "status": "planned", "description": "Extend to Joe Phillips, Rich Thompson, House"},
+            {"name": "VENDOR-QUOTE-EXTRACT", "status": "planned", "description": "Extract pricing from vendor/supplier quote emails"},
+            {"name": "DAILY-BID-DIGEST", "status": "planned", "description": "Morning summary pushed to Notion vault"},
+        ],
+        "salesmen": ["Jeff Fye", "Joe Phillips", "Rich Thompson", "House"],
+        "email_folder": "Inbox/BID REQUEST/{salesperson}",
+        "last_check": datetime.now().isoformat(),
+    }
+
+
+# ── KeyedIn Formatting ──────────────────────────────────────────────────────
+
+class KeyedInFormatRequest(BaseModel):
+    quote_number: str
+    customer: str
+    labor_lines: list = Field(default_factory=list)
+    install_lines: list = Field(default_factory=list)
+
+
+@app.post("/api/keyedin/format")
+async def format_for_keyedin(req: KeyedInFormatRequest):
+    """Format estimate results for KeyedIn ERP quote entry.
+    Returns work orders ready to paste into KeyedIn."""
+    all_lines = req.labor_lines + req.install_lines
+    work_orders = []
+    for line in all_lines:
+        work_orders.append({
+            "work_code": line.get("code", ""),
+            "description": line.get("desc", ""),
+            "hours": line.get("hours", 0),
+            "unit_type": line.get("unit", "man-hrs"),
+            "department": line.get("dept", ""),
+            "section": line.get("section", ""),
+        })
+    total_man = sum(l["hours"] for l in work_orders if "CREW" not in l["unit_type"].upper())
+    total_crew = sum(l["hours"] for l in work_orders if "CREW" in l["unit_type"].upper())
+    return {
+        "keyedin_ready": True,
+        "quote_number": req.quote_number,
+        "customer": req.customer,
+        "work_orders": work_orders,
+        "total_man_hours": round(total_man, 2),
+        "total_crew_hours": round(total_crew, 2),
+        "line_count": len(work_orders),
+        "instructions": "Copy work orders to KeyedIn Quote Entry → Direct Purchase tab. Use Work Code as line item code. Man-hrs go to standard entry, CREW-hrs get crew multiplier.",
+    }
+
+
 if __name__ == "__main__":
-    print("\n  SignX-Takeoff Server v2.0")
+    print("\n  SignX-Takeoff Server v2.1")
     print("  http://localhost:8765")
-    print("  Endpoints: /api/estimate, /api/structural/wind, /api/structural/full-design, ...")
+    print("  Endpoints:")
+    print("    Estimation: /api/estimate, /api/estimate/monument, /api/estimate/pylon, ...")
+    print("    Structural: /api/structural/wind, /api/structural/full-design, ...")
+    print("    Pipeline:   /api/notion/bids, /api/notion/takeoff, /api/notion/flow-status")
+    print("    KeyedIn:    /api/keyedin/format")
+    print("    Notify:     /api/notify/bid-ready")
     print()
     uvicorn.run(app, host="0.0.0.0", port=8765, log_level="info")
