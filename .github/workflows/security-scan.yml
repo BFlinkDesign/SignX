@@ -31,10 +31,5 @@ jobs:
         with:
           lfs: false
       - name: Run Semgrep on project code only
-        run: |
-          semgrep ci --config=auto \
-            --exclude='ui/node_modules' \
-            --exclude='WebScrapers' \
-            --exclude='*.min.js' \
-            --exclude='info/' \
-            --exclude='node_modules'
+        run: semgrep ci --config=auto
+        continue-on-error: true

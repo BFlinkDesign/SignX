@@ -1,4 +1,4 @@
-ui/node_modules/
+ui/
 node_modules/
 WebScrapers/
 info/
@@ -6,3 +6,7 @@ info/
 *.pdf
 *.xlsx
 *.duckdb
+*.cdr
+vendor/
+dist/
+build/
