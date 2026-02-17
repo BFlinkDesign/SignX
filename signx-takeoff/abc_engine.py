@@ -440,6 +440,12 @@ REMOVAL_FLOOR: dict[str, float] = {
 }
 REMOVAL_DEFAULT = 2.40  # Overall P50 ~2.0 x 1.20 (Tier 3 fallback)
 
+# Raceway removal adder -- extra labor for dismounting raceway from wall
+# CL on raceway: 3 holes in wall + raceway brackets vs flush: 3-5 holes PER letter
+# Raceway removal adds ~0.75h for short raceway, scales with LF if known
+RACEWAY_REMOVAL_BASE = 0.75   # Base hours for removing a standard raceway (up to 10 LF)
+RACEWAY_REMOVAL_PER_LF = 0.05  # Additional hours per LF over 10 LF
+
 # ── Auto-populate from calibration.json (overrides hardcoded values above) ───
 # Hardcoded dicts above serve as Tier 2 fallback if calibration is unavailable.
 # When calibration.json exists, its values take precedence (newer warehouse data).
@@ -1075,8 +1081,13 @@ class JobInput:
     crew_size: int = 2
     num_units: int = 1  # Number of sign units for load/unload
 
+    # Batch travel deduplication -- multiple signs on same job share one trip
+    batch_index: int = 0   # 0 = first/only sign (gets travel), 1+ = skip travel
+    batch_size: int = 1    # Total signs in batch (for load/unload scaling)
+
     # Optional removal
     include_removal: bool = False
+    has_raceway: bool = False  # True = sign on raceway (adds raceway removal labor)
 
     # Face area override (if known from PDF)
     face_sf_override: Optional[float] = None
@@ -1146,6 +1157,60 @@ class EstimateResult:
 
     # Warnings
     warnings: list[str] = field(default_factory=list)
+
+
+# ── Shared Helpers ───────────────────────────────────────────────────────────
+
+def _make_travel_line(job: JobInput, fallback_hrs: float = 0.0,
+                      fallback_formula: str = "") -> LaborLine:
+    """Generate a batch-aware travel LaborLine.
+
+    - batch_index == 0: first/only sign → normal travel calc
+    - batch_index > 0: subsequent sign in same job → 0 hours (shared trip)
+    - If miles_one_way == 0 and fallback_hrs > 0: use warehouse median fallback
+    """
+    if job.batch_index > 0:
+        return LaborLine(
+            work_code="0620",
+            description=f"Travel (shared -- batch sign #{job.batch_index + 1})",
+            hours=0.0, unit_type="man-hrs",
+            department="Installation (600)",
+            formula=f"Batch sign #{job.batch_index + 1} of {job.batch_size} -- travel charged to sign #1",
+            section="Batch travel dedup",
+        )
+    if job.miles_one_way > 0:
+        travel_hrs = round((job.miles_one_way / 50.0) * 2 * job.crew_size, 2)
+        return LaborLine(
+            work_code="0620", description="Travel",
+            hours=travel_hrs, unit_type="man-hrs",
+            department="Installation (600)",
+            formula=f"({job.miles_one_way} mi / 50) x 2 x {job.crew_size} crew",
+            section="Standard",
+        )
+    if fallback_hrs > 0:
+        return LaborLine(
+            work_code="0620", description="Travel",
+            hours=round(fallback_hrs, 2), unit_type="man-hrs",
+            department="Installation (600)",
+            formula=fallback_formula or f"Warehouse median {fallback_hrs}h",
+            section="Standard",
+        )
+    return None  # type: ignore[return-value]
+
+
+def _make_raceway_removal_line(job: JobInput) -> LaborLine | None:
+    """Generate raceway removal adder line if job.has_raceway is True."""
+    if not job.has_raceway:
+        return None
+    rw_lf = job.raceway_lf if job.raceway_lf > 0 else 8.0
+    rw_hrs = RACEWAY_REMOVAL_BASE + max(0, rw_lf - 10) * RACEWAY_REMOVAL_PER_LF
+    return LaborLine(
+        work_code="0625", description="Raceway Removal (adder)",
+        hours=round(rw_hrs, 2), unit_type="man-hrs",
+        department="Installation (600)",
+        formula=f"Base {RACEWAY_REMOVAL_BASE}h + max(0, {rw_lf:.0f} LF - 10) x {RACEWAY_REMOVAL_PER_LF}/LF = {rw_hrs:.2f}h",
+        section="Raceway removal adder",
+    )
 
 
 # ── Main Calculation Engine ──────────────────────────────────────────────────
@@ -1341,16 +1406,10 @@ def estimate(job: JobInput) -> EstimateResult:
         section="Standard",
     ))
 
-    # ── 0620 Travel ──────────────────────────────────────────────────────
-    if job.miles_one_way > 0:
-        travel_hrs = (job.miles_one_way / 50.0) * 2 * job.crew_size
-        install.append(LaborLine(
-            work_code="0620", description="Travel",
-            hours=round(travel_hrs, 2), unit_type="man-hrs",
-            department="Installation (600)",
-            formula=f"({job.miles_one_way} mi / 50) x 2 x {job.crew_size} crew",
-            section="Standard",
-        ))
+    # ── 0620 Travel (batch-aware) ──────────────────────────────────────────
+    _tl = _make_travel_line(job)
+    if _tl:
+        install.append(_tl)
 
     # ── 0282 Check-In Freight ────────────────────────────────────────────
     pallets = max(1, (job.num_units + 1) // 2)
@@ -1695,20 +1754,11 @@ def estimate_monument(job: JobInput) -> EstimateResult:
         section="Standard",
     ))
 
-    # 0620 Travel — warehouse median when no distance given
-    if job.miles_one_way > 0:
-        travel_hrs = (job.miles_one_way / 50.0) * 2 * job.crew_size
-        travel_formula = f"({job.miles_one_way} mi / 50) x 2 x {job.crew_size} crew"
-    else:
-        travel_hrs = MONDF_0620_MEDIAN_NONLIT
-        travel_formula = f"Warehouse median {MONDF_0620_MEDIAN_NONLIT}h (n=61, NONLIT)"
-    install.append(LaborLine(
-        work_code="0620", description="Travel",
-        hours=round(travel_hrs, 2), unit_type="man-hrs",
-        department="Installation (600)",
-        formula=travel_formula,
-        section="Standard",
-    ))
+    # 0620 Travel (batch-aware) — warehouse median when no distance given
+    _tl = _make_travel_line(job, fallback_hrs=MONDF_0620_MEDIAN_NONLIT,
+                            fallback_formula=f"Warehouse median {MONDF_0620_MEDIAN_NONLIT}h (n=61, NONLIT)")
+    if _tl:
+        install.append(_tl)
 
     # 0630 1-Man Install — warehouse median by segment (no floor override)
     install_median = MONDF_0630_MEDIAN_LIT if job.is_illuminated else MONDF_0630_MEDIAN_NONLIT
@@ -1814,6 +1864,11 @@ def estimate_removal(job: JobInput) -> EstimateResult:
         formula=formula, section=section,
     ))
 
+    # 0625R Raceway Removal (adder)
+    _rr = _make_raceway_removal_line(job)
+    if _rr:
+        install.append(_rr)
+
     # 0610 Load/Unload
     load_hrs = 1.0 + 0.5 * max(0, job.num_units - 1)
     install.append(LaborLine(
@@ -1824,16 +1879,10 @@ def estimate_removal(job: JobInput) -> EstimateResult:
         section="Standard",
     ))
 
-    # 0620 Travel
-    if job.miles_one_way > 0:
-        travel_hrs = (job.miles_one_way / 50.0) * 2 * job.crew_size
-        install.append(LaborLine(
-            work_code="0620", description="Travel",
-            hours=round(travel_hrs, 2), unit_type="man-hrs",
-            department="Installation (600)",
-            formula=f"({job.miles_one_way} mi / 50) x 2 x {job.crew_size} crew",
-            section="Standard",
-        ))
+    # 0620 Travel (batch-aware)
+    _tl = _make_travel_line(job)
+    if _tl:
+        install.append(_tl)
 
     # 9600 Install OT — use OT_FACTORS if available for sign type
     ot = OT_FACTORS.get(sign_type_key)
@@ -1961,26 +2010,13 @@ def estimate_awning(job: JobInput) -> EstimateResult:
         section="Awning (Eagle actuals)",
     ))
 
-    # 0620 Travel (SF-based rate OR miles if provided)
-    if job.miles_one_way > 0:
-        travel_hrs = (job.miles_one_way / 50.0) * 2 * job.crew_size
-        install.append(LaborLine(
-            work_code="0620", description="Travel",
-            hours=round(travel_hrs, 2), unit_type="man-hrs",
-            department="Installation (600)",
-            formula=f"({job.miles_one_way} mi / 50) x 2 x {job.crew_size} crew",
-            section="Standard",
-        ))
-    else:
-        travel_rate = AWNING_LABOR_PER_SF.get('0620', 0.040)
-        travel_hrs = total_sf * travel_rate
-        install.append(LaborLine(
-            work_code="0620", description="Travel",
-            hours=round(travel_hrs, 2), unit_type="man-hrs",
-            department="Installation (600)",
-            formula=f"{total_sf:.1f} SF x {travel_rate:.3f}/SF",
-            section="Awning (Eagle actuals)",
-        ))
+    # 0620 Travel (batch-aware, SF-based fallback)
+    _awning_travel_rate = AWNING_LABOR_PER_SF.get('0620', 0.040)
+    _awning_travel_fb = round(total_sf * _awning_travel_rate, 2)
+    _tl = _make_travel_line(job, fallback_hrs=_awning_travel_fb,
+                            fallback_formula=f"{total_sf:.1f} SF x {_awning_travel_rate:.3f}/SF (Eagle actuals)")
+    if _tl:
+        install.append(_tl)
 
     # 0630 1-Man Install
     install_1man_rate = AWNING_LABOR_PER_SF.get('0630', 0.285)
@@ -2276,20 +2312,11 @@ def estimate_pylon(job: JobInput) -> EstimateResult:
         section="Standard",
     ))
 
-    # 0620 Travel — warehouse median when no distance given
-    if job.miles_one_way > 0:
-        travel_hrs = (job.miles_one_way / 50.0) * 2 * job.crew_size
-        travel_formula = f"({job.miles_one_way} mi / 50) x 2 x {job.crew_size} crew"
-    else:
-        travel_hrs = POLLIT_0620_MEDIAN
-        travel_formula = f"Warehouse median {POLLIT_0620_MEDIAN}h (POLLIT)"
-    install.append(LaborLine(
-        work_code="0620", description="Travel",
-        hours=round(travel_hrs, 2), unit_type="man-hrs",
-        department="Installation (600)",
-        formula=travel_formula,
-        section="Standard",
-    ))
+    # 0620 Travel (batch-aware) — warehouse median when no distance given
+    _tl = _make_travel_line(job, fallback_hrs=POLLIT_0620_MEDIAN,
+                            fallback_formula=f"Warehouse median {POLLIT_0620_MEDIAN}h (POLLIT)")
+    if _tl:
+        install.append(_tl)
 
     # 0650 3-Man Install — crane required for pylon
     install_hrs = POLLIT_0650_MEDIAN
@@ -2571,20 +2598,11 @@ def estimate_cabinet(job: JobInput) -> EstimateResult:
         section="Standard",
     ))
 
-    # 0620 Travel — warehouse median when no distance given
-    if job.miles_one_way > 0:
-        travel_hrs = (job.miles_one_way / 50.0) * 2 * job.crew_size
-        travel_formula = f"({job.miles_one_way} mi / 50) x 2 x {job.crew_size} crew"
-    else:
-        travel_hrs = ALULIT_0620_MEDIAN
-        travel_formula = f"Warehouse median {ALULIT_0620_MEDIAN}h (ALULIT)"
-    install.append(LaborLine(
-        work_code="0620", description="Travel",
-        hours=round(travel_hrs, 2), unit_type="man-hrs",
-        department="Installation (600)",
-        formula=travel_formula,
-        section="Standard",
-    ))
+    # 0620 Travel (batch-aware) — warehouse median when no distance given
+    _tl = _make_travel_line(job, fallback_hrs=ALULIT_0620_MEDIAN,
+                            fallback_formula=f"Warehouse median {ALULIT_0620_MEDIAN}h (ALULIT)")
+    if _tl:
+        install.append(_tl)
 
     # 0630 1-Man Install — wall-mounted standard
     install_hrs = ALULIT_0630_MEDIAN
@@ -2792,20 +2810,11 @@ def estimate_directional(job: JobInput) -> EstimateResult:
         section="DIRECT warehouse",
     ))
 
-    # 0620 Travel
-    if job.miles_one_way > 0:
-        travel_hrs = round((job.miles_one_way / 50.0) * 2 * job.crew_size, 2)
-        travel_formula = f"({job.miles_one_way} mi / 50) x 2 x {job.crew_size} crew"
-    else:
-        travel_hrs = 1.50
-        travel_formula = "Warehouse median 1.50h (DIRECT P50)"
-    install.append(LaborLine(
-        work_code="0620", description="Travel",
-        hours=travel_hrs, unit_type="man-hrs",
-        department="Installation (600)",
-        formula=travel_formula,
-        section="DIRECT warehouse",
-    ))
+    # 0620 Travel (batch-aware)
+    _tl = _make_travel_line(job, fallback_hrs=1.50,
+                            fallback_formula="Warehouse median 1.50h (DIRECT P50)")
+    if _tl:
+        install.append(_tl)
 
     # 0630 1-Man Install — INSTALL_FLOOR["DIRECT"] = 7.20h
     install_hrs = INSTALL_FLOOR.get("DIRECT", 7.20)
@@ -2960,20 +2969,11 @@ def estimate_dimensional(job: JobInput) -> EstimateResult:
         section="GEMINI warehouse",
     ))
 
-    # 0620 Travel
-    if job.miles_one_way > 0:
-        travel_hrs = round((job.miles_one_way / 50.0) * 2 * job.crew_size, 2)
-        travel_formula = f"({job.miles_one_way} mi / 50) x 2 x {job.crew_size} crew"
-    else:
-        travel_hrs = 1.25
-        travel_formula = "Warehouse median 1.25h (GEMINI P50)"
-    install.append(LaborLine(
-        work_code="0620", description="Travel",
-        hours=travel_hrs, unit_type="man-hrs",
-        department="Installation (600)",
-        formula=travel_formula,
-        section="GEMINI warehouse",
-    ))
+    # 0620 Travel (batch-aware)
+    _tl = _make_travel_line(job, fallback_hrs=1.25,
+                            fallback_formula="Warehouse median 1.25h (GEMINI P50)")
+    if _tl:
+        install.append(_tl)
 
     # 0630 1-Man Install — INSTALL_FLOOR["GEMINI"] = 4.20h
     install_hrs = INSTALL_FLOOR.get("GEMINI", 4.20)
@@ -3163,17 +3163,10 @@ def estimate_flatpanel(job: JobInput) -> EstimateResult:
         section="Standard",
     ))
 
-    # ── 0620 Travel ─────────────────────────────────────────────────────
-    if job.miles_one_way > 0:
-        travel_hrs = round(job.miles_one_way * 2 / 45, 2)
-        travel_hrs = max(travel_hrs, 0.50)
-        install.append(LaborLine(
-            work_code="0620", description="Travel",
-            hours=round(travel_hrs, 2), unit_type="man-hrs",
-            department="Installation (600)",
-            formula=f"{job.miles_one_way} mi x 2 / 45 mph = {travel_hrs:.2f}h (min 0.50)",
-            section="Standard travel",
-        ))
+    # ── 0620 Travel (batch-aware) ─────────────────────────────────────────
+    _tl = _make_travel_line(job)
+    if _tl:
+        install.append(_tl)
 
     # ── 0625 Removal (optional) ─────────────────────────────────────────
     if job.include_removal:
