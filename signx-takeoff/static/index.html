@@ -6,10 +6,10 @@
 <title>SignX-Takeoff</title>
 <style>
   :root {
-    --bg: #0f172a; --surface: #1e293b; --surface2: #334155;
-    --border: #475569; --text: #e2e8f0; --text-dim: #94a3b8;
-    --accent: #3b82f6; --accent2: #8b5cf6; --green: #22c55e;
-    --orange: #f59e0b; --red: #ef4444;
+    --bg: #000000; --surface: #0d0d0d; --surface2: #1a1a1a;
+    --border: #2a2a2a; --text: #e8e8e8; --text-dim: #777777;
+    --accent: #0077ff; --accent2: #00bcd4; --green: #00e676;
+    --orange: #ff9100; --red: #ff3d00;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
@@ -24,7 +24,7 @@
   /* Main Nav Tabs */
   .main-nav { display: flex; gap: 0; border-bottom: 2px solid var(--border); margin-bottom: 1.5rem; background: var(--surface); border-radius: 0.5rem 0.5rem 0 0; overflow-x: auto; }
   .main-nav .nav-tab { padding: 0.75rem 1.5rem; cursor: pointer; color: var(--text-dim); font-size: 0.9rem; font-weight: 600; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.15s; white-space: nowrap; }
-  .main-nav .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); background: rgba(59,130,246,0.08); }
+  .main-nav .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); background: rgba(0,119,255,0.06); }
   .main-nav .nav-tab:hover { color: var(--text); background: rgba(255,255,255,0.03); }
   .main-section { display: none; }
   .main-section.active { display: block; }
@@ -41,7 +41,7 @@
   /* Forms */
   label { display: block; font-size: 0.8rem; color: var(--text-dim); margin-bottom: 0.25rem; font-weight: 500; }
   input, select { width: 100%; padding: 0.5rem 0.75rem; background: var(--bg); border: 1px solid var(--border); border-radius: 0.5rem; color: var(--text); font-size: 0.9rem; }
-  input:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(59,130,246,0.2); }
+  input:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(0,119,255,0.15); }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem; }
   .form-group { margin-bottom: 0.75rem; }
   .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem; }
@@ -62,13 +62,13 @@
 
   /* Drop zone */
   .dropzone { border: 2px dashed var(--border); border-radius: 0.75rem; padding: 2rem; text-align: center; cursor: pointer; transition: all 0.2s; }
-  .dropzone:hover, .dropzone.dragover { border-color: var(--accent); background: rgba(59,130,246,0.05); }
+  .dropzone:hover, .dropzone.dragover { border-color: var(--accent); background: rgba(0,119,255,0.04); }
   .dropzone svg { width: 48px; height: 48px; color: var(--text-dim); margin-bottom: 0.5rem; }
   .dropzone p { color: var(--text-dim); font-size: 0.85rem; }
   .dropzone .filename { color: var(--green); font-weight: 600; margin-top: 0.5rem; }
 
   /* PF Display */
-  .pf-display { background: linear-gradient(135deg, #1e3a5f, #1e293b); border: 1px solid var(--accent); border-radius: 0.75rem; padding: 1.25rem; text-align: center; margin: 1rem 0; }
+  .pf-display { background: linear-gradient(135deg, #001a3d, #0d0d0d); border: 1px solid var(--accent); border-radius: 0.75rem; padding: 1.25rem; text-align: center; margin: 1rem 0; }
   .pf-display .value { font-size: 2.5rem; font-weight: 800; color: var(--accent); }
   .pf-display .label { font-size: 0.85rem; color: var(--text-dim); }
   .pf-display .source { font-size: 0.75rem; color: var(--text-dim); margin-top: 0.25rem; }
@@ -80,7 +80,7 @@
   table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
   th { text-align: left; padding: 0.5rem 0.75rem; background: var(--bg); color: var(--text-dim); font-weight: 600; border-bottom: 1px solid var(--border); white-space: nowrap; }
   td { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--surface2); }
-  tr:hover td { background: rgba(59,130,246,0.05); }
+  tr:hover td { background: rgba(0,119,255,0.04); }
   .mono { font-family: 'Cascadia Code', 'Fira Code', monospace; }
   .right { text-align: right; }
   .unit-crew { color: var(--orange); font-weight: 600; }
@@ -138,7 +138,7 @@
   /* Pipeline table */
   #pipeline-table th { position: sticky; top: 0; z-index: 1; }
   #pipeline-table td { font-size: 0.82rem; vertical-align: middle; }
-  #pipeline-table tr:hover td { background: rgba(59,130,246,0.08); }
+  #pipeline-table tr:hover td { background: rgba(0,119,255,0.06); }
 
   /* ── Intelligence Dashboard ── */
   .intel-search-bar { display: flex; gap: 0.75rem; align-items: flex-end; flex-wrap: wrap; margin-bottom: 1.25rem; }
@@ -198,7 +198,7 @@
   .market-bar-marker { position: absolute; top: -4px; width: 2px; height: 14px; background: var(--text); border-radius: 1px; }
 
   /* Win Probability Gauge */
-  .win-prob-card { background: linear-gradient(135deg, rgba(30,58,95,0.6), var(--surface)); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.5rem; margin-bottom: 1.25rem; text-align: center; }
+  .win-prob-card { background: linear-gradient(135deg, rgba(0,40,80,0.4), var(--surface)); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.5rem; margin-bottom: 1.25rem; text-align: center; }
   .win-prob-gauge { position: relative; width: 160px; height: 80px; margin: 0 auto 0.75rem; overflow: hidden; }
   .win-prob-gauge-bg { width: 160px; height: 80px; border-radius: 80px 80px 0 0; background: var(--bg); border: 6px solid var(--surface2); border-bottom: none; }
   .win-prob-gauge-fill { position: absolute; bottom: 0; left: 0; width: 160px; height: 80px; border-radius: 80px 80px 0 0; border: 6px solid var(--green); border-bottom: none; clip-path: polygon(0 100%, 0 0, var(--fill-pct) 0, var(--fill-pct) 100%); transition: clip-path 0.6s ease-out; }
@@ -214,7 +214,7 @@
   @media (max-width: 800px) { .pricing-tiers { grid-template-columns: 1fr; } }
   .pricing-tier { background: var(--surface); border: 2px solid var(--border); border-radius: 0.75rem; padding: 1rem; cursor: pointer; transition: all 0.2s; position: relative; text-align: center; }
   .pricing-tier:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
-  .pricing-tier.recommended { border-color: var(--accent); background: linear-gradient(135deg, rgba(59,130,246,0.08), var(--surface)); }
+  .pricing-tier.recommended { border-color: var(--accent); background: linear-gradient(135deg, rgba(0,119,255,0.06), var(--surface)); }
   .pricing-tier.recommended::after { content: 'RECOMMENDED'; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #fff; font-size: 0.6rem; font-weight: 700; padding: 0.15rem 0.6rem; border-radius: 4px; letter-spacing: 0.05em; }
   .pricing-tier .tier-name { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
   .pricing-tier .tier-price { font-size: 1.5rem; font-weight: 800; font-family: 'Cascadia Code', 'Fira Code', monospace; margin-bottom: 0.35rem; }
@@ -234,6 +234,35 @@
   .health-dot.churn { background: var(--red); box-shadow: 0 0 6px rgba(239,68,68,0.4); }
   .health-row { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--text-dim); padding: 0.25rem 0; }
   .health-row .health-val { font-weight: 600; }
+
+  /* SpaceX-style refinements */
+  body { letter-spacing: 0.01em; }
+  .card { border-radius: 0.25rem; border-color: var(--border); }
+  .main-nav { border-radius: 0; background: var(--bg); border-bottom: 1px solid var(--border); }
+  .main-nav .nav-tab { text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.08em; border-bottom-width: 2px; }
+  .main-nav .nav-tab.active { background: rgba(0,119,255,0.06); }
+  button { border-radius: 0.25rem; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.8rem; }
+  .btn-primary { background: #0077ff; }
+  .btn-primary:hover { background: #005ecb; }
+  input, select { border-radius: 0.25rem; background: #0a0a0a; border-color: #333; }
+  .badge { border-radius: 0.15rem; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.65rem; }
+  .summary-box { border-radius: 0.25rem; }
+  .tabs .tab { text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; }
+  th { text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.06em; }
+
+  /* Adjustment sliders */
+  input[type="range"] { -webkit-appearance: none; height: 4px; border-radius: 2px; background: var(--surface2); outline: none; border: none; padding: 0; }
+  input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; cursor: pointer; background: var(--accent); border: 2px solid var(--bg); }
+  input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; cursor: pointer; background: var(--accent); border: 2px solid var(--bg); }
+  .adj-positive { color: var(--green); }
+  .adj-negative { color: var(--red); }
+  .adj-zero { color: var(--text-dim); }
+
+  /* File preview */
+  .file-preview-img { max-width: 100%; max-height: 200px; border-radius: 0.25rem; margin-top: 0.5rem; border: 1px solid var(--border); }
+  .file-ref { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; background: var(--bg); border-radius: 0.25rem; font-size: 0.8rem; margin-top: 0.5rem; border: 1px solid var(--border); }
+  .file-ref .file-icon { font-size: 1.1rem; }
+  .file-ref .file-info { color: var(--text-dim); font-size: 0.7rem; }
 </style>
 </head>
 <body>
@@ -255,9 +284,9 @@
     <div class="nav-tab" data-section="sec-cabinet">Cabinet</div>
     <div class="nav-tab" data-section="sec-directional">Directional</div>
     <div class="nav-tab" data-section="sec-dimensional">Dimensional</div>
-    <div class="nav-tab" data-section="sec-pipeline" style="color:var(--green);font-weight:700;">Bid Pipeline</div>
+    <div class="nav-tab" data-section="sec-pipeline" style="color:var(--green);">Bid Pipeline</div>
     <div class="nav-tab" data-section="sec-structural">Engineering</div>
-    <div class="nav-tab" data-section="sec-intel" style="color:var(--accent2);font-weight:700;">Intelligence</div>
+    <div class="nav-tab" data-section="sec-intel" style="color:var(--accent2);">Intelligence</div>
   </nav>
 
   <!-- ════════════════════════════════════════════════════════════════════════ -->
@@ -280,10 +309,10 @@
           <div class="tab-content active" id="tab-pdf">
             <div class="dropzone" id="dropzone">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 16V4m0 0l-4 4m4-4l4 4M4 20h16"/></svg>
-              <p>Drop PDF here (Gemini Art, cut file, or conceptual)<br>or click to browse</p>
+              <p>Drop file here or click to browse<br><span style="font-size:0.7rem;color:var(--text-dim)">PDF, EPS, SVG, JPG, PNG, DXF, DWG</span></p>
               <div class="filename" id="pdf-filename"></div>
             </div>
-            <input type="file" id="pdf-input" accept=".pdf" style="display:none">
+            <input type="file" id="pdf-input" accept=".pdf,.eps,.svg,.jpg,.jpeg,.png,.dxf,.dwg" style="display:none">
             <div class="form-row" style="margin-top:0.75rem">
               <div><label>Scale Factor (0 = auto)</label>
                 <input type="number" id="pdf-scale" value="0" min="0" max="10" step="0.25">
@@ -429,6 +458,16 @@
     <div class="grid">
       <div class="input-panel">
         <div class="card">
+          <h2>Upload Drawing <span class="badge" style="background:var(--green)">FILE</span></h2>
+          <div class="dropzone" id="mon-dropzone">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 16V4m0 0l-4 4m4-4l4 4M4 20h16"/></svg>
+            <p>Drop file here or click to browse<br><span style="font-size:0.7rem;color:var(--text-dim)">PDF, EPS, SVG, JPG, PNG, DXF, DWG</span></p>
+            <div class="filename" id="mon-file-name"></div>
+          </div>
+          <input type="file" id="mon-file-input" accept=".pdf,.eps,.svg,.jpg,.jpeg,.png,.dxf,.dwg" style="display:none">
+          <div id="mon-file-preview" style="margin-top:0.5rem;"></div>
+        </div>
+        <div class="card">
           <h2>Monument Sign <span class="badge">INPUT</span></h2>
           <div class="form-row">
             <div><label>Width (ft)</label><input type="number" id="mon-width" value="8" min="1" max="40" step="0.5"></div>
@@ -482,6 +521,16 @@
     <div class="grid">
       <div class="input-panel">
         <div class="card">
+          <h2>Upload Drawing <span class="badge" style="background:var(--green)">FILE</span></h2>
+          <div class="dropzone" id="awn-dropzone">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 16V4m0 0l-4 4m4-4l4 4M4 20h16"/></svg>
+            <p>Drop file here or click to browse<br><span style="font-size:0.7rem;color:var(--text-dim)">PDF, EPS, SVG, JPG, PNG, DXF, DWG</span></p>
+            <div class="filename" id="awn-file-name"></div>
+          </div>
+          <input type="file" id="awn-file-input" accept=".pdf,.eps,.svg,.jpg,.jpeg,.png,.dxf,.dwg" style="display:none">
+          <div id="awn-file-preview" style="margin-top:0.5rem;"></div>
+        </div>
+        <div class="card">
           <h2>Awning <span class="badge">INPUT</span></h2>
           <div class="form-row">
             <div><label>Width (ft)</label><input type="number" id="awn-width" value="10" min="1" max="60" step="0.5"></div>
@@ -521,6 +570,16 @@
   <div class="main-section" id="sec-removal">
     <div class="grid">
       <div class="input-panel">
+        <div class="card">
+          <h2>Upload Drawing <span class="badge" style="background:var(--green)">FILE</span></h2>
+          <div class="dropzone" id="rem-dropzone">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 16V4m0 0l-4 4m4-4l4 4M4 20h16"/></svg>
+            <p>Drop file here or click to browse<br><span style="font-size:0.7rem;color:var(--text-dim)">PDF, EPS, SVG, JPG, PNG, DXF, DWG</span></p>
+            <div class="filename" id="rem-file-name"></div>
+          </div>
+          <input type="file" id="rem-file-input" accept=".pdf,.eps,.svg,.jpg,.jpeg,.png,.dxf,.dwg" style="display:none">
+          <div id="rem-file-preview" style="margin-top:0.5rem;"></div>
+        </div>
         <div class="card">
           <h2>Removal <span class="badge">INPUT</span></h2>
           <div class="form-row">
@@ -568,6 +627,16 @@
   <div class="main-section" id="sec-pylon">
     <div class="grid">
       <div class="input-panel">
+        <div class="card">
+          <h2>Upload Drawing <span class="badge" style="background:var(--green)">FILE</span></h2>
+          <div class="dropzone" id="pylon-dropzone">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 16V4m0 0l-4 4m4-4l4 4M4 20h16"/></svg>
+            <p>Drop file here or click to browse<br><span style="font-size:0.7rem;color:var(--text-dim)">PDF, EPS, SVG, JPG, PNG, DXF, DWG</span></p>
+            <div class="filename" id="pylon-file-name"></div>
+          </div>
+          <input type="file" id="pylon-file-input" accept=".pdf,.eps,.svg,.jpg,.jpeg,.png,.dxf,.dwg" style="display:none">
+          <div id="pylon-file-preview" style="margin-top:0.5rem;"></div>
+        </div>
         <div class="card">
           <h2>Pylon Sign <span class="badge">INPUT</span></h2>
           <form id="pylon-form">
@@ -625,6 +694,16 @@
   <div class="main-section" id="sec-cabinet">
     <div class="grid">
       <div class="input-panel">
+        <div class="card">
+          <h2>Upload Drawing <span class="badge" style="background:var(--green)">FILE</span></h2>
+          <div class="dropzone" id="cab-dropzone">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 16V4m0 0l-4 4m4-4l4 4M4 20h16"/></svg>
+            <p>Drop file here or click to browse<br><span style="font-size:0.7rem;color:var(--text-dim)">PDF, EPS, SVG, JPG, PNG, DXF, DWG</span></p>
+            <div class="filename" id="cab-file-name"></div>
+          </div>
+          <input type="file" id="cab-file-input" accept=".pdf,.eps,.svg,.jpg,.jpeg,.png,.dxf,.dwg" style="display:none">
+          <div id="cab-file-preview" style="margin-top:0.5rem;"></div>
+        </div>
         <div class="card">
           <h2>Cabinet Sign <span class="badge">INPUT</span></h2>
           <form id="cabinet-form">
@@ -691,6 +770,16 @@
     <div class="grid">
       <div class="input-panel">
         <div class="card">
+          <h2>Upload Drawing <span class="badge" style="background:var(--green)">FILE</span></h2>
+          <div class="dropzone" id="dir-dropzone">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 16V4m0 0l-4 4m4-4l4 4M4 20h16"/></svg>
+            <p>Drop file here or click to browse<br><span style="font-size:0.7rem;color:var(--text-dim)">PDF, EPS, SVG, JPG, PNG, DXF, DWG</span></p>
+            <div class="filename" id="dir-file-name"></div>
+          </div>
+          <input type="file" id="dir-file-input" accept=".pdf,.eps,.svg,.jpg,.jpeg,.png,.dxf,.dwg" style="display:none">
+          <div id="dir-file-preview" style="margin-top:0.5rem;"></div>
+        </div>
+        <div class="card">
           <h2>Directional / Wayfinding <span class="badge">INPUT</span></h2>
           <form id="directional-form">
             <div class="form-row">
@@ -737,6 +826,16 @@
   <div class="main-section" id="sec-dimensional">
     <div class="grid">
       <div class="input-panel">
+        <div class="card">
+          <h2>Upload Drawing <span class="badge" style="background:var(--green)">FILE</span></h2>
+          <div class="dropzone" id="dim-dropzone">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 16V4m0 0l-4 4m4-4l4 4M4 20h16"/></svg>
+            <p>Drop file here or click to browse<br><span style="font-size:0.7rem;color:var(--text-dim)">PDF, EPS, SVG, JPG, PNG, DXF, DWG</span></p>
+            <div class="filename" id="dim-file-name"></div>
+          </div>
+          <input type="file" id="dim-file-input" accept=".pdf,.eps,.svg,.jpg,.jpeg,.png,.dxf,.dwg" style="display:none">
+          <div id="dim-file-preview" style="margin-top:0.5rem;"></div>
+        </div>
         <div class="card">
           <h2>Dimensional Letters <span class="badge">INPUT</span></h2>
           <form id="dimensional-form">
@@ -1316,6 +1415,22 @@ pdfInput.addEventListener('change', () => { if (pdfInput.files.length) handlePDF
 async function handlePDF(file) {
   document.getElementById('pdf-filename').textContent = file.name;
   document.getElementById('pdf-result').style.display = 'block';
+  const ext = file.name.split('.').pop().toLowerCase();
+
+  // Non-PDF files: show preview, no PF extraction
+  if (ext !== 'pdf') {
+    if (['jpg','jpeg','png','svg'].includes(ext)) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        document.getElementById('pdf-info').innerHTML = `<img src="${e.target.result}" class="file-preview-img" alt="${file.name}"><div class="file-ref"><span class="file-icon">&#128444;</span><div>${file.name}<div class="file-info">${(file.size/1024).toFixed(0)} KB &mdash; Reference image (enter PF manually or use chart)</div></div></div>`;
+      };
+      reader.readAsDataURL(file);
+    } else {
+      document.getElementById('pdf-info').innerHTML = `<div class="file-ref"><span class="file-icon">&#128207;</span><div>${file.name}<div class="file-info">${(file.size/1024).toFixed(0)} KB &mdash; ${ext.toUpperCase()} design file (enter PF manually or use chart)</div></div></div>`;
+    }
+    return;
+  }
+
   document.getElementById('pdf-info').innerHTML = '<span class="spinner"></span> Extracting vectors...';
 
   const form = new FormData();
@@ -1628,6 +1743,9 @@ function renderEstimateResults(containerId, placeholderId, r) {
   const hasLabor = r.labor && r.labor.length > 0;
   const hasInstall = r.install && r.install.length > 0;
 
+  // Store raw for adjustment recalculation
+  container._rawData = JSON.parse(JSON.stringify(r));
+
   let html = '';
 
   // Summary boxes
@@ -1645,12 +1763,37 @@ function renderEstimateResults(containerId, placeholderId, r) {
     }
   }
 
+  // Adjustment Controls
+  html += `<div class="card" style="border-color:var(--accent2);border-left:3px solid var(--accent2);">
+    <h2>Adjustments <span class="badge" style="background:var(--accent2)">TUNING</span></h2>
+    <div class="form-row">
+      <div>
+        <label>Labor Hours Adjustment</label>
+        <div style="display:flex;align-items:center;gap:0.5rem;">
+          <input type="range" id="adj-labor-${containerId}" min="-50" max="50" value="0" step="5" style="flex:1;" oninput="applyAdjustment('${containerId}')">
+          <span id="adj-labor-val-${containerId}" class="mono adj-zero" style="min-width:50px;text-align:right;font-weight:700;">0%</span>
+        </div>
+      </div>
+      <div>
+        <label>Material Qty Adjustment</label>
+        <div style="display:flex;align-items:center;gap:0.5rem;">
+          <input type="range" id="adj-mat-${containerId}" min="-50" max="50" value="0" step="5" style="flex:1;" oninput="applyAdjustment('${containerId}')">
+          <span id="adj-mat-val-${containerId}" class="mono adj-zero" style="min-width:50px;text-align:right;font-weight:700;">0%</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;gap:0.5rem;margin-top:0.5rem;align-items:center;">
+      <button onclick="resetAdjustment('${containerId}')" style="padding:0.25rem 0.6rem;font-size:0.7rem;background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);border-radius:0.25rem;cursor:pointer;text-transform:uppercase;letter-spacing:0.04em;">Reset</button>
+      <span style="font-size:0.65rem;color:var(--text-dim);">Slide to adjust all hours / material quantities by percentage</span>
+    </div>
+  </div>`;
+
   // Fabrication Labor
   if (hasLabor) {
     html += '<div class="card">';
     html += '<div class="section-header">';
     html += '<h3>Fabrication Labor &mdash; KeyedIn Entry</h3>';
-    html += `<span style="font-size:0.7rem;color:var(--text-dim);">ABC ${(r.construction || '').replace('_', '-')} | ${r.height_category || ''}" | ${r.total_pf != null ? r.total_pf : '--'} PF</span>`;
+    html += `<span style="font-size:0.7rem;color:var(--text-dim);">ABC ${(r.construction || '').replace('_', '-')} | ${r.height_category || ''} | ${r.total_pf != null ? r.total_pf : '--'} PF</span>`;
     html += '</div>';
     html += renderLaborTable(r.labor, 'Fab Subtotal');
     html += '</div>';
@@ -1830,6 +1973,196 @@ function exportResultCSV(containerId) {
 // Legacy aliases so original CL export buttons still work
 function copyToClipboard() { copyResultToClipboard('cl-results'); }
 function exportCSV() { exportResultCSV('cl-results'); }
+
+// ══════════════════════════════════════════════════════════════════════════════
+// UNIVERSAL DROPZONE SETUP
+// ══════════════════════════════════════════════════════════════════════════════
+function setupDropzone(dropzoneId, inputId, previewId, nameId, onPdfData) {
+  const dz = document.getElementById(dropzoneId);
+  const inp = document.getElementById(inputId);
+  if (!dz || !inp) return;
+
+  dz.addEventListener('click', () => inp.click());
+  dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('dragover'); });
+  dz.addEventListener('dragleave', () => dz.classList.remove('dragover'));
+  dz.addEventListener('drop', e => {
+    e.preventDefault();
+    dz.classList.remove('dragover');
+    if (e.dataTransfer.files.length) handleFileUpload(e.dataTransfer.files[0], nameId, previewId, onPdfData);
+  });
+  inp.addEventListener('change', () => {
+    if (inp.files.length) handleFileUpload(inp.files[0], nameId, previewId, onPdfData);
+  });
+}
+
+function handleFileUpload(file, nameId, previewId, onPdfData) {
+  const nameEl = document.getElementById(nameId);
+  if (nameEl) nameEl.textContent = file.name;
+  const ext = file.name.split('.').pop().toLowerCase();
+  const preview = document.getElementById(previewId);
+  if (!preview) return;
+
+  if (ext === 'pdf') {
+    preview.innerHTML = '<div style="display:flex;align-items:center;gap:0.5rem;color:var(--text-dim);font-size:0.8rem;"><span class="spinner"></span> Extracting from PDF...</div>';
+    const form = new FormData();
+    form.append('file', file);
+    fetch('/api/extract-pf', { method: 'POST', body: form })
+      .then(r => r.json())
+      .then(data => {
+        preview.innerHTML = `<div class="file-ref"><span class="file-icon">&#128196;</span><div><strong>${data.total_face_sf.toFixed(1)} SF</strong> face area | ${data.letter_count} shapes | ${data.total_pf.toFixed(2)} PF<div class="file-info">${data.filename}</div></div></div>`;
+        if (onPdfData) onPdfData(data);
+      })
+      .catch(() => {
+        preview.innerHTML = `<div class="file-ref"><span class="file-icon">&#128196;</span><div>${file.name}<div class="file-info">${(file.size/1024).toFixed(0)} KB &mdash; PDF uploaded (vector extraction not available for this format)</div></div></div>`;
+      });
+  } else if (['jpg', 'jpeg', 'png', 'svg'].includes(ext)) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      preview.innerHTML = `<img src="${e.target.result}" class="file-preview-img" alt="${file.name}"><div class="file-ref"><span class="file-icon">&#128444;</span><div>${file.name}<div class="file-info">${(file.size/1024).toFixed(0)} KB &mdash; Reference image</div></div></div>`;
+    };
+    reader.readAsDataURL(file);
+  } else {
+    const icons = { eps: '&#128208;', dxf: '&#128207;', dwg: '&#128207;' };
+    preview.innerHTML = `<div class="file-ref"><span class="file-icon">${icons[ext] || '&#128206;'}</span><div>${file.name}<div class="file-info">${(file.size/1024).toFixed(0)} KB &mdash; ${ext.toUpperCase()} design file (reference)</div></div></div>`;
+  }
+}
+
+// Wire up all tab dropzones
+setupDropzone('mon-dropzone', 'mon-file-input', 'mon-file-preview', 'mon-file-name', (data) => {
+  if (data.total_face_sf > 0) {
+    const w = document.getElementById('mon-width');
+    const h = document.getElementById('mon-height');
+    // Estimate width/height assuming 2:1 ratio if we only have area
+    const sf = data.total_face_sf;
+    if (w && h) { w.value = Math.sqrt(sf * 2).toFixed(1); h.value = Math.sqrt(sf / 2).toFixed(1); }
+  }
+});
+setupDropzone('awn-dropzone', 'awn-file-input', 'awn-file-preview', 'awn-file-name', null);
+setupDropzone('rem-dropzone', 'rem-file-input', 'rem-file-preview', 'rem-file-name', (data) => {
+  if (data.total_face_sf > 0) {
+    const el = document.getElementById('rem-area');
+    if (el) el.value = data.total_face_sf.toFixed(1);
+  }
+});
+setupDropzone('pylon-dropzone', 'pylon-file-input', 'pylon-file-preview', 'pylon-file-name', (data) => {
+  if (data.total_face_sf > 0) {
+    const el = document.getElementById('pylon-area-override');
+    if (el) el.value = data.total_face_sf.toFixed(0);
+  }
+});
+setupDropzone('cab-dropzone', 'cab-file-input', 'cab-file-preview', 'cab-file-name', (data) => {
+  if (data.total_face_sf > 0) {
+    const el = document.getElementById('cab-area-override');
+    if (el) el.value = data.total_face_sf.toFixed(0);
+  }
+});
+setupDropzone('dir-dropzone', 'dir-file-input', 'dir-file-preview', 'dir-file-name', (data) => {
+  if (data.total_face_sf > 0) {
+    const el = document.getElementById('dir-area-override');
+    if (el) el.value = data.total_face_sf.toFixed(1);
+  }
+});
+setupDropzone('dim-dropzone', 'dim-file-input', 'dim-file-preview', 'dim-file-name', null);
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ADJUSTMENT CONTROLS
+// ══════════════════════════════════════════════════════════════════════════════
+function applyAdjustment(containerId) {
+  const container = document.getElementById(containerId);
+  if (!container || !container._rawData) return;
+  const raw = container._rawData;
+
+  const laborSlider = document.getElementById('adj-labor-' + containerId);
+  const matSlider = document.getElementById('adj-mat-' + containerId);
+  if (!laborSlider || !matSlider) return;
+
+  const laborPct = parseInt(laborSlider.value);
+  const matPct = parseInt(matSlider.value);
+
+  // Update labels
+  const laborLabel = document.getElementById('adj-labor-val-' + containerId);
+  const matLabel = document.getElementById('adj-mat-val-' + containerId);
+  if (laborLabel) {
+    laborLabel.textContent = (laborPct >= 0 ? '+' : '') + laborPct + '%';
+    laborLabel.className = 'mono ' + (laborPct > 0 ? 'adj-positive' : laborPct < 0 ? 'adj-negative' : 'adj-zero');
+  }
+  if (matLabel) {
+    matLabel.textContent = (matPct >= 0 ? '+' : '') + matPct + '%';
+    matLabel.className = 'mono ' + (matPct > 0 ? 'adj-positive' : matPct < 0 ? 'adj-negative' : 'adj-zero');
+  }
+
+  // Clone and adjust
+  const adjusted = JSON.parse(JSON.stringify(raw));
+  const laborMult = 1 + laborPct / 100;
+  const matMult = 1 + matPct / 100;
+
+  let adjManHrs = 0, adjCrewHrs = 0;
+  for (const l of (adjusted.labor || [])) {
+    l.hours = parseFloat((l.hours * laborMult).toFixed(2));
+    if (l.unit && l.unit.toUpperCase().includes('CREW')) adjCrewHrs += l.hours;
+    else adjManHrs += l.hours;
+  }
+  for (const l of (adjusted.install || [])) {
+    l.hours = parseFloat((l.hours * laborMult).toFixed(2));
+    if (l.unit && l.unit.toUpperCase().includes('CREW')) adjCrewHrs += l.hours;
+    else adjManHrs += l.hours;
+  }
+  adjusted.total_man_hours = parseFloat(adjManHrs.toFixed(2));
+  adjusted.total_crew_hours = parseFloat(adjCrewHrs.toFixed(2));
+
+  for (const m of (adjusted.materials || [])) {
+    m.qty = parseFloat((m.qty * matMult).toFixed(2));
+  }
+
+  container._data = adjusted;
+
+  // Update summary boxes
+  const summaryBoxes = container.querySelectorAll('.summary-box .val');
+  if (summaryBoxes.length >= 3) {
+    if (laborPct !== 0) {
+      summaryBoxes[1].innerHTML = adjusted.total_man_hours.toFixed(2) + '<div style="font-size:0.55rem;color:var(--text-dim);">was ' + raw.total_man_hours.toFixed(2) + '</div>';
+      summaryBoxes[2].innerHTML = adjusted.total_crew_hours.toFixed(2) + '<div style="font-size:0.55rem;color:var(--text-dim);">was ' + raw.total_crew_hours.toFixed(2) + '</div>';
+    } else {
+      summaryBoxes[1].textContent = adjusted.total_man_hours.toFixed(2);
+      summaryBoxes[2].textContent = adjusted.total_crew_hours.toFixed(2);
+    }
+  }
+
+  // Re-render labor tables
+  container.querySelectorAll('.card').forEach(card => {
+    const h3 = card.querySelector('.section-header h3');
+    if (h3 && h3.textContent.includes('Fabrication')) {
+      const tbl = card.querySelector('table');
+      if (tbl) tbl.outerHTML = renderLaborTable(adjusted.labor, 'Fab Subtotal');
+    }
+    if (h3 && h3.textContent.includes('Installation')) {
+      const tbl = card.querySelector('table');
+      if (tbl) tbl.outerHTML = renderLaborTable(adjusted.install, 'Install Subtotal');
+    }
+    const h2 = card.querySelector('h2');
+    if (h2 && h2.textContent.includes('Material BOM')) {
+      const tbody = card.querySelector('tbody');
+      if (tbody) {
+        tbody.innerHTML = adjusted.materials.map(m => `<tr>
+          <td>${m.item}</td>
+          <td class="mono">${m.part}</td>
+          <td class="right mono">${m.qty}</td>
+          <td>${m.unit}</td>
+          <td>${m.waste}</td>
+          <td style="font-size:0.75rem;color:var(--text-dim)">${m.formula}</td>
+        </tr>`).join('');
+      }
+    }
+  });
+}
+
+function resetAdjustment(containerId) {
+  const ls = document.getElementById('adj-labor-' + containerId);
+  const ms = document.getElementById('adj-mat-' + containerId);
+  if (ls) ls.value = 0;
+  if (ms) ms.value = 0;
+  applyAdjustment(containerId);
+}
 
 // ══════════════════════════════════════════════════════════════════════════════
 // STRUCTURAL: Full Design
@@ -2724,7 +3057,7 @@ function updateKPIFromProfile(p) {
 }
 
 // ── Win Probability Scoring ──────────────────────────────────────────────────
-// Calls the real backend bid scoring API: POST /api/bid/score
+// Calls both heuristic + ML scoring APIs in parallel
 async function computeWinProbability(customer, signType, price) {
     const params = new URLSearchParams();
     if (customer) params.set('customer', customer);
@@ -2732,6 +3065,16 @@ async function computeWinProbability(customer, signType, price) {
     if (price > 0) params.set('price', price);
     const res = await fetch(`/api/bid/score?${params}`, { method: 'POST' });
     if (!res.ok) throw new Error(`bid/score ${res.status}`);
+    return res.json();
+}
+
+async function computeMLScore(customer, signType, price) {
+    const params = new URLSearchParams();
+    if (customer) params.set('customer', customer);
+    if (signType) params.set('sign_type', signType);
+    if (price > 0) params.set('price', price);
+    const res = await fetch(`/api/bid/ml-score?${params}`, { method: 'POST' });
+    if (!res.ok) throw new Error(`ml-score ${res.status}`);
     return res.json();
 }
 
@@ -2755,7 +3098,11 @@ async function renderWinProbability(profile, market, similar) {
         const price = parseFloat(document.getElementById('intel-revenue').value) ||
             profile.avg_revenue_per_job || market.avg_revenue || 0;
 
-        const result = await computeWinProbability(customer, signType, price);
+        // Fire both engines in parallel
+        const [result, mlResult] = await Promise.all([
+            computeWinProbability(customer, signType, price),
+            computeMLScore(customer, signType, price).catch(() => null),
+        ]);
 
         const score = result.win_probability ?? result.score ?? 50;
         const factors = result.factors || {};
@@ -2765,7 +3112,25 @@ async function renderWinProbability(profile, market, similar) {
         const gaugeColor = score >= 70 ? 'var(--green)' : score >= 45 ? 'var(--orange)' : 'var(--red)';
         const verdict = score >= 70 ? 'Strong' : score >= 45 ? 'Moderate' : 'Challenging';
 
-        // Factor display config: API returns these 6 named factors
+        // ML model results
+        const mlScore = mlResult ? Math.round((mlResult.win_probability || 0) * 100) : null;
+        const mlColor = mlScore >= 70 ? 'var(--green)' : mlScore >= 45 ? 'var(--orange)' : 'var(--red)';
+        const mlConf = mlResult?.confidence || '';
+        const mlFillPct = mlScore != null ? Math.max(0, Math.min(100, mlScore)) + '%' : '0%';
+
+        let html = '<div style="display:flex;gap:1rem;flex-wrap:wrap;">';
+
+        // ── Heuristic Engine ──
+        html += '<div class="win-prob-card" style="flex:1;min-width:200px;">';
+        html += '<div class="win-prob-label">Rules Engine <span style="font-size:0.65rem;color:var(--text-dim);font-weight:400;">6 signals</span></div>';
+        html += `<div class="win-prob-gauge">
+            <div class="win-prob-gauge-bg"></div>
+            <div class="win-prob-gauge-fill" style="--fill-pct:${fillPct};border-color:${gaugeColor};"></div>
+            <div class="win-prob-gauge-val" style="color:${gaugeColor};">${score}%</div>
+        </div>`;
+        html += `<div style="font-size:0.9rem;font-weight:700;color:${gaugeColor};margin-bottom:0.5rem;">${verdict}</div>`;
+
+        // Factor display config
         const factorMeta = {
             customer_recency:      { label: 'Recency',       max: 20 },
             frequency:             { label: 'Frequency',     max: 20 },
@@ -2775,16 +3140,6 @@ async function renderWinProbability(profile, market, similar) {
             margin_health:         { label: 'Margin',        max: 10 },
         };
 
-        let html = '<div class="win-prob-card">';
-        html += '<div class="win-prob-label">Win Probability <span style="font-size:0.7rem;color:var(--text-dim);font-weight:400;">(API)</span></div>';
-        html += `<div class="win-prob-gauge">
-            <div class="win-prob-gauge-bg"></div>
-            <div class="win-prob-gauge-fill" style="--fill-pct:${fillPct};border-color:${gaugeColor};"></div>
-            <div class="win-prob-gauge-val" style="color:${gaugeColor};">${score}%</div>
-        </div>`;
-        html += `<div style="font-size:0.9rem;font-weight:700;color:${gaugeColor};margin-bottom:0.5rem;">${verdict}</div>`;
-
-        // Scoring factor breakdown from API
         const factorKeys = Object.keys(factorMeta);
         const hasApiFactors = factorKeys.some(k => factors[k] != null);
 
@@ -2804,8 +3159,39 @@ async function renderWinProbability(profile, market, similar) {
             }
             html += '</div>';
         }
+        html += '</div>';
 
-        // Actionable recommendations from API
+        // ── ML Engine ──
+        if (mlResult && mlResult.model_available) {
+            const mlVerdict = mlScore >= 70 ? 'Strong' : mlScore >= 45 ? 'Moderate' : 'Challenging';
+            html += '<div class="win-prob-card" style="flex:1;min-width:200px;">';
+            html += `<div class="win-prob-label">ML Model <span style="font-size:0.65rem;color:var(--text-dim);font-weight:400;">${mlConf} conf</span></div>`;
+            html += `<div class="win-prob-gauge">
+                <div class="win-prob-gauge-bg"></div>
+                <div class="win-prob-gauge-fill" style="--fill-pct:${mlFillPct};border-color:${mlColor};"></div>
+                <div class="win-prob-gauge-val" style="color:${mlColor};">${mlScore}%</div>
+            </div>`;
+            html += `<div style="font-size:0.9rem;font-weight:700;color:${mlColor};margin-bottom:0.5rem;">${mlVerdict}</div>`;
+
+            // Positive factors
+            const positives = mlResult.positive_factors || [];
+            const risks = mlResult.risk_factors || [];
+            if (positives.length > 0 || risks.length > 0) {
+                html += '<div style="font-size:0.75rem;line-height:1.5;">';
+                for (const p of positives.slice(0, 3)) {
+                    html += `<div style="color:var(--green);">+ ${p}</div>`;
+                }
+                for (const r of risks.slice(0, 3)) {
+                    html += `<div style="color:var(--red);">- ${r}</div>`;
+                }
+                html += '</div>';
+            }
+            html += '</div>';
+        }
+
+        html += '</div>'; // end flex container
+
+        // Actionable recommendations from heuristic engine
         if (recommendations.length > 0) {
             html += '<div style="margin-top:0.75rem;border-top:1px solid var(--border);padding-top:0.5rem;">';
             html += '<div style="font-size:0.72rem;color:var(--text-dim);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.35rem;">Recommendations</div>';
@@ -2816,7 +3202,6 @@ async function renderWinProbability(profile, market, similar) {
             html += '</ul></div>';
         }
 
-        html += '</div>';
         container.innerHTML = html;
         container.style.display = 'block';
 
