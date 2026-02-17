@@ -11,11 +11,14 @@ and KeyedIn-ready output into a single web application.
 
 from __future__ import annotations
 
+import asyncio
 import json
 import logging
 import os
+import smtplib
 import sys
 from datetime import datetime
+from email.mime.text import MIMEText
 from pathlib import Path
 from typing import List, Optional
 
@@ -32,13 +35,7 @@ from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
-logger = logging.getLogger(__name__)
-
-try:
-    from dotenv import load_dotenv
-    load_dotenv()
-except ImportError:
-    pass
+logger = logging.getLogger("signx-takeoff")
 
 NOTION_TOKEN = os.environ.get("NOTION_TOKEN", "")
 NOTION_BID_PIPELINE_DB = os.environ.get("NOTION_BID_PIPELINE", "")
@@ -47,8 +44,13 @@ NOTION_HEADERS = {
     "Notion-Version": "2022-06-28",
     "Content-Type": "application/json",
 }
-
 NOTIFY_WEBHOOK_URL = os.environ.get("NOTIFY_WEBHOOK_URL", "")
+
+# SMS Configuration
+SMS_PHONE = os.environ.get("SMS_PHONE", "7122666482")
+SMS_CARRIER_GATEWAY = os.environ.get("SMS_CARRIER_GATEWAY", "vtext.com")
+SMTP_SERVER = os.environ.get("SMTP_SERVER", "")
+SMTP_FROM = os.environ.get("SMTP_FROM", "")
 
 from abc_engine import (
     ConstructionType,
@@ -70,7 +72,22 @@ from abc_engine import (
     get_footage_chart,
     interpolate_pf,
 )
+from customer_intel import (
+    find_similar_jobs,
+    get_customer_profile,
+    get_market_intel,
+    warehouse_stats,
+)
+from drawing_search import search_drawings, search_for_bid
 from extract_pf_from_pdf import extract_pf_from_pdf
+from project_files import scan_project_files
+from bid_scoring import (
+    score_bid,
+    get_win_rate_stats,
+    get_price_recommendation,
+    scoring_stats,
+)
+from bid_model import predict_win_probability, get_model_diagnostics
 from warehouse import benchmark
 
 # Add signcalc-service to path for structural modules
@@ -725,20 +742,109 @@ async def list_sections(family: Optional[str] = None, limit: int = 50):
     }
 
 
+# ── Drawing Search (G: Drive //ES-FS02/Customers2) ────────────────────────
+
+@app.get("/api/drawings/search")
+async def api_drawing_search(
+    customer: str,
+    sign_type: Optional[str] = None,
+    wo_number: Optional[str] = None,
+    max_results: int = 25,
+):
+    """Search G: drive for customer drawings.
+
+    Args:
+        customer: Customer name to search for
+        sign_type: Optional sign type filter (monument, pylon, channel_letter, etc.)
+        wo_number: Optional WO number to search for (format: MMYY-NNNNN)
+        max_results: Max results to return (default 25)
+    """
+    try:
+        result = await asyncio.to_thread(
+            search_drawings,
+            customer_name=customer,
+            sign_type_filter=sign_type,
+            wo_number=wo_number,
+            max_results=max_results,
+        )
+        return {
+            "ok": True,
+            "customer_folder": result.customer_folder,
+            "total_files_scanned": result.total_files,
+            "sign_types_found": result.sign_types_found,
+            "warnings": result.warnings,
+            "latest_revisions": [
+                {
+                    "filename": m.filename,
+                    "path": m.path,
+                    "wo_number": m.wo_number,
+                    "revision": m.revision,
+                    "sign_type": m.sign_type_guess,
+                    "size_kb": round(m.size_bytes / 1024, 1),
+                }
+                for m in result.latest_revisions
+            ],
+            "all_drawings": [
+                {
+                    "filename": m.filename,
+                    "path": m.path,
+                    "wo_number": m.wo_number,
+                    "revision": m.revision,
+                    "sign_type": m.sign_type_guess,
+                    "is_pdf": m.is_pdf,
+                    "is_cdr": m.is_cdr,
+                    "size_kb": round(m.size_bytes / 1024, 1),
+                }
+                for m in result.drawings
+            ],
+            "pdf_count": len(result.pdfs),
+            "drawing_count": len(result.drawings),
+        }
+    except Exception as e:
+        logger.exception("Drawing search failed for %s", customer)
+        return JSONResponse(status_code=500, content={"ok": False, "error": str(e)})
+
+
+@app.post("/api/drawings/bid-lookup")
+async def api_drawings_for_bid(req: dict):
+    """Search G: drive for drawings matching a bid's customer and sign type.
+
+    Accepts: {"customer": "...", "sign_type": "EMC_POLE", "sq_ft": 48.0}
+    """
+    customer = req.get("customer", "")
+    sign_type = req.get("sign_type")
+    sq_ft = req.get("sq_ft")
+    if not customer:
+        return JSONResponse(status_code=400, content={"ok": False, "error": "customer is required"})
+    try:
+        result = await asyncio.to_thread(search_for_bid, customer, sign_type=sign_type, sq_ft=sq_ft)
+        return {
+            "ok": True,
+            "customer_folder": result.customer_folder,
+            "total_files_scanned": result.total_files,
+            "sign_types_found": result.sign_types_found,
+            "warnings": result.warnings,
+            "latest_revisions": [
+                {
+                    "filename": m.filename,
+                    "path": m.path,
+                    "wo_number": m.wo_number,
+                    "revision": m.revision,
+                    "sign_type": m.sign_type_guess,
+                    "size_kb": round(m.size_bytes / 1024, 1),
+                }
+                for m in result.latest_revisions
+            ],
+            "drawing_count": len(result.drawings),
+        }
+    except Exception as e:
+        logger.exception("Bid drawing lookup failed for %s", customer)
+        return JSONResponse(status_code=500, content={"ok": False, "error": str(e)})
+
+
 # ══════════════════════════════════════════════════════════════════════════════
 # NOTION BID PIPELINE INTEGRATION
 # ══════════════════════════════════════════════════════════════════════════════
-
-logger = logging.getLogger("signx-takeoff")
-
-NOTION_TOKEN = os.environ.get("NOTION_TOKEN", "")
-NOTION_BID_PIPELINE_DB = os.environ.get("NOTION_BID_PIPELINE", "")
-NOTIFY_WEBHOOK_URL = os.environ.get("NOTIFY_WEBHOOK_URL", "")
-NOTION_HEADERS = {
-    "Authorization": f"Bearer {NOTION_TOKEN}",
-    "Notion-Version": "2022-06-28",
-    "Content-Type": "application/json",
-}
 
 # Sign type mapping: Notion sign_type → estimator function + default params
 SIGN_TYPE_MAP = {
@@ -985,20 +1091,81 @@ class NotifyRequest(BaseModel):
     message: str = ""
 
 
+SMTP_PORT = int(os.environ.get("SMTP_PORT", "587"))
+SMTP_USER = os.environ.get("SMTP_USER", "")
+SMTP_PASS = os.environ.get("SMTP_PASS", "")
+
+
+def _send_sms(body: str) -> dict:
+    """Send SMS via SMTP email-to-SMS gateway.
+
+    Uses M365 authenticated SMTP (smtp.office365.com:587 with STARTTLS)
+    or a local SMTP relay (port 25, no auth).
+
+    Requires SMTP_SERVER and SMTP_FROM in .env.
+    SMS_PHONE defaults to 7122666482 (Brady Flink).
+    SMS_CARRIER_GATEWAY defaults to vtext.com (Verizon).
+
+    Common carrier gateways:
+        Verizon:    vtext.com
+        AT&T:       txt.att.net
+        T-Mobile:   tmomail.net
+        US Cellular: email.uscc.net
+        Sprint:     messaging.sprintpcs.com
+    """
+    if not SMTP_SERVER or not SMTP_FROM:
+        return {"sent": False, "reason": "SMTP_SERVER and SMTP_FROM not configured in .env"}
+    if not SMS_PHONE:
+        return {"sent": False, "reason": "SMS_PHONE not configured in .env"}
+
+    to_addr = f"{SMS_PHONE}@{SMS_CARRIER_GATEWAY}"
+    msg = MIMEText(body)
+    msg["From"] = SMTP_FROM
+    msg["To"] = to_addr
+    msg["Subject"] = "SignX Bid Ready"
+
+    try:
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=15) as smtp:
+            smtp.ehlo()
+            if SMTP_PORT == 587:
+                smtp.starttls()
+                smtp.ehlo()
+            if SMTP_USER and SMTP_PASS:
+                smtp.login(SMTP_USER, SMTP_PASS)
+            smtp.send_message(msg)
+        return {"sent": True, "to": to_addr, "gateway": SMS_CARRIER_GATEWAY}
+    except Exception as e:
+        logger.warning("SMS send failed: %s", e)
+        return {"sent": False, "reason": str(e)}
+
+
 @app.post("/api/notify/bid-ready")
 async def notify_bid_ready(req: NotifyRequest):
     """Send notification that a bid takeoff is complete and ready for review.
-    Supports Power Automate HTTP trigger webhook or direct logging."""
+
+    Delivery methods (in order):
+    1. SMS via SMTP email-to-SMS gateway (if SMTP_SERVER configured)
+    2. Power Automate HTTP trigger webhook (if NOTIFY_WEBHOOK_URL configured)
+    3. Server log (always)
+    """
+    text = req.message or (
+        f"SIGNX: Takeoff done - {req.quote_number} ({req.customer}). "
+        f"{req.total_hours:.1f}h {req.estimator_type}. Ready for review."
+    )
     payload = {
         "event": "bid_takeoff_complete",
         "quote_number": req.quote_number,
         "customer": req.customer,
         "total_hours": req.total_hours,
         "estimator_type": req.estimator_type,
-        "message": req.message or f"Takeoff complete for {req.quote_number} ({req.customer}). {req.total_hours:.1f} total hours. Ready for KeyedIn entry and review.",
+        "message": text,
         "timestamp": datetime.now().isoformat(),
     }
 
+    # 1. SMS via SMTP gateway
+    sms_result = _send_sms(text)
+
+    # 2. Power Automate webhook
     webhook_sent = False
     if NOTIFY_WEBHOOK_URL:
         try:
@@ -1009,13 +1176,14 @@ async def notify_bid_ready(req: NotifyRequest):
         except Exception as e:
             logger.warning("Webhook notification failed: %s", e)
 
+    # 3. Always log
     logger.info("BID READY: %s %s — %.1f hrs (%s)", req.quote_number, req.customer, req.total_hours, req.estimator_type)
 
     return {
         "ok": True,
+        "sms": sms_result,
         "webhook_sent": webhook_sent,
         "payload": payload,
-        "instructions": "Configure NOTIFY_WEBHOOK_URL in .env to send SMS via Power Automate HTTP trigger.",
     }
 
 
@@ -1084,14 +1252,400 @@ async def format_for_keyedin(req: KeyedInFormatRequest):
     }
 
 
+# ══════════════════════════════════════════════════════════════════════════════
+# PROJECT DOSSIER — Unified intelligence view per project
+# ══════════════════════════════════════════════════════════════════════════════
+
+
+@app.get("/api/dossier")
+async def get_project_dossier(customer: str, sign_type: Optional[str] = None,
+                              wo_number: Optional[str] = None):
+    """Build a complete project dossier for a customer.
+
+    Aggregates: Notion bids, G: drive files (classified), warehouse history,
+    customer intelligence, similar past jobs, and completeness checklist.
+    One call = everything you need to know about a project.
+    """
+    dossier: dict = {
+        "customer": customer,
+        "generated": datetime.now().isoformat(),
+    }
+
+    # 1. Customer Intelligence (from 27K warehouse jobs)
+    profile = await asyncio.to_thread(get_customer_profile, customer)
+    if profile:
+        dossier["intel"] = {
+            "customer_name": profile.customer_name,
+            "customer_no": profile.customer_no,
+            "total_jobs": profile.total_jobs,
+            "total_revenue": round(profile.total_revenue, 2),
+            "avg_revenue_per_job": round(profile.avg_revenue_per_job, 2),
+            "avg_gm_pct": profile.avg_gm_pct,
+            "margin_trend": profile.margin_trend,
+            "relationship_score": profile.relationship_score,
+            "relationship_label": profile.relationship_label,
+            "top_sign_type": profile.top_sign_type,
+            "sign_type_breakdown": profile.sign_type_breakdown[:8],
+            "locations": profile.locations[:10],
+            "last_job_date": profile.last_job_date,
+            "months_since_last": profile.months_since_last,
+            "insights": profile.insights,
+            "recent_jobs": profile.recent_jobs,
+        }
+    else:
+        dossier["intel"] = None
+        dossier["intel_note"] = "New customer — no warehouse history"
+
+    # 2. Similar Past Jobs
+    if sign_type:
+        similar = await asyncio.to_thread(find_similar_jobs, sign_type, max_results=8)
+        dossier["similar_jobs"] = [
+            {
+                "wo": s.work_order,
+                "customer": s.customer,
+                "location": s.location,
+                "type": s.sign_type,
+                "description": s.description,
+                "revenue": s.billing,
+                "gm_pct": s.gm_pct,
+                "similarity": s.similarity_score,
+            }
+            for s in similar
+        ]
+    else:
+        dossier["similar_jobs"] = []
+
+    # 3. Market Intel for this sign type
+    if sign_type:
+        mkt = await asyncio.to_thread(get_market_intel, sign_type)
+        if mkt:
+            dossier["market"] = {
+                "sign_type": mkt.sign_type,
+                "total_jobs": mkt.total_jobs,
+                "avg_revenue": mkt.avg_revenue,
+                "median_revenue": mkt.median_revenue,
+                "avg_gm_pct": mkt.avg_gm_pct,
+                "p25_revenue": mkt.p25_revenue,
+                "p75_revenue": mkt.p75_revenue,
+            }
+        else:
+            dossier["market"] = None
+
+    # 4. G: Drive Project Files (classified)
+    files = await asyncio.to_thread(scan_project_files, customer, wo_number=wo_number, sign_type=sign_type)
+    dossier["files"] = {
+        "customer_folder": files.customer_folder,
+        "total_scanned": files.total_files_scanned,
+        "sign_types_found": files.sign_types_found,
+        "wo_numbers_found": files.wo_numbers_found,
+        "checklist": files.checklist,
+        "completeness_pct": files.completeness_pct,
+        "warnings": files.warnings,
+        "by_type": {
+            dtype: [
+                {
+                    "filename": f.filename,
+                    "path": f.path,
+                    "wo_number": f.wo_number,
+                    "revision": f.revision,
+                    "sign_type": f.sign_type,
+                    "size_kb": round(f.size_bytes / 1024, 1),
+                    "modified": f.modified,
+                    "subfolder": f.subfolder,
+                    "relevance": f.relevance,
+                }
+                for f in flist[:20]
+            ]
+            for dtype, flist in files.by_type.items()
+        },
+        "total_files": len(files.files),
+    }
+
+    # 5. Notion Bids for this customer
+    notion_bids = []
+    if NOTION_TOKEN and NOTION_BID_PIPELINE_DB:
+        try:
+            async with httpx.AsyncClient(timeout=10.0) as client:
+                resp = await client.post(
+                    f"https://api.notion.com/v1/databases/{NOTION_BID_PIPELINE_DB}/query",
+                    headers=NOTION_HEADERS,
+                    json={
+                        "filter": {
+                            "property": "Customer",
+                            "rich_text": {"contains": customer},
+                        },
+                        "page_size": 20,
+                    },
+                )
+                if resp.status_code == 200:
+                    data = resp.json()
+                    notion_bids = [
+                        _parse_notion_bid(e) for e in data.get("results", [])
+                    ]
+        except Exception as e:
+            logger.warning("Notion query failed in dossier: %s", e)
+
+    dossier["bids"] = notion_bids
+    dossier["active_bids"] = len([b for b in notion_bids if b.get("pipeline_stage") not in ("WON", "LOST", None)])
+
+    return dossier
+
+
+@app.post("/api/dossier/prefetch")
+async def prefetch_dossier(customer: str, sign_type: Optional[str] = None,
+                           wo_number: Optional[str] = None):
+    """Pre-warm the G: drive file cache for a customer. Fire-and-forget from UI."""
+    await asyncio.to_thread(scan_project_files, customer, wo_number=wo_number,
+                            sign_type=sign_type)
+    return {"ok": True, "message": f"Cache warmed for {customer}"}
+
+
+@app.get("/api/cache/stats")
+async def cache_stats():
+    """Return current cache status for monitoring."""
+    from project_files import _cache, _bg_scans
+    return {
+        "cached_customers": len(_cache),
+        "active_scans": len(_bg_scans),
+        "cache_keys": list(_cache.keys()),
+    }
+
+
+@app.get("/api/intel/customer/{customer_name}")
+async def api_customer_intel(customer_name: str):
+    """Customer intelligence from warehouse history."""
+    profile = await asyncio.to_thread(get_customer_profile, customer_name)
+    if not profile:
+        return JSONResponse(status_code=404, content={
+            "ok": False,
+            "error": f"No warehouse history found for '{customer_name}'",
+        })
+    return {
+        "ok": True,
+        "customer_name": profile.customer_name,
+        "customer_no": profile.customer_no,
+        "total_jobs": profile.total_jobs,
+        "total_revenue": round(profile.total_revenue, 2),
+        "avg_revenue_per_job": round(profile.avg_revenue_per_job, 2),
+        "avg_gm_pct": profile.avg_gm_pct,
+        "margin_trend": profile.margin_trend,
+        "relationship_score": profile.relationship_score,
+        "relationship_label": profile.relationship_label,
+        "top_sign_type": profile.top_sign_type,
+        "sign_type_breakdown": profile.sign_type_breakdown,
+        "locations": profile.locations,
+        "last_job_date": profile.last_job_date,
+        "months_since_last": profile.months_since_last,
+        "insights": profile.insights,
+        "recent_jobs": profile.recent_jobs,
+    }
+
+
+@app.get("/api/intel/similar")
+async def api_similar_jobs(sign_type: str, revenue: float = 0, location: str = "",
+                           limit: int = 10):
+    """Find similar historical jobs by sign type and revenue range."""
+    similar = await asyncio.to_thread(find_similar_jobs, sign_type, revenue_estimate=revenue,
+                                      location=location, max_results=limit)
+    return {
+        "ok": True,
+        "sign_type": sign_type,
+        "matches": len(similar),
+        "jobs": [
+            {
+                "wo": s.work_order,
+                "customer": s.customer,
+                "location": s.location,
+                "type": s.sign_type,
+                "description": s.description,
+                "revenue": s.billing,
+                "labor_cost": s.labor_cost,
+                "gm_pct": s.gm_pct,
+                "date": s.date_completed,
+                "similarity": s.similarity_score,
+            }
+            for s in similar
+        ],
+    }
+
+
+@app.get("/api/intel/market/{sign_type}")
+async def api_market_intel(sign_type: str):
+    """Market intelligence for a sign type — pricing, volume, margins."""
+    mkt = await asyncio.to_thread(get_market_intel, sign_type)
+    if not mkt:
+        return JSONResponse(status_code=404, content={
+            "ok": False,
+            "error": f"No market data for '{sign_type}'",
+        })
+    return {
+        "ok": True,
+        "sign_type": mkt.sign_type,
+        "total_jobs": mkt.total_jobs,
+        "avg_revenue": mkt.avg_revenue,
+        "median_revenue": mkt.median_revenue,
+        "avg_gm_pct": mkt.avg_gm_pct,
+        "p25_revenue": mkt.p25_revenue,
+        "p75_revenue": mkt.p75_revenue,
+        "top_customers": mkt.top_customers,
+    }
+
+
+@app.get("/api/intel/warehouse")
+async def api_warehouse_stats():
+    """Top-level warehouse statistics."""
+    return await asyncio.to_thread(warehouse_stats)
+
+
+@app.get("/api/project-files")
+async def api_project_files(customer: str, wo_number: Optional[str] = None,
+                            sign_type: Optional[str] = None):
+    """Scan G: drive for all project files, classified by document type."""
+    result = await asyncio.to_thread(scan_project_files, customer, wo_number=wo_number, sign_type=sign_type)
+    return {
+        "ok": True,
+        "customer_folder": result.customer_folder,
+        "total_scanned": result.total_files_scanned,
+        "sign_types_found": result.sign_types_found,
+        "wo_numbers_found": result.wo_numbers_found,
+        "checklist": result.checklist,
+        "completeness_pct": result.completeness_pct,
+        "warnings": result.warnings,
+        "files": [
+            {
+                "filename": f.filename,
+                "path": f.path,
+                "doc_type": f.doc_type,
+                "doc_type_label": f.doc_type_label,
+                "wo_number": f.wo_number,
+                "revision": f.revision,
+                "sign_type": f.sign_type,
+                "ext": f.ext,
+                "size_kb": round(f.size_bytes / 1024, 1),
+                "modified": f.modified,
+                "subfolder": f.subfolder,
+                "relevance": f.relevance,
+            }
+            for f in result.files[:100]
+        ],
+        "total_files": len(result.files),
+    }
+
+
+# ── Bid Scoring Endpoints ────────────────────────────────────────────────────
+
+
+@app.post("/api/bid/score")
+async def api_bid_score(
+    customer: str,
+    sign_type: str,
+    price: float,
+    salesperson: Optional[str] = None,
+):
+    """Score the win probability for a bid opportunity.
+
+    Uses 6 weighted signals cross-validated against 18,670 labeled quotes.
+    """
+    result = await asyncio.to_thread(score_bid, customer, sign_type, price, salesperson)
+    return {
+        "ok": True,
+        "win_probability": result.win_probability,
+        "confidence": result.confidence,
+        "comparable_wins": result.comparable_wins,
+        "comparable_losses": result.comparable_losses,
+        "factors": [
+            {
+                "name": f.name,
+                "score": round(f.score, 4),
+                "weight": f.weight,
+                "weighted": round(f.weighted, 4),
+                "explanation": f.explanation,
+            }
+            for f in result.factors
+        ],
+        "recommendations": result.recommendations,
+    }
+
+
+@app.get("/api/bid/win-rates")
+async def api_win_rates():
+    """Aggregate win rate statistics: overall, by year, salesperson, bracket, sign type."""
+    return await asyncio.to_thread(get_win_rate_stats)
+
+
+@app.get("/api/bid/price-recommendation")
+async def api_price_recommendation(sign_type: str, customer: Optional[str] = None):
+    """3-tier pricing recommendation based on won bid distribution."""
+    rec = await asyncio.to_thread(get_price_recommendation, sign_type, customer)
+    if not rec:
+        return JSONResponse(status_code=404, content={
+            "ok": False,
+            "error": f"No pricing data for sign type '{sign_type}'",
+        })
+    return {
+        "ok": True,
+        "sign_type": rec.sign_type,
+        "conservative": rec.conservative,
+        "balanced": rec.balanced,
+        "aggressive": rec.aggressive,
+        "data_points": rec.data_points,
+        "customer_adjusted": rec.customer_adjusted,
+        "customer_avg_spend": rec.customer_avg_spend,
+        "customer_job_count": rec.customer_job_count,
+    }
+
+
+@app.get("/api/bid/scoring-health")
+async def api_scoring_health():
+    """Scoring engine diagnostics — data sizes, cache state, coverage."""
+    return await asyncio.to_thread(scoring_stats)
+
+
+# ── ML Model Endpoints ─────────────────────────────────────────────────────
+
+
+@app.post("/api/bid/ml-score")
+async def api_ml_score(
+    customer: str,
+    sign_type: str,
+    price: float,
+    salesperson: Optional[str] = None,
+):
+    """ML-trained win probability using logistic regression on 18K+ labeled quotes.
+
+    Complements the heuristic /api/bid/score with a data-driven model.
+    AUC-ROC ~0.80, Brier ~0.19.
+    """
+    pred = await asyncio.to_thread(
+        predict_win_probability, customer, sign_type, price, salesperson
+    )
+    return {
+        "ok": True,
+        "win_probability": pred.win_probability,
+        "confidence": pred.confidence,
+        "model_available": pred.model_available,
+        "risk_factors": pred.risk_factors,
+        "positive_factors": pred.positive_factors,
+        "feature_contributions": pred.feature_contributions,
+        "feature_values": {k: round(v, 4) for k, v in pred.feature_values.items()},
+    }
+
+
+@app.get("/api/bid/ml-diagnostics")
+async def api_ml_diagnostics():
+    """ML model health: AUC-ROC, Brier, coefficients, data coverage."""
+    return await asyncio.to_thread(get_model_diagnostics)
+
+
 if __name__ == "__main__":
-    print("\n  SignX-Takeoff Server v2.1")
+    print("\n  SignX-Takeoff Server v3.0 — Intelligence Platform")
     print("  http://localhost:8765")
     print("  Endpoints:")
     print("    Estimation: /api/estimate, /api/estimate/monument, /api/estimate/pylon, ...")
     print("    Structural: /api/structural/wind, /api/structural/full-design, ...")
+    print("    Drawings:   /api/drawings/search, /api/drawings/bid-lookup")
     print("    Pipeline:   /api/notion/bids, /api/notion/takeoff, /api/notion/flow-status")
     print("    KeyedIn:    /api/keyedin/format")
-    print("    Notify:     /api/notify/bid-ready")
+    print("    Notify:     /api/notify/bid-ready  (SMS to %s@%s)" % (SMS_PHONE, SMS_CARRIER_GATEWAY))
     print()
     uvicorn.run(app, host="0.0.0.0", port=8765, log_level="info")

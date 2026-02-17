@@ -139,6 +139,101 @@
   #pipeline-table th { position: sticky; top: 0; z-index: 1; }
   #pipeline-table td { font-size: 0.82rem; vertical-align: middle; }
   #pipeline-table tr:hover td { background: rgba(59,130,246,0.08); }
+
+  /* ── Intelligence Dashboard ── */
+  .intel-search-bar { display: flex; gap: 0.75rem; align-items: flex-end; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .intel-search-bar input { flex: 1; min-width: 200px; font-size: 1rem; padding: 0.65rem 1rem; }
+  .intel-search-bar select { min-width: 160px; }
+  .intel-search-bar .btn-dossier { background: var(--accent2); color: #fff; padding: 0.65rem 1.5rem; white-space: nowrap; font-size: 0.95rem; }
+  .intel-search-bar .btn-dossier:hover { background: #7c3aed; }
+
+  .intel-grid { display: grid; grid-template-columns: 380px 1fr; gap: 1.25rem; }
+  @media (max-width: 1000px) { .intel-grid { grid-template-columns: 1fr; } }
+
+  .intel-kpi { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-bottom: 1.25rem; }
+  @media (max-width: 800px) { .intel-kpi { grid-template-columns: repeat(2, 1fr); } }
+  .intel-kpi-box { background: var(--surface); border: 1px solid var(--border); border-radius: 0.5rem; padding: 0.75rem; text-align: center; }
+  .intel-kpi-box .kpi-val { font-size: 1.5rem; font-weight: 700; }
+  .intel-kpi-box .kpi-lbl { font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; }
+
+  /* Relationship gauge */
+  .rel-gauge { position: relative; width: 120px; height: 60px; margin: 0 auto 0.5rem; overflow: hidden; }
+  .rel-gauge-bg { width: 120px; height: 60px; border-radius: 60px 60px 0 0; background: var(--bg); border: 4px solid var(--border); border-bottom: none; }
+  .rel-gauge-fill { position: absolute; bottom: 0; left: 0; width: 120px; height: 60px; border-radius: 60px 60px 0 0; border: 4px solid var(--green); border-bottom: none; clip-path: polygon(0 100%, 0 0, var(--fill-pct) 0, var(--fill-pct) 100%); }
+  .rel-gauge-val { position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); font-size: 1.4rem; font-weight: 800; }
+
+  .rel-label { display: inline-block; padding: 0.2rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 700; }
+  .rel-label.key { background: rgba(34,197,94,0.15); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+  .rel-label.regular { background: rgba(59,130,246,0.15); color: var(--accent); border: 1px solid rgba(59,130,246,0.3); }
+  .rel-label.new { background: rgba(100,116,139,0.15); color: var(--text-dim); border: 1px solid rgba(100,116,139,0.3); }
+
+  .intel-badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: 600; background: rgba(139,92,246,0.12); color: var(--accent2); border: 1px solid rgba(139,92,246,0.25); margin: 0.15rem; }
+
+  .intel-stat-row { display: flex; justify-content: space-between; padding: 0.4rem 0; border-bottom: 1px solid var(--surface2); font-size: 0.85rem; }
+  .intel-stat-row:last-child { border-bottom: none; }
+  .intel-stat-row .stat-val { font-weight: 600; font-family: 'Cascadia Code', 'Fira Code', monospace; }
+
+  .trend-up { color: var(--green); }
+  .trend-down { color: var(--red); }
+  .trend-flat { color: var(--text-dim); }
+
+  .similarity-high { background: rgba(34,197,94,0.08); }
+  .similarity-mid { background: rgba(245,158,11,0.06); }
+  .similarity-low { }
+
+  .checklist-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0; font-size: 0.82rem; }
+  .check-yes { color: var(--green); font-weight: 700; }
+  .check-no { color: var(--red); font-weight: 700; }
+
+  .file-group { margin-bottom: 0.75rem; }
+  .file-group-header { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 0.35rem; padding-bottom: 0.2rem; border-bottom: 1px solid var(--surface2); }
+  .file-item { font-size: 0.8rem; padding: 0.2rem 0; color: var(--text-dim); padding-left: 0.75rem; }
+
+  .intel-loading { display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 2rem; color: var(--text-dim); font-size: 0.85rem; }
+  .intel-empty { text-align: center; padding: 3rem 1.5rem; color: var(--text-dim); }
+  .intel-empty h3 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--text-dim); }
+
+  .market-bar { height: 6px; border-radius: 3px; background: var(--surface2); position: relative; margin: 0.35rem 0 0.75rem; }
+  .market-bar-fill { height: 100%; border-radius: 3px; background: var(--accent2); }
+  .market-bar-marker { position: absolute; top: -4px; width: 2px; height: 14px; background: var(--text); border-radius: 1px; }
+
+  /* Win Probability Gauge */
+  .win-prob-card { background: linear-gradient(135deg, rgba(30,58,95,0.6), var(--surface)); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.5rem; margin-bottom: 1.25rem; text-align: center; }
+  .win-prob-gauge { position: relative; width: 160px; height: 80px; margin: 0 auto 0.75rem; overflow: hidden; }
+  .win-prob-gauge-bg { width: 160px; height: 80px; border-radius: 80px 80px 0 0; background: var(--bg); border: 6px solid var(--surface2); border-bottom: none; }
+  .win-prob-gauge-fill { position: absolute; bottom: 0; left: 0; width: 160px; height: 80px; border-radius: 80px 80px 0 0; border: 6px solid var(--green); border-bottom: none; clip-path: polygon(0 100%, 0 0, var(--fill-pct) 0, var(--fill-pct) 100%); transition: clip-path 0.6s ease-out; }
+  .win-prob-gauge-val { position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); font-size: 1.8rem; font-weight: 800; }
+  .win-prob-label { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 0.5rem; }
+  .win-prob-factors { display: flex; justify-content: center; gap: 1.25rem; margin-top: 0.75rem; }
+  .win-prob-factor { text-align: center; }
+  .win-prob-factor .factor-val { font-size: 0.9rem; font-weight: 700; font-family: 'Cascadia Code', 'Fira Code', monospace; }
+  .win-prob-factor .factor-lbl { font-size: 0.65rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.04em; }
+
+  /* Smart Pricing Tiers */
+  .pricing-tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 1.25rem; }
+  @media (max-width: 800px) { .pricing-tiers { grid-template-columns: 1fr; } }
+  .pricing-tier { background: var(--surface); border: 2px solid var(--border); border-radius: 0.75rem; padding: 1rem; cursor: pointer; transition: all 0.2s; position: relative; text-align: center; }
+  .pricing-tier:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+  .pricing-tier.recommended { border-color: var(--accent); background: linear-gradient(135deg, rgba(59,130,246,0.08), var(--surface)); }
+  .pricing-tier.recommended::after { content: 'RECOMMENDED'; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #fff; font-size: 0.6rem; font-weight: 700; padding: 0.15rem 0.6rem; border-radius: 4px; letter-spacing: 0.05em; }
+  .pricing-tier .tier-name { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+  .pricing-tier .tier-price { font-size: 1.5rem; font-weight: 800; font-family: 'Cascadia Code', 'Fira Code', monospace; margin-bottom: 0.35rem; }
+  .pricing-tier .tier-detail { font-size: 0.78rem; color: var(--text-dim); }
+  .pricing-tier .tier-winprob { font-size: 0.85rem; font-weight: 700; margin-top: 0.5rem; }
+  .tier-conservative .tier-name { color: var(--green); }
+  .tier-conservative .tier-price { color: var(--green); }
+  .tier-balanced .tier-name { color: var(--accent); }
+  .tier-balanced .tier-price { color: var(--accent); }
+  .tier-aggressive .tier-name { color: var(--orange); }
+  .tier-aggressive .tier-price { color: var(--orange); }
+
+  /* Customer Health Indicators */
+  .health-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 0.35rem; vertical-align: middle; }
+  .health-dot.active { background: var(--green); box-shadow: 0 0 6px rgba(34,197,94,0.4); }
+  .health-dot.cooling { background: var(--orange); box-shadow: 0 0 6px rgba(245,158,11,0.4); }
+  .health-dot.churn { background: var(--red); box-shadow: 0 0 6px rgba(239,68,68,0.4); }
+  .health-row { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--text-dim); padding: 0.25rem 0; }
+  .health-row .health-val { font-weight: 600; }
 </style>
 </head>
 <body>
@@ -162,6 +257,7 @@
     <div class="nav-tab" data-section="sec-dimensional">Dimensional</div>
     <div class="nav-tab" data-section="sec-pipeline" style="color:var(--green);font-weight:700;">Bid Pipeline</div>
     <div class="nav-tab" data-section="sec-structural">Engineering</div>
+    <div class="nav-tab" data-section="sec-intel" style="color:var(--accent2);font-weight:700;">Intelligence</div>
   </nav>
 
   <!-- ════════════════════════════════════════════════════════════════════════ -->
@@ -739,6 +835,192 @@
         <h2>Takeoff Result</h2>
         <div id="pipeline-takeoff-content"></div>
       </div>
+    </div>
+
+    <!-- Drawing Search -->
+    <div class="card" style="margin-top:1rem;">
+      <h2>Drawing Search (G: Drive)</h2>
+      <div style="display:flex;gap:0.75rem;align-items:flex-end;flex-wrap:wrap;">
+        <div style="flex:1;min-width:200px;">
+          <label class="form-label">Customer Name</label>
+          <input id="draw-customer" class="form-input" placeholder="e.g. McDonald's, Casey's, John Deere">
+        </div>
+        <div style="min-width:140px;">
+          <label class="form-label">Sign Type (optional)</label>
+          <select id="draw-type" class="form-input">
+            <option value="">All types</option>
+            <option value="monument">Monument</option>
+            <option value="pylon">Pylon</option>
+            <option value="channel_letter">Channel Letter</option>
+            <option value="cabinet">Cabinet</option>
+            <option value="awning">Awning</option>
+            <option value="directional">Directional</option>
+            <option value="dimensional">Dimensional</option>
+            <option value="removal">Removal</option>
+          </select>
+        </div>
+        <div style="min-width:120px;">
+          <label class="form-label">WO Number</label>
+          <input id="draw-wo" class="form-input" placeholder="MMYY-NNNNN">
+        </div>
+        <button class="btn-primary" onclick="searchDrawings()" style="width:auto;padding:0.5rem 1.25rem;">Search G:</button>
+      </div>
+      <div id="draw-results" style="margin-top:1rem;display:none;">
+        <div id="draw-summary" style="font-size:0.85rem;margin-bottom:0.5rem;"></div>
+        <div style="overflow-x:auto;">
+          <table style="width:100%;font-size:0.82rem;">
+            <thead>
+              <tr style="background:var(--bg-card);">
+                <th style="padding:0.4rem 0.6rem;text-align:left;">Filename</th>
+                <th style="padding:0.4rem 0.6rem;text-align:left;">WO #</th>
+                <th style="padding:0.4rem 0.6rem;text-align:left;">Rev</th>
+                <th style="padding:0.4rem 0.6rem;text-align:left;">Type</th>
+                <th style="padding:0.4rem 0.6rem;text-align:right;">Size</th>
+                <th style="padding:0.4rem 0.6rem;text-align:left;">Path</th>
+              </tr>
+            </thead>
+            <tbody id="draw-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION: Intelligence Dashboard                                         -->
+  <!-- ════════════════════════════════════════════════════════════════════════ -->
+  <div class="main-section" id="sec-intel">
+
+    <!-- Search Bar -->
+    <div class="intel-search-bar">
+      <div style="flex:1;min-width:220px;">
+        <label>Customer Name</label>
+        <input type="text" id="intel-customer" placeholder="e.g. McDonald's, Casey's, John Deere">
+      </div>
+      <div style="min-width:160px;">
+        <label>Sign Type (optional)</label>
+        <select id="intel-sign-type">
+          <option value="">All Types</option>
+          <option value="channel_letter">Channel Letter</option>
+          <option value="monument">Monument</option>
+          <option value="pylon">Pylon</option>
+          <option value="cabinet">Cabinet</option>
+          <option value="awning">Awning</option>
+          <option value="directional">Directional</option>
+          <option value="dimensional">Dimensional</option>
+          <option value="removal">Removal</option>
+        </select>
+      </div>
+      <div style="min-width:140px;">
+        <label>Revenue Estimate ($)</label>
+        <input type="number" id="intel-revenue" placeholder="Optional" min="0" step="100">
+      </div>
+      <button class="btn-dossier" onclick="buildDossier()">Build Dossier</button>
+    </div>
+
+    <!-- KPI Strip -->
+    <div class="intel-kpi" id="intel-kpi" style="display:none;">
+      <div class="intel-kpi-box"><div class="kpi-val" id="kpi-jobs" style="color:var(--accent);">--</div><div class="kpi-lbl">Total Jobs</div></div>
+      <div class="intel-kpi-box"><div class="kpi-val" id="kpi-revenue" style="color:var(--green);">--</div><div class="kpi-lbl">Total Revenue</div></div>
+      <div class="intel-kpi-box"><div class="kpi-val" id="kpi-gm" style="color:var(--orange);">--</div><div class="kpi-lbl">Avg GM%</div></div>
+      <div class="intel-kpi-box"><div class="kpi-val" id="kpi-similar" style="color:var(--accent2);">--</div><div class="kpi-lbl">Similar Jobs Found</div></div>
+    </div>
+
+    <!-- Win Probability + Smart Pricing (shown after dossier loads) -->
+    <div id="intel-win-prob-container" style="display:none;"></div>
+    <div id="intel-pricing-container" style="display:none;"></div>
+
+    <!-- Main Intel Grid -->
+    <div class="intel-grid" id="intel-grid" style="display:none;">
+      <!-- LEFT COLUMN: Customer Profile + Project Dossier -->
+      <div>
+        <!-- Customer Profile Card -->
+        <div class="card" id="intel-profile-card">
+          <h2>Customer Profile</h2>
+          <div id="intel-profile-content"></div>
+        </div>
+
+        <!-- Project Dossier -->
+        <div class="card" id="intel-dossier-card">
+          <h2>Project Dossier</h2>
+          <div id="intel-dossier-content"></div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: Market Intel + Similar Jobs + Notion Bids + Drawing Search -->
+      <div>
+        <!-- Market Intel Panel -->
+        <div class="card" id="intel-market-card">
+          <h2>Market Intel <span class="badge" style="background:var(--accent2);">BENCHMARKS</span></h2>
+          <div id="intel-market-content"></div>
+        </div>
+
+        <!-- Similar Jobs Table -->
+        <div class="card" id="intel-similar-card">
+          <h2>Similar Historical Jobs</h2>
+          <div id="intel-similar-content" style="overflow-x:auto;"></div>
+        </div>
+
+        <!-- Notion Active Bids -->
+        <div class="card" id="intel-bids-card">
+          <h2>Active Bids <span class="badge">NOTION</span></h2>
+          <div id="intel-bids-content" style="overflow-x:auto;"></div>
+        </div>
+
+        <!-- Drawing Search -->
+        <div class="card" id="intel-drawing-card">
+          <h2>Drawing Search (G: Drive)</h2>
+          <div style="display:flex;gap:0.75rem;align-items:flex-end;flex-wrap:wrap;">
+            <div style="flex:1;min-width:200px;">
+              <label>Customer Name</label>
+              <input type="text" id="intel-draw-customer" placeholder="e.g. McDonald's">
+            </div>
+            <div style="min-width:140px;">
+              <label>Sign Type</label>
+              <select id="intel-draw-type">
+                <option value="">All types</option>
+                <option value="monument">Monument</option>
+                <option value="pylon">Pylon</option>
+                <option value="channel_letter">Channel Letter</option>
+                <option value="cabinet">Cabinet</option>
+                <option value="awning">Awning</option>
+                <option value="directional">Directional</option>
+                <option value="dimensional">Dimensional</option>
+              </select>
+            </div>
+            <div style="min-width:120px;">
+              <label>WO Number</label>
+              <input type="text" id="intel-draw-wo" placeholder="MMYY-NNNNN">
+            </div>
+            <button class="btn-primary" onclick="intelSearchDrawings()" style="width:auto;padding:0.5rem 1.25rem;">Search</button>
+          </div>
+          <div id="intel-draw-results" style="margin-top:1rem;display:none;">
+            <div id="intel-draw-summary" style="font-size:0.85rem;margin-bottom:0.5rem;"></div>
+            <div style="overflow-x:auto;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Filename</th>
+                    <th>WO #</th>
+                    <th>Rev</th>
+                    <th>Type</th>
+                    <th class="right">Size</th>
+                    <th>Path</th>
+                  </tr>
+                </thead>
+                <tbody id="intel-draw-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Placeholder shown when no dossier loaded -->
+    <div id="intel-placeholder" class="card intel-empty">
+      <svg style="width:64px;height:64px;color:var(--text-dim);margin-bottom:1rem;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+      <h3 style="color:var(--text-dim);margin-bottom:0.5rem;">Intelligence Dashboard</h3>
+      <p style="font-size:0.85rem;">Enter a customer name and click "Build Dossier" to load relationship history, market benchmarks, similar jobs, project files, and active bids. Or use the Drawing Search below.</p>
     </div>
   </div>
 
@@ -2069,11 +2351,12 @@ function renderPipelineTable() {
         const takeoffBadge = b.takeoff_done
             ? '<span style="color:var(--green);font-weight:700;font-size:0.8rem;">DONE</span>'
             : '<span style="color:var(--text-dim);font-size:0.8rem;">pending</span>';
+        const drawBtn = b.customer ? `<button onclick="lookupBidDrawings('${(b.customer||'').replace(/'/g,"\\'")}','${b.sign_type||''}')" style="padding:0.25rem 0.5rem;font-size:0.7rem;background:var(--accent2);color:#fff;border:none;border-radius:4px;cursor:pointer;margin-right:0.25rem;">Dwg</button>` : '';
         const actionBtns = canTakeoff
-            ? `<button onclick="runSingleTakeoff('${b.page_id}', this)" style="padding:0.25rem 0.6rem;font-size:0.75rem;background:var(--accent);color:#fff;border:none;border-radius:4px;cursor:pointer;">Run Takeoff</button>`
+            ? `${drawBtn}<button onclick="runSingleTakeoff('${b.page_id}', this)" style="padding:0.25rem 0.6rem;font-size:0.75rem;background:var(--accent);color:#fff;border:none;border-radius:4px;cursor:pointer;">Run Takeoff</button>`
             : b.takeoff_done
-                ? `<button onclick="formatForKeyedIn('${b.page_id}')" style="padding:0.25rem 0.6rem;font-size:0.75rem;background:var(--accent2);color:#fff;border:none;border-radius:4px;cursor:pointer;">KeyedIn</button>`
-                : '<span style="font-size:0.7rem;color:var(--text-dim);">--</span>';
+                ? `${drawBtn}<button onclick="formatForKeyedIn('${b.page_id}')" style="padding:0.25rem 0.6rem;font-size:0.75rem;background:var(--accent2);color:#fff;border:none;border-radius:4px;cursor:pointer;">KeyedIn</button>`
+                : `${drawBtn}<span style="font-size:0.7rem;color:var(--text-dim);">--</span>`;
 
         return `<tr>
             <td class="mono" style="font-weight:600;">${b.quote_number || '--'}</td>
@@ -2236,6 +2519,887 @@ function copyKeyedInLines() {
         lines += `${wo.work_code}\t${wo.description}\t${wo.hours.toFixed(2)}\t${wo.unit_type}\t${wo.department}\n`;
     }
     navigator.clipboard.writeText(lines).then(() => alert('Copied! Paste into KeyedIn Quote Entry.'));
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// INTELLIGENCE DASHBOARD
+// ══════════════════════════════════════════════════════════════════════════════
+let intelDossier = null;
+let intelBuildId = 0; // monotonic counter to discard stale responses
+
+// Allow Enter key to trigger dossier build
+document.getElementById('intel-customer').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') buildDossier();
+});
+
+// ── Debounced prefetch on customer name input ────────────────────────────────
+// Fires after 500ms of no typing (min 3 chars) to pre-warm the G: drive cache
+let prefetchTimer = null;
+document.getElementById('intel-customer').addEventListener('input', function(e) {
+    clearTimeout(prefetchTimer);
+    const val = e.target.value.trim();
+    if (val.length >= 3) {
+        prefetchTimer = setTimeout(() => {
+            fetch('/api/dossier/prefetch', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({customer: val})
+            }).catch(() => {}); // fire-and-forget
+        }, 500);
+    }
+});
+
+async function buildDossier() {
+    const customer = document.getElementById('intel-customer').value.trim();
+    if (!customer) {
+        alert('Enter a customer name to build a dossier.');
+        return;
+    }
+
+    const signType = document.getElementById('intel-sign-type').value;
+    const revenue = parseFloat(document.getElementById('intel-revenue').value) || 0;
+
+    // Bump build ID so any in-flight responses from a previous search get discarded
+    const thisBuild = ++intelBuildId;
+
+    // Show loading state
+    document.getElementById('intel-placeholder').style.display = 'none';
+    document.getElementById('intel-grid').style.display = 'grid';
+    document.getElementById('intel-kpi').style.display = 'grid';
+
+    // Reset KPI strip to loading
+    ['kpi-jobs','kpi-revenue','kpi-gm','kpi-similar'].forEach(id => {
+        document.getElementById(id).textContent = '--';
+    });
+
+    // Hide win probability and pricing until dossier is ready
+    document.getElementById('intel-win-prob-container').style.display = 'none';
+    document.getElementById('intel-pricing-container').style.display = 'none';
+
+    // Set every panel to its loading spinner
+    document.getElementById('intel-profile-content').innerHTML = '<div class="intel-loading"><span class="spinner"></span> Loading customer profile...</div>';
+    document.getElementById('intel-market-content').innerHTML = '<div class="intel-loading"><span class="spinner"></span> Loading market intel...</div>';
+    document.getElementById('intel-similar-content').innerHTML = '<div class="intel-loading"><span class="spinner"></span> Finding similar jobs...</div>';
+    document.getElementById('intel-dossier-content').innerHTML = '<div class="intel-loading"><span class="spinner"></span> Scanning project files...</div>';
+    document.getElementById('intel-bids-content').innerHTML = '<div class="intel-loading"><span class="spinner"></span> Loading active bids...</div>';
+
+    // Auto-fill drawing search customer
+    document.getElementById('intel-draw-customer').value = customer;
+    if (signType) document.getElementById('intel-draw-type').value = signType;
+
+    // Build URL params
+    const params = new URLSearchParams({ customer });
+    if (signType) params.set('sign_type', signType);
+    if (revenue > 0) params.set('revenue', revenue);
+
+    // ── Progressive loading: fire all calls in parallel, render each as it arrives ──
+    // We track what the aggregated dossier returns so individual endpoints act as
+    // fallbacks only when the dossier doesn't cover that section.
+    let dossierData = null;
+
+    // 1) Customer profile (fastest -- warehouse lookup)
+    fetchJSON(`/api/intel/customer/${encodeURIComponent(customer)}`)
+        .then(data => {
+            if (intelBuildId !== thisBuild) return; // stale
+            if (!dossierData?.customer) {
+                renderIntelProfile(data || {}, []);
+                updateKPIFromProfile(data);
+            }
+        })
+        .catch(() => {
+            if (intelBuildId !== thisBuild) return;
+            if (!dossierData?.customer) {
+                document.getElementById('intel-profile-content').innerHTML =
+                    '<p style="color:var(--red);font-size:0.85rem;text-align:center;padding:1rem;">Failed to load customer profile.</p>';
+            }
+        });
+
+    // 2) Market intel
+    if (signType) {
+        fetchJSON(`/api/intel/market/${encodeURIComponent(signType)}`)
+            .then(data => {
+                if (intelBuildId !== thisBuild) return;
+                if (!dossierData?.market) renderIntelMarket(data || {}, signType);
+            })
+            .catch(() => {
+                if (intelBuildId !== thisBuild) return;
+                if (!dossierData?.market) {
+                    document.getElementById('intel-market-content').innerHTML =
+                        '<p style="color:var(--red);font-size:0.85rem;text-align:center;padding:1rem;">Failed to load market data.</p>';
+                }
+            });
+    } else {
+        document.getElementById('intel-market-content').innerHTML =
+            '<p style="color:var(--text-dim);font-size:0.85rem;text-align:center;padding:1rem;">Select a sign type to see market benchmarks.</p>';
+    }
+
+    // 3) Similar jobs
+    if (signType) {
+        const simUrl = `/api/intel/similar?sign_type=${encodeURIComponent(signType)}${revenue > 0 ? '&revenue=' + revenue : ''}`;
+        fetchJSON(simUrl)
+            .then(data => {
+                if (intelBuildId !== thisBuild) return;
+                const jobs = data?.jobs || data?.similar_jobs || [];
+                if (!dossierData?.similar_jobs) {
+                    renderIntelSimilar(jobs);
+                    document.getElementById('kpi-similar').textContent = jobs.length || '--';
+                }
+            })
+            .catch(() => {
+                if (intelBuildId !== thisBuild) return;
+                if (!dossierData?.similar_jobs) {
+                    document.getElementById('intel-similar-content').innerHTML =
+                        '<p style="color:var(--red);font-size:0.85rem;text-align:center;padding:1rem;">Failed to load similar jobs.</p>';
+                }
+            });
+    } else {
+        document.getElementById('intel-similar-content').innerHTML =
+            '<p style="color:var(--text-dim);font-size:0.85rem;text-align:center;padding:1rem;">Select a sign type to find similar jobs.</p>';
+    }
+
+    // 4) Project files (G: drive -- slowest, benefits most from prefetch cache)
+    fetchJSON(`/api/project-files?customer=${encodeURIComponent(customer)}`)
+        .then(data => {
+            if (intelBuildId !== thisBuild) return;
+            if (!dossierData?.project_files) renderIntelDossier(data || {}, customer);
+        })
+        .catch(() => {
+            if (intelBuildId !== thisBuild) return;
+            if (!dossierData?.project_files) {
+                document.getElementById('intel-dossier-content').innerHTML =
+                    '<p style="color:var(--red);font-size:0.85rem;text-align:center;padding:1rem;">Failed to load project files.</p>';
+            }
+        });
+
+    // 5) Full aggregated dossier (may be slower but authoritative when it arrives)
+    fetchJSON(`/api/dossier?${params}`)
+        .then(data => {
+            if (intelBuildId !== thisBuild) return;
+            dossierData = data;
+            intelDossier = data;
+
+            // Overwrite all sections with authoritative dossier data
+            const profile = data?.customer || {};
+            const market = data?.market || {};
+            const similar = data?.similar_jobs || [];
+            const files = data?.project_files || {};
+            const bids = data?.bids || [];
+            const insights = data?.insights || [];
+
+            if (profile && (profile.total_jobs || profile.name || profile.relationship_score)) {
+                renderIntelProfile(profile, insights);
+            }
+            updateKPIFromProfile(profile);
+            if (market && (market.avg_revenue || market.total_jobs)) renderIntelMarket(market, signType);
+            if (similar.length > 0) {
+                renderIntelSimilar(similar);
+                document.getElementById('kpi-similar').textContent = similar.length;
+            }
+            if (files && (files.checklist || files.files || files.folder_path || files.documents)) {
+                renderIntelDossier(files, customer);
+            }
+            renderIntelBids(bids, customer);
+
+            // Win probability + smart pricing -- async API calls, fire in parallel
+            renderWinProbability(profile, market, similar);
+            renderSmartPricing(profile, market, revenue);
+        })
+        .catch(() => {
+            if (intelBuildId !== thisBuild) return;
+            // Dossier endpoint failed -- individual endpoints already rendered as fallbacks.
+            // Just fill bids with an error since no other endpoint covers it.
+            if (!dossierData?.bids) {
+                document.getElementById('intel-bids-content').innerHTML =
+                    '<p style="color:var(--text-dim);font-size:0.85rem;text-align:center;padding:1rem;">Could not load active bids.</p>';
+            }
+        });
+}
+
+// Helper: update KPI strip from a customer profile object
+function updateKPIFromProfile(p) {
+    if (!p) return;
+    if (p.total_jobs != null) document.getElementById('kpi-jobs').textContent = p.total_jobs;
+    if (p.total_revenue != null) document.getElementById('kpi-revenue').textContent = '$' + fmtCurrency(p.total_revenue);
+    if (p.avg_gm_pct != null) document.getElementById('kpi-gm').textContent = p.avg_gm_pct.toFixed(1) + '%';
+}
+
+// ── Win Probability Scoring ──────────────────────────────────────────────────
+// Calls the real backend bid scoring API: POST /api/bid/score
+async function computeWinProbability(customer, signType, price) {
+    const params = new URLSearchParams();
+    if (customer) params.set('customer', customer);
+    if (signType) params.set('sign_type', signType);
+    if (price > 0) params.set('price', price);
+    const res = await fetch(`/api/bid/score?${params}`, { method: 'POST' });
+    if (!res.ok) throw new Error(`bid/score ${res.status}`);
+    return res.json();
+}
+
+async function renderWinProbability(profile, market, similar) {
+    const container = document.getElementById('intel-win-prob-container');
+
+    // Need at least a customer name to call the API
+    const customer = document.getElementById('intel-customer').value.trim();
+    if (!customer || (!profile || (!profile.total_jobs && !profile.relationship_score))) {
+        container.style.display = 'none';
+        return;
+    }
+
+    // Show loading state inside the container
+    container.innerHTML = '<div class="intel-loading"><span class="spinner"></span> Scoring bid...</div>';
+    container.style.display = 'block';
+
+    try {
+        const signType = document.getElementById('intel-sign-type').value ||
+            (profile.top_sign_types && profile.top_sign_types[0]?.type) || '';
+        const price = parseFloat(document.getElementById('intel-revenue').value) ||
+            profile.avg_revenue_per_job || market.avg_revenue || 0;
+
+        const result = await computeWinProbability(customer, signType, price);
+
+        const score = result.win_probability ?? result.score ?? 50;
+        const factors = result.factors || {};
+        const recommendations = result.recommendations || [];
+
+        const fillPct = Math.max(0, Math.min(100, score)) + '%';
+        const gaugeColor = score >= 70 ? 'var(--green)' : score >= 45 ? 'var(--orange)' : 'var(--red)';
+        const verdict = score >= 70 ? 'Strong' : score >= 45 ? 'Moderate' : 'Challenging';
+
+        // Factor display config: API returns these 6 named factors
+        const factorMeta = {
+            customer_recency:      { label: 'Recency',       max: 20 },
+            frequency:             { label: 'Frequency',     max: 20 },
+            price_position:        { label: 'Price Pos.',    max: 20 },
+            revenue_tier:          { label: 'Revenue Tier',  max: 15 },
+            sign_type_expertise:   { label: 'Expertise',     max: 15 },
+            margin_health:         { label: 'Margin',        max: 10 },
+        };
+
+        let html = '<div class="win-prob-card">';
+        html += '<div class="win-prob-label">Win Probability <span style="font-size:0.7rem;color:var(--text-dim);font-weight:400;">(API)</span></div>';
+        html += `<div class="win-prob-gauge">
+            <div class="win-prob-gauge-bg"></div>
+            <div class="win-prob-gauge-fill" style="--fill-pct:${fillPct};border-color:${gaugeColor};"></div>
+            <div class="win-prob-gauge-val" style="color:${gaugeColor};">${score}%</div>
+        </div>`;
+        html += `<div style="font-size:0.9rem;font-weight:700;color:${gaugeColor};margin-bottom:0.5rem;">${verdict}</div>`;
+
+        // Scoring factor breakdown from API
+        const factorKeys = Object.keys(factorMeta);
+        const hasApiFactors = factorKeys.some(k => factors[k] != null);
+
+        if (hasApiFactors) {
+            html += '<div class="win-prob-factors" style="flex-wrap:wrap;gap:0.4rem;">';
+            for (const key of factorKeys) {
+                const meta = factorMeta[key];
+                const f = factors[key] || {};
+                const val = typeof f === 'object' ? (f.score ?? f.value ?? 0) : f;
+                const pct = meta.max > 0 ? val / meta.max : 0;
+                const color = pct >= 0.65 ? 'var(--green)' : pct >= 0.4 ? 'var(--orange)' : 'var(--red)';
+                const tip = typeof f === 'object' && f.explanation ? ` title="${f.explanation.replace(/"/g, '&quot;')}"` : '';
+                html += `<div class="win-prob-factor"${tip}>
+                    <div class="factor-val" style="color:${color};">${val}/${meta.max}</div>
+                    <div class="factor-lbl">${meta.label}</div>
+                </div>`;
+            }
+            html += '</div>';
+        }
+
+        // Actionable recommendations from API
+        if (recommendations.length > 0) {
+            html += '<div style="margin-top:0.75rem;border-top:1px solid var(--border);padding-top:0.5rem;">';
+            html += '<div style="font-size:0.72rem;color:var(--text-dim);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.35rem;">Recommendations</div>';
+            html += '<ul style="margin:0;padding-left:1.1rem;font-size:0.8rem;color:var(--text);line-height:1.5;">';
+            for (const rec of recommendations) {
+                html += `<li>${rec}</li>`;
+            }
+            html += '</ul></div>';
+        }
+
+        html += '</div>';
+        container.innerHTML = html;
+        container.style.display = 'block';
+
+    } catch (err) {
+        container.innerHTML = `<p style="color:var(--red);font-size:0.8rem;text-align:center;padding:0.75rem;">Win probability unavailable (${err.message})</p>`;
+        container.style.display = 'block';
+    }
+}
+
+// ── Smart Price Recommendations ──────────────────────────────────────────────
+// Calls the real backend pricing API: GET /api/bid/price-recommendation
+async function computeSmartPricing(signType, customer) {
+    const params = new URLSearchParams();
+    if (signType) params.set('sign_type', signType);
+    if (customer) params.set('customer', customer);
+    const res = await fetch(`/api/bid/price-recommendation?${params}`);
+    if (!res.ok) throw new Error(`bid/price-recommendation ${res.status}`);
+    return res.json();
+}
+
+async function renderSmartPricing(profile, market, inputRevenue) {
+    const container = document.getElementById('intel-pricing-container');
+
+    const customer = document.getElementById('intel-customer').value.trim();
+    const signType = document.getElementById('intel-sign-type').value ||
+        (profile.top_sign_types && profile.top_sign_types[0]?.type) || '';
+
+    if (!signType && !customer) {
+        container.style.display = 'none';
+        return;
+    }
+
+    // Show loading state inside the container
+    container.innerHTML = '<div class="intel-loading"><span class="spinner"></span> Loading price recommendations...</div>';
+    container.style.display = 'block';
+
+    try {
+        const result = await computeSmartPricing(signType, customer);
+
+        // API returns tiers under various shapes; normalise to array
+        let tiers = result.tiers || result.recommendations || result;
+        if (!Array.isArray(tiers)) tiers = Object.values(tiers);
+
+        if (!tiers || tiers.length === 0) {
+            container.style.display = 'none';
+            return;
+        }
+
+        let html = '<div style="margin-bottom:0.5rem;"><span style="font-size:0.8rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.05em;">Smart Price Recommendations <span style="font-weight:400;font-size:0.7rem;">(API)</span></span></div>';
+        html += '<div class="pricing-tiers">';
+
+        for (const t of tiers) {
+            const tierKey  = (t.tier || t.name || 'balanced').toLowerCase();
+            const name     = t.name || (tierKey.charAt(0).toUpperCase() + tierKey.slice(1));
+            const price    = t.price || t.suggested_price || 0;
+            const margin   = t.margin ?? t.margin_pct ?? t.gm_pct ?? 0;
+            const winProb  = t.win_probability ?? t.win_prob ?? t.winProb ?? 0;
+            const isRec    = t.recommended || tierKey === 'balanced';
+            html += `<div class="pricing-tier tier-${tierKey}${isRec ? ' recommended' : ''}" onclick="selectPricingTier('${tierKey}', ${price})">
+                <div class="tier-name">${name}</div>
+                <div class="tier-price">$${price.toLocaleString()}</div>
+                <div class="tier-detail">${typeof margin === 'number' ? margin.toFixed(0) + '% margin' : margin}</div>
+                <div class="tier-winprob" style="color:${winProb >= 65 ? 'var(--green)' : winProb >= 40 ? 'var(--orange)' : 'var(--red)'};">~${winProb}% win</div>
+            </div>`;
+        }
+
+        html += '</div>';
+        container.innerHTML = html;
+        container.style.display = 'block';
+
+    } catch (err) {
+        container.innerHTML = `<p style="color:var(--red);font-size:0.8rem;text-align:center;padding:0.75rem;">Price recommendations unavailable (${err.message})</p>`;
+        container.style.display = 'block';
+    }
+}
+
+function selectPricingTier(tier, price) {
+    // Update the revenue input with the selected price
+    document.getElementById('intel-revenue').value = price;
+    // Visual feedback: highlight selected tier
+    document.querySelectorAll('.pricing-tier').forEach(el => {
+        el.style.opacity = el.classList.contains('tier-' + tier) ? '1' : '0.5';
+    });
+    // Reset opacity after 1.5s
+    setTimeout(() => {
+        document.querySelectorAll('.pricing-tier').forEach(el => el.style.opacity = '1');
+    }, 1500);
+}
+
+// ── Customer Health Indicators ───────────────────────────────────────────────
+// Compute health status from profile data (last order date, cadence, etc.)
+function computeCustomerHealth(profile) {
+    const totalJobs = profile.total_jobs || 0;
+    const lastOrderDate = profile.last_order_date || profile.last_job_date || null;
+    const avgCadenceDays = profile.avg_cadence_days || profile.order_cadence || null;
+
+    let daysSinceOrder = null;
+    if (lastOrderDate) {
+        const last = new Date(lastOrderDate);
+        if (!isNaN(last.getTime())) {
+            daysSinceOrder = Math.floor((Date.now() - last.getTime()) / (1000 * 60 * 60 * 24));
+        }
+    }
+
+    // If no explicit last order date, estimate from recent jobs
+    if (daysSinceOrder == null && profile.recent_jobs && profile.recent_jobs.length > 0) {
+        const firstJob = profile.recent_jobs[0];
+        const dateStr = firstJob.date || firstJob.completed_date || firstJob.created_date;
+        if (dateStr) {
+            const d = new Date(dateStr);
+            if (!isNaN(d.getTime())) {
+                daysSinceOrder = Math.floor((Date.now() - d.getTime()) / (1000 * 60 * 60 * 24));
+            }
+        }
+    }
+
+    // Compute cadence if not provided
+    let cadence = avgCadenceDays;
+    if (cadence == null && totalJobs >= 2 && profile.first_order_date) {
+        const first = new Date(profile.first_order_date);
+        if (!isNaN(first.getTime())) {
+            const totalDays = Math.floor((Date.now() - first.getTime()) / (1000 * 60 * 60 * 24));
+            cadence = Math.round(totalDays / totalJobs);
+        }
+    }
+
+    // Health status: active (ordered recently), cooling (overdue), churn (way overdue)
+    let status = 'active';
+    if (daysSinceOrder != null) {
+        const threshold = cadence || 180; // default 6 months
+        if (daysSinceOrder > threshold * 2) status = 'churn';
+        else if (daysSinceOrder > threshold * 1.2) status = 'cooling';
+    } else if (totalJobs === 0) {
+        status = 'new';
+    }
+
+    return { daysSinceOrder, cadence, status };
+}
+
+async function fetchJSON(url) {
+    const resp = await fetch(url);
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}: ${resp.statusText}`);
+    return resp.json();
+}
+
+function fmtCurrency(val) {
+    if (val == null) return '--';
+    if (val >= 1000000) return (val / 1000000).toFixed(1) + 'M';
+    if (val >= 1000) return (val / 1000).toFixed(1) + 'K';
+    return val.toLocaleString();
+}
+
+// ── Customer Profile Renderer ────────────────────────────────────────────────
+function renderIntelProfile(p, insights) {
+    const el = document.getElementById('intel-profile-content');
+
+    if (!p || (!p.total_jobs && !p.name && !p.relationship_score)) {
+        el.innerHTML = '<p style="color:var(--text-dim);font-size:0.85rem;text-align:center;padding:1rem;">No customer data found. This may be a new customer.</p>';
+        return;
+    }
+
+    const score = p.relationship_score != null ? p.relationship_score : 0;
+    const label = p.relationship_label || (score >= 70 ? 'Key Account' : score >= 40 ? 'Regular' : 'New');
+    const labelClass = score >= 70 ? 'key' : score >= 40 ? 'regular' : 'new';
+    const gaugeColor = score >= 70 ? 'var(--green)' : score >= 40 ? 'var(--accent)' : 'var(--text-dim)';
+    const fillPct = Math.max(0, Math.min(100, score)) + '%';
+
+    // Margin trend
+    const trend = p.margin_trend || 'flat';
+    const trendArrow = trend === 'up' ? '&#9650;' : trend === 'down' ? '&#9660;' : '&#9644;';
+    const trendClass = trend === 'up' ? 'trend-up' : trend === 'down' ? 'trend-down' : 'trend-flat';
+
+    // Customer health indicators
+    const health = computeCustomerHealth(p);
+
+    let html = '';
+
+    // Gauge + health dot
+    html += `<div style="text-align:center;margin-bottom:1rem;">
+        <div class="rel-gauge">
+            <div class="rel-gauge-bg"></div>
+            <div class="rel-gauge-fill" style="--fill-pct:${fillPct};border-color:${gaugeColor};"></div>
+            <div class="rel-gauge-val" style="color:${gaugeColor};">${score}</div>
+        </div>
+        <div><span class="health-dot ${health.status}"></span><span class="rel-label ${labelClass}">${label}</span></div>
+    </div>`;
+
+    // Health indicators
+    html += '<div style="margin-bottom:0.75rem;padding:0.5rem 0.75rem;background:var(--bg);border-radius:0.5rem;">';
+    if (health.daysSinceOrder != null) {
+        const ageColor = health.daysSinceOrder <= 90 ? 'var(--green)' : health.daysSinceOrder <= 180 ? 'var(--orange)' : 'var(--red)';
+        html += `<div class="health-row"><span>Last ordered</span><span class="health-val" style="color:${ageColor};">${health.daysSinceOrder} days ago</span></div>`;
+    }
+    if (health.cadence != null) {
+        html += `<div class="health-row"><span>Order cadence</span><span class="health-val">~${health.cadence} days</span></div>`;
+    }
+    const statusLabel = { active: 'Active', cooling: 'Cooling Off', churn: 'Churn Risk', new: 'New Customer' }[health.status] || health.status;
+    const statusColor = { active: 'var(--green)', cooling: 'var(--orange)', churn: 'var(--red)', new: 'var(--text-dim)' }[health.status] || 'var(--text-dim)';
+    html += `<div class="health-row"><span>Status</span><span class="health-val" style="color:${statusColor};">${statusLabel}</span></div>`;
+    html += '</div>';
+
+    // Stats
+    html += '<div style="margin-bottom:1rem;">';
+    html += `<div class="intel-stat-row"><span>Total Jobs</span><span class="stat-val">${p.total_jobs || 0}</span></div>`;
+    html += `<div class="intel-stat-row"><span>Total Revenue</span><span class="stat-val">$${fmtCurrency(p.total_revenue)}</span></div>`;
+    html += `<div class="intel-stat-row"><span>Avg GM%</span><span class="stat-val">${p.avg_gm_pct != null ? p.avg_gm_pct.toFixed(1) + '%' : '--'}</span></div>`;
+    html += `<div class="intel-stat-row"><span>Margin Trend</span><span class="stat-val ${trendClass}">${trendArrow} ${trend}</span></div>`;
+    html += '</div>';
+
+    // Top sign types
+    const signTypes = p.top_sign_types || p.sign_types || [];
+    if (signTypes.length > 0) {
+        html += '<div style="margin-bottom:1rem;"><div style="font-size:0.75rem;color:var(--text-dim);margin-bottom:0.35rem;font-weight:600;">TOP SIGN TYPES</div>';
+        for (const st of signTypes) {
+            const name = typeof st === 'string' ? st : (st.type || st.name || st);
+            const count = typeof st === 'object' && st.count ? ` (${st.count})` : '';
+            html += `<span class="intel-badge">${name}${count}</span>`;
+        }
+        html += '</div>';
+    }
+
+    // Recent jobs
+    const recent = p.recent_jobs || [];
+    if (recent.length > 0) {
+        html += '<div style="margin-bottom:0.75rem;"><div style="font-size:0.75rem;color:var(--text-dim);margin-bottom:0.35rem;font-weight:600;">RECENT JOBS</div>';
+        html += '<table style="font-size:0.8rem;"><thead><tr><th>WO</th><th>Type</th><th class="right">Revenue</th><th class="right">GM%</th></tr></thead><tbody>';
+        for (const j of recent.slice(0, 8)) {
+            html += `<tr>
+                <td class="mono">${j.wo || j.work_order || '--'}</td>
+                <td>${j.sign_type || j.type || '--'}</td>
+                <td class="right mono">$${typeof j.revenue === 'number' ? j.revenue.toLocaleString() : (j.revenue || '--')}</td>
+                <td class="right">${j.gm_pct != null ? j.gm_pct.toFixed(1) + '%' : (j.gm != null ? j.gm + '%' : '--')}</td>
+            </tr>`;
+        }
+        html += '</tbody></table></div>';
+    }
+
+    // AI Insights
+    if (insights && insights.length > 0) {
+        html += '<div style="margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid var(--surface2);">';
+        html += '<div style="font-size:0.75rem;color:var(--accent2);margin-bottom:0.35rem;font-weight:700;">AI INSIGHTS</div>';
+        for (const ins of insights) {
+            const text = typeof ins === 'string' ? ins : (ins.text || ins.message || '');
+            if (text) html += `<p style="font-size:0.8rem;color:var(--text-dim);margin-bottom:0.35rem;padding-left:0.5rem;border-left:2px solid var(--accent2);">${text}</p>`;
+        }
+        html += '</div>';
+    }
+
+    el.innerHTML = html;
+}
+
+// ── Market Intel Renderer ────────────────────────────────────────────────────
+function renderIntelMarket(m, signType) {
+    const el = document.getElementById('intel-market-content');
+
+    if (!m || (!m.avg_revenue && !m.total_jobs && !m.median_revenue)) {
+        el.innerHTML = signType
+            ? '<p style="color:var(--text-dim);font-size:0.85rem;text-align:center;padding:1rem;">No market data available for this sign type.</p>'
+            : '<p style="color:var(--text-dim);font-size:0.85rem;text-align:center;padding:1rem;">Select a sign type to see market benchmarks.</p>';
+        return;
+    }
+
+    const avg = m.avg_revenue || 0;
+    const median = m.median_revenue || 0;
+    const p25 = m.p25_revenue || m.percentile_25 || 0;
+    const p75 = m.p75_revenue || m.percentile_75 || 0;
+    const maxRev = p75 * 1.5 || avg * 2 || 10000;
+
+    let html = '';
+
+    // Summary stats grid
+    html += `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin-bottom:1rem;">
+        <div style="text-align:center;">
+            <div style="font-size:1.3rem;font-weight:700;color:var(--accent);">$${fmtCurrency(avg)}</div>
+            <div style="font-size:0.7rem;color:var(--text-dim);">Avg Revenue</div>
+        </div>
+        <div style="text-align:center;">
+            <div style="font-size:1.3rem;font-weight:700;color:var(--accent2);">$${fmtCurrency(median)}</div>
+            <div style="font-size:0.7rem;color:var(--text-dim);">Median Revenue</div>
+        </div>
+        <div style="text-align:center;">
+            <div style="font-size:1.3rem;font-weight:700;color:var(--green);">${m.total_jobs || '--'}</div>
+            <div style="font-size:0.7rem;color:var(--text-dim);">Total Jobs</div>
+        </div>
+    </div>`;
+
+    // Revenue range bar
+    html += '<div style="font-size:0.75rem;color:var(--text-dim);margin-bottom:0.25rem;">Revenue Distribution</div>';
+    html += '<div class="market-bar" style="position:relative;">';
+    const p25Pct = maxRev > 0 ? (p25 / maxRev * 100) : 0;
+    const p75Pct = maxRev > 0 ? Math.min(100, p75 / maxRev * 100) : 100;
+    const medPct = maxRev > 0 ? Math.min(100, median / maxRev * 100) : 50;
+    html += `<div class="market-bar-fill" style="width:${p75Pct}%;"></div>`;
+    html += `<div style="position:absolute;top:0;left:${p25Pct}%;width:${p75Pct - p25Pct}%;height:100%;background:var(--accent2);border-radius:3px;opacity:0.5;"></div>`;
+    html += `<div class="market-bar-marker" style="left:${medPct}%;"></div>`;
+    html += '</div>';
+    html += `<div style="display:flex;justify-content:space-between;font-size:0.7rem;color:var(--text-dim);margin-bottom:1rem;">
+        <span>P25: $${fmtCurrency(p25)}</span>
+        <span>Median: $${fmtCurrency(median)}</span>
+        <span>P75: $${fmtCurrency(p75)}</span>
+    </div>`;
+
+    // Additional stats
+    html += '<div style="margin-bottom:0;">';
+    if (m.avg_gm_pct != null) html += `<div class="intel-stat-row"><span>Avg GM%</span><span class="stat-val" style="color:${m.avg_gm_pct >= 35 ? 'var(--green)' : m.avg_gm_pct >= 20 ? 'var(--orange)' : 'var(--red)'};">${m.avg_gm_pct.toFixed(1)}%</span></div>`;
+    if (m.avg_hours != null) html += `<div class="intel-stat-row"><span>Avg Hours</span><span class="stat-val">${m.avg_hours.toFixed(1)}</span></div>`;
+    if (m.std_dev != null) html += `<div class="intel-stat-row"><span>Std Dev</span><span class="stat-val">&plusmn;${m.std_dev.toFixed(1)}</span></div>`;
+    html += '</div>';
+
+    el.innerHTML = html;
+}
+
+// ── Similar Jobs Renderer ────────────────────────────────────────────────────
+function renderIntelSimilar(jobs) {
+    const el = document.getElementById('intel-similar-content');
+
+    if (!jobs || jobs.length === 0) {
+        el.innerHTML = '<p style="color:var(--text-dim);font-size:0.85rem;text-align:center;padding:1rem;">No similar jobs found. Try selecting a sign type or entering a revenue estimate.</p>';
+        return;
+    }
+
+    let html = '<table><thead><tr>';
+    html += '<th>WO #</th><th>Customer</th><th>Location</th><th>Sign Type</th>';
+    html += '<th class="right">Revenue</th><th class="right">GM%</th><th class="right">Similarity</th>';
+    html += '</tr></thead><tbody>';
+
+    for (const j of jobs.slice(0, 25)) {
+        const sim = j.similarity_score != null ? j.similarity_score : (j.similarity || 0);
+        const simPct = (sim * 100).toFixed(0);
+        const simClass = sim >= 0.7 ? 'similarity-high' : sim >= 0.4 ? 'similarity-mid' : 'similarity-low';
+        const simColor = sim >= 0.7 ? 'var(--green)' : sim >= 0.4 ? 'var(--orange)' : 'var(--text-dim)';
+
+        html += `<tr class="${simClass}">
+            <td class="mono" style="font-weight:600;">${j.wo || j.work_order || '--'}</td>
+            <td>${j.customer || '--'}</td>
+            <td style="font-size:0.78rem;">${j.location || j.city || '--'}</td>
+            <td><span style="font-size:0.75rem;">${j.sign_type || j.type || '--'}</span></td>
+            <td class="right mono">$${typeof j.revenue === 'number' ? j.revenue.toLocaleString() : (j.revenue || '--')}</td>
+            <td class="right" style="color:${j.gm_pct >= 35 ? 'var(--green)' : j.gm_pct >= 20 ? 'var(--orange)' : 'var(--red)'};">${j.gm_pct != null ? j.gm_pct.toFixed(1) + '%' : (j.gm != null ? j.gm + '%' : '--')}</td>
+            <td class="right" style="font-weight:600;color:${simColor};">${simPct}%</td>
+        </tr>`;
+    }
+
+    html += '</tbody></table>';
+    if (jobs.length > 25) {
+        html += `<p style="font-size:0.75rem;color:var(--text-dim);margin-top:0.5rem;text-align:center;">Showing 25 of ${jobs.length} similar jobs</p>`;
+    }
+
+    el.innerHTML = html;
+}
+
+// ── Project Dossier Renderer ─────────────────────────────────────────────────
+function renderIntelDossier(files, customer) {
+    const el = document.getElementById('intel-dossier-content');
+
+    if (!files || (!files.checklist && !files.files && !files.folder_path && !files.documents)) {
+        el.innerHTML = '<p style="color:var(--text-dim);font-size:0.85rem;text-align:center;padding:1rem;">No project files found for this customer.</p>';
+        return;
+    }
+
+    let html = '';
+
+    // Completeness checklist
+    const checklist = files.checklist || {};
+    const checkItems = Object.entries(checklist);
+    if (checkItems.length > 0) {
+        html += '<div style="margin-bottom:1rem;">';
+        html += '<div style="font-size:0.75rem;color:var(--text-dim);margin-bottom:0.35rem;font-weight:600;">COMPLETENESS</div>';
+        let complete = 0;
+        for (const [key, val] of checkItems) {
+            const has = !!val;
+            if (has) complete++;
+            html += `<div class="checklist-item">
+                <span class="${has ? 'check-yes' : 'check-no'}">${has ? '&#10003;' : '&#10007;'}</span>
+                <span>${key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}</span>
+            </div>`;
+        }
+        const pct = checkItems.length > 0 ? Math.round(complete / checkItems.length * 100) : 0;
+        html += `<div style="margin-top:0.5rem;height:4px;background:var(--surface2);border-radius:2px;">
+            <div style="height:100%;width:${pct}%;background:${pct >= 80 ? 'var(--green)' : pct >= 50 ? 'var(--orange)' : 'var(--red)'};border-radius:2px;transition:width 0.3s;"></div>
+        </div>`;
+        html += `<div style="font-size:0.7rem;color:var(--text-dim);margin-top:0.25rem;">${pct}% complete (${complete}/${checkItems.length})</div>`;
+        html += '</div>';
+    }
+
+    // File list grouped by doc type
+    const fileList = files.files || files.documents || [];
+    if (fileList.length > 0) {
+        const groups = {};
+        for (const f of fileList) {
+            const type = f.doc_type || f.type || f.category || 'other';
+            if (!groups[type]) groups[type] = [];
+            groups[type].push(f);
+        }
+
+        html += '<div style="margin-bottom:0.75rem;">';
+        html += '<div style="font-size:0.75rem;color:var(--text-dim);margin-bottom:0.35rem;font-weight:600;">PROJECT FILES</div>';
+
+        const typeOrder = ['drawings', 'proposals', 'permits', 'photos', 'contracts', 'correspondence', 'other'];
+        const sortedTypes = Object.keys(groups).sort((a, b) => {
+            const ai = typeOrder.indexOf(a.toLowerCase());
+            const bi = typeOrder.indexOf(b.toLowerCase());
+            return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+        });
+
+        for (const type of sortedTypes) {
+            html += '<div class="file-group">';
+            html += `<div class="file-group-header">${type.replace(/_/g, ' ')} (${groups[type].length})</div>`;
+            for (const f of groups[type].slice(0, 10)) {
+                const name = f.filename || f.name || f.path || '';
+                html += `<div class="file-item">${name}</div>`;
+            }
+            if (groups[type].length > 10) {
+                html += `<div class="file-item" style="color:var(--accent);">... +${groups[type].length - 10} more</div>`;
+            }
+            html += '</div>';
+        }
+        html += '</div>';
+    }
+
+    // G: drive folder path
+    const folderPath = files.folder_path || files.g_drive_path || '';
+    if (folderPath) {
+        html += `<div style="margin-top:0.75rem;padding:0.5rem 0.75rem;background:var(--bg);border:1px solid var(--border);border-radius:0.5rem;font-size:0.78rem;">
+            <span style="color:var(--text-dim);">G: Drive:</span> <span class="mono" style="color:var(--accent);">${folderPath}</span>
+        </div>`;
+    }
+
+    el.innerHTML = html;
+}
+
+// ── Notion Bids Renderer ─────────────────────────────────────────────────────
+function renderIntelBids(bids, customer) {
+    const el = document.getElementById('intel-bids-content');
+
+    if (!bids || bids.length === 0) {
+        el.innerHTML = '<p style="color:var(--text-dim);font-size:0.85rem;text-align:center;padding:1rem;">No active bids found for this customer.</p>';
+        return;
+    }
+
+    let html = '<table><thead><tr>';
+    html += '<th>Quote #</th><th>Type</th><th class="right">Est. Value</th><th>Stage</th><th>Age</th><th>Takeoff</th>';
+    html += '</tr></thead><tbody>';
+
+    for (const b of bids) {
+        const stageColor = STAGE_COLORS[b.pipeline_stage || b.stage] || '#64748b';
+        const typeLabel = TYPE_LABELS[b.sign_type] || b.sign_type || '?';
+        const takeoff = b.takeoff_done
+            ? '<span style="color:var(--green);font-weight:700;font-size:0.8rem;">DONE</span>'
+            : '<span style="color:var(--text-dim);font-size:0.8rem;">pending</span>';
+
+        html += `<tr>
+            <td class="mono" style="font-weight:600;">${b.quote_number || b.quote || '--'}</td>
+            <td><span style="font-size:0.75rem;">${typeLabel}</span></td>
+            <td class="right mono">${b.est_value != null ? '$' + b.est_value.toLocaleString() : '--'}</td>
+            <td><span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;font-size:0.7rem;font-weight:600;background:${stageColor}20;color:${stageColor};border:1px solid ${stageColor}40;">${b.pipeline_stage || b.stage || '?'}</span></td>
+            <td class="right" style="font-size:0.8rem;">${b.age_days != null ? b.age_days + 'd' : '--'}</td>
+            <td style="text-align:center;">${takeoff}</td>
+        </tr>`;
+    }
+
+    html += '</tbody></table>';
+    el.innerHTML = html;
+}
+
+// ── Drawing Search (Intelligence tab) ────────────────────────────────────────
+async function intelSearchDrawings() {
+    const customer = document.getElementById('intel-draw-customer').value.trim();
+    const signType = document.getElementById('intel-draw-type').value;
+    const wo = document.getElementById('intel-draw-wo').value.trim();
+
+    if (!customer && !wo) {
+        alert('Enter a customer name or WO number to search.');
+        return;
+    }
+
+    const resultsDiv = document.getElementById('intel-draw-results');
+    const summaryDiv = document.getElementById('intel-draw-summary');
+    const bodyEl = document.getElementById('intel-draw-body');
+
+    resultsDiv.style.display = 'block';
+    summaryDiv.innerHTML = '<span class="spinner"></span> Searching G: drive...';
+    bodyEl.innerHTML = '';
+
+    const params = new URLSearchParams();
+    if (customer) params.set('customer', customer);
+    if (signType) params.set('sign_type', signType);
+    if (wo) params.set('wo', wo);
+
+    try {
+        const resp = await fetch(`/api/drawings/search?${params}`);
+        const data = await resp.json();
+
+        if (data.error) {
+            summaryDiv.innerHTML = `<span style="color:var(--red);">${data.error}</span>`;
+            return;
+        }
+
+        const drawings = data.drawings || data.results || [];
+        summaryDiv.textContent = `Found ${drawings.length} drawing(s)`;
+
+        if (drawings.length === 0) {
+            bodyEl.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:1.5rem;color:var(--text-dim);">No drawings found</td></tr>';
+            return;
+        }
+
+        bodyEl.innerHTML = drawings.map(d => `<tr>
+            <td style="font-size:0.8rem;">${d.filename || d.name || '--'}</td>
+            <td class="mono">${d.wo || d.work_order || '--'}</td>
+            <td>${d.rev || d.revision || '--'}</td>
+            <td>${d.type || d.sign_type || '--'}</td>
+            <td class="right mono">${d.size || '--'}</td>
+            <td style="font-size:0.72rem;color:var(--text-dim);max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${d.path || '--'}</td>
+        </tr>`).join('');
+
+    } catch (err) {
+        summaryDiv.innerHTML = `<span style="color:var(--red);">Error: ${err.message}</span>`;
+    }
+}
+
+// ── Drawing Search (Pipeline tab - was missing) ──────────────────────────────
+async function searchDrawings() {
+    const customer = document.getElementById('draw-customer').value.trim();
+    const signType = document.getElementById('draw-type').value;
+    const wo = document.getElementById('draw-wo').value.trim();
+
+    if (!customer && !wo) {
+        alert('Enter a customer name or WO number to search.');
+        return;
+    }
+
+    const resultsDiv = document.getElementById('draw-results');
+    const summaryDiv = document.getElementById('draw-summary');
+    const bodyEl = document.getElementById('draw-table-body');
+
+    resultsDiv.style.display = 'block';
+    summaryDiv.innerHTML = '<span class="spinner"></span> Searching G: drive...';
+    bodyEl.innerHTML = '';
+
+    const params = new URLSearchParams();
+    if (customer) params.set('customer', customer);
+    if (signType) params.set('sign_type', signType);
+    if (wo) params.set('wo', wo);
+
+    try {
+        const resp = await fetch(`/api/drawings/search?${params}`);
+        const data = await resp.json();
+
+        if (data.error) {
+            summaryDiv.innerHTML = `<span style="color:var(--red);">${data.error}</span>`;
+            return;
+        }
+
+        const drawings = data.drawings || data.results || [];
+        summaryDiv.textContent = `Found ${drawings.length} drawing(s)`;
+
+        if (drawings.length === 0) {
+            bodyEl.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:1.5rem;color:var(--text-dim);">No drawings found</td></tr>';
+            return;
+        }
+
+        bodyEl.innerHTML = drawings.map(d => `<tr>
+            <td style="font-size:0.8rem;">${d.filename || d.name || '--'}</td>
+            <td class="mono">${d.wo || d.work_order || '--'}</td>
+            <td>${d.rev || d.revision || '--'}</td>
+            <td>${d.type || d.sign_type || '--'}</td>
+            <td class="right mono">${d.size || '--'}</td>
+            <td style="font-size:0.72rem;color:var(--text-dim);max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${d.path || '--'}</td>
+        </tr>`).join('');
+
+    } catch (err) {
+        summaryDiv.innerHTML = `<span style="color:var(--red);">Error: ${err.message}</span>`;
+    }
+}
+
+// ── Lookup Drawings from Pipeline (was missing) ──────────────────────────────
+async function lookupBidDrawings(customer, signType) {
+    // Switch to pipeline drawing search and auto-fill
+    document.getElementById('draw-customer').value = customer;
+    if (signType) document.getElementById('draw-type').value = signType;
+    searchDrawings();
+    // Scroll to drawing search
+    document.getElementById('draw-results').scrollIntoView({behavior: 'smooth'});
 }
 </script>
 </body>
