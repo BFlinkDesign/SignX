@@ -72,8 +72,8 @@ jobs:
           python -c "
           from apex_signcalc.wind_asce7 import wind_force_on_sign
           r = wind_force_on_sign(V_mph=115, sign_width_ft=8, sign_height_ft=4, height_to_top_ft=14, exposure='C')
-          assert r['design_force_lbs'] > 0, 'Wind force must be positive'
-          print(f'Wind force: {r[\"design_force_lbs\"]:.1f} lbs -- OK')
+          assert r['governing_F_lbf'] > 0, 'Wind force must be positive'
+          print(f'Wind force: {r[\"governing_F_lbf\"]:.1f} lbs, case {r[\"governing_case\"]} -- OK')
 
           from apex_signcalc.foundation_embed import design_embed
           f = design_embed(F_lbf=500, M_inlb=60000)
