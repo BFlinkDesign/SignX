@@ -2751,7 +2751,13 @@ function renderPipelineTable() {
             <td><span style="font-size:0.75rem;">${typeLabel}</span></td>
             <td class="right mono">${b.sq_ft != null ? b.sq_ft : '--'}</td>
             <td class="right mono">${b.est_value != null ? '$' + b.est_value.toLocaleString() : '--'}</td>
-            <td><span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;font-size:0.7rem;font-weight:600;background:${stageColor}20;color:${stageColor};border:1px solid ${stageColor}40;">${b.pipeline_stage || '?'}</span></td>
+            <td>
+              <select onchange="updateBidStage('${b.page_id}', this.value, this)" style="padding:0.15rem 0.3rem;border-radius:4px;font-size:0.7rem;font-weight:600;background:${stageColor}15;color:${stageColor};border:1px solid ${stageColor}40;cursor:pointer;appearance:auto;">
+                ${['INTAKE','NEEDS_INFO','NEEDS_VENDOR_QUOTE','NEEDS_SUB_QUOTE','READY_TO_TAKEOFF','IN_PROGRESS','QUOTED','WON','LOST'].map(s =>
+                  `<option value="${s}" ${s === b.pipeline_stage ? 'selected' : ''}>${s.replace(/_/g,' ')}</option>`
+                ).join('')}
+              </select>
+            </td>
             <td>${blocking || '<span style="font-size:0.7rem;color:var(--text-dim);">none</span>'}</td>
             <td class="right" style="font-size:0.8rem;">${b.age_days != null ? b.age_days + 'd' : '--'}</td>
             <td style="text-align:center;">${takeoffBadge}</td>
@@ -2835,6 +2841,41 @@ async function runAllReadyTakeoffs() {
         await runSingleTakeoff(bid.page_id, null);
     }
     alert(`Completed ${ready.length} takeoff(s). Check results and Notion.`);
+}
+
+async function updateBidStage(pageId, newStage, selectEl) {
+    const origColor = selectEl.style.borderColor;
+    selectEl.style.borderColor = 'var(--accent)';
+    selectEl.disabled = true;
+    try {
+        const resp = await fetch('/api/notion/bid', {
+            method: 'PATCH',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({page_id: pageId, pipeline_stage: newStage}),
+        });
+        const data = await resp.json();
+        if (!data.ok) {
+            selectEl.style.borderColor = 'var(--red)';
+            setTimeout(() => { selectEl.style.borderColor = origColor; }, 2000);
+            return;
+        }
+        // Update local state so table re-renders correctly
+        const bid = pipelineBids.find(b => b.page_id === pageId);
+        if (bid) bid.pipeline_stage = newStage;
+        // Flash green confirmation
+        selectEl.style.borderColor = 'var(--green)';
+        selectEl.style.background = 'rgba(34,197,94,0.15)';
+        setTimeout(() => {
+            selectEl.style.borderColor = origColor;
+            selectEl.style.background = '';
+            renderPipelineTable();
+        }, 800);
+    } catch (err) {
+        selectEl.style.borderColor = 'var(--red)';
+        setTimeout(() => { selectEl.style.borderColor = origColor; }, 2000);
+    } finally {
+        selectEl.disabled = false;
+    }
 }
 
 async function formatForKeyedIn(pageId) {

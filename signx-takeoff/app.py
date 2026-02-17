@@ -1155,6 +1155,64 @@ async def run_notion_takeoff(req: TakeoffRequest):
         return JSONResponse(status_code=500, content={"ok": False, "error": str(e)})
 
 
+# ── Notion Status Update ───────────────────────────────────────────────────
+
+PIPELINE_STAGES = [
+    "INTAKE", "NEEDS_INFO", "NEEDS_VENDOR_QUOTE", "NEEDS_SUB_QUOTE",
+    "READY_TO_TAKEOFF", "IN_PROGRESS", "QUOTED", "WON", "LOST",
+]
+
+
+class StatusUpdateRequest(BaseModel):
+    page_id: str = Field(..., description="Notion page ID")
+    pipeline_stage: Optional[str] = Field(None, description="New pipeline stage")
+    est_value: Optional[float] = Field(None, description="Estimated value ($)")
+    salesman: Optional[str] = Field(None, description="Salesman name")
+    blocking: Optional[List[str]] = Field(None, description="Blocking items")
+
+
+@app.patch("/api/notion/bid")
+async def update_notion_bid(req: StatusUpdateRequest):
+    """Update a bid's properties in Notion (stage, value, salesman, blocking)."""
+    if not NOTION_TOKEN:
+        return JSONResponse(status_code=400, content={"ok": False, "error": "Notion not configured"})
+
+    props = {}
+    if req.pipeline_stage:
+        if req.pipeline_stage not in PIPELINE_STAGES:
+            return JSONResponse(status_code=400, content={
+                "ok": False,
+                "error": f"Invalid stage '{req.pipeline_stage}'. Must be one of: {PIPELINE_STAGES}",
+            })
+        props["Pipeline Stage"] = {"select": {"name": req.pipeline_stage}}
+    if req.est_value is not None:
+        props["Est. Value"] = {"number": req.est_value}
+    if req.salesman:
+        props["Salesman"] = {"select": {"name": req.salesman}}
+    if req.blocking is not None:
+        props["Blocking"] = {"multi_select": [{"name": b} for b in req.blocking]}
+
+    if not props:
+        return {"ok": False, "error": "No fields to update"}
+
+    try:
+        async with httpx.AsyncClient(timeout=15.0) as client:
+            resp = await client.patch(
+                f"https://api.notion.com/v1/pages/{req.page_id}",
+                headers=NOTION_HEADERS,
+                json={"properties": props},
+            )
+            resp.raise_for_status()
+        return {"ok": True, "updated": list(props.keys()), "page_id": req.page_id}
+    except httpx.HTTPStatusError as e:
+        return JSONResponse(status_code=e.response.status_code, content={
+            "ok": False, "error": f"Notion API: {e.response.text}",
+        })
+    except Exception as e:
+        logger.exception("Notion update failed for %s", req.page_id)
+        return JSONResponse(status_code=500, content={"ok": False, "error": str(e)})
+
+
 # ── Notification: SMS / Webhook ─────────────────────────────────────────────
 
 class NotifyRequest(BaseModel):
