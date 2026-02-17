@@ -344,6 +344,7 @@ class PylonRequest(BaseModel):
     face_area_sf: Optional[float] = Field(None, description="Override face area (SF)")
     num_faces: int = Field(2, description="Number of cabinet faces (1 or 2)")
     pole_height_ft: float = Field(25.0, description="Total pole height to top of sign (ft)")
+    illuminated: bool = Field(True, description="Has illumination (LED/electrical)")
     has_vinyl: bool = Field(True, description="Has vinyl graphics")
     include_footing: bool = Field(True, description="Self-performed footing")
     miles: float = Field(0.0, description="One-way travel miles")
@@ -352,13 +353,13 @@ class PylonRequest(BaseModel):
 
 @app.post("/api/estimate/pylon")
 async def run_pylon_estimate(req: PylonRequest):
-    """Run pylon/pole sign estimation engine."""
+    """Run pylon/pole sign estimation engine (POLLIT or POLNON)."""
     sf = req.face_area_sf if req.face_area_sf and req.face_area_sf > 0 else req.width_ft * req.height_ft
     job = JobInput(
-        sign_type=SignType.POLLIT,
+        sign_type=SignType.POLLIT if req.illuminated else SignType.POLNON,
         sign_sf_per_face=sf,
         num_faces=req.num_faces,
-        is_illuminated=True,  # Pylons are always illuminated
+        is_illuminated=req.illuminated,
         has_vinyl=req.has_vinyl,
         has_structural_steel=True,  # Pylons always have steel poles
         has_footing=req.include_footing,
@@ -596,6 +597,27 @@ async def run_calibration(req: CalibrateRequest):
 
 
 # ── Structural Endpoints ────────────────────────────────────────────────────
+
+
+# Iowa defaults — covers ~90% of Eagle Sign jobs
+IOWA_DEFAULTS = {
+    "V_mph": 115.0,
+    "exposure": "C",
+    "elevation_ft": 800.0,
+    "risk_category": "II",
+    "Kzt": 1.0,
+    "soil_type": "medium_clay",
+    "f_c_psi": 3000.0,
+    "bolt_grade": "F1554-36",
+    "label": "Iowa Defaults",
+    "description": "115 mph wind, open flat land, 800 ft elevation — covers most Iowa jobs",
+}
+
+
+@app.get("/api/structural/defaults")
+async def get_structural_defaults():
+    """Return default site conditions for Iowa (90% of Eagle Sign jobs)."""
+    return {"ok": True, "defaults": IOWA_DEFAULTS}
 
 
 class WindRequest(BaseModel):
@@ -927,13 +949,14 @@ SIGN_TYPE_MAP = {
     "MONUMENT_BASE":            ("monument", {"illuminated": False}),
     "MONUMENT_MANUAL_READER":   ("monument", {"illuminated": False, "num_faces": 2}),
     "EMC_MONUMENT":             ("monument", {"illuminated": True}),
-    "EMC_POLE":                 ("pylon", {}),
+    "EMC_POLE":                 ("pylon", {"illuminated": True}),
+    "POLE_SIGN":                ("pylon", {"illuminated": False}),
     "EMC_RETROFIT":             ("cabinet", {"illuminated": True}),
     "EMC":                      ("cabinet", {"illuminated": True}),
     "CABINET_ILLUMINATED":      ("cabinet", {"illuminated": True}),
     "INFO_PANEL":               ("directional", {}),
     "REMOVAL":                  ("removal", {}),
-    "STRUCTURAL_BASE":          ("pylon", {"include_footing": True}),
+    "STRUCTURAL_BASE":          ("pylon", {"illuminated": True, "include_footing": True}),
     "MASONRY_SUB":              ("monument", {"illuminated": False}),
 }
 
@@ -1074,11 +1097,12 @@ async def run_notion_takeoff(req: TakeoffRequest):
             )
             result = estimate_monument(job)
         elif est_key == "pylon":
+            _pyl_lit = defaults.get("illuminated", True)
             job = JobInput(
-                sign_type=SignType.POLLIT,
+                sign_type=SignType.POLLIT if _pyl_lit else SignType.POLNON,
                 sign_sf_per_face=sq_ft / max(faces, 1),
                 num_faces=max(faces, 2),
-                is_illuminated=True,
+                is_illuminated=_pyl_lit,
                 has_vinyl=True,
                 has_structural_steel=True,
                 has_footing=defaults.get("include_footing", True),
@@ -1391,22 +1415,38 @@ async def format_for_keyedin(req: KeyedInFormatRequest):
 
 @app.get("/api/dossier")
 async def get_project_dossier(customer: str, sign_type: Optional[str] = None,
-                              wo_number: Optional[str] = None):
+                              wo_number: Optional[str] = None,
+                              revenue: Optional[float] = None,
+                              salesperson: Optional[str] = None):
     """Build a complete project dossier for a customer.
 
-    Aggregates: Notion bids, G: drive files (classified), warehouse history,
-    customer intelligence, similar past jobs, and completeness checklist.
+    Aggregates: Notion bids, G: drive files + drawings, warehouse history,
+    customer intelligence, similar past jobs, win probability, price
+    recommendations, and completeness checklist.
     One call = everything you need to know about a project.
     """
     dossier: dict = {
-        "customer": customer,
+        "customer_query": customer,
         "generated": datetime.now().isoformat(),
+        "warnings": [],
     }
 
-    # 1. Customer Intelligence (from 27K warehouse jobs)
-    profile = await asyncio.to_thread(get_customer_profile, customer)
+    # ── 1. Customer Intelligence (from 27K warehouse jobs) ────────────────
+    try:
+        profile = await asyncio.to_thread(get_customer_profile, customer)
+    except Exception as e:
+        logger.warning("Customer profile failed: %s", e)
+        profile = None
+        dossier["warnings"].append(f"Customer profile unavailable: {e}")
+
     if profile:
-        dossier["intel"] = {
+        # Group jobs by location for multi-location breakout
+        location_groups = {}
+        for job in profile.recent_jobs:
+            loc = job.get("location") or "Unknown"
+            location_groups.setdefault(loc, []).append(job)
+
+        dossier["customer"] = {
             "customer_name": profile.customer_name,
             "customer_no": profile.customer_no,
             "total_jobs": profile.total_jobs,
@@ -1418,82 +1458,256 @@ async def get_project_dossier(customer: str, sign_type: Optional[str] = None,
             "relationship_label": profile.relationship_label,
             "top_sign_type": profile.top_sign_type,
             "sign_type_breakdown": profile.sign_type_breakdown[:8],
-            "locations": profile.locations[:10],
+            "locations": profile.locations[:20],
             "last_job_date": profile.last_job_date,
             "months_since_last": profile.months_since_last,
             "insights": profile.insights,
             "recent_jobs": profile.recent_jobs,
+            "jobs_by_location": {
+                loc: jobs for loc, jobs in sorted(
+                    location_groups.items(),
+                    key=lambda x: len(x[1]),
+                    reverse=True,
+                )
+            },
         }
+        dossier["insights"] = profile.insights
     else:
-        dossier["intel"] = None
-        dossier["intel_note"] = "New customer — no warehouse history"
+        dossier["customer"] = None
+        dossier["insights"] = ["New customer -- no warehouse history"]
 
-    # 2. Similar Past Jobs
-    if sign_type:
-        similar = await asyncio.to_thread(find_similar_jobs, sign_type, max_results=8)
-        dossier["similar_jobs"] = [
-            {
-                "wo": s.work_order,
-                "customer": s.customer,
-                "location": s.location,
-                "type": s.sign_type,
-                "description": s.description,
-                "revenue": s.billing,
-                "gm_pct": s.gm_pct,
-                "similarity": s.similarity_score,
-            }
-            for s in similar
-        ]
-    else:
-        dossier["similar_jobs"] = []
+    # ── 2. Similar Past Jobs ──────────────────────────────────────────────
+    try:
+        if sign_type:
+            similar = await asyncio.to_thread(
+                find_similar_jobs, sign_type,
+                revenue_estimate=revenue or 0, max_results=8,
+            )
+        elif profile and profile.top_sign_type:
+            similar = await asyncio.to_thread(
+                find_similar_jobs, profile.top_sign_type,
+                revenue_estimate=revenue or 0, max_results=8,
+            )
+        else:
+            similar = []
+    except Exception as e:
+        logger.warning("Similar jobs failed: %s", e)
+        similar = []
+        dossier["warnings"].append(f"Similar jobs unavailable: {e}")
 
-    # 3. Market Intel for this sign type
-    if sign_type:
-        mkt = await asyncio.to_thread(get_market_intel, sign_type)
-        if mkt:
-            dossier["market"] = {
-                "sign_type": mkt.sign_type,
-                "total_jobs": mkt.total_jobs,
-                "avg_revenue": mkt.avg_revenue,
-                "median_revenue": mkt.median_revenue,
-                "avg_gm_pct": mkt.avg_gm_pct,
-                "p25_revenue": mkt.p25_revenue,
-                "p75_revenue": mkt.p75_revenue,
-            }
+    dossier["similar_jobs"] = [
+        {
+            "wo": s.work_order,
+            "customer": s.customer,
+            "location": s.location,
+            "type": s.sign_type,
+            "description": s.description,
+            "revenue": s.billing,
+            "gm_pct": s.gm_pct,
+            "similarity": s.similarity_score,
+        }
+        for s in similar
+    ]
+
+    # ── 3. Market Intel for this sign type ────────────────────────────────
+    effective_sign_type = sign_type or (profile.top_sign_type if profile else None)
+    try:
+        if effective_sign_type:
+            mkt = await asyncio.to_thread(get_market_intel, effective_sign_type)
+            if mkt:
+                dossier["market"] = {
+                    "sign_type": mkt.sign_type,
+                    "total_jobs": mkt.total_jobs,
+                    "avg_revenue": mkt.avg_revenue,
+                    "median_revenue": mkt.median_revenue,
+                    "avg_gm_pct": mkt.avg_gm_pct,
+                    "p25_revenue": mkt.p25_revenue,
+                    "p75_revenue": mkt.p75_revenue,
+                }
+            else:
+                dossier["market"] = None
         else:
             dossier["market"] = None
+    except Exception as e:
+        logger.warning("Market intel failed: %s", e)
+        dossier["market"] = None
+        dossier["warnings"].append(f"Market intel unavailable: {e}")
 
-    # 4. G: Drive Project Files (classified)
-    files = await asyncio.to_thread(scan_project_files, customer, wo_number=wo_number, sign_type=sign_type)
-    dossier["files"] = {
-        "customer_folder": files.customer_folder,
-        "total_scanned": files.total_files_scanned,
-        "sign_types_found": files.sign_types_found,
-        "wo_numbers_found": files.wo_numbers_found,
-        "checklist": files.checklist,
-        "completeness_pct": files.completeness_pct,
-        "warnings": files.warnings,
-        "by_type": {
-            dtype: [
+    # ── 4. G: Drive Project Files (classified) ────────────────────────────
+    try:
+        files = await asyncio.to_thread(
+            scan_project_files, customer, wo_number=wo_number, sign_type=sign_type,
+        )
+        dossier["project_files"] = {
+            "customer_folder": files.customer_folder,
+            "folder_path": files.customer_folder,
+            "total_scanned": files.total_files_scanned,
+            "sign_types_found": files.sign_types_found,
+            "wo_numbers_found": files.wo_numbers_found,
+            "checklist": files.checklist,
+            "completeness_pct": files.completeness_pct,
+            "warnings": files.warnings,
+            "by_type": {
+                dtype: [
+                    {
+                        "filename": f.filename,
+                        "path": f.path,
+                        "doc_type": f.doc_type,
+                        "doc_type_label": f.doc_type_label,
+                        "wo_number": f.wo_number,
+                        "revision": f.revision,
+                        "sign_type": f.sign_type,
+                        "size_kb": round(f.size_bytes / 1024, 1),
+                        "modified": f.modified,
+                        "subfolder": f.subfolder,
+                        "relevance": f.relevance,
+                    }
+                    for f in flist[:20]
+                ]
+                for dtype, flist in files.by_type.items()
+            },
+            "files": [
                 {
                     "filename": f.filename,
                     "path": f.path,
+                    "doc_type": f.doc_type,
+                    "doc_type_label": f.doc_type_label,
                     "wo_number": f.wo_number,
                     "revision": f.revision,
                     "sign_type": f.sign_type,
                     "size_kb": round(f.size_bytes / 1024, 1),
                     "modified": f.modified,
-                    "subfolder": f.subfolder,
-                    "relevance": f.relevance,
                 }
-                for f in flist[:20]
-            ]
-            for dtype, flist in files.by_type.items()
-        },
-        "total_files": len(files.files),
-    }
+                for f in files.files[:50]
+            ],
+            "total_files": len(files.files),
+            "updated": datetime.now().isoformat(),
+        }
+    except Exception as e:
+        logger.warning("Project files scan failed: %s", e)
+        dossier["project_files"] = {
+            "warnings": [f"G: drive not accessible: {e}"],
+            "files": [],
+            "total_files": 0,
+            "updated": datetime.now().isoformat(),
+        }
+        dossier["warnings"].append(f"Project files unavailable: {e}")
 
-    # 5. Notion Bids for this customer
+    # ── 5. Drawing Search (G: drive — always search by customer) ──────────
+    try:
+        drawings_result = await asyncio.to_thread(
+            search_drawings, customer, sign_type_filter=sign_type, max_results=25,
+        )
+        dossier["drawings"] = {
+            "customer_folder": drawings_result.customer_folder,
+            "total_files": drawings_result.total_files,
+            "sign_types_found": drawings_result.sign_types_found,
+            "latest_revisions": [
+                {
+                    "filename": d.filename,
+                    "path": d.path,
+                    "wo_number": d.wo_number,
+                    "revision": d.revision,
+                    "sign_type_guess": d.sign_type_guess,
+                    "size_kb": round(d.size_bytes / 1024, 1),
+                }
+                for d in drawings_result.latest_revisions[:15]
+            ],
+            "pdfs": [
+                {
+                    "filename": d.filename,
+                    "wo_number": d.wo_number,
+                    "revision": d.revision,
+                    "sign_type_guess": d.sign_type_guess,
+                }
+                for d in drawings_result.pdfs[:20]
+            ],
+            "warnings": drawings_result.warnings,
+            "updated": datetime.now().isoformat(),
+        }
+    except Exception as e:
+        logger.warning("Drawing search failed: %s", e)
+        dossier["drawings"] = {"warnings": [str(e)], "latest_revisions": [], "pdfs": []}
+        dossier["warnings"].append(f"Drawing search unavailable: {e}")
+
+    # ── 6. Win Probability (heuristic + ML) ───────────────────────────────
+    est_price = revenue or (profile.avg_revenue_per_job if profile else 0) or 5000
+    eff_sign = effective_sign_type or "CHANNEL_LETTER"
+    try:
+        heuristic = await asyncio.to_thread(
+            score_bid, customer, eff_sign, est_price, salesperson,
+        )
+        dossier["win_probability"] = {
+            "heuristic": {
+                "score": heuristic.win_probability,
+                "confidence": heuristic.confidence,
+                "comparable_wins": heuristic.comparable_wins,
+                "comparable_losses": heuristic.comparable_losses,
+                "factors": {
+                    f.name: {
+                        "score": round(f.score, 4),
+                        "weight": f.weight,
+                        "weighted": round(f.weighted, 4),
+                        "explanation": f.explanation,
+                    }
+                    for f in heuristic.factors
+                },
+                "recommendations": heuristic.recommendations,
+            },
+            "updated": datetime.now().isoformat(),
+        }
+    except Exception as e:
+        logger.warning("Heuristic bid scoring failed: %s", e)
+        dossier["win_probability"] = {"heuristic": None, "warnings": [str(e)]}
+        dossier["warnings"].append(f"Win probability (heuristic) unavailable: {e}")
+
+    try:
+        ml_pred = await asyncio.to_thread(
+            predict_win_probability, customer, eff_sign, est_price, salesperson,
+        )
+        wp = dossier.get("win_probability", {})
+        wp["ml"] = {
+            "score": round(ml_pred.win_probability * 100, 1) if ml_pred.win_probability else None,
+            "confidence": ml_pred.confidence,
+            "model_available": ml_pred.model_available,
+            "risk_factors": ml_pred.risk_factors,
+            "positive_factors": ml_pred.positive_factors,
+        }
+        dossier["win_probability"] = wp
+    except Exception as e:
+        logger.warning("ML win prediction failed: %s", e)
+        wp = dossier.get("win_probability", {})
+        wp["ml"] = None
+        dossier["win_probability"] = wp
+
+    # ── 7. Price Recommendation ───────────────────────────────────────────
+    try:
+        if effective_sign_type:
+            price_rec = await asyncio.to_thread(
+                get_price_recommendation, effective_sign_type, customer,
+            )
+            if price_rec:
+                dossier["price_recommendation"] = {
+                    "sign_type": price_rec.sign_type,
+                    "conservative": price_rec.conservative,
+                    "balanced": price_rec.balanced,
+                    "aggressive": price_rec.aggressive,
+                    "data_points": price_rec.data_points,
+                    "customer_adjusted": price_rec.customer_adjusted,
+                    "customer_avg_spend": price_rec.customer_avg_spend,
+                    "customer_job_count": price_rec.customer_job_count,
+                    "updated": datetime.now().isoformat(),
+                }
+            else:
+                dossier["price_recommendation"] = None
+        else:
+            dossier["price_recommendation"] = None
+    except Exception as e:
+        logger.warning("Price recommendation failed: %s", e)
+        dossier["price_recommendation"] = None
+        dossier["warnings"].append(f"Price recommendation unavailable: {e}")
+
+    # ── 8. Notion Bids for this customer ──────────────────────────────────
     notion_bids = []
     if NOTION_TOKEN and NOTION_BID_PIPELINE_DB:
         try:
@@ -1516,6 +1730,7 @@ async def get_project_dossier(customer: str, sign_type: Optional[str] = None,
                     ]
         except Exception as e:
             logger.warning("Notion query failed in dossier: %s", e)
+            dossier["warnings"].append(f"Notion bids unavailable: {e}")
 
     dossier["bids"] = notion_bids
     dossier["active_bids"] = len([b for b in notion_bids if b.get("pipeline_stage") not in ("WON", "LOST", None)])

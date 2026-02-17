@@ -280,7 +280,7 @@
     <div class="nav-tab" data-section="sec-monument">Monument</div>
     <div class="nav-tab" data-section="sec-awning">Awning</div>
     <div class="nav-tab" data-section="sec-removal">Removal</div>
-    <div class="nav-tab" data-section="sec-pylon">Pylon</div>
+    <div class="nav-tab" data-section="sec-pylon">Pole / Pylon</div>
     <div class="nav-tab" data-section="sec-cabinet">Cabinet</div>
     <div class="nav-tab" data-section="sec-directional">Directional</div>
     <div class="nav-tab" data-section="sec-dimensional">Dimensional</div>
@@ -639,8 +639,15 @@
           <div id="pylon-file-preview" style="margin-top:0.5rem;"></div>
         </div>
         <div class="card">
-          <h2>Pylon Sign <span class="badge">INPUT</span></h2>
+          <h2>Pole / Pylon Sign <span class="badge">INPUT</span></h2>
           <form id="pylon-form">
+            <div class="form-row" style="margin-bottom:0.75rem;">
+              <div class="checkbox-group" style="padding-top:0.2rem;">
+                <input type="checkbox" id="pylon-illuminated" checked>
+                <label for="pylon-illuminated" style="font-weight:600;">Illuminated (has lights / LED)</label>
+              </div>
+              <div id="pylon-type-label" style="font-size:0.85rem;color:var(--accent);padding-top:0.3rem;font-weight:600;">Pylon (Illuminated)</div>
+            </div>
             <div class="form-row">
               <div><label>Cabinet Width (ft)</label><input type="number" id="pylon-width" value="8" min="1" max="40" step="0.5"></div>
               <div><label>Cabinet Height (ft)</label><input type="number" id="pylon-height" value="6" min="1" max="20" step="0.5"></div>
@@ -675,15 +682,15 @@
                 <option value="3" selected>3 Men</option>
               </select>
             </div>
-            <button type="submit" class="btn-primary">Estimate This Pylon</button>
+            <button type="submit" class="btn-primary">Estimate This Pole Sign</button>
           </form>
         </div>
       </div>
       <div class="results-panel">
         <div class="results" id="pylon-results"></div>
         <div id="pylon-placeholder" class="card" style="text-align:center;padding:4rem 2rem;">
-          <h3 style="color:var(--text-dim);margin-bottom:0.5rem;">Pylon Estimator</h3>
-          <p style="color:var(--text-dim);font-size:0.85rem;">Configure pylon sign parameters and click "Estimate This Pylon".</p>
+          <h3 style="color:var(--text-dim);margin-bottom:0.5rem;">Pole / Pylon Estimator</h3>
+          <p style="color:var(--text-dim);font-size:0.85rem;">Configure pole sign parameters and click "Estimate This Pole Sign".</p>
         </div>
       </div>
     </div>
@@ -1195,26 +1202,23 @@
       <div class="grid">
         <div class="input-panel">
           <div class="card">
-            <h2>Complete Sign Design</h2>
+            <h2>Complete Sign Design <span id="fd-defaults-badge" class="badge" style="background:var(--green);color:#000;font-size:0.65rem;padding:0.1rem 0.5rem;border-radius:9999px;margin-left:0.5rem;">Iowa Defaults</span></h2>
             <div class="form-row">
               <div><label>Sign Width (ft)</label><input type="number" id="fd-width" value="10" min="1" max="100" step="0.5"></div>
               <div><label>Sign Height (ft)</label><input type="number" id="fd-height" value="5" min="1" max="50" step="0.5"></div>
             </div>
             <div class="form-row">
-              <div><label>Height to Top (ft)</label><input type="number" id="fd-top" value="20" min="5" max="200" step="1"></div>
+              <div><label>Height to Top of Sign (ft)</label><input type="number" id="fd-top" value="20" min="5" max="200" step="1"></div>
               <div><label>Wind Speed (mph)</label><input type="number" id="fd-v" value="115" min="85" max="200" step="5"></div>
             </div>
             <div class="form-row">
-              <div><label>Location Type</label>
+              <div><label>Area Type</label>
                 <select id="fd-exposure">
-                  <option value="B">Urban / Suburban</option>
-                  <option value="C" selected>Open Terrain</option>
-                  <option value="D">Coastal / Flat</option>
+                  <option value="B">City / Suburbs</option>
+                  <option value="C" selected>Open Flat Land (Iowa)</option>
+                  <option value="D">Coastal / Wide Open</option>
                 </select>
               </div>
-              <div><label>Elevation (ft)</label><input type="number" id="fd-elev" value="0" min="0" max="15000" step="100"></div>
-            </div>
-            <div class="form-row">
               <div><label>Anchor Bolt Strength</label>
                 <select id="fd-bolt">
                   <option value="A307">Standard (A307)</option>
@@ -1224,8 +1228,16 @@
                   <option value="A36">Structural (A36)</option>
                 </select>
               </div>
-              <div><label>Concrete Strength (psi)</label><input type="number" id="fd-fc" value="3000" min="2500" max="8000" step="500"></div>
             </div>
+            <details style="margin-top:0.25rem;">
+              <summary style="font-size:0.8rem;color:var(--text-dim);">Engineering Details</summary>
+              <div style="padding:0.5rem 0;">
+                <div class="form-row">
+                  <div><label>Site Elevation Above Sea Level (ft)</label><input type="number" id="fd-elev" value="800" min="0" max="15000" step="100"></div>
+                  <div><label>Concrete Strength (psi)</label><input type="number" id="fd-fc" value="3000" min="2500" max="8000" step="500"></div>
+                </div>
+              </div>
+            </details>
           </div>
           <button class="btn-primary" id="fd-btn" onclick="runFullDesign()">Design This Sign</button>
         </div>
@@ -1233,7 +1245,7 @@
           <div id="fd-results" style="display:none;"></div>
           <div id="fd-placeholder" class="card" style="text-align:center;padding:4rem 2rem;">
             <h3 style="color:var(--text-dim);margin-bottom:0.5rem;">Complete Sign Design</h3>
-            <p style="color:var(--text-dim);font-size:0.85rem;">Enter sign dimensions and site conditions. We'll figure out the wind load, pick a support post, size the foundation, and spec the anchor bolts.</p>
+            <p style="color:var(--text-dim);font-size:0.85rem;">Enter sign dimensions and hit the button. We'll figure out the wind load, pick a support post, size the foundation, and spec the anchor bolts -- all using Iowa defaults.</p>
           </div>
         </div>
       </div>
@@ -1244,36 +1256,43 @@
       <div class="grid">
         <div class="input-panel">
           <div class="card">
-            <h2>Wind Load Analysis</h2>
+            <h2>Wind Load Analysis <span id="wnd-defaults-badge" class="badge" style="background:var(--green);color:#000;font-size:0.65rem;padding:0.1rem 0.5rem;border-radius:9999px;margin-left:0.5rem;">Iowa Defaults</span></h2>
             <div class="form-row">
               <div><label>Wind Speed (mph)</label><input type="number" id="wnd-v" value="115" min="85" max="200" step="5"></div>
               <div><label>Sign Width (ft)</label><input type="number" id="wnd-width" value="10" min="1" max="100" step="0.5"></div>
             </div>
             <div class="form-row">
               <div><label>Sign Height (ft)</label><input type="number" id="wnd-height" value="5" min="1" max="50" step="0.5"></div>
-              <div><label>Height to Top (ft)</label><input type="number" id="wnd-top" value="20" min="5" max="200" step="1"></div>
+              <div><label>Height to Top of Sign (ft)</label><input type="number" id="wnd-top" value="20" min="5" max="200" step="1"></div>
             </div>
             <div class="form-row">
-              <div><label>Location Type</label>
+              <div><label>Area Type</label>
                 <select id="wnd-exposure">
-                  <option value="B">Urban / Suburban</option>
-                  <option value="C" selected>Open Terrain</option>
-                  <option value="D">Coastal / Flat</option>
-                </select>
-              </div>
-              <div><label>Terrain Factor</label><input type="number" id="wnd-kzt" value="1.0" min="0.5" max="3.0" step="0.05"></div>
-            </div>
-            <div class="form-row">
-              <div><label>Elevation (ft)</label><input type="number" id="wnd-elev" value="0" min="0" max="15000" step="100"></div>
-              <div><label>Risk Category</label>
-                <select id="wnd-risk">
-                  <option value="I">I</option>
-                  <option value="II" selected>II</option>
-                  <option value="III">III</option>
-                  <option value="IV">IV</option>
+                  <option value="B">City / Suburbs</option>
+                  <option value="C" selected>Open Flat Land (Iowa)</option>
+                  <option value="D">Coastal / Wide Open</option>
                 </select>
               </div>
             </div>
+            <details style="margin-top:0.25rem;">
+              <summary style="font-size:0.8rem;color:var(--text-dim);">Engineering Details</summary>
+              <div style="padding:0.5rem 0;">
+                <div class="form-row">
+                  <div><label>Terrain Factor (Kzt)</label><input type="number" id="wnd-kzt" value="1.0" min="0.5" max="3.0" step="0.05"></div>
+                  <div><label>Site Elevation Above Sea Level (ft)</label><input type="number" id="wnd-elev" value="800" min="0" max="15000" step="100"></div>
+                </div>
+                <div class="form-row">
+                  <div><label>Risk Category</label>
+                    <select id="wnd-risk">
+                      <option value="I">I</option>
+                      <option value="II" selected>II</option>
+                      <option value="III">III</option>
+                      <option value="IV">IV</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </details>
           </div>
           <button class="btn-primary" id="wnd-btn" onclick="runWind()">Calculate Wind</button>
         </div>
@@ -1281,7 +1300,7 @@
           <div id="wnd-results" style="display:none;"></div>
           <div id="wnd-placeholder" class="card" style="text-align:center;padding:4rem 2rem;">
             <h3 style="color:var(--text-dim);margin-bottom:0.5rem;">Wind Load Calculator</h3>
-            <p style="color:var(--text-dim);font-size:0.85rem;">Calculate how much wind force pushes on your sign.</p>
+            <p style="color:var(--text-dim);font-size:0.85rem;">Calculate how much wind force pushes on your sign. Iowa defaults are pre-loaded.</p>
           </div>
         </div>
       </div>
@@ -1428,6 +1447,41 @@ document.querySelectorAll('#struct-tabs .tab').forEach(tab => {
     tab.classList.add('active');
     document.getElementById(tab.dataset.stab).classList.add('active');
   });
+});
+
+// ══════════════════════════════════════════════════════════════════════════════
+// IOWA DEFAULTS BADGE TRACKING
+// ══════════════════════════════════════════════════════════════════════════════
+// Iowa defaults: 115 mph, Exposure C, 800ft elev, Risk II, Kzt 1.0
+const IOWA = { V_mph: 115, exposure: 'C', elev: 800, risk: 'II', kzt: 1.0 };
+
+function checkIowaDefaults(prefix) {
+  const badge = document.getElementById(prefix + '-defaults-badge');
+  if (!badge) return;
+  let match = true;
+  const vEl = document.getElementById(prefix === 'fd' ? 'fd-v' : 'wnd-v');
+  const expEl = document.getElementById(prefix === 'fd' ? 'fd-exposure' : 'wnd-exposure');
+  const elevEl = document.getElementById(prefix === 'fd' ? 'fd-elev' : 'wnd-elev');
+  if (vEl && parseFloat(vEl.value) !== IOWA.V_mph) match = false;
+  if (expEl && expEl.value !== IOWA.exposure) match = false;
+  if (elevEl && parseFloat(elevEl.value) !== IOWA.elev) match = false;
+  if (prefix === 'wnd') {
+    const kztEl = document.getElementById('wnd-kzt');
+    const riskEl = document.getElementById('wnd-risk');
+    if (kztEl && parseFloat(kztEl.value) !== IOWA.kzt) match = false;
+    if (riskEl && riskEl.value !== IOWA.risk) match = false;
+  }
+  badge.style.display = match ? 'inline' : 'none';
+}
+
+// Attach listeners to all relevant fields
+['fd-v', 'fd-exposure', 'fd-elev'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('change', () => checkIowaDefaults('fd'));
+});
+['wnd-v', 'wnd-exposure', 'wnd-elev', 'wnd-kzt', 'wnd-risk'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('change', () => checkIowaDefaults('wnd'));
 });
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -1718,6 +1772,13 @@ async function runRemoval() {
 // ══════════════════════════════════════════════════════════════════════════════
 // PYLON
 // ══════════════════════════════════════════════════════════════════════════════
+// Illuminated toggle — update label dynamically
+document.getElementById('pylon-illuminated').addEventListener('change', (e) => {
+    const label = document.getElementById('pylon-type-label');
+    label.textContent = e.target.checked ? 'Pylon (Illuminated)' : 'Pole Sign (Non-Illuminated)';
+    label.style.color = e.target.checked ? 'var(--accent)' : 'var(--text-dim)';
+});
+
 document.getElementById('pylon-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = e.target.querySelector('button[type="submit"]');
@@ -1730,6 +1791,7 @@ document.getElementById('pylon-form').addEventListener('submit', async (e) => {
         face_area_sf: parseFloat(document.getElementById('pylon-area-override').value) || null,
         num_faces: parseInt(document.getElementById('pylon-faces').value),
         pole_height_ft: parseFloat(document.getElementById('pylon-pole-height').value),
+        illuminated: document.getElementById('pylon-illuminated').checked,
         has_vinyl: document.getElementById('pylon-vinyl').checked,
         include_footing: document.getElementById('pylon-footing').checked,
         miles: parseFloat(document.getElementById('pylon-miles').value),
@@ -1741,11 +1803,11 @@ document.getElementById('pylon-form').addEventListener('submit', async (e) => {
         const data = await res.json();
         renderEstimateResults('pylon-results', 'pylon-placeholder', data);
     } catch (err) {
-        alert('Pylon estimation error: ' + err.message);
+        alert('Pole sign estimation error: ' + err.message);
     }
 
     btn.disabled = false;
-    btn.textContent = 'Estimate This Pylon';
+    btn.textContent = 'Estimate This Pole Sign';
 });
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -3100,7 +3162,10 @@ async function buildDossier() {
         });
 
     // 5) Full aggregated dossier (may be slower but authoritative when it arrives)
-    fetchJSON(`/api/dossier?${params}`)
+    const dossierParams = new URLSearchParams({ customer });
+    if (signType) dossierParams.set('sign_type', signType);
+    if (revenue > 0) dossierParams.set('revenue', revenue);
+    fetchJSON(`/api/dossier?${dossierParams}`)
         .then(data => {
             if (intelBuildId !== thisBuild) return;
             dossierData = data;
@@ -3113,8 +3178,12 @@ async function buildDossier() {
             const files = data?.project_files || {};
             const bids = data?.bids || [];
             const insights = data?.insights || [];
+            const drawings = data?.drawings || {};
+            const winProb = data?.win_probability || {};
+            const priceRec = data?.price_recommendation || null;
+            const warnings = data?.warnings || [];
 
-            if (profile && (profile.total_jobs || profile.name || profile.relationship_score)) {
+            if (profile && (profile.total_jobs || profile.customer_name || profile.relationship_score)) {
                 renderIntelProfile(profile, insights);
             }
             updateKPIFromProfile(profile);
@@ -3123,23 +3192,45 @@ async function buildDossier() {
                 renderIntelSimilar(similar);
                 document.getElementById('kpi-similar').textContent = similar.length;
             }
-            if (files && (files.checklist || files.files || files.folder_path || files.documents)) {
+            if (files && (files.checklist || files.files || files.folder_path)) {
                 renderIntelDossier(files, customer);
             }
             renderIntelBids(bids, customer);
 
-            // Win probability + smart pricing -- async API calls, fire in parallel
-            renderWinProbability(profile, market, similar);
-            renderSmartPricing(profile, market, revenue);
+            // Drawings from dossier — auto-fill drawing search results
+            if (drawings && (drawings.latest_revisions?.length > 0 || drawings.pdfs?.length > 0)) {
+                renderDossierDrawings(drawings, customer);
+            }
+
+            // Win probability — use embedded data, fall back to separate API
+            if (winProb.heuristic || winProb.ml) {
+                renderDossierWinProb(winProb);
+            } else {
+                renderWinProbability(profile, market, similar);
+            }
+
+            // Pricing — use embedded data, fall back to separate API
+            if (priceRec) {
+                renderDossierPricing(priceRec);
+            } else {
+                renderSmartPricing(profile, market, revenue);
+            }
+
+            // Show any warnings
+            if (warnings.length > 0) {
+                console.warn('[Dossier warnings]', warnings);
+            }
         })
         .catch(() => {
             if (intelBuildId !== thisBuild) return;
             // Dossier endpoint failed -- individual endpoints already rendered as fallbacks.
-            // Just fill bids with an error since no other endpoint covers it.
             if (!dossierData?.bids) {
                 document.getElementById('intel-bids-content').innerHTML =
                     '<p style="color:var(--text-dim);font-size:0.85rem;text-align:center;padding:1rem;">Could not load active bids.</p>';
             }
+            // Fall back to separate API calls for win prob + pricing
+            renderWinProbability(null, null, []);
+            renderSmartPricing(null, null, revenue);
         });
 }
 
@@ -3453,7 +3544,7 @@ function fmtCurrency(val) {
 function renderIntelProfile(p, insights) {
     const el = document.getElementById('intel-profile-content');
 
-    if (!p || (!p.total_jobs && !p.name && !p.relationship_score)) {
+    if (!p || (!p.total_jobs && !p.name && !p.customer_name && !p.relationship_score)) {
         el.innerHTML = '<p style="color:var(--text-dim);font-size:0.85rem;text-align:center;padding:1rem;">No customer data found. This may be a new customer.</p>';
         return;
     }
@@ -3507,7 +3598,7 @@ function renderIntelProfile(p, insights) {
     html += '</div>';
 
     // Top sign types
-    const signTypes = p.top_sign_types || p.sign_types || [];
+    const signTypes = p.top_sign_types || p.sign_type_breakdown || p.sign_types || [];
     if (signTypes.length > 0) {
         html += '<div style="margin-bottom:1rem;"><div style="font-size:0.75rem;color:var(--text-dim);margin-bottom:0.35rem;font-weight:600;">TOP SIGN TYPES</div>';
         for (const st of signTypes) {
@@ -3534,6 +3625,31 @@ function renderIntelProfile(p, insights) {
         html += '</tbody></table></div>';
     }
 
+    // Location breakout (multi-location customers)
+    const locations = p.locations || [];
+    const jobsByLoc = p.jobs_by_location || {};
+    const locKeys = Object.keys(jobsByLoc);
+    if (locKeys.length > 1) {
+        html += '<div style="margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid var(--surface2);">';
+        html += `<div style="font-size:0.75rem;color:var(--text-dim);margin-bottom:0.35rem;font-weight:600;">LOCATIONS (${locKeys.length})</div>`;
+        html += '<div style="display:flex;gap:0.25rem;flex-wrap:wrap;margin-bottom:0.5rem;" id="loc-tabs">';
+        for (let i = 0; i < Math.min(locKeys.length, 10); i++) {
+            const loc = locKeys[i];
+            const cnt = jobsByLoc[loc]?.length || 0;
+            html += `<span class="intel-badge" style="cursor:pointer;${i === 0 ? 'background:var(--accent);color:#fff;' : ''}" onclick="showLocationJobs(this, '${loc.replace(/'/g, "\\'")}')" data-loc="${loc}">${loc} (${cnt})</span>`;
+        }
+        html += '</div>';
+        html += '<div id="loc-jobs-display">';
+        // Show first location by default
+        if (locKeys.length > 0) {
+            const firstJobs = jobsByLoc[locKeys[0]] || [];
+            html += renderLocationJobs(firstJobs);
+        }
+        html += '</div></div>';
+    } else if (locations.length > 0) {
+        html += `<div style="margin-top:0.5rem;font-size:0.8rem;color:var(--text-dim);">Location: ${locations[0]}</div>`;
+    }
+
     // AI Insights
     if (insights && insights.length > 0) {
         html += '<div style="margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid var(--surface2);">';
@@ -3546,6 +3662,35 @@ function renderIntelProfile(p, insights) {
     }
 
     el.innerHTML = html;
+}
+
+function renderLocationJobs(jobs) {
+    if (!jobs || jobs.length === 0) return '<p style="font-size:0.8rem;color:var(--text-dim);">No jobs at this location.</p>';
+    let html = '<table style="font-size:0.78rem;"><thead><tr><th>WO</th><th>Type</th><th class="right">Revenue</th><th class="right">GM%</th></tr></thead><tbody>';
+    for (const j of jobs.slice(0, 6)) {
+        html += `<tr>
+            <td class="mono">${j.wo || j.work_order || '--'}</td>
+            <td>${j.sign_type || j.type || '--'}</td>
+            <td class="right mono">$${typeof j.revenue === 'number' ? j.revenue.toLocaleString() : (j.revenue || '--')}</td>
+            <td class="right">${j.gm_pct != null ? j.gm_pct.toFixed(1) + '%' : '--'}</td>
+        </tr>`;
+    }
+    html += '</tbody></table>';
+    return html;
+}
+
+function showLocationJobs(clickedEl, locName) {
+    // Update active tab styling
+    const tabs = clickedEl.parentElement.querySelectorAll('.intel-badge');
+    tabs.forEach(t => { t.style.background = ''; t.style.color = ''; });
+    clickedEl.style.background = 'var(--accent)';
+    clickedEl.style.color = '#fff';
+
+    // Get jobs for this location from the stored dossier
+    const dossier = intelDossier;
+    if (!dossier?.customer?.jobs_by_location) return;
+    const jobs = dossier.customer.jobs_by_location[locName] || [];
+    document.getElementById('loc-jobs-display').innerHTML = renderLocationJobs(jobs);
 }
 
 // ── Market Intel Renderer ────────────────────────────────────────────────────
@@ -3648,6 +3793,174 @@ function renderIntelSimilar(jobs) {
     el.innerHTML = html;
 }
 
+// ── Dossier Embedded Drawings ─────────────────────────────────────────────────
+function renderDossierDrawings(drawings, customer) {
+    // Auto-populate the drawing search results area with dossier data
+    const el = document.getElementById('intel-draw-results');
+    const body = document.getElementById('intel-draw-body');
+    const summary = document.getElementById('intel-draw-summary');
+
+    const revs = drawings.latest_revisions || [];
+    const pdfs = drawings.pdfs || [];
+    const allDrawings = revs.length > 0 ? revs : pdfs;
+
+    if (allDrawings.length === 0) return;
+
+    summary.innerHTML = `<span style="color:var(--green);font-weight:600;">${allDrawings.length} drawings</span> found in <span class="mono" style="color:var(--accent);">${drawings.customer_folder || 'G: drive'}</span>` +
+        (drawings.sign_types_found?.length > 0 ? ` <span style="color:var(--text-dim);">| Types: ${drawings.sign_types_found.join(', ')}</span>` : '') +
+        (drawings.updated ? ` <span style="color:var(--text-dim);font-size:0.7rem;margin-left:0.5rem;">Updated ${new Date(drawings.updated).toLocaleTimeString()}</span>` : '');
+
+    let rows = '';
+    for (const d of allDrawings) {
+        rows += `<tr>
+            <td style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${d.filename || ''}">${d.filename || ''}</td>
+            <td class="mono">${d.wo_number || '--'}</td>
+            <td class="right">${d.revision || 0}</td>
+            <td>${d.sign_type_guess || d.sign_type || '--'}</td>
+            <td class="right">${d.size_kb ? d.size_kb.toFixed(0) + ' KB' : '--'}</td>
+            <td class="mono" style="font-size:0.7rem;max-width:200px;overflow:hidden;text-overflow:ellipsis;" title="${d.path || ''}">${d.path || ''}</td>
+        </tr>`;
+    }
+    body.innerHTML = rows;
+    el.style.display = 'block';
+}
+
+// ── Dossier Embedded Win Probability ─────────────────────────────────────────
+function renderDossierWinProb(winProb) {
+    const container = document.getElementById('intel-win-prob-container');
+    if (!winProb) { container.style.display = 'none'; return; }
+
+    const h = winProb.heuristic || {};
+    const ml = winProb.ml || {};
+    const score = h.score ?? 50;
+    const fillPct = Math.max(0, Math.min(100, score)) + '%';
+    const gaugeColor = score >= 70 ? 'var(--green)' : score >= 45 ? 'var(--orange)' : 'var(--red)';
+    const verdict = score >= 70 ? 'Strong' : score >= 45 ? 'Moderate' : 'Challenging';
+
+    let html = '<div style="display:flex;gap:1rem;flex-wrap:wrap;">';
+
+    // Heuristic
+    html += '<div class="win-prob-card" style="flex:1;min-width:200px;">';
+    html += '<div class="win-prob-label">Rules Engine <span style="font-size:0.65rem;color:var(--text-dim);font-weight:400;">6 signals</span></div>';
+    html += `<div class="win-prob-gauge">
+        <div class="win-prob-gauge-bg"></div>
+        <div class="win-prob-gauge-fill" style="--fill-pct:${fillPct};border-color:${gaugeColor};"></div>
+        <div class="win-prob-gauge-val" style="color:${gaugeColor};">${score}%</div>
+    </div>`;
+    html += `<div style="font-size:0.9rem;font-weight:700;color:${gaugeColor};margin-bottom:0.5rem;">${verdict}</div>`;
+
+    // Factor bars
+    const factorMeta = {
+        customer_recency:    { label: 'Recency',     max: 20 },
+        frequency:           { label: 'Frequency',   max: 20 },
+        price_position:      { label: 'Price Pos.',  max: 20 },
+        revenue_tier:        { label: 'Revenue Tier', max: 15 },
+        sign_type_expertise: { label: 'Expertise',   max: 15 },
+        margin_health:       { label: 'Margin',      max: 10 },
+    };
+    const factors = h.factors || {};
+    const hasFactors = Object.keys(factorMeta).some(k => factors[k] != null);
+    if (hasFactors) {
+        html += '<div class="win-prob-factors" style="flex-wrap:wrap;gap:0.4rem;">';
+        for (const [key, meta] of Object.entries(factorMeta)) {
+            const f = factors[key] || {};
+            const val = typeof f === 'object' ? (f.score ?? f.value ?? 0) : f;
+            const pct = meta.max > 0 ? val / meta.max : 0;
+            const color = pct >= 0.65 ? 'var(--green)' : pct >= 0.4 ? 'var(--orange)' : 'var(--red)';
+            const tip = typeof f === 'object' && f.explanation ? ` title="${f.explanation.replace(/"/g, '&quot;')}"` : '';
+            html += `<div class="win-prob-factor"${tip}>
+                <div class="factor-val" style="color:${color};">${val}/${meta.max}</div>
+                <div class="factor-lbl">${meta.label}</div>
+            </div>`;
+        }
+        html += '</div>';
+    }
+    html += '</div>';
+
+    // ML
+    if (ml && ml.model_available && ml.score != null) {
+        const mlScore = Math.round(ml.score);
+        const mlColor = mlScore >= 70 ? 'var(--green)' : mlScore >= 45 ? 'var(--orange)' : 'var(--red)';
+        const mlFillPct = Math.max(0, Math.min(100, mlScore)) + '%';
+        const mlVerdict = mlScore >= 70 ? 'Strong' : mlScore >= 45 ? 'Moderate' : 'Challenging';
+
+        html += '<div class="win-prob-card" style="flex:1;min-width:200px;">';
+        html += `<div class="win-prob-label">ML Model <span style="font-size:0.65rem;color:var(--text-dim);font-weight:400;">${ml.confidence || ''} conf</span></div>`;
+        html += `<div class="win-prob-gauge">
+            <div class="win-prob-gauge-bg"></div>
+            <div class="win-prob-gauge-fill" style="--fill-pct:${mlFillPct};border-color:${mlColor};"></div>
+            <div class="win-prob-gauge-val" style="color:${mlColor};">${mlScore}%</div>
+        </div>`;
+        html += `<div style="font-size:0.9rem;font-weight:700;color:${mlColor};margin-bottom:0.5rem;">${mlVerdict}</div>`;
+
+        const positives = ml.positive_factors || [];
+        const risks = ml.risk_factors || [];
+        if (positives.length > 0 || risks.length > 0) {
+            html += '<div style="font-size:0.75rem;line-height:1.5;">';
+            for (const p of positives.slice(0, 3)) html += `<div style="color:var(--green);">+ ${p}</div>`;
+            for (const r of risks.slice(0, 3)) html += `<div style="color:var(--red);">- ${r}</div>`;
+            html += '</div>';
+        }
+        html += '</div>';
+    }
+    html += '</div>';
+
+    // Recommendations
+    const recs = h.recommendations || [];
+    if (recs.length > 0) {
+        html += '<div style="margin-top:0.75rem;border-top:1px solid var(--border);padding-top:0.5rem;">';
+        html += '<div style="font-size:0.72rem;color:var(--text-dim);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.35rem;">Recommendations</div>';
+        html += '<ul style="margin:0;padding-left:1.1rem;font-size:0.8rem;color:var(--text);line-height:1.5;">';
+        for (const rec of recs) html += `<li>${rec}</li>`;
+        html += '</ul></div>';
+    }
+
+    // Timestamp
+    if (winProb.updated) {
+        html += `<div style="font-size:0.65rem;color:var(--text-dim);margin-top:0.5rem;text-align:right;">Updated ${new Date(winProb.updated).toLocaleTimeString()}</div>`;
+    }
+
+    container.innerHTML = html;
+    container.style.display = 'block';
+}
+
+// ── Dossier Embedded Pricing ─────────────────────────────────────────────────
+function renderDossierPricing(rec) {
+    const container = document.getElementById('intel-pricing-container');
+    if (!rec) { container.style.display = 'none'; return; }
+
+    let html = '<div style="margin-bottom:0.5rem;"><span style="font-size:0.8rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.05em;">Smart Price Recommendations</span></div>';
+    html += '<div class="pricing-tiers">';
+
+    const tiers = [
+        { name: 'Aggressive', price: rec.aggressive, color: 'var(--green)', desc: 'Win-focused' },
+        { name: 'Balanced', price: rec.balanced, color: 'var(--accent)', desc: 'Recommended' },
+        { name: 'Conservative', price: rec.conservative, color: 'var(--orange)', desc: 'Margin-focused' },
+    ];
+
+    for (const t of tiers) {
+        if (t.price == null) continue;
+        html += `<div class="pricing-tier${t.name === 'Balanced' ? ' tier-primary' : ''}">
+            <div class="tier-name" style="color:${t.color};">${t.name}</div>
+            <div class="tier-price">$${typeof t.price === 'number' ? t.price.toLocaleString() : t.price}</div>
+            <div class="tier-desc">${t.desc}</div>
+        </div>`;
+    }
+    html += '</div>';
+
+    if (rec.data_points) {
+        html += `<div style="font-size:0.7rem;color:var(--text-dim);margin-top:0.35rem;">Based on ${rec.data_points} won bids`;
+        if (rec.customer_adjusted) html += ` (adjusted for customer: ${rec.customer_job_count} past jobs, avg $${rec.customer_avg_spend?.toLocaleString() || '?'})`;
+        html += '</div>';
+    }
+    if (rec.updated) {
+        html += `<div style="font-size:0.65rem;color:var(--text-dim);margin-top:0.25rem;text-align:right;">Updated ${new Date(rec.updated).toLocaleTimeString()}</div>`;
+    }
+
+    container.innerHTML = html;
+    container.style.display = 'block';
+}
+
 // ── Project Dossier Renderer ─────────────────────────────────────────────────
 function renderIntelDossier(files, customer) {
     const el = document.getElementById('intel-dossier-content');
@@ -3659,19 +3972,23 @@ function renderIntelDossier(files, customer) {
 
     let html = '';
 
-    // Completeness checklist
-    const checklist = files.checklist || {};
-    const checkItems = Object.entries(checklist);
+    // Completeness checklist — handle array of {type, label, found, count} OR plain object
+    const rawChecklist = files.checklist || {};
+    let checkItems = [];
+    if (Array.isArray(rawChecklist)) {
+        checkItems = rawChecklist.map(item => [item.label || item.type, item.found, item.count || 0]);
+    } else {
+        checkItems = Object.entries(rawChecklist).map(([key, val]) => [key, !!val, 0]);
+    }
     if (checkItems.length > 0) {
         html += '<div style="margin-bottom:1rem;">';
         html += '<div style="font-size:0.75rem;color:var(--text-dim);margin-bottom:0.35rem;font-weight:600;">COMPLETENESS</div>';
         let complete = 0;
-        for (const [key, val] of checkItems) {
-            const has = !!val;
+        for (const [label, has, count] of checkItems) {
             if (has) complete++;
             html += `<div class="checklist-item">
                 <span class="${has ? 'check-yes' : 'check-no'}">${has ? '&#10003;' : '&#10007;'}</span>
-                <span>${key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}</span>
+                <span>${label.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}${count > 0 ? ' (' + count + ')' : ''}</span>
             </div>`;
         }
         const pct = checkItems.length > 0 ? Math.round(complete / checkItems.length * 100) : 0;
@@ -3718,11 +4035,23 @@ function renderIntelDossier(files, customer) {
     }
 
     // G: drive folder path
-    const folderPath = files.folder_path || files.g_drive_path || '';
+    const folderPath = files.folder_path || files.g_drive_path || files.customer_folder || '';
     if (folderPath) {
         html += `<div style="margin-top:0.75rem;padding:0.5rem 0.75rem;background:var(--bg);border:1px solid var(--border);border-radius:0.5rem;font-size:0.78rem;">
             <span style="color:var(--text-dim);">G: Drive:</span> <span class="mono" style="color:var(--accent);">${folderPath}</span>
         </div>`;
+    }
+
+    // Warnings
+    if (files.warnings && files.warnings.length > 0) {
+        for (const w of files.warnings) {
+            html += `<div class="warning" style="margin-top:0.5rem;">${w}</div>`;
+        }
+    }
+
+    // Last Updated timestamp
+    if (files.updated) {
+        html += `<div style="font-size:0.65rem;color:var(--text-dim);margin-top:0.5rem;text-align:right;">Updated ${new Date(files.updated).toLocaleTimeString()}</div>`;
     }
 
     el.innerHTML = html;

@@ -78,6 +78,10 @@ INDUSTRY_RAILS: dict[str, dict[str, tuple[float, float]]] = {
         "0650": (4.0, 12.0),    # Pylon install: 4-8 hrs + crane
         "0625": (2.0, 8.0),     # Pylon removal: 2-4 hrs + crane
     },
+    "POLNON": {
+        "0650": (4.0, 12.0),    # Pole sign install: same crane requirement
+        "0625": (1.0, 6.0),     # Pole sign removal: slightly less (no electrical)
+    },
     "AWNNON": {
         "0630": (4.0, 12.0),    # Awning install: 4-8 hrs
     },

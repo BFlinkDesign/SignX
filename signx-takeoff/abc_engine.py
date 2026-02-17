@@ -155,6 +155,7 @@ class SignType(str, Enum):
     MONDF = "MONDF"       # Monument Double-Face
     MONSF = "MONSF"       # Monument Single-Face
     POLLIT = "POLLIT"     # Pole/Pylon Illuminated
+    POLNON = "POLNON"     # Pole/Pylon Non-Illuminated
     DIRECT = "DIRECT"     # Directional
     BLDILL = "BLDILL"     # Building Illuminated
     BLDNON = "BLDNON"     # Building Non-Illuminated
@@ -675,6 +676,7 @@ WORKFLOW_SEQUENCES: dict[str, list[str]] = {
     'MONDF':  ['0110', '0200', '0215', '0340', '0420', '0260', '0605', '0650'],
     'VINYL':  ['0110', '0510', '0520', '0550', '0280', '0630'],
     'POLLIT': ['0110', '0200', '0215', '0220', '0340', '0420', '0605', '0650'],
+    'POLNON': ['0110', '0200', '0215', '0220', '0420', '0605', '0650'],
     'AWNNON': ['0110', '0200', '0250', '0270', '0610', '0620', '0630'],
 }
 
@@ -722,7 +724,8 @@ SIGN_TYPE_PATTERNS: dict[str, list[str]] = {
     'CLNON': [r'LETTER.*NON'],
     'MONSF': [r'MON-.*SF', r'MONUMENT.*S/?F', r'MONUMENT.*SINGLE'],
     'MONDF': [r'MON-(?!.*SF)', r'MONUMENT.*D/?F', r'MONUMENT.*DOUBLE'],
-    'POLLIT': [r'PYL-', r'PYLON', r'POLE\s*SIGN'],
+    'POLLIT': [r'PYL-', r'PYLON', r'POLE\s*SIGN.*ILLUM'],
+    'POLNON': [r'POLE\s*SIGN.*NON', r'POLE\s*SIGN(?!.*ILLUM)'],
     'DIRECT': [r'DIR-', r'WAYFIND', r'DIRECTORY', r'DIRECTIONAL'],
     'BLDILL': [r'BLDG?.*ILLUM', r'WALL\s*SIGN.*ILLUM'],
     'BLDNON': [r'BLDG?.*NON', r'WALL\s*SIGN.*NON'],
@@ -2094,7 +2097,10 @@ def estimate_pylon(job: JobInput) -> EstimateResult:
 
     Uses ABC Section 2 (cabinet SF) + Section 5A (paint SF) formulas with
     POLLIT_CORRECTION factors. Pylons have heavy structural steel (tall poles),
-    long electrical runs, and require crane installation (0650 vs 0630).
+    and require crane installation (0650 vs 0630).
+
+    POLNON (non-illuminated): Skips 0340 Electrical Wiring.
+    POLLIT (illuminated): Includes 0340 Electrical (long wire runs up poles).
 
     For 0650 install: Uses warehouse median directly (crane crew).
     For 0605 footing: Almost always self-performed for pylons.
@@ -2234,17 +2240,18 @@ def estimate_pylon(job: JobInput) -> EstimateResult:
     ))
     fab_total += hrs_270
 
-    # ── 0340 Electrical Wiring (always for pylons — long runs up poles) ─
-    abc_340 = 1.0 + total_sf * 0.030
-    hrs_340 = corrected("0340", abc_340)
-    labor.append(LaborLine(
-        work_code="0340", description="Electrical Wiring",
-        hours=round(hrs_340, 2), unit_type="man-hrs",
-        department="Electrical (300)",
-        formula=f"1.0 + ({total_sf:.1f} SF x 0.030)" + corr_note("0340", abc_340),
-        section="Est — pylon long runs",
-    ))
-    fab_total += hrs_340
+    # ── 0340 Electrical Wiring (illuminated only — long runs up poles) ──
+    if job.is_illuminated:
+        abc_340 = 1.0 + total_sf * 0.030
+        hrs_340 = corrected("0340", abc_340)
+        labor.append(LaborLine(
+            work_code="0340", description="Electrical Wiring",
+            hours=round(hrs_340, 2), unit_type="man-hrs",
+            department="Electrical (300)",
+            formula=f"1.0 + ({total_sf:.1f} SF x 0.030)" + corr_note("0340", abc_340),
+            section="Est — pylon long runs",
+        ))
+        fab_total += hrs_340
 
     # ── 0410 Clean & Etch (Section 5A) ─────────────────────────────────
     paint_rate = SECTION_5A_RATES.get(job.paint_colors, SECTION_5A_RATES[1])
@@ -2289,15 +2296,15 @@ def estimate_pylon(job: JobInput) -> EstimateResult:
             section="Est (vinyl/SF)",
         ))
 
-    # ── 9200 Fab Overtime (POLLIT OT ratio) ────────────────────────────
+    # ── 9200 Fab Overtime (pylon OT ratio) ───────────────────────────
     fab_ot = round(fab_total * POLLIT_OT_FAB, 2)
     if fab_ot >= 0.25:
         labor.append(LaborLine(
             work_code="9200", description=f"Fab Overtime ({POLLIT_OT_FAB:.1%} median)",
             hours=fab_ot, unit_type="man-hrs",
             department="Fabrication (200)",
-            formula=f"Fab total {fab_total:.2f}h x {POLLIT_OT_FAB} (POLLIT median)",
-            section="POLLIT correction",
+            formula=f"Fab total {fab_total:.2f}h x {POLLIT_OT_FAB} ({sign_type_key} median)",
+            section=f"{sign_type_key} correction",
         ))
 
     # ── Installation ──────────────────────────────────────────────────
@@ -2314,7 +2321,7 @@ def estimate_pylon(job: JobInput) -> EstimateResult:
 
     # 0620 Travel (batch-aware) — warehouse median when no distance given
     _tl = _make_travel_line(job, fallback_hrs=POLLIT_0620_MEDIAN,
-                            fallback_formula=f"Warehouse median {POLLIT_0620_MEDIAN}h (POLLIT)")
+                            fallback_formula=f"Warehouse median {POLLIT_0620_MEDIAN}h ({sign_type_key})")
     if _tl:
         install.append(_tl)
 
@@ -2324,8 +2331,8 @@ def estimate_pylon(job: JobInput) -> EstimateResult:
         work_code="0650", description="3 Men & Crane - Install",
         hours=round(install_hrs, 2), unit_type="CREW-hrs",
         department="Installation (600)",
-        formula=f"Warehouse median {POLLIT_0650_MEDIAN}h (POLLIT crane install)",
-        section="POLLIT correction (crane required)",
+        formula=f"Warehouse median {POLLIT_0650_MEDIAN}h ({sign_type_key} crane install)",
+        section=f"{sign_type_key} correction (crane required)",
     ))
 
     # 0605 Footing (almost always self-performed for pylons)
@@ -2334,30 +2341,30 @@ def estimate_pylon(job: JobInput) -> EstimateResult:
             work_code="0605", description="Footing Install (self-performed)",
             hours=round(POLLIT_0605_MEDIAN, 2), unit_type="man-hrs",
             department="Installation (600)",
-            formula=f"Warehouse median {POLLIT_0605_MEDIAN}h (POLLIT deep footing)",
-            section="POLLIT correction",
+            formula=f"Warehouse median {POLLIT_0605_MEDIAN}h ({sign_type_key} deep footing)",
+            section=f"{sign_type_key} correction",
         ))
 
     # 0625 Removal (optional) — warehouse P50 x 1.20
     if job.include_removal:
-        _pol_rem = REMOVAL_FLOOR.get("POLLIT", REMOVAL_DEFAULT)
+        _pol_rem = REMOVAL_FLOOR.get(sign_type_key, REMOVAL_DEFAULT)
         install.append(LaborLine(
             work_code="0625", description="Removal",
             hours=round(_pol_rem, 2), unit_type="man-hrs",
             department="Installation (600)",
-            formula=f"REMOVAL_FLOOR[POLLIT] = {_pol_rem}h (warehouse P50 x 1.20, n=28)",
+            formula=f"REMOVAL_FLOOR[{sign_type_key}] = {_pol_rem}h (warehouse P50 x 1.20)",
             section="Warehouse removal floor",
         ))
 
-    # 9600 Install Overtime (POLLIT OT ratio)
+    # 9600 Install Overtime (pylon OT ratio)
     inst_ot = round(install_hrs * POLLIT_OT_INSTALL, 2)
     if inst_ot >= 0.25:
         install.append(LaborLine(
             work_code="9600", description=f"Install Overtime ({POLLIT_OT_INSTALL:.1%} median)",
             hours=inst_ot, unit_type="man-hrs",
             department="Installation (600)",
-            formula=f"Install {install_hrs:.2f}h x {POLLIT_OT_INSTALL} (POLLIT median)",
-            section="POLLIT correction",
+            formula=f"Install {install_hrs:.2f}h x {POLLIT_OT_INSTALL} ({sign_type_key} median)",
+            section=f"{sign_type_key} correction",
         ))
 
     # ── Assemble result ────────────────────────────────────────────────
@@ -2374,11 +2381,14 @@ def estimate_pylon(job: JobInput) -> EstimateResult:
     )
 
     corrected_codes = [c for c, f in POLLIT_CORRECTION.items() if f is not None and f != 1.0]
+    lit_label = "POLLIT" if job.is_illuminated else "POLNON"
     result.warnings.append(
-        f"POLLIT corrections applied [PROVISIONAL]: {', '.join(corrected_codes)}. "
+        f"{lit_label} corrections applied [PROVISIONAL]: {', '.join(corrected_codes)}. "
         f"Source: MONDF pattern scaled for pylon (n=461 warehouse jobs). "
         f"Will refine with direct POLLIT warehouse query."
     )
+    if not job.is_illuminated:
+        result.warnings.append("Non-illuminated: 0340 Electrical Wiring excluded.")
     return result
 
 

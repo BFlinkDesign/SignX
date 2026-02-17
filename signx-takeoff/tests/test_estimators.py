@@ -78,13 +78,26 @@ def _removal_job(sign_type=SignType.CLLIT, num_units=1):
 
 
 def _pylon_job(sf_per_face=48.0, num_faces=2, height_ft=25.0, footing=True):
-    """Pylon sign job."""
+    """Pylon sign job (illuminated)."""
     job = JobInput()
     job.sign_type = SignType.POLLIT
     job.num_faces = num_faces
     job.sign_sf_per_face = sf_per_face
     job.install_height_ft = height_ft
     job.has_footing = footing
+    job.is_illuminated = True
+    return job
+
+
+def _polnon_job(sf_per_face=48.0, num_faces=2, height_ft=25.0, footing=True):
+    """Pole sign job (non-illuminated)."""
+    job = JobInput()
+    job.sign_type = SignType.POLNON
+    job.num_faces = num_faces
+    job.sign_sf_per_face = sf_per_face
+    job.install_height_ft = height_ft
+    job.has_footing = footing
+    job.is_illuminated = False
     return job
 
 
@@ -132,6 +145,19 @@ class TestRegression:
         r = estimate_pylon(_pylon_job(sf_per_face=48.0, num_faces=2, height_ft=25.0))
         assert r.total_man_hours == pytest.approx(167.78, rel=0.05)
         assert r.total_crew_hours == pytest.approx(8.50, rel=0.05)
+
+    def test_polnon_8x6_df_25ft_48sf(self):
+        """POLNON should produce fewer hours than POLLIT (no electrical)."""
+        r_lit = estimate_pylon(_pylon_job(sf_per_face=48.0, num_faces=2, height_ft=25.0))
+        r_non = estimate_pylon(_polnon_job(sf_per_face=48.0, num_faces=2, height_ft=25.0))
+        # POLNON must be less — no 0340 Electrical Wiring
+        assert r_non.total_man_hours < r_lit.total_man_hours
+        # Should have no 0340 line
+        all_codes = [l.work_code for l in r_non.labor_lines + r_non.install_lines]
+        assert "0340" not in all_codes
+        # POLLIT should have 0340
+        lit_codes = [l.work_code for l in r_lit.labor_lines + r_lit.install_lines]
+        assert "0340" in lit_codes
 
     def test_cabinet_6x4_illum_24sf(self):
         r = estimate_cabinet(_cabinet_job(sf_per_face=24.0, num_faces=1, illuminated=True))
@@ -201,6 +227,7 @@ ALL_ESTIMATOR_FIXTURES = [
     ("awning", lambda: estimate_awning(_awning_job())),
     ("removal", lambda: estimate_removal(_removal_job())),
     ("pylon", lambda: estimate_pylon(_pylon_job())),
+    ("polnon", lambda: estimate_pylon(_polnon_job())),
     ("cabinet", lambda: estimate_cabinet(_cabinet_job())),
 ]
 
@@ -267,6 +294,11 @@ class TestScaling:
     def test_more_sf_more_hours_pylon(self):
         r_small = estimate_pylon(_pylon_job(sf_per_face=15.0))
         r_large = estimate_pylon(_pylon_job(sf_per_face=60.0))
+        assert r_large.total_man_hours > r_small.total_man_hours
+
+    def test_more_sf_more_hours_polnon(self):
+        r_small = estimate_pylon(_polnon_job(sf_per_face=15.0))
+        r_large = estimate_pylon(_polnon_job(sf_per_face=60.0))
         assert r_large.total_man_hours > r_small.total_man_hours
 
     def test_more_sf_more_hours_cabinet(self):
