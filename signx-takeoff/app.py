@@ -35,6 +35,8 @@ from abc_engine import (
     estimate,
     estimate_awning,
     estimate_cabinet,
+    estimate_dimensional,
+    estimate_directional,
     estimate_monument,
     estimate_pylon,
     estimate_removal,
@@ -359,6 +361,68 @@ async def run_cabinet_estimate(req: CabinetRequest):
         install_mount_type=req.mount_type,
     )
     result = estimate_cabinet(job)
+    total_est_hours = result.total_man_hours + result.total_crew_hours
+    bench = benchmark(total_est_hours)
+    bench_data = _format_benchmark(bench) if bench else None
+    return _format_estimate_result(result, bench_data)
+
+
+# ── Directional Estimate ───────────────────────────────────────────────────
+
+class DirectionalRequest(BaseModel):
+    width_ft: float = Field(4.0, description="Panel width (ft)")
+    height_ft: float = Field(2.0, description="Panel height (ft)")
+    face_area_sf: Optional[float] = Field(None, description="Override face area (SF)")
+    num_units: int = Field(1, description="Number of directional panels")
+    has_vinyl: bool = Field(True, description="Has vinyl graphics")
+    paint_colors: int = Field(1, description="Number of paint colors")
+    miles: float = Field(0.0, description="One-way travel miles")
+    crew_size: int = Field(1, description="Crew size")
+
+
+@app.post("/api/estimate/directional")
+async def run_directional_estimate(req: DirectionalRequest):
+    """Run directional/wayfinding sign estimation engine."""
+    sf = req.face_area_sf if req.face_area_sf and req.face_area_sf > 0 else req.width_ft * req.height_ft
+    job = JobInput(
+        sign_type=SignType.DIRECT,
+        sign_sf_per_face=sf,
+        num_faces=1,
+        num_units=req.num_units,
+        has_vinyl=req.has_vinyl,
+        paint_colors=req.paint_colors,
+        miles_one_way=req.miles,
+        crew_size=req.crew_size,
+    )
+    result = estimate_directional(job)
+    total_est_hours = result.total_man_hours + result.total_crew_hours
+    bench = benchmark(total_est_hours)
+    bench_data = _format_benchmark(bench) if bench else None
+    return _format_estimate_result(result, bench_data)
+
+
+# ── Dimensional/Gemini Estimate ───────────────────────────────────────────
+
+class DimensionalRequest(BaseModel):
+    letter_count: int = Field(10, description="Number of letters")
+    letter_height_inches: float = Field(8.0, description="Letter height (inches)")
+    paint_colors: int = Field(1, description="Number of paint colors")
+    miles: float = Field(0.0, description="One-way travel miles")
+    crew_size: int = Field(1, description="Crew size")
+
+
+@app.post("/api/estimate/dimensional")
+async def run_dimensional_estimate(req: DimensionalRequest):
+    """Run dimensional/Gemini letters estimation engine."""
+    job = JobInput(
+        sign_type=SignType.GEMINI,
+        letter_count=req.letter_count,
+        letter_height_inches=req.letter_height_inches,
+        paint_colors=req.paint_colors,
+        miles_one_way=req.miles,
+        crew_size=req.crew_size,
+    )
+    result = estimate_dimensional(job)
     total_est_hours = result.total_man_hours + result.total_crew_hours
     bench = benchmark(total_est_hours)
     bench_data = _format_benchmark(bench) if bench else None

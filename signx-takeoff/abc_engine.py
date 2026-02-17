@@ -2501,3 +2501,390 @@ def estimate_cabinet(job: JobInput) -> EstimateResult:
         f"Treat estimates as provisional."
     )
     return result
+
+
+# ── Directional/Wayfinding Estimator ──────────────────────────────────────────
+
+def estimate_directional(job: JobInput) -> EstimateResult:
+    """
+    Estimate labor for a DIRECT (directional/wayfinding) sign.
+
+    Directional signs are typically small aluminum panels with vinyl graphics
+    on posts. Simple fab, simple install.
+
+    [PROVISIONAL] — no ABC section. All rates derived from warehouse P50 (n=162).
+    Uses INSTALL_FLOOR["DIRECT"] = 7.20h and OT_FACTORS["DIRECT"].
+
+    Requires sign_sf_per_face > 0 on JobInput (or width/height via app.py).
+    """
+    total_sf = job.sign_sf_per_face * max(job.num_faces, 1)
+
+    result = EstimateResult(
+        total_pf=0.0,
+        pf_source="N/A (directional — SF-based, not PF)",
+        construction="directional_DIRECT",
+        height_category="N/A",
+        letter_count=0,
+    )
+
+    if total_sf <= 0:
+        result.warnings.append("sign_sf_per_face required for directional estimate.")
+        return result
+
+    labor: list[LaborLine] = []
+    install: list[LaborLine] = []
+    fab_total = 0.0
+
+    # ── 0110 Design ──────────────────────────────────────────────────────
+    labor.append(LaborLine(
+        work_code="0110", description="Design / Drafting",
+        hours=1.00, unit_type="man-hrs",
+        department="Art/Design (100)",
+        formula="1.00h standard [PROVISIONAL]",
+        section="DIRECT warehouse",
+    ))
+
+    # ── 0200 Fab Layout ──────────────────────────────────────────────────
+    hrs_200 = 1.00
+    labor.append(LaborLine(
+        work_code="0200", description="Fabrication Layout",
+        hours=hrs_200, unit_type="man-hrs",
+        department="Fabrication (200)",
+        formula="1.00h simple layout [PROVISIONAL]",
+        section="DIRECT warehouse",
+    ))
+    fab_total += hrs_200
+
+    # ── 0210 Sheet Metal ─────────────────────────────────────────────────
+    hrs_210 = round(total_sf * 0.15, 2)
+    labor.append(LaborLine(
+        work_code="0210", description="Sheet Metal",
+        hours=hrs_210, unit_type="man-hrs",
+        department="Fabrication (200)",
+        formula=f"{total_sf:.1f} SF x 0.15 (simple flat panel) [PROVISIONAL]",
+        section="DIRECT warehouse",
+    ))
+    fab_total += hrs_210
+
+    # ── 0235 Routing (if routed — many directionals are not) ─────────────
+    hrs_235 = round(total_sf * 0.08, 2)
+    if hrs_235 >= 0.25:
+        labor.append(LaborLine(
+            work_code="0235", description="Routing",
+            hours=hrs_235, unit_type="man-hrs",
+            department="Fabrication (200)",
+            formula=f"{total_sf:.1f} SF x 0.08 (if routed) [PROVISIONAL]",
+            section="DIRECT warehouse",
+        ))
+        fab_total += hrs_235
+
+    # ── 0270 Misc Fab (brackets, posts) ──────────────────────────────────
+    hrs_270 = round(total_sf * 0.10, 2)
+    labor.append(LaborLine(
+        work_code="0270", description="Misc Fabrication",
+        hours=max(hrs_270, 0.50), unit_type="man-hrs",
+        department="Fabrication (200)",
+        formula=f"{total_sf:.1f} SF x 0.10 (brackets, posts) [PROVISIONAL]",
+        section="DIRECT warehouse",
+    ))
+    fab_total += max(hrs_270, 0.50)
+
+    # ── 0410 Clean & Etch (Section 5A rates) ─────────────────────────────
+    paint_rate = SECTION_5A_RATES.get(job.paint_colors, SECTION_5A_RATES[1])
+    paint_sf = job.paint_sf if job.paint_sf > 0 else total_sf
+
+    hrs_410 = round(paint_rate["constant"] + (paint_sf * paint_rate["labor"]), 2)
+    labor.append(LaborLine(
+        work_code="0410", description="Clean & Etch",
+        hours=hrs_410, unit_type="man-hrs",
+        department="Paint/Finish (400)",
+        formula=f"Sec5A: {paint_rate['constant']} + ({paint_sf:.1f} SF x {paint_rate['labor']})",
+        section=f"5A ({job.paint_colors} color)",
+    ))
+
+    # ── 0420 Prime & Finish (Section 5A rates) ───────────────────────────
+    hrs_420 = round(paint_rate["constant"] + (paint_sf * paint_rate["labor"]), 2)
+    labor.append(LaborLine(
+        work_code="0420", description="Prime & Finish",
+        hours=hrs_420, unit_type="man-hrs",
+        department="Paint/Finish (400)",
+        formula=f"Sec5A: {paint_rate['constant']} + ({paint_sf:.1f} SF x {paint_rate['labor']})",
+        section=f"5A ({job.paint_colors} color)",
+    ))
+
+    # ── Vinyl (if applicable) ────────────────────────────────────────────
+    if job.has_vinyl:
+        hrs_520 = round(1.0 + total_sf * 0.03, 2)
+        labor.append(LaborLine(
+            work_code="0520", description="Cut / Weed Vinyl",
+            hours=hrs_520, unit_type="man-hrs",
+            department="Vinyl (500)",
+            formula=f"1.0 + ({total_sf:.1f} SF x 0.03) [PROVISIONAL]",
+            section="DIRECT warehouse",
+        ))
+        hrs_550 = round(1.0 + total_sf * 0.04, 2)
+        labor.append(LaborLine(
+            work_code="0550", description="Vinyl Application",
+            hours=hrs_550, unit_type="man-hrs",
+            department="Vinyl (500)",
+            formula=f"1.0 + ({total_sf:.1f} SF x 0.04) [PROVISIONAL]",
+            section="DIRECT warehouse",
+        ))
+
+    # ── 9200 Fab Overtime (3.5% from OT_FACTORS) ────────────────────────
+    ot_fab_rate = 0.035
+    fab_ot = round(fab_total * ot_fab_rate, 2)
+    if fab_ot >= 0.25:
+        labor.append(LaborLine(
+            work_code="9200", description=f"Fab Overtime ({ot_fab_rate:.1%} DIRECT median)",
+            hours=fab_ot, unit_type="man-hrs",
+            department="Fabrication (200)",
+            formula=f"Fab total {fab_total:.2f}h x {ot_fab_rate} [PROVISIONAL]",
+            section="DIRECT warehouse",
+        ))
+
+    # ── Installation ─────────────────────────────────────────────────────
+
+    # 0610 Load/Unload
+    install.append(LaborLine(
+        work_code="0610", description="Load / Unload",
+        hours=1.00, unit_type="man-hrs",
+        department="Installation (600)",
+        formula="1.0h standard [PROVISIONAL]",
+        section="DIRECT warehouse",
+    ))
+
+    # 0620 Travel
+    if job.miles_one_way > 0:
+        travel_hrs = round((job.miles_one_way / 50.0) * 2 * job.crew_size, 2)
+        travel_formula = f"({job.miles_one_way} mi / 50) x 2 x {job.crew_size} crew"
+    else:
+        travel_hrs = 1.50
+        travel_formula = "Warehouse median 1.50h (DIRECT P50)"
+    install.append(LaborLine(
+        work_code="0620", description="Travel",
+        hours=travel_hrs, unit_type="man-hrs",
+        department="Installation (600)",
+        formula=travel_formula,
+        section="DIRECT warehouse",
+    ))
+
+    # 0630 1-Man Install — INSTALL_FLOOR["DIRECT"] = 7.20h
+    install_hrs = INSTALL_FLOOR.get("DIRECT", 7.20)
+    install.append(LaborLine(
+        work_code="0630", description="1 Man & Truck - Install",
+        hours=round(install_hrs, 2), unit_type="man-hrs",
+        department="Installation (600)",
+        formula=f"INSTALL_FLOOR DIRECT = {install_hrs}h (P50 x 1.20) [PROVISIONAL]",
+        section="DIRECT warehouse",
+    ))
+
+    # 0625 Removal (optional)
+    if job.include_removal:
+        removal_hrs = round(install_hrs * 0.65 * 2, 2)
+        install.append(LaborLine(
+            work_code="0625", description="Removal",
+            hours=removal_hrs, unit_type="man-hrs",
+            department="Installation (600)",
+            formula=f"Install {install_hrs}h x 0.65 x 2 [PROVISIONAL]",
+            section="DIRECT warehouse",
+        ))
+
+    # 9600 Install Overtime (from OT_FACTORS: 0.593 prob x 2.52 mean / ~25 normalizer)
+    ot_inst_rate = 0.06
+    inst_ot = round(install_hrs * ot_inst_rate, 2)
+    if inst_ot >= 0.25:
+        install.append(LaborLine(
+            work_code="9600", description=f"Install Overtime ({ot_inst_rate:.1%} DIRECT median)",
+            hours=inst_ot, unit_type="man-hrs",
+            department="Installation (600)",
+            formula=f"Install {install_hrs:.2f}h x {ot_inst_rate} [PROVISIONAL]",
+            section="DIRECT warehouse",
+        ))
+
+    # ── Assemble result ──────────────────────────────────────────────────
+    result.labor_lines = labor
+    result.install_lines = install
+    result.total_man_hours = round(
+        sum(l.hours for l in labor if l.unit_type == "man-hrs")
+        + sum(l.hours for l in install if l.unit_type == "man-hrs"),
+        2
+    )
+    result.total_crew_hours = round(
+        sum(l.hours for l in install if l.unit_type == "CREW-hrs"),
+        2
+    )
+
+    result.warnings.append(
+        "[PROVISIONAL] -- no ABC section. Rates derived from warehouse P50 (n=162). "
+        "Directional signs = aluminum panels + vinyl on posts. Treat as provisional."
+    )
+    return result
+
+
+# ── Dimensional/Gemini Letters Estimator ──────────────────────────────────────
+
+def estimate_dimensional(job: JobInput) -> EstimateResult:
+    """
+    Estimate labor for GEMINI (dimensional/Gemini letters) signs.
+
+    Dimensional letters are pre-formed plastic or metal letters that are
+    purchased, painted, and installed. Minimal fabrication -- mostly paint + install.
+
+    [PROVISIONAL] -- no ABC section. Rates from warehouse P50 (n=115).
+    Uses INSTALL_FLOOR["GEMINI"] = 4.20h and OT_FACTORS["GEMINI"].
+
+    Uses letter_count and letter_height_inches from JobInput.
+    """
+    lc = max(job.letter_count, 1)
+    lh = job.letter_height_inches if job.letter_height_inches > 0 else 8.0
+
+    # Estimate face SF from letter dimensions: letter_count * height^2 * 0.006
+    est_face_sf = lc * (lh ** 2) * 0.006
+
+    result = EstimateResult(
+        total_pf=0.0,
+        pf_source="N/A (dimensional -- letter-based, not PF)",
+        construction="dimensional_GEMINI",
+        height_category="N/A",
+        letter_count=lc,
+    )
+
+    labor: list[LaborLine] = []
+    install: list[LaborLine] = []
+    fab_total = 0.0
+
+    # ── 0110 Design ──────────────────────────────────────────────────────
+    labor.append(LaborLine(
+        work_code="0110", description="Design / Drafting",
+        hours=1.00, unit_type="man-hrs",
+        department="Art/Design (100)",
+        formula="1.00h standard [PROVISIONAL]",
+        section="GEMINI warehouse",
+    ))
+
+    # ── 0240 Flat Cut Out Letters (layout/trim per letter) ───────────────
+    hrs_240 = round(lc * 0.15, 2)
+    labor.append(LaborLine(
+        work_code="0240", description="Flat Cut Out Letters",
+        hours=max(hrs_240, 0.50), unit_type="man-hrs",
+        department="Fabrication (200)",
+        formula=f"{lc} letters x 0.15 (layout/trim per letter) [PROVISIONAL]",
+        section="GEMINI warehouse",
+    ))
+    fab_total += max(hrs_240, 0.50)
+
+    # ── 0270 Misc Fab (mounting patterns, hardware) ──────────────────────
+    hrs_270 = round(lc * 0.08, 2)
+    labor.append(LaborLine(
+        work_code="0270", description="Misc Fabrication",
+        hours=max(hrs_270, 0.50), unit_type="man-hrs",
+        department="Fabrication (200)",
+        formula=f"{lc} letters x 0.08 (mounting patterns, hardware) [PROVISIONAL]",
+        section="GEMINI warehouse",
+    ))
+    fab_total += max(hrs_270, 0.50)
+
+    # ── 0410 Clean & Etch (Section 5A on estimated face SF) ──────────────
+    paint_rate = SECTION_5A_RATES.get(job.paint_colors, SECTION_5A_RATES[1])
+    paint_sf = job.paint_sf if job.paint_sf > 0 else est_face_sf
+
+    hrs_410 = round(paint_rate["constant"] + (paint_sf * paint_rate["labor"]), 2)
+    labor.append(LaborLine(
+        work_code="0410", description="Clean & Etch",
+        hours=hrs_410, unit_type="man-hrs",
+        department="Paint/Finish (400)",
+        formula=f"Sec5A: {paint_rate['constant']} + ({paint_sf:.1f} SF x {paint_rate['labor']})",
+        section=f"5A ({job.paint_colors} color)",
+    ))
+
+    # ── 0420 Prime & Finish (Section 5A) ─────────────────────────────────
+    hrs_420 = round(paint_rate["constant"] + (paint_sf * paint_rate["labor"]), 2)
+    labor.append(LaborLine(
+        work_code="0420", description="Prime & Finish",
+        hours=hrs_420, unit_type="man-hrs",
+        department="Paint/Finish (400)",
+        formula=f"Sec5A: {paint_rate['constant']} + ({paint_sf:.1f} SF x {paint_rate['labor']})",
+        section=f"5A ({job.paint_colors} color)",
+    ))
+
+    # ── 9200 Fab Overtime — 0.0 per OT_FACTORS (never appears) ──────────
+    # OT_FACTORS["GEMINI"] = (0.0, 0.0, ...) — no fab OT
+
+    # ── Installation ─────────────────────────────────────────────────────
+
+    # 0610 Load/Unload
+    install.append(LaborLine(
+        work_code="0610", description="Load / Unload",
+        hours=1.00, unit_type="man-hrs",
+        department="Installation (600)",
+        formula="1.0h standard [PROVISIONAL]",
+        section="GEMINI warehouse",
+    ))
+
+    # 0620 Travel
+    if job.miles_one_way > 0:
+        travel_hrs = round((job.miles_one_way / 50.0) * 2 * job.crew_size, 2)
+        travel_formula = f"({job.miles_one_way} mi / 50) x 2 x {job.crew_size} crew"
+    else:
+        travel_hrs = 1.25
+        travel_formula = "Warehouse median 1.25h (GEMINI P50)"
+    install.append(LaborLine(
+        work_code="0620", description="Travel",
+        hours=travel_hrs, unit_type="man-hrs",
+        department="Installation (600)",
+        formula=travel_formula,
+        section="GEMINI warehouse",
+    ))
+
+    # 0630 1-Man Install — INSTALL_FLOOR["GEMINI"] = 4.20h
+    install_hrs = INSTALL_FLOOR.get("GEMINI", 4.20)
+    install.append(LaborLine(
+        work_code="0630", description="1 Man & Truck - Install",
+        hours=round(install_hrs, 2), unit_type="man-hrs",
+        department="Installation (600)",
+        formula=f"INSTALL_FLOOR GEMINI = {install_hrs}h (P50 x 1.20) [PROVISIONAL]",
+        section="GEMINI warehouse",
+    ))
+
+    # 0625 Removal (optional)
+    if job.include_removal:
+        removal_hrs = round(install_hrs * 0.65 * 2, 2)
+        install.append(LaborLine(
+            work_code="0625", description="Removal",
+            hours=removal_hrs, unit_type="man-hrs",
+            department="Installation (600)",
+            formula=f"Install {install_hrs}h x 0.65 x 2 [PROVISIONAL]",
+            section="GEMINI warehouse",
+        ))
+
+    # 9600 Install Overtime (from OT_FACTORS: 0.478 prob x 1.81 mean)
+    ot_inst_rate = 0.048
+    inst_ot = round(install_hrs * ot_inst_rate, 2)
+    if inst_ot >= 0.25:
+        install.append(LaborLine(
+            work_code="9600", description=f"Install Overtime ({ot_inst_rate:.1%} GEMINI median)",
+            hours=inst_ot, unit_type="man-hrs",
+            department="Installation (600)",
+            formula=f"Install {install_hrs:.2f}h x {ot_inst_rate} [PROVISIONAL]",
+            section="GEMINI warehouse",
+        ))
+
+    # ── Assemble result ──────────────────────────────────────────────────
+    result.labor_lines = labor
+    result.install_lines = install
+    result.total_man_hours = round(
+        sum(l.hours for l in labor if l.unit_type == "man-hrs")
+        + sum(l.hours for l in install if l.unit_type == "man-hrs"),
+        2
+    )
+    result.total_crew_hours = round(
+        sum(l.hours for l in install if l.unit_type == "CREW-hrs"),
+        2
+    )
+
+    result.warnings.append(
+        "[PROVISIONAL] -- no ABC section. Rates from warehouse P50 (n=115). "
+        "Gemini letters = purchased, minimal fab. Treat as provisional."
+    )
+    return result
