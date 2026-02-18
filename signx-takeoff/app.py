@@ -89,6 +89,12 @@ from bid_scoring import (
 )
 from bid_model import predict_win_probability, get_model_diagnostics
 from warehouse import benchmark
+import mail_state
+
+try:
+    import mail_classifier
+except ImportError:
+    mail_classifier = None  # type: ignore[assignment]
 
 # Add signcalc-service to path for structural modules
 _SIGNCALC_DIR = str(Path(__file__).resolve().parent.parent / "services" / "signcalc-service")
@@ -105,6 +111,9 @@ app = FastAPI(title="SignX-Takeoff", version="2.0.0")
 
 STATIC_DIR = Path(__file__).parent / "static"
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
+
+# Initialize mail state DB tables
+mail_state.init_db()
 
 
 @app.get("/")
@@ -1984,6 +1993,53 @@ async def api_ml_diagnostics():
     return await asyncio.to_thread(get_model_diagnostics)
 
 
+# ── Email Intake Endpoints ────────────────────────────────────────────────────
+
+
+@app.get("/api/intake/feed")
+async def api_intake_feed():
+    """Recent processed emails (last 7 days)."""
+    return await asyncio.to_thread(mail_state.get_recent_emails, 7)
+
+
+@app.get("/api/intake/stats")
+async def api_intake_stats():
+    """Email processing statistics."""
+    return await asyncio.to_thread(mail_state.get_stats)
+
+
+@app.get("/api/intake/follow-ups")
+async def api_intake_follow_ups():
+    """Bids needing follow-up (> 48 hours in QUOTED)."""
+    return await asyncio.to_thread(mail_state.get_pending_follow_ups, 48)
+
+
+class ManualEmailRequest(BaseModel):
+    subject: str
+    body: str
+    sender: str = "manual"
+
+
+@app.post("/api/intake/process-email")
+async def api_intake_process_email(req: ManualEmailRequest):
+    """Manual email classification via the intake engine."""
+    if mail_classifier is None:
+        return {"ok": False, "error": "mail_classifier module not available yet"}
+    try:
+        result = await asyncio.to_thread(
+            mail_classifier.classify_and_route,
+            req.subject,
+            req.body,
+            req.sender,
+            datetime.now().isoformat(),
+            "manual",
+            [],
+        )
+        return {"ok": True, "result": result}
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+
+
 if __name__ == "__main__":
     print("\n  SignX-Takeoff Server v3.0 — Intelligence Platform")
     print("  http://localhost:8765")
@@ -1993,6 +2049,7 @@ if __name__ == "__main__":
     print("    Drawings:   /api/drawings/search, /api/drawings/bid-lookup")
     print("    Pipeline:   /api/notion/bids, /api/notion/takeoff, /api/notion/flow-status")
     print("    KeyedIn:    /api/keyedin/format")
+    print("    Intake:     /api/intake/feed, /api/intake/stats, /api/intake/follow-ups")
     print("    Notify:     /api/notify/bid-ready  (SMS to %s@%s)" % (SMS_PHONE, SMS_CARRIER_GATEWAY))
     print()
     uvicorn.run(app, host="0.0.0.0", port=8765, log_level="info")

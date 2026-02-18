@@ -288,6 +288,7 @@
     <div class="nav-tab" data-section="sec-structural">Engineering</div>
     <div class="nav-tab" data-section="sec-intel" style="color:var(--accent2);">Intelligence</div>
     <div class="nav-tab" data-section="sec-calibration" style="color:var(--yellow);">Calibration</div>
+    <div class="nav-tab" data-section="sec-intake" style="color:var(--orange);">Email Intake</div>
   </nav>
 
   <!-- ════════════════════════════════════════════════════════════════════════ -->
@@ -1419,6 +1420,113 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION: Email Intake                                                    -->
+  <!-- ════════════════════════════════════════════════════════════════════════ -->
+  <div class="main-section" id="sec-intake">
+
+    <!-- Pipeline Funnel -->
+    <div class="summary-grid" id="intake-funnel">
+      <div class="summary-box accent">
+        <div class="val" id="intake-total-24h">--</div>
+        <div class="lbl">Emails (24h)</div>
+      </div>
+      <div class="summary-box green">
+        <div class="val" id="intake-classified">--</div>
+        <div class="lbl">Classified</div>
+      </div>
+      <div class="summary-box orange">
+        <div class="val" id="intake-bids-created">--</div>
+        <div class="lbl">Bids Created</div>
+      </div>
+      <div class="summary-box purple">
+        <div class="val" id="intake-takeoffs">--</div>
+        <div class="lbl">Takeoffs Run</div>
+      </div>
+    </div>
+
+    <div class="grid" style="grid-template-columns: 1fr 360px;">
+
+      <!-- LEFT: Live Feed -->
+      <div>
+        <div class="card">
+          <h2>Live Feed <span class="badge" id="intake-feed-badge">0</span>
+            <span style="margin-left:auto;font-size:0.7rem;color:var(--text-dim);" id="intake-refresh-indicator">Auto-refresh 30s</span>
+          </h2>
+          <div style="overflow-x:auto;">
+            <table id="intake-feed-table">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Salesperson</th>
+                  <th>Subject</th>
+                  <th>Flow</th>
+                  <th>Type</th>
+                  <th>Urgency</th>
+                  <th style="text-align:center;">Scope</th>
+                </tr>
+              </thead>
+              <tbody id="intake-feed-body">
+                <tr><td colspan="7" style="text-align:center;color:var(--text-dim);padding:2rem;">No emails processed yet. Intake engine will populate this feed.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Manual Classification -->
+        <div class="card">
+          <h2>Manual Classification</h2>
+          <div class="form-group">
+            <label>Subject</label>
+            <input type="text" id="intake-manual-subject" placeholder="RE: Quote Request - New Monument Sign">
+          </div>
+          <div class="form-group">
+            <label>Email Body</label>
+            <textarea id="intake-manual-body" rows="4" style="width:100%;padding:0.5rem 0.75rem;background:var(--bg);border:1px solid var(--border);border-radius:0.5rem;color:var(--text);font-size:0.9rem;resize:vertical;" placeholder="Paste email body here..."></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Sender</label>
+              <input type="text" id="intake-manual-sender" placeholder="sender@example.com">
+            </div>
+            <div class="form-group" style="display:flex;align-items:flex-end;">
+              <button class="btn-primary" onclick="runManualClassification()">Classify Email</button>
+            </div>
+          </div>
+          <div id="intake-manual-result" style="display:none;"></div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Sidebar -->
+      <div>
+        <!-- Follow-Up Alerts -->
+        <div class="card">
+          <h2>Follow-Up Alerts <span class="badge" style="background:var(--red);" id="intake-followup-badge">0</span></h2>
+          <div id="intake-followups-list">
+            <p style="color:var(--text-dim);font-size:0.85rem;">No follow-ups pending.</p>
+          </div>
+        </div>
+
+        <!-- Stats by Salesperson -->
+        <div class="card">
+          <h2>By Salesperson</h2>
+          <div id="intake-stats-salesperson">
+            <p style="color:var(--text-dim);font-size:0.85rem;">Loading...</p>
+          </div>
+        </div>
+
+        <!-- Stats by Flow -->
+        <div class="card">
+          <h2>By Flow Type</h2>
+          <div id="intake-stats-flow">
+            <p style="color:var(--text-dim);font-size:0.85rem;">Loading...</p>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -4343,6 +4451,205 @@ async function runCalibration(dryRun) {
 
 // Load calibration data on page load
 loadCalibration();
+
+// ══════════════════════════════════════════════════════════════════════════════
+// EMAIL INTAKE TAB
+// ══════════════════════════════════════════════════════════════════════════════
+
+function timeAgo(dateStr) {
+  if (!dateStr) return '--';
+  const now = new Date();
+  const then = new Date(dateStr);
+  const diffMs = now - then;
+  const diffMin = Math.floor(diffMs / 60000);
+  if (diffMin < 1) return 'just now';
+  if (diffMin < 60) return diffMin + 'm ago';
+  const diffHr = Math.floor(diffMin / 60);
+  if (diffHr < 24) return diffHr + 'h ago';
+  const diffDay = Math.floor(diffHr / 24);
+  return diffDay + 'd ago';
+}
+
+function flowBadge(flow) {
+  if (!flow) return '<span class="badge" style="background:var(--text-dim);">UNKNOWN</span>';
+  if (flow.toLowerCase().includes('bid')) {
+    return '<span class="badge" style="background:var(--green);color:#000;">BID INTAKE</span>';
+  }
+  return '<span class="badge" style="background:var(--accent);">CORRESPONDENCE</span>';
+}
+
+function urgencyDot(result) {
+  if (!result) return '<span style="color:var(--text-dim);">--</span>';
+  const urgency = (result.urgency || '').toLowerCase();
+  if (urgency === 'high' || urgency === 'urgent') return '<span style="color:var(--red);font-weight:700;">HIGH</span>';
+  if (urgency === 'medium') return '<span style="color:var(--orange);font-weight:600;">MED</span>';
+  return '<span style="color:var(--green);">LOW</span>';
+}
+
+function parseResult(row) {
+  if (!row.result_json) return null;
+  try { return JSON.parse(row.result_json); } catch(e) { return null; }
+}
+
+async function loadIntakeFeed() {
+  try {
+    const resp = await fetch('/api/intake/feed');
+    const data = await resp.json();
+    const tbody = document.getElementById('intake-feed-body');
+    const badge = document.getElementById('intake-feed-badge');
+
+    if (!Array.isArray(data) || data.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-dim);padding:2rem;">No emails processed yet.</td></tr>';
+      badge.textContent = '0';
+      return;
+    }
+
+    badge.textContent = data.length;
+    tbody.innerHTML = data.map(row => {
+      const r = parseResult(row);
+      const salesperson = row.folder || '--';
+      const subject = (row.subject || '').substring(0, 60) + ((row.subject || '').length > 60 ? '...' : '');
+      const emailType = r && r.type ? '<span class="badge">' + r.type + '</span>' : '--';
+      const scopeCreep = r && r.scope_creep ? '<span style="color:var(--red);font-weight:700;">!!</span>' : '';
+      return `<tr>
+        <td class="mono" style="white-space:nowrap;">${timeAgo(row.processed_at)}</td>
+        <td>${salesperson}</td>
+        <td title="${(row.subject || '').replace(/"/g, '&quot;')}">${subject}</td>
+        <td>${flowBadge(row.flow)}</td>
+        <td>${emailType}</td>
+        <td>${urgencyDot(r)}</td>
+        <td style="text-align:center;">${scopeCreep}</td>
+      </tr>`;
+    }).join('');
+  } catch(e) {
+    console.error('Intake feed error:', e);
+  }
+}
+
+async function loadIntakeStats() {
+  try {
+    const resp = await fetch('/api/intake/stats');
+    const data = await resp.json();
+
+    // Funnel stats
+    document.getElementById('intake-total-24h').textContent = data.total || 0;
+    document.getElementById('intake-classified').textContent = data.total || 0;
+
+    const bidCount = (data.by_flow || {})['bid_intake'] || (data.by_flow || {})['BID_INTAKE'] || 0;
+    document.getElementById('intake-bids-created').textContent = bidCount;
+    document.getElementById('intake-takeoffs').textContent = '--';
+
+    // By flow
+    const flowDiv = document.getElementById('intake-stats-flow');
+    if (data.by_flow && Object.keys(data.by_flow).length > 0) {
+      flowDiv.innerHTML = Object.entries(data.by_flow).map(([flow, count]) =>
+        `<div style="display:flex;justify-content:space-between;padding:0.4rem 0;border-bottom:1px solid var(--surface2);">
+          <span>${flow.replace(/_/g, ' ').toUpperCase()}</span>
+          <span class="mono" style="color:var(--accent);font-weight:600;">${count}</span>
+        </div>`
+      ).join('');
+    } else {
+      flowDiv.innerHTML = '<p style="color:var(--text-dim);font-size:0.85rem;">No data yet.</p>';
+    }
+
+    // By salesperson (folder)
+    const spDiv = document.getElementById('intake-stats-salesperson');
+    if (data.by_folder && Object.keys(data.by_folder).length > 0) {
+      spDiv.innerHTML = Object.entries(data.by_folder).sort((a,b) => b[1] - a[1]).map(([folder, count]) =>
+        `<div style="display:flex;justify-content:space-between;padding:0.4rem 0;border-bottom:1px solid var(--surface2);">
+          <span>${folder}</span>
+          <span class="mono" style="color:var(--green);font-weight:600;">${count}</span>
+        </div>`
+      ).join('');
+    } else {
+      spDiv.innerHTML = '<p style="color:var(--text-dim);font-size:0.85rem;">No data yet.</p>';
+    }
+  } catch(e) {
+    console.error('Intake stats error:', e);
+  }
+}
+
+async function loadIntakeFollowUps() {
+  try {
+    const resp = await fetch('/api/intake/follow-ups');
+    const data = await resp.json();
+    const container = document.getElementById('intake-followups-list');
+    const badge = document.getElementById('intake-followup-badge');
+
+    if (!Array.isArray(data) || data.length === 0) {
+      container.innerHTML = '<p style="color:var(--text-dim);font-size:0.85rem;">No follow-ups pending.</p>';
+      badge.textContent = '0';
+      return;
+    }
+
+    badge.textContent = data.length;
+    container.innerHTML = data.map(fu => {
+      const hoursAgo = Math.floor((Date.now() - new Date(fu.quoted_at).getTime()) / 3600000);
+      const urgColor = hoursAgo > 72 ? 'var(--red)' : 'var(--orange)';
+      return `<div style="padding:0.5rem 0;border-bottom:1px solid var(--surface2);">
+        <div style="display:flex;justify-content:space-between;">
+          <span style="font-weight:600;">${fu.quote_name || 'Unknown'}</span>
+          <span style="color:${urgColor};font-weight:600;font-size:0.8rem;">${hoursAgo}h</span>
+        </div>
+        <div style="font-size:0.8rem;color:var(--text-dim);">${fu.customer || ''} &mdash; ${fu.salesman || ''}</div>
+      </div>`;
+    }).join('');
+  } catch(e) {
+    console.error('Intake follow-ups error:', e);
+  }
+}
+
+async function refreshIntake() {
+  await Promise.all([loadIntakeFeed(), loadIntakeStats(), loadIntakeFollowUps()]);
+}
+
+// Auto-refresh every 30 seconds
+setInterval(refreshIntake, 30000);
+
+// Initial load when tab is first shown
+document.querySelectorAll('#main-nav .nav-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    if (tab.dataset.section === 'sec-intake') {
+      refreshIntake();
+    }
+  });
+});
+
+async function runManualClassification() {
+  const subject = document.getElementById('intake-manual-subject').value.trim();
+  const body = document.getElementById('intake-manual-body').value.trim();
+  const sender = document.getElementById('intake-manual-sender').value.trim() || 'manual';
+  const resultDiv = document.getElementById('intake-manual-result');
+
+  if (!subject && !body) {
+    resultDiv.style.display = 'block';
+    resultDiv.innerHTML = '<div class="warning">Enter a subject or body to classify.</div>';
+    return;
+  }
+
+  resultDiv.style.display = 'block';
+  resultDiv.innerHTML = '<p style="color:var(--text-dim);">Classifying...</p>';
+
+  try {
+    const resp = await fetch('/api/intake/process-email', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({subject, body, sender})
+    });
+    const data = await resp.json();
+
+    if (data.ok) {
+      resultDiv.innerHTML = `<div class="card" style="background:var(--bg);border-color:var(--green);">
+        <h2 style="color:var(--green);">Classification Result</h2>
+        <pre style="font-size:0.8rem;color:var(--text);overflow-x:auto;white-space:pre-wrap;">${JSON.stringify(data.result, null, 2)}</pre>
+      </div>`;
+    } else {
+      resultDiv.innerHTML = `<div class="warning">${data.error || 'Classification failed.'}</div>`;
+    }
+  } catch(e) {
+    resultDiv.innerHTML = `<div class="warning">Error: ${e.message}</div>`;
+  }
+}
 
 </script>
 </body>
