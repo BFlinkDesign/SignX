@@ -173,7 +173,7 @@ def _get_received_iso(item) -> str:
 # ---------------------------------------------------------------------------
 
 
-def _trigger_takeoff(page_id: str, customer: str, quote_name: str) -> None:
+def _trigger_takeoff(page_id: str, customer: str, quote_name: str, quote_number: str = "") -> None:
     """POST to SignX-Takeoff to trigger auto-estimation and SMS notification."""
     # Auto-takeoff
     try:
@@ -196,7 +196,13 @@ def _trigger_takeoff(page_id: str, customer: str, quote_name: str) -> None:
         msg = f"New bid: {customer or 'Unknown'} - {quote_name or 'New Bid'}"
         resp = http_requests.post(
             f"{TAKEOFF_BASE_URL}/api/notify/bid-ready",
-            json={"message": msg},
+            json={
+                "quote_number": quote_number,
+                "customer": customer or "Unknown",
+                "total_hours": 0.0,
+                "estimator_type": "pending",
+                "message": msg,
+            },
             timeout=HTTP_TIMEOUT,
         )
         if resp.ok:
@@ -327,6 +333,7 @@ def process_folder(folder, folder_name: str, dry_run: bool = False) -> dict:
                         page_id=page_id,
                         customer=result.get("customer", ""),
                         quote_name=result.get("quote_name", ""),
+                        quote_number=result.get("quote_number", ""),
                     )
 
                 log.info(

@@ -47,7 +47,7 @@ NOTION_HEADERS = {
 NOTIFY_WEBHOOK_URL = os.environ.get("NOTIFY_WEBHOOK_URL", "")
 
 # SMS Configuration
-SMS_PHONE = os.environ.get("SMS_PHONE", "7122666482")
+SMS_PHONE = os.environ.get("SMS_PHONE", "")
 SMS_CARRIER_GATEWAY = os.environ.get("SMS_CARRIER_GATEWAY", "vtext.com")
 SMTP_SERVER = os.environ.get("SMTP_SERVER", "")
 SMTP_FROM = os.environ.get("SMTP_FROM", "")
@@ -563,6 +563,13 @@ async def get_calibration():
         },
         "defaults": cal.get("defaults", {}),
     }
+
+
+@app.get("/api/led/catalog")
+async def get_led_catalog():
+    """Return LED module, power supply, and sign face material catalogs."""
+    from led_catalog import catalog_to_dicts
+    return {"ok": True, **catalog_to_dicts()}
 
 
 class CalibrateRequest(BaseModel):
@@ -1278,10 +1285,8 @@ def _send_sms(body: str) -> dict:
         US Cellular: email.uscc.net
         Sprint:     messaging.sprintpcs.com
     """
-    if not SMTP_SERVER or not SMTP_FROM:
-        return {"sent": False, "reason": "SMTP_SERVER and SMTP_FROM not configured in .env"}
-    if not SMS_PHONE:
-        return {"sent": False, "reason": "SMS_PHONE not configured in .env"}
+    if not SMTP_SERVER or not SMTP_FROM or not SMS_PHONE:
+        return {"sent": False, "reason": "SMTP_SERVER, SMTP_FROM, and SMS_PHONE must all be configured in .env"}
 
     to_addr = f"{SMS_PHONE}@{SMS_CARRIER_GATEWAY}"
     msg = MIMEText(body)

@@ -51,6 +51,16 @@ from enum import Enum
 from pathlib import Path
 from typing import Any, Optional
 
+from led_catalog import (
+    select_module as _select_led_module,
+    get_module_by_sku as _get_led_module,
+    size_power_supply as _size_ps,
+    check_cascade as _check_cascade,
+    estimate_voltage_drop as _estimate_vdrop,
+    check_compliance as _check_led_compliance,
+    eagle_pn,
+)
+
 # numpy/pandas imported lazily inside robust_z_mad/baseline_for_group
 # to avoid 30s+ cold-start penalty on every engine load
 
@@ -914,43 +924,80 @@ def baseline_for_group(actual_hours: list[float]) -> dict:
 
 # ── LED Sizing ───────────────────────────────────────────────────────────────
 
-def calculate_led(pf: float, construction: ConstructionType) -> dict:
-    """Calculate LED module count and power supply sizing."""
+def calculate_led(
+    pf: float,
+    construction: ConstructionType,
+    letter_height_inches: float = 12.0,
+    voltage_pref: int = 24,
+    module_override: str = "",
+) -> dict:
+    """Calculate LED module count and power supply sizing using led_catalog.
+
+    Args:
+        pf: Peripheral feet (total sign perimeter).
+        construction: FACE_LIT, HALO, STRIP, or OPEN_FACE.
+        letter_height_inches: Tallest letter height for module selection.
+        voltage_pref: 0=auto, 12=12V only, 24=24V only.
+        module_override: Vendor SKU to force a specific module (e.g. "HLED-PN2W65K").
+    """
+    # 1. Select module
+    if module_override:
+        module = _get_led_module(module_override)
+        if module is None:
+            module = _select_led_module(letter_height_inches, construction.value, voltage_pref)
+    else:
+        module = _select_led_module(letter_height_inches, construction.value, voltage_pref)
+
+    # 2. Calculate module count
     if construction == ConstructionType.HALO:
-        modules = pf * 1.0
+        raw_modules = pf * module.mods_per_foot * 1.0
     else:
-        modules = pf * 1.2
+        raw_modules = pf * module.mods_per_foot * 1.0
 
-    modules_with_waste = modules * 1.05
-    watts = modules_with_waste * 0.72
-    capacity = watts / 0.80
+    modules_with_waste = raw_modules * 1.05  # 5% waste
+    total_modules = round(modules_with_waste)
 
-    # Power supply sizing
-    if capacity <= 80:
-        ps_spec = "100W"
-        ps_count = 1
-        ps_part = "307-0265"  # 60w or closest
-    elif capacity <= 120:
-        ps_spec = "150W"
-        ps_count = 1
-        ps_part = "307-0264"  # 120w
-    elif capacity <= 160:
-        ps_spec = "200W"
-        ps_count = 1
-        ps_part = "307-0170"  # 192w
-    else:
-        # Split into 2 supplies
-        ps_spec = "2x100W"
-        ps_count = 2
-        ps_part = "307-0265"
+    # 3. Wattage
+    watts = total_modules * module.watts
+    capacity_needed = watts / 0.80  # NEC 80% rule
+
+    # 4. Power supply sizing
+    ps, ps_count = _size_ps(watts, module.voltage)
+
+    # 5. Cascade distribution
+    feed_type = "double" if construction == ConstructionType.HALO else "single"
+    cascade_runs, mods_per_run = _check_cascade(module, total_modules, feed_type)
+
+    # 6. Voltage drop
+    v_drop, wire_awg = _estimate_vdrop(module, total_modules, cascade_runs, mods_per_run)
+
+    # 7. Compliance check
+    total_length_ft = total_modules / module.mods_per_foot if module.mods_per_foot > 0 else 0
+    is_compliant, compliance_notes = _check_led_compliance(
+        module, watts, ps, ps_count, v_drop, cascade_runs, total_length_ft
+    )
 
     return {
-        "modules": round(modules_with_waste),
+        "modules": total_modules,
         "watts": round(watts, 1),
-        "capacity_needed": round(capacity, 1),
-        "ps_spec": ps_spec,
+        "capacity_needed": round(capacity_needed, 1),
+        "ps_spec": f"{ps.rated_watts:.0f}W" if ps_count == 1 else f"{ps_count}x{ps.rated_watts:.0f}W",
         "ps_count": ps_count,
-        "ps_part": ps_part,
+        "ps_part": eagle_pn(ps.part_number),
+        "ps_vendor_sku": ps.part_number,
+        # Module details
+        "module_name": module.name,
+        "module_sku": module.part_number,
+        "module_eagle_pn": eagle_pn(module.part_number),
+        "module_watts": module.watts,
+        "module_voltage": module.voltage,
+        # Cascade & compliance
+        "cascade_runs": cascade_runs,
+        "mods_per_run": mods_per_run,
+        "voltage_drop_v": v_drop,
+        "wire_awg": wire_awg,
+        "is_compliant": is_compliant,
+        "compliance_notes": compliance_notes,
     }
 
 
@@ -958,9 +1005,10 @@ def calculate_led(pf: float, construction: ConstructionType) -> dict:
 
 def calculate_materials(pf: float, face_sf: float, return_depth_inches: float,
                         raceway_lf: float,
-                        construction: ConstructionType) -> list[dict]:
+                        construction: ConstructionType,
+                        letter_height_inches: float = 12.0) -> list[dict]:
     """Calculate material BOM with part numbers and quantities."""
-    led = calculate_led(pf, construction)
+    led = calculate_led(pf, construction, letter_height_inches=letter_height_inches)
     bom = []
 
     # Face Acrylic 3/16"
@@ -1009,29 +1057,33 @@ def calculate_materials(pf: float, face_sf: float, return_depth_inches: float,
 
     # LED Modules
     bom.append({
-        "item": "LED Modules",
-        "part": "307-0261",
+        "item": f"LED Modules ({led.get('module_name', 'LED')})",
+        "part": led.get("module_eagle_pn", "307-0261"),
+        "vendor_sku": led.get("module_sku", ""),
         "qty": led["modules"],
         "unit": "EA",
         "waste": "5%",
-        "formula": f"PF ({pf:.2f}) x {'1.0' if construction == ConstructionType.HALO else '1.2'} x 1.05",
+        "formula": f"PF ({pf:.2f}) x {led.get('module_watts', 0.72)} W/mod x 1.05 waste",
     })
 
     # Power Supply
     bom.append({
         "item": f"Power Supply ({led['ps_spec']})",
         "part": led["ps_part"],
+        "vendor_sku": led.get("ps_vendor_sku", ""),
         "qty": led["ps_count"],
         "unit": "EA",
         "waste": "0%",
         "formula": f"{led['watts']:.0f}W / 0.80 = {led['capacity_needed']:.0f}W needed",
     })
 
-    # Wire 18AWG
+    # Wire (gauge selected by voltage drop calculation)
+    wire_awg = led.get("wire_awg", 18)
     wire_lf = raceway_lf + 20  # Raceway LF + 20ft
     bom.append({
-        "item": "Wire 18AWG",
+        "item": f"Wire {wire_awg}AWG",
         "part": "307-0100",
+        "vendor_sku": "",
         "qty": round(wire_lf, 1),
         "unit": "LF",
         "waste": "fixed +20'",
@@ -1466,12 +1518,17 @@ def estimate(job: JobInput) -> EstimateResult:
     )
 
     # ── LED Spec ─────────────────────────────────────────────────────────
-    result.led_spec = calculate_led(total_pf, job.construction)
+    result.led_spec = calculate_led(
+        total_pf,
+        job.construction,
+        letter_height_inches=job.letter_height_inches if job.letter_height_inches > 0 else 12.0,
+    )
 
     # ── Material BOM ─────────────────────────────────────────────────────
     raceway_lf = job.raceway_lf if job.raceway_lf > 0 else total_pf * 0.3  # estimate
     result.material_bom = calculate_materials(
-        total_pf, face_sf, job.return_depth_inches, raceway_lf, job.construction
+        total_pf, face_sf, job.return_depth_inches, raceway_lf, job.construction,
+        letter_height_inches=job.letter_height_inches if job.letter_height_inches > 0 else 12.0,
     )
 
     # ── Warnings ─────────────────────────────────────────────────────────
