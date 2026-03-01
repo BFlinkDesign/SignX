@@ -16,12 +16,17 @@ Routes:
     PATCH /nodes/{node_id}     Update node
     DELETE /nodes/{node_id}    Delete node (cascades edges)
 
+    POST /nodes/batch          Bulk ingest (upsert) from KnowEx/pipelines
     POST /edges                Create an edge
     DELETE /edges/{edge_id}    Delete an edge
 
+    GET  /review/edges         List edges by status (proposed/validated/rejected)
+    POST /review/edges/{id}/validate   Approve a proposed edge
+    POST /review/edges/{id}/reject     Reject a proposed edge
+
     POST /traverse             BFS traversal
     POST /paths                Find paths between two nodes
-    POST /heuristic            Tribal-knowledge adjustments
+    POST /heuristic            Tribal-knowledge adjustments (validated only)
 """
 from __future__ import annotations
 
@@ -34,6 +39,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from database import get_db_session, init_db
 from logic import (
+    batch_ingest,
     compute_graph_stats,
     find_paths,
     get_heuristic_adjustments,
@@ -41,8 +47,13 @@ from logic import (
 )
 from models import Edge, Node
 from schemas import (
+    BatchEdgeInput,
+    BatchIngestRequest,
+    BatchIngestResult,
+    BatchNodeInput,
     EdgeCreate,
     EdgeResponse,
+    EdgeStatus,
     GraphStats,
     HeuristicAdjustment,
     HeuristicQuery,
@@ -266,6 +277,7 @@ async def create_edge(
         relationship_type=body.relationship_type.value,
         weight=body.weight,
         confidence=body.confidence,
+        status=body.status.value,
         evidence=body.evidence,
     )
     session.add(edge)
@@ -289,6 +301,111 @@ async def delete_edge(
     if edge is None:
         raise HTTPException(status_code=404, detail=f"Edge {edge_id} not found")
     await session.delete(edge)
+
+
+# ── Batch Ingest ──────────────────────────────────────────────────────────── #
+
+@app.post("/nodes/batch")
+async def batch_ingest_nodes(
+    body: BatchIngestRequest,
+    mode: str = Query("strict", pattern="^(strict|best_effort)$"),
+    session: AsyncSession = Depends(get_db_session),
+):
+    """
+    Bulk upsert nodes and edges from KnowEx or other pipelines.
+
+    mode=strict: any error rolls back the entire batch (400).
+    mode=best_effort: ingest what succeeds, return errors in response.
+
+    New edges default to status="proposed" — they do NOT affect
+    /heuristic results until manually validated via /review/edges.
+    """
+    try:
+        result = await batch_ingest(
+            session,
+            nodes=body.nodes,
+            edges=body.edges,
+            source=body.source,
+            mode=mode,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+
+    return IQEnvelope(
+        result=BatchIngestResult(**result).model_dump(),
+        assumptions=[
+            f"mode={mode}",
+            "New edges default to status=proposed",
+            "Node properties are deep-merged on upsert",
+            "Edge confidence takes max(existing, incoming)",
+        ],
+        confidence=1.0,
+        trace=make_trace(result, body.model_dump(mode="json")),
+    )
+
+
+# ── Review Workflow ───────────────────────────────────────────────────────── #
+
+@app.get("/review/edges")
+async def list_review_edges(
+    status: str = Query("proposed", pattern="^(proposed|validated|rejected)$"),
+    limit: int = Query(100, ge=1, le=1000),
+    session: AsyncSession = Depends(get_db_session),
+):
+    """List edges by status. Default: show proposed (pending review)."""
+    stmt = (
+        select(Edge)
+        .where(Edge.status == status)
+        .order_by(Edge.created_at.desc())
+        .limit(limit)
+    )
+    result = await session.execute(stmt)
+    edges = result.scalars().all()
+    return {
+        "status_filter": status,
+        "count": len(edges),
+        "edges": [EdgeResponse.model_validate(e).model_dump(mode="json") for e in edges],
+    }
+
+
+@app.post("/review/edges/{edge_id}/validate")
+async def validate_edge(
+    edge_id: int,
+    session: AsyncSession = Depends(get_db_session),
+):
+    """Promote a proposed edge to validated — it will now affect /heuristic."""
+    edge = await session.get(Edge, edge_id)
+    if edge is None:
+        raise HTTPException(status_code=404, detail=f"Edge {edge_id} not found")
+    edge.status = "validated"
+    await session.flush()
+    result = EdgeResponse.model_validate(edge).model_dump(mode="json")
+    return IQEnvelope(
+        result=result,
+        assumptions=["Edge is now active in /heuristic queries"],
+        confidence=1.0,
+        trace=make_trace(result, {"action": "validate", "edge_id": edge_id}),
+    )
+
+
+@app.post("/review/edges/{edge_id}/reject")
+async def reject_edge(
+    edge_id: int,
+    session: AsyncSession = Depends(get_db_session),
+):
+    """Reject a proposed edge — it will never affect /heuristic."""
+    edge = await session.get(Edge, edge_id)
+    if edge is None:
+        raise HTTPException(status_code=404, detail=f"Edge {edge_id} not found")
+    edge.status = "rejected"
+    await session.flush()
+    result = EdgeResponse.model_validate(edge).model_dump(mode="json")
+    return IQEnvelope(
+        result=result,
+        assumptions=["Edge is now rejected and excluded from queries"],
+        confidence=1.0,
+        trace=make_trace(result, {"action": "reject", "edge_id": edge_id}),
+    )
 
 
 # ── Graph Queries ─────────────────────────────────────────────────────────── #
@@ -380,6 +497,10 @@ async def find_graph_paths(
 @app.post("/heuristic")
 async def query_heuristics(
     body: HeuristicQuery,
+    include_proposed: bool = Query(
+        False,
+        description="Include proposed (unvalidated) edges. Debug only.",
+    ),
     session: AsyncSession = Depends(get_db_session),
 ):
     """
@@ -388,9 +509,10 @@ async def query_heuristics(
     Ask: "What tribal-knowledge adjustments apply when Employee X
     works on WorkCode Y for SignType Z?"
 
+    SAFETY: Only uses validated edges by default. Set include_proposed=true
+    for debugging to see what proposed heuristics would add.
+
     Returns adjustment factors with confidence and evidence chains.
-    This is designed to replace the hardcoded mock predictions in
-    modules/intelligence/__init__.py.
     """
     if not any([body.employee_id, body.work_code, body.sign_type]):
         raise HTTPException(
@@ -403,6 +525,7 @@ async def query_heuristics(
         employee_id=body.employee_id,
         work_code=body.work_code,
         sign_type=body.sign_type,
+        include_proposed=include_proposed,
     )
 
     adjustments = [HeuristicAdjustment(**a) for a in raw_adjustments]
@@ -421,6 +544,7 @@ async def query_heuristics(
     assumptions = [
         "Graph walk: EMPLOYEE --USES--> HEURISTIC --IMPACTS--> WORK_CODE",
         "Combined factor is the product of individual factors",
+        f"Edge filter: {'validated+proposed' if include_proposed else 'validated only'}",
     ]
     if not adjustments:
         assumptions.append("No matching heuristics found in the graph")

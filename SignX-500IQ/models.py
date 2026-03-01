@@ -26,6 +26,7 @@ from sqlalchemy import (
     Integer,
     String,
     Text,
+    UniqueConstraint,
     event,
 )
 from sqlalchemy.dialects.sqlite import JSON
@@ -90,6 +91,7 @@ class Edge(Base):
     relationship_type = Column(String, nullable=False)
     weight = Column(Float, nullable=False, default=1.0)
     confidence = Column(Float, nullable=False, default=1.0)
+    status = Column(String, nullable=False, default="validated")
     evidence = Column(JSON, nullable=False, default=dict)
     created_at = Column(DateTime, nullable=False, default=_utcnow)
 
@@ -101,9 +103,14 @@ class Edge(Base):
     )
 
     __table_args__ = (
+        UniqueConstraint(
+            "source_id", "target_id", "relationship_type",
+            name="uq_edge_triple",
+        ),
         Index("ix_edges_source_rel", "source_id", "relationship_type"),
         Index("ix_edges_target_rel", "target_id", "relationship_type"),
         Index("ix_edges_rel_type", "relationship_type"),
+        Index("ix_edges_status", "status"),
     )
 
     def __repr__(self) -> str:
@@ -121,6 +128,8 @@ def _enable_fk(target, connection, **kw):
     pass  # handled at engine level
 
 
+EDGE_STATUSES = frozenset({"proposed", "validated", "rejected"})
+
 # Node types and relationship types as constants for validation
 NODE_TYPES = frozenset({
     "JOB",
@@ -132,6 +141,8 @@ NODE_TYPES = frozenset({
     "CUSTOMER",
     "SIGN_TYPE",
     "CONSTRAINT",
+    "EQUIPMENT",
+    "SUPPLIER",
 })
 
 RELATIONSHIP_TYPES = frozenset({

@@ -121,6 +121,7 @@ EDGES = [
         relationship_type="USES",
         weight=1.0,
         confidence=0.94,
+        status="validated",
         evidence={
             "source": "2025 cost audit",
             "sample_size": 47,
@@ -134,6 +135,7 @@ EDGES = [
         relationship_type="IMPACTS",
         weight=1.0,
         confidence=0.94,
+        status="validated",
         evidence={
             "overestimation_pct": 94,
             "avg_delta_hours": 2.4,
@@ -146,6 +148,7 @@ EDGES = [
         relationship_type="ADJUSTS",
         weight=1.0,
         confidence=0.90,
+        status="validated",
         evidence={
             "applies_to": ["CABLIT", "CABNON"],
             "note": "Padding habit is specific to cabinet-type signs",
@@ -158,6 +161,7 @@ EDGES = [
         relationship_type="LEARNED_FROM",
         weight=1.0,
         confidence=1.0,
+        status="validated",
         evidence={
             "audit": "2025 cost audit",
             "analyst": "500IQ knowledge extraction",
@@ -170,6 +174,7 @@ EDGES = [
         relationship_type="CAUSED_BY",
         weight=0.8,
         confidence=0.85,
+        status="validated",
         evidence={
             "note": "The padding habit is the root cause of systematic overestimation",
         },
@@ -181,6 +186,7 @@ EDGES = [
         relationship_type="WORKED_ON",
         weight=1.0,
         confidence=1.0,
+        status="validated",
         evidence={"role": "estimator"},
     ),
 ]

@@ -15,10 +15,12 @@ these functions walk the graph to answer business questions:
 """
 from __future__ import annotations
 
+import re
 from collections import deque
-from typing import Dict, List, Optional, Set, Tuple
+from datetime import datetime, timezone
+from typing import Any, Dict, List, Optional, Set, Tuple
 
-from sqlalchemy import func, select
+from sqlalchemy import and_, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
@@ -162,6 +164,7 @@ async def get_heuristic_adjustments(
     employee_id: Optional[str] = None,
     work_code: Optional[str] = None,
     sign_type: Optional[str] = None,
+    include_proposed: bool = False,
 ) -> Tuple[List[dict], float]:
     """
     Walk the graph to find tribal-knowledge adjustments.
@@ -170,9 +173,16 @@ async def get_heuristic_adjustments(
       EMPLOYEE --USES--> HEURISTIC --IMPACTS--> WORK_CODE
       SIGN_TYPE --REQUIRES--> HEURISTIC
 
+    SAFETY: Only uses edges with status="validated" by default.
+    Set include_proposed=True for debugging to also include proposed edges.
+
     Returns (adjustments_list, combined_factor) where combined_factor is
     the product of all individual adjustment_factor values.
     """
+    allowed_statuses = ["validated"]
+    if include_proposed:
+        allowed_statuses.append("proposed")
+
     heuristic_ids: Set[str] = set()
     adjustments: List[dict] = []
 
@@ -182,6 +192,7 @@ async def get_heuristic_adjustments(
             select(Edge)
             .where(Edge.source_id == employee_id)
             .where(Edge.relationship_type.in_(["USES", "PREFERS"]))
+            .where(Edge.status.in_(allowed_statuses))
         )
         result = await session.execute(stmt)
         for edge in result.scalars().all():
@@ -193,6 +204,7 @@ async def get_heuristic_adjustments(
             select(Edge)
             .where(Edge.source_id == sign_type)
             .where(Edge.relationship_type.in_(["REQUIRES", "ADJUSTS", "APPLIES_TO"]))
+            .where(Edge.status.in_(allowed_statuses))
         )
         result = await session.execute(stmt)
         for edge in result.scalars().all():
@@ -207,6 +219,7 @@ async def get_heuristic_adjustments(
                 .where(Edge.source_id == hid)
                 .where(Edge.target_id == work_code)
                 .where(Edge.relationship_type.in_(["IMPACTS", "APPLIES_TO", "ADJUSTS"]))
+                .where(Edge.status.in_(allowed_statuses))
             )
             result = await session.execute(stmt)
             if result.scalars().first() is not None:
@@ -305,3 +318,183 @@ async def compute_graph_stats(session: AsyncSession) -> dict:
         "nodes_by_type": nodes_by_type,
         "edges_by_type": edges_by_type,
     }
+
+
+# ── Batch Ingest (upsert) ────────────────────────────────────────────────── #
+
+def _normalize_id(raw: str) -> str:
+    """Trim, uppercase, spaces→hyphens, collapse repeated hyphens."""
+    s = raw.strip().upper().replace(" ", "-")
+    return re.sub(r"-{2,}", "-", s)
+
+
+def _deep_merge(base: dict, incoming: dict) -> dict:
+    """Merge incoming into base. Incoming keys overwrite base keys."""
+    merged = dict(base)
+    for k, v in incoming.items():
+        if (
+            k in merged
+            and isinstance(merged[k], dict)
+            and isinstance(v, dict)
+        ):
+            merged[k] = _deep_merge(merged[k], v)
+        else:
+            merged[k] = v
+    return merged
+
+
+async def batch_ingest(
+    session: AsyncSession,
+    nodes: list,
+    edges: list,
+    source: str = "knowex",
+    mode: str = "strict",
+) -> dict:
+    """
+    Upsert nodes and edges in a single transaction.
+
+    Nodes: create if new, merge properties if exists (type must match).
+    Edges: create if new (by unique triple), update confidence (take max)
+           and merge evidence if exists.
+
+    mode="strict": any error rolls back the entire batch, raises.
+    mode="best_effort": skip errors, commit what succeeds.
+
+    Returns {"nodes_created", "nodes_updated", "edges_created",
+             "edges_updated", "edges_skipped", "errors"}.
+    """
+    stats = {
+        "nodes_created": 0,
+        "nodes_updated": 0,
+        "edges_created": 0,
+        "edges_updated": 0,
+        "edges_skipped": 0,
+        "errors": [],
+    }
+
+    # ── Phase 1: Upsert nodes ────────────────────────────────────────────
+    for n in nodes:
+        nid = _normalize_id(n.id)
+        ntype = n.type.value if hasattr(n.type, "value") else str(n.type).upper()
+        try:
+            existing = await session.get(Node, nid)
+            if existing is None:
+                node = Node(
+                    id=nid,
+                    type=ntype,
+                    label=n.label or nid,
+                    properties=n.properties or {},
+                    source=source,
+                )
+                session.add(node)
+                stats["nodes_created"] += 1
+            else:
+                if existing.type != ntype:
+                    msg = (
+                        f"Node {nid}: type mismatch "
+                        f"(existing={existing.type}, incoming={ntype})"
+                    )
+                    if mode == "strict":
+                        raise ValueError(msg)
+                    stats["errors"].append(msg)
+                    continue
+                # Merge properties
+                existing.properties = _deep_merge(
+                    existing.properties or {}, n.properties or {}
+                )
+                if n.label:
+                    existing.label = n.label
+                existing.updated_at = datetime.now(timezone.utc)
+                stats["nodes_updated"] += 1
+        except ValueError:
+            raise
+        except Exception as exc:
+            msg = f"Node {nid}: {exc}"
+            if mode == "strict":
+                raise ValueError(msg) from exc
+            stats["errors"].append(msg)
+
+    # Flush nodes so edges can reference them
+    await session.flush()
+
+    # ── Phase 2: Upsert edges ────────────────────────────────────────────
+    for e in edges:
+        src = _normalize_id(e.source_id)
+        tgt = _normalize_id(e.target_id)
+        rel = (
+            e.relationship_type.value
+            if hasattr(e.relationship_type, "value")
+            else str(e.relationship_type).upper()
+        )
+        edge_status = (
+            e.status.value
+            if hasattr(e.status, "value")
+            else str(getattr(e, "status", "proposed"))
+        )
+        try:
+            # Validate endpoints exist
+            if await session.get(Node, src) is None:
+                msg = f"Edge {src}->{tgt}: source node not found"
+                if mode == "strict":
+                    raise ValueError(msg)
+                stats["errors"].append(msg)
+                stats["edges_skipped"] += 1
+                continue
+            if await session.get(Node, tgt) is None:
+                msg = f"Edge {src}->{tgt}: target node not found"
+                if mode == "strict":
+                    raise ValueError(msg)
+                stats["errors"].append(msg)
+                stats["edges_skipped"] += 1
+                continue
+
+            # Check for existing edge by unique triple
+            stmt = select(Edge).where(
+                and_(
+                    Edge.source_id == src,
+                    Edge.target_id == tgt,
+                    Edge.relationship_type == rel,
+                )
+            )
+            result = await session.execute(stmt)
+            existing_edge = result.scalars().first()
+
+            if existing_edge is None:
+                edge = Edge(
+                    source_id=src,
+                    target_id=tgt,
+                    relationship_type=rel,
+                    confidence=e.confidence,
+                    status=edge_status,
+                    evidence=e.evidence or {},
+                )
+                session.add(edge)
+                stats["edges_created"] += 1
+            else:
+                # Update: take higher confidence, merge evidence
+                existing_edge.confidence = max(
+                    existing_edge.confidence, e.confidence
+                )
+                if e.evidence:
+                    existing_edge.evidence = _deep_merge(
+                        existing_edge.evidence or {}, e.evidence
+                    )
+                # Never auto-promote proposed → validated
+                # Only allow explicit status change in strict mode
+                if edge_status != existing_edge.status:
+                    if mode == "strict" and edge_status in (
+                        "validated", "rejected"
+                    ):
+                        existing_edge.status = edge_status
+                    # In best_effort: skip status change silently
+                stats["edges_updated"] += 1
+        except ValueError:
+            raise
+        except Exception as exc:
+            msg = f"Edge {src}->{tgt}: {exc}"
+            if mode == "strict":
+                raise ValueError(msg) from exc
+            stats["errors"].append(msg)
+            stats["edges_skipped"] += 1
+
+    return stats

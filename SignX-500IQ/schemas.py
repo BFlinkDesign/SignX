@@ -33,6 +33,14 @@ class NodeType(str, Enum):
     CUSTOMER = "CUSTOMER"
     SIGN_TYPE = "SIGN_TYPE"
     CONSTRAINT = "CONSTRAINT"
+    EQUIPMENT = "EQUIPMENT"
+    SUPPLIER = "SUPPLIER"
+
+
+class EdgeStatus(str, Enum):
+    PROPOSED = "proposed"
+    VALIDATED = "validated"
+    REJECTED = "rejected"
 
 
 class RelationshipType(str, Enum):
@@ -145,6 +153,7 @@ class EdgeCreate(BaseModel):
     relationship_type: RelationshipType
     weight: float = Field(default=1.0, ge=0.0)
     confidence: float = Field(default=1.0, ge=0.0, le=1.0)
+    status: EdgeStatus = Field(default=EdgeStatus.VALIDATED)
     evidence: Dict[str, Any] = Field(default_factory=dict)
 
 
@@ -155,6 +164,7 @@ class EdgeResponse(BaseModel):
     relationship_type: str
     weight: float
     confidence: float
+    status: str
     evidence: Dict[str, Any]
     created_at: datetime
 
@@ -243,3 +253,44 @@ class GraphStats(BaseModel):
 class NodeListResponse(BaseModel):
     items: List[NodeResponse]
     total: int
+
+
+# ── Batch ingest ──────────────────────────────────────────────────────────── #
+
+def _normalize_id(raw: str) -> str:
+    """Trim, uppercase, spaces→hyphens, collapse repeated hyphens."""
+    import re
+    s = raw.strip().upper().replace(" ", "-")
+    return re.sub(r"-{2,}", "-", s)
+
+
+class BatchNodeInput(BaseModel):
+    id: str = Field(..., min_length=1)
+    type: NodeType
+    label: str = Field(default="")
+    properties: Dict[str, Any] = Field(default_factory=dict)
+    source: str = Field(default="knowex")
+
+
+class BatchEdgeInput(BaseModel):
+    source_id: str = Field(..., min_length=1)
+    target_id: str = Field(..., min_length=1)
+    relationship_type: RelationshipType
+    confidence: float = Field(default=0.5, ge=0.0, le=1.0)
+    status: EdgeStatus = Field(default=EdgeStatus.PROPOSED)
+    evidence: Dict[str, Any] = Field(default_factory=dict)
+
+
+class BatchIngestRequest(BaseModel):
+    nodes: List[BatchNodeInput] = Field(default_factory=list)
+    edges: List[BatchEdgeInput] = Field(default_factory=list)
+    source: str = Field(default="knowex", description="Origin pipeline")
+
+
+class BatchIngestResult(BaseModel):
+    nodes_created: int = 0
+    nodes_updated: int = 0
+    edges_created: int = 0
+    edges_updated: int = 0
+    edges_skipped: int = 0
+    errors: List[str] = Field(default_factory=list)
