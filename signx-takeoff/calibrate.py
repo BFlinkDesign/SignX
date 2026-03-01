@@ -33,10 +33,9 @@ from typing import Any
 # Config
 # ---------------------------------------------------------------------------
 
-WAREHOUSE_DB = os.environ.get(
-    "SIGNX_WAREHOUSE_DB",
-    "C:/Scripts/signx-warehouse/warehouse/signx.duckdb",
-)
+from sign_types import find_warehouse_db as _find_db
+
+WAREHOUSE_DB = str(_find_db() or "C:/Scripts/signx-warehouse/warehouse/signx.duckdb")
 CALIBRATION_DIR = Path(__file__).parent / "data"
 CALIBRATION_FILE = CALIBRATION_DIR / "calibration.json"
 RAW_MATRIX_FILE = CALIBRATION_DIR / "calibration_matrix_raw.json"

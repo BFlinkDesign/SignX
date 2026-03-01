@@ -14,27 +14,13 @@ import csv
 import statistics
 from dataclasses import dataclass, field
 from datetime import datetime
-from pathlib import Path
 from typing import Optional
 
-
-# ── Warehouse CSV ────────────────────────────────────────────────────────────
-
-WAREHOUSE_PATHS = [
-    Path(r"C:\Scripts\signx-warehouse\warehouse\raw\so_contracts_parsed.csv"),
-    Path(r"C:\Scripts\SignX\Keyedin\warehouse\warehouse\raw\so_contracts_parsed.csv"),
-]
+from sign_types import expand_sign_type, find_warehouse_csv
 
 # Shared cache — load once, query many
 _ALL_JOBS: list[dict] = []
 _LOADED = False
-
-
-def _find_csv() -> Optional[Path]:
-    for p in WAREHOUSE_PATHS:
-        if p.exists():
-            return p
-    return None
 
 
 def _load_warehouse():
@@ -43,7 +29,7 @@ def _load_warehouse():
     if _LOADED:
         return
 
-    csv_path = _find_csv()
+    csv_path = find_warehouse_csv()
     if not csv_path:
         _LOADED = True
         return
@@ -393,27 +379,7 @@ def find_similar_jobs(
     if not _ALL_JOBS:
         return []
 
-    sign_type_upper = sign_type.upper()
-
-    # Map common names to warehouse codes
-    type_aliases = {
-        "CHANNEL_LETTER": ["CLLIT", "CLNON", "CHANNL"],
-        "MONUMENT": ["MONDF", "MONSF"],
-        "PYLON": ["POLLIT", "POLNON"],
-        "CABINET": ["ALULIT", "ALUNON", "BLDILL", "BLDNON"],
-        "AWNING": ["AWNNON", "AWNLIT"],
-        "DIRECTIONAL": ["DIRECT"],
-        "DIMENSIONAL": ["GEMINI"],
-        "REMOVAL": ["REMOVAL", "REMOVE"],
-    }
-
-    # Build set of matching codes
-    match_codes = set()
-    match_codes.add(sign_type_upper)
-    for alias, codes in type_aliases.items():
-        if sign_type_upper in codes or sign_type_upper == alias:
-            match_codes.update(codes)
-            break
+    match_codes = expand_sign_type(sign_type)
 
     # Filter jobs by sign type
     candidates = []
@@ -475,23 +441,7 @@ def get_market_intel(sign_type: str) -> Optional[MarketIntel]:
     if not _ALL_JOBS:
         return None
 
-    sign_type_upper = sign_type.upper()
-
-    type_aliases = {
-        "CHANNEL_LETTER": ["CLLIT", "CLNON", "CHANNL"],
-        "MONUMENT": ["MONDF", "MONSF"],
-        "PYLON": ["POLLIT", "POLNON"],
-        "CABINET": ["ALULIT", "ALUNON", "BLDILL", "BLDNON"],
-        "AWNING": ["AWNNON", "AWNLIT"],
-        "DIRECTIONAL": ["DIRECT"],
-        "DIMENSIONAL": ["GEMINI"],
-    }
-
-    match_codes = {sign_type_upper}
-    for alias, codes in type_aliases.items():
-        if sign_type_upper in codes or sign_type_upper == alias:
-            match_codes.update(codes)
-            break
+    match_codes = expand_sign_type(sign_type)
 
     matching = [
         j

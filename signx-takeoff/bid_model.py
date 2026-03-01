@@ -36,17 +36,9 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
+from sign_types import find_warehouse_csv, find_quote_csv
+
 # ── sklearn imports (deferred to _train() so import errors are clear) ─────────
-
-WAREHOUSE_PATHS = [
-    Path(r"C:\Scripts\signx-warehouse\warehouse\raw\so_contracts_parsed.csv"),
-    Path(r"C:\Scripts\SignX\Keyedin\warehouse\warehouse\raw\so_contracts_parsed.csv"),
-]
-
-QUOTE_PATHS = [
-    Path(r"C:\Scripts\signx-warehouse\warehouse\raw\quote_status_report.csv"),
-    Path(r"C:\Scripts\SignX\Keyedin\warehouse\warehouse\raw\quote_status_report.csv"),
-]
 
 # ── Module-level cache ─────────────────────────────────────────────────────────
 
@@ -120,15 +112,6 @@ class MLPrediction:
     model_available: bool = True
 
 
-# ── Path helpers ──────────────────────────────────────────────────────────────
-
-def _find_csv(paths: list[Path]) -> Optional[Path]:
-    for p in paths:
-        if p.exists():
-            return p
-    return None
-
-
 # ── Date parsing ──────────────────────────────────────────────────────────────
 
 _DATE_FMTS = ["%Y-%m-%d", "%m/%d/%Y", "%m/%d/%y", "%Y/%m/%d"]
@@ -196,7 +179,7 @@ def train_model() -> ModelBundle:
 
     # ── 1. Load warehouse ──────────────────────────────────────────────────────
     print("[bid_model] Loading warehouse...")
-    wh_path = _find_csv(WAREHOUSE_PATHS)
+    wh_path = find_warehouse_csv()
     all_jobs: list[dict] = []
     if wh_path:
         with open(wh_path, "r", encoding="utf-8", errors="replace") as f:
@@ -279,7 +262,7 @@ def train_model() -> ModelBundle:
 
     # ── 4. Load quotes and build labels ───────────────────────────────────────
     print("[bid_model] Loading quotes and building labels...")
-    qt_path = _find_csv(QUOTE_PATHS)
+    qt_path = find_quote_csv()
     labeled_rows: list[dict] = []
 
     if qt_path:

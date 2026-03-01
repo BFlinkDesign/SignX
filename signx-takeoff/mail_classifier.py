@@ -264,7 +264,7 @@ def parse_bid_intake(
 # ---------------------------------------------------------------------------
 
 CLASSIFIER_SYSTEM_PROMPT = """\
-You are a correspondence classifier for Eagle Sign Co., a commercial sign fabrication and installation company in Grimes, Iowa. You classify inbound emails into structured fields for a Notion database.
+You are a correspondence classifier for Eagle Sign Co., a commercial sign fabrication and installation company in Des Moines, Iowa. You classify inbound emails into structured fields for a Notion database.
 
 ## SIGN INDUSTRY CONTEXT
 Eagle Sign designs, manufactures, installs, and services commercial signage. Their work involves:

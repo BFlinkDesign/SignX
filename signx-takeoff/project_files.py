@@ -25,6 +25,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
+from sign_types import FILENAME_TYPE_MAP as SIGN_TYPE_MAP
+
 logger = logging.getLogger(__name__)
 
 _SMB_TIMEOUT = 3  # seconds — don't let SMB path checks hang
@@ -84,34 +86,7 @@ DOC_TYPE_RULES: list[tuple[str, list[str]]] = [
     ("scan_artifact", ["skmbt_", "scan_", "scanned"]),
 ]
 
-# Sign type keywords found in filenames
-SIGN_TYPE_MAP = {
-    "monument":     "monument",
-    "mon face":     "monument",
-    "mon ":         "monument",
-    "pylon":        "pylon",
-    "pole sign":    "pylon",
-    "pole face":    "pylon",
-    "channel let":  "channel_letter",
-    "channel lit":  "channel_letter",
-    "letters":      "channel_letter",
-    "emc":          "pylon",
-    "emcenter":     "pylon",
-    "electronic":   "pylon",
-    "awning":       "awning",
-    "canopy":       "awning",
-    "cabinet":      "cabinet",
-    "lightbox":     "cabinet",
-    "light box":    "cabinet",
-    "dimensional":  "dimensional",
-    "gemini":       "dimensional",
-    "flat cut":     "dimensional",
-    "directional":  "directional",
-    "wayfinding":   "directional",
-    "info panel":   "directional",
-    "removal":      "removal",
-    "remove":       "removal",
-}
+# SIGN_TYPE_MAP imported from sign_types.py (single source of truth)
 
 # Design file extensions (these are sign design source files)
 DESIGN_EXTENSIONS = {".cdr", ".ai", ".eps", ".dxf", ".dwg", ".svg"}

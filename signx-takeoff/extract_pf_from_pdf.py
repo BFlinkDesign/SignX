@@ -49,6 +49,8 @@ class PDFExtraction:
     letter_count: int = 0
     max_height_inches: float = 0.0
     min_height_inches: float = 0.0
+    median_height_inches: float = 0.0
+    representative_height_inches: float = 0.0
     warnings: list[str] = field(default_factory=list)
 
     @property
@@ -172,30 +174,48 @@ def extract_pf_from_pdf(pdf_bytes: bytes, filename: str = "upload.pdf",
     if scale_factor > 0:
         sf = scale_factor
     elif known_letter_height > 0:
-        # First pass: find max bounding-box height across all significant paths
-        raw_max_h = 0.0
+        # First pass: collect heights of all significant paths
+        raw_heights = []
         for path in paths:
             items = path.get("items", [])
             ys = []
+            path_perim = 0.0
             for item in items:
                 cmd = item[0]
                 if cmd == "l":
                     ys.extend([item[1].y, item[2].y])
+                    p0 = (item[1].x, item[1].y)
+                    p1 = (item[2].x, item[2].y)
+                    path_perim += _line_length(p0, p1)
                 elif cmd == "c":
                     ys.extend([item[1].y, item[4].y])
+                    path_perim += _bezier_length(
+                        (item[1].x, item[1].y), (item[2].x, item[2].y),
+                        (item[3].x, item[3].y), (item[4].x, item[4].y),
+                    )
                 elif cmd == "re":
                     ys.extend([item[1].y0, item[1].y1])
+                    path_perim += 2 * (abs(item[1].width) + abs(item[1].height))
                 elif cmd == "qu":
                     quad = item[1]
                     ys.extend([quad.ul.y, quad.ur.y, quad.lr.y, quad.ll.y])
             if ys:
                 h = (max(ys) - min(ys)) * pts_to_inches
-                if h > raw_max_h:
-                    raw_max_h = h
-        if raw_max_h > 0.5:
-            sf = known_letter_height / raw_max_h
+                perim_in = path_perim * pts_to_inches
+                # Only consider substantial shapes (not tiny noise)
+                if h > 0.5 and perim_in > 1.0:
+                    raw_heights.append(h)
+        if raw_heights:
+            raw_heights.sort()
+            # Use median height (robust to outlier serifs/ascenders)
+            mid = len(raw_heights) // 2
+            if len(raw_heights) % 2 == 0:
+                repr_h = (raw_heights[mid - 1] + raw_heights[mid]) / 2.0
+            else:
+                repr_h = raw_heights[mid]
+            sf = known_letter_height / repr_h
             result.warnings.append(
-                f"Auto-scale: detected max height {raw_max_h:.1f}\", "
+                f"Auto-scale: median height {repr_h:.1f}\" (n={len(raw_heights)}), "
                 f"known height {known_letter_height:.0f}\" -> scale {sf:.2f}x"
             )
         else:
@@ -321,6 +341,17 @@ def extract_pf_from_pdf(pdf_bytes: bytes, filename: str = "upload.pdf",
     result.letter_count = letter_idx
     result.max_height_inches = max_height
     result.min_height_inches = min_height if min_height != float("inf") else 0.0
+
+    # Compute representative height (median of all shape heights)
+    if result.letters:
+        heights = sorted(ltr.height_inches for ltr in result.letters)
+        mid = len(heights) // 2
+        if len(heights) % 2 == 0:
+            result.median_height_inches = (heights[mid - 1] + heights[mid]) / 2.0
+        else:
+            result.median_height_inches = heights[mid]
+        # Representative = median (robust to outlier serifs/ascenders)
+        result.representative_height_inches = result.median_height_inches
 
     if letter_idx == 0:
         result.warnings.append(

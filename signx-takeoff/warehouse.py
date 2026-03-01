@@ -1,8 +1,10 @@
 """
-warehouse.py — Warehouse benchmarking against historical job data.
+warehouse.py -- Warehouse benchmarking against historical job data.
 
 Loads so_contracts_parsed.csv (25,400 rows) and provides benchmark
 comparisons: "ABC says X hours, similar jobs averaged Y +/- Z hours".
+
+Supports any sign type via expand_sign_type() from sign_types.py.
 
 CRITICAL: Revenue = `billing` column, NOT `quoted_price`.
 """
@@ -10,22 +12,18 @@ CRITICAL: Revenue = `billing` column, NOT `quoted_price`.
 from __future__ import annotations
 
 import csv
-import os
 import statistics
 from dataclasses import dataclass, field
 from pathlib import Path
 
-# Path to warehouse CSV (try multiple locations)
-WAREHOUSE_PATHS = [
-    Path(r"C:\Scripts\signx-warehouse\warehouse\raw\so_contracts_parsed.csv"),
-    Path(r"C:\Scripts\SignX\Keyedin\warehouse\warehouse\raw\so_contracts_parsed.csv"),
-]
+from sign_types import expand_sign_type, find_warehouse_csv, sign_type_label
 
 
 @dataclass
 class BenchmarkResult:
     """Historical benchmark for a job type."""
     sign_type: str
+    sign_type_label: str
     matching_jobs: int
     avg_labor_hours: float
     median_labor_hours: float
@@ -38,32 +36,14 @@ class BenchmarkResult:
     similar_jobs: list[dict] = field(default_factory=list)
 
 
-def _find_warehouse_csv() -> Path | None:
-    for p in WAREHOUSE_PATHS:
-        if p.exists():
-            return p
-    return None
-
-
-def _load_channel_letter_jobs(csv_path: Path) -> list[dict]:
-    """Load channel letter jobs from warehouse CSV."""
+def _load_all_jobs(csv_path: Path) -> list[dict]:
+    """Load all jobs with valid financial data from warehouse CSV."""
     jobs = []
     with open(csv_path, "r", encoding="utf-8", errors="replace") as f:
         reader = csv.DictReader(f)
         for row in reader:
-            # Filter for channel letter sales codes
             sales_code = (row.get("sales_code") or "").strip().upper()
-            sign_type = (row.get("sign_type") or "").strip().upper()
-
-            is_channel = (
-                sales_code in ("CHANNL", "CHANL", "CHNL", "CHLET")
-                or "CLLIT" in sign_type
-                or "CLNON" in sign_type
-                or "CHANNEL" in (row.get("description") or "").upper()
-            )
-
-            if not is_channel:
-                continue
+            st = (row.get("sign_type") or "").strip().upper()
 
             try:
                 labor_cost = float(row.get("labor_cost") or 0)
@@ -81,7 +61,7 @@ def _load_channel_letter_jobs(csv_path: Path) -> list[dict]:
                 "work_order": row.get("work_order", ""),
                 "customer": row.get("customer_name", ""),
                 "location": row.get("location", ""),
-                "sign_type": sign_type,
+                "sign_type": st,
                 "sales_code": sales_code,
                 "labor_cost": labor_cost,
                 "billing": billing,
@@ -93,26 +73,62 @@ def _load_channel_letter_jobs(csv_path: Path) -> list[dict]:
     return jobs
 
 
+# Legacy compatibility -- kept for test_validation.py source inspection
+def _load_channel_letter_jobs(csv_path: Path) -> list[dict]:
+    """Load channel letter jobs from warehouse CSV."""
+    channel_codes = expand_sign_type("CHANNEL_LETTER")
+    all_jobs = _load_all_jobs(csv_path)
+    return [
+        j for j in all_jobs
+        if j["sales_code"] in channel_codes
+        or j["sign_type"] in channel_codes
+        or "CHANNEL" in j["description"].upper()
+    ]
+
+
 _cache: dict[str, list[dict]] = {}
 
 
-def benchmark(abc_estimate_hours: float,
-              sign_type_filter: str = "CHANNL") -> BenchmarkResult | None:
-    """
-    Compare an ABC estimate against historical warehouse data.
-
-    Returns benchmark with statistics from similar jobs, or None if
-    warehouse data is unavailable.
-    """
-    csv_path = _find_warehouse_csv()
+def _get_cached_jobs() -> list[dict] | None:
+    """Load and cache all warehouse jobs. Returns None if CSV unavailable."""
+    csv_path = find_warehouse_csv()
     if csv_path is None:
         return None
 
     cache_key = str(csv_path)
     if cache_key not in _cache:
-        _cache[cache_key] = _load_channel_letter_jobs(csv_path)
+        _cache[cache_key] = _load_all_jobs(csv_path)
 
-    jobs = _cache[cache_key]
+    return _cache[cache_key]
+
+
+def benchmark(abc_estimate_hours: float,
+              sign_type_filter: str = "CHANNEL_LETTER") -> BenchmarkResult | None:
+    """
+    Compare an ABC estimate against historical warehouse data.
+
+    Args:
+        abc_estimate_hours: ABC engine's estimated hours for the job.
+        sign_type_filter: Sign type code or group name (e.g. "CLLIT",
+            "CHANNEL_LETTER", "MONUMENT"). Uses expand_sign_type() to
+            match all related codes.
+
+    Returns benchmark with statistics from similar jobs, or None if
+    warehouse data is unavailable or insufficient matches.
+    """
+    all_jobs = _get_cached_jobs()
+    if all_jobs is None:
+        return None
+
+    # Expand the filter to all related codes
+    match_codes = expand_sign_type(sign_type_filter)
+
+    # Filter jobs matching this sign type
+    jobs = [
+        j for j in all_jobs
+        if j["sales_code"] in match_codes
+        or j["sign_type"] in match_codes
+    ]
 
     if not jobs:
         return None
@@ -163,6 +179,7 @@ def benchmark(abc_estimate_hours: float,
 
     return BenchmarkResult(
         sign_type=sign_type_filter,
+        sign_type_label=sign_type_label(sign_type_filter),
         matching_jobs=n,
         avg_labor_hours=round(avg_hrs, 1),
         median_labor_hours=round(median_hrs, 1),

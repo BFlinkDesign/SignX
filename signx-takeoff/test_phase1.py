@@ -34,9 +34,9 @@ from abc_engine import (
 def test_sign_type_enum_members():
     """All expected SignType enum members are present."""
     expected_types = {
-        "CLLIT", "CLNON", "MONDF", "MONSF", "POLLIT", "DIRECT",
+        "CLLIT", "CLNON", "MONDF", "MONSF", "POLLIT", "POLNON", "DIRECT",
         "BLDILL", "BLDNON", "AWNNON", "GEMINI", "LED",
-        "ALULIT", "ALUNON", "VINYL", "NEON", "OTHER",
+        "ALULIT", "ALUNON", "VINYL", "NEON", "FLATPNL", "OTHER",
     }
     actual = {s.value for s in SignType}
     assert actual == expected_types, (
@@ -284,49 +284,70 @@ def test_gemini_no_fab_ot():
     assert gem_fab is None, f"Unexpected 9200 fab OT line for GEMINI: {gem_fab}"
 
 
-def test_gemini_has_install_ot():
-    """GEMINI sign type has a 9600 install OT line with hours > 0."""
+def test_gemini_install_ot_below_threshold():
+    """GEMINI install OT (calibrated: 0.221 * 1.68 = 0.37h) is below 0.50h threshold -- no 9600 line."""
     job_gem = JobInput(
         letter_count=10, letter_height_inches=12, font_type=FontType.BLOCK,
         construction=ConstructionType.FACE_LIT, sign_type=SignType.GEMINI,
     )
     r_gem = estimate(job_gem)
     gem_inst = next((l for l in r_gem.install_lines if l.work_code == "9600"), None)
-    assert gem_inst is not None and gem_inst.hours > 0, (
-        "Expected GEMINI install OT (9600) line with hours > 0"
+    # Calibration data: install_ot_probability=0.221, install_ot_mean=1.68
+    # Expected hours = 0.37 < 0.50 threshold -> suppressed
+    assert gem_inst is None, (
+        f"GEMINI install OT (9600) should be suppressed (0.37h < 0.50h threshold), got {gem_inst}"
     )
 
 
-def test_other_sign_type_no_ot_lines():
-    """OTHER sign type (not in OT_FACTORS) has no 9200 or 9600 lines."""
+def test_other_sign_type_ot_from_calibration():
+    """OTHER sign type has OT factors from calibration auto-populate.
+
+    Calibration: fab_ot=0.088*3.88=0.34h (<0.50, suppressed),
+                 install_ot=0.23*3.28=0.75h (>=0.50, included as 9600).
+    """
     job_other = JobInput(
         letter_count=10, letter_height_inches=12, font_type=FontType.BLOCK,
         construction=ConstructionType.FACE_LIT, sign_type=SignType.OTHER,
     )
     r_other = estimate(job_other)
-    ot_lines = [
-        l for l in r_other.labor_lines + r_other.install_lines
-        if l.work_code in ("9200", "9600")
-    ]
-    assert not ot_lines, (
-        f"Unexpected OT lines for OTHER type: {[l.work_code for l in ot_lines]}"
+    fab_ot = [l for l in r_other.labor_lines if l.work_code == "9200"]
+    inst_ot = [l for l in r_other.install_lines if l.work_code == "9600"]
+    # Fab OT: 0.088 * 3.88 = 0.34h < 0.50 -> suppressed
+    assert not fab_ot, (
+        f"OTHER fab OT (9200) should be suppressed (0.34h < 0.50h threshold)"
+    )
+    # Install OT: 0.23 * 3.28 = 0.75h >= 0.50 -> present
+    assert len(inst_ot) == 1 and inst_ot[0].hours > 0, (
+        "OTHER install OT (9600) expected from calibration (0.75h >= 0.50h threshold)"
     )
 
 
-# ── Warehouse Validation (requires DuckDB) ────────────────────────────────────
+# ── Warehouse Validation (requires DuckDB with normalized schema) ──────────────
+
+def _duckdb_has_normalized_schema() -> bool:
+    """Check if DuckDB warehouse has the expected normalized tables."""
+    from sign_types import find_warehouse_db
+    db_path = find_warehouse_db()
+    if db_path is None:
+        return False
+    try:
+        import duckdb
+        db = duckdb.connect(str(db_path), read_only=True)
+        tables = {t[0] for t in db.execute("SHOW TABLES").fetchall()}
+        db.close()
+        return "so_contract_labor" in tables and "so_contracts" in tables
+    except Exception:
+        return False
 
 @pytest.mark.skipif(
-    not __import__("pathlib").Path(
-        "C:/Scripts/signx-warehouse/warehouse/signx.duckdb"
-    ).exists(),
-    reason="DuckDB warehouse not available",
+    not _duckdb_has_normalized_schema(),
+    reason="DuckDB warehouse missing or lacks normalized schema (so_contract_labor + so_contracts)",
 )
 def test_install_floors_within_15pct_of_warehouse_p50():
     """Install floor values are within 15% of warehouse P50 * 1.20 for each sign type."""
     import duckdb
-    db = duckdb.connect(
-        "C:/Scripts/signx-warehouse/warehouse/signx.duckdb", read_only=True
-    )
+    from sign_types import find_warehouse_db
+    db = duckdb.connect(str(find_warehouse_db()), read_only=True)
     rows = db.execute("""
         SELECT
             c.sign_type,
@@ -359,17 +380,14 @@ def test_install_floors_within_15pct_of_warehouse_p50():
 
 
 @pytest.mark.skipif(
-    not __import__("pathlib").Path(
-        "C:/Scripts/signx-warehouse/warehouse/signx.duckdb"
-    ).exists(),
-    reason="DuckDB warehouse not available",
+    not _duckdb_has_normalized_schema(),
+    reason="DuckDB warehouse missing or lacks normalized schema (so_contract_labor + so_contracts)",
 )
 def test_cllit_0270_floor_within_15pct_of_warehouse_p50():
     """CLLIT 0270 floor is within 15% of warehouse P50 * 1.20."""
     import duckdb
-    db = duckdb.connect(
-        "C:/Scripts/signx-warehouse/warehouse/signx.duckdb", read_only=True
-    )
+    from sign_types import find_warehouse_db
+    db = duckdb.connect(str(find_warehouse_db()), read_only=True)
     row = db.execute("""
         SELECT
             round(percentile_cont(0.50) WITHIN GROUP (ORDER BY l.actual_hours), 2) as p50

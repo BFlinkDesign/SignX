@@ -19,9 +19,11 @@ from difflib import SequenceMatcher
 from pathlib import Path
 from typing import List, Optional
 
+from sign_types import FILENAME_TYPE_MAP
+
 logger = logging.getLogger("signx-takeoff.drawing_search")
 
-_SMB_TIMEOUT = 3  # seconds — don't let SMB path checks hang
+_SMB_TIMEOUT = 3  # seconds -- don't let SMB path checks hang
 
 # Folder listing cache (TTL managed externally; populated on first scan per letter)
 _folder_cache: dict[str, list[str]] = {}
@@ -35,11 +37,11 @@ def _path_exists_fast(p: Path, timeout: int = _SMB_TIMEOUT) -> bool:
         except (FuturesTimeout, OSError):
             return False
 
-# ── Configuration ────────────────────────────────────────────────────────────
+# -- Configuration ------------------------------------------------------------
 
 DRAWINGS_ROOT = Path(os.environ.get("DRAWINGS_ROOT", r"\\ES-FS02\Customers2"))
 
-# Customer name aliases — maps common short names / abbreviations to
+# Customer name aliases -- maps common short names / abbreviations to
 # the canonical folder name on G: drive.  Add entries as needed.
 CUSTOMER_ALIASES: dict[str, list[str]] = {
     "cat scale":        ["cat scale company", "catscale", "cat scale co"],
@@ -60,34 +62,7 @@ CUSTOMER_ALIASES: dict[str, list[str]] = {
 # WO number pattern: MMYY-NNNNN-NN (with optional revision)
 WO_PATTERN = re.compile(r"(\d{4})-(\d{4,5})(?:-(\d{2}))?")
 
-# Sign type keywords found in filenames → estimator type
-FILENAME_TYPE_MAP = {
-    "monument":         "monument",
-    "mon face":         "monument",
-    "mon ":             "monument",
-    "pylon":            "pylon",
-    "pole sign":        "pylon",
-    "pole face":        "pylon",
-    "channel let":      "channel_letter",
-    "channel lit":      "channel_letter",
-    "letters":          "channel_letter",
-    "emc":              "pylon",
-    "emcenter":         "pylon",
-    "electronic":       "pylon",
-    "awning":           "awning",
-    "canopy":           "awning",
-    "cabinet":          "cabinet",
-    "lightbox":         "cabinet",
-    "light box":        "cabinet",
-    "dimensional":      "dimensional",
-    "gemini":           "dimensional",
-    "flat cut":         "dimensional",
-    "directional":      "directional",
-    "wayfinding":       "directional",
-    "info panel":       "directional",
-    "removal":          "removal",
-    "remove":           "removal",
-}
+# FILENAME_TYPE_MAP imported from sign_types.py (single source of truth)
 
 # Filenames to exclude (not actual sign drawings)
 EXCLUDE_PATTERNS = [

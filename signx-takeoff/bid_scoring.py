@@ -19,21 +19,9 @@ import csv
 import statistics
 from dataclasses import dataclass, field
 from datetime import datetime
-from pathlib import Path
 from typing import Optional
 
-
-# ── File Paths ────────────────────────────────────────────────────────────────
-
-WAREHOUSE_PATHS = [
-    Path(r"C:\Scripts\signx-warehouse\warehouse\raw\so_contracts_parsed.csv"),
-    Path(r"C:\Scripts\SignX\Keyedin\warehouse\warehouse\raw\so_contracts_parsed.csv"),
-]
-
-QUOTE_PATHS = [
-    Path(r"C:\Scripts\signx-warehouse\warehouse\raw\quote_status_report.csv"),
-    Path(r"C:\Scripts\SignX\Keyedin\warehouse\warehouse\raw\quote_status_report.csv"),
-]
+from sign_types import expand_sign_type, find_warehouse_csv, find_quote_csv
 
 # ── Module-level Caches ───────────────────────────────────────────────────────
 
@@ -51,11 +39,6 @@ _SIGN_TYPE_WIN_RATE: dict[str, float] = {}         # sign_type -> win rate 0-1
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
-def _find_csv(paths: list[Path]) -> Optional[Path]:
-    for p in paths:
-        if p.exists():
-            return p
-    return None
 
 
 def _percentile(sorted_values: list[float], p: float) -> float:
@@ -91,7 +74,7 @@ def _load_all():
         return
 
     # ── Load Warehouse ────────────────────────────────────────────────────────
-    wh_path = _find_csv(WAREHOUSE_PATHS)
+    wh_path = find_warehouse_csv()
     if wh_path:
         with open(wh_path, "r", encoding="utf-8", errors="replace") as f:
             for row in csv.DictReader(f):
@@ -123,7 +106,7 @@ def _load_all():
             _warehouse_quote_nos.add(qn)
 
     # ── Load Quotes ───────────────────────────────────────────────────────────
-    qt_path = _find_csv(QUOTE_PATHS)
+    qt_path = find_quote_csv()
     if qt_path:
         with open(qt_path, "r", encoding="utf-8", errors="replace") as f:
             for row in csv.DictReader(f):
@@ -529,20 +512,9 @@ def _score_price_position(price: float, sign_type: str) -> FactorScore:
 
     # Try aliases if direct match not found
     if not pricing_data:
-        _ALIASES = {
-            "CHANNEL_LETTER": ["CLLIT", "CLNON", "CHANNL"],
-            "MONUMENT": ["MONDF", "MONSF"],
-            "PYLON": ["POLLIT", "POLNON"],
-            "CABINET": ["ALULIT", "ALUNON", "BLDILL", "BLDNON"],
-            "AWNING": ["AWNNON", "AWNLIT", "AWNILL", "AWNREC"],
-            "DIRECTIONAL": ["DIRECT"],
-            "DIMENSIONAL": ["GEMINI"],
-        }
-        for alias, codes in _ALIASES.items():
-            if sign_type.upper() in codes or sign_type.upper() == alias:
-                for code in codes:
-                    if code in _SIGN_TYPE_PRICING:
-                        pricing_data = pricing_data + _SIGN_TYPE_PRICING[code]
+        for code in expand_sign_type(sign_type):
+            if code in _SIGN_TYPE_PRICING:
+                pricing_data = pricing_data + _SIGN_TYPE_PRICING[code]
         pricing_data = sorted(pricing_data)
 
     if not pricing_data or price <= 0:
@@ -631,21 +603,10 @@ def _score_sign_type_expertise(sign_type: str) -> FactorScore:
 
     # Try aliases
     if win_rate is None:
-        _ALIASES = {
-            "CHANNEL_LETTER": ["CLLIT", "CLNON", "CHANNL"],
-            "MONUMENT": ["MONDF", "MONSF"],
-            "PYLON": ["POLLIT", "POLNON"],
-            "CABINET": ["ALULIT", "ALUNON", "BLDILL", "BLDNON"],
-            "AWNING": ["AWNNON", "AWNLIT", "AWNILL", "AWNREC"],
-            "DIRECTIONAL": ["DIRECT"],
-            "DIMENSIONAL": ["GEMINI"],
-        }
-        for alias, codes in _ALIASES.items():
-            if st_upper in codes or st_upper == alias:
-                rates = [_SIGN_TYPE_WIN_RATE[c] for c in codes if c in _SIGN_TYPE_WIN_RATE]
-                if rates:
-                    win_rate = statistics.mean(rates)
-                break
+        expanded = expand_sign_type(sign_type)
+        rates = [_SIGN_TYPE_WIN_RATE[c] for c in expanded if c in _SIGN_TYPE_WIN_RATE]
+        if rates:
+            win_rate = statistics.mean(rates)
 
     if win_rate is None:
         return FactorScore(
@@ -720,23 +681,7 @@ def _count_comparable_bids(
     Counts from _LABELED_QUOTES cross-referenced with warehouse sign types.
     """
     _load_all()
-    st_upper = sign_type.upper()
-
-    # Build alias codes
-    _ALIASES = {
-        "CHANNEL_LETTER": ["CLLIT", "CLNON", "CHANNL"],
-        "MONUMENT": ["MONDF", "MONSF"],
-        "PYLON": ["POLLIT", "POLNON"],
-        "CABINET": ["ALULIT", "ALUNON", "BLDILL", "BLDNON"],
-        "AWNING": ["AWNNON", "AWNLIT", "AWNILL", "AWNREC"],
-        "DIRECTIONAL": ["DIRECT"],
-        "DIMENSIONAL": ["GEMINI"],
-    }
-    match_codes = {st_upper}
-    for alias, codes in _ALIASES.items():
-        if st_upper in codes or st_upper == alias:
-            match_codes.update(codes)
-            break
+    match_codes = expand_sign_type(sign_type)
 
     # Get quote_nbrs for this sign type from warehouse
     sign_type_quotes: set[str] = set()
@@ -953,18 +898,8 @@ def score_bid(
     comparable_wins, comparable_losses = _count_comparable_bids(sign_type, price, customer_name)
 
     # Confidence
-    sign_type_known = sign_type.upper() in _SIGN_TYPE_WIN_RATE or any(
-        sign_type.upper() in codes
-        for codes in [
-            ["CLLIT", "CLNON", "CHANNL"],
-            ["MONDF", "MONSF"],
-            ["POLLIT", "POLNON"],
-            ["ALULIT", "ALUNON", "BLDILL", "BLDNON"],
-            ["AWNNON", "AWNLIT", "AWNILL", "AWNREC"],
-            ["DIRECT"],
-            ["GEMINI"],
-        ]
-    )
+    expanded = expand_sign_type(sign_type)
+    sign_type_known = any(c in _SIGN_TYPE_WIN_RATE for c in expanded)
     conf = _confidence(cstats, comparable_wins, comparable_losses, sign_type_known)
 
     # Recommendations
@@ -1033,21 +968,9 @@ def get_price_recommendation(
     pricing_data = list(_SIGN_TYPE_PRICING.get(st_upper, []))
 
     # Aggregate aliases
-    _ALIASES = {
-        "CHANNEL_LETTER": ["CLLIT", "CLNON", "CHANNL"],
-        "MONUMENT": ["MONDF", "MONSF"],
-        "PYLON": ["POLLIT", "POLNON"],
-        "CABINET": ["ALULIT", "ALUNON", "BLDILL", "BLDNON"],
-        "AWNING": ["AWNNON", "AWNLIT", "AWNILL", "AWNREC"],
-        "DIRECTIONAL": ["DIRECT"],
-        "DIMENSIONAL": ["GEMINI"],
-    }
-    for alias, codes in _ALIASES.items():
-        if st_upper in codes or st_upper == alias:
-            for code in codes:
-                if code in _SIGN_TYPE_PRICING:
-                    pricing_data.extend(_SIGN_TYPE_PRICING[code])
-            break
+    for code in expand_sign_type(sign_type):
+        if code != st_upper and code in _SIGN_TYPE_PRICING:
+            pricing_data.extend(_SIGN_TYPE_PRICING[code])
     pricing_data = sorted(pricing_data)
 
     if not pricing_data:
@@ -1068,13 +991,12 @@ def get_price_recommendation(
             cstats = _CUSTOMER_STATS[ckey]
             # Get this customer's jobs for this sign type
             cname_upper = ckey.upper()
+            type_codes = expand_sign_type(sign_type)
             cust_billings = [
                 j["billing"]
                 for j in _ALL_JOBS
                 if j["customer_name"].upper() == cname_upper
-                and (j["sign_type"] == st_upper or j["sales_code"] == st_upper
-                     or any(st_upper in codes or j["sign_type"] in codes
-                            for codes in _ALIASES.values()))
+                and (j["sign_type"] in type_codes or j["sales_code"] in type_codes)
                 and j["billing"] > 0
             ]
             if cust_billings:

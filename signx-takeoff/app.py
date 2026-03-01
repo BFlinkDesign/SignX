@@ -121,6 +121,54 @@ async def root():
     return FileResponse(str(STATIC_DIR / "index.html"))
 
 
+# ── Health Check ─────────────────────────────────────────────────────────────
+
+@app.get("/api/health")
+async def health_check():
+    """System health check -- reports subsystem status for diagnostics."""
+    from sign_types import find_warehouse_csv, find_quote_csv, SIGN_TYPE_ALIASES
+
+    warehouse_csv = find_warehouse_csv()
+    quote_csv = find_quote_csv()
+
+    subsystems = {
+        "warehouse_csv": {
+            "status": "ok" if warehouse_csv else "missing",
+            "path": str(warehouse_csv) if warehouse_csv else None,
+        },
+        "quote_csv": {
+            "status": "ok" if quote_csv else "missing",
+            "path": str(quote_csv) if quote_csv else None,
+        },
+        "notion": {
+            "status": "ok" if NOTION_TOKEN and NOTION_BID_PIPELINE_DB else "not_configured",
+        },
+        "sign_type_groups": len(SIGN_TYPE_ALIASES),
+    }
+
+    try:
+        from bid_model import get_model_diagnostics
+        diag = get_model_diagnostics()
+        subsystems["ml_model"] = {
+            "status": "ok" if diag.get("model_loaded") else "failed",
+            "auc": diag.get("metrics", {}).get("auc_roc"),
+            "training_error": diag.get("training_error"),
+        }
+    except Exception as e:
+        subsystems["ml_model"] = {"status": "error", "error": str(e)}
+
+    all_ok = all(
+        v.get("status") == "ok" if isinstance(v, dict) else True
+        for v in subsystems.values()
+    )
+
+    return {
+        "status": "healthy" if all_ok else "degraded",
+        "subsystems": subsystems,
+        "version": app.version,
+    }
+
+
 # ── PDF Upload ───────────────────────────────────────────────────────────────
 
 @app.post("/api/extract-pf")
@@ -140,6 +188,8 @@ async def extract_pf(file: UploadFile = File(...), page: int = 0,
         "letter_count": result.letter_count,
         "max_height_inches": round(result.max_height_inches, 1),
         "min_height_inches": round(result.min_height_inches, 1),
+        "median_height_inches": round(result.median_height_inches, 1),
+        "representative_height_inches": round(result.representative_height_inches, 1),
         "warnings": result.warnings,
         "letters": [
             {
@@ -237,7 +287,7 @@ async def run_estimate(req: EstimateRequest):
 
     result = estimate(job)
     total_est_hours = result.total_man_hours + result.total_crew_hours
-    bench = benchmark(total_est_hours)
+    bench = benchmark(total_est_hours, sign_type_filter="CHANNEL_LETTER")
     bench_data = _format_benchmark(bench) if bench else None
     return _format_estimate_result(result, bench_data)
 
@@ -272,7 +322,7 @@ async def run_monument_estimate(req: MonumentRequest):
     )
     result = estimate_monument(job)
     total_est_hours = result.total_man_hours + result.total_crew_hours
-    bench = benchmark(total_est_hours)
+    bench = benchmark(total_est_hours, sign_type_filter="MONUMENT")
     bench_data = _format_benchmark(bench) if bench else None
     return _format_estimate_result(result, bench_data)
 
@@ -307,7 +357,7 @@ async def run_awning_estimate(req: AwningRequest):
     )
     result = estimate_awning(job)
     total_est_hours = result.total_man_hours + result.total_crew_hours
-    bench = benchmark(total_est_hours)
+    bench = benchmark(total_est_hours, sign_type_filter="AWNING")
     bench_data = _format_benchmark(bench) if bench else None
     return _format_estimate_result(result, bench_data)
 
@@ -340,7 +390,7 @@ async def run_removal_estimate(req: RemovalRequest):
     )
     result = estimate_removal(job)
     total_est_hours = result.total_man_hours + result.total_crew_hours
-    bench = benchmark(total_est_hours)
+    bench = benchmark(total_est_hours, sign_type_filter="REMOVAL")
     bench_data = _format_benchmark(bench) if bench else None
     return _format_estimate_result(result, bench_data)
 
@@ -378,7 +428,7 @@ async def run_pylon_estimate(req: PylonRequest):
     )
     result = estimate_pylon(job)
     total_est_hours = result.total_man_hours + result.total_crew_hours
-    bench = benchmark(total_est_hours)
+    bench = benchmark(total_est_hours, sign_type_filter="PYLON")
     bench_data = _format_benchmark(bench) if bench else None
     return _format_estimate_result(result, bench_data)
 
@@ -416,7 +466,7 @@ async def run_cabinet_estimate(req: CabinetRequest):
     )
     result = estimate_cabinet(job)
     total_est_hours = result.total_man_hours + result.total_crew_hours
-    bench = benchmark(total_est_hours)
+    bench = benchmark(total_est_hours, sign_type_filter="CABINET")
     bench_data = _format_benchmark(bench) if bench else None
     return _format_estimate_result(result, bench_data)
 
@@ -450,7 +500,7 @@ async def run_directional_estimate(req: DirectionalRequest):
     )
     result = estimate_directional(job)
     total_est_hours = result.total_man_hours + result.total_crew_hours
-    bench = benchmark(total_est_hours)
+    bench = benchmark(total_est_hours, sign_type_filter="DIRECTIONAL")
     bench_data = _format_benchmark(bench) if bench else None
     return _format_estimate_result(result, bench_data)
 
@@ -478,7 +528,7 @@ async def run_dimensional_estimate(req: DimensionalRequest):
     )
     result = estimate_dimensional(job)
     total_est_hours = result.total_man_hours + result.total_crew_hours
-    bench = benchmark(total_est_hours)
+    bench = benchmark(total_est_hours, sign_type_filter="DIMENSIONAL")
     bench_data = _format_benchmark(bench) if bench else None
     return _format_estimate_result(result, bench_data)
 
@@ -487,6 +537,8 @@ async def run_dimensional_estimate(req: DimensionalRequest):
 
 def _format_benchmark(bench):
     return {
+        "sign_type": bench.sign_type,
+        "sign_type_label": bench.sign_type_label,
         "matching_jobs": bench.matching_jobs,
         "avg_hours": bench.avg_labor_hours,
         "median_hours": bench.median_labor_hours,
@@ -1162,9 +1214,19 @@ async def run_notion_takeoff(req: TakeoffRequest):
             )
             result = estimate_cabinet(job)
 
-        # 4. Format result
+        # 4. Format result -- benchmark against same sign type
+        _bench_type_map = {
+            "channel_letter": "CHANNEL_LETTER",
+            "monument": "MONUMENT",
+            "pylon": "PYLON",
+            "cabinet": "CABINET",
+            "directional": "DIRECTIONAL",
+            "removal": "REMOVAL",
+            "awning": "AWNING",
+            "dimensional": "DIMENSIONAL",
+        }
         total_est = result.total_man_hours + result.total_crew_hours
-        bench = benchmark(total_est)
+        bench = benchmark(total_est, sign_type_filter=_bench_type_map.get(est_key, "CHANNEL_LETTER"))
         bench_data = _format_benchmark(bench) if bench else None
         estimate_data = _format_estimate_result(result, bench_data)
 
@@ -1723,6 +1785,10 @@ async def get_project_dossier(customer: str, sign_type: Optional[str] = None,
 
     # ── 8. Notion Bids for this customer ──────────────────────────────────
     notion_bids = []
+    if not NOTION_TOKEN or not NOTION_BID_PIPELINE_DB:
+        dossier["warnings"].append(
+            "Notion not configured -- set NOTION_TOKEN and NOTION_BID_PIPELINE in .env to see bid pipeline data"
+        )
     if NOTION_TOKEN and NOTION_BID_PIPELINE_DB:
         try:
             async with httpx.AsyncClient(timeout=10.0) as client:

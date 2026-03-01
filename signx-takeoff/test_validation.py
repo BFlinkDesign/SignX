@@ -116,7 +116,8 @@ def test_pdf_parser_info_only_file():
 
 # ── Test 2: ABC Formula vs Warehouse Actuals ──────────────────────────────────
 
-_CSV_PATH = Path(r"C:\Scripts\signx-warehouse\warehouse\raw\so_contracts_parsed.csv")
+from sign_types import find_warehouse_csv as _find_csv
+_CSV_PATH = _find_csv() or Path(r"C:\Scripts\signx-warehouse\warehouse\raw\so_contracts_parsed.csv")
 _IMPLIED_RATE = 40.0
 
 
@@ -270,28 +271,29 @@ def _warehouse_available() -> bool:
 
 @pytest.mark.skipif(not _warehouse_available(), reason="warehouse module not available")
 def test_warehouse_uses_billing_not_quoted_price():
-    """warehouse._load_channel_letter_jobs uses `billing` column, not `quoted_price`."""
+    """warehouse data loading uses `billing` column, not `quoted_price`."""
     import inspect
-    from warehouse import _load_channel_letter_jobs
-    source = inspect.getsource(_load_channel_letter_jobs)
+    from warehouse import _load_all_jobs
+    source = inspect.getsource(_load_all_jobs)
     assert "billing" in source, (
-        "`billing` column not referenced in _load_channel_letter_jobs source"
+        "`billing` column not referenced in _load_all_jobs source"
     )
     assert "quoted_price" not in source, (
-        "`quoted_price` found in source — should use `billing` column exclusively"
+        "`quoted_price` found in source -- should use `billing` column exclusively"
     )
 
 
 @pytest.mark.skipif(not _warehouse_available(), reason="warehouse module not available")
 def test_warehouse_filters_channel_letter_jobs():
-    """warehouse._load_channel_letter_jobs filters on CHANNL or CLLIT identifiers."""
+    """warehouse._load_channel_letter_jobs filters channel letters via expand_sign_type."""
     import inspect
     from warehouse import _load_channel_letter_jobs
     source = inspect.getsource(_load_channel_letter_jobs)
-    has_channl = "CHANNL" in source
-    has_cllit = "CLLIT" in source
-    assert has_channl or has_cllit, (
-        "No channel letter filter (CHANNL/CLLIT) found in _load_channel_letter_jobs"
+    # After Sprint F refactor, uses expand_sign_type("CHANNEL_LETTER") instead of hardcoded codes
+    has_expand = "expand_sign_type" in source or "channel_codes" in source
+    has_legacy = "CHANNL" in source or "CLLIT" in source
+    assert has_expand or has_legacy, (
+        "No channel letter filter found in _load_channel_letter_jobs"
     )
 
 

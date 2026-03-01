@@ -51,6 +51,8 @@ from enum import Enum
 from pathlib import Path
 from typing import Any, Optional
 
+from sign_types import find_warehouse_db
+
 from led_catalog import (
     select_module as _select_led_module,
     get_module_by_sku as _get_led_module,
@@ -1551,7 +1553,7 @@ def estimate(job: JobInput) -> EstimateResult:
 # ── Comparable WO Loader ──────────────────────────────────────────────────────
 
 def load_comparable(wo_number: str,
-                    db_path: str = "C:/Scripts/signx-warehouse/warehouse/signx.duckdb"
+                    db_path: str | None = None,
                     ) -> dict[str, float]:
     """
     Pull a WO's actual hours from the warehouse, grouped by work code.
@@ -1564,6 +1566,11 @@ def load_comparable(wo_number: str,
         comp = load_comparable("9719.2")
         # comp = {"0200": 1.75, "0210": 12.25, "0220": 4.25, ...}
     """
+    if db_path is None:
+        _resolved = find_warehouse_db()
+        if _resolved is None:
+            return {}
+        db_path = str(_resolved)
     import duckdb
     con = duckdb.connect(db_path, read_only=True)
     rows = con.execute("""

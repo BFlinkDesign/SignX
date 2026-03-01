@@ -295,18 +295,17 @@ def test_cllit_produces_led_material():
     )
 
 
-def test_clnon_no_install_ot_line():
-    """CLNON (non-illuminated) has no 9600 install OT line — it's not in OT_FACTORS."""
+def test_clnon_install_ot_from_calibration():
+    """CLNON gets install OT from calibration auto-fill (38.5% probability, 2.7h mean)."""
     job = JobInput(
         letter_count=10, letter_height_inches=12, font_type=FontType.BLOCK,
         construction=ConstructionType.FACE_LIT, sign_type=SignType.CLNON,
     )
     result = estimate(job)
     inst_ot = next((l for l in result.install_lines if l.work_code == "9600"), None)
-    assert inst_ot is None, (
-        f"CLNON should have no 9600 install OT line (not in OT_FACTORS), "
-        f"but found: hours={inst_ot.hours if inst_ot else None}"
-    )
+    # Calibration auto-populates OT_FACTORS for CLNON from warehouse data
+    assert inst_ot is not None, "CLNON should have 9600 install OT from calibration"
+    assert inst_ot.hours > 0, f"Install OT hours should be positive, got {inst_ot.hours}"
 
 
 def test_halo_construction_does_not_crash():
