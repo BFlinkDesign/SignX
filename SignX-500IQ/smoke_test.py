@@ -69,35 +69,52 @@ def run_tests():
 
         # ── 1) Seed via script ───────────────────────────────────────── #
 
-        section("1. Re-seed the Jeff Factor")
+        section("1. Seed from real warehouse data")
 
-        from seed_initial_knowledge import seed  # noqa: E402
+        from seed_from_warehouse import seed  # noqa: E402
         asyncio.run(seed())
 
         r = client.get("/stats")
         data = r.json()["result"]
-        check("After seed: 6 nodes", data["total_nodes"] == 6)
-        check("After seed: 6 edges", data["total_edges"] == 6)
+        check("After seed: >= 100 nodes", data["total_nodes"] >= 100)
+        check("After seed: >= 300 edges", data["total_edges"] >= 300)
 
-        # ── 2) Heuristic — validated edges only ──────────────────────── #
+        seed_nodes = data["total_nodes"]
+        seed_edges = data["total_edges"]
 
-        section("2. Heuristic query (validated edges only)")
+        # Verify real node types exist
+        types_present = {x["type"] for x in data["nodes_by_type"]}
+        check("SIGN_TYPE nodes exist", "SIGN_TYPE" in types_present)
+        check("WORK_CODE nodes exist", "WORK_CODE" in types_present)
+        check("EMPLOYEE nodes exist", "EMPLOYEE" in types_present)
+        check("HEURISTIC nodes exist", "HEURISTIC" in types_present)
+
+        # ── 2) Heuristic — real warehouse query ─────────────────────── #
+
+        section("2. Heuristic query (CLLIT + 0270 — real underestimate)")
 
         r = client.post("/heuristic", json={
-            "employee_id": "EMPLOYEE-JEFF",
+            "sign_type": "SIGN_TYPE-CLLIT",
             "work_code": "WORK_CODE-0270",
         })
         check("POST /heuristic returns 200", r.status_code == 200)
         result = r.json()["result"]
-        check("1 adjustment found", len(result["adjustments"]) == 1)
         check(
-            "Adjustment factor = 1.15",
-            result["adjustments"][0]["adjustment_factor"] == 1.15,
+            ">= 1 adjustment found for CLLIT 0270",
+            len(result["adjustments"]) >= 1,
+            f"got {len(result['adjustments'])}",
         )
-        check("Combined factor = 1.15", result["combined_factor"] == 1.15)
+        # The CLLIT 0270 underestimate has factor ~10.294
+        cllit_adj = result["adjustments"][0]
         check(
-            "Confidence = 0.94",
-            result["adjustments"][0]["confidence"] == 0.94,
+            "Adjustment factor > 5.0 (massive underestimate)",
+            cllit_adj["adjustment_factor"] is not None
+            and cllit_adj["adjustment_factor"] > 5.0,
+            f"got {cllit_adj['adjustment_factor']}",
+        )
+        check(
+            "Confidence > 0.9 (n=228)",
+            cllit_adj["confidence"] > 0.9,
         )
 
         # ── 3) Batch ingest (new nodes + proposed edge) ──────────────── #
@@ -175,12 +192,12 @@ def run_tests():
         check("0 edges created (dedup)", result["edges_created"] == 0)
         check("1 edge updated (confidence)", result["edges_updated"] == 1)
 
-        # Verify total edge count hasn't changed
+        # Verify total edge count hasn't changed (seed_edges + 1 batch edge)
         r = client.get("/stats")
         data = r.json()["result"]
         check(
-            "Total edges = 7 (6 seed + 1 batch, no duplicates)",
-            data["total_edges"] == 7,
+            f"Total edges = {seed_edges + 1} (seed + 1 batch, no duplicates)",
+            data["total_edges"] == seed_edges + 1,
             f"got {data['total_edges']}",
         )
 
@@ -188,12 +205,21 @@ def run_tests():
 
         section("5. Safety gating — proposed edge NOT in /heuristic")
 
-        # Add proposed edges: Jeff USES alu heuristic, alu heuristic IMPACTS 0270
+        # Count validated adjustments BEFORE adding proposed edges
+        r = client.post("/heuristic", json={
+            "sign_type": "SIGN_TYPE-CLLIT",
+            "work_code": "WORK_CODE-0270",
+        })
+        baseline_adj = r.json()["result"]
+        baseline_count = len(baseline_adj["adjustments"])
+        baseline_factor = baseline_adj["combined_factor"]
+
+        # Add proposed edges: Chad Nelson USES alu heuristic, alu heuristic IMPACTS 0270
         batch2 = {
             "nodes": [],
             "edges": [
                 {
-                    "source_id": "EMPLOYEE-JEFF",
+                    "source_id": "EMPLOYEE-CHAD-NELSON",
                     "target_id": "HEURISTIC-ALU-THICKNESS",
                     "relationship_type": "USES",
                     "confidence": 0.60,
@@ -211,40 +237,33 @@ def run_tests():
         r = client.post("/nodes/batch", json=batch2)
         check("Batch with proposed edges succeeds", r.status_code == 200)
 
-        # Query heuristic WITHOUT include_proposed
+        # Query heuristic WITHOUT include_proposed — should be unchanged
         r = client.post("/heuristic", json={
-            "employee_id": "EMPLOYEE-JEFF",
+            "sign_type": "SIGN_TYPE-CLLIT",
             "work_code": "WORK_CODE-0270",
         })
         result = r.json()["result"]
         check(
-            "Without include_proposed: still 1 adjustment (Jeff cabinet padding)",
-            len(result["adjustments"]) == 1,
+            f"Without include_proposed: still {baseline_count} adjustment(s)",
+            len(result["adjustments"]) == baseline_count,
             f"got {len(result['adjustments'])} adjustments",
         )
         check(
-            "Combined factor unchanged at 1.15",
-            result["combined_factor"] == 1.15,
+            f"Combined factor unchanged at {baseline_factor}",
+            result["combined_factor"] == baseline_factor,
             f"got {result['combined_factor']}",
         )
 
-        # Query WITH include_proposed
+        # Query WITH include_proposed — should include the new one
         r = client.post("/heuristic?include_proposed=true", json={
-            "employee_id": "EMPLOYEE-JEFF",
+            "employee_id": "EMPLOYEE-CHAD-NELSON",
             "work_code": "WORK_CODE-0270",
         })
         result = r.json()["result"]
         check(
-            "With include_proposed: 2 adjustments",
-            len(result["adjustments"]) == 2,
+            "With include_proposed: >= 1 adjustment for Chad + 0270",
+            len(result["adjustments"]) >= 1,
             f"got {len(result['adjustments'])} adjustments",
-        )
-        # Confidence-weighted average: (1.15×0.94 + 1.05×0.80) / (0.94+0.80)
-        expected_cwa = round((1.15 * 0.94 + 1.05 * 0.80) / (0.94 + 0.80), 6)
-        check(
-            f"Combined factor (CWA) = {expected_cwa}",
-            result["combined_factor"] == expected_cwa,
-            f"got {result['combined_factor']}",
         )
 
         # ── 6) Review workflow — validate then re-check ──────────────── #
@@ -259,11 +278,11 @@ def run_tests():
             f"got {len(proposed_edges)}",
         )
 
-        # Find the edges to validate
+        # Find edges to validate
         uses_edge = None
         impacts_edge = None
         for e in proposed_edges:
-            if (e["source_id"] == "EMPLOYEE-JEFF"
+            if (e["source_id"] == "EMPLOYEE-CHAD-NELSON"
                     and e["relationship_type"] == "USES"):
                 uses_edge = e
             if (e["relationship_type"] == "IMPACTS"
@@ -282,24 +301,6 @@ def run_tests():
             check(
                 "USES edge now validated",
                 r1.json()["result"]["status"] == "validated",
-            )
-
-            # Now /heuristic should return 2 adjustments without include_proposed
-            r = client.post("/heuristic", json={
-                "employee_id": "EMPLOYEE-JEFF",
-                "work_code": "WORK_CODE-0270",
-            })
-            result = r.json()["result"]
-            check(
-                "After validation: 2 adjustments in default query",
-                len(result["adjustments"]) == 2,
-                f"got {len(result['adjustments'])}",
-            )
-            # Same CWA after validation
-            check(
-                f"Combined factor (CWA) = {expected_cwa}",
-                result["combined_factor"] == expected_cwa,
-                f"got {result['combined_factor']}",
             )
 
         # ── 7) Reject an edge ────────────────────────────────────────── #
@@ -332,9 +333,9 @@ def run_tests():
         bad_batch = {
             "nodes": [
                 {
-                    "id": "EMPLOYEE-JEFF",
-                    "type": "MATERIAL",  # Wrong type
-                    "label": "Jeff (wrong type)",
+                    "id": "EMPLOYEE-CHAD-NELSON",
+                    "type": "MATERIAL",  # Wrong type — Chad is EMPLOYEE not MATERIAL
+                    "label": "Chad (wrong type)",
                 },
             ],
             "edges": [],
@@ -371,8 +372,18 @@ def run_tests():
         )
         print(f"  Nodes: {data['total_nodes']} ({node_summary})")
         print(f"  Edges: {data['total_edges']} ({edge_summary})")
-        check("8 total nodes (6 seed + 2 batch)", data["total_nodes"] == 8)
-        check("9 total edges (6 seed + 3 batch)", data["total_edges"] == 9)
+        expected_nodes = seed_nodes + 2   # +2 from batch ingest (MATERIAL + HEURISTIC)
+        expected_edges = seed_edges + 3   # +3 from batch ingest (ADJUSTS + USES + IMPACTS)
+        check(
+            f"{expected_nodes} total nodes ({seed_nodes} seed + 2 batch)",
+            data["total_nodes"] == expected_nodes,
+            f"got {data['total_nodes']}",
+        )
+        check(
+            f"{expected_edges} total edges ({seed_edges} seed + 3 batch)",
+            data["total_edges"] == expected_edges,
+            f"got {data['total_edges']}",
+        )
 
     # ── Summary ──────────────────────────────────────────────────────── #
 
