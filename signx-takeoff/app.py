@@ -90,6 +90,7 @@ from bid_scoring import (
 from bid_model import predict_win_probability, get_model_diagnostics
 from warehouse import benchmark
 import mail_state
+import iq_client
 
 try:
     import mail_classifier
@@ -236,10 +237,11 @@ async def run_estimate(req: EstimateRequest):
         job.letter_height_inches = req.height_inches
 
     result = estimate(job)
+    iq_shadow = await _iq_shadow_annotate(result, job.sign_type.value)
     total_est_hours = result.total_man_hours + result.total_crew_hours
     bench = benchmark(total_est_hours)
     bench_data = _format_benchmark(bench) if bench else None
-    return _format_estimate_result(result, bench_data)
+    return _format_estimate_result(result, bench_data, iq_shadow=iq_shadow)
 
 
 # ── Monument Estimate ────────────────────────────────────────────────────────
@@ -271,10 +273,11 @@ async def run_monument_estimate(req: MonumentRequest):
         crew_size=req.crew_size,
     )
     result = estimate_monument(job)
+    iq_shadow = await _iq_shadow_annotate(result, job.sign_type.value)
     total_est_hours = result.total_man_hours + result.total_crew_hours
     bench = benchmark(total_est_hours)
     bench_data = _format_benchmark(bench) if bench else None
-    return _format_estimate_result(result, bench_data)
+    return _format_estimate_result(result, bench_data, iq_shadow=iq_shadow)
 
 
 # ── Awning Estimate ──────────────────────────────────────────────────────────
@@ -306,10 +309,11 @@ async def run_awning_estimate(req: AwningRequest):
         crew_size=req.crew_size,
     )
     result = estimate_awning(job)
+    iq_shadow = await _iq_shadow_annotate(result, job.sign_type.value)
     total_est_hours = result.total_man_hours + result.total_crew_hours
     bench = benchmark(total_est_hours)
     bench_data = _format_benchmark(bench) if bench else None
-    return _format_estimate_result(result, bench_data)
+    return _format_estimate_result(result, bench_data, iq_shadow=iq_shadow)
 
 
 # ── Removal Estimate ─────────────────────────────────────────────────────────
@@ -339,10 +343,11 @@ async def run_removal_estimate(req: RemovalRequest):
         crew_size=req.crew_size,
     )
     result = estimate_removal(job)
+    iq_shadow = await _iq_shadow_annotate(result, job.sign_type.value)
     total_est_hours = result.total_man_hours + result.total_crew_hours
     bench = benchmark(total_est_hours)
     bench_data = _format_benchmark(bench) if bench else None
-    return _format_estimate_result(result, bench_data)
+    return _format_estimate_result(result, bench_data, iq_shadow=iq_shadow)
 
 
 # ── Pylon/Pole Estimate ─────────────────────────────────────────────────────
@@ -377,10 +382,11 @@ async def run_pylon_estimate(req: PylonRequest):
         crew_size=req.crew_size,
     )
     result = estimate_pylon(job)
+    iq_shadow = await _iq_shadow_annotate(result, job.sign_type.value)
     total_est_hours = result.total_man_hours + result.total_crew_hours
     bench = benchmark(total_est_hours)
     bench_data = _format_benchmark(bench) if bench else None
-    return _format_estimate_result(result, bench_data)
+    return _format_estimate_result(result, bench_data, iq_shadow=iq_shadow)
 
 
 # ── Cabinet Estimate ────────────────────────────────────────────────────────
@@ -415,10 +421,11 @@ async def run_cabinet_estimate(req: CabinetRequest):
         install_mount_type=req.mount_type,
     )
     result = estimate_cabinet(job)
+    iq_shadow = await _iq_shadow_annotate(result, job.sign_type.value)
     total_est_hours = result.total_man_hours + result.total_crew_hours
     bench = benchmark(total_est_hours)
     bench_data = _format_benchmark(bench) if bench else None
-    return _format_estimate_result(result, bench_data)
+    return _format_estimate_result(result, bench_data, iq_shadow=iq_shadow)
 
 
 # ── Directional Estimate ───────────────────────────────────────────────────
@@ -449,10 +456,11 @@ async def run_directional_estimate(req: DirectionalRequest):
         crew_size=req.crew_size,
     )
     result = estimate_directional(job)
+    iq_shadow = await _iq_shadow_annotate(result, job.sign_type.value)
     total_est_hours = result.total_man_hours + result.total_crew_hours
     bench = benchmark(total_est_hours)
     bench_data = _format_benchmark(bench) if bench else None
-    return _format_estimate_result(result, bench_data)
+    return _format_estimate_result(result, bench_data, iq_shadow=iq_shadow)
 
 
 # ── Dimensional/Gemini Estimate ───────────────────────────────────────────
@@ -477,10 +485,11 @@ async def run_dimensional_estimate(req: DimensionalRequest):
         crew_size=req.crew_size,
     )
     result = estimate_dimensional(job)
+    iq_shadow = await _iq_shadow_annotate(result, job.sign_type.value)
     total_est_hours = result.total_man_hours + result.total_crew_hours
     bench = benchmark(total_est_hours)
     bench_data = _format_benchmark(bench) if bench else None
-    return _format_estimate_result(result, bench_data)
+    return _format_estimate_result(result, bench_data, iq_shadow=iq_shadow)
 
 
 # ── Shared formatters ────────────────────────────────────────────────────────
@@ -500,8 +509,76 @@ def _format_benchmark(bench):
     }
 
 
-def _format_estimate_result(result, bench_data):
-    return {
+async def _iq_shadow_annotate(result, sign_type: str) -> dict | None:
+    """
+    Query 500IQ for adjustment factors and log shadow data.
+
+    In shadow mode: logs adjustments but does NOT modify result hours.
+    When shadow mode is off AND IQ is enabled: applies adjustments to result.
+
+    Returns shadow dict for API response, or None if IQ is disabled.
+    """
+    if not iq_client.is_enabled():
+        return None
+
+    all_lines = result.labor_lines + result.install_lines
+    work_codes = list({line.work_code for line in all_lines})
+
+    iq_results = await iq_client.batch_query(sign_type, work_codes)
+
+    shadow: dict = {
+        "enabled": True,
+        "shadow_mode": iq_client.is_shadow_mode(),
+        "sign_type": sign_type,
+        "adjustments": {},
+    }
+
+    for line in all_lines:
+        iq = iq_results.get(line.work_code)
+        if iq is None:
+            continue
+
+        base_hours = line.hours
+        adjusted_hours = round(base_hours * iq["factor"], 2)
+        delta_pct = round((iq["factor"] - 1.0) * 100, 1)
+
+        shadow["adjustments"][line.work_code] = {
+            "base_hours": base_hours,
+            "adjusted_hours": adjusted_hours,
+            "factor": iq["factor"],
+            "raw_factor": iq["raw_factor"],
+            "confidence": iq["confidence"],
+            "delta_pct": delta_pct,
+            "source": iq["source"],
+        }
+
+        logger.info(
+            "IQ_SHADOW: %s/%s base=%.2f adj=%.2f factor=%.3f conf=%.2f delta=%.1f%% src=%s",
+            sign_type, line.work_code, base_hours, adjusted_hours,
+            iq["factor"], iq["confidence"], delta_pct, iq["source"],
+        )
+
+        # Apply adjustment only when enabled AND not in shadow mode
+        if not iq_client.is_shadow_mode() and iq["factor"] != 1.0:
+            line.hours = adjusted_hours
+
+    # Recalculate totals if adjustments were applied (non-shadow mode)
+    if not iq_client.is_shadow_mode():
+        result.total_man_hours = round(
+            sum(l.hours for l in result.labor_lines if l.unit_type == "man-hrs")
+            + sum(l.hours for l in result.install_lines if l.unit_type == "man-hrs"),
+            2,
+        )
+        result.total_crew_hours = round(
+            sum(l.hours for l in result.install_lines if l.unit_type == "CREW-hrs"),
+            2,
+        )
+
+    return shadow
+
+
+def _format_estimate_result(result, bench_data, iq_shadow=None):
+    out = {
         "total_pf": result.total_pf,
         "pf_source": result.pf_source,
         "construction": result.construction,
@@ -529,6 +606,25 @@ def _format_estimate_result(result, bench_data):
         "materials": result.material_bom,
         "warnings": result.warnings,
         "benchmark": bench_data,
+    }
+    if iq_shadow is not None:
+        out["iq_shadow"] = iq_shadow
+    return out
+
+
+# ── 500IQ Integration Status ────────────────────────────────────────────────
+
+
+@app.get("/api/iq/status")
+async def iq_status():
+    """500IQ integration status and configuration."""
+    return {
+        "enabled": iq_client.is_enabled(),
+        "shadow_mode": iq_client.is_shadow_mode(),
+        "base_url": iq_client.IQ_BASE_URL,
+        "timeout_s": iq_client.IQ_TIMEOUT,
+        "min_confidence": iq_client.IQ_MIN_CONFIDENCE,
+        "factor_range": [iq_client.IQ_FACTOR_FLOOR, iq_client.IQ_FACTOR_CEILING],
     }
 
 
