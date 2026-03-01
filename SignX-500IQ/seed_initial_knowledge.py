@@ -21,8 +21,6 @@ Run:
 from __future__ import annotations
 
 import asyncio
-import sys
-from datetime import datetime, timezone
 
 from database import init_db, get_db
 from models import Edge, Node

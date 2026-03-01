@@ -20,7 +20,7 @@ import os
 from typing import Dict, List, Optional
 
 import httpx
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from pydantic import BaseModel
 
 from signx_platform.events import event_bus, Event

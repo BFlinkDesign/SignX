@@ -31,7 +31,7 @@ Routes:
 from __future__ import annotations
 
 from contextlib import asynccontextmanager
-from typing import List, Optional
+from typing import Optional
 
 from fastapi import Depends, FastAPI, HTTPException, Query
 from sqlalchemy import select
@@ -47,14 +47,10 @@ from logic import (
 )
 from models import Edge, Node
 from schemas import (
-    BatchEdgeInput,
     BatchIngestRequest,
     BatchIngestResult,
-    BatchNodeInput,
     EdgeCreate,
     EdgeResponse,
-    EdgeStatus,
-    GraphStats,
     HeuristicAdjustment,
     HeuristicQuery,
     HeuristicResult,
