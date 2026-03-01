@@ -1,19 +1,16 @@
 """
-seed_real_heuristics.py — Inject 5 real tribal-knowledge heuristics into 500IQ.
+seed_example_heuristics.py — EXAMPLE / TEST DATA ONLY.
 
-ADDS to the existing Jeff Factor data (does NOT delete anything).
-Uses upsert behavior: checks if nodes exist, merges metadata if so.
+These are synthetic heuristics used to stress-test the aggregation
+logic (CWA, null-factor exclusion, conditional thresholds).
+They are NOT based on real Eagle Sign shop data.
 
-Run:
+Do NOT run this in production — use seed_initial_knowledge.py
+for the real seed data instead.
+
+Run (for testing only):
     cd SignX-500IQ
-    python seed_real_heuristics.py
-
-Heuristics seeded:
-  1. Two-Person Brake Press Rule (cabinets > 6ft)
-  2. CNC Grain Rotation (15° for brushed aluminum)
-  3. Work Code 0310 Dead Code (zero utilization)
-  4. Supplier X Aluminum Defect (Job 45678 rework)
-  5. Joe's Channel Letter Padding (unconfirmed)
+    python seed_example_heuristics.py
 """
 from __future__ import annotations
 
