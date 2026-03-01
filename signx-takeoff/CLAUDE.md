@@ -246,5 +246,15 @@ All loaded via `.env` (python-dotenv). Never hardcoded.
 
 ---
 
+## Sprint F — COMPLETE (2026-03-01, commit 3505878)
+- Centralized DuckDB path resolution (find_warehouse_db + WAREHOUSE_DB_PATHS)
+- Fixed test_phase1 OT failures, DuckDB skipif guards
+- 178 tests passing, 2 skipped, 15 files modified, net -56 lines
+
+## Sprint G — Backlog
+- [ ] POLLIT/POLNON regression tests (estimator exists, zero regression coverage per Gemini audit)
+- [ ] BLDILL/BLDNON estimator (enum defined, no estimate function)
+- [ ] Stale doc cleanup (pending Gemini Task 2 report at C:\Temp\doc-staleness-report.md)
+
 ## Last Updated
-2026-02-26 — Initial CLAUDE.md created (overnight task)
+2026-03-01 — Sprint F complete, Sprint G backlog added
