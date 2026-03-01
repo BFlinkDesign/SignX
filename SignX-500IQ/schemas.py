@@ -50,12 +50,15 @@ class RelationshipType(str, Enum):
     LEARNED_FROM = "LEARNED_FROM"
     USES = "USES"
     IMPACTS = "IMPACTS"
+    IMPACTS_JOB = "IMPACTS_JOB"
     WORKED_ON = "WORKED_ON"
     SIMILAR_TO = "SIMILAR_TO"
     ADJUSTS = "ADJUSTS"
+    APPLIES = "APPLIES"
     APPLIES_TO = "APPLIES_TO"
     INFLUENCED_BY = "INFLUENCED_BY"
     REQUIRES = "REQUIRES"
+    USED_MATERIAL = "USED_MATERIAL"
 
 
 class TraversalDirection(str, Enum):
@@ -216,8 +219,9 @@ class HeuristicQuery(BaseModel):
 class HeuristicAdjustment(BaseModel):
     heuristic_id: str
     label: str
-    adjustment_factor: float = Field(
-        description="Multiplier (1.15 = +15%, 0.90 = -10%)"
+    adjustment_factor: Optional[float] = Field(
+        default=None,
+        description="Multiplier (1.15 = +15%, 0.90 = -10%). None if unconfirmed.",
     )
     confidence: float = Field(ge=0.0, le=1.0)
     evidence_chain: List[str] = Field(
@@ -229,7 +233,8 @@ class HeuristicAdjustment(BaseModel):
 class HeuristicResult(BaseModel):
     adjustments: List[HeuristicAdjustment]
     combined_factor: float = Field(
-        description="Product of all adjustment factors"
+        description="Confidence-weighted average: Σ(factor×confidence) / Σ(confidence). "
+                    "Heuristics with null factor are excluded from calculation.",
     )
     query: HeuristicQuery
 

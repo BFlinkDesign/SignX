@@ -151,10 +151,13 @@ RELATIONSHIP_TYPES = frozenset({
     "LEARNED_FROM",
     "USES",
     "IMPACTS",
+    "IMPACTS_JOB",
     "WORKED_ON",
     "SIMILAR_TO",
     "ADJUSTS",
+    "APPLIES",
     "APPLIES_TO",
     "INFLUENCED_BY",
     "REQUIRES",
+    "USED_MATERIAL",
 })

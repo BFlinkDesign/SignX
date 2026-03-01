@@ -239,9 +239,11 @@ def run_tests():
             len(result["adjustments"]) == 2,
             f"got {len(result['adjustments'])} adjustments",
         )
+        # Confidence-weighted average: (1.15×0.94 + 1.05×0.80) / (0.94+0.80)
+        expected_cwa = round((1.15 * 0.94 + 1.05 * 0.80) / (0.94 + 0.80), 6)
         check(
-            "Combined factor includes proposed: 1.15 * 1.05 = 1.2075",
-            result["combined_factor"] == 1.2075,
+            f"Combined factor (CWA) = {expected_cwa}",
+            result["combined_factor"] == expected_cwa,
             f"got {result['combined_factor']}",
         )
 
@@ -293,9 +295,10 @@ def run_tests():
                 len(result["adjustments"]) == 2,
                 f"got {len(result['adjustments'])}",
             )
+            # Same CWA after validation
             check(
-                "Combined factor now 1.2075",
-                result["combined_factor"] == 1.2075,
+                f"Combined factor (CWA) = {expected_cwa}",
+                result["combined_factor"] == expected_cwa,
                 f"got {result['combined_factor']}",
             )
 

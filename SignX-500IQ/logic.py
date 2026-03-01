@@ -168,15 +168,20 @@ async def get_heuristic_adjustments(
     """
     Walk the graph to find tribal-knowledge adjustments.
 
-    The canonical path:
-      EMPLOYEE --USES--> HEURISTIC --IMPACTS--> WORK_CODE
-      SIGN_TYPE --REQUIRES--> HEURISTIC
+    Discovery paths:
+      EMPLOYEE --USES/PREFERS--> HEURISTIC --IMPACTS--> WORK_CODE
+      SIGN_TYPE --REQUIRES/ADJUSTS--> HEURISTIC --IMPACTS--> WORK_CODE
+      HEURISTIC --IMPACTS--> WORK_CODE  (reverse lookup when no employee/sign_type)
 
     SAFETY: Only uses edges with status="validated" by default.
     Set include_proposed=True for debugging to also include proposed edges.
 
-    Returns (adjustments_list, combined_factor) where combined_factor is
-    the product of all individual adjustment_factor values.
+    Aggregation: confidence-weighted average of adjustment factors.
+      combined = Σ(factor × confidence) / Σ(confidence)
+    Heuristics with null/missing adjustment_factor are EXCLUDED from the
+    combined factor (they appear in the list with factor=None for info).
+
+    Returns (adjustments_list, combined_factor).
     """
     allowed_statuses = ["validated"]
     if include_proposed:
@@ -185,7 +190,7 @@ async def get_heuristic_adjustments(
     heuristic_ids: Set[str] = set()
     adjustments: List[dict] = []
 
-    # 1) Employee heuristics: EMPLOYEE --USES--> HEURISTIC
+    # 1) Employee heuristics: EMPLOYEE --USES/PREFERS--> HEURISTIC
     if employee_id:
         stmt = (
             select(Edge)
@@ -209,8 +214,25 @@ async def get_heuristic_adjustments(
         for edge in result.scalars().all():
             heuristic_ids.add(edge.target_id)
 
-    # 3) Filter heuristics that IMPACT the requested work code
-    filtered_ids = set()
+    # 3) Work-code reverse lookup: HEURISTIC --IMPACTS--> WORK_CODE
+    #    When no employee or sign_type is given, discover ALL heuristics
+    #    that impact this work code by walking backwards.
+    if work_code and not heuristic_ids:
+        stmt = (
+            select(Edge)
+            .where(Edge.target_id == work_code)
+            .where(Edge.relationship_type.in_(["IMPACTS", "APPLIES_TO", "ADJUSTS"]))
+            .where(Edge.status.in_(allowed_statuses))
+        )
+        result = await session.execute(stmt)
+        for edge in result.scalars().all():
+            # Only include HEURISTIC nodes
+            source = await session.get(Node, edge.source_id)
+            if source is not None and source.type == "HEURISTIC":
+                heuristic_ids.add(edge.source_id)
+
+    # 4) Filter heuristics that IMPACT the requested work code
+    filtered_ids: Set[str] = set()
     if work_code and heuristic_ids:
         for hid in heuristic_ids:
             stmt = (
@@ -227,25 +249,39 @@ async def get_heuristic_adjustments(
         # No work_code filter — return all found heuristics
         filtered_ids = heuristic_ids
 
-    # 4) Build adjustment records
-    combined = 1.0
+    # 5) Build adjustment records with confidence-weighted averaging
+    #    Exclude heuristics with null/missing adjustment_factor from combined calc.
+    weighted_sum = 0.0
+    confidence_sum = 0.0
+
     for hid in filtered_ids:
         node = await session.get(Node, hid)
         if node is None or node.type != "HEURISTIC":
             continue
 
         props = node.properties or {}
-        factor = float(props.get("adjustment_factor", 1.0))
-        conf = float(props.get("confidence", 0.5))
-        notes = str(props.get("note", props.get("notes", "")))
+        raw_factor = props.get("adjustment_factor")
+        # Also check "multiplier" key (some heuristics use this)
+        if raw_factor is None:
+            raw_factor = props.get("multiplier")
+        # Also check "labor_multiplier" key
+        if raw_factor is None:
+            raw_factor = props.get("labor_multiplier")
 
-        # Build evidence chain: which nodes led to this heuristic
-        chain = []
+        conf = float(props.get("confidence", 0.5))
+        notes = str(props.get("note", props.get("notes", props.get("description", ""))))
+
+        # Build evidence chain
+        chain: List[str] = []
         if employee_id:
             chain.append(employee_id)
         chain.append(hid)
         if work_code:
             chain.append(work_code)
+
+        # Determine if this heuristic has a usable factor
+        has_factor = raw_factor is not None
+        factor = float(raw_factor) if has_factor else None
 
         adjustments.append({
             "heuristic_id": hid,
@@ -256,9 +292,18 @@ async def get_heuristic_adjustments(
             "notes": notes,
         })
 
-        combined *= factor
+        # Only include in weighted average if factor is concrete
+        if has_factor and factor is not None:
+            weighted_sum += factor * conf
+            confidence_sum += conf
 
-    return adjustments, round(combined, 6)
+    # Confidence-weighted average: Σ(factor × confidence) / Σ(confidence)
+    if confidence_sum > 0:
+        combined = round(weighted_sum / confidence_sum, 6)
+    else:
+        combined = 1.0  # No usable heuristics → neutral
+
+    return adjustments, combined
 
 
 # ── Failure Mode Lookup ───────────────────────────────────────────────────── #

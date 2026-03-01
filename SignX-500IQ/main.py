@@ -539,7 +539,8 @@ async def query_heuristics(
 
     assumptions = [
         "Graph walk: EMPLOYEE --USES--> HEURISTIC --IMPACTS--> WORK_CODE",
-        "Combined factor is the product of individual factors",
+        "Combined factor = confidence-weighted average: Σ(factor×conf) / Σ(conf)",
+        "Heuristics with null adjustment_factor are excluded from combined calc",
         f"Edge filter: {'validated+proposed' if include_proposed else 'validated only'}",
     ]
     if not adjustments:
