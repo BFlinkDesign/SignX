@@ -25,6 +25,8 @@ from typing import Dict, List, Any
 import logging
 from dataclasses import dataclass, asdict
 import sys
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Configure logging
 logging.basicConfig(
@@ -65,6 +67,7 @@ class KeyedInExtractor:
     def __init__(self, base_url: str, session_cookies: Dict[str, str], output_dir: str = "keyedin_backup"):
         self.base_url = base_url.rstrip('/')
         self.session = requests.Session()
+        self.session.verify = False
         self.session.cookies.update(session_cookies)
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
