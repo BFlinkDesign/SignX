@@ -122,6 +122,7 @@ POST /api/bid/score             — Win probability score
 | MONDF | Monument Double-Face | COMPLETE | `estimate_monument()` |
 | MONSF | Monument Single-Face | COMPLETE | `estimate_monument()` |
 | AWNNON | Awning Non-Illuminated | COMPLETE | `estimate_awning()` |
+| AWNILL | Awning Illuminated (LED) | COMPLETE | `estimate_awning()` |
 | DIRECT | Directional/Wayfinding | COMPLETE | `estimate_directional()` |
 | GEMINI | Dimensional Letters | COMPLETE | `estimate_dimensional()` |
 | POLLIT | Pole/Pylon Illuminated | COMPLETE | `estimate_pylon()` |
@@ -134,7 +135,7 @@ POST /api/bid/score             — Win probability score
 
 - **Part number validation:** No live lookup against KeyedIn part catalog — engine outputs Eagle PN conventions (e.g., `307-0xxx`, `202-0xxx`) but does not validate them
 - **Pylon/cabinet structural integration:** estimators exist but not yet wired to structural engine
-- **Regression baselines:** `test_regression.py` baselines were captured 2026-02-17; engine updated since — baselines refreshed 2026-02-26 (commit cccba7d)
+- **Regression baselines:** refreshed 2026-03-02 (Sprint H) — re-run after any engine change
 - **Opportunities (0 records):** Kimco Opportunities entity is empty — not yet in use by Eagle
 - **NCRs (0 records):** Quality entity not yet populated in prototype
 - **G: drive from bash:** `ls G:/...` returns nothing from MSYS bash — Python pathlib CAN access G: (PDF tests pass). This is MSYS path translation, not a drive access issue.
@@ -168,8 +169,9 @@ timeout 60 pytest test_regression.py -k "test_channel_face_lit" --timeout=30 -v
 | File | Tests | Purpose |
 |------|-------|---------|
 | `test_validation.py` | 11 | Ground truth: PDF parser, ABC formula vs actuals, part numbers, warehouse quality |
-| `test_regression.py` | 70 | Locked baseline: all sign types, exact hour values (2% tolerance) |
-| `test_phase1.py` | 32 | Unit tests: engine inputs, model validation, calibration |
+| `test_regression.py` | 75 | Locked baseline: all sign types, exact hour values (abs=0.01 tolerance) |
+| `test_phase1.py` | 32 | Unit tests: engine inputs, model validation, calibration (2 skip = warehouse schema guards) |
+| `test_pylon_regression.py` | 13 | POLLIT/POLNON locked baselines (Sprint G) |
 | `test_boundary.py` | ~15 | Edge cases: extreme PF values, missing fields, zero qty |
 | `tests/test_estimators.py` | ~20 | Estimator-level unit tests |
 | `tests/test_performance.py` | ~5 | Response time benchmarks |
@@ -178,9 +180,10 @@ timeout 60 pytest test_regression.py -k "test_channel_face_lit" --timeout=30 -v
 
 ## Current Status
 
+- **Suite: 252 pass, 0 fail, 2 skip** (live run 2026-03-02, Sprint H complete)
 - **Validation:** 11/11 pass (test_validation.py)
-- **Regression:** 70/70 pass post-baseline-refresh (cccba7d, 2026-02-26)
-- **Phase 1:** 32/32 pass
+- **Regression:** 75/75 pass (test_regression.py, baselines updated 2026-03-02)
+- **Phase 1:** 32/32 pass (2 skipped = DuckDB normalized-schema guards, intentional)
 - **API:** All 30+ endpoints functional
 - **Calibration:** Auto-calibration via DuckDB warehouse actuals
 - **LED catalog:** Integrated (Eagle Sign + LED Wizard 8 catalog)
@@ -201,9 +204,22 @@ Logo PF: use biggest coefficient row (0.051 per questionnaire)
 Engine outputs ONLY: work codes, labor hours, part numbers, material quantities
 NO $/hr rates, cost tables, or dollar conversions — KeyedIn handles all dollars
 SignX boundary: output work codes + hours + part numbers ONLY. Never dollars.
+
+New SignType added to enum → ALSO update test_phase1.py test_sign_type_enum_members hardcoded set
+MONSF ≠ MONDF: separate MONSF_CORRECTION_NONLIT/LIT tables; estimate_monument() branches on is_monsf
+DIRECT primary fab code = 0220 (Extrusions), NOT 0210 (Sheet Metal) — directionals are alum extrusion frames
+Vinyl formula pattern: max(P50_floor, SF * rate) — NOT 1.0 + SF * rate (overcounts small signs)
+Pydantic last-wins: duplicate fields in a unified JobInput model cause monument defaults to override channel letter inputs
 ```
 
 ---
+
+## Calibration & Warehouse DB
+
+- **Real warehouse DB:** `C:\Scripts\signx-warehouse\warehouse\signx.duckdb` — `data/signx.duckdb` is always empty (0 tables)
+- **`find_warehouse_db()`** in `sign_types.py` resolves the path; use it instead of hardcoding
+- **calibration.json auto-populates** `INSTALL_FLOOR` at module import — always query at runtime, not the constant
+- **Work-code P50 query:** `SELECT work_code, PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY hours) FROM temp_labor t JOIN wo_labor w ON t.work_order = w.wo WHERE w.sign_type = 'X' GROUP BY work_code`
 
 ## Data Files
 
@@ -211,7 +227,7 @@ SignX boundary: output work codes + hours + part numbers ONLY. Never dollars.
 data/
   abc-estimating/          — ABC Pricing Guide source materials (1974, updated 2026)
   calibration.json         — Auto-calibration output (reload with POST /api/calibrate)
-  signx.duckdb             — Main warehouse DB (labor_rolled_up view, 27,000+ jobs)
+  signx.duckdb             — EMPTY placeholder — real warehouse is C:\Scripts\signx-warehouse\warehouse\signx.duckdb
   so_contracts_parsed.csv  — 25,400 rows historical quotes (billing = revenue col)
 
 External (read-only):
@@ -236,6 +252,30 @@ All loaded via `.env` (python-dotenv). Never hardcoded.
 
 ---
 
+## Agent Comms (Sprint coordination)
+
+- **Task channel:** `signx-intel` — all Sprint task traffic (TASK-N, Gemini proactive research)
+  `signx-takeoff.jsonl` is always empty — do not read it
+- **Dispatch command:**
+  ```bash
+  COMMS_AGENT="claude/architect" COMMS_CHANNELS="C:/Users/Brady.EAGLE/.ai/channels" \
+    bash C:/tools/agent-comms/comms.sh task signx-intel "TASK-N [agent/role] ..."
+  ```
+- **Read channel:**
+  ```bash
+  python -c "
+  import json
+  with open('C:/Users/Brady.EAGLE/.ai/channels/signx-intel.jsonl') as f:
+      lines = f.read().strip().split('\n')
+  for l in lines[-20:]:
+      d = json.loads(l)
+      print(d['ts'][:16], d.get('from','?').ljust(14), d.get('type','?').ljust(8), d.get('msg','')[:100])
+  "
+  ```
+- **Sprint close:** After each sprint completes, update the Sprint History section in this file
+
+---
+
 ## Operating Rules
 
 - Auto-approve: file edits, test runs, calibration runs, read-only API calls
@@ -246,19 +286,29 @@ All loaded via `.env` (python-dotenv). Never hardcoded.
 
 ---
 
-## Sprint F — COMPLETE (2026-03-01, commit 3505878)
+## Sprint History
+
+### Sprint F — COMPLETE (2026-03-01, commit 3505878)
 - Centralized DuckDB path resolution (find_warehouse_db + WAREHOUSE_DB_PATHS)
 - Fixed test_phase1 OT failures, DuckDB skipif guards
-- 178 tests passing, 2 skipped, 15 files modified, net -56 lines
 
-## Sprint G — In Progress
-- [x] POLLIT/POLNON regression tests -- 13 tests added (test_pylon_regression.py, e0bda4e)
-- [x] calibrate.py fix -- migrated from missing so_contract_labor to temp_labor + wo_labor (f3a5696)
-- [x] Dead code removal -- 4 unused _cal_* functions removed from abc_engine.py (a15b178)
-- [x] Stale doc cleanup -- Gemini Task 2 found only 1 stale item (G: drive, already resolved)
-- [ ] BLDILL/BLDNON estimator (enum defined, no estimate function)
-- [ ] Calibration data refresh (run `python calibrate.py` -- will shift regression baselines)
-- [ ] AWNILL/DIRECT/MONSF calibration variance reduction
+### Sprint G — COMPLETE (2026-03-02)
+- Fixed HALO Section 4C bug (Pydantic last-wins — duplicate JobInput fields)
+- Fixed BLDILL regression baseline (20.35h), removed dead code in estimate_building()
+- Added POLLIT/POLNON regression tests (test_pylon_regression.py, 13 tests)
+- Calibration pipeline fix (temp_labor + wo_labor)
+
+### Sprint H — COMPLETE (2026-03-02)
+- AWNILL illuminated awning estimator — 4 regression tests locked (60SF=46.30h)
+- DIRECT fix: replaced 0210 Sheet Metal with 0220 Extrusions; warehouse P50 formulas; 20SF=16.30h
+- MONSF fix: separate correction tables from MONDF; 20SF lit=25.54h (avg=28.27h)
+- Calibration data refresh (calibrate.py)
+- Suite: **252 pass, 0 fail, 2 skip**
+
+### Open (Sprint I)
+- [ ] Notion token rotation (401 unauthorized — Brady must rotate)
+- [ ] RTLT/ILLUM/FFACE/PRNGRA sign types route to OTHER fallback (not yet estimated)
+- [ ] Part number validation vs live KeyedIn catalog
 
 ## Last Updated
-2026-03-01 — Sprint G in progress: 247 tests, calibrate.py fixed, pylon tests added
+2026-03-02 — Sprint H complete. 252/0/2.
