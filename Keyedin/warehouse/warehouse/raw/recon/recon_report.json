@@ -1,0 +1,6909 @@
+[
+  {
+    "report_name": "AR Invoice Details",
+    "report_id": 1441842,
+    "launch_click_success": true,
+    "launch_strategy": "strategy_1_row_based",
+    "has_parameter_dialog": true,
+    "page_title": "",
+    "url_after_launch": "https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441842&launch=false",
+    "gwt_pushbuttons": [
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "+",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "-",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Clear Filter",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Aggregate Options",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "x",
+        "visible": true,
+        "classes": "gwt-PushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      }
+    ],
+    "input_fields": [
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-955",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-957",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-958",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-248",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox gwt-TextBox-default",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      }
+    ],
+    "all_buttons": [],
+    "requests_after_launch": [
+      {
+        "timestamp": 1770056747.1798997,
+        "method": "POST",
+        "url": "https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService?authToken=93f83313-d1e5-4932-9cfa-f74854e923ac&clientId=7129d175-2929-4ac8-adbd-07dec66aa5c9",
+        "post_data_length": 187,
+        "post_data_preview": "7|0|5|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|F94C0FA52A7B058D7077BFA6B82FF792|com.entrinsik.informer.core.client.service.ReportRPCService|lookup|I|1|2|3|4|1|5|1441842|",
+        "response_status": null,
+        "response_length": null
+      }
+    ],
+    "requests_after_dialog_click": [],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": true,
+    "dialog_button_selector": "",
+    "dialog_click_method": "playwright_native_nth_1",
+    "screenshot_after_launch": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\ar_invoice_details_after_launch.png",
+    "screenshot_after_dialog_click": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\ar_invoice_details_after_dialog_click.png",
+    "errors": []
+  },
+  {
+    "report_name": "AR Invoice Listing",
+    "report_id": 1441843,
+    "launch_click_success": true,
+    "launch_strategy": "strategy_1_row_based",
+    "has_parameter_dialog": true,
+    "page_title": "",
+    "url_after_launch": "https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441843&launch=false",
+    "gwt_pushbuttons": [
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "+",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "-",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Clear Filter",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Aggregate Options",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "x",
+        "visible": true,
+        "classes": "gwt-PushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      }
+    ],
+    "input_fields": [
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-1316",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-1317",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-1319",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-248",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox gwt-TextBox-default",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      }
+    ],
+    "all_buttons": [],
+    "requests_after_launch": [
+      {
+        "timestamp": 1770056773.5270486,
+        "method": "POST",
+        "url": "https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService?authToken=93f83313-d1e5-4932-9cfa-f74854e923ac&clientId=7129d175-2929-4ac8-adbd-07dec66aa5c9",
+        "post_data_length": 187,
+        "post_data_preview": "7|0|5|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|F94C0FA52A7B058D7077BFA6B82FF792|com.entrinsik.informer.core.client.service.ReportRPCService|lookup|I|1|2|3|4|1|5|1441843|",
+        "response_status": null,
+        "response_length": null
+      }
+    ],
+    "requests_after_dialog_click": [],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": true,
+    "dialog_button_selector": "",
+    "dialog_click_method": "playwright_native_nth_1",
+    "screenshot_after_launch": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\ar_invoice_listing_after_launch.png",
+    "screenshot_after_dialog_click": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\ar_invoice_listing_after_dialog_click.png",
+    "errors": []
+  },
+  {
+    "report_name": "AR Open Invoices",
+    "report_id": 1441844,
+    "launch_click_success": true,
+    "launch_strategy": "strategy_1_row_based",
+    "has_parameter_dialog": true,
+    "page_title": "",
+    "url_after_launch": "https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441844&launch=false",
+    "gwt_pushbuttons": [
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Clear Filter",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Aggregate Options",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "x",
+        "visible": true,
+        "classes": "gwt-PushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      }
+    ],
+    "input_fields": [
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-248",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox gwt-TextBox-default",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      }
+    ],
+    "all_buttons": [],
+    "requests_after_launch": [
+      {
+        "timestamp": 1770056799.783146,
+        "method": "POST",
+        "url": "https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService?authToken=93f83313-d1e5-4932-9cfa-f74854e923ac&clientId=7129d175-2929-4ac8-adbd-07dec66aa5c9",
+        "post_data_length": 187,
+        "post_data_preview": "7|0|5|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|F94C0FA52A7B058D7077BFA6B82FF792|com.entrinsik.informer.core.client.service.ReportRPCService|lookup|I|1|2|3|4|1|5|1441844|",
+        "response_status": null,
+        "response_length": null
+      }
+    ],
+    "requests_after_dialog_click": [],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": false,
+    "dialog_button_selector": "",
+    "dialog_click_method": "",
+    "screenshot_after_launch": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\ar_open_invoices_after_launch.png",
+    "screenshot_after_dialog_click": "",
+    "errors": [
+      "Parameter dialog visible but no 'Launch Report' button found"
+    ]
+  },
+  {
+    "report_name": "Cash Receipts",
+    "report_id": 1441849,
+    "launch_click_success": true,
+    "launch_strategy": "strategy_1_row_based",
+    "has_parameter_dialog": true,
+    "page_title": "",
+    "url_after_launch": "https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441849&launch=false",
+    "gwt_pushbuttons": [
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "+",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "-",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "+",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "-",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Clear Filter",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Aggregate Options",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "x",
+        "visible": true,
+        "classes": "gwt-PushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      }
+    ],
+    "input_fields": [
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-2216",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-2217",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-2218",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-248",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox gwt-TextBox-default",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      }
+    ],
+    "all_buttons": [],
+    "requests_after_launch": [
+      {
+        "timestamp": 1770056813.9289982,
+        "method": "POST",
+        "url": "https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService?authToken=93f83313-d1e5-4932-9cfa-f74854e923ac&clientId=7129d175-2929-4ac8-adbd-07dec66aa5c9",
+        "post_data_length": 187,
+        "post_data_preview": "7|0|5|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|F94C0FA52A7B058D7077BFA6B82FF792|com.entrinsik.informer.core.client.service.ReportRPCService|lookup|I|1|2|3|4|1|5|1441849|",
+        "response_status": null,
+        "response_length": null
+      }
+    ],
+    "requests_after_dialog_click": [
+      {
+        "timestamp": 1770056824.0309396,
+        "method": "POST",
+        "url": "https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ViewRPCService?authToken=93f83313-d1e5-4932-9cfa-f74854e923ac&clientId=7129d175-2929-4ac8-adbd-07dec66aa5c9",
+        "post_data_length": 16297,
+        "post_data_preview": "7|0|221|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|327E0F303D0CA463050DC31340CFE01D|com.entrinsik.informer.core.client.service.ViewRPCService|getData|com.entrinsik.gwt.data.shared.View",
+        "response_status": null,
+        "response_length": null
+      }
+    ],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": true,
+    "dialog_button_selector": "",
+    "dialog_click_method": "playwright_native_nth_1",
+    "screenshot_after_launch": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\cash_receipts_after_launch.png",
+    "screenshot_after_dialog_click": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\cash_receipts_after_dialog_click.png",
+    "errors": []
+  },
+  {
+    "report_name": "Customer Listing",
+    "report_id": 1441850,
+    "launch_click_success": true,
+    "launch_strategy": "strategy_1_row_based",
+    "has_parameter_dialog": true,
+    "page_title": "",
+    "url_after_launch": "https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441850&launch=false",
+    "gwt_pushbuttons": [
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Clear Filter",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Aggregate Options",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "x",
+        "visible": true,
+        "classes": "gwt-PushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      }
+    ],
+    "input_fields": [
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-2529",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-2530",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-2531",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-248",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox gwt-TextBox-default",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      }
+    ],
+    "all_buttons": [],
+    "requests_after_launch": [
+      {
+        "timestamp": 1770056840.16635,
+        "method": "POST",
+        "url": "https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService?authToken=93f83313-d1e5-4932-9cfa-f74854e923ac&clientId=7129d175-2929-4ac8-adbd-07dec66aa5c9",
+        "post_data_length": 187,
+        "post_data_preview": "7|0|5|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|F94C0FA52A7B058D7077BFA6B82FF792|com.entrinsik.informer.core.client.service.ReportRPCService|lookup|I|1|2|3|4|1|5|1441850|",
+        "response_status": null,
+        "response_length": null
+      }
+    ],
+    "requests_after_dialog_click": [
+      {
+        "timestamp": 1770056850.2693882,
+        "method": "POST",
+        "url": "https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ViewRPCService?authToken=93f83313-d1e5-4932-9cfa-f74854e923ac&clientId=7129d175-2929-4ac8-adbd-07dec66aa5c9",
+        "post_data_length": 9957,
+        "post_data_preview": "7|0|145|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|327E0F303D0CA463050DC31340CFE01D|com.entrinsik.informer.core.client.service.ViewRPCService|getData|com.entrinsik.gwt.data.shared.View",
+        "response_status": null,
+        "response_length": null
+      }
+    ],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": true,
+    "dialog_button_selector": "",
+    "dialog_click_method": "playwright_native_nth_1",
+    "screenshot_after_launch": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\customer_listing_after_launch.png",
+    "screenshot_after_dialog_click": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\customer_listing_after_dialog_click.png",
+    "errors": []
+  },
+  {
+    "report_name": "Customer Listing Export",
+    "report_id": 1441851,
+    "launch_click_success": false,
+    "launch_strategy": "all_strategies_failed",
+    "has_parameter_dialog": false,
+    "page_title": "",
+    "url_after_launch": "",
+    "gwt_pushbuttons": [],
+    "input_fields": [],
+    "all_buttons": [],
+    "requests_after_launch": [],
+    "requests_after_dialog_click": [],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": false,
+    "dialog_button_selector": "",
+    "dialog_click_method": "",
+    "screenshot_after_launch": "",
+    "screenshot_after_dialog_click": "",
+    "errors": [
+      "Failed to click Launch link"
+    ]
+  },
+  {
+    "report_name": "Customer Location Listing",
+    "report_id": 1441852,
+    "launch_click_success": false,
+    "launch_strategy": "all_strategies_failed",
+    "has_parameter_dialog": false,
+    "page_title": "",
+    "url_after_launch": "",
+    "gwt_pushbuttons": [],
+    "input_fields": [],
+    "all_buttons": [],
+    "requests_after_launch": [],
+    "requests_after_dialog_click": [],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": false,
+    "dialog_button_selector": "",
+    "dialog_click_method": "",
+    "screenshot_after_launch": "",
+    "screenshot_after_dialog_click": "",
+    "errors": [
+      "Failed to click Launch link"
+    ]
+  },
+  {
+    "report_name": "Customer Location Listing Export",
+    "report_id": 1441853,
+    "launch_click_success": false,
+    "launch_strategy": "all_strategies_failed",
+    "has_parameter_dialog": false,
+    "page_title": "",
+    "url_after_launch": "",
+    "gwt_pushbuttons": [],
+    "input_fields": [],
+    "all_buttons": [],
+    "requests_after_launch": [],
+    "requests_after_dialog_click": [],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": false,
+    "dialog_button_selector": "",
+    "dialog_click_method": "",
+    "screenshot_after_launch": "",
+    "screenshot_after_dialog_click": "",
+    "errors": [
+      "Failed to click Launch link"
+    ]
+  },
+  {
+    "report_name": "Inventory List",
+    "report_id": 1441854,
+    "launch_click_success": true,
+    "launch_strategy": "strategy_1_row_based",
+    "has_parameter_dialog": true,
+    "page_title": "",
+    "url_after_launch": "https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441854&launch=false",
+    "gwt_pushbuttons": [
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Clear Filter",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Aggregate Options",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "x",
+        "visible": true,
+        "classes": "gwt-PushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      }
+    ],
+    "input_fields": [
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-2870",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-2871",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-2872",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-2873",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-2874",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-248",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox gwt-TextBox-default",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      }
+    ],
+    "all_buttons": [],
+    "requests_after_launch": [
+      {
+        "timestamp": 1770056893.561841,
+        "method": "POST",
+        "url": "https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService?authToken=93f83313-d1e5-4932-9cfa-f74854e923ac&clientId=7129d175-2929-4ac8-adbd-07dec66aa5c9",
+        "post_data_length": 187,
+        "post_data_preview": "7|0|5|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|F94C0FA52A7B058D7077BFA6B82FF792|com.entrinsik.informer.core.client.service.ReportRPCService|lookup|I|1|2|3|4|1|5|1441854|",
+        "response_status": null,
+        "response_length": null
+      }
+    ],
+    "requests_after_dialog_click": [
+      {
+        "timestamp": 1770056903.666463,
+        "method": "POST",
+        "url": "https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ViewRPCService?authToken=93f83313-d1e5-4932-9cfa-f74854e923ac&clientId=7129d175-2929-4ac8-adbd-07dec66aa5c9",
+        "post_data_length": 10418,
+        "post_data_preview": "7|0|151|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|327E0F303D0CA463050DC31340CFE01D|com.entrinsik.informer.core.client.service.ViewRPCService|getData|com.entrinsik.gwt.data.shared.View",
+        "response_status": null,
+        "response_length": null
+      }
+    ],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": true,
+    "dialog_button_selector": "",
+    "dialog_click_method": "playwright_native_nth_1",
+    "screenshot_after_launch": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\inventory_list_after_launch.png",
+    "screenshot_after_dialog_click": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\inventory_list_after_dialog_click.png",
+    "errors": []
+  },
+  {
+    "report_name": "Inventory List Export",
+    "report_id": 1441855,
+    "launch_click_success": false,
+    "launch_strategy": "all_strategies_failed",
+    "has_parameter_dialog": false,
+    "page_title": "",
+    "url_after_launch": "",
+    "gwt_pushbuttons": [],
+    "input_fields": [],
+    "all_buttons": [],
+    "requests_after_launch": [],
+    "requests_after_dialog_click": [],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": false,
+    "dialog_button_selector": "",
+    "dialog_click_method": "",
+    "screenshot_after_launch": "",
+    "screenshot_after_dialog_click": "",
+    "errors": [
+      "Failed to click Launch link"
+    ]
+  },
+  {
+    "report_name": "Inventory Transaction History",
+    "report_id": 1441856,
+    "launch_click_success": true,
+    "launch_strategy": "strategy_1_row_based",
+    "has_parameter_dialog": true,
+    "page_title": "",
+    "url_after_launch": "https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441856&launch=false",
+    "gwt_pushbuttons": [
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "+",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "-",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Clear Filter",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Aggregate Options",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "x",
+        "visible": true,
+        "classes": "gwt-PushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      }
+    ],
+    "input_fields": [
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-3271",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-3272",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-3273",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-3275",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-3276",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-248",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox gwt-TextBox-default",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      }
+    ],
+    "all_buttons": [],
+    "requests_after_launch": [
+      {
+        "timestamp": 1770056928.8742294,
+        "method": "POST",
+        "url": "https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService?authToken=93f83313-d1e5-4932-9cfa-f74854e923ac&clientId=7129d175-2929-4ac8-adbd-07dec66aa5c9",
+        "post_data_length": 187,
+        "post_data_preview": "7|0|5|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|F94C0FA52A7B058D7077BFA6B82FF792|com.entrinsik.informer.core.client.service.ReportRPCService|lookup|I|1|2|3|4|1|5|1441856|",
+        "response_status": null,
+        "response_length": null
+      }
+    ],
+    "requests_after_dialog_click": [],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": true,
+    "dialog_button_selector": "",
+    "dialog_click_method": "playwright_native_nth_1",
+    "screenshot_after_launch": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\inventory_transaction_history_after_launch.png",
+    "screenshot_after_dialog_click": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\inventory_transaction_history_after_dialog_click.png",
+    "errors": []
+  },
+  {
+    "report_name": "Invoice Register",
+    "report_id": 1441857,
+    "launch_click_success": true,
+    "launch_strategy": "strategy_1_row_based",
+    "has_parameter_dialog": true,
+    "page_title": "",
+    "url_after_launch": "https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441857&launch=false",
+    "gwt_pushbuttons": [
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "+",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "-",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "+",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "-",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Clear Filter",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Aggregate Options",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "x",
+        "visible": true,
+        "classes": "gwt-PushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      }
+    ],
+    "input_fields": [
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-248",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox gwt-TextBox-default",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      }
+    ],
+    "all_buttons": [],
+    "requests_after_launch": [
+      {
+        "timestamp": 1770056955.147287,
+        "method": "POST",
+        "url": "https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService?authToken=93f83313-d1e5-4932-9cfa-f74854e923ac&clientId=7129d175-2929-4ac8-adbd-07dec66aa5c9",
+        "post_data_length": 187,
+        "post_data_preview": "7|0|5|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|F94C0FA52A7B058D7077BFA6B82FF792|com.entrinsik.informer.core.client.service.ReportRPCService|lookup|I|1|2|3|4|1|5|1441857|",
+        "response_status": null,
+        "response_length": null
+      }
+    ],
+    "requests_after_dialog_click": [
+      {
+        "timestamp": 1770056965.2486763,
+        "method": "POST",
+        "url": "https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ViewRPCService?authToken=93f83313-d1e5-4932-9cfa-f74854e923ac&clientId=7129d175-2929-4ac8-adbd-07dec66aa5c9",
+        "post_data_length": 11789,
+        "post_data_preview": "7|0|184|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|327E0F303D0CA463050DC31340CFE01D|com.entrinsik.informer.core.client.service.ViewRPCService|getData|com.entrinsik.gwt.data.shared.View",
+        "response_status": null,
+        "response_length": null
+      }
+    ],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": true,
+    "dialog_button_selector": "",
+    "dialog_click_method": "playwright_native_nth_1",
+    "screenshot_after_launch": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\invoice_register_after_launch.png",
+    "screenshot_after_dialog_click": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\invoice_register_after_dialog_click.png",
+    "errors": []
+  },
+  {
+    "report_name": "Open Sales Order Backlog",
+    "report_id": 1441859,
+    "launch_click_success": true,
+    "launch_strategy": "strategy_1_row_based",
+    "has_parameter_dialog": true,
+    "page_title": "",
+    "url_after_launch": "https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441859&launch=false",
+    "gwt_pushbuttons": [
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Clear Filter",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Aggregate Options",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "x",
+        "visible": true,
+        "classes": "gwt-PushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      }
+    ],
+    "input_fields": [
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-4030",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-4031",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-4032",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-248",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox gwt-TextBox-default",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      }
+    ],
+    "all_buttons": [],
+    "requests_after_launch": [
+      {
+        "timestamp": 1770056981.4164033,
+        "method": "POST",
+        "url": "https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService?authToken=93f83313-d1e5-4932-9cfa-f74854e923ac&clientId=7129d175-2929-4ac8-adbd-07dec66aa5c9",
+        "post_data_length": 187,
+        "post_data_preview": "7|0|5|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|F94C0FA52A7B058D7077BFA6B82FF792|com.entrinsik.informer.core.client.service.ReportRPCService|lookup|I|1|2|3|4|1|5|1441859|",
+        "response_status": null,
+        "response_length": null
+      }
+    ],
+    "requests_after_dialog_click": [
+      {
+        "timestamp": 1770056991.5220864,
+        "method": "POST",
+        "url": "https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ViewRPCService?authToken=93f83313-d1e5-4932-9cfa-f74854e923ac&clientId=7129d175-2929-4ac8-adbd-07dec66aa5c9",
+        "post_data_length": 13098,
+        "post_data_preview": "7|0|198|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|327E0F303D0CA463050DC31340CFE01D|com.entrinsik.informer.core.client.service.ViewRPCService|getData|com.entrinsik.gwt.data.shared.View",
+        "response_status": null,
+        "response_length": null
+      }
+    ],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": true,
+    "dialog_button_selector": "",
+    "dialog_click_method": "playwright_native_nth_1",
+    "screenshot_after_launch": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\open_sales_order_backlog_after_launch.png",
+    "screenshot_after_dialog_click": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\open_sales_order_backlog_after_dialog_click.png",
+    "errors": []
+  },
+  {
+    "report_name": "Open Sales Orders",
+    "report_id": 1441860,
+    "launch_click_success": true,
+    "launch_strategy": "strategy_1_row_based",
+    "has_parameter_dialog": true,
+    "page_title": "",
+    "url_after_launch": "https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441860&launch=false",
+    "gwt_pushbuttons": [
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Clear Filter",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Aggregate Options",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "x",
+        "visible": true,
+        "classes": "gwt-PushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      }
+    ],
+    "input_fields": [
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-248",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox gwt-TextBox-default",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      }
+    ],
+    "all_buttons": [],
+    "requests_after_launch": [
+      {
+        "timestamp": 1770057007.6761816,
+        "method": "POST",
+        "url": "https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService?authToken=93f83313-d1e5-4932-9cfa-f74854e923ac&clientId=7129d175-2929-4ac8-adbd-07dec66aa5c9",
+        "post_data_length": 187,
+        "post_data_preview": "7|0|5|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|F94C0FA52A7B058D7077BFA6B82FF792|com.entrinsik.informer.core.client.service.ReportRPCService|lookup|I|1|2|3|4|1|5|1441860|",
+        "response_status": null,
+        "response_length": null
+      }
+    ],
+    "requests_after_dialog_click": [],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": false,
+    "dialog_button_selector": "",
+    "dialog_click_method": "",
+    "screenshot_after_launch": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\open_sales_orders_after_launch.png",
+    "screenshot_after_dialog_click": "",
+    "errors": [
+      "Parameter dialog visible but no 'Launch Report' button found"
+    ]
+  },
+  {
+    "report_name": "Open Work Orders",
+    "report_id": 1441861,
+    "launch_click_success": true,
+    "launch_strategy": "strategy_1_row_based",
+    "has_parameter_dialog": true,
+    "page_title": "",
+    "url_after_launch": "https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441861&launch=false",
+    "gwt_pushbuttons": [
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Clear Filter",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Aggregate Options",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "x",
+        "visible": true,
+        "classes": "gwt-PushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      }
+    ],
+    "input_fields": [
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-248",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox gwt-TextBox-default",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      }
+    ],
+    "all_buttons": [],
+    "requests_after_launch": [
+      {
+        "timestamp": 1770057021.8368886,
+        "method": "POST",
+        "url": "https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService?authToken=93f83313-d1e5-4932-9cfa-f74854e923ac&clientId=7129d175-2929-4ac8-adbd-07dec66aa5c9",
+        "post_data_length": 187,
+        "post_data_preview": "7|0|5|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|F94C0FA52A7B058D7077BFA6B82FF792|com.entrinsik.informer.core.client.service.ReportRPCService|lookup|I|1|2|3|4|1|5|1441861|",
+        "response_status": null,
+        "response_length": null
+      }
+    ],
+    "requests_after_dialog_click": [],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": false,
+    "dialog_button_selector": "",
+    "dialog_click_method": "",
+    "screenshot_after_launch": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\open_work_orders_after_launch.png",
+    "screenshot_after_dialog_click": "",
+    "errors": [
+      "Parameter dialog visible but no 'Launch Report' button found"
+    ]
+  },
+  {
+    "report_name": "Planned Part Activity",
+    "report_id": 1441862,
+    "launch_click_success": true,
+    "launch_strategy": "strategy_1_row_based",
+    "has_parameter_dialog": true,
+    "page_title": "",
+    "url_after_launch": "https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441862&launch=false",
+    "gwt_pushbuttons": [
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Clear Filter",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Aggregate Options",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "x",
+        "visible": true,
+        "classes": "gwt-PushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      }
+    ],
+    "input_fields": [
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-5380",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-5381",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-5382",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-248",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox gwt-TextBox-default",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      }
+    ],
+    "all_buttons": [],
+    "requests_after_launch": [
+      {
+        "timestamp": 1770057036.0169024,
+        "method": "POST",
+        "url": "https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService?authToken=93f83313-d1e5-4932-9cfa-f74854e923ac&clientId=7129d175-2929-4ac8-adbd-07dec66aa5c9",
+        "post_data_length": 187,
+        "post_data_preview": "7|0|5|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|F94C0FA52A7B058D7077BFA6B82FF792|com.entrinsik.informer.core.client.service.ReportRPCService|lookup|I|1|2|3|4|1|5|1441862|",
+        "response_status": null,
+        "response_length": null
+      }
+    ],
+    "requests_after_dialog_click": [
+      {
+        "timestamp": 1770057047.2701738,
+        "method": "POST",
+        "url": "https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ViewRPCService?authToken=93f83313-d1e5-4932-9cfa-f74854e923ac&clientId=7129d175-2929-4ac8-adbd-07dec66aa5c9",
+        "post_data_length": 21267,
+        "post_data_preview": "7|0|253|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|327E0F303D0CA463050DC31340CFE01D|com.entrinsik.informer.core.client.service.ViewRPCService|getData|com.entrinsik.gwt.data.shared.View",
+        "response_status": null,
+        "response_length": null
+      }
+    ],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": true,
+    "dialog_button_selector": "",
+    "dialog_click_method": "playwright_native_nth_1",
+    "screenshot_after_launch": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\planned_part_activity_after_launch.png",
+    "screenshot_after_dialog_click": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\planned_part_activity_after_dialog_click.png",
+    "errors": []
+  },
+  {
+    "report_name": "Purchase History",
+    "report_id": 1441865,
+    "launch_click_success": true,
+    "launch_strategy": "strategy_1_row_based",
+    "has_parameter_dialog": true,
+    "page_title": "",
+    "url_after_launch": "https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441865&launch=false",
+    "gwt_pushbuttons": [
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "+",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "-",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Clear Filter",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Aggregate Options",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "x",
+        "visible": true,
+        "classes": "gwt-PushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      }
+    ],
+    "input_fields": [
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-5864",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-5865",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-5866",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-5867",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-248",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox gwt-TextBox-default",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      }
+    ],
+    "all_buttons": [],
+    "requests_after_launch": [
+      {
+        "timestamp": 1770057065.411069,
+        "method": "POST",
+        "url": "https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService?authToken=93f83313-d1e5-4932-9cfa-f74854e923ac&clientId=7129d175-2929-4ac8-adbd-07dec66aa5c9",
+        "post_data_length": 187,
+        "post_data_preview": "7|0|5|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|F94C0FA52A7B058D7077BFA6B82FF792|com.entrinsik.informer.core.client.service.ReportRPCService|lookup|I|1|2|3|4|1|5|1441865|",
+        "response_status": null,
+        "response_length": null
+      }
+    ],
+    "requests_after_dialog_click": [],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": true,
+    "dialog_button_selector": "",
+    "dialog_click_method": "playwright_native_nth_1",
+    "screenshot_after_launch": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\purchase_history_after_launch.png",
+    "screenshot_after_dialog_click": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\purchase_history_after_dialog_click.png",
+    "errors": []
+  },
+  {
+    "report_name": "Purchase Order Detail",
+    "report_id": 1441866,
+    "launch_click_success": true,
+    "launch_strategy": "strategy_1_row_based",
+    "has_parameter_dialog": true,
+    "page_title": "",
+    "url_after_launch": "https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441866&launch=false",
+    "gwt_pushbuttons": [
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "+",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "-",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Clear Filter",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Aggregate Options",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "x",
+        "visible": true,
+        "classes": "gwt-PushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      }
+    ],
+    "input_fields": [
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-6298",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-6299",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-6300",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-6301",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-248",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox gwt-TextBox-default",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      }
+    ],
+    "all_buttons": [],
+    "requests_after_launch": [
+      {
+        "timestamp": 1770057094.650309,
+        "method": "POST",
+        "url": "https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService?authToken=93f83313-d1e5-4932-9cfa-f74854e923ac&clientId=7129d175-2929-4ac8-adbd-07dec66aa5c9",
+        "post_data_length": 187,
+        "post_data_preview": "7|0|5|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|F94C0FA52A7B058D7077BFA6B82FF792|com.entrinsik.informer.core.client.service.ReportRPCService|lookup|I|1|2|3|4|1|5|1441866|",
+        "response_status": null,
+        "response_length": null
+      }
+    ],
+    "requests_after_dialog_click": [],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": true,
+    "dialog_button_selector": "",
+    "dialog_click_method": "playwright_native_nth_1",
+    "screenshot_after_launch": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\purchase_order_detail_after_launch.png",
+    "screenshot_after_dialog_click": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\purchase_order_detail_after_dialog_click.png",
+    "errors": []
+  },
+  {
+    "report_name": "Purchased Part Variance",
+    "report_id": 1441868,
+    "launch_click_success": true,
+    "launch_strategy": "strategy_1_row_based",
+    "has_parameter_dialog": true,
+    "page_title": "",
+    "url_after_launch": "https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441868&launch=false",
+    "gwt_pushbuttons": [
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "+",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "-",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "+",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "-",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Clear Filter",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Aggregate Options",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "x",
+        "visible": true,
+        "classes": "gwt-PushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      }
+    ],
+    "input_fields": [
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-6739",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-6740",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-6741",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-248",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox gwt-TextBox-default",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      }
+    ],
+    "all_buttons": [],
+    "requests_after_launch": [
+      {
+        "timestamp": 1770057123.8929427,
+        "method": "POST",
+        "url": "https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService?authToken=93f83313-d1e5-4932-9cfa-f74854e923ac&clientId=7129d175-2929-4ac8-adbd-07dec66aa5c9",
+        "post_data_length": 187,
+        "post_data_preview": "7|0|5|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|F94C0FA52A7B058D7077BFA6B82FF792|com.entrinsik.informer.core.client.service.ReportRPCService|lookup|I|1|2|3|4|1|5|1441868|",
+        "response_status": null,
+        "response_length": null
+      }
+    ],
+    "requests_after_dialog_click": [],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": true,
+    "dialog_button_selector": "",
+    "dialog_click_method": "playwright_native_nth_1",
+    "screenshot_after_launch": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\purchased_part_variance_after_launch.png",
+    "screenshot_after_dialog_click": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\purchased_part_variance_after_dialog_click.png",
+    "errors": []
+  },
+  {
+    "report_name": "Quote Status Report",
+    "report_id": 1441869,
+    "launch_click_success": true,
+    "launch_strategy": "strategy_1_row_based",
+    "has_parameter_dialog": true,
+    "page_title": "",
+    "url_after_launch": "https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441869&launch=false",
+    "gwt_pushbuttons": [
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "+",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "-",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Clear Filter",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Aggregate Options",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "x",
+        "visible": true,
+        "classes": "gwt-PushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      }
+    ],
+    "input_fields": [
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-7112",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-7115",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-7116",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-7117",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-248",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox gwt-TextBox-default",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      }
+    ],
+    "all_buttons": [],
+    "requests_after_launch": [
+      {
+        "timestamp": 1770057153.1312428,
+        "method": "POST",
+        "url": "https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService?authToken=93f83313-d1e5-4932-9cfa-f74854e923ac&clientId=7129d175-2929-4ac8-adbd-07dec66aa5c9",
+        "post_data_length": 187,
+        "post_data_preview": "7|0|5|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|F94C0FA52A7B058D7077BFA6B82FF792|com.entrinsik.informer.core.client.service.ReportRPCService|lookup|I|1|2|3|4|1|5|1441869|",
+        "response_status": null,
+        "response_length": null
+      }
+    ],
+    "requests_after_dialog_click": [],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": true,
+    "dialog_button_selector": "",
+    "dialog_click_method": "playwright_native_nth_1",
+    "screenshot_after_launch": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\quote_status_report_after_launch.png",
+    "screenshot_after_dialog_click": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\quote_status_report_after_dialog_click.png",
+    "errors": []
+  },
+  {
+    "report_name": "Sales Cost Detail Report",
+    "report_id": 1441870,
+    "launch_click_success": true,
+    "launch_strategy": "strategy_1_row_based",
+    "has_parameter_dialog": true,
+    "page_title": "",
+    "url_after_launch": "https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441870&launch=false",
+    "gwt_pushbuttons": [
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "+",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "-",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Clear Filter",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Aggregate Options",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "x",
+        "visible": true,
+        "classes": "gwt-PushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      }
+    ],
+    "input_fields": [
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-7567",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-7570",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-7573",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-7574",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-248",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox gwt-TextBox-default",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      }
+    ],
+    "all_buttons": [],
+    "requests_after_launch": [
+      {
+        "timestamp": 1770057182.3741622,
+        "method": "POST",
+        "url": "https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService?authToken=93f83313-d1e5-4932-9cfa-f74854e923ac&clientId=7129d175-2929-4ac8-adbd-07dec66aa5c9",
+        "post_data_length": 187,
+        "post_data_preview": "7|0|5|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|F94C0FA52A7B058D7077BFA6B82FF792|com.entrinsik.informer.core.client.service.ReportRPCService|lookup|I|1|2|3|4|1|5|1441870|",
+        "response_status": null,
+        "response_length": null
+      }
+    ],
+    "requests_after_dialog_click": [],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": true,
+    "dialog_button_selector": "",
+    "dialog_click_method": "playwright_native_nth_1",
+    "screenshot_after_launch": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\sales_cost_detail_report_after_launch.png",
+    "screenshot_after_dialog_click": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\sales_cost_detail_report_after_dialog_click.png",
+    "errors": []
+  },
+  {
+    "report_name": "Sales Order Bookings By Line Date",
+    "report_id": 1441872,
+    "launch_click_success": false,
+    "launch_strategy": "all_strategies_failed",
+    "has_parameter_dialog": false,
+    "page_title": "",
+    "url_after_launch": "",
+    "gwt_pushbuttons": [],
+    "input_fields": [],
+    "all_buttons": [],
+    "requests_after_launch": [],
+    "requests_after_dialog_click": [],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": false,
+    "dialog_button_selector": "",
+    "dialog_click_method": "",
+    "screenshot_after_launch": "",
+    "screenshot_after_dialog_click": "",
+    "errors": [
+      "Failed to click Launch link"
+    ]
+  },
+  {
+    "report_name": "Sales Order Bookings By SO Date",
+    "report_id": 1441873,
+    "launch_click_success": false,
+    "launch_strategy": "all_strategies_failed",
+    "has_parameter_dialog": false,
+    "page_title": "",
+    "url_after_launch": "",
+    "gwt_pushbuttons": [],
+    "input_fields": [],
+    "all_buttons": [],
+    "requests_after_launch": [],
+    "requests_after_dialog_click": [],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": false,
+    "dialog_button_selector": "",
+    "dialog_click_method": "",
+    "screenshot_after_launch": "",
+    "screenshot_after_dialog_click": "",
+    "errors": [
+      "Failed to click Launch link"
+    ]
+  },
+  {
+    "report_name": "Sales Order Detail",
+    "report_id": 1441874,
+    "launch_click_success": true,
+    "launch_strategy": "strategy_1_row_based",
+    "has_parameter_dialog": true,
+    "page_title": "",
+    "url_after_launch": "https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441874&launch=false",
+    "gwt_pushbuttons": [
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "+",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "-",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Clear Filter",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Aggregate Options",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "x",
+        "visible": true,
+        "classes": "gwt-PushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      }
+    ],
+    "input_fields": [
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-8264",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-8265",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-8266",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-248",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox gwt-TextBox-default",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      }
+    ],
+    "all_buttons": [],
+    "requests_after_launch": [
+      {
+        "timestamp": 1770057228.7143168,
+        "method": "POST",
+        "url": "https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService?authToken=93f83313-d1e5-4932-9cfa-f74854e923ac&clientId=7129d175-2929-4ac8-adbd-07dec66aa5c9",
+        "post_data_length": 187,
+        "post_data_preview": "7|0|5|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|F94C0FA52A7B058D7077BFA6B82FF792|com.entrinsik.informer.core.client.service.ReportRPCService|lookup|I|1|2|3|4|1|5|1441874|",
+        "response_status": null,
+        "response_length": null
+      }
+    ],
+    "requests_after_dialog_click": [],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": true,
+    "dialog_button_selector": "",
+    "dialog_click_method": "playwright_native_nth_1",
+    "screenshot_after_launch": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\sales_order_detail_after_launch.png",
+    "screenshot_after_dialog_click": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\sales_order_detail_after_dialog_click.png",
+    "errors": []
+  },
+  {
+    "report_name": "Sales Order Status by Customer",
+    "report_id": 1441875,
+    "launch_click_success": true,
+    "launch_strategy": "strategy_1_row_based",
+    "has_parameter_dialog": true,
+    "page_title": "",
+    "url_after_launch": "https://eaglesign.keyedinsign.com:8443/eaglesign/Informer.html?locale=en_US#action=ReportRun&reportId=1441875&launch=false",
+    "gwt_pushbuttons": [
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "+",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "-",
+        "visible": true,
+        "classes": "gwt-PushButton inf-PlusMinusButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Clear Filter",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "Aggregate Options",
+        "visible": true,
+        "classes": "gwt-PushButton pushButton gwt-PushButton-up",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      },
+      {
+        "tag": "div.gwt-PushButton",
+        "text": "x",
+        "visible": true,
+        "classes": "gwt-PushButton gwt-PushButton-up-disabled",
+        "element_id": "",
+        "element_type": "",
+        "name": ""
+      }
+    ],
+    "input_fields": [
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": false,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-8659",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-8660",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-8661",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox GHAYNDLIL",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "...",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-8662",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Launch Report",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "Refresh",
+        "visible": true,
+        "classes": "",
+        "element_id": "gwt-uid-248",
+        "element_type": "checkbox",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "gwt-TextBox gwt-TextBox-default",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      },
+      {
+        "tag": "INPUT",
+        "text": "",
+        "visible": true,
+        "classes": "",
+        "element_id": "",
+        "element_type": "text",
+        "name": ""
+      }
+    ],
+    "all_buttons": [],
+    "requests_after_launch": [
+      {
+        "timestamp": 1770057257.9689507,
+        "method": "POST",
+        "url": "https://eaglesign.keyedinsign.com:8443/eaglesign/informer/rpc/protected/ReportRPCService?authToken=93f83313-d1e5-4932-9cfa-f74854e923ac&clientId=7129d175-2929-4ac8-adbd-07dec66aa5c9",
+        "post_data_length": 187,
+        "post_data_preview": "7|0|5|https://eaglesign.keyedinsign.com:8443/eaglesign/informer/|F94C0FA52A7B058D7077BFA6B82FF792|com.entrinsik.informer.core.client.service.ReportRPCService|lookup|I|1|2|3|4|1|5|1441875|",
+        "response_status": null,
+        "response_length": null
+      }
+    ],
+    "requests_after_dialog_click": [],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": true,
+    "dialog_button_selector": "",
+    "dialog_click_method": "playwright_native_nth_1",
+    "screenshot_after_launch": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\sales_order_status_by_customer_after_launch.png",
+    "screenshot_after_dialog_click": "C:\\Scripts\\signx-warehouse\\warehouse\\raw\\recon\\sales_order_status_by_customer_after_dialog_click.png",
+    "errors": []
+  },
+  {
+    "report_name": "Sales Summary by Customer",
+    "report_id": 1441877,
+    "launch_click_success": false,
+    "launch_strategy": "all_strategies_failed",
+    "has_parameter_dialog": false,
+    "page_title": "",
+    "url_after_launch": "",
+    "gwt_pushbuttons": [],
+    "input_fields": [],
+    "all_buttons": [],
+    "requests_after_launch": [],
+    "requests_after_dialog_click": [],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": false,
+    "dialog_button_selector": "",
+    "dialog_click_method": "",
+    "screenshot_after_launch": "",
+    "screenshot_after_dialog_click": "",
+    "errors": [
+      "Failed to click Launch link"
+    ]
+  },
+  {
+    "report_name": "Sales Summary by Product Type",
+    "report_id": 1441878,
+    "launch_click_success": false,
+    "launch_strategy": "all_strategies_failed",
+    "has_parameter_dialog": false,
+    "page_title": "",
+    "url_after_launch": "",
+    "gwt_pushbuttons": [],
+    "input_fields": [],
+    "all_buttons": [],
+    "requests_after_launch": [],
+    "requests_after_dialog_click": [],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": false,
+    "dialog_button_selector": "",
+    "dialog_click_method": "",
+    "screenshot_after_launch": "",
+    "screenshot_after_dialog_click": "",
+    "errors": [
+      "Failed to click Launch link"
+    ]
+  },
+  {
+    "report_name": "Vendor Listing",
+    "report_id": 1441883,
+    "launch_click_success": false,
+    "launch_strategy": "all_strategies_failed",
+    "has_parameter_dialog": false,
+    "page_title": "",
+    "url_after_launch": "",
+    "gwt_pushbuttons": [],
+    "input_fields": [],
+    "all_buttons": [],
+    "requests_after_launch": [],
+    "requests_after_dialog_click": [],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": false,
+    "dialog_button_selector": "",
+    "dialog_click_method": "",
+    "screenshot_after_launch": "",
+    "screenshot_after_dialog_click": "",
+    "errors": [
+      "Failed to click Launch link"
+    ]
+  },
+  {
+    "report_name": "Vendor Listing Export",
+    "report_id": 1441884,
+    "launch_click_success": false,
+    "launch_strategy": "all_strategies_failed",
+    "has_parameter_dialog": false,
+    "page_title": "",
+    "url_after_launch": "",
+    "gwt_pushbuttons": [],
+    "input_fields": [],
+    "all_buttons": [],
+    "requests_after_launch": [],
+    "requests_after_dialog_click": [],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": false,
+    "dialog_button_selector": "",
+    "dialog_click_method": "",
+    "screenshot_after_launch": "",
+    "screenshot_after_dialog_click": "",
+    "errors": [
+      "Failed to click Launch link"
+    ]
+  },
+  {
+    "report_name": "Work Order Listing",
+    "report_id": 1441887,
+    "launch_click_success": false,
+    "launch_strategy": "all_strategies_failed",
+    "has_parameter_dialog": false,
+    "page_title": "",
+    "url_after_launch": "",
+    "gwt_pushbuttons": [],
+    "input_fields": [],
+    "all_buttons": [],
+    "requests_after_launch": [],
+    "requests_after_dialog_click": [],
+    "command_service_fired": false,
+    "command_service_fired_after_dialog": false,
+    "dialog_button_found": false,
+    "dialog_button_selector": "",
+    "dialog_click_method": "",
+    "screenshot_after_launch": "",
+    "screenshot_after_dialog_click": "",
+    "errors": [
+      "Failed to click Launch link"
+    ]
+  }
+]

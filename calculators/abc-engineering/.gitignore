@@ -1,0 +1,22 @@
+# OS
+Thumbs.db
+.DS_Store
+
+# Editor
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Temp
+*.tmp
+*.bak
+
+# Binary files (kept in original clone only)
+*.dll
+*.exe
+*.mdb
+*.est
+*.rpt
+*.abc

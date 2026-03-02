@@ -1,0 +1,70 @@
+{
+  "request": {
+    "schema_version": "sign-1.0",
+    "jurisdiction": "US",
+    "standard": {
+      "code": "ASCE7",
+      "version": "16",
+      "importance": "II"
+    },
+    "site": {
+      "lat": 32.7,
+      "lon": -117.1,
+      "elevation_m": 30.0,
+      "exposure": "C",
+      "topography": "flat",
+      "soil_bearing_psf": 2000.0,
+      "frost_depth_in": 12.0
+    },
+    "sign": {
+      "width_ft": 10.0,
+      "height_ft": 5.0,
+      "centroid_height_ft": 15.0,
+      "gross_weight_lbf": 300.0
+    },
+    "support_options": [
+      "pipe",
+      "W",
+      "tube"
+    ],
+    "embed": {
+      "type": "direct"
+    },
+    "constraints": {
+      "max_foundation_dia_in": null,
+      "max_embed_in": null
+    },
+    "provenance": {
+      "source": "test"
+    }
+  },
+  "loads": {
+    "V_basic": 100,
+    "qz_psf": 18.5,
+    "F_w_sign_lbf": 1414.9,
+    "governing_case": "C",
+    "governing_M_ftlbf": 21224.2
+  },
+  "selected": {
+    "support": {
+      "type": "W",
+      "designation": "W10x22"
+    },
+    "foundation": {
+      "shape": "cyl",
+      "dia_in": 30.0,
+      "width_in": null,
+      "depth_in": 170.4,
+      "rebar_schedule_ref": "SCH-36-72-#5@12",
+      "anchor_bolt_ref": null
+    },
+    "checks": {
+      "OT_sf": 1.0,
+      "BRG_sf": 1.0,
+      "SLIDE_sf": 1.0,
+      "UPLIFT_sf": 7.77,
+      "DEF_ok": true
+    }
+  },
+  "packs_sha": "ff72efa1c93012a417c7583231eea4028010bb4c2c3aac6364c516ebc5a0d3e7"
+}

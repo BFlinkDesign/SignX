@@ -1,0 +1,5 @@
+﻿Addresses
+CustomerCards
+Customers
+Materials
+Paperclip

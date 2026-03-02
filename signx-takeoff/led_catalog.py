@@ -247,12 +247,14 @@ FACE_CATALOG: list[SignFaceMaterial] = [
 
 EAGLE_PN_MAP: dict[str, str] = {
     # LED Modules
-    "HLED-PN2W65K":  "307-0261",   # NRG 2 Pro (current default in abc_engine)
+    "HLED-PN2W65K":  "307-0261",   # NRG 2 Pro / PF3120 Phoenix
+    "PF4180W":       "307-0260",   # Hanley PF4180W
+    "PF3120-RED":    "307-0262",   # PF3120 Red Phoenix
+    "PF2080":        "307-0263",   # PF2080 Phoenix
     # Power Supplies
-    "H75W-SD-24":    "307-0265",   # 75W 24V (was "60w or closest")
-    "H120W-SD-12":   "307-0264",   # 120W 12V
-    "H150W-SD-24":   "307-0170",   # 150W 24V (was "192w")
-    # TODO: Brady to confirm remaining PN mappings
+    "H75W-SD-24":    "307-0265",   # H60W-SD-12 (closest factual match for small PS)
+    "H120W-SD-12":   "307-0264",   # H120W-PPS5 12V
+    "H150W-SD-24":   "307-0170",   # H192W-SD-24 (closest factual match for large PS)
 }
 
 

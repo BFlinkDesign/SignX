@@ -1,0 +1,72 @@
+Work Order Parser - Quick Start Guide
+=====================================
+
+1. OPENING THE TOOL
+   - Launch "Work Order Parser" from your desktop or Start menu
+   - The application will open with a modern Windows interface
+   - First-time setup may require administrator privileges
+
+2. USING THE TOOL
+   - Copy your work order data from your source
+   - Paste it into the input area
+   - Click "Parse Work Orders"
+   - Choose your preferred format (CSV, Excel, or JSON)
+   - Select your save location
+   - The processed file will be saved automatically
+
+3. EXPECTED DATA FORMAT
+   Your data should look like this:
+   ```
+   Work Order Cost History
+
+   Part Number    221-0200
+   Description    5'-4 1/2" X 20' STANDARD OVERHEAD CAT SCALE SIGN
+
+   Work Order    Date Complete    Quantity    Labor Hours    etc...
+   * * STOCK * *
+   68425        05/29/25        1           34.500         ...
+   * * STOCK * *
+   68408        05/29/25        1           32.250         ...
+   ```
+
+4. TIPS
+   - Use "Load Sample Data" to see how it works
+   - Use "Clear" to start over
+   - Files are automatically named with dates
+   - You can save in multiple formats simultaneously
+   - The tool will automatically clean up the data and remove unnecessary columns
+   - The application runs in the system tray for quick access
+
+5. REQUIREMENTS
+   - Windows 10 or later
+   - No additional software needed
+   - Works offline
+   - Administrator privileges for first-time setup
+
+Need Help?
+----------
+If you have any issues:
+1. Make sure you have administrator privileges
+2. Try the "Load Sample Data" button to test the tool
+3. Check that your data follows the expected format
+4. Clear the data and try again if needed
+5. The tool will extract Work Order numbers, dates, and other relevant information
+6. Check the system tray icon for quick access to the application
+
+==============================
+Eagle Sign Co. Work Order Parser
+==============================
+
+**For Office Users:**
+1. Double-click `dist/work_order_parser.exe` to launch the app.
+2. No installation or setup is required.
+3. If you see a security prompt, click 'Allow' or 'Run'.
+4. The app will auto-update in future releases (planned).
+
+**For Developers:**
+- All 'win32*' import warnings are now suppressed in VS Code and Pyright for a clean experience.
+- See `pyrightconfig.json` and `.vscode/settings.json` for details.
+- The build and installer process is fully automated.
+- (Planned) Auto-updates and advanced installer features for seamless deployment.
+
+If you ever see a runtime error about missing win32 modules, ensure `

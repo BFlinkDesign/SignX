@@ -1,0 +1,40 @@
+# Ralph Progress Log
+Started: 2026-02-02T12:35:00Z
+
+## Codebase Patterns
+- GWT RPC v7 protocol: pipe-delimited payloads, //OK[] responses, RTL data reading
+- Two RPC endpoints: commandService (RunReportCommand) and ViewRPCService (report execution)
+- Browser flow: ReportRPCService.lookup -> parameter dialog -> ViewRPCService POST
+- HTTP replay flow: load captured payload -> send_rpc -> extract ViewToken -> paginate via getData
+- Auth: ERP login -> SSO -> JSESSIONID + authToken + clientId
+- Field discovery: 3-tier fallback (hardcoded -> manifest.json -> auto-discovery from GWT response)
+
+## Reconnaissance Data (2026-02-02)
+
+### Report Categories (30 total)
+- LAUNCHABLE + NO REQUIRED PARAMS (fires ViewRPCService on empty submit):
+  Cash Receipts, Customer Listing, Inventory List, Invoice Register,
+  Open Sales Order Backlog, Planned Part Activity
+
+- LAUNCHABLE + REQUIRED PARAMS (needs date fill):
+  AR Invoice Details, AR Invoice Listing, Inventory Transaction History,
+  Purchase History, Purchase Order Detail, Purchased Part Variance,
+  Quote Status Report, Sales Cost Detail Report, Sales Order Detail,
+  Sales Order Status by Customer
+
+- LAUNCHABLE + NO "Launch Report" BUTTON:
+  AR Open Invoices, Open Sales Orders, Open Work Orders
+  (auto-run on launch, no parameter dialog button)
+
+- LAUNCH CLICK FAILS (11 reports):
+  Customer Listing Export, Customer Location Listing, Customer Location Listing Export,
+  Inventory List Export, Sales Order Bookings By Line Date, Sales Order Bookings By SO Date,
+  Sales Summary by Customer, Sales Summary by Product Type,
+  Vendor Listing, Vendor Listing Export, Work Order Listing
+
+### Key Network Finding
+- commandService is NOT used during browser Launch flow
+- ViewRPCService is the actual endpoint (10-16KB payloads)
+- The existing Customer Listing capture (commandService) was manually obtained via DevTools
+
+---

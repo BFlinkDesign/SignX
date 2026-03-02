@@ -1,0 +1,132 @@
+﻿[
+    {
+        "size":  129047,
+        "formulas":  1490,
+        "sections":  1419,
+        "filename":  "bill_mat_nm.abc",
+        "unique_strings":  2405,
+        "status":  "ok",
+        "strings":  3690,
+        "floats":  1000
+    },
+    {
+        "size":  657,
+        "formulas":  4,
+        "sections":  13,
+        "filename":  "dept_nm.abc",
+        "unique_strings":  27,
+        "status":  "ok",
+        "strings":  27,
+        "floats":  74
+    },
+    {
+        "size":  31284,
+        "formulas":  605,
+        "sections":  337,
+        "filename":  "descript_nm.abc",
+        "unique_strings":  1060,
+        "status":  "ok",
+        "strings":  2108,
+        "floats":  629
+    },
+    {
+        "size":  66987,
+        "formulas":  705,
+        "sections":  1175,
+        "filename":  "invent_nm.abc",
+        "unique_strings":  3227,
+        "status":  "ok",
+        "strings":  3479,
+        "floats":  1000
+    },
+    {
+        "size":  263742,
+        "formulas":  1617,
+        "sections":  1978,
+        "filename":  "labor_nm.abc",
+        "unique_strings":  2917,
+        "status":  "ok",
+        "strings":  10699,
+        "floats":  1000
+    },
+    {
+        "size":  2113,
+        "formulas":  13,
+        "sections":  0,
+        "filename":  "macros_nm.abc",
+        "unique_strings":  26,
+        "status":  "ok",
+        "strings":  26,
+        "floats":  426
+    },
+    {
+        "size":  173367,
+        "formulas":  1125,
+        "sections":  968,
+        "filename":  "menu_nm.abc",
+        "unique_strings":  3235,
+        "status":  "ok",
+        "strings":  4299,
+        "floats":  1000
+    },
+    {
+        "size":  408,
+        "formulas":  2,
+        "sections":  0,
+        "filename":  "sales_nm.abc",
+        "unique_strings":  5,
+        "status":  "ok",
+        "strings":  5,
+        "floats":  57
+    },
+    {
+        "size":  255801,
+        "formulas":  5090,
+        "sections":  3,
+        "filename":  "scripts_nm.abc",
+        "unique_strings":  4987,
+        "status":  "ok",
+        "strings":  11179,
+        "floats":  1000
+    },
+    {
+        "size":  2908,
+        "formulas":  2,
+        "sections":  0,
+        "filename":  "stat_nm.abc",
+        "unique_strings":  15,
+        "status":  "ok",
+        "strings":  19,
+        "floats":  219
+    },
+    {
+        "size":  98,
+        "formulas":  0,
+        "sections":  0,
+        "filename":  "user_nm.abc",
+        "unique_strings":  3,
+        "status":  "ok",
+        "strings":  3,
+        "floats":  15
+    },
+    {
+        "size":  140,
+        "formulas":  0,
+        "sections":  0,
+        "filename":  "wocfg_nm.abc",
+        "unique_strings":  7,
+        "status":  "ok",
+        "strings":  9,
+        "floats":  18
+    },
+    {
+        "size":  131081,
+        "formulas":  774,
+        "sections":  859,
+        "filename":  "mconv.dat",
+        "unique_strings":  2797,
+        "status":  "ok",
+        "strings":  3471,
+        "floats":  902
+    }
+]

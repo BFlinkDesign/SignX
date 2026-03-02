@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: 'Helvetica', 'Arial', sans-serif; color: #333; line-height: 1.4; }
+        .page { height: 1000px; padding: 50px; border: 1px solid #eee; margin-bottom: 20px; page-break-after: always; position: relative; }
+        .header { border-bottom: 2px solid #004a99; padding-bottom: 10px; margin-bottom: 20px; }
+        .logo { font-size: 24px; font-weight: bold; color: #004a99; }
+        h1 { color: #004a99; font-size: 28px; margin-top: 0; }
+        h2 { border-left: 5px solid #004a99; padding-left: 10px; font-size: 20px; margin-top: 30px; }
+        .data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+        .data-item { margin-bottom: 10px; }
+        .label { font-weight: bold; color: #666; font-size: 12px; text-transform: uppercase; }
+        .value { font-size: 16px; }
+        .footer { position: absolute; bottom: 30px; left: 50px; right: 50px; font-size: 10px; color: #999; text-align: center; border-top: 1px solid #eee; padding-top: 10px; }
+        .seal-spot { position: absolute; bottom: 100px; right: 50px; width: 150px; height: 150px; border: 1px dashed #ccc; display: flex; align-items: center; text-align: center; font-size: 10px; color: #ccc; }
+    </style>
+</head>
+<body>
+    <!-- PAGE 1: COVER -->
+    <div class="page">
+        <div class="header"><div class="logo">EAGLE SIGN CO.</div></div>
+        <div style="margin-top: 150px; text-align: center;">
+            <h1>PROJECT CALCULATION REPORT</h1>
+            <div style="font-size: 20px; margin-bottom: 40px;">{{ project.name }}</div>
+            <p>{{ site.address }}</p>
+            <p>Date: 2026-03-02</p>
+        </div>
+        <div class="footer">EAGLE SIGN CO | RE-IMAGINED LEGACY TOOL | ASCE 7-22 STANDARDS</div>
+    </div>
+
+    <!-- PAGE 2: ELEVATION & SPECS -->
+    <div class="page">
+        <div class="header"><div class="logo">EAGLE SIGN CO.</div></div>
+        <h2>STRUCTURE ELEVATION</h2>
+        <div class="data-grid">
+            <div class="data-item"><div class="label">Sign Dimensions</div><div class="value">{{ sign.width_ft }}' x {{ sign.height_ft }}' ({{ sign.area_sf }} SF)</div></div>
+            <div class="data-item"><div class="label">Centroid Height</div><div class="value">{{ sign.centroid_height_ft }}' Above Grade</div></div>
+            <div class="data-item"><div class="label">Selected Pole</div><div class="value">{{ selected.support.designation }}</div></div>
+            <div class="data-item"><div class="label">Foundation</div><div class="value">{{ selected.foundation.dia_in }}" Dia x {{ selected.foundation.depth_in }}" Depth</div></div>
+        </div>
+        <div class="footer">PAGE 2 of 4 | ELEVATION DATA</div>
+    </div>
+
+    <!-- PAGE 3: DESIGN OUTPUT -->
+    <div class="page">
+        <div class="header"><div class="logo">EAGLE SIGN CO.</div></div>
+        <h2>ENGINEERING SUMMARY (ASCE 7-22)</h2>
+        <div class="data-grid">
+            <div class="data-item"><div class="label">Wind Pressure (qz)</div><div class="value">{{ loads.qz_psf }} PSF</div></div>
+            <div class="data-item"><div class="label">Governing Lateral Force</div><div class="value">{{ loads.F_w_sign_lbf }} LBF</div></div>
+            <div class="data-item"><div class="label">Concrete Volume</div><div class="value">{{ foundation.concrete_cy }} CUBIC YARDS</div></div>
+            <div class="data-item"><div class="label">Safety Factor (OT)</div><div class="value">{{ selected.checks.OT_sf }} (Governing)</div></div>
+        </div>
+        <div class="seal-spot">NOT FOR PERMIT<br>PRELIMINARY ESTIMATE</div>
+        <div class="footer">PAGE 3 of 4 | DESIGN OUTPUT</div>
+    </div>
+
+    <!-- PAGE 4: GENERAL NOTES -->
+    <div class="page">
+        <div class="header"><div class="logo">EAGLE SIGN CO.</div></div>
+        <h2>GENERAL NOTES</h2>
+        <ul style="font-size: 13px;">
+            <li>All structural steel shall be AISC ASTM A500 Grade C (Fy=50ksi).</li>
+            <li>Concrete shall have a minimum 28-day compressive strength of 3000 PSI.</li>
+            <li>Foundations are designed for "Medium Sand" (S1=200psf/ft) unless otherwise noted.</li>
+            <li>This report is for estimation purposes only. Stamped PE calculations required for permit.</li>
+        </ul>
+        <div class="footer">PAGE 4 of 4 | FINAL NOTES</div>
+    </div>
+</body>
+</html>

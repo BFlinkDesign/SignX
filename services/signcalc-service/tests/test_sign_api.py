@@ -4,7 +4,7 @@ import importlib.util
 import json
 import os
 import pytest
-from httpx import AsyncClient
+from httpx import AsyncClient, ASGITransport
 
 
 def _load_app():
@@ -20,7 +20,7 @@ def _load_app():
 @pytest.mark.asyncio
 async def test_schemas_and_packs():
     app = _load_app()
-    async with AsyncClient(app=app, base_url="http://test") as client:
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
         s = await client.get("/schemas/sign-1.0.json")
         assert s.status_code == 200
         p = await client.get("/packs")
@@ -39,7 +39,7 @@ def _fixture(path: str) -> dict:
 async def test_design_us_small_deterministic():
     app = _load_app()
     req = _fixture("req_small.json")
-    async with AsyncClient(app=app, base_url="http://test") as client:
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
         r1 = await client.post("/v1/signs/design", json=req)
         r2 = await client.post("/v1/signs/design", json=req)
     assert r1.status_code == 200 and r2.status_code == 200
@@ -58,7 +58,7 @@ async def test_design_eu_basic():
     req = _fixture("req_small.json")
     req["jurisdiction"] = "EU"
     req["standard"]["code"] = "EN1991"
-    async with AsyncClient(app=app, base_url="http://test") as client:
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
         r = await client.post("/v1/signs/design", json=req)
     assert r.status_code == 200
     d = r.json()

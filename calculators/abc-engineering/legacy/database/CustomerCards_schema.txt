@@ -1,0 +1,20 @@
+﻿
+Table         ColumnName         DataType MaxLength AllowDBNull
+-----         ----------         -------- --------- -----------
+CustomerCards CustomerCardID     Int32           -1        True
+CustomerCards CustomerUniqueId   String          -1        True
+CustomerCards JobDescription     String          -1        True
+CustomerCards InstallAddressId   Int32           -1        True
+CustomerCards SameBillAddress    Int32           -1        True
+CustomerCards BillAddressId      Int32           -1        True
+CustomerCards sameJobSiteAddress Int32           -1        True
+CustomerCards JobSiteAddressId   Int32           -1        True
+CustomerCards JOBCREATEDDATE     DateTime        -1        True
+CustomerCards JOBCLOSEDDATE      DateTime        -1        True
+CustomerCards SYSJOBCLOSEDDATE   DateTime        -1        True
+CustomerCards NOTES              String          -1        True
+CustomerCards JOBTYPE            String          -1        True
+CustomerCards WORKORDER          String          -1        True
+
+
+

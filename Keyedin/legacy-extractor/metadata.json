@@ -1,0 +1,5 @@
+{
+  "name": "LegacyLink ERP Extractor",
+  "description": "A secure, AI-driven interface for extracting data from legacy MultiValue ERP systems using computer vision and autonomous navigation.",
+  "requestFramePermissions": []
+}

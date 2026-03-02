@@ -1646,63 +1646,18 @@ def validate_bom_parts(result: EstimateResult) -> list[str]:
         return [f"Error reading inventory: {e}"]
 
     warnings = []
-    for item in result.material_bom:
-        # Extract PN from BOM string (e.g., "202-EXT9: 30.6 LF" -> "202-EXT9")
-        match = re.match(r"^([A-Z0-9-]+):", item)
-        if match:
-            pn = match.group(1)
-            if pn not in valid_parts:
-                warnings.append(f"Non-standard PN in BOM: {pn} (Not found in inventory list)")
     
-    return warnings
-
-
-
-
-
-# ── Structural Standards Knowledge Base (Eagle Sign Co) ───────────────────────
-
-HSS_SIZING_STANDARDS = {
-    "SMALL": {"LOW": "HSS6X6X3/16", "MED": "HSS6X6X1/4", "HIGH": "HSS8X8X1/4"},
-    "MEDIUM": {"LOW": "HSS8X8X1/4", "MED": "HSS8X8X3/8", "HIGH": "HSS10X10X3/8"},
-    "LARGE": {"LOW": "HSS10X10X3/8", "MED": "HSS12X12X3/8", "HIGH": "HSS12X12X1/2"}
-}
-
-FOUNDATION_STANDARDS = {
-    "SMALL": {"diam_in": 24, "depth_ft": 4.0},
-    "MEDIUM": {"diam_in": 30, "depth_ft": 6.0},
-    "LARGE": {"diam_in": 36, "depth_ft": 8.0},
-    "XLARGE": {"diam_in": 42, "depth_ft": 12.0}
-}
-
-EAGLE_INVENTORY = {
-    "HSS_STEEL": "205-STRUCTURAL",
-    "ALUM_ANGLE": "203-0100",
-    "ALUM_TUBE": "203-0310",
-    "CONCRETE": "600-CONCRETE",
-    "ABC_EXTRUSION_7": "202-0385",
-    "ABC_EXTRUSION_9": "202-0390",
-    "LED_THIN_FRAME": "202-0395"
-}
-
-def validate_bom_parts(result: EstimateResult) -> list[str]:
-    inventory_path = r"C:\Users\Brady.EAGLE\Desktop\SignX\Eagle Data\BOT TRAINING\Eagle Data\Inventory List.csv"
-    if not os.path.exists(inventory_path): return []
-    valid_parts = set()
-    try:
-        with open(inventory_path, "r", encoding="utf-8-sig") as f:
-            import csv
-            reader = csv.DictReader(f)
-            for row in reader:
-                pn = row.get("Part Nbr")
-                if pn: valid_parts.add(pn.strip())
-    except: return []
-    warnings = []
     for item in result.material_bom:
-        match = re.match(r"^([A-Z0-9-]+):", item)
-        if match:
-            pn = match.group(1)
-            if pn not in valid_parts: warnings.append(f"Non-standard PN: {pn}")
+        pn = None
+        if isinstance(item, dict):
+            pn = item.get("part_number")
+        elif isinstance(item, str):
+            match = re.match(r"^([A-Z0-9-]+):", item)
+            if match: pn = match.group(1)
+        
+        if pn and pn not in valid_parts:
+            warnings.append(f"Non-standard PN: {pn}")
+
     return warnings
 
 def estimate_building(job: JobInput) -> EstimateResult:

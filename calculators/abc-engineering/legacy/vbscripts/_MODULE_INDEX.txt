@@ -1,0 +1,36 @@
+﻿ABC Engineering VBScript Module Index
+=====================================
+Source: scripts_nm.abc
+
+Known .vbs module names (29 found in binary):
+  - estglob.vbs
+  - estreport.vbs
+  - ProposalReport.vbs
+  - BoltBase.vbs
+  - CSRFound.vbs
+  - SprFound.vbs
+  - DeptInfoReport.vbs
+  - emplPrint.vbs
+  - InventoryReport.vbs
+  - LaborFactReport.vbs
+  - OpenEstimateReport.vbs
+  - OpenJobReport.vbs
+  - Print_job_order.vbs
+  - Print_manuf_order.vbs
+  - Print_shop_order.vbs
+  - salesPerfReport.vbs
+  - StatAnReport.vbs
+  - wk_in_progress.vbs
+  - handle_journals.vbs
+  - job_shop_copy.vbs
+  - updatejobDates.vbs
+  - openfile.vbs
+  - PreviewAlloc.vbs
+  - InvLinksReport.vbs
+  - lbRecPrint.vbs
+  - matRecPrint.vbs
+  - misAmntReport.vbs
+  - upInvoicesReport.vbs
+  - JournalReport.vbs
+
+Extracted procedures (0 found):

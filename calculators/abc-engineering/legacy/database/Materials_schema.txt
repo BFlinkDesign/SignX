@@ -1,0 +1,16 @@
+﻿
+Table     ColumnName     DataType MaxLength AllowDBNull
+-----     ----------     -------- --------- -----------
+Materials MATERIALSID    Int32           -1        True
+Materials MATERIAL       String          -1        True
+Materials CUSTOMERCARDID Int32           -1        True
+Materials DEPARTMENT     String          -1        True
+Materials ESTIMATEAMOUNT Double          -1        True
+Materials ESTIMATECOST   Decimal         -1        True
+Materials ACTUALAMOUNT   Double          -1        True
+Materials ACTUALCOST     Decimal         -1        True
+Materials Notes          String          -1        True
+Materials SECTION        Int32           -1        True
+
+
+

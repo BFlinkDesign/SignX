@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignX Estimating Engine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <style>
+        body { background-color: #0f172a; color: #f8fafc; font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center py-10">
+
+<div id="root" class="w-full max-w-6xl"></div>
+
+<script type="text/babel">
+    const { useState } = React;
+
+    function App() {
+        const [signType, setSignType] = useState('BLDILL');
+        const [method, setMethod] = useState('extrusion');
+        const [sqft, setSqft] = useState(50);
+        const [depth, setDepth] = useState(9);
+        const [result, setResult] = useState(null);
+        const [loading, setLoading] = useState(false);
+        const [error, setError] = useState(null);
+
+        const runEstimate = async () => {
+            setLoading(true);
+            setError(null);
+            
+            // Map the request to the correct endpoint
+            const endpoint = signType.startsWith('BLD') ? '/api/estimate/building' : 
+                             signType.startsWith('POL') ? '/api/estimate/pylon' : '/api/estimate/cabinet';
+            
+            const payload = {
+                sign_type: signType,
+                width_ft: Math.sqrt(sqft),
+                height_ft: Math.sqrt(sqft),
+                face_area_sf: parseFloat(sqft),
+                num_faces: 1,
+                illuminated: signType.includes('ILL') || signType.includes('LIT'),
+                construction_method: method,
+                return_depth_in: parseFloat(depth)
+            };
+
+            try {
+                const res = await fetch(http://localhost:8765, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!res.ok) throw new Error(HTTP Error: );
+                const data = await res.json();
+                setResult(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        return (
+            <div className="space-y-6">
+                <div className="flex items-center space-x-4 mb-8">
+                    <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center text-2xl"><i className="fas fa-drafting-compass"></i></div>
+                    <div>
+                        <h1 className="text-3xl font-bold tracking-tight">SignX Engine</h1>
+                        <p className="text-slate-400">Unified Structural Takeoff System v1.2</p>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    {/* Controls */}
+                    <div className="glass rounded-xl p-6 lg:col-span-1">
+                        <h2 className="text-xl font-semibold mb-4 border-b border-slate-700 pb-2">Configuration</h2>
+                        
+                        <div className="space-y-4">
+                            <div>
+                                <label className="block text-sm font-medium text-slate-400 mb-1">Sign Type</label>
+                                <select className="w-full bg-slate-800 border border-slate-600 rounded p-2 text-white" value={signType} onChange={e => setSignType(e.target.value)}>
+                                    <option value="BLDILL">Building Illuminated (BLDILL)</option>
+                                    <option value="BLDNON">Building Non-Illuminated (BLDNON)</option>
+                                    <option value="POLLIT">Pylon Illuminated (POLLIT)</option>
+                                    <option value="CABINET">Cabinet Sign (ALULIT)</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-slate-400 mb-1">Construction Method</label>
+                                <select className="w-full bg-slate-800 border border-slate-600 rounded p-2 text-white" value={method} onChange={e => setMethod(e.target.value)}>
+                                    <option value="extrusion">ABC Extrusion (7" or 9")</option>
+                                    <option value="thin_frame">LED Thin Frame</option>
+                                    <option value="stick">Stick Build (Angle/Tube)</option>
+                                </select>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-400 mb-1">Area (SqFt)</label>
+                                    <input type="number" className="w-full bg-slate-800 border border-slate-600 rounded p-2 text-white" value={sqft} onChange={e => setSqft(e.target.value)} />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-400 mb-1">Depth (Inches)</label>
+                                    <input type="number" className="w-full bg-slate-800 border border-slate-600 rounded p-2 text-white" value={depth} onChange={e => setDepth(e.target.value)} />
+                                </div>
+                            </div>
+
+                            <button onClick={runEstimate} disabled={loading} className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-4 rounded transition-colors mt-4 flex justify-center items-center">
+                                {loading ? <i className="fas fa-spinner fa-spin"></i> : "Calculate Takeoff"}
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Results */}
+                    <div className="glass rounded-xl p-6 lg:col-span-2">
+                        <h2 className="text-xl font-semibold mb-4 border-b border-slate-700 pb-2">Engineering Output</h2>
+                        
+                        {error && <div className="bg-red-900/50 border border-red-500 text-red-200 p-4 rounded mb-4">{error}</div>}
+                        
+                        {!result && !error && <div className="text-slate-500 text-center py-20 flex flex-col items-center"><i className="fas fa-calculator text-4xl mb-4 opacity-50"></i><p>Awaiting inputs for structural calculation...</p></div>}
+
+                        {result && (
+                            <div className="space-y-6 animate-fade-in">
+                                <div className="grid grid-cols-3 gap-4">
+                                    <div className="bg-slate-800 p-4 rounded-lg border border-slate-700">
+                                        <div className="text-slate-400 text-sm mb-1">Total Labor</div>
+                                        <div className="text-2xl font-bold text-blue-400">{result.total_man_hours} hrs</div>
+                                    </div>
+                                    <div className="bg-slate-800 p-4 rounded-lg border border-slate-700">
+                                        <div className="text-slate-400 text-sm mb-1">Crew Install</div>
+                                        <div className="text-2xl font-bold text-emerald-400">{result.total_crew_hours || 'N/A'} hrs</div>
+                                    </div>
+                                    <div className="bg-slate-800 p-4 rounded-lg border border-slate-700">
+                                        <div className="text-slate-400 text-sm mb-1">Construction Type</div>
+                                        <div className="text-md font-mono text-purple-400">{result.construction}</div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h3 className="text-lg font-medium text-slate-300 mb-2"><i className="fas fa-boxes mr-2"></i>Bill of Materials</h3>
+                                    <ul className="space-y-2">
+                                        {(result.material_bom || []).map((item, i) => (
+                                            <li key={i} className="bg-slate-800/50 p-3 rounded border border-slate-700 font-mono text-sm flex items-center">
+                                                <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                                                {item}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                {result.warnings && result.warnings.length > 0 && (
+                                    <div>
+                                        <h3 className="text-lg font-medium text-amber-500 mb-2"><i className="fas fa-exclamation-triangle mr-2"></i>Validation Warnings</h3>
+                                        <ul className="list-disc pl-5 text-amber-200 text-sm space-y-1">
+                                            {result.warnings.map((w, i) => <li key={i}>{w}</li>)}
+                                        </ul>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+</script>
+</body>
+</html>

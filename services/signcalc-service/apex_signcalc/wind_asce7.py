@@ -472,7 +472,7 @@ def wind_force_on_sign(
     Kd_val = KD_SIGNS
     G_val = G_RIGID
 
-    qz_val = velocity_pressure(V_mph, Kz_val, Kzt, Kd_val, Ke_val)
+    qz_val = velocity_pressure(V_mph, Kz_val, Kzt, Ke_val)
 
     # ------------------------------------------------------------------
     # 3. Force Coefficients — Case A
@@ -485,23 +485,33 @@ def wind_force_on_sign(
     # F = qz * G * Cf * A  (ASCE 7-22 Eq. 29.3-1)
     # M_base = F * h_centroid
     # ------------------------------------------------------------------
-    F_A = qz_val * G_val * Cf_A * A
+    F_A = qz_val * G_val * Cf_A * A * Kd_val
     e_A = 0.0
     arm_A = h_centroid
     M_A = F_A * arm_A
 
     # ------------------------------------------------------------------
-    # 5. Case B — Same F, resultant offset 0.2*B from geometric center
-    # Reference: ASCE 7-22 Figure 29.3-1, Case B
-    # The lateral overturning moment is identical to Case A.
-    # The eccentricity generates an ADDITIONAL torsional demand.
+    
+    # 5. Case B — Resultant offset 0.2*B from geometric center
+    # Reference: ASCE 7-22 Figure 29.3-1, Note 4 (Case B not req if B/s > 2)
     # ------------------------------------------------------------------
-    Cf_B = Cf_A
-    F_B = F_A
-    e_B = 0.2 * B
-    arm_B = arm_A
-    M_B = F_B * arm_B            # lateral OTM at base (same as M_A)
-    T_B = F_B * e_B              # torsional moment at foundation (ft-lbf)
+    case_B_applicable = Bs_ratio <= 2.0
+    
+    if case_B_applicable:
+        Cf_B = Cf_A
+        F_B = F_A
+        e_B = 0.2 * B
+        arm_B = arm_A
+        M_B = F_B * arm_B
+        T_B = F_B * e_B
+    else:
+        Cf_B = 0.0
+        F_B = 0.0
+        e_B = 0.0
+        arm_B = 0.0
+        M_B = 0.0
+        T_B = 0.0
+              # torsional moment at foundation (ft-lbf)
 
     # ------------------------------------------------------------------
     # 6. Case C — Two-zone loading (only when B/s >= 2)
@@ -607,7 +617,8 @@ def wind_force_on_sign(
         "e_B_ft": round(e_B, 3),
         "T_B_ftlbf": round(T_B, 1),
         "arm_B_ft": round(arm_B, 3),
-        "M_B_ftlbf": round(M_B, 1),
+        "case_B_applicable": case_B_applicable,
+          "M_B_ftlbf": round(M_B, 1),
 
         # --- Case C ---
         "case_C_applicable": case_C_applicable,

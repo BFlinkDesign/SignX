@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eagle Workflow Hub v2.0.0 - Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .logo-text h1 {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .logo-text p {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .status-bar {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 12px;
+            background: #f0f0f0;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4CAF50;
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.error { background: #f44336; }
+        .status-dot.warning { background: #ff9800; }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Tab Navigation */
+        .tab-nav {
+            background: white;
+            padding: 0 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .tab-nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            gap: 2px;
+        }
+
+        .tab-button {
+            padding: 15px 25px;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #666;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-button:hover {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .tab-button.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+            background: #f9f9ff;
+        }
+
+        .tab-icon {
+            font-size: 18px;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            max-width: 1400px;
+            width: 100%;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Grid Layouts */
+        .grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+        .grid-4 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+
+        /* Stat Cards */
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .stat-change {
+            font-size: 12px;
+            color: #4CAF50;
+            margin-top: 5px;
+        }
+
+        .stat-change.negative { color: #f44336; }
+
+        /* Buttons */
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-success {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn-warning {
+            background: #ff9800;
+            color: white;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        select.form-control {
+            cursor: pointer;
+        }
+
+        /* Tables */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f5f5f5;
+            padding: 12px;
+            text-align: left;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 2px solid #ddd;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+            color: #666;
+        }
+
+        tr:hover {
+            background: #f9f9f9;
+        }
+
+        /* Activity Feed */
+        .activity-feed {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .activity-item {
+            padding: 10px;
+            margin-bottom: 10px;
+            background: white;
+            border-radius: 5px;
+            border-left: 3px solid #667eea;
+            font-size: 13px;
+        }
+
+        .activity-time {
+            color: #999;
+            font-size: 11px;
+        }
+
+        /* Progress Bars */
+        .progress {
+            height: 30px;
+            background: #f0f0f0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            transition: width 0.5s ease;
+        }
+
+        /* Settings Grid */
+        .settings-grid {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 20px;
+        }
+
+        .settings-nav {
+            background: white;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .settings-nav-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            transition: background 0.3s;
+        }
+
+        .settings-nav-item:hover {
+            background: #f0f0f0;
+        }
+
+        .settings-nav-item.active {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: #667eea;
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Alerts */
+        .alert {
+            padding: 15px 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .tab-nav-content {
+                overflow-x: auto;
+            }
+
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">🦅</div>
+                <div class="logo-text">
+                    <h1>Eagle Workflow Hub</h1>
+                    <p>Version 2.0.0 | Production</p>
+                </div>
+            </div>
+            <div class="status-bar">
+                <div class="status-item">
+                    <span class="status-dot"></span>
+                    <span>System Active</span>
+                </div>
+                <div class="status-item">
+                    <span>📧</span>
+                    <span id="email-count">0 New</span>
+                </div>
+                <div class="status-item">
+                    <span>💰</span>
+                    <span id="quote-count">0 Today</span>
+                </div>
+                <div class="status-item">
+                    <span>🕐</span>
+                    <span id="current-time"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="tab-nav">
+        <div class="tab-nav-content">
+            <button class="tab-button active" onclick="switchTab('dashboard')">
+                <span class="tab-icon">📊</span>
+                <span>Dashboard</span>
+            </button>
+            <button class="tab-button" onclick="switchTab('email')">
+                <span class="tab-icon">📧</span>
+                <span>Email Processing</span>
+            </button>
+            <button class="tab-button" onclick="switchTab('quotes')">
+                <span class="tab-icon">💰</span>
+                <span>Quote Generator</span>
+            </button>
+            <button class="tab-button" onclick="switchTab('keyedin')">
+                <span class="tab-icon">🗃️</span>
+                <span>KeyedIn Data</span>
+            </button>
+            <button class="tab-button" onclick="switchTab('files')">
+                <span class="tab-icon">📁</span>
+                <span>File Manager</span>
+            </button>
+            <button class="tab-button" onclick="switchTab('reports')">
+                <span class="tab-icon">📈</span>
+                <span>Reports</span>
+            </button>
+            <button class="tab-button" onclick="switchTab('settings')">
+                <span class="tab-icon">⚙️</span>
+                <span>Settings</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Dashboard Tab -->
+        <div id="dashboard-tab" class="tab-content active">
+            <div class="grid grid-4">
+                <div class="stat-card">
+                    <div class="stat-label">Today's Quotes</div>
+                    <div class="stat-value">12</div>
+                    <div class="stat-change">↑ 20% from yesterday</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Emails Processed</div>
+                    <div class="stat-value">47</div>
+                    <div class="stat-change">↑ 15% from average</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Active Jobs</div>
+                    <div class="stat-value">28</div>
+                    <div class="stat-change negative">↓ 3 from last week</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Success Rate</div>
+                    <div class="stat-value">94%</div>
+                    <div class="stat-change">↑ 2% improvement</div>
+                </div>
+            </div>
+
+            <div class="grid grid-2">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>📊</span>
+                            <span>Recent Activity</span>
+                        </div>
+                        <button class="btn btn-secondary" onclick="refreshActivity()">Refresh</button>
+                    </div>
+                    <div class="activity-feed" id="activity-feed">
+                        <div class="activity-item">
+                            <strong>New BID REQUEST</strong> from Valley Church
+                            <div class="activity-time">2 minutes ago</div>
+                        </div>
+                        <div class="activity-item">
+                            <strong>Quote Generated</strong> #209-4857 - $8,347
+                            <div class="activity-time">15 minutes ago</div>
+                        </div>
+                        <div class="activity-item">
+                            <strong>Email Processed</strong> DSM Airport Priority
+                            <div class="activity-time">23 minutes ago</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>🎯</span>
+                            <span>Quick Actions</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-2" style="gap: 10px;">
+                        <button class="btn btn-primary" onclick="processEmails()">
+                            <span>📧</span> Check Emails
+                        </button>
+                        <button class="btn btn-success" onclick="generateQuote()">
+                            <span>💰</span> New Quote
+                        </button>
+                        <button class="btn btn-warning" onclick="syncKeyedIn()">
+                            <span>🔄</span> Sync KeyedIn
+                        </button>
+                        <button class="btn btn-secondary" onclick="openReports()">
+                            <span>📈</span> View Reports
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>📈</span>
+                        <span>System Performance</span>
+                    </div>
+                </div>
+                <div class="grid grid-3">
+                    <div>
+                        <div class="form-label">Email Processing</div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 85%">85%</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-label">PDF Analysis</div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 92%">92%</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-label">Quote Accuracy</div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 78%">78%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Email Processing Tab -->
+        <div id="email-tab" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>📧</span>
+                        <span>Email Monitor</span>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-primary" onclick="checkEmails()">Check Now</button>
+                        <button class="btn btn-secondary" onclick="configureEmail()">Configure</button>
+                    </div>
+                </div>
+                
+                <div class="alert alert-info">
+                    <span>ℹ️</span>
+                    <span>Monitoring Outlook for "BID REQUEST" emails every 30 minutes</span>
+                </div>
+
+                <div class="table-responsive">
+                    <table id="email-table">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>From</th>
+                                <th>Subject</th>
+                                <th>Attachments</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>09:45 AM</td>
+                                <td>Valley Church</td>
+                                <td>BID REQUEST - Channel Letters</td>
+                                <td>2 files</td>
+                                <td><span class="btn btn-success btn-sm">Processed</span></td>
+                                <td><button class="btn btn-secondary btn-sm">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quote Generator Tab -->
+        <div id="quotes-tab" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>💰</span>
+                        <span>Quote Generator</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-2">
+                    <div>
+                        <div class="form-group">
+                            <label class="form-label">Customer Name</label>
+                            <input type="text" class="form-control" id="customer-name" placeholder="Enter customer name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Sign Type</label>
+                            <select class="form-control" id="sign-type">
+                                <option>Channel Letters</option>
+                                <option>Cabinet Sign</option>
+                                <option>Monument Sign</option>
+                                <option>Vehicle Graphics</option>
+                                <option>Window Graphics</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Dimensions (W x H)</label>
+                            <div class="grid grid-2" style="gap: 10px;">
+                                <input type="number" class="form-control" id="width" placeholder="Width">
+                                <input type="number" class="form-control" id="height" placeholder="Height">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-group">
+                            <label class="form-label">Material</label>
+                            <select class="form-control" id="material">
+                                <option>Aluminum</option>
+                                <option>Acrylic</option>
+                                <option>Steel</option>
+                                <option>Vinyl</option>
+                                <option>Foam</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Quantity</label>
+                            <input type="number" class="form-control" id="quantity" value="1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Rush Order</label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="rush-order">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="calculateQuote()">
+                    <span>🔢</span> Calculate Quote
+                </button>
+
+                <div id="quote-result" style="display: none; margin-top: 20px;">
+                    <div class="alert alert-success">
+                        <span>✅</span>
+                        <span>Quote calculated successfully!</span>
+                    </div>
+                    <div class="grid grid-3">
+                        <div class="stat-card">
+                            <div class="stat-label">Base Price</div>
+                            <div class="stat-value">$6,250</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">With Markup</div>
+                            <div class="stat-value">$8,437</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Confidence</div>
+                            <div class="stat-value">92%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- KeyedIn Data Tab -->
+        <div id="keyedin-tab" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>🗃️</span>
+                        <span>KeyedIn / Excel Integration</span>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-primary" onclick="syncExcel()">Sync Excel</button>
+                        <button class="btn btn-secondary" onclick="exportData()">Export</button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Job Number</th>
+                                <th>Customer</th>
+                                <th>Description</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="keyedin-data">
+                            <tr>
+                                <td>209-4856</td>
+                                <td>Valley Church</td>
+                                <td>Channel Letters - Halo Lit</td>
+                                <td>01/24/2024</td>
+                                <td>$8,437</td>
+                                <td>Active</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- File Manager Tab -->
+        <div id="files-tab" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>📁</span>
+                        <span>File Manager</span>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-primary" onclick="uploadFile()">Upload</button>
+                        <button class="btn btn-secondary" onclick="refreshFiles()">Refresh</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-4">
+                    <div class="stat-card" style="cursor: pointer;" onclick="openFolder('projects')">
+                        <div class="stat-label">📁 Projects</div>
+                        <div class="stat-value">142</div>
+                    </div>
+                    <div class="stat-card" style="cursor: pointer;" onclick="openFolder('quotes')">
+                        <div class="stat-label">💰 Quotes</div>
+                        <div class="stat-value">89</div>
+                    </div>
+                    <div class="stat-card" style="cursor: pointer;" onclick="openFolder('drawings')">
+                        <div class="stat-label">📐 Drawings</div>
+                        <div class="stat-value">256</div>
+                    </div>
+                    <div class="stat-card" style="cursor: pointer;" onclick="openFolder('pdfs')">
+                        <div class="stat-label">📄 PDFs</div>
+                        <div class="stat-value">412</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reports Tab -->
+        <div id="reports-tab" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>📈</span>
+                        <span>Reports & Analytics</span>
+                    </div>
+                    <div class="card-actions">
+                        <select class="form-control" style="width: 150px;">
+                            <option>Last 7 Days</option>
+                            <option>Last 30 Days</option>
+                            <option>Last Quarter</option>
+                            <option>Year to Date</option>
+                        </select>
+                        <button class="btn btn-primary" onclick="generateReport()">Generate</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-3">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Revenue</div>
+                        <div class="stat-value">$247,892</div>
+                        <div class="stat-change">↑ 12% from last period</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Average Quote</div>
+                        <div class="stat-value">$4,837</div>
+                        <div class="stat-change">↑ 8% increase</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Win Rate</div>
+                        <div class="stat-value">68%</div>
+                        <div class="stat-change">↑ 5% improvement</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Tab -->
+        <div id="settings-tab" class="tab-content">
+            <div class="settings-grid">
+                <div class="settings-nav">
+                    <div class="settings-nav-item active" onclick="showSettings('general')">General</div>
+                    <div class="settings-nav-item" onclick="showSettings('email')">Email</div>
+                    <div class="settings-nav-item" onclick="showSettings('automation')">Automation</div>
+                    <div class="settings-nav-item" onclick="showSettings('pricing')">Pricing</div>
+                    <div class="settings-nav-item" onclick="showSettings('advanced')">Advanced</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>⚙️</span>
+                            <span>General Settings</span>
+                        </div>
+                        <button class="btn btn-primary" onclick="saveSettings()">Save Changes</button>
+                    </div>
+
+                    <div id="general-settings">
+                        <div class="form-group">
+                            <label class="form-label">Company Name</label>
+                            <input type="text" class="form-control" value="Eagle Sign Co">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Default Browser</label>
+                            <select class="form-control">
+                                <option selected>Chrome</option>
+                                <option>Edge</option>
+                                <option>Firefox</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Auto-save Interval</label>
+                            <select class="form-control">
+                                <option>5 minutes</option>
+                                <option>10 minutes</option>
+                                <option selected>15 minutes</option>
+                                <option>30 minutes</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Enable Notifications</label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTime();
+            setInterval(updateTime, 1000);
+            setInterval(updateStats, 30000); // Update stats every 30 seconds
+            loadDashboardData();
+        });
+
+        // Update current time
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('current-time').textContent = 
+                now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        // Switch tabs
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active from all buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName + '-tab').classList.add('active');
+            
+            // Activate button
+            event.target.closest('.tab-button').classList.add('active');
+        }
+
+        // Dashboard functions
+        function loadDashboardData() {
+            // Simulate loading data
+            console.log('Loading dashboard data...');
+            updateStats();
+        }
+
+        function updateStats() {
+            // Update email count
+            const emailCount = Math.floor(Math.random() * 10);
+            document.getElementById('email-count').textContent = emailCount + ' New';
+            
+            // Update quote count
+            const quoteCount = Math.floor(Math.random() * 5) + 10;
+            document.getElementById('quote-count').textContent = quoteCount + ' Today';
+        }
+
+        function refreshActivity() {
+            const feed = document.getElementById('activity-feed');
+            feed.innerHTML = '<div class="spinner"></div>';
+            
+            setTimeout(() => {
+                feed.innerHTML = `
+                    <div class="activity-item">
+                        <strong>System Refresh</strong> completed successfully
+                        <div class="activity-time">Just now</div>
+                    </div>
+                    <div class="activity-item">
+                        <strong>New BID REQUEST</strong> from Valley Church
+                        <div class="activity-time">2 minutes ago</div>
+                    </div>
+                `;
+            }, 1000);
+        }
+
+        // Email functions
+        function checkEmails() {
+            alert('Checking Outlook for new BID REQUEST emails...');
+            // Call PowerShell script via fetch to local API endpoint
+        }
+
+        function processEmails() {
+            console.log('Processing emails...');
+            checkEmails();
+        }
+
+        // Quote functions
+        function calculateQuote() {
+            const width = document.getElementById('width').value;
+            const height = document.getElementById('height').value;
+            
+            if (!width || !height) {
+                alert('Please enter dimensions');
+                return;
+            }
+            
+            const sqft = width * height;
+            const basePrice = sqft * 75; // $75 per sq ft
+            const withMarkup = basePrice * 1.35; // 35% markup
+            
+            document.getElementById('quote-result').style.display = 'block';
+        }
+
+        function generateQuote() {
+            switchTab('quotes');
+        }
+
+        // KeyedIn functions
+        function syncKeyedIn() {
+            console.log('Syncing with KeyedIn/Excel...');
+            // Call PowerShell script
+        }
+
+        function syncExcel() {
+            alert('Syncing with Excel work order file...');
+        }
+
+        // File functions
+        function openFolder(folderName) {
+            console.log('Opening folder:', folderName);
+        }
+
+        function uploadFile() {
+            alert('File upload dialog would open here');
+        }
+
+        function refreshFiles() {
+            console.log('Refreshing file list...');
+        }
+
+        // Reports functions
+        function openReports() {
+            switchTab('reports');
+        }
+
+        function generateReport() {
+            alert('Generating report...');
+        }
+
+        // Settings functions
+        function showSettings(section) {
+            console.log('Showing settings section:', section);
+        }
+
+        function saveSettings() {
+            alert('Settings saved successfully!');
+        }
+
+        function configureEmail() {
+            alert('Email configuration dialog');
+        }
+
+        function exportData() {
+            alert('Exporting data to CSV...');
+        }
+
+        // WebSocket connection for real-time updates (optional)
+        function connectWebSocket() {
+            // This would connect to a local WebSocket server
+            // running from PowerShell for real-time updates
+            console.log('WebSocket connection would be established here');
+        }
+
+        // Auto-refresh data
+        setInterval(() => {
+            // Refresh activity feed
+            const activities = [
+                'Email processed from DSM Airport',
+                'Quote generated for Wells Fargo',
+                'PDF analyzed successfully',
+                'KeyedIn data synchronized',
+                'New customer added: Principal'
+            ];
+            
+            const randomActivity = activities[Math.floor(Math.random() * activities.length)];
+            console.log('Activity:', randomActivity);
+        }, 60000); // Every minute
+    </script>
+</body>
+</html>

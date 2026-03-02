@@ -1,0 +1,17 @@
+﻿
+Table     ColumnName  DataType MaxLength AllowDBNull
+-----     ----------  -------- --------- -----------
+Customers UniqueID    String          -1        True
+Customers Name        String          -1        True
+Customers Address     String          -1        True
+Customers City        String          -1        True
+Customers State       String          -1        True
+Customers ZipCode     String          -1        True
+Customers Phone       String          -1        True
+Customers ID          String          -1        True
+Customers FaxNumber   String          -1        True
+Customers CreditTerms String          -1        True
+Customers Notes       String          -1        True
+
+
+

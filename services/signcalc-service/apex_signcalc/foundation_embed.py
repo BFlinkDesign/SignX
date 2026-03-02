@@ -465,6 +465,14 @@ def _concrete_volume_cy(D_ft: float, L_ft: float) -> float:
 def _shaft_weight_lbf(D_ft: float, L_ft: float) -> float:
     return _concrete_volume_cy(D_ft, L_ft) * 27.0 * CONCRETE_PCF
 
+def calculate_concrete_yards(diameter_in: float, depth_ft: float) -> float:
+    """Calculate cubic yards of concrete for a cylindrical footing."""
+    radius_ft = (diameter_in / 12.0) / 2.0
+    area_sqft = math.pi * (radius_ft ** 2)
+    volume_cuft = area_sqft * depth_ft
+    return round(volume_cuft / 27.0, 2)
+
+
 
 def _skin_friction_uplift(
     gamma_pcf: float,

@@ -1,0 +1,1063 @@
+part_number,description,inventory_type,sales_code,lead_code,engr_status,warehouse_location,qty_on_hand,uom,unit_price,acctg_cost,source_tier,source_file,ingested_at
+201-0100,406/19 LORD PAK ADHESIVE,FADHES,,P,A,,7.0,TUBE,129.6225,74.07,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+201-0110,7542A/B 50ML SM LORD PACK ADH.,FADHES,,P,A,,0.0,TUBE,14.45,8.3625,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+201-0112,Lord Adhesive 7550,FADHES,,P,A,,5.0,TUBE,52.2375,29.85,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+201-0130,3M ADHESIVE REMOVER #08984,FADHES,,P,A,,48.0,OZ,0.8329,0.47594,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+201-0150,BLACK CAULKING,FADHES,,P,A,,1.0,TUBE,9.48,4.4,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+201-0170,BROWN CAULKING,FADHES,,P,A,,1.0,TUBE,4.32,2.47,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+201-0200,LIMESTONE CAULKING NP-1,FADHES,,P,A,,0.0,TUBE,5.69,3.2533,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+201-0275,40 YR SILICONE ACRYLIC LATEX WHITE CAULK,FADHES,,P,A,,-1.0,TUBE,15.715,8.98,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+201-0280,25 YR WHITE CAULKING,FADHES,,P,A,,60.0,TUBE,9.34,3.1565,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+201-0285,#3 WELD ON PLASTIC CEMENT,FADHES,,P,A,,240.0,OZ,1.6841,0.96234,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+201-0290,#16 WELD ON PLASTIC CEMENT,FADHES,,P,A,20.0,356.0,OZ,1.855,1.06,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+201-0292,#16 WELD ON CLEAR PLASTIC CEMENT,FADHES,,P,A,,0.0,OZ,0.52322,0.3171,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+201-0294,#58 WELD ON PLASTIC CEMENT,FADHES,,P,A,20.0,25.0,OZ,1.23361,0.70492,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+201-0330,SCS1001 GE CLEAR SILICONE,FADHES,,P,A,,1.0,TUBE,8.22,2.9808,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+201-0340,81911 CLEAR SILICONE,FADHES,,P,A,,29.0,TUBE,8.66,3.7983,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+201-0350,SCS1202 GE WHITE SILICONE,FADHES,,P,A,,0.0,TUBE,7.89,3.6154,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0100,"3"" ALUMINUM GUSSETS",FALEXT,,M,A,,71.0,EA,3.61883,2.0679,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0110,BOLT TOGETHER ANGLES,FALEXT,,P,A,,0.0,EA,3.5,2.0,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0140,TYPE II BACK ADAPTER - 26',FALEXT,,P,A,,42.0,FT,2.31,1.32,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0150,BLEED TRIM ABC Extr.- 26',FALEXT,,P,A,,26.0,FT,3.22,1.84,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0185,"1-1/2"" CONVENTIONAL DIVIDER BAR - 26'",FALEXT,,P,A,,626.0,LF,4.4975,2.57,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0190,"1-3/4"" SMALL DIVIDER BAR - 26'",FALEXT,,P,A,,156.0,FT,7.175,4.1,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0220,ABC FLEXIBLE FACE TENSIONERS - 500/BOX,FALEXT,,P,A,,,EA,2.1,1.2,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0250,TYPE IV END FRAME ABC- 26',FALEXT,,P,A,,78.0,FT,7.35,4.2,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0270,"LARGE ""A"" BLEEDFRAME ABC- 26'",FALEXT,,P,A,,26.0,FT,22.7675,11.7,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0340,THRIF-T FRAME,FALEXT,,P,A,,234.0,FT,10.99,6.28,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0350,"12"" CONVENTIONAL FRAME - 26'",FALEXT,,P,A,,145.0,FT,21.7525,12.43,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0360,TYPE I FRAME (10)- 26',FALEXT,,P,A,,607.0,FT,15.5225,8.87,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0370,TYPE II FRAME - 26',FALEXT,,P,A,,416.0,FT,14.21,8.12,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0380,TYPE I WIDE FAB FRAME (EI) - 26',FALEXT,,P,A,,286.0,FT,6.51,3.72,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0385,Type III End Frame - 26',FALEXT,,P,A,,104.0,FT,10.78,6.16,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0386,Type III lifts,FALEXT,,M,A,,0.0,EA,0.0,0.47,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0387,Type III Unit Frame - 26',FALEXT,,P,A,,147.0,FT,13.8425,7.91,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0390,TYPE IV UNIT FRAME - 26',FALEXT,,P,A,,114.0,FT,9.87,5.64,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0400,WIDE FAB FRAME - ABC 0550-W/F - 26',FALEXT,,P,A,,0.0,FT,15.435,8.82,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0410,ZERO-CLEARANCE CARRIER FRAME - 26',FALEXT,,P,A,,0.0,FT,6.6325,3.79,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0420,"1/8"" X 1/2"" X 50' GASKET TAPE",FALEXT,,P,A,,,FT,1.6275,0.14377,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0425,"1/8"" X 1 1/2""  GASKET TAPE",FALEXT,,P,A,,975.0,FT,0.455,0.26,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0431,"LARGE ""A"" Z-BRACKET",FALEXT,,P,A,,100.0,EA,6.9125,3.95,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0440,HANGER BAR ABC- 16',FALEXT,,P,A,,0.0,FT,2.975,1.7,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0500,"8"" ANGLE IRON BRACKETS - LAF IRONS",FALEXT,,M,A,,152.0,EA,9.68991,5.53709,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0510,"LARGE ""A"" FLEXFRAME - 26'",FALEXT,,P,A,,,FT,25.4275,14.53,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0530,"LARGE ""A"" BACK ADAPTER - 26'",FALEXT,,P,A,,156.0,FT,4.3225,2.47,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0540,C-COVER CORNER FLASHING - L/A SCABS,FALEXT,,M,A,,339.0,EA,2.05,1.17,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0560,"LARGE ""A"" SPREADER BARS (Frame Support)",FALEXT,,M,A,,174.0,EA,2.77751,1.58715,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0570,"LG ""A"" BLEEDFRAME COVER ABC 26'",FALEXT,,P,A,,26.0,FT,9.7475,5.01,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0580,"LARGE ""A"" C-COVER ABC- 26'",FALEXT,,P,A,,,FT,10.8325,6.19,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0610,"2-1/2"" FLAT RETAINER ABC- 26'",FALEXT,,P,A,,,FT,4.48,2.56,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0620,TYPE III FLAT RETAINER ABC,FALEXT,,P,A,20.0,312.0,FT,2.17,1.24,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0680,2 TYPE I FLAT RETAINER - 26',FALEXT,,P,A,,893.0,LF,3.2025,1.83,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0690,2 LG E-Z RETAINER - 26',FALEXT,,P,A,,286.0,LF,4.0775,2.33,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0710,TYPE IV RETAINER - 26',FALEXT,,P,A,20.0,324.0,LF,1.5575,0.89,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0760,"3-1/2"" ANGLE IRON BRACKETS - SAF IRONS",FSTANG,,M,A,,0.0,EA,0.54,0.27,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0790,RETRO SADDLE - 26',FALEXT,,P,A,,0.0,SF,8.19,4.68,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0810,ZERO-CLEARANCE SADDLE - 26',FALEXT,,P,A,,52.0,FT,8.54,4.88,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0820,"SMALL ""A"" FLEX COVER ABC- 26'",FALEXT,,P,A,,48.0,FT,5.005,2.86,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0830,"SMALL ""A"" FLEX FRAME ABC- 26'",FALEXT,,P,A,,52.0,FT,20.5625,11.75,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0860,"SMALL ""A"" SPREADER BARS",FALEXT,,M,A,,0.0,EA,0.39,0.22,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0861,Post & Panel Retainer,FALEXT,,P,A,,40.0,EA,0.14,0.08,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0862,Post & Panel closure - 25' pieces,FALEXT,,P,A,,0.0,LF,2.485,1.42,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0863,Corner keys post & panel,FALEXT,,P,A,,0.0,EA,0.6125,0.35,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0864,"3 1/4"" half round post - 25' pieces",FALEXT,,P,A,,52.0,LF,13.79,7.88,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0865,"5"" Half Round Post ABC part #1004-RDP",FALEXT,,P,A,,0.0,LF,11.3225,6.47,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0866,"1"" Reveal - Post & Panel ABC part #1040-R1",FALEXT,,P,A,,75.0,LF,6.2825,3.59,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0867,Post & Panel Mono Frame - 25' pieces,FALEXT,,P,A,,75.0,LF,10.3425,5.91,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0868,Post & Panel end frame - 25' pieces,FALEXT,,P,A,,45.0,LF,7.4725,4.27,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0869,"3 1/4"" Post Caps",FALEXT,,P,A,,0.0,EA,3.9375,2.25,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0870,SMALL BALLAST WIREWAY BASE ABC- 26',FALEXT,,P,A,,12.0,FT,6.055,3.46,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0871,"3 1/4"" Rectangle Post",FALEXT,,P,A,20.0,0.0,FT,14.0175,8.01,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0872,"1/2"" post & panel reveal",FALEXT,,P,A,20.0,0.0,FT,4.8825,2.79,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0875,Intermediate Wireway Extrusion,FALEXT,,P,A,,234.0,LF,2.73,1.56,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0885,Intermediate Wireway Extrusion Cover,FALEXT,,P,A,,234.0,LF,1.8725,1.07,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0920,LARGE BLEED TRIM ABC- 26',FALEXT,,P,A,,52.0,FT,3.0275,1.73,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0941,"1 3/8"" H-style Divider Bar",FALEXT,,P,A,,156.0,FT,5.2675,3.01,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-0945,H-MOLDING,FALEXT,,P,A,,0.0,FT,2.52,1.44,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-1110,AWNING TRIM CAP - MILLIKEN 350' per box,FAWN,AWNING,P,A,,,FT,1.421,0.53866,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-1120,"1"" X 1"" STANDARD WALL W/DBL 1"" FLANGES - 24'",FAWN,AWNING,P,A,,48.0,FT,1.3,1.0498,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-1130,MI-6 AWNING Z CLIPS,FAWN,AWNING,P,A,,59.0,EA,1.6625,0.95,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-1140,"MP1A 1"" X 1"" STD WALL STAPLE-IN - 24'",FAWN,AWNING,P,A,,920.0,FT,4.25705,2.4326,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-1150,MP1A BENT BOWS 1/4 CIRCLE,FAWN,AWNING,P,A,,0.0,EA,16.53,10.5537,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-1155,"MP2 1"" X 1"" X 1-1/2"" STD WALL",FAWN,AWNING,P,A,,0.0,FT,2.5375,1.45,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-1160,"MP2B 1"" X 1"" STD. WALL/1FLNG STPLN",FAWN,AWNING,P,A,,250.0,FT,1.51,1.236,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-1165,"MP2A 1"" X 1"" X 1"" STD WALL",FAWN,AWNING,P,A,20.0,0.0,FT,2.5375,1.45,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-1170,GALVANIZED STAPLES,FAWN,AWNING,P,A,,,EA,0.02,0.00451,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-1235,EXCELLART MC RETAINER - H STYLE,FALEXT,,P,A,,208.0,FT,4.37217,2.49838,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-1250,L-1982N  2-PC RACEWAY,FALEXT,,P,A,20.0,0.0,FT,10.12799,5.78742,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-1260,R-1981 2-PC RACEWAY,FALEXT,,P,A,,0.0,FT,9.26294,5.29311,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-1261,Raceway Spreader LC5972N-8,FALEXT,,P,A,,-20.0,EA,3.0975,1.77,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-1262,"LC5972N5 5"" narrow channel letter raceway brace/bracket mill finish",FALEXT,,P,A,20.0,0.0,EA,2.3275,1.33,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-1263,"LCB1970N narrow 5"" channel letter raceway and cover",FALEXT,,P,A,20.0,336.0,FT,20.1644,11.5225,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-1264,"LC5987N5 5"" narrow channel letter raceway end cap mill finish",FALEXT,,P,A,20.0,0.0,EA,14.245,8.14,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-1265,"7"" EXCELLART CHANNEL LETTER RACEWAY - 1401015 24'6"" pieces.",FALEXT,,P,A,20.0,419.0,FT,17.4475,9.21,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-1266,"Excellart 7"" RACEWAY ENDCAP",FALEXT,,P,A,20.0,16.0,EA,19.1975,10.97,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-1267,"Excellart 2"" mounting bracket",FALEXT,,P,A,20.0,194.0,EA,3.465,1.98,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-1270,RACEWAY SPREADER BARS,FALEXT,,M,A,,524.0,EA,4.71,2.69,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-1290,1986N RACEWAY COVER,FALEXT,,P,A,20.0,0.0,FT,4.45209,2.54405,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-1295,"7"" EXCELLART CHANNEL LETTER RACEWAY COVER - 1401016 24'6"" pieces",FALEXT,,P,A,20.0,419.0,FT,4.2875,2.26,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-1300,RACEWAY END CAPS,FALEXT,,M,A,,0.0,EA,7.97668,4.5581,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-1310,MOUNTING CLIPS,FALEXT,,P,A,,0.0,EA,2.9925,1.71,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-1320,"5"" X 7"" HAND HOLE COVER",FALEXT,,M,A,,-37.0,EA,3.27469,1.87125,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-1330,"6"" X 7"" X .032"" HAND HOLE COVER",FALEXT,,M,A,,301.0,EA,2.73919,1.56525,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+202-1400,Large Channel Extrusion 10',FALEXT,,P,A,,20.0,FT,30.93038,17.6745,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+203-0110,"1"" X 1"" X 3/16"" ALUM ANGLE - 25'",FALUM,,P,A,,162.0,FT,2.415,1.38,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+203-0130,"1-1/2"" X 1-1/2"" X 3/16"" ALUM ANGLE",FALUM,,P,A,,25.0,LF,3.8675,2.21,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+203-0140,"2"" X 2"" X 1/8"" ALUM ANGLE - 25'",FALUM,,P,A,,300.0,FT,3.4825,1.99,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+203-0150,"2"" X 2"" X 3/16"" ALUM ANGLE - 25'",FALUM,,P,A,,640.0,FT,6.5744,2.8476,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+203-0160,"2"" X 2"" X 1/4"" ALUM ANGLE - 25'",FALUM,,P,A,,350.0,FT,6.5079,3.7188,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+203-0210,"3"" X 3"" X 1/4"" ALUM ANGLE - 25'",FALUM,,P,A,,116.0,FT,10.4475,5.97,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+203-0215,"3"" X 4"" X 1/4"" ALUM ANGLE - 25'",FALUM,,P,A,,7.0,FT,12.775,7.3,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+203-0260,"3/8"" ROUND ALUM ROD - 12'",FALUM,,P,A,,0.0,FT,0.82,0.4667,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+203-0298,"3/4"" X 1.5"" x .125"" rectangle ALUM TUBE - 21'-1""",FALUM,,P,A,20.0,0.0,FT,8.25195,4.7154,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+203-0300,"1"" X 1"" X .062"" ALUM TUBE - 21'-1""",FALUM,,P,A,,0.0,FT,1.12,0.6914,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+203-0310,"1"" X 1"" X 1/8"" ALUM TUBE",FALUM,,P,A,,,LF,4.17162,1.86295,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+203-0320,"1-1/4"" X 1-1/4"" X 1/8"" ALUM TUBE  21'1""",FALUM,,P,A,,80.0,FT,3.68583,2.10619,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+203-0330,"1-1/2"" X 1-1/2"" X 1/8"" ALUM TUBE  21'1""",FALUM,,P,A,,121.0,FT,10.4965,5.998,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+203-0340,"2"" X 1"" X 1/8"" ALUM TUBE",FALUM,,P,A,,0.0,FT,4.12015,2.35437,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+203-0360,"2"" X 2"" X 1/8"" ALUM TUBE",FALUM,,P,A,,,LF,8.54067,3.66,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+203-0365,"2"" X 3"" X 1/8"" ALUMINUM TUBE - 21' 1""",FALUM,,P,A,,23.0,FT,9.05583,5.17476,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+203-0375,"2"" X 2"" X 1/4"" ALUMINUM TUBE - 25'",FALUM,,P,A,,72.0,LF,8.28013,4.7315,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+203-0380,"2-1/2"" X 2-1/2"" X 1/8"" ALUM TUBE 21'1""",FALUM,,P,A,,0.0,FT,8.8375,5.05,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+203-0430,"3"" X 3"" X 1/8"" ALUM TUBE",FALUM,,P,A,,212.0,LF,10.13756,5.79289,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+203-0440,"4"" X 2"" X 1/8"" ALUM TUBE - 21'-1""",FALUM,,P,A,,0.0,FT,6.02,3.4373,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+203-0450,"4"" X 4"" X 1/8"" ALUM TUBE - 21'-1""",FALUM,,P,A,,96.0,FT,14.0875,8.05,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+203-0460,"1/8"" X 1-1/2"" ALUM FLAT - 12'",FALUM,,P,A,,0.0,FT,0.945,0.4718,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+203-0480,"1/4"" X 1/4"" ALUMINUM FLAT - 12'",FALUM,,P,A,,42.0,FT,1.3825,0.79,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+203-0495,"1/4"" X 12"" ALUMINUM FLAT - 12'",FALUM,,P,A,,0.0,FT,21.875,7.95833,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+203-0500,"1/4"" X 2"" ALUM FLAT",FALUM,,P,A,,188.0,LF,4.7775,2.73,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+203-0510,"1/4"" X 3"" ALUM FLAT",FALUM,,P,A,,0.0,LF,3.99438,2.2825,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+204-0141,".090"" ALUM SHEET 5052",FALUM,,P,A,,32.0,SF,7.7875,4.28,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+204-0144,.100 5052 aluminum no sheet size,FALUM,,P,A,,25.0,SF,9.52,4.86,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+204-0155,.125 ALUMINUM 5052,FALUM,,P,A,,314.0,SF,12.6525,5.67,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+204-0162,".250"" ALUM SHEET 5052 -no sheet size-sq. ft.",FALUM,,P,A,,86.0,SF,26.74,15.28,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+204-0171,".375"" ALUM PLATE - 4' X 10'",FALUM,,P,A,,6.0,SF,42.40425,24.231,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+204-0182,".500"" ALUM SHEET - no sheet size - sqft.",FALUM,,P,A,20.0,58.0,SF,25.89,15.625,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+205-0111,".040"" BLACK/WHITE ALUM VM",FALUM,,P,A,,,SF,5.14938,2.9425,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+205-0113,.040 Ivy Green/White aluminum,FALUM,,P,A,,224.0,SF,2.223,1.27031,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+205-0180,".040"" WHITE/WHITE ALUMINUM",FALUM,,P,A,,911.0,SF,4.13,2.36,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+205-0201,".050"" WHITE/MILL ALUM 5052",FALUM,,P,A,,80.0,SF,5.75239,3.28708,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+205-0211,".063"" WHITE/WHITE ALUM",FALUM,,P,A,,588.0,SF,8.42286,3.25,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+205-0212,".063"" Texaco Red/WHITE ALUM",FALUM,,P,A,20.0,400.0,SF,9.07991,5.18852,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+205-0221,".063"" MILL ALUMINUM 5052",FALUM,,P,A,,228.0,SF,4.55,2.6,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+205-0253,".080"" WHITE/WHITE 4x10 sheets",FALUM,,P,A,,54.0,SF,11.37325,6.499,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+205-0256,".080"" ALUMINUM 5052",FALUM,,P,A,,,SF,5.94108,3.3949,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+206-0100,3MM White/White Maxmetal Lite,FALUM,,P,A,20.0,182.0,SF,1.93867,1.10781,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+206-0101,3MM black/black Maxmetal colors,FALUM,,P,A,20.0,24.0,SF,2.55281,1.45875,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+206-0110,6MM white/white maxmetal 6mm,FALUM,,P,A,20.0,116.0,SF,4.68781,2.67875,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+206-0111,6MM  black/black maxmetal 6mm,FALUM,,P,A,20.0,0.0,SF,3.45954,1.97688,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+206-0140,3MM WHITE/WHITE DIBOND - 4' X 8',FALUM,,P,A,,0.0,SF,4.94,3.3834,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+206-0160,3MM WHITE 1S D-LITE  - 4' X 8',FALUM,,P,A,,0.0,SF,6.36615,3.6378,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+206-0220,6MM WHITE 2S ALUMALITE - 4' X 8',FALUM,,P,A,,0.0,SF,7.595,4.34,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+206-0221,6MM WHITE 2S ALUMALITE - 4' X 10',FALUM,,P,A,,44.0,SF,4.39,2.5103,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+206-0230,6MM WHITE 1S ECONOLITE - 4' X 8',FALUM,,P,A,,0.0,SF,7.74977,4.42844,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+206-0231,6MM WHITE 1S ECONOLITE - 4' X 10',FALUM,,P,A,,0.0,SF,4.18,2.6141,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0101,"1"" BLACK JEWELITE TRIMCAP - 150'/RL",FCHANN,CHANNL,P,A,,445.0,LF,0.58333,0.33333,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0110,"2"" BLACK JEWELITE TRIMCAP - 10'",FCHANN,CHANNL,P,A,,-33.0,LF,1.491,0.852,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0120,"1"" BLUE JEWELITE TRIMCAP - 10'",FCHANN,CHANNL,P,A,,0.0,LF,0.57,0.3276,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0121,"1"" BLUE JEWELITE TRIMCAP - 150'",FCHANN,CHANNL,P,A,,102.0,LF,0.82005,0.4686,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0125,"1"" LIGHT BLUE JEWELITE TRIMCAP - 10'",FCHANN,,P,A,,70.0,FT,0.5733,0.3276,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0130,"2"" BLUE JEWELITE TRIMCAP - 10'",FCHANN,CHANNL,P,A,,30.0,LF,1.33,0.6048,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0141,"1"" BRONZE JEWELITE TRIMCAP - 150'/RL",FCHANN,CHANNL,P,A,,110.0,LF,0.94255,0.5386,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0150,"2"" BRONZE JEWELITE TRIMCAP 100' roll",FCHANN,CHANNL,P,A,,0.0,LF,1.43,0.8169,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0161,"1"" BROWN JEWELITE TRIMCAP - 150'/RL",FCHANN,CHANNL,P,A,,0.0,LF,1.02,0.4122,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0181,"1"" DARK BRONZE JEWELITE TRIMCAP - 150'/RL",FCHANN,CHANNL,P,A,,0.0,LF,0.7588,0.4336,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0185,"1"" CHROME JEWELITE TRIMCAP - 150'/RL",FCHANN,CHANNL,P,A,,200.0,LF,0.6697,0.38267,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0191,"1"" BRUSHED CHROME JEWELITE TRIMCAP - 150'/RL",FCHANN,CHANNL,P,A,,12.0,LF,0.812,0.464,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0211,"1"" GOLD JEWELITE TRIMCAP - 150'/RL",FCHANN,CHANNL,P,A,,125.0,LF,0.78808,0.45033,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0220,"2"" GOLD JEWELITE TRIMCAP - 10'",FCHANN,CHANNL,P,A,,0.0,LF,0.99,0.6174,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0231,"1"" GREEN JEWELITE TRIMCAP - 150'/RL",FCHANN,CHANNL,P,A,,294.0,LF,0.77,0.44,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0235,"1"" HUNTER GREEN #2162 GEMTRIM TRIMCAP - 150'/RL",FCHANN,,P,A,,241.0,LF,0.86361,0.49349,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0251,"1"" IVORY JEWELITE TRIMCAP - 150'/RL",FCHANN,CHANNL,P,A,,118.0,LF,0.62,0.3528,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0261,"1"" ORANGE JEWELITE TRIMCAP - 150'/RL",FCHANN,CHANNL,P,A,,85.0,LF,0.29,0.1667,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0265,"1"" PURPLE #2287 GEMTRIM TRIMCAP - 150'/RL",FCHANN,,P,A,,90.0,FT,0.546,0.312,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0271,"1"" RED JEWELITE TRIMCAP - 150'/RL",FCHANN,CHANNL,P,A,,117.0,LF,0.77,0.44,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0291,1 SILVER JEWELITE TRIM,FCHANN,CHANNL,P,A,,284.0,LF,0.72135,0.4122,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0295,"3/4"" WHITE JEWELITE TRIM",FCHANN,CHANNL,P,A,,285.0,LF,0.7525,0.43,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0301,1 WHITE JEWELITE TRIM,FCHANN,CHANNL,P,A,,186.0,LF,0.7525,0.43,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0305,1 YELLOW JEWELITE TRIM,FCHANN,,P,A,,100.0,FT,0.98,0.56,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0310,2 WHITE JEWELITE TRIM,FCHANN,CHANNL,P,A,,24.0,LF,1.06,0.6048,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0320,1-1/2 X .063 COIL STOCK,FCHANN,,P,A,,376.0,LF,1.11482,0.63704,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0345,3.3 x .040 Mil3 Finish Letter Coil,FCHANN,,P,A,,0.0,LF,1.53346,0.87626,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0350,3 X .063 MILL FINISH COIL,FCHANN,,P,A,,210.0,LF,1.07,0.61,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0360,3 X .063 MILL LETTER COIL,FCHANN,CHANNL,P,A,,0.0,LF,2.23288,1.27593,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0370,4.5 POL WHITE/WHITE LET COIL,FCHANN,CHANNL,P,A,,0.0,LF,1.23958,0.70833,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0380,5 X .063 MILL FINISH COIL,FCHANN,,P,A,,105.0,LF,2.61,1.26396,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0395,5.3 X .040 BLACK/WHITE COIL,FCHANN,,P,A,,80.0,FT,1.33978,0.70456,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0396,"3.5"" X .040 BLACK/WHITE COIL",FCHANN,,P,A,20.0,65.0,FT,1.90783,0.6839,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0400,5.3 X .040 BRUSHED ALUM COIL,FCHANN,,P,A,,130.0,LF,5.12762,2.93007,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0415,5.3 X .040 clear anodized coil,FCHANN,,P,A,,0.0,LF,2.97763,1.7015,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0420,5.3 BLACK/WHITE LETTER COIL,FCHANN,CHANNL,P,A,,0.0,LF,1.21398,0.6937,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0436,"3.5"" white channel letter coil",FCHANN,CHANNL,P,A,20.0,,LF,2.01283,1.15019,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0465,5.3 X .063 Texaco Red/WHITE COIL,FCHANN,,P,A,20.0,0.0,LF,1.4058,0.80329,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0470,5.3 RED/WHITE LETTER COIL,FCHANN,CHANNL,P,A,,50.0,LF,1.24,0.8774,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+208-0510,8 X .063 MILL FINISH COIL,FCHANN,,P,A,,270.0,LF,2.66,1.52,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+209-0145,CBL16 INTENSE BLUE COOLEY BRITE,FFABRC,,P,A,,74.0,SF,5.6026,3.2015,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+209-0360,"WHITE COOLEY BRITE 6'6""",FFABRC,,P,A,,0.0,SF,0.0,1.33,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+209-0380,Cooley Brite II / 2037 Yellow,FFABRC,,P,A,20.0,,SF,6.05896,3.46226,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+209-0385,Cat Scale 5x20 faces Enter/Do Not Enter,FFABRC,REPFCE,M,A,,0.0,SET,2809.64,1605.51,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+209-0420,COOLEY MAGIC/REMOVER,FFABRC,,P,A,,136.0,OZ,1.04125,0.595,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+209-0460,FLEX FACE CLIPS,FFABRC,,P,A,,54.0,EA,2.7475,1.57,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+209-0465,"3M Panaflex 945GPS White 80"" x 130' rolls",FFABRC,,P,A,,0.0,SF,3.1325,1.79,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+209-0467,"3M Panaflex 945GPS White 80"" x 50yd. rolls",FFABRC,,P,A,,812.0,SF,3.1325,1.79,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+210-0170,CAT SCALE FR CANADIAN FACE,FFACE,,M,A,,0.0,EA,121.28,80.85,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+210-0180,CAT SCALE GUARANTEE FACE,FFACE,,M,A,,106.0,EA,100.65265,57.5158,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+210-0190,CAT SCALE INSTRUCTION FACE,FFACE,,M,A,,106.0,EA,84.8225,48.47,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+212-0240,3/8 NYLON W/CABLE CNTR NWCH12,FFLAG,FLAG,P,A,20.0,100.0,LF,1.14177,0.76118,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-0000,HARDWARE FOR ESTIMATING,HRDWRE,,P,A,20.0,0.0,SF,0.0,0.58,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-0100,BLUE ANCHORS,HRDWRE,,P,A,,0.0,EA,0.06,0.0214,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-0410,1/4 X 3/4 BOLT,HRDWRE,,P,A,,0.0,EA,0.04,0.0214,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-0420,1/4 X 1 BOLT,HRDWRE,,P,A,,537.0,EA,0.06,0.025,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-0440,1/4 X 1-1/2 BOLT,HRDWRE,,P,A,,0.0,EA,0.07,0.045,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-0460,1/4 X 2 BOLT,HRDWRE,,P,A,,0.0,EA,0.12,0.0925,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-0492,"1/4"" x 3/4"" THMS Phillips",HRDWRE,,P,A,,448.0,EA,0.05513,0.0315,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-0500,1/4 X 3 BOLT,HRDWRE,,P,A,,90.0,EA,0.2,0.0942,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-0570,5/16 X 1 BOLT,HRDWRE,,P,A,20.0,,EA,0.04,0.0202,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-0578,5/16 X 1 3/4 BOLT,HRDWRE,,P,A,20.0,0.0,EA,0.0,0.0,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-0590,5/16 X 2-1/2 BOLT - GRADE 8,HRDWRE,,P,A,20.0,24.0,EA,0.27,0.1546,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-0620,3/8 X 1 HEX BOLT,HRDWRE,,P,A,,,EA,0.17896,0.10226,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-0630,3/8 X 1-1/2 HEX BOLT,HRDWRE,,P,A,,29.0,EA,0.11,0.0496,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-0640,3/8 X 2 BOLT,HRDWRE,,P,A,,0.0,EA,0.2478,0.1416,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-0642,"3/8"" x 2"" THMS",HRDWRE,,P,A,,0.0,EA,0.105,0.06,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-0650,3/8 X 2-1/2 BOLT,HRDWRE,,P,A,,0.0,EA,0.21,0.1071,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-0760,1/2 X 1 HEX BOLT,HRDWRE,,P,A,,0.0,EA,0.245,0.14,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-0765,"1/2"" x 1 1/4"" x 13 HHMS",HRDWRE,,P,A,,740.0,EA,0.40143,0.22939,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-0770,1/2 X 1-1/2 HEX BOLT,HRDWRE,,P,A,,51.0,EA,0.24,0.0834,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-0820,"1/2"" X 3"" BOLT",HRDWRE,,P,A,20.0,0.0,EA,0.75,0.275,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-0830,1/2 X 3-1/2 BOLT,HRDWRE,,P,A,20.0,1.0,EA,1.6,1.65,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-0840,1/2 X 4 BOLT,HRDWRE,,P,A,20.0,0.0,EA,0.65,0.37,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-0850,1/2 X 5 HEX BOLT,HRDWRE,,P,A,20.0,0.0,EA,1.67,1.0188,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-0910,5/8 X 2 BOLT,HRDWRE,,P,A,,175.0,EA,0.5775,0.33,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-0911,"5/8""-11 x 2"" A325 bolt",HRDWRE,,P,A,20.0,494.0,EA,1.09183,0.6239,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-1012,3/4 X 1 3/4 BOLT,HRDWRE,,P,A,,91.0,EA,0.0,0.0,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-1150,"7/8 X 2 BOLT, GRADE 5",HRDWRE,,P,A,20.0,0.0,EA,1.575,0.9,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-1160,7/8 X 2-1/2 BOLT GRADE 5,HRDWRE,,P,A,,9.0,EA,2.59,1.48,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-1240,1 X 2-1/2 BOLT,HRDWRE,,P,A,,16.0,EA,7.05,2.32125,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-1250,1 X 3 BOLT,HRDWRE,,P,A,20.0,0.0,EA,4.31,2.4625,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-1800,1/2 X 3 EYE BOLT,HRDWRE,,P,A,20.0,0.0,EA,5.06,2.892,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-2150,08-32 X 1 STOVE BOLT,HRDWRE,,P,A,20.0,0.0,EA,0.06,0.03,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-2270,1/4 X 2 TOGGLE BOLTS,HRDWRE,,P,A,,0.0,EA,0.46,0.26,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-2280,1/4 X 4 TOGGLE BOLTS,HRDWRE,,P,A,,20.0,EA,0.49,0.2608,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-2290,1/4 X 6 TOGGLE BOLT,HRDWRE,,P,A,,17.0,EA,0.54,0.309,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-2450,CABLE TIE,HRDWRE,,P,A,,0.0,EA,0.2275,0.13,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-2535,"1-1/2"" STEEL PIANO HINGE",HRDWRE,,P,A,,0.0,FT,14.19542,8.11167,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-2680,1/4 X 2 LAG SCREW,HRDWRE,,P,A,,60.0,EA,0.23,0.036,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-2690,1/4 X 2-1/2 LAG SCREW,HRDWRE,,P,A,,0.0,EA,0.19,0.1058,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-2700,1/4 X 3 LAG SCREW,HRDWRE,,P,A,,11.0,EA,0.29,0.0618,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-2710,1/4 X 3-1/2 LAG,HRDWRE,,P,A,,0.0,EA,0.32,0.184,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-2740,1/4 X 6 LAG SCREW,HRDWRE,,P,A,,26.0,EA,0.14,0.0772,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-2830,3/8 X 1-1/2 LAG SCREW,HRDWRE,,P,A,,10.0,EA,0.2,0.1,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-2840,3/8 X 2 LAG SCREW,HRDWRE,,P,A,,39.0,EA,0.16,0.078,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-2850,3/8 X 2-1/2 LAG SCREW,HRDWRE,,P,A,,17.0,EA,0.23,0.0764,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-2860,3/8 X 3 LAG SCREW,HRDWRE,,P,A,,49.0,EA,0.15,0.0942,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-2870,3/8 X 3-1/2 LAG SCREW,HRDWRE,,P,A,,0.0,EA,0.22,0.1075,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-2880,3/8 X 4 LAG SCREW,HRDWRE,,P,A,,66.0,EA,0.5,0.1183,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-2890,3/8 X 4-1/2 LAG SCREW,HRDWRE,,P,A,,2.0,EA,0.34,0.1707,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-2900,3/8 X 5 LAG,HRDWRE,,P,A,,0.0,EA,0.55,0.2092,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-2920,3/8 X 8 LAG SCREW,HRDWRE,,P,A,,0.0,EA,1.05,0.6,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-2960,1/2 X 3-1/2 LAG SCREW,HRDWRE,,P,A,,0.0,EA,0.5,0.25,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-2970,1/2 X 4 LAG SCREW,HRDWRE,,P,A,,1.0,EA,1.05,0.335,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-2980,1/2 X 5 LAG,HRDWRE,,P,A,,1.0,EA,0.68,0.3867,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3000,1/2 X 8 LAG SCREW,HRDWRE,,P,A,,0.0,EA,0.8,0.4,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3025,"Big Timber 15x4""",HRDWRE,,P,A,20.0,443.0,EA,0.6475,0.37,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3070,"3/8 LAG SHIELD, LONG",HRDWRE,,P,A,,0.0,EA,0.7987,0.4564,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3080,"3/8 LAG SHIELD, SHORT",HRDWRE,,P,A,,0.0,EA,0.73,0.3332,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3200,3/16 HEX NUT,HRDWRE,,P,A,,216.0,EA,0.06,0.0091,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3205,3/16 PUSH NUT,HRDWRE,,P,A,,,EA,0.19408,0.1109,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3210,3/16 HEX NUT (TINNERMAN),HRDWRE,,P,A,,0.0,EA,0.17,0.0965,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3230,1/4 HEX NUT,HRDWRE,,P,A,,608.0,EA,0.02083,0.0119,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3235,"1/4"" X 20 Rivet Nut",HRDWRE,,P,A,,,EA,1.57973,0.9027,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3240,"1/4"" SPEED NUT - FLAT(TINNERMAN)",HRDWRE,,P,A,,-5.0,EA,0.23,0.0992,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3265,"5/16"" Hex Nut",HRDWRE,,P,A,,367.0,EA,0.0266,0.0152,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3270,3/8 HEX NUT,HRDWRE,,P,A,,,EA,0.05513,0.0315,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3278,"1/2"" Alum.Nuts",HRDWRE,,P,A,,168.0,EA,0.6153,0.3516,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3280,1/2 HEX NUT,HRDWRE,,P,A,,,EA,0.13734,0.07848,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3310,5/8 HEX NUT,HRDWRE,,P,A,,0.0,EA,0.11,0.052,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3480,1-1/8 HEX NUT,HRDWRE,,P,A,,202.0,EA,2.20929,1.26245,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3540,#10-24 HEX NUTS,HRDWRE,,P,A,,,EA,0.0,0.0109,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3550,10-24 TINNERMAN NUT,HRDWRE,,P,A,,,EA,0.54075,0.0945,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3600,6-32 (3/16) NUT,HRDWRE,,P,A,,230.0,EA,0.03,0.004,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3645,Bulbex Rivets BF01-0630,HRDWRE,,P,A,,453.0,EA,0.34895,0.1994,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3648,6-12 S/S rivet,HRDWRE,,P,A,,0.0,EA,0.182,0.104,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3649,4-4 S/S rivet,HRDWRE,,P,A,,,EA,0.06486,0.02486,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3660,6-2 S/S rivet,HRDWRE,,P,A,,0.0,EA,0.06,0.0143,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3670,6-4 S/S rivet,HRDWRE,,P,A,,,EA,0.12,0.0671,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3680,6-6 A/A rivet,HRDWRE,,P,A,,0.0,EA,0.05,0.0219,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3690,6-10 A/A rivet,HRDWRE,,P,A,,0.0,EA,0.06,0.0333,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3700,6-12 A/A rivet,HRDWRE,,P,A,,0.0,EA,0.03,0.0224,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3711,4-6 S/S rivet,HRDWRE,,P,A,,400.0,EA,0.0525,0.03,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3712,6-6 S/S rivet,HRDWRE,,P,A,,538.0,EA,0.0525,0.03,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3715,4-2 A/A rivet,HRDWRE,,P,A,,,EA,0.03164,0.01808,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3716,4-4 A/A rivet,HRDWRE,,P,A,,,EA,0.06125,0.035,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3717,6-4 A/A rivet,HRDWRE,,P,A,,0.0,EA,0.1225,0.07,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3719,4-2 A/S rivet,HRDWRE,,P,A,,0.0,EA,0.04533,0.0259,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3750,"1/4"" TAPCON SCREW",HRDWRE,,P,A,,893.0,EA,0.44,0.2243,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3755,"3/8"" x 3"" TAPCON SCREW",HRDWRE,,P,A,,25.0,EA,1.60965,0.9198,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3756,"3/8"" x 4"" TAPCON SCREW",HRDWRE,,P,A,20.0,0.0,EA,1.6097,0.9198,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3850,#8 X 3 GALV DECK SCREW,HRDWRE,,P,A,,0.0,EA,0.08,0.02,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3870,3 DECK SCREW,HRDWRE,,P,A,,0.0,EA,0.14,0.0218,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3880,3.5 DECK SCREW,HRDWRE,,P,A,,0.0,EA,0.06,0.0338,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3930,1-5/8 DRYWALL SCREWS,HRDWRE,,P,A,,125.0,EA,0.05,0.0323,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-3970,3 DRYWALL SCREWS,HRDWRE,,P,A,,0.0,EA,0.07,0.0482,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4100,"1/4"" x 1"" THMS",HRDWRE,,P,A,,425.0,EA,0.07,0.04,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4180,"10-24 x 1/2"" THMS",HRDWRE,,P,A,,,EA,0.04459,0.02548,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4193,10-24 x 1 THMS,HRDWRE,,P,A,,0.0,EA,0.07,0.04,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4220,10-24 X 5/8 MACH SCR PAN HEAD,HRDWRE,,P,A,,0.0,EA,0.05,0.024,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4291,#8 x 1/2 FHSMS,HRDWRE,,P,A,,0.0,EA,0.07,0.04,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4293,"#8 x 3/4"" FHSMS",HRDWRE,,P,A,20.0,,EA,0.105,0.06,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4300,#8 X 1 DRIL &TAP FLAT HEAD SCR,HRDWRE,,P,A,,0.0,EA,0.07,0.0568,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4310,"#10 x 3/4"" TEK Screw",HRDWRE,,P,A,,,EA,0.0315,0.018,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4311,"#10 x 3/4"" PHPSMS Pancake Head Phillips Sheet Metal Screw",HRDWRE,,P,A,20.0,,EA,0.189,0.108,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4312,"#10 x 1/2"" TEK Screws",HRDWRE,,P,A,,-204.0,EA,0.02931,0.01675,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4320,"#10 x 3/4"" TEK Screw w/ Rubb",HRDWRE,,P,A,,,EA,0.14665,0.0838,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4330,#10 X 1-1/2 SELF TAPPING SCREW,HRDWRE,,P,A,,138.0,EA,0.13,0.0549,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4345,"#12 X 1"" TEK SCREW WITH RUBBER WASHER",HRDWRE,,P,A,,60.0,EA,0.25169,0.12,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4350,"#10 x 2"" Tek Screw",HRDWRE,,P,A,,0.0,EA,0.0525,0.03,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4355,"#10 x 4"" Tek Screw",HRDWRE,,P,A,,0.0,EA,0.2625,0.15,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4370,12 X 1 SELF TAPPING SCRW,HRDWRE,,P,A,,25.0,EA,0.08,0.0426,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4375,12 X 1 1/4 HWHSMS Tek #5 point,HRDWRE,,P,A,,0.0,EA,0.36988,0.21136,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4380,"#12-24 x 1 1/2"" TEK 5 (Man Killer)",HRDWRE,,P,A,,,EA,0.39382,0.22504,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4391,12 X 2 1/2 HWHSMS Tek,HRDWRE,,P,A,,0.0,EA,0.1015,0.058,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4395,"#12 x 3"" TEK Screw",HRDWRE,,P,A,,0.0,EA,0.0,0.1008,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4410,"#14 x 3/4"" Tek Screw",HRDWRE,,P,A,,21.0,EA,0.0525,0.03,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4420,#14 X 1 SELF TAPPER SCREW,HRDWRE,,P,A,,0.0,EA,0.07,0.0233,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4440,#14 X 1-1/2 SELF TAPPER SCREW,HRDWRE,,P,A,,0.0,EA,0.3,0.0285,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4470,#14 X 2 SELF TAPPING SCR,HRDWRE,,P,A,,0.0,EA,0.53,0.24,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4530,1/4 X 4 SELF TAPPING SCR,HRDWRE,,P,A,,0.0,EA,1.32,0.75,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4580,5/16 X 1-1/2 SELF TAPPER,HRDWRE,,P,A,,0.0,EA,0.18,0.1,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4590,5/16 X 1 SELF TAPPER,HRDWRE,,P,A,,0.0,EA,0.14,0.08,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4652,"#8 x 1/2"" PHSMS Black",HRDWRE,,P,A,,992.0,EA,0.0,0.0366,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4653,"#8 x 3/8"" PHSMS",HRDWRE,,P,A,,0.0,EA,0.06125,0.035,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4654,"#8 x 3/4"" PHSMS",HRDWRE,,P,A,,0.0,EA,0.028,0.016,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4655,"#8 X 1/2"" PHILLIPS WAFER LATH SHARP POINT SCREW",HRDWRE,,P,A,,,EA,0.02853,0.0163,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4656,"#8 X 1/2"" Lath trim cap) screw",HRDWRE,,P,A,20.0,,EA,0.20825,0.119,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4660,#8 X 3/4 SHEET METAL SCR,HRDWRE,,P,A,,0.0,EA,0.03,0.0127,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4670,#8 X 1 SHEET METAL SCREW,HRDWRE,,P,A,,0.0,EA,0.07,0.1149,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4710,#10 X 1/2 SHEET METAL SC,HRDWRE,,P,A,,,EA,0.07,0.02295,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4712,"#10 x 1/2"" HWHSMS - Black",HRDWRE,,P,A,,,EA,0.17094,0.09768,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4930,#08 X 2-1/2 WOOD SCREW,HRDWRE,,P,A,,0.0,EA,0.12,0.0601,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4940,#12 WOOD SCREW,HRDWRE,,P,A,,0.0,EA,0.11,0.0637,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-4995,3/16” aluminum weld studs,HRDWRE,,P,A,,,EA,0.13736,0.07849,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5000,"2"" STUDS X 3/16 ALUMINUM",HRDWRE,,P,A,,900.0,EA,0.8372,0.4784,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5020,"3"" STUDS X 3/16 ALUMINUM",HRDWRE,,P,A,,100.0,EA,0.6594,0.3768,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5030,"2"" STUDS X 1/4 ALUMINUM",HRDWRE,,P,A,,0.0,EA,0.13,0.0767,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5060,10-32 X 1-1/4 ALUM STUDS,HRDWRE,,P,A,,0.0,EA,0.14,0.0775,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5080,"6"" STUDS 10-24 ALUMINUM",HRDWRE,,P,A,,75.0,EA,0.64,0.5887,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5340,2 TURNBUCKLES,HRDWRE,,P,A,20.0,0.0,EA,1.33,0.758,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5350,AWNING WALL CLIPS/NAGLE,HRDWRE,,P,A,,44.0,EA,0.74,0.42,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5360,#90301 WALL ANGLE BRKT,HRDWRE,,P,A,20.0,0.0,EA,4.3575,2.49,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5370,90 - 6 WALL ANGLE #303,HRDWRE,,P,A,20.0,0.0,EA,2.87,1.64,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5380,45 WALL ANGLE #304,HRDWRE,,P,A,,121.0,EA,3.36,1.92,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5390,90305 WALL ANGLE 45 X 5,HRDWRE,,P,A,20.0,0.0,EA,2.37,1.352,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5400,90306 WALL ANGLE 90 X 5,HRDWRE,,P,A,,0.0,EA,1.97,1.15,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5410,90 WALL ANGLE #90311,HRDWRE,,P,A,,0.0,EA,1.68,0.96,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5420,1/8 FLAT WASHERS,HRDWRE,,P,A,,0.0,EA,0.04,0.0158,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5430,3/16 FLAT WASHERS,HRDWRE,,P,A,,,EA,0.05,0.00962,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5440,1/4 FLAT WASHERS,HRDWRE,,P,A,,791.0,EA,0.014,0.008,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5450,5/16 FLAT WASHERS,HRDWRE,,P,A,,169.0,EA,0.07,0.0365,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5460,3/8 FLAT WASHERS,HRDWRE,,P,A,,,EA,0.05338,0.0305,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5470,1/2 FLAT WASHERS,HRDWRE,,P,A,,,EA,0.105,0.06,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5500,5/8 FLAT WASHERS,HRDWRE,,P,A,,20.0,EA,0.18928,0.10816,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5510,5/8 FLAT WASHERS/A325,HRDWRE,,P,A,,541.0,EA,0.17542,0.10024,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5520,"3/4"" flat washers",HRDWRE,,P,A,,424.0,EA,0.0,0.11032,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5530,7/8 FLAT WASHERS,HRDWRE,,P,A,,332.0,EA,0.5,0.2829,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5550,"1"" flat washers",HRDWRE,,P,A,,29.0,EA,1.03688,0.5925,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5560,1-1/8 FLAT WASHERS,HRDWRE,,P,A,,198.0,EA,0.9667,0.5524,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5590,3/16 FENDER WASHERS,HRDWRE,,P,A,,0.0,EA,0.1,0.0466,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5600,1/4 FENDER WASHERS,HRDWRE,,P,A,,100.0,EA,0.21735,0.1242,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5630,1/4 LOCK WASHERS,HRDWRE,,P,A,,155.0,EA,0.06,0.009,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5635,5/16 LOCK WASHERS,HRDWRE,,P,A,,36.0,EA,0.02842,0.01624,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5640,3/8 LOCK WASHERS,HRDWRE,,P,A,,229.0,EA,0.0329,0.0188,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5650,1/2 LOCK WASHERS,HRDWRE,,P,A,,,EA,0.12,0.06,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5660,5/8 LOCK WASHERS,HRDWRE,,P,A,,0.0,EA,0.56,0.32,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+214-5673,"7/8"" Flat Washer - SAE",HRDWRE,,P,A,,0.0,EA,0.245,0.14,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+215-0145,.118 SGC100 112C Clear Lexan,FLEXAN,,P,A,,0.0,SF,3.4825,1.99,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+215-0160,.118 S/G WHITE LEXAN,FLEXAN,,P,A,,0.0,SF,6.09,1.96,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+215-0189,.150 CLEAR LEXAN,FLEXAN,,P,A,,0.0,SF,7.315,4.18,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+215-0199,.150 White Polycarbonate,FLEXAN,,P,A,,-16.0,SF,5.28707,3.02118,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+215-0210,.177 CLEAR LEXAN,FLEXAN,,P,A,,0.0,SF,8.4525,3.95,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+215-0220,".177"" S/G WHITE LEXAN",FLEXAN,,P,A,,0.0,SF,7.78,4.1377,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+215-0535,.177 WHITE FF #2447 PLEXIGLAS,FPLEX,,P,A,,-4.0,SF,7.5775,2.8,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+216-0100,1 X 10 LUMBER,FLUMBR,,P,A,20.0,-128.0,LF,3.1895,1.82257,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+216-0151,"1"" X 4"" X 12' SPF WOOD FRAMING",FLUMBR,,P,A,,,FT,1.50792,0.75,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+216-0251,"2"" X 4"" X 20' SPF WOOD FRAMING",FLUMBR,,P,A,,,FT,1.25388,0.7165,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+216-0252,"2"" X 4"" X 12' SPF WOOD FRAMING",FLUMBR,,P,A,,,LF,0.95667,0.54667,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+216-0300,4X4 WOLMANIZED POSTS,FLUMBR,,P,A,,0.0,LF,1.85,1.8493,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+216-0421,"7/16"" OSB 4'x 8'sheet",FLUMBR,,P,A,,,SF,1.35625,0.4,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+216-0600,3/4 MDF MOLD BOARD,FLUMBR,,P,A,,0.0,SF,3.9025,2.23,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+217-0120,1/2 EGG CRATE LOUVER,FPLEX,,P,A,,40.0,SF,6.80531,3.88875,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+217-0330,1/8 CLEAR PLEXIGLAS,FPLEX,,P,A,,0.0,SF,4.12,1.08,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+217-0335,.250 CLEAR FF PLEXIGLAS,FPLEX,,P,A,,-46.0,SF,9.4325,4.0325,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+217-0480,.177 CLEAR PLEXIGLAS FF,FPLEX,,P,A,20.0,50.0,SF,7.21,4.12,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+217-0485,.177 CLEAR IMPACT MODIFIED ACRYLIC,FPLEX,,P,A,20.0,,SF,19.3375,11.05,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+217-0520,.177 RED PLEXIGLAS FF #2157,FPLEX,,P,A,,204.0,SF,11.8489,6.7708,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+217-0535,.177 White #2447 Plexiglas,FPLEX,,P,A,,220.0,SF,3.64858,2.0849,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+217-0537,.75 WHITE PLEX 7328,FPLEX,,P,A,,0.0,SF,20.09,11.48,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+217-0554,.250 #2157 RED FF PLEXIGLAS,FPLEX,,P,A,,0.0,SF,5.7449,3.2828,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+217-0556,.177 #7328 WHITE FF PLEXIGLAS,FPLEX,,P,A,,468.0,SF,8.24469,2.75781,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+217-0557,.187 #2037 YELLOW FF PLEXIGLAS,FPLEX,,P,A,,262.0,SF,9.51563,5.4375,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+217-0585,"1/4"" #2157 Red Acrylic Sheet GP",FPLEX,,P,A,,0.0,SF,0.0,3.7884,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+217-0590,1/4 WHITE PLEX,FPLEX,,P,A,,0.0,SF,19.215,10.98,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+217-0700,1/2 WHITE SINTRA (KOMATEX),FPLEX,,P,A,,96.0,SF,8.6884,4.9648,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+217-0730,6MM WHITE KOMATEX SINTRA,FPLEX,,P,A,,20.0,SF,4.2875,1.88438,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+217-0780,.750 CLEAR ACRYLIC SHEET,FPLEX,,P,A,,0.0,SF,30.4686,17.41063,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+217-0790,.500 CLEAR ACRYLIC SHEET,FPLEX,,P,A,,8.0,SF,19.1,9.29688,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+217-0793,"1"" CLEAR ACRYLIC SHEET",FPLEX,,P,A,20.0,132.0,SF,50.6604,28.9488,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+217-0795,"1"" 7328 WHITE ACRYLIC SHEET",FPLEX,,P,A,20.0,72.0,SF,40.89148,23.36656,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+217-0796,.75 7328 WHITE ACRYLIC SHEET,FPLEX,,P,A,20.0,32.0,SF,24.08,13.76,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+217-0800,.50 WHITE PLEX 7328,FPLEX,,P,A,,24.0,SF,20.09,11.48,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+218-0160,"LETTER TRACK, BOTTOM - 8'",FCHANG,,P,A,,72.0,FT,2.39969,1.37125,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+218-0161,"LETTER TRACK, BOTTOM - 10'",FCHANG,,P,A,,0.0,FT,1.0,0.52,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+218-0162,"LETTER TRACK, BOTTOM - 12'",FCHANG,,P,A,,0.0,FT,1.0,0.468,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+218-0170,"LETTER TRACK, MUTUAL - 8'",FCHANG,,P,A,,58.0,FT,3.07563,1.7575,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+218-0171,"LETTER TRACK, MUTUAL - 10'",FCHANG,,P,A,,0.0,FT,1.19,0.68,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+218-0172,"LETTER TRACK, MUTUAL - 12'",FCHANG,,P,A,,0.0,FT,1.1,0.618,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+218-0180,"LETTER TRACK, TOP - 8'",FCHANG,,P,A,,49.0,FT,2.92031,1.66875,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+218-0181,"LETTER TRACK, TOP - 10'",FCHANG,,P,A,,0.0,FT,1.1025,0.63,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+218-0182,"LETTER TRACK, TOP - 12'",FCHANG,,P,A,,0.0,FT,1.0,0.57,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-0100,1/2 X 1/2 X 1/8 ANGLE,FSTANG,,P,A,,0.0,FT,0.2,0.11,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-0120,1 X 1 X 1/8 ANGLE IRON,FSTANG,,P,A,,48.0,FT,0.826,0.472,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-0130,1 X 1 X 1/4 ANGLE IRON,FSTANG,,P,A,,0.0,FT,1.49625,0.855,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-0150,"1-1/2"" X 1-1/2"" X 3/16"" ANGLE IRON",FSTANG,,P,A,20.0,245.0,FT,2.625,1.4175,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-0155,ANGLE IRON MOUNTING BRACKET - CAT,FSTANG,PYLON,M,A,,133.0,EA,5.74175,3.281,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-0170,"2"" X 2"" X 3/16"" ANGLE IRON",FSTANG,,P,A,,484.0,FT,3.68536,1.75,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-0180,2 X 2 X 1/4 ANGLE IRON,FSTANG,,P,A,,44.0,FT,3.8675,2.21,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-0240,3 X 3 X 3/8 ANGLE IRON,FSTANG,,P,A,,20.0,FT,2.31,1.321,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-0241,3 X 3 X 3/8 ANGLE IRON,FSTANG,,P,A,,0.0,FT,2.31,1.321,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-0270,4 X 4 X 5/16 ANGLE IRON,FSTANG,,P,A,,0.0,FT,2.78,2.1279,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-0580,4 IN X 5.4 LB CHANNEL,FSTBC,,P,A,,18.0,FT,2.16,1.2393,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-0630,8 IN X 11.5 LB CHANNEL,FSTBC,,P,A,,14.0,FT,3.98,2.2715,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-0660,#3 STEEL GRATING,FSTPLT,,P,A,,0.0,SF,4.74688,2.7125,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-0790,1/4 X 4 H.R. FLAT STEEL,FSTFLT,,P,A,,0.0,FT,2.41,1.3797,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-0800,1/4 X 6 FLAT STEEL,FSTFLT,,P,A,,0.0,FT,6.965,3.98,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-0860,3/8 X 6 H.R. FLAT STEEL,FSTFLT,,P,A,,6.0,FT,6.3875,3.65,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-0930,"1/2"" X 6"" STEEL FLAT",FSTFLT,,P,A,,0.0,FT,10.9025,5.05,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-0970,5/8 X 6 H.R. FLAT STEEL,FSTFLT,,P,A,,13.0,FT,15.22938,8.7025,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-0990,3/4 X 8 H.R. FLAT STEEL,FSTFLT,,P,A,,36.0,FT,30.43688,15.4,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1010,3/4 X 12 H R FLAT STEEL,FSTFLT,,P,A,,15.0,FT,45.1675,25.81,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1018,"1"" X 10"" STEEL FLAT",FSTFLT,,P,A,,0.0,FT,52.77563,30.1575,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1040,1 X 8 FLAT STEEL,FSTFLT,,P,A,,20.0,FT,31.892,18.224,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1050,Hot Rolled Sheet,FSTPLT,,P,A,,56.0,SF,3.05156,1.74375,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1060,18 GAUGE SHEET METAL,FSTPLT,,P,A,,0.0,SF,1.89,1.08,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1130,1/2 X 6 POLE GUSSETS,FSTPLT,,M,A,,97.0,EA,15.6625,8.95,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1131,"8"" x 7"" x 3/4"" gussets hurricane/170mph",FSTPLT,,P,A,20.0,48.0,EA,17.7625,10.15,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1132,"6"" x 4.5"" x 5/8"" gussets high wind/135mph",FSTPLT,,P,A,20.0,0.0,EA,13.5625,7.75,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1141,"1/2"" x 8"" Top Plate",FSTPLT,,M,A,,-1.0,EA,53.1475,30.37,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1150,3/4 X 8 MATCH PLATE,FSTPLT,,P,A,20.0,36.0,EA,60.7075,22.5,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1160,3/4 X 8 TOP PLATE,FSTPLT,,P,A,20.0,38.0,EA,83.9125,47.95,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1161,"1"" x 10"" x 10"" hurricane/170mph top plate",FSTPLT,,P,A,20.0,12.0,EA,78.75,45.0,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1162,"1"" x 10"" x 10"" hurricane/170mph match plate",FSTPLT,,P,A,20.0,8.0,EA,76.125,43.5,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1163,"7/8"" x 8"" x 8"" high wind/135mph top plate",FSTPLT,,P,A,20.0,0.0,EA,76.125,43.5,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1164,"7/8"" x 8"" x 8"" high wind/135mph match plate",FSTPLT,,P,A,20.0,0.0,EA,55.125,31.5,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1265,"24 x 24 x 1.25"" CS Plate 9 H",FSTPLT,,P,A,,24.0,EA,419.2475,239.57,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1266,"24 x 24 x 1 3/8"" CS Plate 9 H",FSTPLT,,P,A,20.0,10.0,EA,700.0,400.0,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1267,"24 x 24 x 1 3/4"" CS Plate 9 H",FSTPLT,,P,A,20.0,7.0,EA,912.92444,275.0,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1320,"5"" STEEL PIPE",FSTPIP,,P,A,,21.0,FT,20.895,11.94,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1330,"6"" STEEL PIPE",FSTPIP,,P,A,,18.0,FT,50.4525,18.585,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1340,"8"" STEEL PIPE",FSTPIP,,P,A,,9.0,FT,53.95917,30.83381,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1640,5/8 H.R. SQUARE STEEL,FSTMIS,,P,A,,3.0,FT,1.96,1.12,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1731,"1-1/2"" X 1-1/2"" X 3/16"" SQ STEEL TUBE",FSTTBE,,P,A,,364.0,FT,4.68956,2.4,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1761,2 X 2 X 1/8 SQ STEEL TBE,FSTTBE,,P,A,,0.0,FT,3.07,1.7525,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1771,2 X 2 X 3/16 SQ STEEL TBE,FSTTBE,,P,A,,0.0,FT,6.01199,3.43542,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1780,2 X 2 X 1/4 SQ STEEL TBE,FSTTBE,,P,A,,0.0,FT,12.30775,5.0,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1781,2 X 2 X 1/4 SQ STEEL TBE,FSTTBE,,P,A,,120.0,FT,13.195,4.7689,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1800,"2-1/2"" SQ STEEL TUBE X 3/16",FSTTBE,,P,A,,0.0,FT,5.8625,3.35,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1801,"2-1/2"" SQ STEEL TUBE X 3/16",FSTTBE,,P,A,,72.0,FT,7.455,4.26,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1810,"2-1/2"" SQ STEEL TUBE X 1/4",FSTTBE,,P,A,,0.0,FT,5.5,3.7,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1811,"2-1/2"" SQ STEEL TUBE X 1/4",FSTTBE,,P,A,,72.0,FT,5.5,3.7,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1841,"3"" X 3"" X 1/4"" SQUARE STEEL TUBING",FSTTBE,,P,A,,68.0,FT,19.5125,7.0,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1891,4 X 4 X 1/4 SQUARE TUBE,FSTTBE,,P,A,,302.0,FT,23.975,9.62,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1900,4 X 4 X 3/8 SQ STEEL TUBING,FSTTBE,,P,A,,0.0,FT,29.8025,17.03,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1950,"5"" X 5"" X .250"" SQUARE TUBE 20 FT",FSTTBE,,P,A,,0.0,FT,15.3825,8.79,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1951,"5"" X 5"" X .250"" SQUARE TUBE 40 FT",FSTTBE,,P,A,,0.0,FT,16.33,8.25,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1952,5 X 5 X 1/4 SQUARE TUBE,FSTTBE,,P,A,,120.0,FT,42.3675,14.60472,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-1990,6 X 6 X 1/4 SQ TUBING,FSTTBE,,P,A,,36.0,LF,50.925,18.65,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-2070,8 X 4 X 1/4 RECT TUBING,FSTTBE,,P,A,20.0,22.0,FT,30.975,17.7,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-2102,"8"" X 8"" 1/4"" SQUARE STEEL TUBE",FSTTBE,,P,A,,301.0,FT,44.43751,21.43665,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-2110,8 X 8 X 3/8 SQ TUBING,FSTTBE,,P,A,,20.0,FT,62.4225,35.67,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-2111,8 X 8 X 3/8 SQ TUBING,FSTTBE,,P,A,,0.0,FT,62.4225,35.67,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-2130,8 X 8 X 5/16 SQ TUBE,FSTTBE,,P,A,20.0,0.0,LF,65.7475,37.57,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-2190,10X10X3/8 SQ TUBING,FSTTBE,,P,A,20.0,96.0,LF,129.9375,37.65,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+219-2191,10X10X3/8 SQ TUBING,FSTTBE,,P,A,,-8.0,FT,68.8625,39.35,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+220-0101,S-4367 36x6x6 box,FSHIP,,P,A,20.0,34.0,EA,3.22,1.84,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+220-0102,S-11258 36 x 12 x 12 cardboard box,FSHIP,,P,A,20.0,15.0,EA,7.805,4.46,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+220-0103,"S-4672, 36 x 10 x 10 cardboard box",FSHIP,,P,A,20.0,-88.0,EA,4.38638,2.5065,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+220-0115,60 x 12 x 12 CARDBOARD BOX S-20417,FSHIP,,P,A,20.0,13.0,EA,16.51475,9.437,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+220-0165,60x8x8 CARDBOARD BOX S-20536,FSHIP,,P,A,20.0,420.0,EA,7.1925,4.11,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+220-0240,"1/4"" x 6"" Micro Foam Rolls",FSHIP,,P,A,,,FT,1.176,0.074,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+220-0315,7 mm shrink wrap,FSHIP,,P,A,20.0,,SF,0.2975,0.17,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+221-0190,STANDARD CAT SCALE SPEAKER SIGN,MFGSGN,PYLON,M,A,,0.0,EA,1520.38,1216.3,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+221-0191,CAT SCALE SPEAKER SIGN DOOR GUARD,MFGSGN,MISC,M,A,,24.0,EA,15.48996,12.39197,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+221-0192,CAT SCALE SPEAKER SIGN PANEL,MFGSGN,MISC,M,A,,50.0,EA,21.32325,17.0586,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+221-0200,"5'-4 1/2"" X 20' STANDARD OVERHEAD CAT SCALE SIGN",MFGSGN,PYLON,M,A,,0.0,EA,8410.64,6728.51,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+221-0210,"5'-4 1/2"" X 20' HIGH WIND OVERHEAD CAT SCALE SIGN",MFGSGN,PYLON,M,A,,0.0,EA,7972.3,6377.84,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+221-0220,"5'-4 1/2"" X 20' HURRICANE OVERHEAD CAT SCALE SIGN",MFGSGN,PYLON,M,A,,0.0,EA,8139.9,7093.14,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+221-0300,"5'-4 1/2"" X 20' STANDARD CAT SCALE POLES",MFGSGN,MISC,M,A,,0.0,SET,3092.91,2192.22,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+221-0301,"5'-4 1/2"" X 20' STANDARD CAT SCALE Single Non-Intercom Pole",MFGSGN,MISC,M,A,,0.0,EA,1151.73,921.38,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+221-0302,"5'-4 1/2"" X 20' STANDARD CAT SCALE Intercom Pole",MFGSGN,MISC,M,A,,0.0,EA,1290.49,1032.39,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+221-0310,"4'-4 1/2"" X 18' HIGH WIND CAT SCALE POLE",MFGSGN,MISC,M,A,,0.0,EA,0.0,0.0,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+221-0320,"5'-4 1/2"" X 20' HIGH WIND CAT SCALE POLES (SET OF 2)",MFGSGN,MISC,M,A,,0.0,EA,4348.49,3478.79,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+221-0330,"5'-4 1/2"" X 20' HURRICANE CAT SCALE POLE",MFGSGN,MISC,M,A,,0.0,SET,6525.35,5220.28,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+221-0400,Cat Scale Standard 5 X 20 Package,MFGSGN,,M,A,,0.0,EA,0.0,0.0,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+221-0500,4' X 18' STANDARD OVERHEAD CAT SCALE SIGN,MFGSGN,PYLON,M,A,,0.0,EA,4638.85,3711.08,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+301-0185,ADVANCE ISB 104014E,BALLST,,P,A,,8.0,EA,136.58,68.29,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+301-0220,175W METAL HALIDE MT BALLAST,BALLST,,P,A,,1.0,EA,152.74,76.37,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+301-0240,250W MH MULTI TAP BALLAST,BALLST,,P,A,,1.0,EA,69.4,34.7,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+301-0245,400W MH M59 MULTI TAP BALLAST,BALLST,,P,A,,0.0,EA,190.54,72.78,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+301-0260,400W METAL HALIDE MT BALLAST,BALLST,,P,A,,2.0,EA,88.82,47.18,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+301-0290,320 PULSE START BALLAST,BALLST,,P,A,,1.0,EA,247.72,123.86,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+301-0330,MH1000W MULTI TAP BALLAST,BALLST,,P,A,20.0,2.0,EA,253.58,126.79,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+301-1301,ESB-1040-14 Universal Electronic Ballast,BALLST,,P,A,,2.0,EA,136.58,68.29,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+301-1302,KTSB-E-0416-12 Keystone Electronic Ballast,BALLST,,P,A,,1.0,EA,83.16,41.58,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+301-1303,KTSB-E-1232-24 Keystone Electronic Ballast,BALLST,,P,A,20.0,8.0,EA,145.46,72.73,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+301-1304,KTSB-E-2048-46 Keystone Electronic Ballast,BALLST,,P,A,20.0,3.0,EA,188.72,94.36,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+302-0100,BX ARMOR CABLE #12/2,ELECT,,P,A,20.0,-45.0,FT,1.24012,0.70864,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+302-0140,HIGH VOLTAGE CABLE GTO,ELECT,,P,A,,33.0,FT,1.84779,1.05588,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+302-0180,BX CLAMP/ARMOR CABLE,ELECT,,P,A,,309.0,EA,0.91088,0.5205,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+302-0185,"All State Clamps 1/2""",ELECT,,P,A,20.0,0.0,EA,0.30968,0.17696,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+302-0186,"3/4"" Cable Clamp",ELECT,,P,A,,653.0,EA,0.88344,0.50482,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+302-0187,Heyco Wavelock clip,ELECT,,P,A,20.0,701.0,EA,0.85904,0.49088,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+302-0231,HEYCO 1029 mounting bracket,ELECT,,P,A,20.0,977.0,EA,0.52133,0.2979,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+302-0445,"3/8"" ALUMINUM GREENFIELD CONDUIT",ELECT,,P,A,,60.0,FT,0.63973,0.36556,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+302-0450,"3/4"" ALUMINUM GREENFIELD CONDUIT",ELECT,,P,A,,100.0,FT,1.4469,0.8268,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+302-0460,"1/2"" ALUMINUM GREENFIELD CONDUIT 100 FT BUNDLE",ELECT,,P,A,,54.0,FT,1.76225,1.007,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+302-0570,"1/2"" LIQUITITE CONDUIT",ELECT,,P,A,,30.0,FT,1.93473,1.10556,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+302-0580,"1/2"" LIQUITITE CONDUIT 100 FT BUNDLE",ELECT,,P,A,,-8.0,FT,4.25058,2.4289,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+302-0600,"3/4"" SEALTITE CONDUIT 100 FT BUNDLE",ELECT,,P,A,,0.0,FT,0.84,0.478,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+302-0621,"3/4"" Heyco 8452 black conduit",ELECT,,P,A,,260.0,FT,3.34863,1.9135,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+302-1050,"1/2"" TWO HOLE STRAP",ELECT,,P,A,20.0,0.0,EA,0.07,0.0372,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+302-1150,3M STD CABLE TIES/NYLON,ELECT,,P,A,,200.0,EA,0.27,0.2598,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-0145,2x4 bell box cover 5173-0 sg wp,ELECT,,P,A,,30.0,EA,1.36771,0.78155,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-0150,RACO 5320-0 1G WP BX W/3-1/2 HUBS,ELECT,,P,A,,120.0,EA,15.03731,8.59275,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-0151,RACO 5330-0 WP BX W/ 3/4 HUBS,ELECT,,P,A,,7.0,EA,7.9898,4.5656,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-0153,RACO 650 Handy Box 4x2 1-1/2DP 1/2KO,ELECT,,P,A,20.0,50.0,EA,7.14693,4.08396,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-0180,RACO 5128-0 SP 20A 277VAC SW&WP CVR,ELECT,,P,A,,118.0,EA,74.03463,42.3055,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-0190,"1-1/4"" DEEP HANDY BOXES",ELECT,,P,A,,0.0,EA,1.62,0.9544,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-0200,"1-1/2"" X 5"" X 1/2"" HANDY BOX",ELECT,,P,A,,0.0,EA,1.62,0.5658,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-0210,RACO 660 1-7/8D HANDY BOX 1/2 KO,ELECT,,P,A,,27.0,EA,5.99095,3.4234,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-0211,"RACO 666 1 7/8"" deep handy box 3/4"" knockout",ELECT,,P,A,,47.0,EA,18.65938,10.6625,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-0240,RACO 860 BLANK HANDY BOX COVER,ELECT,,P,A,,83.0,EA,1.83803,1.0503,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-0298,"3/8"" Heyco Bushing",ELECT,,P,A,,,EA,0.105,0.06,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-0300,"1/2"" PLASTIC BUSHING",ELECT,,P,A,,490.0,EA,0.47425,0.271,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-0303,"5/8"" Heyco Bushing",ELECT,,P,A,,,EA,0.26128,0.1493,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-0313,"7/8"" Heyco Bushing",ELECT,,P,A,,,EA,0.3528,0.2016,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-0581,#10 eyelet - 60042 Ring Tongue,ELECT,,P,A,,,EA,0.95736,0.54706,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-0610,"1/2"" GREENFIELD CONNECTOR BRDGPORT 520-DC2",ELECT,,P,A,,473.0,EA,1.36194,0.77825,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-0611,"3/4"" GREENFIELD CONNECTOR BRDGPORT 521-DC2",ELECT,,P,A,,72.0,EA,1.93226,1.10415,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-0612,HEYCO 8495 Snap In Connector,ELECT,,P,A,,888.0,EA,1.43078,0.81759,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-0650,"1/2"" LIQUITITE SEALTITE MALE CONNECTOR - STRAIGHT - RACO #3402",ELECT,,P,A,,143.0,EA,5.11845,2.92483,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-0690,"1/2"" PVC CONNECTOR",ELECT,,P,A,20.0,0.0,EA,0.37783,0.2159,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-0710,"1"" PVC CONNECTOR",ELECT,,P,A,,0.0,EA,0.88,0.505,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-0780,"3/8"" ROMEX CONNECTOR (SQUEEZE)",ELECT,,P,A,,0.0,EA,0.25,0.1239,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-0960,"1"" PVC COUPLING",ELECT,,P,A,,0.0,EA,0.5,0.2833,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-1030,"1/2"" 90-DEG. GREENFIELD CONNECTOR BRDGPORT 804-DC2",ELECT,,P,A,,118.0,EA,3.00125,1.715,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-1090,"1"" PVC 90-DEG. ELBOW",ELECT,,P,A,20.0,0.0,EA,1.7,0.97,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-1130,"1/2"" 90-DEG. SEALTIGHT ELBOW",ELECT,,P,A,,56.0,EA,5.5566,3.1752,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-1220,"1/2"" LOCK NUT",ELECT,,P,A,,114.0,EA,0.51161,0.29235,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-1240,"1"" LOCK NUT",ELECT,,P,A,,188.0,EA,1.23025,0.703,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-1260,"1-1/2"" LOCK NUT",ELECT,,P,A,,256.0,EA,2.20929,1.26245,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-1280,"1/2"" CHASE NIPPLE",ELECT,,P,A,,178.0,EA,1.61263,0.9215,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-1330,"1"" CHASE NIPPLE",ELECT,,P,A,,198.0,EA,5.75829,3.29045,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-1355,"1 1/2"" CHASE NIPPLE 1106-DC",ELECT,,P,A,,174.0,EA,16.69255,9.5386,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+303-1435,Paige Wall Busters,ELECT,,P,A,,184.0,EA,10.5175,6.01,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-0880,F18T12CW/HO LAMP,LAMPS,,P,A,20.0,8.0,EA,15.88,9.51,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-0890,F18T12 D/HO LAMP,LAMPS,,P,A,20.0,0.0,EA,15.88,4.98,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-0891,F18T12 DSN design lamp,LAMPS,,P,A,20.0,0.0,EA,17.97,8.17,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-0900,F20T12WW LAMP,LAMPS,,P,A,,0.0,EA,5.7,2.59,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-0920,F24T12CW/HO LAMP,LAMPS,,P,A,,42.0,EA,13.05,6.47,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-0930,F24T12D/HO LAMP,LAMPS,,P,A,,0.0,EA,15.27,2.4,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-0950,F30T12CWHO,LAMPS,,P,A,,61.0,EA,15.62,6.29,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-0960,F30T12D/HO LAMPS,LAMPS,,P,A,,0.0,EA,18.26,4.01,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-0980,F34T12CW LAMP,LAMPS,,P,A,,0.0,EA,3.01,1.217,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-0990,F36T12CW/HO LAMP,LAMPS,,P,A,,29.0,EA,14.81,2.67,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1000,F36T12D/HO LAMP,LAMPS,,P,A,,0.0,EA,15.27,2.59,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1025,F40T12CW/HO LAMP,LAMPS,,P,A,,0.0,EA,6.85212,3.1146,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1030,F40CW/U/6 GE U BENT,LAMPS,,P,A,,0.0,EA,16.67,7.765,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1060,F42T12CW/HO LAMP,LAMPS,,P,A,,7.0,EA,14.56,2.97,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1070,F42T12D/HO LAMP,LAMPS,,P,A,,53.0,EA,16.32,3.29,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1080,F48T12CW/HO LAMP,LAMPS,,P,A,,10.0,EA,17.996,8.18,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1090,F48T12D/HO LAMPS,LAMPS,,P,A,,0.0,EA,12.98,4.44,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1100,F60T12CW/HO LAMP,LAMPS,,P,A,,55.0,EA,9.13,3.02,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1110,F60T12D/HO LAMP,LAMPS,,P,A,,0.0,EA,14.04,3.06,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1120,F64T12CW/HO LAMP,LAMPS,,P,A,,25.0,EA,12.36,3.55,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1130,F64T12D/HO LAMP,LAMPS,,P,A,,63.0,EA,6.6,3.0,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1140,F72T12CW/HO LAMP,LAMPS,,P,A,,14.0,EA,31.9,14.5,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1150,F72T12CW/VHO LAMP,LAMPS,,P,A,,0.0,EA,21.32,5.478,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1160,F72T12D/HO LAMP,LAMPS,,P,A,,11.0,EA,12.98,5.8,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1170,F72T12DV/HO LAMP,LAMPS,,P,A,,0.0,EA,38.04,17.29,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1180,F84T12CW/HO LAMP,LAMPS,,P,A,,20.0,EA,16.698,7.59,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1190,F84T12D/HO LAMP,LAMPS,,P,A,,22.0,EA,13.46,5.733,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1200,F96T12/CW GE LAMP,LAMPS,,P,A,,0.0,EA,7.77,2.4733,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1210,F96T12CW/HO LAMP,LAMPS,,P,A,,17.0,EA,12.36,8.39,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1220,F96T12CW/VHO LAMP,LAMPS,,P,A,,0.0,EA,24.88,6.2887,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1230,F96T12D/HO LAMP (DAYLIGHT HIGH OUTPUT),LAMPS,,P,A,,0.0,EA,12.17,2.49,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1240,F96T8TL841 LAMP,LAMPS,,P,A,,0.0,EA,27.214,12.37,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1250,F108T12CW/HO LAMP,LAMPS,,P,A,,15.0,EA,42.46,19.3,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1260,F108T12D/HO LAMP,LAMPS,,P,A,,12.0,EA,22.45,10.0925,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1270,F117T12CW/HO LAMP,LAMPS,,P,A,,8.0,EA,37.62,17.1,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1280,F117T12D/HO LAMP,LAMPS,,P,A,,14.0,EA,31.13,14.15,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1290,F120T12CW/HO LAMP/VOLTARC,LAMPS,,P,A,,14.0,EA,42.46,19.3,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1300,F120T12D/HO LAMP,LAMPS,,P,A,,18.0,EA,22.45,14.15,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1350,U6 36T12CW/HO LAMP,LAMPS,,P,A,20.0,0.0,EA,52.646,23.93,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1400,U6 60T12CWHO,LAMPS,,P,A,20.0,0.0,EA,26.45,19.3983,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1460,U6 96CW/HO LAMP,LAMPS,,P,A,20.0,0.0,EA,53.24,24.2,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1480,U9-120CWHO,LAMPS,,P,A,20.0,0.0,EA,34.75,23.9967,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1490,U9 36CW/HO LAMP,LAMPS,,P,A,20.0,0.0,EA,26.25,15.1517,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1580,U9 96T12CW/HO LAMP,LAMPS,,P,A,20.0,0.0,EA,69.806,31.73,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1965,MH250 U LAMP,LAMPS,,P,A,20.0,1.0,EA,31.02,14.1,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-1970,MH400 LAMP,LAMPS,,P,A,20.0,1.0,EA,62.304,18.29,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+306-2040,MS320/BU/ED28/PS BULB HID,LAMPS,,P,A,20.0,0.0,EA,87.142,39.61,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0100,18 GAUGE LED HOOK UP WIRE,ELECT,,P,A,,,FT,0.53053,0.30316,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0101,LED HOOK UP WIRE for RGB systems,ELECT,,P,A,20.0,222.0,FT,0.9569,0.5468,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0121,Hanley LED NRG Mini-PE-Mini 7000k 12v,ELECT,,P,A,20.0,361.0,EA,1.79048,1.02313,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0122,HPEB-2S96 NRG bar,ELECT,,P,A,20.0,4.0,EA,155.75,89.0,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0134,HanleyLED NRG Series IV - PE4/PN4,ELECT,,P,A,20.0,360.0,EA,3.98125,2.275,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0151,H96W-SD-24V power supply,ELECT,,P,A,20.0,806.0,EA,93.17,42.9,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0167,Sloan 701507-MOD60277 Power Supply,ELECT,,P,A,20.0,10.0,EA,150.68,75.34,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0170,H192W-SD-24 power supply,ELECT,,P,A,20.0,0.0,EA,179.9,89.95,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0175,Slim Qwik Box 240W 12v DBL SZ 2 120WPS,ELECT,,P,A,20.0,5.0,EA,393.75,225.0,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0241,Agilight Pro215,ELECT,,P,A,20.0,0.0,EA,5.97625,3.415,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0243,Streetfighter,ELECT,,P,A,20.0,0.0,EA,1.75,1.0,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0245,PL-QS60-MW-FF Principal Quik Stik,ELECT,,P,A,20.0,0.0,EA,109.375,62.5,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0246,Principal Qwik Mod QM2,ELECT,,P,A,,0.0,EA,1.42741,0.61829,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0247,Principal Qwik Mod QM3,ELECT,,P,A,20.0,0.0,EA,2.30965,1.3198,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0255,QM3 Red,ELECT,,P,A,20.0,0.0,EA,2.48465,1.4198,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0256,SHLB-2S60 4500K Concord,ELECT,,P,A,20.0,0.0,EA,89.11,50.92,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0257,SHLB-2S36 4500K Concord,ELECT,,P,A,20.0,0.0,EA,53.48,30.56,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0258,HPEB-CC cable 6',ELECT,,P,A,20.0,,EA,6.86,3.92,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0259,HPEB-CC cable 12,ELECT,,P,A,20.0,,EA,15.12,8.64,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0260,Hanley PF4180W,ELECT,,P,A,20.0,255.0,EA,3.50595,2.0034,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0261,PF3120 Phoenix LED,ELECT,,P,A,20.0,566.0,EA,2.15294,1.23025,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0262,PF3120 Red Phoenix LED,ELECT,,P,A,20.0,,EA,2.24919,1.28525,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0263,PF2080 Phoenix LED,ELECT,,P,A,20.0,,EA,1.71763,0.68283,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0264,H120W-PPS5 Hanley Power Supply,ELECT,,P,A,20.0,29.0,EA,103.25,48.58,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0265,H60W-SD-12 Hanley Power Supply,ELECT,,P,A,20.0,62.0,EA,58.45,33.4,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0267,Hanley NRG LED 5x20 conversion kit,ELECT,PYLON,M,A,,0.0,EA,2588.0,1513.37,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0268,Hanley NRG LED intercom conversion kit,ELECT,PYLON,M,A,,0.0,EA,295.8375,169.05,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0269,"SHPEB-2S6045K NRG Bar 60"" 4500K",ELECT,,P,A,20.0,,EA,106.785,61.02,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0270,"SHPEB-2S3645K NRG Bar 36"" 4500K",ELECT,,P,A,20.0,,EA,64.05,36.6,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0271,PF2080 Red Phoenix LED,ELECT,,P,A,20.0,143.0,EA,1.48605,0.84917,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0273,"SHPEB-2S9645K NRG Bar 96"" 4500K",ELECT,,P,A,20.0,32.0,EA,139.44,79.68,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-0274,"SHPEB-2S12045K NRG Bar 120"" 4500K",ELECT,,P,A,20.0,40.0,EA,174.3,99.6,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+307-2530,LED Corn 120W,ELECT,,P,A,20.0,7.0,EA,230.4225,98.0205,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+309-0110,12MM REGULAR ELECTRODE CAPS,NEON,NEON,P,A,,41.0,EA,0.12,0.0904,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+309-0120,15MM REGULAR ELECTRODE CAPS,NEON,NEON,P,A,,60.0,EA,1.4644,0.8368,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+309-0130,EC0-10 10MM GREY END CAPS,NEON,NEON,P,A,,0.0,EA,0.54,0.31,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+309-0135,Black End Caps 10mm,NEON,NEON,P,A,,0.0,EA,0.5425,0.31,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+309-0140,"EC3 12, 13MM BLACK CAPS",NEON,NEON,P,A,,70.0,EA,0.5,0.2856,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+309-0683,15mm Short Stop - Black,NEON,,P,A,,36.0,EA,0.3675,0.21,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+309-0770,1# TIE WIRE,NEON,NEON,P,A,20.0,1.0,LB,6.94,4.748,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+309-1916,"Westrim Glass Tube Support Aluminum w/ tie wire, silicone-dipped.",NEON,,P,A,,8.0,EA,1.00135,0.5722,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+309-1990,QUIK SUPPORT/PLASTIC,NEON,NEON,P,A,,60.0,EA,0.68,0.39,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+310-0150,K1121 PHOTO CELL,ELECT,,P,A,,2.0,EA,15.86,9.06,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+310-0190,K4021 PHOTO CELL 120V,ELECT,,P,A,20.0,0.0,EA,19.39,10.69,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+310-0200,K4121 PHOTO CELL 120V,ELECT,,P,A,20.0,0.0,EA,21.14,12.08,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+310-0350,T101 TIME CLOCK,ELECT,,P,A,,0.0,EA,184.45,105.4,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+311-0830,22258 RECEPTACLES (PIN SOCKET),ELECT,,P,A,20.0,0.0,EA,9.24,5.28,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+311-0840,530.1 SPRINGLOADED SOCKETS,ELECT,,P,A,,428.0,EA,2.66,1.52,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+311-0841,530.2 STATIONERY SOCKETS,ELECT,,P,A,,417.0,EA,2.0475,1.17,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+311-0860,582-583 SNAP IN SOCKETS - 250/BOX,ELECT,,P,A,,375.0,EA,6.18625,3.535,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+311-0861,HLB-SSB Hanley Concorde Mounting Bracket,ELECT,,P,A,20.0,0.0,EA,7.4375,4.25,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+311-0862,HPEB-MB NRG Bar Mounting Bracket,ELECT,,P,A,20.0,,EA,5.6525,3.23,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+311-0863,SHPEB-MB Custom NRG Bar Cap for Concorde Bracket.,ELECT,,P,A,20.0,0.0,EA,3.465,1.98,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+311-0980,WEATHER PROTECTIVE COVERS #S2983 FOR TOGGLE SWITCH,ELECT,,P,A,,147.0,EA,2.275,1.3,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+311-1050,TOGGLE SWITCH W/LEADS,ELECT,,P,A,,27.0,EA,9.835,5.62,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+312-0100,TRANSFORMER BOXES,TRANSF,,P,A,,7.0,EA,57.4,28.7,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+312-0240,4000/60 SMART SERIES TRANS,TRANSF,,P,A,,3.0,EA,155.58,50.065,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+312-0260,4030P5G2 SMART SGFI NPF TRANS,TRANSF,,P,A,,4.0,EA,94.32,47.16,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+312-0350,5000/30 P5G2 SM SGFI NPF 30MA TRAN,TRANSF,,P,A,20.0,1.0,EA,0.0,60.42,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+312-0550,7500/60 P5KA2NG-2 SELF CONTAIN,TRANSF,,P,A,,0.0,EA,168.84,84.42,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+312-0650,9000/30 P5G2UE  TRAN,TRANSF,,P,A,,0.0,EA,390.86,195.43,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+312-0660,9000/30 PBKM-51 TRANSFORMER,TRANSF,,P,A,,0.0,EA,679.52,339.76,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+312-0680,9000/30 P8G2U SERVICE MASTER TRAN,TRANSF,,P,A,,1.0,EA,479.08,239.54,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+312-0950,15000/30 P5G-2UE FRANCE TRAN,TRANSF,,P,A,,2.0,EA,560.66,280.33,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+312-0975,France 15000/30 P5G2E 277 volt,TRANSF,,P,A,20.0,0.0,EA,922.86,461.43,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+312-1000,15060 P5G-2UE SERVICE MASTER TRAN,TRANSF,,P,A,,2.0,EA,589.46,294.73,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+312-1159,VT6030 CL120 Ventex Transformer,TRANSF,,P,A,,3.0,EA,230.36,115.18,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+312-1165,6030-120 TRAN Indoor Neon Pull-Chain,TRANSF,,P,A,,0.0,EA,124.8,62.4,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+312-1170,VT9030CL-120 CHANNEL LETTER TRAN,TRANSF,,P,A,,3.0,EA,625.94,312.97,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+312-1175,VT12030CL-120 CHANNEL LETTER TRANSFORMER,TRANSF,,P,A,,0.0,EA,356.88,178.44,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+312-1180,VT9030-120 INDOOR TRANSFORMER W/ PULL CHAIN,TRANSF,,P,A,,0.0,EA,179.98,89.99,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+312-1185,VT12030-120 INDOOR TRANSFORMER W/ PULL CHAIN,TRANSF,,P,A,,0.0,EA,310.6,155.3,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+313-0130,5/8 GROUNDING CLAMP,ELECT,,P,A,20.0,1.0,EA,1.87,1.07,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+313-0160,5/8 X 8 GROUNDING ROD,ELECT,,P,A,20.0,0.0,EA,14.46,8.26,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+313-0260,#6 GROUND WIRE - linear ft to linear ft.,ELECT,,P,A,20.0,105.0,LF,0.27,0.1371,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+313-0310,#10 STRANDED WIRE,ELECT,,P,A,,632.0,FT,0.74785,0.42734,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+313-0329,#12 BLUE 600V STRANDED WIRE,ELECT,,P,A,20.0,78.0,FT,0.37643,0.2151,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+313-0330,#12 RED 600V STRANDED WIRE,ELECT,,P,A,20.0,433.0,FT,0.37643,0.2151,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+313-0331,#12 WHITE 600V STRANDED WIRE,ELECT,,P,A,20.0,,FT,0.37643,0.2151,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+313-0332,#12 BLACK 600V STRANDED WIRE,ELECT,,P,A,,638.0,FT,0.37643,0.19619,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+313-0333,#12 GREEN 1000V STRANDED WIRE MTW,ELECT,,P,A,,390.0,FT,0.22138,0.1265,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+313-0334,#12 WHITE UL 1000V STRANDED WIRE MTW,ELECT,,P,A,,,FT,0.56875,0.325,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+313-0335,#12 BLACK UL 1000V STRANDED WIRE MTW,ELECT,,P,A,,,FT,0.6573,0.3756,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+313-0336,#12 GREEN UL 1000V STRANDED WIRE MTW,ELECT,,P,A,,,FT,0.57594,0.32911,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+313-0337,#12 AWC 15-12-65T-2 Red 12AWG UL 1000V MTW,ELECT,,P,A,,86.0,LF,0.35,0.2,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+313-0360,#14 STRANDED WIRE,ELECT,,P,A,20.0,0.0,FT,0.21,0.12,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+313-0380,30-072 BLUE WIRE NUT,ELECT,,P,A,,,EA,0.24717,0.14124,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+313-0420,30-452 RED WIRE NUTS,ELECT,,P,A,,,EA,0.561,0.32057,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+313-0460,ORANGE WIRE NUTS,ELECT,,P,A,,0.0,EA,0.132,0.07543,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+313-0465,WIRE NUTS O/B+,ELECT,,P,A,,,EA,0.1995,0.114,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+313-0470,30-451 YELLOW WIRE NUTS,ELECT,,P,A,20.0,272.0,EA,0.38045,0.2174,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+313-0475,74B YELLOW 1000V UL WIRE NUT,ELECT,,P,A,,839.0,EA,0.18764,0.10722,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+313-0476,Wago 3 wire lever nuts,ELECT,,P,A,20.0,836.0,EA,0.74613,0.42636,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+313-0477,Wago 5 wire lever nuts,ELECT,,P,A,20.0,269.0,EA,1.19133,0.68076,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+313-0478,WAGO 221-2401 inline splice connector w/lever,ELECT,,P,A,20.0,,EA,0.90125,0.515,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+400-0500,Azko Touch Up Additive,PAINT,,P,A,,32.0,OZ,1.87618,1.0721,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+400-0600,GG Plus Brush/Roll Additive 390909,PAINT,,P,A,,0.0,OZ,1.64897,0.94227,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+400-1000,GRIP FLEX PAINT QUOTING,PAINT,,P,A,,0.0,SF,0.0,0.72,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+400-3000,GRIPGARD PAINT QUOTING,PAINT,,P,A,,-40.0,SF,3.325,1.9,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+401-0100,White alkyd enamel,PAINT,,P,A,20.0,0.0,OZ,1.21608,0.6949,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+402-0215,Sikkens FLNA-90021 silver meta,PAINT,,P,A,,0.0,OZ,3.5175,2.01,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+403-0101,Grip Gard Base Coat White 110,PAINT,,P,A,,639.0,OZ,2.00704,1.14688,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+403-0102,GRIP Gard Base Coat Mixing Black 160,PAINT,,P,A,,,OZ,2.00704,1.14688,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+403-0103,Grip Gard Base Coat High Strength (HS) White 120,PAINT,,P,A,,927.0,OZ,2.08919,1.19382,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+403-0104,GRIP Gard Base Coat Deep Black 140,PAINT,,P,A,,963.0,OZ,2.23549,1.27742,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+403-0105,Grip Gard Base Coat Assorted Colors,PAINT,,P,A,,,OZ,4.68017,2.67438,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+403-0106,Grip Gard Base Coat Metallic Fine 811E,PAINT,,P,A,,336.0,OZ,3.35344,1.91625,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+403-0107,Grip Gard Base Coat Metallic Very Coarse 811R,PAINT,,P,A,,523.0,OZ,3.35344,1.91625,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+404-0113,GRIP GARD Base Coat Translucent Binder 50 483309,PAINT,,P,A,,0.0,OZ,1.43882,0.82218,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+404-0114,GRIP GARD Base Coat Single Stage Satin Binder 85 483517,PAINT,,P,A,,0.0,OZ,1.43896,0.82226,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+404-0115,Grip Gard Base Coat 90 Binder,PAINT,,P,A,,333.0,OZ,2.1175,1.21,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+404-0116,GRIP GARD base coat binder 10,PAINT,,P,A,,102.0,OZ,1.52714,0.87265,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+404-0117,GRIP GARD base coat single stage converter 80,PAINT,,P,A,,0.0,OZ,1.51963,0.86836,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+404-0118,GRIP GARD base coat interior matte binder 91,PAINT,,P,A,,0.0,OZ,2.1875,1.25,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+404-0195,Clear Hardener (Universal) 563553,PAINT,,P,A,20.0,,OZ,3.35825,1.919,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+404-0196,GRIP GARD PL Sup Top Plus 3.5 VOC 397479,PAINT,,P,A,20.0,354.0,OZ,5.66017,3.23438,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+404-0231,Clear Gloss (Universal) 571430,PAINT,,P,A,20.0,,OZ,2.1875,1.25,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+404-0232,Low Gloss Clear (Universal) 563426,PAINT,,P,A,20.0,,OZ,2.46558,1.4089,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+404-0233,Satin Clear (Universal) 563423,PAINT,,P,A,20.0,0.0,OZ,2.1875,0.8345,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+404-0295,GRIP GARD Base Coat Medium Reducer 391265,PAINT,,P,A,,792.0,OZ,0.60165,0.3438,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+404-0296,GRIP GARD Base Coat Flex Medium Reducer 483311,PAINT,,P,A,,230.0,OZ,0.38253,0.21859,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+404-0297,Grip Gard Surfacer Sealer Hardener GGSURESEALHARDQT 576880,PAINT,,P,A,20.0,160.0,OZ,1.32836,0.75906,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+404-0340,GGP Super Top Coat 395714,PAINT,,P,A,,0.0,OZ,6.18275,3.533,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+404-0355,Grip Gard HB Surfacer,PAINT,,P,A,,0.0,OZ,0.0,0.49969,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+404-0361,Epoxy Hardener Grip-Gard 483100GL,PAINT,,P,A,20.0,0.0,OZ,1.67727,0.95844,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+404-0362,Epoxy Reducer Grip=Gard 480746GL,PAINT,,P,A,20.0,0.0,OZ,0.5354,0.30594,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+404-0380,White Wash Primer,PAINT,,P,A,,,OZ,1.54574,0.88328,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+404-0382,White Surfacer Sealer GGSURWHITEGL 545807,PAINT,,P,A,20.0,896.0,OZ,1.2708,0.72617,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+404-0390,WAX & GREASE REMOVER M600,PAINT,,P,A,,982.0,OZ,0.43855,0.2506,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+405-0145,Jet Black Rustoleum,PAINT,,P,A,20.0,-106.0,OZ,0.73855,0.42203,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+407-0111,S-375 aluminum cleaner,PAINT,,P,A,20.0,,OZ,0.15173,0.0867,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+408-0290,Grip-Gard 483099 GL White Epoxy Sealer,PAINT,,P,A,20.0,128.0,OZ,1.56517,0.89438,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+409-0140,Lacquer Thinner,PAINT,,P,A,,,OZ,0.1603,0.0916,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+409-0165,Acetone,PAINT,,P,A,20.0,97.0,OZ,0.63259,0.2382,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+409-0230,A-5055 THINNER,PAINT,,P,A,,,OZ,0.18935,0.1082,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+502-0250,WHITE CONTROLTAC + 180-10 54,VPRINT,,P,A,,0.0,SF,1.7,0.8536,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+502-0260,WHITE TRANS FILM/INKJET 54,VPRINT,,P,A,,0.0,SF,2.76,1.4201,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+506-0100,27 X 38 CLEAR STATIC CLING,VINYL,,P,A,,0.0,EA,2.89,1.71,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+506-0110,27 X 38 WHITE STATIC CLING,VINYL,,P,A,,0.0,EA,2.89,1.71,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+506-0130,48 1772 YELLOW PAINT MASK,VINYL,,P,A,,48.0,SF,1.2,0.6,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+506-0140,60 AVERY MASK,VINYL,,P,A,,0.0,SF,0.6,0.3933,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+506-0145,P28487A Gerber Mask,VINYL,,P,A,,0.0,SF,0.0,0.76587,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+506-0240,BROWN LIGHT ORACAL 48,VINYL,,P,A,,0.0,SF,2.29,1.1463,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+506-0245,"Oracal oralite 5600 brown 24""",VINYL,,P,A,,21.0,SF,4.59334,2.29667,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+506-0400,SANDBLAST MASK 15,VINYL,,P,A,,0.0,LF,5.04,2.88,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+506-0410,SANDBLASTING MASK 25,VINYL,,P,A,,0.0,SF,2.49,1.425,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0100,BLACK H.P. REFL VIN 15,VREFL,,P,A,,0.0,LF,6.87,3.444,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0110,BLACK REF SCOTCHLITE,VREFL,,P,A,,69.0,SF,11.94,5.97,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0120,BLUE 1170-75 36 SCOTCHLITE,VREFL,,P,A,,0.0,SF,3.47,1.98,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0130,BLUE 1175C SCOTCHLITE FILM,VREFL,,P,A,,0.0,SF,4.08,2.04,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0135,Blue ElectroCut Film 3M 1175,VREFL,,P,A,,112.0,SF,5.11484,2.55742,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0140,BLUE 3275 REF SCOTCHLITE,VREFL,,P,A,,0.0,SF,2.64,1.32,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0150,BLUE 580-75 SCOTCHLITE,VREFL,,P,A,,0.0,SF,4.6,2.7108,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0160,BLUE 680-75 SCOTCHLITE,VREFL,,P,A,,14.0,SF,5.89,2.9441,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0170,BLUE H.P. REFLECTIVE VINL 15,VREFL,,P,A,,0.0,LF,5.57,3.1843,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0180,BLUE LIGHT 580-76 SCOTCHLITE,VREFL,,P,A,,0.0,SF,4.6,2.6313,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0190,BLUE LIGHT 680-76 REFLECTIVE,VREFL,,P,A,,0.0,SF,5.89,2.9442,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0200,BROWN REFLECTIVE #2450 15,VREFL,,P,A,,0.0,LF,4.03,2.3,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0210,GOLD 580-54 REF SCOTCHLITE,VREFL,,P,A,,0.0,SF,5.96,2.9805,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0220,GOLD NEW 580-64 REF SCOTCHLITE,VREFL,,P,A,,0.0,SF,5.89,2.9433,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0230,GREEN 680-77 SCOTCHLITE PLUS,VREFL,,P,A,,8.0,SF,5.58,2.7857,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0240,GREEN H.P. REFLECTIVE VIN 15,VREFL,,P,A,,0.0,LF,5.57,3.1833,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0250,GREEN REF 3277 SCOTCHLITE,VREFL,,P,A,,0.0,SF,3.22,1.023,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0290,ORANGE REF SCOTCHLITE,VREFL,,P,A,,5.0,SF,7.08,2.5362,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0300,RED #3872 SCOTCHLIT H INTN12,VREFL,,P,A,,0.0,SF,7.81,4.4608,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0310,RED 680-72 SCOTCHLITE,VREFL,,P,A,,0.0,SF,3.73,1.8651,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0320,RED 580-72 SCOTCHLITE 24,VREFL,,P,A,,0.0,SF,5.54,3.4385,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0330,RED 680-72 SCOTCHLITE PLUS 24,VREFL,,P,A,,0.0,SF,5.54,2.7857,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0340,RED REFLECTIVE #280 30,VREFL,,P,A,,0.0,LF,12.73,6.3637,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0345,RED 24 REFLECTIVE VINYL Avery V4000-450,VREFL,,P,A,20.0,4.0,SF,8.266,4.133,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0350,RED RUBY 680-82 REF SCOTCHLITE,VREFL,,P,A,,0.0,SF,6.0725,3.03625,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0360,RED SCOTCHLITE 3272,VREFL,,P,A,,0.0,SF,3.05,1.32,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0390,SILVER/WHITE SCOTCHLITE #3870,VREFL,,P,A,,0.0,SF,5.87,2.9587,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0400,WHITE #3290 X 24 SCOTCHLITE,VREFL,,P,A,,0.0,SF,2.69,1.32,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0410,WHITE H.P. REFLECTIVE VIN 15,VREFL,,P,A,,0.0,LF,6.37,3.1847,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0415,WHITE REFLECTIVE VINYL V4000-101 24”,VREFL,,P,A,20.0,114.0,SF,8.266,4.133,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0425,"White 4090 DG3 Refl sheeting 11 48""",VREFL,,P,A,,67.0,SF,11.0868,5.5434,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0426,"White 3930 High Intensity Prismatic (HIP) 48"" x 50yd roll",VREFL,,P,A,20.0,128.0,SF,3.36,1.68,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0427,"White 4090 DG3 Refl sheeting 11 30""",VREFL,,P,A,,0.0,SF,11.73016,5.86508,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0430,WHITE SCOTCHLITE PLUS 680-10,VREFL,,P,A,,67.0,SF,8.3,4.15,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0440,WHITE SCOTTCHLITE PLUS 580-10,VREFL,,P,A,,0.0,SF,4.46,2.55,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0455,YELLOW 24 REFLECTIVE VINYL Avery V4000-250,VREFL,,P,A,20.0,30.0,SF,8.266,4.133,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0460,YELLOW DMND 3971GGD SCOTCHLITE,VREFL,,P,A,,0.0,SF,9.9,5.6592,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0465,"YELLOW 3M DG3 Reflective 4091 24""",VREFL,,P,A,20.0,276.0,SF,6.11112,3.05556,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0470,YELLOW LEM 680-81 SCOTCHLIT 24,VREFL,,P,A,,0.0,SF,5.89,2.9442,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0480,YELLOW REF SCOTCHLIT 3271,VREFL,,P,A,,0.0,SF,3.37,2.7272,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0485,YELLOW REF SCOTCHLIT 680-71,VREFL,,P,A,,19.0,SF,5.4544,2.7272,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0490,YELLOW REF SCOTCHLIT 3871,VREFL,,P,A,,0.0,SF,7.56,4.3207,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+507-0500,YELLOW SCOTCHLITE FILM 1171C,VREFL,,P,A,,0.0,SF,4.08,2.04,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0130,BEIGE (7725-49) SCOTCHCAL 24,VSCTCL,,P,A,,6.0,SF,1.45,0.852,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0150,BEIGE LIGHT TRANSLUCENT 48,VSCTCL,,P,A,,0.0,SF,2.67,1.3978,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0180,BEIGE LIGHT TRANSLUCENT 30,VSCTCL,,P,A,,0.0,SF,2.63,1.4958,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0190,BEIGE PUNCHED VINYL 30,VSCTCL,,P,A,,0.0,SF,4.5,2.2493,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0200,BEIGE SCOTCHCAL 48,VSCTCL,,P,A,,6.0,SF,1.49,0.8747,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0220,BLACK (7755-12) SCOTCHCAL 24,VSCTCL,,P,A,,0.0,SF,1.35,0.7668,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0230,"BLACK 7725-12 VINYL 30""",VSCTCL,,P,A,20.0,55.0,SF,3.15,1.575,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0250,BLACK BLOCKOUT MAT SCOTCHCL 48,VSCTCL,,P,A,,0.0,SF,1.57,0.8494,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0260,BLACK CONTROLTAC 48,VSCTCL,,P,A,,0.0,SF,1.58,0.8172,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0270,BLACK CONTROLTAC (24),VSCTCL,,P,A,,0.0,SF,1.58,0.789,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0290,BLACK MATTE SCOTCHCAL 30,VSCTCL,,P,A,,0.0,SF,1.57,0.7859,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0310,BLACK SCOTCHCAL 24,VSCTCL,,P,A,,0.0,SF,1.51,0.7532,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0330,"BLACK GLOSS 3M 7725-12 48""",VSCTCL,,P,A,20.0,,SF,2.68686,1.34343,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0350,BLACK TRANS 3630-22 VINYL 24,VSCTCL,,P,A,,0.0,SF,1.61,0.8044,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0370,BLUE OLYMPIC SCOTCHCAL 30,VSCTCL,,P,A,,0.0,SF,1.8,1.0307,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0380,BLUE OLYMPIC VINYL 30,VSCTCL,,P,A,,0.0,SF,1.8,1.0307,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0470,BLUE BRIGHT MET CONTROLTAC 48,VSCTCL,,P,A,,0.0,SF,1.53,0.8747,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0480,BLUE BRIGHT MET SCOTCHCAL 30,VSCTCL,,P,A,,0.0,SF,1.8,1.0275,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0500,BLUE BRIGHT METALLIC VINYL 30,VSCTCL,,P,A,,0.0,SF,4.5,2.5686,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0530,BLUE DARK AQUA HP VINYL 30,VSCTCL,,P,A,,0.0,SF,3.78,2.1607,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0610,BLUE INTENSE SCOTCH 48,VSCTCL,,P,A,,0.0,SF,3.075,1.5375,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0620,BLUE INTENSE SCOTCHCAL 30,VSCTCL,,P,A,,0.0,SF,1.57,0.8997,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0630,BLUE INTENSE SCOTCHCAL 24,VSCTCL,,P,A,,0.0,SF,1.65,0.8065,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0650,BLUE LIGHT NAVY SCOTCHCAL 24,VSCTCL,,P,A,,0.0,SF,1.75,0.8742,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0660,BLUE LIGHT NAVY SCOTCHCAL 30,VSCTCL,,P,A,,17.0,SF,1.57,0.8997,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0670,BLUE LIGHT NAVY SCOTCHCAL 48,VSCTCL,,P,A,,85.0,SF,4.1,2.05,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0710,"#7725-57 OLYMPIC BLUE OPAQUE 48""",VSCTCL,,P,A,,0.0,SF,1.75,0.8747,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0730,BLUE OLYMPIC HP VINYL 30,VSCTCL,,P,A,,0.0,SF,3.78,2.1607,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0740,BLUE OLYMPIC SCOTCHCAL 24,VSCTCL,,P,A,,12.0,SF,1.41,0.8065,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0750,BLUE PEACOCK HP VINYL 30,VSCTCL,,P,A,,0.0,SF,3.78,1.8653,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0850,BLUE SAPPHIRE HP VINYL 30,VSCTCL,,P,A,,0.0,SF,3.78,2.1607,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0860,BLUE SAPPHIRE SCOTCHCAL 24,VSCTCL,,P,A,,0.0,SF,1.75,0.8742,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0880,BLUE SAPPHIRE SCOTCHCAL 48,VSCTCL,,P,A,,38.0,SF,2.92834,1.46417,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0900,BLUE SHADOW SCOTCHCAL 48,VSCTCL,,P,A,,0.0,SF,1.71,1.1648,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0980,BLUE VIVID SCOTCHCAL 30,VSCTCL,,P,A,,0.0,SF,1.8,1.0307,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-0990,BLUE VIVID SCOTCHCAL 48,VSCTCL,,P,A,,149.0,SF,2.92834,1.46417,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-1010,BLUE WEDGEWOOD HP VINYL 30,VSCTCL,,P,A,,0.0,SF,3.78,2.1608,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-1090,"BROWN RUSSET H.P. VINYL 48""",VSCTCL,,P,A,,23.0,LF,2.4,1.0918,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-1130,BROWN SADDLE H.P. VINYL 30,VSCTCL,,P,A,,0.0,SF,3.78,2.1607,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-1160,BURGUNDY HP VINYL 30,VSCTCL,,P,A,,0.0,SF,3.94,2.2492,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-1200,BURGUNDY SCOTCHCAL 48,VSCTCL,,P,A,,0.0,SF,1.75,0.8747,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-1240,CHROME MATERIAL 24,VSCTCL,,P,A,,38.0,SF,2.74266,1.37133,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-1270,CHROME SCOTCHCAL 24,VSCTCL,,P,A,,0.0,SF,2.25,1.2832,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-1280,CHROME SCOTCHCAL 24X36,VSCTCL,,P,A,,0.0,EA,6.06,3.16,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-1290,CHROME SCOTCHCAL 48,VSCTCL,,P,A,,0.0,SF,0.91,0.5197,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-1370,"7725-314 DUSTED CRYSTAL VINYL 48""",VSCTCL,,P,A,,245.0,SF,4.55116,2.27558,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-1400,CRYSTAL FROSTED VINYL HP 30,VSCTCL,,P,A,,0.0,SF,7.34,4.1956,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-1405,"#7725-324 FROSTED CRYSTAL VINYL 48""",VSCTCL,,P,A,,22.0,SF,3.77832,1.88916,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-1410,DARK AQUA VINYL 30,VSCTCL,,P,A,,48.0,SF,1.7,0.972,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-1490,FAWN SCOTCHCAL 48,VSCTCL,,P,A,,0.0,SF,1.75,0.8747,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-1530,GOLD BRUSHED VINYL 30,VSCTCL,,P,A,,0.0,SF,4.43,2.2497,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-1575,"Harvest Gold 48"" 3M 7725-105",VSCTCL,,P,A,20.0,116.0,SF,3.26516,1.63258,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-1620,GOLD METALLIC HP 200 VINYL 30,VSCTCL,,P,A,,0.0,SF,4.02,2.1153,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-1630,GOLD METALLIC SCOTCHC 24,VSCTCL,,P,A,,0.0,SF,1.71,0.852,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-1650,GOLD MIRROR VINYL 30,VSCTCL,,P,A,,0.0,SF,5.33,3.045,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-1700,GOLD SATIN SCOTCHCAL 48,VSCTCL,,P,A,,0.0,SF,1.49,0.8525,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-1750,GRAY MEDIUM SCOTCHCAL 48,VSCTCL,,P,A,,118.0,SF,4.639,2.3195,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-1755,"Mid Grey 7725-61 48""",VSCTCL,,P,A,20.0,90.0,SF,3.81666,1.90833,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-1780,GREEN APPLE VINYL HP 30,VSCTCL,,P,A,,0.0,SF,3.78,2.1607,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-1790,GREEN BTLE SCOTCH 48 7725-276,VSCTCL,,P,A,,13.0,SF,1.72,0.8599,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-1870,GREEN BRIGHT SCOTCHCAL 48,VSCTCL,,P,A,,36.0,SF,4.638,2.319,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-1910,GREEN DK 7725-56 SCOTCHCAL 48,VSCTCL,,P,A,,0.0,SF,1.71,0.8779,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-1990,GREEN FRST 7725-66 SCOTCHCAL48,VSCTCL,,P,A,,9.0,SF,1.75,0.8747,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-2070,GREEN KEL(7725-46) SCOTCH 48,VSCTCL,,P,A,,15.0,SF,1.73,0.8811,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-2150,GREY DARK SCOTCHCAL 48,VSCTCL,,P,A,,0.0,SF,1.75,0.8778,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-2160,GREY DARK VINYL 30,VSCTCL,,P,A,,0.0,SF,3.78,2.1607,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-2220,GREY PEARL SCOTCHCAL 24,VSCTCL,,P,A,,0.0,SF,1.75,0.8742,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-2230,GREY PEARL SCOTCHCAL 30,VSCTCL,,P,A,,0.0,SF,1.47,0.8387,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-2240,GREY PEARL SCOTCHCAL 48,VSCTCL,,P,A,,0.0,SF,1.71,0.8525,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-2340,MAGENTA SCOTCHCAL 30,VSCTCL,,P,A,,6.0,SF,1.47,0.8387,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-2350,MAGENTA SCOTCHCAL 48,VSCTCL,,P,A,,0.0,SF,2.24,0.9688,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-2390,MAHOGANY SCOTCHCAL MAT'RL 48,VSCTCL,,P,A,,13.0,SF,1.45,0.8525,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-2470,ORANGE BRIGHT SCOTCHCAL 48,VSCTCL,,P,A,,12.0,SF,1.49,0.8779,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-2490,ORANGE FLUOR SCOTCHCAL 30,VSCTCL,,P,A,,0.0,SF,2.29,1.3075,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-2530,ORANGE LIGHT 30 SCOTCHCAL,VSCTCL,,P,A,,6.0,SF,1.73,0.8642,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-2610,PEACOCK SCOTCHCAL 24,VSCTCL,,P,A,,24.0,SF,1.42,0.809,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-2680,PURPLE ROYAL SCOTCHCAL 48,VSCTCL,,P,A,,0.0,SF,1.52,0.8525,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-2740,PURPLE VINYL 48,VSCTCL,,P,A,,17.0,SF,3.77,1.8653,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-2750,"PUTTY OPAQUE 7725-59 48""",VSCTCL,,P,A,20.0,88.0,SF,2.469,1.2345,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-2810,RED CARD CONTROLTAC PLUS 48,VSCTCL,,P,A,,0.0,SF,1.58,0.9003,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-2850,RED CARDINAL SCOTCHCL 48,VSCTCL,,P,A,,0.0,SF,1.75,0.8752,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-2930,RED DEEP SCOTCHCAL PLUS 24,VSCTCL,,P,A,,0.0,SF,1.73,0.8632,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-2980,"GERANIUM 7725-63 48""",VSCTCL,,P,A,,0.0,SF,3.13316,1.56658,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-2985,GERANIUM 180MC-63-4810,VSCTCL,,P,A,20.0,96.0,SF,3.79882,1.89941,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-3000,RED GERANIUM SCOTCHCAL 48,VSCTCL,,P,A,,0.0,SF,1.75,0.8779,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-3040,RED PERFECT MATCH SCOTCHCAL 36,VSCTCL,,P,A,,0.0,SF,1.7,0.9692,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-3060,RED PERFECT MATCH VINYL 48,VSCTCL,,P,A,,51.0,SF,3.88,1.9407,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-3140,RED TOMATOSCOTCHCAL 48,VSCTCL,,P,A,,29.0,SF,3.421,1.7105,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-3190,SANDSTONE VINYL 30,VSCTCL,,P,A,,0.0,SF,3.78,2.1607,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-3240,"SILVER METALLIC 7725-120 48""",VSCTCL,,P,A,,0.0,SF,1.54,0.8773,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-3340,SUNFLOWER VINYL 30,VSCTCL,,P,A,,0.0,SF,3.78,2.1611,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-3350,SUNFLOWER VINYL 48,VSCTCL,,P,A,,0.0,SF,1.75,0.8747,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-3370,TAN H.P. VINYL 30,VSCTCL,,P,A,,4.0,SF,3.78,2.1607,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-3470,TEAL SCOTCHCAL 48,VSCTCL,,P,A,,0.0,SF,4.48,0.8525,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-3530,VIOLET DARK SCOTCHCAL 30,VSCTCL,,P,A,,0.0,SF,1.51,0.8643,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-3555,"VQ 4962 GLOSS BLACK VINYL 48"" 3M #3632G-0153   CAT SCALE",VSCTCL,,P,A,,0.0,SF,4.275,1.8498,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-3557,"Oracal GLOSS BLACK VINYL 48"" 951 premium cast film",VTRANS,,P,A,20.0,-102.0,SF,2.1043,1.05215,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-3558,"Arlon GLOSS BLACK VINYL 48"" 2100-003",VTRANS,,P,A,,0.0,SF,1.80152,0.90076,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-3565,"VQ4077 YELLOW VINYL 48""",VSCTCL,,P,A,,0.0,SF,5.68,2.84,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-3590,"WHITE ANTIQUE VINYL 7725-90 48""",VSCTCL,,P,A,20.0,3.0,SF,3.78,2.1607,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-3600,3635-20B White Blockout Matte,VSCTCL,,P,A,,0.0,SF,2.41466,1.20733,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-3610,WHITE BLOCK OUT VINYL 48,VSCTCL,,P,A,,0.0,SF,1.56,0.7889,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-3620,WHITE CONTROLTAC 160-80,VSCTCL,,P,A,,9.0,SF,1.0,0.5723,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-3690,"7725-10 WHITE OPAQUE 48""",VSCTCL,,P,A,,120.0,SF,3.59966,1.79983,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-3695,"WHITE CONTROLTAC 180MC-10-4810 48""",VSCTCL,,P,A,20.0,50.0,SF,3.06032,1.53016,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-3720,YELLOW BRIGHT SCOTCHC 48,VSCTCL,,P,A,,11.0,SF,3.35334,1.67667,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+508-3730,YELLOW CONTROLTAC,VSCTCL,,P,A,,0.0,SF,2.52,1.26,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0100,24 BLUE TRANSLUCENT VNL 24,VTRANS,,P,A,,0.0,SF,2.5,1.445,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0110,BLACK TRANS 3630-22 VINYL 48,VTRANS,,P,A,,506.0,SF,3.015,1.5075,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0115,"Black 1178 Electrocut overlay 48""",VTRANS,,P,A,,3.0,SF,2.8,1.4,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0140,BLUE 3630-36 TRANS VINYL 48,VTRANS,,P,A,20.0,16.0,SF,3.73834,1.86917,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0150,BLUE BR TRANS SCOTCHCAL 48,VTRANS,,P,A,,0.0,SF,2.67,1.3978,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0160,BLUE BRISTOL TRANS VINYL 48,VTRANS,,P,A,,14.0,SF,4.6848,2.3424,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0190,BLUE DARK TRANS. 3630-36 48,VTRANS,,P,A,,0.0,SF,3.018,1.509,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0210,BLUE EUROPE 3630-137 TRANS 48,VTRANS,,P,A,,0.0,SF,2.67,1.3364,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0230,BLUE EVENING TRANS VINYL 48,VTRANS,,P,A,,29.0,SF,2.23,1.2739,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0240,BLUE INT TRANS SCOTCH 48,VTRANS,,P,A,,240.0,SF,3.90284,1.95142,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0250,BLUE LIGHT EUROPEAN TRANS 48,VTRANS,,P,A,,0.0,SF,3.31334,1.65667,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0260,BLUE OLYMPIC TRANS SCOTHCAL 48,VTRANS,,P,A,,96.0,SF,7.88334,3.94167,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0270,BLUE PROCESS TRANS SCOTCH 48,VTRANS,,P,A,,135.0,SF,4.078,2.039,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0280,BLUE ROYAL TRANS SCOTCHCAL 48,VTRANS,,P,A,,64.0,SF,2.92334,1.46167,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0300,BLUE SULTAN TRANS S'CAL 48,VTRANS,,P,A,,25.0,SF,3.505,1.7525,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0321,BRIGHT BLUE 3630-167 TRANS VINYL 48,VTRANS,,P,A,,59.0,SF,4.92834,1.92025,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0322,BRIGHT Violet  3630-158 TRANS VINYL 48,VTRANS,,P,A,20.0,185.0,SF,5.87166,2.93583,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0330,BRONZE DURANODIC TRAN 48,VTRANS,,P,A,,231.0,SF,4.74366,2.37183,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0345,BRONZE TRAN 3630-129 48,VTRANS,,P,A,,0.0,SF,3.2667,1.63333,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0350,BROWN DARK TRANS 3630-59 48,VTRANS,,P,A,,8.0,SF,3.2,1.6,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0370,BROWN DARK TRAN SCOTCHCL 30,VTRANS,,P,A,,0.0,SF,2.63,1.496,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0390,BROWN LT RST TRANS 3630-109 48,VTRANS,,P,A,,0.0,SF,2.24,1.3978,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0410,BROWN RUST TRANS 3630-63 48,VTRANS,,P,A,,16.0,SF,2.67,1.3978,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0450,"BURGUNDY TRAN 3630-49 48""",VTRANS,,P,A,,86.0,SF,4.68484,2.34242,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0470,DARK BLUE TRAN 30,VTRANS,,P,A,,0.0,SF,6.49,3.705,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0560,GOLD METALLIC TRAN VINYL 48,VTRANS,,P,A,20.0,19.0,SF,3.925,1.9625,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0580,GOLD NUGGET TRANSH.P. VINYL 30,VTRANS,,P,A,,0.0,SF,6.48,3.705,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0590,GOLD NUGGET TRAN VINYL 48,VTRANS,,P,A,,153.0,SF,2.79,1.3978,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0630,GREEN BRILLIANT TRAN 48,VTRANS,,P,A,,63.0,SF,5.15842,2.01,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0640,GREEN DK EMRLD TR 3630-126 48,VTRANS,,P,A,,8.0,SF,3.38166,1.69083,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0645,"Green 1177 Electrocut overlay 48""",VTRANS,,P,A,,127.0,SF,4.72832,2.36416,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0660,GREEN HOLLY TRANS VINYL 48,VTRANS,,P,A,,19.0,SF,3.73834,1.86917,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0690,GREEN JADE TRANS 3630-116 48,VTRANS,,P,A,,0.0,SF,2.23,1.403,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0720,GREEN LT KELLY TR 3630-146 48,VTRANS,,P,A,,54.0,SF,2.23,1.2739,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0735,"Lime Green 48"" translucent 3630-136",VTRANS,,P,A,20.0,0.0,SF,4.0,2.0,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0760,GREEN TRANS VINYL 48 3630-26,VTRANS,,P,A,,66.0,SF,3.575,1.7875,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0780,GREEN TRAN 4 STRIPING 3630-26,VTRANS,,P,A,,0.0,LF,11.63112,5.81556,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0800,GREEN VIVID TRANS VINYL 48,VTRANS,,P,A,,41.0,SF,5.46616,2.34242,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0830,GREY SHADOW TRAN 30,VTRANS,,P,A,,0.0,SF,6.48,3.705,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0870,GREY SLATE TRAN SCOTCHCL 48,VTRANS,,P,A,,0.0,SF,3.665,1.8325,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0875,"Day/Night Smoke Grey 48"" 3635-91",VTRANS,,P,A,20.0,43.0,SF,7.508,3.754,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0876,"Dual Color Black 48"" 3635-222",VTRANS,,P,A,20.0,74.0,SF,9.4938,4.7469,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0890,IVORY TRANS SCOTCHCAL 48,VTRANS,,P,A,,6.0,SF,2.81,1.403,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0920,KUMQUAT TRAN SCOTCHCAL 48,VTRANS,,P,A,,0.0,SF,2.45,1.3978,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0940,LIGHT ENHANCEMENT 3635-100 48,VTRANS,,P,A,,0.0,SF,2.71,1.5543,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0950,LIGHT ORANGE LIGHT TRAN 48,VTRANS,,P,A,,0.0,SF,2.8,1.4,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0955,"Poppy Orange 48"" trans 3M 3630-144",VTRANS,,P,A,20.0,17.0,SF,2.8,1.4,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0960,MAGENTA INTENSE TRANS 48,VTRANS,,P,A,,104.0,SF,3.07,1.535,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-0990,MARIGOLD TRAN SCOTCHCAL 48,VTRANS,,P,A,,25.0,SF,5.56,2.78,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1050,"ORANGE TRANS 3630-44 SCOTCHCAL 48""",VTRANS,,P,A,,78.0,SF,3.88334,1.94167,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1150,PLUM PURPLE TRANS VINYL 3630-128 48,VTRANS,,P,A,,120.0,SF,3.9028,1.9514,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1185,RASPBERRY TRANS VINYL HP 48,VTRANS,,P,A,,35.0,SF,3.7446,1.8723,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1190,3630-33 RED TRANS VINYL,VTRANS,,P,A,,47.0,SF,3.8838,1.9419,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1195,"Red 1172 Electrocut overlay 24""",VTRANS,,P,A,,3.0,SF,2.8,1.4,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1220,RED CARDINAL TRAN 48,VTRANS,,P,A,,0.0,SF,3.665,1.8325,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1260,RED DK TRAN 3630-73 SCOTL 48,VTRANS,,P,A,,18.0,SF,3.73834,1.86917,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1300,RED LIGHT TOMATO TRAN 48,VTRANS,,P,A,,5.0,SF,3.665,1.8325,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1320,RED POPPY TRAN SCOTCHCAL 48,VTRANS,,P,A,,53.0,SF,3.905,1.9525,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1340,RED REGAL TRAN SCOTCHCAL 48,VTRANS,,P,A,,44.0,SF,3.88334,1.94167,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1350,RED SCARLET TRAN VINYL 30,VTRANS,,P,A,,56.0,SF,6.48,3.7047,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1410,ROSE MAUVE TRAN SCOTCHCL 48,VTRANS,,P,A,,19.0,SF,2.3,1.312,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1420,ROSE VIVID TRANS SCOTCHCL 48,VTRANS,,P,A,,0.0,SF,2.62,1.31,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1470,SILVER GREY TRAN VINYL 48,VTRANS,,P,A,,41.0,SF,3.925,1.9625,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1510,SILVER TRAN VINYL 48,VTRANS,,P,A,,9.0,SF,2.79,1.3954,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1520,SM GREY LITE CONTROL 363591 48,VTRANS,,P,A,,0.0,SF,2.62,1.311,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1540,SUNFLOWER TRANS 3630-25 VINYL,VTRANS,,P,A,,19.0,SF,3.73834,1.86917,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1570,TANGERINE TRAN SCOTCHCAL 48,VTRANS,,P,A,,16.0,SF,3.31334,1.65667,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1590,TEAL TRAN VINYL 48,VTRANS,,P,A,,68.0,SF,3.38166,1.69083,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1650,TURQUOISE TRANS. 3630-236 48,VTRANS,,P,A,,16.0,SF,2.23,1.2739,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1685,VQ-4077 yellow,VTRANS,,P,A,20.0,0.0,SF,0.0,1.91,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1687,"Yellow 3632-015 61 1/2"" x 150' rolls",VTRANS,,P,A,,0.0,SF,3.58,1.79,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1840,"WHITE DIFFUSER VINYL FILM 40% 3635-30 48""",VTRANS,,P,A,20.0,87.0,SF,2.29734,1.14867,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1860,WHITE TRANSLUCENT #3630-20,VTRANS,,P,A,,69.0,SF,4.0208,2.0104,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1870,WHITE TRAN ORAJET 60,VTRANS,,P,A,,0.0,SF,1.46,0.7366,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1880,WHITE TRAN SCOTCHCAL 48,VTRANS,,P,A,,0.0,SF,3.73834,1.86917,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1890,YELLOW GOLD 3630-125 TRANS 48,VTRANS,,P,A,,571.0,SF,4.018,2.009,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1895,Light Lemon Yellow 3630-115 TRANS 48,VTRANS,,P,A,20.0,88.0,SF,3.66184,1.83092,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1900,YELLOW TRAN 48,VTRANS,,P,A,,0.0,SF,3.07,1.535,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1905,"Yellow 1171 Electrocut overlay 48""",VTRANS,,P,A,20.0,20.0,SF,3.6,1.8,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1910,YELLOW TRAN SCOTCHC 24,VTRANS,,P,A,,0.0,SF,2.62,1.3095,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1920,YELLOW TRAN SCOTCHC 3-,VTRANS,,P,A,,0.0,SF,4.62,2.3124,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+510-1930,YELLOW TRAN SCOTCHC 48,VTRANS,,P,A,,104.0,SF,4.68466,2.34233,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0050,"1/2"" clear foam tape #4910",VHRDWE,,P,A,,0.0,FT,0.0,0.45,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0100,"1"" 4949 VHB tape S-10146",VHRDWE,,P,A,,108.0,LF,1.9768,1.1296,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0105,"3M™ 1/2"" 4910 Clear VHB tape",VHRDWE,,P,A,20.0,315.0,LF,1.393,0.796,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0110,"1"" 3M VHB ALL-PURPOSE TAPE - WHITE 4930",VHRDWE,,P,A,,,LF,2.98958,1.02476,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0120,"1/2"" 4930 VHB t ape S-10126",VHRDWE,,P,A,,375.0,LF,3.885,1.02777,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0130,10 X 14 X .063 ALUMINUM BLANKS,VHRDWE,,P,A,,0.0,EA,4.85,2.7731,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0140,1-1/4 SELF ADHESIVE METAL FOIL,VHRDWE,,P,A,,0.0,LF,0.81,0.4709,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0150,12 X 18 X .080 BLUE REF. ALUM,VHRDWE,,P,A,,0.0,EA,12.25,5.95,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0160,12 CARDBOARD EASELS,VHRDWE,,P,A,,0.0,EA,0.5,0.12,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0170,12 X 18 X .080 ALUMINUM BLANKS,VHRDWE,,P,A,,4.0,EA,21.21,12.12,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0180,12X12 WHITE HANDICAP,VHRDWE,,P,A,,0.0,EA,20.0,5.64,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0190,12X12MILL ALUM HANDICAP,VHRDWE,,P,A,,0.0,EA,25.0,8.7,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0200,12X18 HANIDICAP PARK STATE PER,VHRDWE,,P,A,,2.0,EA,25.0,11.265,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0210,1-5/8 X 8-5/8 X 1/8 MAT BLACK,VHRDWE,,P,A,,0.0,EA,3.39,1.97,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0220,18 PEDESTAL BASE W/4' PIPE,VHRDWE,,P,A,,0.0,EA,108.41,72.0,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0230,18 X 18 X .080 ALUMINUM BLANKS,VHRDWE,,P,A,,0.0,EA,15.2,7.6,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0240,18 X 24 BLUE ALUMINUM BLANKS,VHRDWE,,P,A,,0.0,EA,15.6,7.8,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0250,18 X 24 X .040 WHITE ALUM,VHRDWE,,P,A,,0.0,EA,10.95,6.255,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0260,18 X 24 X .080 ALUMINUM BLANKS,VHRDWE,,P,A,,0.0,EA,20.2,13.2283,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0270,18 X 24 X .080 WHITE ALUM,VHRDWE,,P,A,,1.0,EA,23.83,14.2183,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0280,18X24 BLACK H-FRAME SIGN HOLD,VHRDWE,,P,A,,0.0,EA,22.6,8.85,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0290,18X24 FOLDING REALTOR FRAME,VHRDWE,,P,A,,0.0,EA,37.45,21.4,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0300,18X24 H-FRAME/GRIMCO,VHRDWE,,P,A,,0.0,EA,31.33,17.9033,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0305,28X20 H-FRAME/GRIMCO,VHRDWE,,P,A,,0.0,EA,0.0,0.0,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0310,2X10 SILVER DESK NAMEPL HOLD,VHRDWE,,P,A,,0.0,EA,12.93,7.39,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0320,2 ETERNABOND D/S TAPE,VHRDWE,,P,A,,0.0,LF,1.12,0.6411,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0330,24 X 24 X .080 ALUMINUM BLANKS,VHRDWE,,P,A,,0.0,EA,26.9,13.45,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0340,24 X 30 X .080 ALUMINUM BLANKS,VHRDWE,,P,A,,0.0,EA,33.7,16.85,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0350,24 X 36 X .080 ALUMINUM BLANKS,VHRDWE,,P,A,,0.0,EA,49.65,28.3725,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0360,3/4 DOUBLE FACED CREPE TAPE,VHRDWE,,P,A,,0.0,LF,0.05,0.0319,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0370,3/4 FOAM TAPE,VHRDWE,,P,A,,0.0,LF,0.56,0.3233,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0380,3/4 VELCRO HOOK,VHRDWE,,P,A,,0.0,LF,0.58,0.3332,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0390,3/4 VELCRO LOOP,VHRDWE,,P,A,,0.0,LF,0.73,0.3332,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0400,36 X 24 H FRAME/GRIMCO,VHRDWE,,P,A,,0.0,EA,41.16,23.52,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0405,24X18 Double Rider H-Frame/GRIMCO,VHRDWE,,P,A,,0.0,EA,0.0,0.0,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0410,4 FLAG MOUNT BRACKET,VHRDWE,,P,A,,0.0,EA,7.12,4.0667,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0420,41 HEAVY DUTY SCROLL BRACKET,VHRDWE,,P,A,,0.0,EA,63.0,31.5,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0430,Long-Stanton #18 Wall Angles,VHRDWE,,P,A,,0.0,EA,4.7775,2.73,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0440,52 PEDESTAL BASE,VHRDWE,,P,A,,0.0,EA,150.5,86.0,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0450,53 HEAVY DUTY SCROLL BRACKET,VHRDWE,,P,A,,0.0,EA,78.0,39.0,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0460,6 X 6 WHEELCHAIR ACCESS PLAQUE,VHRDWE,,P,A,,0.0,EA,11.5,6.64,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0470,ADA Restroom signs various sizes,VHRDWE,,P,A,,0.0,EA,19.9675,11.41,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0480,23 X 16 HOUSE SHAPE YEL COROPL,VHRDWE,,P,A,,0.0,EA,7.15,4.084,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0490,24 X 18 WHITE COROPLAST SHEET,VHRDWE,,P,A,,0.0,EA,3.0275,1.73,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0500,24 X 18 WHT CRPLST GOLF CART,VHRDWE,,P,A,,9.0,EA,8.03,4.588,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0510,24 X 24 WHITE COROPLAST SHEET,VHRDWE,,P,A,,0.0,EA,1.75,1.0,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0520,STEP STAKE FRAME,VHRDWE,,P,A,,0.0,EA,2.975,1.7,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0530,BEST BUY COROPLAST FRAMES,VHRDWE,,P,A,,0.0,EA,1.05,0.6,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0540,HVY STAKE FOR CORPLAST PANELS,VHRDWE,,P,A,,0.0,EA,5.37,3.0702,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0550,6 CARDBOARD EASELS,VHRDWE,,P,A,,0.0,EA,0.25,0.08,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0560,6 X 12 X .080 BLUE REF. ALUM,VHRDWE,,P,A,,0.0,EA,8.71,4.975,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0570,6 X 18 X .063 WHITE ALUM,VHRDWE,,P,A,,0.0,EA,18.235,10.42,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0580,6 X 18 X .080 REFLECTIVE ALUM,VHRDWE,,P,A,,0.0,EA,12.55,6.2733,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0590,6X12 VAN ACCESSIBLE HANDICAP,VHRDWE,,P,A,,0.0,EA,25.0,5.1,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0600,8 X 35 MAGNETIC PANELYEL/BLACK,VHRDWE,,P,A,,0.0,EA,33.25,19.0,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0610,INDIVIDUAL BANJO FRAME/GRIMCO,VHRDWE,,P,A,,0.0,EA,19.34,10.45,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0620,MAGNETIC SHEET .030,VHRDWE,,P,A,,52.0,SF,7.59675,4.341,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0630,SQ10 10 FT 1-3/4 SQ TB POST,VHRDWE,,P,A,,0.0,EA,40.27,23.0133,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0640,STENCIL BOARD 24 X 36,VHRDWE,,P,A,,0.0,SF,0.71,0.4083,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0650,UP-10 10' GREEN U CHANNEL POST,VHRDWE,,P,A,,0.0,EA,55.5625,31.75,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0660,UP-10G 10 FT GALV U CHANNEL,VHRDWE,,P,A,,0.0,EA,45.78,26.16,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0670,UP-12 12FT GREEN U CHANL POST,VHRDWE,,P,A,,0.0,EA,22.5,12.5,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0680,UP-8 8' GREEN U-CHANNEL POST,VHRDWE,,P,A,,0.0,EA,36.18,2.5842,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+511-0690,YELLOW 18 X 24 ALUMINUM BLANKS,VHRDWE,,P,A,,0.0,EA,23.22,13.27,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+512-0190,Tri Foam Decal,VGRPH,,P,A,,0.0,EA,10.8,7.2,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+512-0195,Tri Foam Decal - French,VGRPH,,P,A,,0.0,EA,7.095,4.73,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+800-0100,GRAVEL MIX,INSTL,,P,A,,0.0,BG,6.91,4.5903,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+800-0120,70# SAND TUBE BAGS,INSTL,,P,A,,0.0,EA,6.5275,3.73,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+800-0130,12 SONOTUBE,INSTL,,P,A,,0.0,LF,19.2325,10.99,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+800-0140,18 SONOTUBE,INSTL,,P,A,,0.0,LF,28.6825,16.39,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+800-0150,24 SONOTUBE,INSTL,,P,A,,0.0,LF,16.12,9.21,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+800-0160,30 SONOTUBE,INSTL,,P,A,,0.0,LF,22.04,12.5933,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+800-2000,CONCRETE,INSTL,,P,A,,0.0,CBFT,16.5,11.0,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+800-2110,"1 3/4""x1 3/4""x10' 14ga perforated post",INSTL,,P,A,,13.0,EA,67.76,38.72,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+800-2111,"2""x2""x3' 12 ga. perforated sleeve",INSTL,,P,A,20.0,19.0,EA,28.63,16.36,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261
+800-2120,"1 3/4""x1 3/4""x12' 14ga perforated post",INSTL,,P,A,,1.0,EA,86.2225,49.27,4,H:\brady\BOT TRAINING\Eagle Data\combined for llm use\Inventory List_Active.csv,2026-01-30T11:06:06.873261

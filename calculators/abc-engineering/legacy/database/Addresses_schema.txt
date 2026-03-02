@@ -1,0 +1,16 @@
+﻿
+Table     ColumnName       DataType MaxLength AllowDBNull
+-----     ----------       -------- --------- -----------
+Addresses AddressID        Int32           -1        True
+Addresses CustomerUniqueId String          -1        True
+Addresses Address          String          -1        True
+Addresses City             String          -1        True
+Addresses State            String          -1        True
+Addresses ZipCode          String          -1        True
+Addresses Phone            String          -1        True
+Addresses ID               String          -1        True
+Addresses FaxNumber        String          -1        True
+Addresses CreditTerms      String          -1        True
+
+
+

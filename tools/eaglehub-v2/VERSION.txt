@@ -1,0 +1,34 @@
+Eagle Workflow Hub Version Control
+===================================
+Current Version: 2.0.0
+Release Date: 2024-01-24
+Status: Production
+
+Version History:
+----------------
+v2.0.0 (2024-01-24) - Production Release
+- Full KeyedIn integration via Excel
+- Outlook email monitoring for BID REQUEST
+- Historical pricing with confidence intervals
+- Chrome-based dashboard
+- 30-minute and hourly scheduled tasks
+- Pattern learning capabilities
+- Hybrid local/network installation
+
+v1.0.0 (2024-01-15) - Initial Development
+- Basic PDF processing
+- Manual operation only
+- Concept testing
+
+Installation Locations:
+----------------------
+Local Path: C:\Users\Brady.EAGLE\Documents\EagleHub_v2
+Network Path: \\ES-FS02\users\brady\EagleHub_v2
+Customer Data: \\ES-FS02\customers2\
+
+Components:
+-----------
+- Eagle-Hub-Engine-v2.ps1 (Main automation)
+- Eagle-Hub-Dashboard-v2.html (Chrome interface)
+- Eagle-Hub-Config-v2.json (Settings)
+- Eagle-Hub-Setup-v2.ps1 (Installation)

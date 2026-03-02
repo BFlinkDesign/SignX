@@ -1,0 +1,10 @@
+﻿
+Table     ColumnName     DataType MaxLength AllowDBNull
+-----     ----------     -------- --------- -----------
+Paperclip ID             Int32           -1        True
+Paperclip CUSTOMERCARDID Int32           -1        True
+Paperclip PATH           String          -1        True
+Paperclip NOTES          String          -1        True
+
+
+

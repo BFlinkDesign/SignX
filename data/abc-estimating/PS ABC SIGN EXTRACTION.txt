@@ -1,0 +1,2699 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Try the new cross-platform PowerShell https://aka.ms/pscore6
+
+PS C:\windows\system32> # Kill the heavy PowerShell process
+>> Write-Host "`n=== KILLING PROCESSES ==="
+>> Stop-Process -Id 22392 -Force
+>> Write-Host "Killed PowerShell process 22392"
+>>
+>> # Kill the AbcEng engineering program
+>> Stop-Process -Id 2756 -Force -ErrorAction SilentlyContinue
+>> Write-Host "Killed AbcEng process 2756"
+>>
+>> # Verify they're gone
+>> Write-Host "`n=== VERIFYING CLEANUP ==="
+>> Get-Process | Where-Object {$_.Id -in @(22392, 2756)} | Select-Object Id, ProcessName
+
+=== KILLING PROCESSES ===
+Stop-Process : Cannot find a process with the process identifier 22392.
+At line:3 char:1
++ Stop-Process -Id 22392 -Force
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (22392:Int32) [Stop-Process], ProcessCommandException
+    + FullyQualifiedErrorId : NoProcessFoundForGivenId,Microsoft.PowerShell.Commands.StopProcessCommand
+
+Killed PowerShell process 22392
+Killed AbcEng process 2756
+
+=== VERIFYING CLEANUP ===
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32> # Fresh extraction of formulas
+>> Write-Host "`n=== EXTRACTING FORMULAS (CLEAN RUN) ==="
+>> $laborBytes = [System.IO.File]::ReadAllBytes("C:\Users\Brady\Desktop\ABC_Extracted\labor_nm.abc")
+>> $formulas = @{}
+>> $buffer = ""
+>> $currentSection = ""
+>>
+>> for ($i = 0; $i -lt $laborBytes.Length; $i++) {
+>>     $byte = $laborBytes[$i]
+>>
+>>     if ($byte -eq 0) {
+>>         if ($buffer -match "^LABOR(\d+):\s*(.+)") {
+>>             $num = $matches[1]
+>>             $desc = $matches[2]
+>>             $formulas[$num] = @{
+>>                 Description = $desc
+>>                 Formula = ""
+>>                 Variables = @()
+>>             }
+>>             $currentSection = $num
+>>         }
+>>         elseif ($buffer -match "^result\s*=\s*(.+)" -and $currentSection) {
+>>             $formulas[$currentSection].Formula = $matches[1]
+>>             # Extract variables
+>>             $vars = [regex]::Matches($matches[1], '[RM]\w+|FACE\d+|IFACE\d+') |
+>>                 ForEach-Object { $_.Value } | Select-Object -Unique
+>>             $formulas[$currentSection].Variables = $vars
+>>         }
+>>         $buffer = ""
+>>     }
+>>     elseif ($byte -ge 32 -and $byte -le 126) {
+>>         $buffer += [char]$byte
+>>     }
+>> }
+>>
+>> Write-Host "Extracted $($formulas.Count) formulas"
+>>
+>> # Show first 3 formulas as examples
+>> Write-Host "`nSample Formulas:"
+>> $formulas.Keys | Sort-Object {[int]$_} | Select-Object -First 3 | ForEach-Object {
+>>     Write-Host "`nLABOR $_"
+>>     Write-Host "  Desc: $($formulas[$_].Description)"
+>>     if ($formulas[$_].Formula) {
+>>         Write-Host "  Formula: $($formulas[$_].Formula.Substring(0, [Math]::Min(80, $formulas[$_].Formula.Length)))..."
+>>     }
+>> }
+>>
+>> # Save all formulas
+>> $output = @()
+>> foreach ($key in ($formulas.Keys | Sort-Object {[int]$_})) {
+>>     $output += "=== LABOR $key ==="
+>>     $output += "Description: $($formulas[$key].Description)"
+>>     $output += "Formula: $($formulas[$key].Formula)"
+>>     $output += "Variables: $($formulas[$key].Variables -join ', ')"
+>>     $output += ""
+>> }
+>> $output | Out-File "C:\Users\Brady\Desktop\ABC_Extracted\ALL_FORMULAS.txt"
+>> Write-Host "`nSaved to ALL_FORMULAS.txt"
+
+=== EXTRACTING FORMULAS (CLEAN RUN) ===
+Extracted 0 formulas
+
+Sample Formulas:
+
+Saved to ALL_FORMULAS.txt
+PS C:\windows\system32> # Extract materials with pricing
+>> Write-Host "`n=== EXTRACTING MATERIALS ==="
+>> $inventBytes = [System.IO.File]::ReadAllBytes("C:\Users\Brady\Desktop\ABC_Extracted\invent_nm.abc")
+>> $materials = @()
+>> $buffer = ""
+>>
+>> for ($i = 0; $i -lt $inventBytes.Length; $i++) {
+>>     if ($inventBytes[$i] -eq 0) {
+>>         if ($buffer -match '\d+\.\d{2}' -or $buffer -match '(steel|aluminum|angle|tube|sheet)') {
+>>             $materials += $buffer
+>>         }
+>>         $buffer = ""
+>>     }
+>>     elseif ($inventBytes[$i] -ge 32 -and $inventBytes[$i] -le 126) {
+>>         $buffer += [char]$inventBytes[$i]
+>>     }
+>> }
+>>
+>> Write-Host "Found $($materials.Count) material entries"
+>>
+>> # Show materials with prices
+>> Write-Host "`nSample materials with pricing:"
+>> $materials | Where-Object { $_ -match '\d+\.\d{2}' } | Select-Object -First 10 | ForEach-Object {
+>>     Write-Host "  $_"
+>> }
+>>
+>> $materials | Out-File "C:\Users\Brady\Desktop\ABC_Extracted\MATERIALS.txt"
+>> Write-Host "Saved to MATERIALS.txt"
+
+=== EXTRACTING MATERIALS ===
+Found 244 material entries
+
+Sample materials with pricing:
+  D2P31.25 x .083 Steel Square Tubep=?ST1.25X.083
+  D2P3a1.25 x .120 Alum Square Tube(\?ALST1.25X.120
+  D2P4b1.25 x .140 Steel Round Tube
+  ?RT1.25X.140
+  D2P4a1.25 x .109 Alum Round TubezG
+  @ART1.25X.109
+  D2P91 3/4" ABC (Sm) Divider Bar333333?DB1.75
+  D2P561 1/4" Match Plate0@MP1.25
+  D2P64.040 Aluminum 8" Filler
+  D2P65.040 Aluminum 12" Filler
+Saved to MATERIALS.txt
+PS C:\windows\system32> # Check created files
+>> Write-Host "`n=== FILES CREATED ==="
+>> Get-ChildItem "C:\Users\Brady\Desktop\ABC_Extracted\*.txt" |
+>>     Select-Object Name, @{Name='Size(KB)';Expression={[math]::Round($_.Length/1KB,2)}}, LastWriteTime |
+>>     Format-Table -AutoSize
+
+=== FILES CREATED ===
+
+Name                  Size(KB) LastWriteTime
+----                  -------- -------------
+ALL_FORMULAS.txt             0 7/21/2025 3:12:46 PM
+ANALYSIS_SUMMARY.txt      1.95 7/21/2025 2:55:18 PM
+FORMULA_VARIABLES.txt    10.98 7/21/2025 2:56:56 PM
+MATERIALS.txt            21.13 7/21/2025 3:12:59 PM
+
+
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32> # Let's examine the raw labor file structure first
+>> Write-Host "`n=== EXAMINING LABOR FILE STRUCTURE ==="
+>> $laborBytes = [System.IO.File]::ReadAllBytes("C:\Users\Brady\Desktop\ABC_Extracted\labor_nm.abc")
+>>
+>> # Look at first 1000 bytes to understand format
+>> $sample = ""
+>> for ($i = 0; $i -lt [Math]::Min($laborBytes.Length, 1000); $i++) {
+>>     if ($laborBytes[$i] -eq 0) {
+>>         if ($sample.Length -gt 5) {
+>>             Write-Host "[$i]: $sample"
+>>         }
+>>         $sample = ""
+>>     } elseif ($laborBytes[$i] -ge 32 -and $laborBytes[$i] -le 126) {
+>>         $sample += [char]$laborBytes[$i]
+>>     }
+>> }
+
+=== EXAMINING LABOR FILE STRUCTURE ===
+[46]: LABOR1!Manual Pattern for Copy, Constant
+[100]: resultRPAT_MANUAL*(RNUM_LETTERS>0)
+[146]: LABOR2Pattern for Copy
+[277]: resultiRCOPY_PATTERN*((RM21L14==0)*(0.44*RBLOCK+0.48*RSERIFED+0.55*RSCRIPT)*RNUM_LETTERS*RLETTER_HEIGHT+RM21L14)
+[307]: RBLOCKRSERIFEDRSCRIPT
+[333]: RPAT_MANUALRPAT_CADCAM
+[383]: Mb?~jth?{Gz?Mbp?I+?{Gzt?
+[701]: Line RLINE: "RM4L2"RNUM_LETTERS, RLETTER_HEIGHT" RBLOCKRSERIFEDRSCRIPTRPAT_CADCAMRPAINT_TEXTRPAINT_OUTLINEDRPAINT_SHADEDRM4L14RM4L15RM4L16RM23L9RM23L10RM23L11RM23L14RM23L15RM23L16RM23L17 lettersLABOR3Pattern for Neon Copy, Constant
+[756]: resultRCOPY_PATTERN*(RM35L1+RM35L2)
+[775]: RCOPY_PATTERN
+[816]: LABOR4Pattern for Neon Copy
+[986]: nfacesaFACE1+FACE2*2+FACE3*3+FACE4*4+MFACE1+MFACE2*2+MFACE3*3+MFACE4*4+IFACE1+IFACE2*2+IFACE3*3+IFACE4*4result&RCOPY_PATTERN*(RM35L15+RM35L16)/nfaces
+PS C:\windows\system32> # More aggressive formula extraction
+>> Write-Host "`n=== EXTRACTING ALL TEXT SEGMENTS ==="
+>> $segments = @()
+>> $current = ""
+>>
+>> for ($i = 0; $i -lt $laborBytes.Length; $i++) {
+>>     if ($laborBytes[$i] -eq 0) {
+>>         if ($current.Trim() -ne "") {
+>>             $segments += $current
+>>         }
+>>         $current = ""
+>>     } elseif ($laborBytes[$i] -ge 32 -and $laborBytes[$i] -le 126) {
+>>         $current += [char]$laborBytes[$i]
+>>     }
+>> }
+>>
+>> Write-Host "Found $($segments.Count) text segments"
+>>
+>> # Find LABOR entries
+>> $laborEntries = $segments | Where-Object { $_ -match "LABOR" }
+>> Write-Host "`nFound $($laborEntries.Count) LABOR entries"
+>>
+>> # Show first 10
+>> Write-Host "`nFirst 10 LABOR-related entries:"
+>> $laborEntries | Select-Object -First 10 | ForEach-Object {
+>>     Write-Host "  $_"
+>> }
+>>
+>> # Find formula entries
+>> $formulaEntries = $segments | Where-Object { $_ -match "result|=" }
+>> Write-Host "`nFound $($formulaEntries.Count) formula entries"
+>>
+>> # Show first 10
+>> Write-Host "`nFirst 10 formula entries:"
+>> $formulaEntries | Select-Object -First 10 | ForEach-Object {
+>>     Write-Host "  $_"
+>> }
+
+=== EXTRACTING ALL TEXT SEGMENTS ===
+Found 5469 text segments
+
+Found 923 LABOR entries
+
+First 10 LABOR-related entries:
+  LABOR1!Manual Pattern for Copy, Constant
+  LABOR2Pattern for Copy
+  Line RLINE: "RM4L2"RNUM_LETTERS, RLETTER_HEIGHT" RBLOCKRSERIFEDRSCRIPTRPAT_CADCAMRPAINT_TEXTRPAINT_OUTLINEDRPAINT_SHADEDRM4L14RM4L15RM4L16RM23L9RM23L10RM23L11RM23L14RM23L15RM23L16RM23L17 lettersLABOR3Pattern for Neon Copy, Constant
+  LABOR4Pattern for Neon Copy
+  Line RLINE, RM35L10RM35L11RM35L12RM35L13RM35L1RM35L2LABOR5(Pattern for Incandescent Lamps, Constant
+  LABOR6Pattern for Incandescent Lamps
+  LABOR7!Pattern for Border/Logo, Constant
+  LABOR8Pattern for Border/Logo
+  LABOR9&Pattern for Neon Border/Logo, Constant
+  LABOR10Pattern for Neon Border/Logo
+
+Found 1057 formula entries
+
+First 10 formula entries:
+  resultRPAT_MANUAL*(RNUM_LETTERS>0)
+  resultiRCOPY_PATTERN*((RM21L14==0)*(0.44*RBLOCK+0.48*RSERIFED+0.55*RSCRIPT)*RNUM_LETTERS*RLETTER_HEIGHT+RM21L14)
+  resultRCOPY_PATTERN*(RM35L1+RM35L2)
+  nfacesaFACE1+FACE2*2+FACE3*3+FACE4*4+MFACE1+MFACE2*2+MFACE3*3+MFACE4*4+IFACE1+IFACE2*2+IFACE3*3+IFACE4*4result&RCOPY_PATTERN*(RM35L15+RM35L16)/nfaces
+  resultRCOPY_PATTERN*(RM40L4>0)
+  resultRCOPY_PATTERN*RM40L4/nfaces
+  result!RBORDER_PATTERN*(BORDER_LENGTH>0)
+  resultRBORDER_PATTERN*RBORDER_LENGTH
+  resultRBORDER_PATTERN*(RM36L1>0)
+  resultRBORDER_PATTERN*RM36L1
+PS C:\windows\system32> # Analyze materials structure
+>> Write-Host "`n=== MATERIAL ANALYSIS ==="
+>> $materials = Get-Content "C:\Users\Brady\Desktop\ABC_Extracted\MATERIALS.txt"
+>>
+>> # Group by type
+>> $steelItems = $materials | Where-Object { $_ -match "steel" -or $_ -match "Steel" }
+>> $alumItems = $materials | Where-Object { $_ -match "alum" -or $_ -match "Alum" }
+>> $sheetItems = $materials | Where-Object { $_ -match "sheet" -or $_ -match "Sheet" }
+>>
+>> Write-Host "Steel items: $($steelItems.Count)"
+>> Write-Host "Aluminum items: $($alumItems.Count)"
+>> Write-Host "Sheet items: $($sheetItems.Count)"
+>>
+>> # Extract prices
+>> Write-Host "`nExtractable prices:"
+>> $materials | Where-Object { $_ -match '\$(\d+\.\d{2})' } | Select-Object -First 10 | ForEach-Object {
+>>     if ($_ -match '(.+?)\s*\$(\d+\.\d{2})') {
+>>         Write-Host "  $($matches[1]) = `$$($matches[2])"
+>>     }
+>> }
+
+=== MATERIAL ANALYSIS ===
+Steel items: 52
+Aluminum items: 57
+Sheet items: 12
+
+Extractable prices:
+PS C:\windows\system32> # Search for specific patterns in labor file
+>> Write-Host "`n=== SEARCHING FOR FORMULA PATTERNS ==="
+>> $text = [System.Text.Encoding]::ASCII.GetString($laborBytes)
+>>
+>> # Look for multiplication patterns
+>> $multPatterns = [regex]::Matches($text, '[A-Z_]+\s*\*\s*[A-Z_0-9]+')
+>> Write-Host "Multiplication patterns found: $($multPatterns.Count)"
+>> $multPatterns | Select-Object -First 5 -ExpandProperty Value | ForEach-Object {
+>>     Write-Host "  $_"
+>> }
+>>
+>> # Look for calculation patterns
+>> $calcPatterns = [regex]::Matches($text, '(result|RESULT)\s*=\s*[^=]+')
+>> Write-Host "`nCalculation patterns found: $($calcPatterns.Count)"
+>> $calcPatterns | Select-Object -First 5 -ExpandProperty Value | ForEach-Object {
+>>     Write-Host "  $_"
+>> }
+
+=== SEARCHING FOR FORMULA PATTERNS ===
+Multiplication patterns found: 122
+  RNUM_LETTERS*RLETTER_HEIGHT
+  RCOPY_PATTERN*RM40L4
+  RBORDER_PATTERN*RBORDER_LENGTH
+  RBORDER_PATTERN*RM36L1
+  RBORDER_PATTERN*RM36L2
+
+Calculation patterns found: 5
+  result=M2L16*((M2L17+M2L18)
+  result=M2L16*((M2L17+M2L18)
+  result=(CRATE_SHIP_SIGN
+  result=(CRATE_SHIP_SIGN
+  result=(CRATE_SHIP_SIGN
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32> # Extract and pair LABOR entries with formulas
+>> Write-Host "`n=== EXTRACTING PAIRED LABOR FORMULAS ==="
+>> $laborFormulas = @{}
+>> $segments = @()
+>> $current = ""
+>>
+>> # Re-extract segments
+>> for ($i = 0; $i -lt $laborBytes.Length; $i++) {
+>>     if ($laborBytes[$i] -eq 0) {
+>>         if ($current.Trim() -ne "") {
+>>             $segments += $current
+>>         }
+>>         $current = ""
+>>     } elseif ($laborBytes[$i] -ge 32 -and $laborBytes[$i] -le 126) {
+>>         $current += [char]$laborBytes[$i]
+>>     }
+>> }
+>>
+>> # Process segments to pair LABOR with formulas
+>> for ($i = 0; $i -lt $segments.Count; $i++) {
+>>     if ($segments[$i] -match "^LABOR(\d+)(.*)") {
+>>         $laborNum = $matches[1]
+>>         $desc = $matches[2]
+>>
+>>         # Look for the next result formula
+>>         for ($j = $i + 1; $j -lt [Math]::Min($i + 10, $segments.Count); $j++) {
+>>             if ($segments[$j] -match "^result(.+)") {
+>>                 $formula = $matches[1]
+>>                 $laborFormulas[$laborNum] = @{
+>>                     Description = $desc
+>>                     Formula = $formula
+>>                 }
+>>                 break
+>>             }
+>>         }
+>>     }
+>> }
+>>
+>> Write-Host "Extracted $($laborFormulas.Count) complete labor formulas"
+>>
+>> # Show first 10
+>> Write-Host "`nFirst 10 Labor Formulas:"
+>> $laborFormulas.Keys | Sort-Object {[int]$_} | Select-Object -First 10 | ForEach-Object {
+>>     Write-Host "`nLABOR $_`: $($laborFormulas[$_].Description)"
+>>     Write-Host "Formula: $($laborFormulas[$_].Formula)"
+>> }
+
+=== EXTRACTING PAIRED LABOR FORMULAS ===
+Extracted 342 complete labor formulas
+
+First 10 Labor Formulas:
+
+LABOR 1: !Manual Pattern for Copy, Constant
+Formula: RPAT_MANUAL*(RNUM_LETTERS>0)
+
+LABOR 2: Pattern for Copy
+Formula: iRCOPY_PATTERN*((RM21L14==0)*(0.44*RBLOCK+0.48*RSERIFED+0.55*RSCRIPT)*RNUM_LETTERS*RLETTER_HEIGHT+RM21L14)
+
+LABOR 4: Pattern for Neon Copy
+Formula: RCOPY_PATTERN*(RM40L4>0)
+
+LABOR 6: Pattern for Incandescent Lamps
+Formula: RCOPY_PATTERN*RM40L4/nfaces
+
+LABOR 7: !Pattern for Border/Logo, Constant
+Formula: !RBORDER_PATTERN*(BORDER_LENGTH>0)
+
+LABOR 8: Pattern for Border/Logo
+Formula: RBORDER_PATTERN*RBORDER_LENGTH
+
+LABOR 9: &Pattern for Neon Border/Logo, Constant
+Formula: RBORDER_PATTERN*(RM36L1>0)
+
+LABOR 10: Pattern for Neon Border/Logo
+Formula: RBORDER_PATTERN*RM36L1
+
+LABOR 11: (Pattern for Skeleton Bord/Logo, Constant
+Formula: RBORDER_PATTERN*(RM36L2>0)
+
+LABOR 12:  Pattern for Skeleton Border/Logo
+Formula: RBORDER_PATTERN*RM36L2/nfaces
+PS C:\windows\system32> # Save complete formulas
+>> Write-Host "`n=== SAVING COMPLETE FORMULAS ==="
+>> $output = @()
+>> $output += "ABC SIGN ESTIMATE v3.3.0.0 - LABOR FORMULAS"
+>> $output += "Extracted: $(Get-Date)"
+>> $output += "Total Formulas: $($laborFormulas.Count)"
+>> $output += "="*60
+>> $output += ""
+>>
+>> foreach ($key in ($laborFormulas.Keys | Sort-Object {[int]$_})) {
+>>     $output += "LABOR $key: $($laborFormulas[$key].Description)"
+>>     $output += "Formula: $($laborFormulas[$key].Formula)"
+>>     $output += ""
+>> }
+>>
+>> $output | Out-File "C:\Users\Brady\Desktop\ABC_Extracted\LABOR_FORMULAS_COMPLETE.txt"
+>> Write-Host "Saved to LABOR_FORMULAS_COMPLETE.txt"
+At line:11 char:23
++     $output += "LABOR $key: $($laborFormulas[$key].Description)"
++                       ~~~~~
+Variable reference is not valid. ':' was not followed by a valid variable name character. Consider using ${} to
+delimit the name.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : InvalidVariableReferenceWithDrive
+
+PS C:\windows\system32> # Extract pricing constants and multipliers
+>> Write-Host "`n=== EXTRACTING CONSTANTS ==="
+>> $constants = @{}
+>>
+>> # Font multipliers we already found
+>> $constants['Font_Multipliers'] = @{
+>>     Block = 0.44
+>>     Serif = 0.48
+>>     Script = 0.55
+>> }
+>>
+>> # Search for other numeric constants
+>> $numericPatterns = [regex]::Matches($text, '[A-Z_]+\s*=\s*\d+\.?\d*')
+>> Write-Host "Numeric constants found: $($numericPatterns.Count)"
+>> $numericPatterns | Select-Object -First 10 -ExpandProperty Value | ForEach-Object {
+>>     Write-Host "  $_"
+>> }
+>>
+>> # Extract variable references
+>> $variables = [regex]::Matches($text, 'R[A-Z_]+\d*') |
+>>     ForEach-Object { $_.Value } |
+>>     Select-Object -Unique |
+>>     Sort-Object
+>>
+>> Write-Host "`nUnique variables found: $($variables.Count)"
+>> Write-Host "Common variables:"
+>> $variables | Select-Object -First 20 | ForEach-Object { Write-Host "  $_" }
+
+=== EXTRACTING CONSTANTS ===
+Numeric constants found: 0
+
+Unique variables found: 125
+Common variables:
+  RAME
+  RANS_ACRYLIC
+  RANS_VINYL
+  RAPEZOID
+  RATE_SHIP_SIGN
+  RBL_
+  RBLOCK
+  RBORDER_CADCAM
+  RBORDER_DIGITIZE
+  RBORDER_DOWNLOAD
+  RBORDER_KERF_COMP
+  RBORDER_LENGTH
+  RBORDER_MANUAL
+  RBORDER_PAT_CAD
+  RBORDER_PAT_MAN
+  RBORDER_PATTERN
+  RBORDER_PLOT_PAT
+  RBORDER_ROUTE
+  RBORDER_SCANNED
+  RBORDER_SHEETS
+PS C:\windows\system32> # Create PowerShell calculator script
+>> Write-Host "`n=== CREATING CALCULATOR SCRIPT ==="
+>> $calculator = @'
+>> # ABC Sign Estimate Calculator
+>> # Based on extracted formulas
+>>
+>> # Font multipliers
+>> $fontMultipliers = @{
+>>     "Block" = 0.44
+>>     "Serif" = 0.48
+>>     "Script" = 0.55
+>> }
+>>
+>> # Sample calculation function
+>> function Calculate-SignLabor {
+>>     param(
+>>         [int]$NumLetters = 10,
+>>         [decimal]$LetterHeight = 12,
+>>         [string]$FontType = "Block"
+>>     )
+>>
+>>     # LABOR2: Pattern for Copy
+>>     # Formula: RCOPY_PATTERN*((RM21L14==0)*(0.44*RBLOCK+0.48*RSERIFED+0.55*RSCRIPT)*RNUM_LETTERS*RLETTER_HEIGHT+RM21L14)
+>>
+>>     $fontMult = $fontMultipliers[$FontType]
+>>     $RCOPY_PATTERN = 1.5  # Base rate
+>>     $RM21L14 = 0  # Manual override (0 = use formula)
+>>
+>>     $patternLabor = $RCOPY_PATTERN * ($fontMult * $NumLetters * $LetterHeight)
+>>
+>>     Write-Host "Sign Labor Calculation"
+>>     Write-Host "===================="
+>>     Write-Host "Letters: $NumLetters"
+>>     Write-Host "Height: $LetterHeight inches"
+>>     Write-Host "Font: $FontType (multiplier: $fontMult)"
+>>     Write-Host "Pattern Labor: $([math]::Round($patternLabor, 2)) units"
+>>
+>>     return $patternLabor
+>> }
+>>
+>> # Run example
+>> Calculate-SignLabor -NumLetters 8 -LetterHeight 24 -FontType "Script"
+>> '@
+>>
+>> $calculator | Out-File "C:\Users\Brady\Desktop\ABC_Extracted\SignCalculator.ps1"
+>> Write-Host "Calculator saved to SignCalculator.ps1"
+>>
+>> # Run it
+>> & "C:\Users\Brady\Desktop\ABC_Extracted\SignCalculator.ps1"
+
+=== CREATING CALCULATOR SCRIPT ===
+Calculator saved to SignCalculator.ps1
+& : File C:\Users\Brady\Desktop\ABC_Extracted\SignCalculator.ps1 cannot be loaded because running scripts is disabled
+on this system. For more information, see about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170.
+At line:49 char:3
++ & "C:\Users\Brady\Desktop\ABC_Extracted\SignCalculator.ps1"
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : SecurityError: (:) [], PSSecurityException
+    + FullyQualifiedErrorId : UnauthorizedAccess
+PS C:\windows\system32> # Create final summary
+>> Write-Host "`n=== CREATING FINAL SUMMARY ==="
+>> $summary = @"
+>> ABC SIGN ESTIMATE EXTRACTION SUMMARY
+>> ====================================
+>> Date: $(Get-Date)
+>>
+>> EXTRACTED DATA:
+>> - Labor Formulas: $($laborFormulas.Count)
+>> - Material Items: 244
+>> - Variables Found: $($variables.Count)
+>>
+>> KEY FINDINGS:
+>> 1. Font Multipliers:
+>>    - Block: 0.44
+>>    - Serif: 0.48
+>>    - Script: 0.55
+>>
+>> 2. Main Formula Pattern:
+>>    Labor = Base_Rate * Font_Multiplier * Num_Letters * Letter_Height
+>>
+>> 3. Common Operations:
+>>    - Pattern Making (LABOR1-2)
+>>    - Neon Copy (LABOR3-4)
+>>    - Incandescent Lamps (LABOR5-6)
+>>    - Border/Logo (LABOR7-10)
+>>
+>> 4. Material Types:
+>>    - Steel items: 52
+>>    - Aluminum items: 57
+>>    - Sheet metal: 12
+>>
+>> FILES CREATED:
+>> - LABOR_FORMULAS_COMPLETE.txt
+>> - MATERIALS.txt
+>> - SignCalculator.ps1
+>> - FORMULA_VARIABLES.txt
+>>
+>> NEXT STEPS:
+>> 1. Review formulas and identify which ones you use
+>> 2. Update material costs to current prices
+>> 3. Build modern interface (web/Excel)
+>> 4. Test calculations against known jobs
+>> "@
+>>
+>> $summary | Out-File "C:\Users\Brady\Desktop\ABC_Extracted\FINAL_SUMMARY.txt"
+>> Write-Host $summary
+
+=== CREATING FINAL SUMMARY ===
+ABC SIGN ESTIMATE EXTRACTION SUMMARY
+====================================
+Date: 07/21/2025 15:16:28
+
+EXTRACTED DATA:
+- Labor Formulas: 342
+- Material Items: 244
+- Variables Found: 125
+
+KEY FINDINGS:
+1. Font Multipliers:
+   - Block: 0.44
+   - Serif: 0.48
+   - Script: 0.55
+
+2. Main Formula Pattern:
+   Labor = Base_Rate * Font_Multiplier * Num_Letters * Letter_Height
+
+3. Common Operations:
+   - Pattern Making (LABOR1-2)
+   - Neon Copy (LABOR3-4)
+   - Incandescent Lamps (LABOR5-6)
+   - Border/Logo (LABOR7-10)
+
+4. Material Types:
+   - Steel items: 52
+   - Aluminum items: 57
+   - Sheet metal: 12
+
+FILES CREATED:
+- LABOR_FORMULAS_COMPLETE.txt
+- MATERIALS.txt
+- SignCalculator.ps1
+- FORMULA_VARIABLES.txt
+
+NEXT STEPS:
+1. Review formulas and identify which ones you use
+2. Update material costs to current prices
+3. Build modern interface (web/Excel)
+4. Test calculations against known jobs
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32> # Fix the formula saving
+>> Write-Host "`n=== SAVING COMPLETE FORMULAS (FIXED) ==="
+>> $output = @()
+>> $output += "ABC SIGN ESTIMATE v3.3.0.0 - LABOR FORMULAS"
+>> $output += "Extracted: $(Get-Date)"
+>> $output += "Total Formulas: $($laborFormulas.Count)"
+>> $output += "="*60
+>> $output += ""
+>>
+>> foreach ($key in ($laborFormulas.Keys | Sort-Object {[int]$_})) {
+>>     $output += "LABOR ${key}: $($laborFormulas[$key].Description)"
+>>     $output += "Formula: $($laborFormulas[$key].Formula)"
+>>     $output += ""
+>> }
+>>
+>> $output | Out-File "C:\Users\Brady\Desktop\ABC_Extracted\LABOR_FORMULAS_COMPLETE.txt"
+>> Write-Host "Saved complete formulas to LABOR_FORMULAS_COMPLETE.txt"
+
+=== SAVING COMPLETE FORMULAS (FIXED) ===
+Saved complete formulas to LABOR_FORMULAS_COMPLETE.txt
+PS C:\windows\system32> # Run calculator directly
+>> Write-Host "`n=== SIGN LABOR CALCULATOR ==="
+>>
+>> # Font multipliers
+>> $fontMultipliers = @{
+>>     "Block" = 0.44
+>>     "Serif" = 0.48
+>>     "Script" = 0.55
+>> }
+>>
+>> # Sample calculation
+>> $NumLetters = 8
+>> $LetterHeight = 24
+>> $FontType = "Script"
+>>
+>> $fontMult = $fontMultipliers[$FontType]
+>> $RCOPY_PATTERN = 1.5  # Base rate
+>> $patternLabor = $RCOPY_PATTERN * ($fontMult * $NumLetters * $LetterHeight)
+>>
+>> Write-Host "Sign Labor Calculation"
+>> Write-Host "===================="
+>> Write-Host "Letters: $NumLetters"
+>> Write-Host "Height: $LetterHeight inches"
+>> Write-Host "Font: $FontType (multiplier: $fontMult)"
+>> Write-Host "Pattern Labor: $([math]::Round($patternLabor, 2)) units"
+>> Write-Host "At $75/hour: `$$([math]::Round($patternLabor * 75, 2))"
+
+=== SIGN LABOR CALCULATOR ===
+Sign Labor Calculation
+====================
+Letters: 8
+Height: 24 inches
+Font: Script (multiplier: 0.55)
+Pattern Labor: 158.4 units
+At /hour: $11880
+PS C:\windows\system32> # Create Excel template with formulas
+>> Write-Host "`n=== CREATING EXCEL TEMPLATE ==="
+>> $excelTemplate = @"
+>> Sign Estimate Calculator - Based on ABC Sign Estimate v3.3.0.0
+>>
+>> INPUT SECTION
+>> Sign Type:,Channel Letters
+>> Number of Letters:,10
+>> Letter Height (inches):,12
+>> Font Type:,Block
+>>
+>> MULTIPLIERS
+>> Block Font:,0.44
+>> Serif Font:,0.48
+>> Script Font:,0.55
+>>
+>> CALCULATIONS
+>> Font Multiplier:,=IF(B5="Block",B9,IF(B5="Serif",B10,B11))
+>> Pattern Labor Units:,=1.5*B14*B3*B4
+>> Labor Hours:,=B15/60
+>> Labor Cost (@$75/hr):,=B16*75
+>>
+>> MATERIALS
+>> Steel Sq Tube 1.25x.083:,$3.50,per ft
+>> Alum Sq Tube 1.25x.120:,$4.25,per ft
+>> Sheet Metal 18ga:,$45.00,per sheet
+>> "@
+>>
+>> $excelTemplate | Out-File "C:\Users\Brady\Desktop\ABC_Extracted\SignEstimateTemplate.csv"
+>> Write-Host "Excel template saved"
+
+=== CREATING EXCEL TEMPLATE ===
+Excel template saved
+PS C:\windows\system32> # List all created files
+>> Write-Host "`n=== ALL EXTRACTED FILES ==="
+>> Get-ChildItem "C:\Users\Brady\Desktop\ABC_Extracted\*.txt", "C:\Users\Brady\Desktop\ABC_Extracted\*.csv", "C:\Users\Brady\Desktop\ABC_Extracted\*.ps1" |
+>>     Select-Object Name, @{Name='Size(KB)';Expression={[math]::Round($_.Length/1KB,2)}} |
+>>     Sort-Object Name |
+>>     Format-Table -AutoSize
+
+=== ALL EXTRACTED FILES ===
+
+Name                        Size(KB)
+----                        --------
+ALL_FORMULAS.txt                   0
+ANALYSIS_SUMMARY.txt            1.95
+FINAL_SUMMARY.txt               1.74
+FORMULA_VARIABLES.txt          10.98
+LABOR_FORMULAS_COMPLETE.txt    62.31
+MATERIALS.txt                  21.13
+SignCalculator.ps1              2.23
+SignEstimateTemplate.csv        0.99
+
+
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32> # View some specific labor formulas
+>> Write-Host "`n=== SAMPLE LABOR FORMULAS ==="
+>> $formulas = Get-Content "C:\Users\Brady\Desktop\ABC_Extracted\LABOR_FORMULAS_COMPLETE.txt"
+>> $formulas | Select-String -Pattern "LABOR (1|2|3|4|5):" -Context 0,1 | Select-Object -First 10
+
+=== SAMPLE LABOR FORMULAS ===
+
+> LABOR 1: !Manual Pattern for Copy, Constant
+  Formula: RPAT_MANUAL*(RNUM_LETTERS>0)
+> LABOR 2: Pattern for Copy
+  Formula: iRCOPY_PATTERN*((RM21L14==0)*(0.44*RBLOCK+0.48*RSERIFED+0.55*RSCRIPT)*RNUM_LETTERS*RLETTER_HEIGHT+RM21L14)
+> LABOR 4: Pattern for Neon Copy
+  Formula: RCOPY_PATTERN*(RM40L4>0)
+
+
+PS C:\windows\system32> # Check material prices
+>> Write-Host "`n=== MATERIALS WITH POSSIBLE PRICES ==="
+>> $materials = Get-Content "C:\Users\Brady\Desktop\ABC_Extracted\MATERIALS.txt"
+>> $materials | Where-Object { $_ -match '\d+\.\d{2}' } | Select-Object -First 20
+
+=== MATERIALS WITH POSSIBLE PRICES ===
+D2P31.25 x .083 Steel Square Tubep=?ST1.25X.083
+D2P3a1.25 x .120 Alum Square Tube(\?ALST1.25X.120
+D2P4b1.25 x .140 Steel Round Tube
+?RT1.25X.140
+D2P4a1.25 x .109 Alum Round TubezG
+@ART1.25X.109
+D2P91 3/4" ABC (Sm) Divider Bar333333?DB1.75
+D2P561 1/4" Match Plate0@MP1.25
+D2P64.040 Aluminum 8" Filler
+D2P65.040 Aluminum 12" Filler
+D2P66.062 Aluminum 8" Filler?8FILL.062
+D2P67.062 Aluminum 12"Filler333333?12FILL.062
+D2P68.080 Aluminum 8" Filler
+D2P69.080 Aluminum 12" Filler
+D2P70.090 Aluminum 8" Filler
+D2P71.090 Aluminum 12" Filler?12FILL.090
+D3P1.032 Mill Finish Alum SheetQ?ALUM.032PRE
+D3P2.040 Mill Finish Alum Sheet)\(?ALUM.040
+D3P3.040 Prefinished AluminumzG?ALUM.040PRE
+D3P4.050 Mill Finish Alum SheetGz?ALUM.050
+PS C:\windows\system32> # Find specific sign type formulas
+>> Write-Host "`n=== CHANNEL LETTER FORMULAS ==="
+>> $formulas | Select-String -Pattern "(Channel|Letter)" -Context 1,1 | Select-Object -First 10
+
+=== CHANNEL LETTER FORMULAS ===
+
+  LABOR 1: !Manual Pattern for Copy, Constant
+> Formula: RPAT_MANUAL*(RNUM_LETTERS>0)
+
+  LABOR 2: Pattern for Copy
+> Formula: iRCOPY_PATTERN*((RM21L14==0)*(0.44*RBLOCK+0.48*RSERIFED+0.55*RSCRIPT)*RNUM_LETTERS*RLETTER_HEIGHT+RM21L14)
+
+  LABOR 33: CAD/CAM, Scanned Font Copy
+> Formula: RSCAN_ARTWORK*RNUM_LETTERS
+
+
+> LABOR 162: &Strip Channel Block Letter Const < 10"
+  Formula: RSERIFED*RM23L14*Rtemp
+
+> LABOR 163: (Strip Channel Serifed Letter Const < 10"
+  Formula: RSERIFED*RM23L14*Rtemp
+
+> LABOR 164: 'Strip Channel Script Letter Const < 10"
+  Formula: RSCRIPT*RM23L14*Rtemp
+
+> LABOR 165: &Strip Channel Block Letter Const >=10"
+  Formula: RSERIFED*RM23L14*Rtemp2
+
+> LABOR 166: (Strip Channel Serifed Letter Const >=10"
+  Formula: RSERIFED*RM23L14*Rtemp2
+
+> LABOR 167: 'Strip Channel Script Letter Const >=10"
+  Formula: RSCRIPT*RM23L14*Rtemp2
+
+> LABOR 168:  Pan Channel Border/Logo Constant
+  Formula: (RM23L15==0)*(RM5eL15+RM5eL17)
+
+
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32> # Find all channel letter related formulas
+>> Write-Host "`n=== ALL CHANNEL LETTER FORMULAS ==="
+>> $formulas | Select-String -Pattern "(Channel|Strip Channel|Pan Channel)" -Context 1,2 | Select-Object -First 20
+
+=== ALL CHANNEL LETTER FORMULAS ===
+
+
+> LABOR 162: &Strip Channel Block Letter Const < 10"
+  Formula: RSERIFED*RM23L14*Rtemp
+
+> LABOR 163: (Strip Channel Serifed Letter Const < 10"
+  Formula: RSERIFED*RM23L14*Rtemp
+
+> LABOR 164: 'Strip Channel Script Letter Const < 10"
+  Formula: RSCRIPT*RM23L14*Rtemp
+
+> LABOR 165: &Strip Channel Block Letter Const >=10"
+  Formula: RSERIFED*RM23L14*Rtemp2
+
+> LABOR 166: (Strip Channel Serifed Letter Const >=10"
+  Formula: RSERIFED*RM23L14*Rtemp2
+
+> LABOR 167: 'Strip Channel Script Letter Const >=10"
+  Formula: RSCRIPT*RM23L14*Rtemp2
+
+> LABOR 168:  Pan Channel Border/Logo Constant
+  Formula: (RM23L15==0)*(RM5eL15+RM5eL17)
+
+> LABOR 169: $Pan Channel Block Letter Const < 10"
+  Formula: RBLOCK*RM23L15*Rtemp
+
+> LABOR 170: &Pan Channel Serifed Letter Const < 10"
+  Formula: RSERIFED*RM23L15*Rtemp
+
+> LABOR 171: %Pan Channel Script Letter Const < 10"
+  Formula: RSCRIPT*RM23L15*Rtemp
+
+> LABOR 172: $Pan Channel Block Letter Const >=10"
+  Formula: RBLOCK*RM23L15*Rtemp2
+
+> LABOR 173: &Pan Channel Serifed Letter Const >=10"
+  Formula: RSERIFED*RM23L15*Rtemp2
+
+> LABOR 174: %Pan Channel Script Letter Const >=10"
+  Formula: RSCRIPT*RM23L15*Rtemp2
+
+> LABOR 175: $Reverse Channel Border/Logo Constant
+  Formula: (RM23L16==0)*RM5eL16
+
+> LABOR 176: %Reverse Channel Block Ltr Const < 10"
+  Formula: RBLOCK*RM23L16*Rtemp
+
+> LABOR 177: 'Reverse Channel Serifed Ltr Const < 10"
+  Formula: RSERIFED*RM23L16*Rtemp
+
+> LABOR 178: &Reverse Channel Script Ltr Const < 10"
+  Formula: RSCRIPT*RM23L16*Rtemp
+
+> LABOR 179: %Reverse Channel Block Ltr Const >=10"
+  Formula: RBLOCK*RM23L16*Rtemp2
+
+> LABOR 180: 'Reverse Channel Serifed Ltr Const >=10"
+  Formula: RSERIFED*RM23L16*Rtemp2
+
+> LABOR 181: &Reverse Channel Script Ltr Const >=10"
+  Formula: RSCRIPT*RM23L16*Rtemp2
+
+
+
+PS C:\windows\system32> # Clean up material pricing
+>> Write-Host "`n=== CLEANING MATERIAL DATA ==="
+>> $materials = Get-Content "C:\Users\Brady\Desktop\ABC_Extracted\MATERIALS.txt"
+>> $cleanMaterials = @()
+>>
+>> foreach ($mat in $materials) {
+>>     if ($mat -match '([^?@]+?)([\?@][A-Z0-9\.]+)?$') {
+>>         $desc = $matches[1].Trim()
+>>         $code = $matches[2]
+>>         if ($desc.Length -gt 5) {
+>>             $cleanMaterials += "$desc (Code: $code)"
+>>         }
+>>     }
+>> }
+>>
+>> Write-Host "Cleaned materials:"
+>> $cleanMaterials | Select-Object -First 20
+
+=== CLEANING MATERIAL DATA ===
+Cleaned materials:
+D2P11 x .083 Steel Square TubeGz (Code: ?ST1X.083)
+D2P31.25 x .083 Steel Square Tubep= (Code: ?ST1.25X.083)
+D2P51.5 x .083 Steel Square Tube\(\ (Code: ?ST1.5X.083)
+D2P182 x .083 Steel Square TubeQ (Code: ?ST2X.083)
+D2P25b2.5 x .141 Steel Square Tube (Code: )
+D2P29b3 x .188 Steel Square TubeGz (Code: @ST3X.155)
+D2P1a1 x .083 Alum Square TubeGz (Code: ?ALST1X.083)
+D2P3a1.25 x .120 Alum Square Tube(\ (Code: ?ALST1.25X.120)
+D2P5a1.5 x .120 Alum Square Tube (Code: ?ALST1.5X.120)
+D2P18a2 x .120 Alum Sq TubeQ (Code: ?ALST2X.120)
+D2P25a2.5 x .120 Alum Sq Tube (Code: )
+D2P29a3 x .125 Alum Sq Tube{Gz (Code: @ALST3X.188)
+RT3/4X.113 (Code: )
+D2P2b1 x .133 Steel Round Tube\(\ (Code: ?ST1X.133)
+D2P4b1.25 x .140 Steel Round Tube (Code: )
+RT1.25X.140 (Code: )
+D2P6c1.5 x .145 Steel Round Tube(\ (Code: ?RT1.5X.145)
+D2P19b2 x .154 Steel Round Tube (Code: )
+D2P24c2.5 x .203 Steel Round Tubep= (Code: @RT2.5X.203)
+ART3/4X.083 (Code: )
+PS C:\windows\system32> # Channel Letter Calculator
+>> Write-Host "`n=== CHANNEL LETTER CALCULATOR ==="
+>>
+>> function Calculate-ChannelLetter {
+>>     param(
+>>         [int]$NumLetters = 10,
+>>         [decimal]$LetterHeight = 12,
+>>         [string]$FontType = "Block",
+>>         [decimal]$LaborRate = 75
+>>     )
+>>
+>>     # Font multipliers
+>>     $fontMult = @{
+>>         "Block" = 0.44
+>>         "Serif" = 0.48
+>>         "Script" = 0.55
+>>     }[$FontType]
+>>
+>>     # Size category
+>>     $sizeCategory = if ($LetterHeight -lt 10) { "Small" } else { "Large" }
+>>
+>>     # Base calculations
+>>     $patternLabor = 1.5 * $fontMult * $NumLetters * $LetterHeight
+>>     $routingLabor = 2.0 * $NumLetters * $LetterHeight  # Estimate
+>>     $assemblyLabor = 1.0 * $NumLetters * $LetterHeight  # Estimate
+>>
+>>     # Material estimates
+>>     $aluminumSqFt = ($NumLetters * $LetterHeight * $LetterHeight) / 144
+>>     $ledModules = $NumLetters * [Math]::Ceiling($LetterHeight / 3)
+>>
+>>     Write-Host "`nCHANNEL LETTER ESTIMATE"
+>>     Write-Host "======================="
+>>     Write-Host "Letters: $NumLetters"
+>>     Write-Host "Height: $LetterHeight inches ($sizeCategory)"
+>>     Write-Host "Font: $FontType"
+>>     Write-Host ""
+>>     Write-Host "LABOR (minutes):"
+>>     Write-Host "  Pattern: $([Math]::Round($patternLabor, 1))"
+>>     Write-Host "  Routing: $([Math]::Round($routingLabor, 1))"
+>>     Write-Host "  Assembly: $([Math]::Round($assemblyLabor, 1))"
+>>     Write-Host "  Total Minutes: $([Math]::Round($patternLabor + $routingLabor + $assemblyLabor, 1))"
+>>     Write-Host "  Total Hours: $([Math]::Round(($patternLabor + $routingLabor + $assemblyLabor) / 60, 2))"
+>>     Write-Host "  Labor Cost: `$$([Math]::Round(($patternLabor + $routingLabor + $assemblyLabor) / 60 * $LaborRate, 2))"
+>>     Write-Host ""
+>>     Write-Host "MATERIALS (estimated):"
+>>     Write-Host "  Aluminum: $([Math]::Round($aluminumSqFt, 1)) sq ft"
+>>     Write-Host "  LED Modules: $ledModules"
+>> }
+>>
+>> # Run example
+>> Calculate-ChannelLetter -NumLetters 8 -LetterHeight 18 -FontType "Serif"
+
+=== CHANNEL LETTER CALCULATOR ===
+
+CHANNEL LETTER ESTIMATE
+=======================
+Letters: 8
+Height: 18 inches (Large)
+Font: Serif
+
+LABOR (minutes):
+  Pattern: 103.7
+  Routing: 288
+  Assembly: 144
+  Total Minutes: 535.7
+  Total Hours: 8.93
+  Labor Cost: $669.60
+
+MATERIALS (estimated):
+  Aluminum: 18 sq ft
+  LED Modules: 48
+PS C:\windows\system32> # Create comprehensive Excel template
+>> Write-Host "`n=== CREATING COMPLETE EXCEL TEMPLATE ==="
+>> $excelComplete = @"
+>> ABC SIGN ESTIMATE CALCULATOR
+>>
+>> JOB INFORMATION
+>> Customer:,
+>> Job Name:,
+>> Date:,=TODAY()
+>>
+>> SIGN SPECIFICATIONS
+>> Sign Type:,Channel Letters
+>> Number of Letters:,10
+>> Letter Height (inches):,12
+>> Font Type:,Block
+>> Illumination:,LED
+>>
+>> LABOR CALCULATIONS
+>> Font Multiplier:,=VLOOKUP(E9,M3:N5,2,FALSE)
+>> Pattern Labor (min):,=1.5*E12*E7*E8
+>> Routing Labor (min):,=2*E7*E8
+>> Assembly Labor (min):,=1*E7*E8
+>> Painting Labor (min):,=0.5*E7*E8
+>> Total Labor Minutes:,=SUM(E13:E16)
+>> Total Labor Hours:,=E17/60
+>> Labor Rate ($/hr):,75
+>> Total Labor Cost:,=E18*E19
+>>
+>> MATERIALS
+>> Item,Qty,Unit,Unit Cost,Total
+>> .040 Aluminum,=E7*E8*E8/144,sq ft,4.50,=B23*D23
+>> LED Modules,=E7*CEILING(E8/3,1),each,3.50,=B24*D24
+>> 1.25" Returns,=E7*E8*2/12,ft,2.75,=B25*D25
+>> Trim Cap,=E7*E8*3.5/12,ft,1.25,=B26*D26
+>> Power Supplies,=CEILING(B24/30,1),each,45.00,=B27*D27
+>> Wire/Misc,1,lot,25.00,=B28*D28
+>> Total Materials:,,,,=SUM(E23:E28)
+>>
+>> SUMMARY
+>> Labor:,=E20
+>> Materials:,=E29
+>> Subtotal:,=E32+E33
+>> Markup (35%):,=E34*0.35
+>> Total Price:,=E34+E35
+>>
+>> REFERENCE DATA
+>> Font Type,Multiplier
+>> Block,0.44
+>> Serif,0.48
+>> Script,0.55
+>> "@
+>>
+>> $excelComplete | Out-File "C:\Users\Brady\Desktop\ABC_Extracted\ChannelLetterCalculator.csv"
+>> Write-Host "Complete calculator saved to ChannelLetterCalculator.csv"
+
+=== CREATING COMPLETE EXCEL TEMPLATE ===
+Complete calculator saved to ChannelLetterCalculator.csv
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32> # Find all sign types mentioned in formulas
+>> Write-Host "`n=== EXTRACTING ALL SIGN TYPES ==="
+>> $formulas = Get-Content "C:\Users\Brady\Desktop\ABC_Extracted\LABOR_FORMULAS_COMPLETE.txt"
+>>
+>> # Search for different patterns that indicate sign types
+>> $signTypes = @()
+>>
+>> # Common sign type keywords to search for
+>> $keywords = @(
+>>     "Channel", "Neon", "LED", "Routed", "Carved", "Sandblasted",
+>>     "Vinyl", "Digital", "Dimensional", "Flat", "Pan", "Reverse",
+>>     "Strip", "Border", "Logo", "Incandescent", "Skeleton",
+>>     "Plastic", "Metal", "Wood", "Foam", "Acrylic", "Cut",
+>>     "Fabricated", "Cast", "Molded", "Engraved", "Etched",
+>>     "Painted", "Gilded", "Screen", "Offset", "Digital"
+>> )
+>>
+>> # Extract lines with sign type indicators
+>> Write-Host "`nSearching for sign types..."
+>> foreach ($keyword in $keywords) {
+>>     $matches = $formulas | Select-String -Pattern $keyword -SimpleMatch
+>>     if ($matches) {
+>>         Write-Host "`n$keyword found in $($matches.Count) formulas"
+>>         $matches | Select-Object -First 3 | ForEach-Object {
+>>             Write-Host "  $_"
+>>         }
+>>     }
+>> }
+
+=== EXTRACTING ALL SIGN TYPES ===
+
+Searching for sign types...
+
+Channel found in 36 formulas
+  LABOR 162: &Strip Channel Block Letter Const < 10"
+  LABOR 163: (Strip Channel Serifed Letter Const < 10"
+  LABOR 164: 'Strip Channel Script Letter Const < 10"
+
+Neon found in 13 formulas
+  LABOR 4: Pattern for Neon Copy
+  LABOR 9: &Pattern for Neon Border/Logo, Constant
+  LABOR 10: Pattern for Neon Border/Logo
+
+LED found in 3 formulas
+  LABOR 52: Beveled Edging Constant
+  LABOR 53: Beveled Edging
+  LABOR 699: gPackage Assembled Sign
+
+Routed found in 25 formulas
+  LABOR 233: Manually Routed Border/Logo
+  LABOR 240:  Manually Routed Letters under 6"
+  LABOR 354: 'Finish on Routed Face/Letters, Constant
+
+Vinyl found in 6 formulas
+  Formula: (RM5hL4+RM5hL5+RM5hL6+RM5hL7+RM5hL8+RM5hL9)*RBORDER_MANUAL*RVINYL_BORDER*RBORDER_LENGTH*nfaces*(1+RNMCUT_OUTLINED+RNMCUT_SHADED)
+  LABOR 471: Vinyl to 100 sq.ft., Constant
+  LABOR 472: Vinyl over 100 sq.ft., Constant
+
+Pan found in 23 formulas
+  LABOR 168:  Pan Channel Border/Logo Constant
+  LABOR 169: $Pan Channel Block Letter Const < 10"
+  LABOR 170: &Pan Channel Serifed Letter Const < 10"
+
+Reverse found in 9 formulas
+  LABOR 175: $Reverse Channel Border/Logo Constant
+  LABOR 176: %Reverse Channel Block Ltr Const < 10"
+  LABOR 177: 'Reverse Channel Serifed Ltr Const < 10"
+
+Strip found in 10 formulas
+  LABOR 162: &Strip Channel Block Letter Const < 10"
+  LABOR 163: (Strip Channel Serifed Letter Const < 10"
+  LABOR 164: 'Strip Channel Script Letter Const < 10"
+
+Border found in 39 formulas
+  LABOR 7: !Pattern for Border/Logo, Constant
+  Formula: !RBORDER_PATTERN*(BORDER_LENGTH>0)
+  LABOR 8: Pattern for Border/Logo
+
+Logo found in 23 formulas
+  LABOR 7: !Pattern for Border/Logo, Constant
+  LABOR 8: Pattern for Border/Logo
+  LABOR 9: &Pattern for Neon Border/Logo, Constant
+
+Incandescent found in 3 formulas
+  LABOR 6: Pattern for Incandescent Lamps
+  LABOR 423: Incandescent, Constant
+  LABOR 424: Incandescent Lamps
+
+Skeleton found in 2 formulas
+  LABOR 11: (Pattern for Skeleton Bord/Logo, Constant
+  LABOR 12:  Pattern for Skeleton Border/Logo
+
+Plastic found in 9 formulas
+  LABOR 41: Plastic Sign Frame Constants
+  LABOR 57: Cut Out for Plastic, Constant
+  LABOR 58: Cut Out for Plastic
+
+Metal found in 5 formulas
+  LABOR 84: Miscellaneous Sheet Metal Labor
+  LABOR 383: a#Paint Outside surface of Metal Back
+  LABOR 480: 'Mold Making/sheet metal, Back. not tex.
+
+Wood found in 14 formulas
+  LABOR 358: Finish on Wood, Constant
+  Formula: SMOOTH_WOOD+M30L8_ROUGH_WOOD
+  LABOR 590: Wood Sign
+
+Acrylic found in 5 formulas
+  LABOR 80: Wind Braces for Acrylic Faces
+  LABOR 81: Wind Cables for Acrylic Faces
+  LABOR 154: Wind Braces for Acrylic Faces
+
+Cut found in 11 formulas
+  LABOR 57: Cut Out for Plastic, Constant
+  LABOR 58: Cut Out for Plastic
+  LABOR 59: Retainer for Cut Out, Constant
+
+Fabricated found in 6 formulas
+  LABOR 82: Fabricated Intermediate Wireway
+  LABOR 91: Wide Fabricated Frame Constants
+  LABOR 156: Fabricated Intermediate Wireway
+PS C:\windows\system32> # Organize by labor number ranges
+>> Write-Host "`n=== SIGN TYPES BY LABOR NUMBER RANGE ==="
+>>
+>> # Group formulas by ranges
+>> $ranges = @(
+>>     @{Start=1; End=20; Name="Pattern/Copy Operations"},
+>>     @{Start=21; End=40; Name="Routing Operations"},
+>>     @{Start=41; End=60; Name="Painting Operations"},
+>>     @{Start=61; End=80; Name="Assembly Operations"},
+>>     @{Start=81; End=100; Name="Installation Operations"},
+>>     @{Start=101; End=120; Name="Specialty Operations"},
+>>     @{Start=121; End=140; Name="Digital/Vinyl Operations"},
+>>     @{Start=141; End=160; Name="3D/Carved Operations"},
+>>     @{Start=161; End=180; Name="Channel Letter Operations"},
+>>     @{Start=181; End=200; Name="Illuminated Sign Operations"},
+>>     @{Start=201; End=220; Name="Special Effects"},
+>>     @{Start=221; End=240; Name="Finishing Operations"},
+>>     @{Start=241; End=260; Name="Packaging/Shipping"},
+>>     @{Start=261; End=280; Name="Service/Repair"},
+>>     @{Start=281; End=342; Name="Miscellaneous"}
+>> )
+>>
+>> foreach ($range in $ranges) {
+>>     Write-Host "`n$($range.Name) (LABOR $($range.Start)-$($range.End)):"
+>>     $formulas | Where-Object {
+>>         $_ -match "LABOR (\d+):" -and
+>>         [int]$matches[1] -ge $range.Start -and
+>>         [int]$matches[1] -le $range.End
+>>     } | Select-Object -First 5
+>> }
+
+=== SIGN TYPES BY LABOR NUMBER RANGE ===
+
+Pattern/Copy Operations (LABOR 1-20):
+LABOR 1: !Manual Pattern for Copy, Constant
+LABOR 2: Pattern for Copy
+LABOR 4: Pattern for Neon Copy
+LABOR 6: Pattern for Incandescent Lamps
+LABOR 7: !Pattern for Border/Logo, Constant
+
+Routing Operations (LABOR 21-40):
+LABOR 21: (CAD/CAM Prt/Draw Prf Bord/Logo, Constant
+LABOR 22: CAD/CAM Download Copy, Constant
+LABOR 23: &CAD/CAM Download Border/Logo, Constant
+LABOR 24: CAD/CAM, Standard Font
+LABOR 32: !CAD/CAM,Bord/Logo Multiple Copies
+
+Painting Operations (LABOR 41-60):
+LABOR 41: Plastic Sign Frame Constants
+LABOR 48: Deck Cabinet
+LABOR 49: Raceway Constant
+LABOR 50: Raceway
+LABOR 52: Beveled Edging Constant
+
+Assembly Operations (LABOR 61-80):
+LABOR 61: !Pipe Stub Built in Sign, Constant
+LABOR 62: Pipe Stub Built in Sign
+LABOR 64: Pipe Stub for Pole Cover
+LABOR 68: Match Plates
+LABOR 70: Match Plates for Pole Cover
+
+Installation Operations (LABOR 81-100):
+LABOR 81: Wind Cables for Acrylic Faces
+LABOR 82: Fabricated Intermediate Wireway
+LABOR 83: Extruded Wireway
+LABOR 84: Miscellaneous Sheet Metal Labor
+LABOR 86: bSmall A/Bleedframe Constant
+
+Specialty Operations (LABOR 101-120):
+LABOR 103: Hingeable Frame Prop Hardware
+LABOR 104: Continuous Piano Hinge
+LABOR 105: Locking Device
+LABOR 106: Outside R-Hinge and Saddle
+LABOR 113: d9Thrif-T Frame (Non-Welded Construction: Single Face Only)
+
+Digital/Vinyl Operations (LABOR 121-140):
+LABOR 124: Radius Corner Kits
+LABOR 125: %Radius Corner Kits for flexible faces
+LABOR 126: Radius Corner Kits
+LABOR 127: %Radius Corner Kits for flexible faces
+LABOR 128: Radius Corner Kits
+
+3D/Carved Operations (LABOR 141-160):
+LABOR 142: Match Plates
+LABOR 143: aPole Mounting Brackets
+LABOR 144: aStringers for mounting
+LABOR 146: $Vertical Jack Struts for Wide Frames
+LABOR 148: &Horizontal Jack Struts for Wide Frames
+
+Channel Letter Operations (LABOR 161-180):
+LABOR 162: &Strip Channel Block Letter Const < 10"
+LABOR 163: (Strip Channel Serifed Letter Const < 10"
+LABOR 164: 'Strip Channel Script Letter Const < 10"
+LABOR 165: &Strip Channel Block Letter Const >=10"
+LABOR 166: (Strip Channel Serifed Letter Const >=10"
+
+Illuminated Sign Operations (LABOR 181-200):
+LABOR 181: &Reverse Channel Script Ltr Const >=10"
+LABOR 182: %Block Raised Block Letter Const < 10"
+LABOR 183: 'Serifed Raised Block Letter Const < 10"
+LABOR 184: &Script Raised Block Letter Const < 10"
+LABOR 185: %Block Raised Block Letter Const >=10"
+
+Special Effects (LABOR 201-220):
+LABOR 201: %Serifed Lustr-Edge Letter Const < 10"
+LABOR 202: $Script Lustr-Edge Letter Const < 10"
+LABOR 203: #Block Lustr-Edge Letter Const >=10"
+LABOR 204: %Serifed Lustr-Edge Letter Const >=10"
+LABOR 205: $Script Lustr-Edge Letter Const >=10"
+
+Finishing Operations (LABOR 221-240):
+LABOR 229: Manual Knife Cut Border/Logo
+LABOR 233: Manually Routed Border/Logo
+LABOR 236:  Knife Cutting Fabricated Letters
+LABOR 240:  Manually Routed Letters under 6"
+
+Packaging/Shipping (LABOR 241-260):
+
+Service/Repair (LABOR 261-280):
+LABOR 263: fBolt Joint
+LABOR 264: 'Rough-sand back side of FCO letters <6"
+
+Miscellaneous (LABOR 281-342):
+LABOR 290: 'Awning Framework Const, 31 to 100 sq ft
+LABOR 291: 'Awning Framework Const 101 to 200 sq ft
+LABOR 292: &Awning Framework Constant, > 200 sq ft
+LABOR 293: "Mitre or Square Cut Pieces, < 5 ft
+LABOR 297: 'Roll ext. - circ. bows rad. 20 to 36 in
+PS C:\windows\system32> # Extract unique sign types with their labor numbers
+>> Write-Host "`n=== COMPREHENSIVE SIGN TYPE LIST ==="
+>>
+>> $signTypeList = @{}
+>>
+>> # Parse all formulas for sign types
+>> foreach ($line in $formulas) {
+>>     if ($line -match "LABOR (\d+): (.+)") {
+>>         $laborNum = $matches[1]
+>>         $desc = $matches[2]
+>>
+>>         # Categorize by keywords in description
+>>         $category = switch -Regex ($desc) {
+>>             "Channel" { "Channel Letters" }
+>>             "Neon" { "Neon Signs" }
+>>             "LED|Incandescent" { "Illuminated Signs" }
+>>             "Routed|Routing" { "Routed Signs" }
+>>             "Carved|Sandblast" { "Carved/Sandblasted Signs" }
+>>             "Vinyl" { "Vinyl Signs" }
+>>             "Digital|Print" { "Digital Print Signs" }
+>>             "Border|Logo" { "Borders & Logos" }
+>>             "Plastic|Acrylic" { "Plastic Signs" }
+>>             "Metal|Aluminum|Steel" { "Metal Signs" }
+>>             "Wood" { "Wood Signs" }
+>>             "Foam" { "Foam Signs" }
+>>             "Paint" { "Painted Signs" }
+>>             "Gild|Gold" { "Gilded Signs" }
+>>             "Cast|Mold" { "Cast/Molded Signs" }
+>>             "Dimensional|3D|Raised" { "Dimensional Signs" }
+>>             "Flat|Panel" { "Flat Panel Signs" }
+>>             "Install" { "Installation" }
+>>             "Pattern|Copy" { "Pattern Making" }
+>>             default { "Other Operations" }
+>>         }
+>>
+>>         if (-not $signTypeList.ContainsKey($category)) {
+>>             $signTypeList[$category] = @()
+>>         }
+>>         $signTypeList[$category] += "LABOR $laborNum: $desc"
+>>     }
+>> }
+>>
+>> # Display organized list
+>> foreach ($category in $signTypeList.Keys | Sort-Object) {
+>>     Write-Host "`n$category ($($signTypeList[$category].Count) operations):"
+>>     $signTypeList[$category] | Select-Object -First 5 | ForEach-Object {
+>>         Write-Host "  $_"
+>>     }
+>>     if ($signTypeList[$category].Count -gt 5) {
+>>         Write-Host "  ... and $($signTypeList[$category].Count - 5) more"
+>>     }
+>> }
+At line:39 char:44
++         $signTypeList[$category] += "LABOR $laborNum: $desc"
++                                            ~~~~~~~~~~
+Variable reference is not valid. ':' was not followed by a valid variable name character. Consider using ${} to
+delimit the name.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : InvalidVariableReferenceWithDrive
+
+PS C:\windows\system32> # Create sign type reference
+>> Write-Host "`n=== CREATING SIGN TYPE REFERENCE ==="
+>> $reference = @"
+>> ABC SIGN ESTIMATE - SIGN TYPE REFERENCE
+>> =======================================
+>>
+>> CHANNEL LETTERS (LABOR 162-181)
+>> - Strip Channel (Face lit)
+>>   - Block: <10" (LABOR 162), ≥10" (LABOR 165)
+>>   - Serif: <10" (LABOR 163), ≥10" (LABOR 166)
+>>   - Script: <10" (LABOR 164), ≥10" (LABOR 167)
+>>
+>> - Pan Channel (Face & side lit)
+>>   - Block: <10" (LABOR 169), ≥10" (LABOR 172)
+>>   - Serif: <10" (LABOR 170), ≥10" (LABOR 173)
+>>   - Script: <10" (LABOR 171), ≥10" (LABOR 174)
+>>
+>> - Reverse Channel (Halo lit)
+>>   - Block: <10" (LABOR 176), ≥10" (LABOR 179)
+>>   - Serif: <10" (LABOR 177), ≥10" (LABOR 180)
+>>   - Script: <10" (LABOR 178), ≥10" (LABOR 181)
+>>
+>> ILLUMINATED SIGNS
+>> - Neon Signs (LABOR 3-4, 9-10)
+>> - LED Signs (various)
+>> - Incandescent Signs (LABOR 5-6)
+>>
+>> FABRICATED SIGNS
+>> - Routed Signs (multiple LABOR entries)
+>> - Carved/Sandblasted Signs
+>> - Cast/Molded Signs
+>> - Dimensional Letters
+>>
+>> FLAT SIGNS
+>> - Vinyl Lettering
+>> - Digital Prints
+>> - Painted Signs
+>> - Screen Printed
+>>
+>> SPECIALTY WORK
+>> - Borders & Logos
+>> - Gilded/Gold Leaf
+>> - Installation Services
+>> - Pattern Making
+>> "@
+>>
+>> $reference | Out-File "C:\Users\Brady\Desktop\ABC_Extracted\SIGN_TYPE_REFERENCE.txt"
+>> Write-Host "Sign type reference saved!"
+
+=== CREATING SIGN TYPE REFERENCE ===
+Sign type reference saved!
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32> # Check all .abc files and their extraction status
+>> Write-Host "`n=== FILES NOT FULLY EXTRACTED ==="
+>> $allAbcFiles = Get-ChildItem "C:\Users\Brady\Desktop\ABC_Extracted\*.abc" |
+>>     Select-Object Name, @{Name='Size(KB)';Expression={[math]::Round($_.Length/1KB,2)}} |
+>>     Sort-Object 'Size(KB)' -Descending
+>>
+>> Write-Host "All .abc files:"
+>> $allAbcFiles | Format-Table -AutoSize
+>>
+>> Write-Host "`n=== EXTRACTION STATUS ==="
+>> Write-Host "√ EXTRACTED:"
+>> Write-Host "  - labor_nm.abc (263KB) - Labor formulas"
+>> Write-Host "  - invent_nm.abc (66KB) - Materials"
+>> Write-Host ""
+>> Write-Host "? NOT FULLY EXTRACTED:"
+>> Write-Host "  - scripts_nm.abc (255KB) - VBScript automation (encoded)"
+>> Write-Host "  - menu_nm.abc (173KB) - UI menus"
+>> Write-Host "  - bill_mat_nm.abc (129KB) - Billing/materials"
+>> Write-Host "  - descript_nm.abc (31KB) - Descriptions"
+>> Write-Host "  - dept_nm.abc - Departments"
+>> Write-Host "  - sales_nm.abc - Sales data"
+>> Write-Host "  - user_nm.abc - User configuration"
+>> Write-Host "  - wocfg_nm.abc - Work order config"
+>> Write-Host "  - stat_nm.abc - Statistics"
+>> Write-Host "  - macros_nm.abc - Macros"
+>> Write-Host ""
+>> Write-Host "? DATABASE:"
+>> Write-Host "  - abcsignc.mdb (2.5MB) - Customer/job database"
+
+=== FILES NOT FULLY EXTRACTED ===
+All .abc files:
+
+Name            Size(KB)
+----            --------
+labor_nm.abc      257.56
+scripts_nm.abc    249.81
+menu_nm.abc        169.3
+bill_mat_nm.abc   126.02
+invent_nm.abc      65.42
+descript_nm.abc    30.55
+stat_nm.abc         2.84
+macros_nm.abc       2.06
+dept_nm.abc         0.64
+sales_nm.abc         0.4
+wocfg_nm.abc        0.14
+user_nm.abc          0.1
+
+
+
+=== EXTRACTION STATUS ===
+✓ EXTRACTED:
+  - labor_nm.abc (263KB) - Labor formulas
+  - invent_nm.abc (66KB) - Materials
+
+✗ NOT FULLY EXTRACTED:
+  - scripts_nm.abc (255KB) - VBScript automation (encoded)
+  - menu_nm.abc (173KB) - UI menus
+  - bill_mat_nm.abc (129KB) - Billing/materials
+  - descript_nm.abc (31KB) - Descriptions
+  - dept_nm.abc - Departments
+  - sales_nm.abc - Sales data
+  - user_nm.abc - User configuration
+  - wocfg_nm.abc - Work order config
+  - stat_nm.abc - Statistics
+  - macros_nm.abc - Macros
+
+✗ DATABASE:
+  - abcsignc.mdb (2.5MB) - Customer/job database
+PS C:\windows\system32> Write-Host "`n=== EXTRACTING BILLING/MATERIALS ==="
+>> $billBytes = [System.IO.File]::ReadAllBytes("C:\Users\Brady\Desktop\ABC_Extracted\bill_mat_nm.abc")
+>> $billData = @()
+>> $buffer = ""
+>>
+>> for ($i = 0; $i -lt $billBytes.Length; $i++) {
+>>     if ($billBytes[$i] -eq 0) {
+>>         if ($buffer.Length -gt 5) {
+>>             $billData += $buffer
+>>         }
+>>         $buffer = ""
+>>     } elseif ($billBytes[$i] -ge 32 -and $billBytes[$i] -le 126) {
+>>         $buffer += [char]$billBytes[$i]
+>>     }
+>> }
+>>
+>> Write-Host "Found $($billData.Count) billing entries"
+>> $billData | Where-Object { $_ -match "BILL|COST|MARKUP|PROFIT|TAX" } | Select-Object -First 20
+
+=== EXTRACTING BILLING/MATERIALS ===
+Found 2097 billing entries
+MUKITTOTAL_KITCOST
+ Cost of Buyout on Knock-Down Kit
+MUKITTOTAL_KITCOST
+ Outsource cost on Knock-Down KitD3P61
+PS C:\windows\system32> Write-Host "`n=== EXTRACTING MENU STRUCTURE ==="
+>> $menuBytes = [System.IO.File]::ReadAllBytes("C:\Users\Brady\Desktop\ABC_Extracted\menu_nm.abc")
+>> $menuItems = @()
+>> $buffer = ""
+>>
+>> for ($i = 0; $i -lt [Math]::Min($menuBytes.Length, 10000); $i++) {
+>>     if ($menuBytes[$i] -eq 0) {
+>>         if ($buffer -match "\w{3,}") {
+>>             $menuItems += $buffer
+>>         }
+>>         $buffer = ""
+>>     } elseif ($menuBytes[$i] -ge 32 -and $menuBytes[$i] -le 126) {
+>>         $buffer += [char]$menuBytes[$i]
+>>     }
+>> }
+>>
+>> Write-Host "Menu items found:"
+>> $menuItems | Select-Object -First 20
+
+=== EXTRACTING MENU STRUCTURE ===
+Menu items found:
+'NEW SIGN ESTIMATE - GENERAL INFORMATIONM0
+Design #: ________M0L3d
+,Customer: __________________________________M0L4e
+,Billing Address: ___________________________M0L5f
+,City: ______________________________________M0L6
+,State: _____________________________________M0L7
+,Zip Code: __________________________________M0L8
+Date: ________M0L10g
+,Salesperson: _______________________________M0L11h
+,Estimator: _________________________________M0L12i
+,Artist: ____________________________________M0L13j
+,Customer Phone Number: _____________________M0L14
+*Customer Fax Number: _____________________M0L19
+Number of Sections in Sign: __M0L16k
+ACheck to enter Job Site Address if different than Billing AddressM0L18
+,Job Site Information / Installation Address:
+,Sreet: _____________________________________NM_JS_STREET
++City: _____________________________________NM_JS_CITY
+,State: _____________________________________NM_JS_STATE
+,Zip Code: __________________________________NM_JS_ZIPCODE
+PS C:\windows\system32> Write-Host "`n=== EXTRACTING DESCRIPTIONS ==="
+>> $descBytes = [System.IO.File]::ReadAllBytes("C:\Users\Brady\Desktop\ABC_Extracted\descript_nm.abc")
+>> $descriptions = @()
+>> $buffer = ""
+>>
+>> for ($i = 0; $i -lt $descBytes.Length; $i++) {
+>>     if ($descBytes[$i] -eq 0) {
+>>         if ($buffer.Length -gt 10) {
+>>             $descriptions += $buffer
+>>         }
+>>         $buffer = ""
+>>     } elseif ($descBytes[$i] -ge 32 -and $descBytes[$i] -le 126) {
+>>         $buffer += [char]$descBytes[$i]
+>>     }
+>> }
+>>
+>> Write-Host "Found $($descriptions.Count) descriptions"
+>> $descriptions | Select-Object -First 10
+
+=== EXTRACTING DESCRIPTIONS ===
+Found 602 descriptions
+temp11temp31temp0
+temp!(FACE1+FACE2+FACE3+FACE4)*NM86L19
+Manufacture
+result!(temp==0)*(NM86L19+MAINTAIN_ONLY)
+Provide labor & materials for
+resultMAINTAIN_ONLY
+maintenance of
+result&MULTIPLE_SIGNS*(NM86L19+MAINTAIN_ONLY)
+MULTIPLE_SIGNS,
+result+(MULTIPLE_SIGNS==0)*(NM86L19+MAINTAIN_ONLY)
+PS C:\windows\system32> Write-Host "`n=== WHAT'S STILL MISSING ==="
+>> Write-Host "1. MARKUP/PROFIT SETTINGS"
+>> Write-Host "   - Default markup percentages"
+>> Write-Host "   - Overhead calculations"
+>> Write-Host "   - Profit margins by job type"
+>> Write-Host ""
+>> Write-Host "2. CUSTOMER DATABASE (abcsignc.mdb)"
+>> Write-Host "   - Customer records"
+>> Write-Host "   - Historical job data"
+>> Write-Host "   - Pricing history"
+>> Write-Host ""
+>> Write-Host "3. VBSCRIPT AUTOMATION (encoded)"
+>> Write-Host "   - Report generators"
+>> Write-Host "   - Custom calculations"
+>> Write-Host ""
+>> Write-Host "4. SYSTEM CONFIGURATION"
+>> Write-Host "   - Tax rates"
+>> Write-Host "   - Company settings"
+>> Write-Host "   - User permissions"
+
+=== WHAT'S STILL MISSING ===
+1. MARKUP/PROFIT SETTINGS
+   - Default markup percentages
+   - Overhead calculations
+   - Profit margins by job type
+
+2. CUSTOMER DATABASE (abcsignc.mdb)
+   - Customer records
+   - Historical job data
+   - Pricing history
+
+3. VBSCRIPT AUTOMATION (encoded)
+   - Report generators
+   - Custom calculations
+
+4. SYSTEM CONFIGURATION
+   - Tax rates
+   - Company settings
+   - User permissions
+PS C:\windows\system32> Write-Host "`n=== QUICK DATABASE PEEK ==="
+>> # Just grab table names without full scan
+>> $mdbPath = "C:\Users\Brady\Desktop\ABC_Extracted\abcsignc.mdb"
+>> $mdbBytes = [System.IO.File]::ReadAllBytes($mdbPath) | Select-Object -First 50000
+>> $mdbText = [System.Text.Encoding]::ASCII.GetString($mdbBytes)
+>>
+>> # Look for table names
+>> $tableNames = [regex]::Matches($mdbText, 'MSys\w+|tbl\w+|Table\w+|\w+Table') |
+>>     Select-Object -ExpandProperty Value -Unique
+>>
+>> Write-Host "Possible tables:"
+>> $tableNames | Where-Object { $_ -notmatch "MSys" } | Select-Object -First 20
+
+=== QUICK DATABASE PEEK ===
+Possible tables:
+PS C:\windows\system32> Write-Host "`n=== SEARCHING FOR MARKUP/PROFIT SETTINGS ==="
+>> $billData | Where-Object { $_ -match "MU|MARKUP|PROFIT|MARGIN|PERCENT" } | Select-Object -First 20 | ForEach-Object {>>     Write-Host $_
+>> }
+>>
+>> # Also search in raw bytes for percentages
+>> $billText = [System.Text.Encoding]::ASCII.GetString($billBytes)
+>> $markupPatterns = [regex]::Matches($billText, 'MU[A-Z]+|MARKUP|PROFIT.*?\d+|MARGIN.*?\d+|\d+\.\d+%|\d+%')
+>> Write-Host "`nMarkup patterns found:"
+>> $markupPatterns | Select-Object -First 10 -ExpandProperty Value
+
+=== SEARCHING FOR MARKUP/PROFIT SETTINGS ===
+MUKITTOTAL_KITCOST
+resultRNM14L19*(NM15gL3+NM15gL4+NM15gL6+NM15gL7)*((MULTIPLE_SIGNS==0)+(MULTIPLE_SIGNS>0))
+MUKITTOTAL_KITCOST
+result8NM14L19*NM15gL5*((MULTIPLE_SIGNS==0)+(MULTIPLE_SIGNS>0))
+tempRM47L17+RM49L17+RM49aL17resultN(RM4bL3==0)*(RM51L11*(temp)*(RM51L15==0))/((MULTIPLE_SIGNS==0)+MULTIPLE_SIGNS)
+resultL(RM4bL3==0)*(RM51L12*temp*(RM51L15==0))/((MULTIPLE_SIGNS==0)+MULTIPLE_SIGNS)
+resultG(RM4bL3==0)*(RM51L15*RM51L11*temp)/((MULTIPLE_SIGNS==0)+MULTIPLE_SIGNS)
+resultG(RM4bL3==0)*(RM51L15*RM51L12*temp)/((MULTIPLE_SIGNS==0)+MULTIPLE_SIGNS)
+
+Markup patterns found:
+MUKIT
+MULTIPLE
+MULTIPLE
+MUKIT
+MULTIPLE
+MULTIPLE
+MULTIPLE
+MULTIPLE
+MULTIPLE
+MULTIPLE
+PS C:\windows\system32>
+
+
+
+
+
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32>
+PS C:\windows\system32> Write-Host "`n=== SEARCHING FOR MARKUP/PROFIT SETTINGS ==="
+>> $billData | Where-Object { $_ -match "MU|MARKUP|PROFIT|MARGIN|PERCENT" } | Select-Object -First 20 | ForEach-Object {
+>>     Write-Host $_
+>> }
+>>
+>> # Also search in raw bytes for percentages
+>> $billText = [System.Text.Encoding]::ASCII.GetString($billBytes)
+>> $markupPatterns = [regex]::Matches($billText, 'MU[A-Z]+|MARKUP|PROFIT.*?\d+|MARGIN.*?\d+|\d+\.\d+%|\d+%')
+>> Write-Host "`nMarkup patterns found:"
+>> $markupPatterns | Select-Object -First 10 -ExpandProperty Value
+
+=== SEARCHING FOR MARKUP/PROFIT SETTINGS ===
+MUKITTOTAL_KITCOST
+resultRNM14L19*(NM15gL3+NM15gL4+NM15gL6+NM15gL7)*((MULTIPLE_SIGNS==0)+(MULTIPLE_SIGNS>0))
+MUKITTOTAL_KITCOST
+result8NM14L19*NM15gL5*((MULTIPLE_SIGNS==0)+(MULTIPLE_SIGNS>0))
+tempRM47L17+RM49L17+RM49aL17resultN(RM4bL3==0)*(RM51L11*(temp)*(RM51L15==0))/((MULTIPLE_SIGNS==0)+MULTIPLE_SIGNS)
+resultL(RM4bL3==0)*(RM51L12*temp*(RM51L15==0))/((MULTIPLE_SIGNS==0)+MULTIPLE_SIGNS)
+resultG(RM4bL3==0)*(RM51L15*RM51L11*temp)/((MULTIPLE_SIGNS==0)+MULTIPLE_SIGNS)
+resultG(RM4bL3==0)*(RM51L15*RM51L12*temp)/((MULTIPLE_SIGNS==0)+MULTIPLE_SIGNS)
+
+Markup patterns found:
+MUKIT
+MULTIPLE
+MULTIPLE
+MUKIT
+MULTIPLE
+MULTIPLE
+MULTIPLE
+MULTIPLE
+MULTIPLE
+MULTIPLE
+PS C:\windows\system32> Write-Host "`n=== COMPLETE MENU STRUCTURE ==="
+>> # Get all menu items
+>> $allMenuItems = @()
+>> $buffer = ""
+>> for ($i = 0; $i -lt $menuBytes.Length; $i++) {
+>>     if ($menuBytes[$i] -eq 0) {
+>>         if ($buffer.Length -gt 3) {
+>>             $allMenuItems += $buffer
+>>         }
+>>         $buffer = ""
+>>     } elseif ($menuBytes[$i] -ge 32 -and $menuBytes[$i] -le 126) {
+>>         $buffer += [char]$menuBytes[$i]
+>>     }
+>> }
+>>
+>> # Group by menu sections (M0, M1, M2, etc.)
+>> $menuSections = $allMenuItems | Where-Object { $_ -match "M\d+L?\d*" } | Group-Object {
+>>     if ($_ -match "(M\d+)") { $matches[1] } else { "Other" }
+>> }
+>>
+>> Write-Host "Menu sections found:"
+>> $menuSections | ForEach-Object {
+>>     Write-Host "`n$($_.Name) section ($($_.Count) items):"
+>>     $_.Group | Select-Object -First 5
+>> }
+
+=== COMPLETE MENU STRUCTURE ===
+Menu sections found:
+
+M0 section (15 items):
+'NEW SIGN ESTIMATE - GENERAL INFORMATIONM0
+Design #: ________M0L3d
+,Customer: __________________________________M0L4e
+,Billing Address: ___________________________M0L5f
+,City: ______________________________________M0L6
+
+M29 section (54 items):
+iter0iterM29c0result1
+M29cM29M22
+)KNIFE-CUT OR PRINTED LETTERS, LINE %RLINEM29
+(D5P38)M29L4
+(D5P68)M29L5
+
+M1 section (4 items):
+SELECT TYPE OF ESTIMATEM1
+Complete Sign EstimateM1L6o
+Miscellaneous SignM1L12o
+Print Existing EstimateM1L14
+
+M2 section (9 items):
+M2M98
+GENERAL INFORMATION 2M2
+$Select for multiple identical signs.M2L1
+    Wall MountedM2L12
+    Column MountedM2L13
+
+M53 section (17 items):
+M53M98
+M53aM69M86
+INSTALLATION 1M53
+%Enter area per face (sq %L2): _______M53L6|
+    Wall mountM53L9
+
+M64 section (7 items):
+M64M98
+MAINTENANCE 1M64
+    Plastic SignM64L4
+    Neon CabinetM64L5
+    Bulletin PanelM64L6
+
+M86 section (17 items):
+M86M98
+MISCELLANEOUS MENUS DESIREDM86
+  PatternsM86L4
+  Sheet MetalM86L5
+  ExtrusionM86L6
+
+M45 section (26 items):
+M45b
+%ELECTRICAL ACCESS. 3, SKELETON WIRINGM45
+M45b
+Transformer Boxes: ____M45L8
+Electrode Boxes: ____M45L9
+
+M3 section (9 items):
+GENERAL INFORMATION 3M3
+    Letters or GraphicsM3L6
+    Sheet MetalM3L4
+    ExtrusionM3L5
+    Plastic Face OnlyM3L8
+
+M4 section (45 items):
+M4a1M5
+M4bM46
+COPY 1M4a1
+M4b1
+'_______________________________________M4L2l
+
+M30 section (11 items):
+M30M32
+    Select for Clear CoatNM30L19
+    Rough WoodM30L8_ROUGH_WOOD
+Paint Metal Cabinet?M30L15
+-TRANS_ACRYLIC-TRANS_VINYL-SMOOTH_WOOD-M30L8_ROUGH_WOOD-M3L5
+
+M14 section (12 items):
+M14M46
+resultM14L16
+EXTRUSION 1, FRAME TYPEM14
+Access FramesM14L4
+Hinged FramesM14L7
+
+M20 section (37 items):
+M20a
+EXTRUSION, MISCELLANEOUSM20
+Item Description:M20L5
+______________________________M20L6O
+Labor Estimate: _______M20L8P
+
+M5 section (89 items):
+ORNAMENTATION 1M5
+    ChannelM5L10
+%      Eradicate color for Border/LogoNM5L19
+    Neon Sign BorderM5L12
+      Machine 1M5L16
+
+M6 section (48 items):
+SHEET METAL 1M6
+M6aM6bM7
+M6aM6bM7
+M6aM6bM7
+M6aM6bM7
+
+M7 section (5 items):
+SHEET METAL 2M7
+resultN(BULLETIN+M7L4+M7L5+M7L6*(M7L7+M7L8)+M7L9*(M7L10+M7L11))*(NO_METAL_FRAME+((LIGHT_METAL_FRAME+HEAVY_METAL_FRAME+MEDIUM_METAL_FRAME)*(STEEL_FRAME+ALUM_FRAME)*(ANGLE+SQUARE_TUBE)))+((BULLETIN+M7L4+M7L5+M7L6+M7L9)==0)*(NO_METAL_FRAME+((LIGHT_METAL_FRAME+HEAVY_METAL_FRAME+MEDIUM_METAL_FRAME)*(STEEL_FRAME+ALUM_FRAME)*(ANGLE+SQUARE_TUBE)))SHEET METAL, RETRO-FRAMESM7a
+(D3P40)M7aL3
+(D3P41)M7aL6
+Other Saddle AssembliesM7aL9
+
+M10 section (20 items):
+M10M11M12M13M46
+FABRICATION EXTRAS 1M10
+Pipe Stub Built in SignM10L1
+    Number of stubs: ___M10L2
+     Enter diameter (%L1): ______M10L3
+
+M16 section (37 items):
+M16b
+M16M17M10M11M12M13M18M18a
+M16bM17M10M11M12M13M17cM18b
+M16M17M10M11M12M13M18M18a
+M16b
+
+M8 section (39 items):
+SHEET METAL EXTRASM8
+    Wide Filler (over 12")M8L2
+!        Total width (%L1): ______M8L3
+    Decking FacesM8L5
+    Round FillerM8L7
+
+M9 section (8 items):
+SHEET METAL, MISCELLANEOUSM9
+Item Description:M9L5
+______________________________M9L6O
+Labor Estimate: _______M9L8P
+Material Cost Estimate: ______M9L10
+
+M11 section (16 items):
+FABRICATION EXTRAS 2M11
+    VerticalM11L3
+      Number: ___M11L4
+       Length/strut (%L1): ______M11L5
+       Square TubeM11L7
+
+M12 section (17 items):
+FABRICATION EXTRAS 3M12
+(D3P94)M12L1
+Divider BarsM12L2
+Number per face: ___M12L3
+Total Lineal %L2/face: ______M12L4
+
+M13 section (13 items):
+%Wind Cables for Acrylic or Flex FacesM13L3
+   Number per face: ___M13L4
+   Cable length (%L1): ______M13L5
+&Intermediate Wireways for Lamp SocketsM13L8
+%   Total wireway length (%L1): ______M13L10
+
+M15 section (174 items):
+M15a
+M15aa
+M15c
+M15d
+M15g
+
+M17 section (43 items):
+M17cM15a1M18aM10M11M12M13
+M17M16
+M17M16
+M17M16
+M17M11M12M13M18M18a
+
+M18 section (35 items):
+EXTRUSION 5, FABRICATION EXTRASM18
+Splice FrameM18L3
+Number of Splices: ___M18L4)
+(D3P54a)M18L5
+(D3P54b)M18L6
+
+M19 section (11 items):
+EXTRUSION 6, FABRICATION EXTRASM19
+(D3P35)M19L3
+    Total length (%L2): ______M19L4.
+Shipping Tie-Down BracketsM19L6
+    Enter number: ___M19L7/
+
+M21 section (7 items):
+!FABRICATED LETTERS 1, LINE %RLINEM21
+    Channel lettersM21L5
+RM21L6.(RNM4b1L5==1)+(RNM4b1L5<>1)*(RM4L14==0)*RM21L6RNM21L209(RNM4b1L5==1)*RNM21L20+(RNM4b1L5<>1)*(RM4L14==0)*RNM21L20RM21L5(RNM4b1L5<>1)*RM21L5RM21L7(RNM4b1L5<>1)*RM21L7RM21L8(RNM4b1L5<>1)*RM21L8RFACES_ROUTED(RNM4b1L5<>1)*RFACES_ROUTEDRM21L10(RNM4b1L5<>1)*RM21L10RM21L11(RNM4b1L5<>1)*RM21L11RNM21L19(RNM4b1L5<>1)*RNM21L19resultRM4L14==0%        Eradicate color for letteringNM21L20
+RM21L6.(RNM4b1L5==1)+(RNM4b1L5<>1)*(RM4L14==0)*RM21L6RNM21L209(RNM4b1L5==1)*RNM21L20+(RNM4b1L5<>1)*(RM4L14==0)*RNM21L20RM21L5(RNM4b1L5<>1)*RM21L5RM21L7(RNM4b1L5<>1)*RM21L7RM21L8(RNM4b1L5<>1)*RM21L8RFACES_ROUTED(RNM4b1L5<>1)*RFACES_ROUTEDRM21L10(RNM4b1L5<>1)*RM21L10RM21L11(RNM4b1L5<>1)*RM21L11RNM21L19(RNM4b1L5<>1)*RNM21L19resultRM4L14==0    RoutedM21L7
+$Use Estimated Length of %FOOTAGE %L2M21L13
+
+M23 section (37 items):
+M23M24M22
+M23M24M25M22
+CHANNEL LETTERS, LINE %RLINEM23
+M23b
+(D2P73)M23L2
+
+M25 section (37 items):
+M25M22
+ROUTING MATERIALS, LINE %RLINEM25
+(D11P1a)M25L2
+(D11P6a)M25L3
+(D11P11a)M25L4
+
+M28 section (143 items):
+M28aM22
+M28e
+M28i
+&ROUTING MATERIAL QUANTITY, LINE %RLINEM28
+Sheet height (%L1): ______M28L95
+
+M22 section (8 items):
+MANUAL OR CAD/CAM, LINE %RLINEM22
+ManualM22L1
+    Existing templatesM22L2
+    Custom templates requiredM22L3
+CAD/CAMM22L4
+
+M24 section (16 items):
+!CHANNEL LETTER DEPTH, LINE %RLINEM24
+    2 1/2" Edging DepthM24L2
+    4" Edging DepthM24L3
+    6" Edging DepthM24L4
+    12" Edging DepthM24L5
+
+M27 section (6 items):
+M27M25a
+ALUCOBOND FINISHES, LINE %RLINEM27
+Mill FinishM27L7
+Painted, Both SidesM27L8
+Clear Anodized, 1 SideM27L9
+
+M26 section (13 items):
+$EDGING AND ACRYLIC TYPE, LINE %RLINEM26
+(D11P47C)M26L2
+(D11P47D)M26L3
+    On channel lettersM26L6
+    Cemented on acrylicM26L7
+
+M31 section (18 items):
+M31b
+FINISHES 2M31
+&    Remove paint from face for repaintM31L15
+$        Enter labor estimate: ______M31L168
+FINISHES, MISCELLANEOUSM31a
+
+M32 section (8 items):
+ILLUMINATION 1, TYPEM32
+    FluorescentM32L7
+    NeonM32L8
+    IncandescentM32L9
+    Special LightingM32L10
+
+M35 section (24 items):
+M35M36M37
+NeonM35L1]
+M35a
+MercuryM35L2^
+M35a
+
+M41 section (36 items):
+M41M41a
+!ILLUMINATION 10, SPECIAL LIGHTINGM41
+$Enter Number of Lamp Fixtures: _____M41L3@
+    Mercury VaporM41L7
+    Metal HalideM41L8
+
+M33 section (15 items):
+ILLUMINATION 2, FLUORESCENT 1M33
+Fluorescent Strip FixturesM33L2
+  Lamp length (%L1):______M33L3`
+Number of 1 Lamp Strips:____M33L4_
+Number of 2 Lamp Strips:____M33L5_
+
+M34 section (21 items):
+ILLUMINATION 3, FLUORESCENT 2M34
+    1 Lamp ballastsNM34L1
+        Number of ballasts: ___NM34L1a_
+!        Lamp length (%L1): ______NM34L1b`
+    2 Lamp ballastsM34L2
+
+M36 section (23 items):
+"ILLUMINATION 5, NEON BORDER TUBINGM36
+Sign Border,M36L1c
+  enter %L2/face: ______M36L1=
+M36a
+Skeleton Border,M36L2c
+
+M37 section (4 items):
+ILLUMINATION 6, NEON EXTRASM37
+Tubes Less than 8' averageM37L5
+Blockout CrossoversM37L7
+$Paint Crossovers to Match BackgroundM37L9
+
+M42 section (45 items):
+M42M42a
+SHOP WIRE, COPY LINE %NLINEM42
+Low Power FactorM42L2
+High Power FactorM42L3
+    5,000 Volts or smallerM42L5
+
+M38 section (13 items):
+"ILLUMINATION 7, INCANDESCENT LAMPSM38
+    11 WattM38L5
+    15 WattM38L6
+    20 WattM38L7
+    25 WattM38L8
+
+M39 section (12 items):
+ILLUMINATION 8, FLASHERSM39
+    Off & On (1 contact)M39L3
+    Alternating (2 contacts)M39L4
+    Three ContactsM39L5
+    Four ContactsM39L6
+
+M40 section (8 items):
+ILLUMINATION 9, INCANDESCENT 2M40
+#Number of Lamps of this type: _____M40L4?
+    Clear or frostedM40L8
+    Colored or EnamelM40L9
+    Clear colored glassM40L10
+
+M43 section (6 items):
+'ELECTRICAL ACCESSORIES 1, TIME SWITCHESM43
+    Single PoleM43L6
+    Double PoleM43L7
+    Outdoor, single poleM43L8
+    Outdoor, double poleM43L9
+
+M44 section (12 items):
+%ELECTRICAL ACCESS. 2, REVOLVING UNITSM44
+Dynapac H-16 With FrameM44L2
+Dynapac H-16 Without FrameM44L3
+Dynapac J-25 With FrameM44L4
+Dynapac K-36 With FrameM44L5
+
+M46 section (6 items):
+FACE MATERIALS 1M46
+    AcrylicM46L6
+    Vinyl FabricM46L7
+    PolycarbonateM46L8
+    DRM46L9
+
+M49 section (22 items):
+M49a
+PLASTICS 4, POLYCARBONATEM49
+    .093M49L2
+    .125M49L3
+    .150M49L4
+
+M47 section (12 items):
+PLASTICS 2, ACRYLICM47
+    ClearM47L2
+    WhiteM47L3
+    ColorM47L4
+Select if Corrugated or DeckingM47L5
+
+M48 section (11 items):
+PLASTICS 3, VINYLM48
+(D11P36a)M48L3
+(D11P42a)M48L4
+(D11P48a)M48L5
+    Pre-SeamedM48L8
+
+M50 section (6 items):
+PLASTICS 5, OTHERM50
+(D11P101)M50L6
+(D11P102)M50L7
+(D11P103)M50L8
+.Square %L2 (per face), Including Waste: ______M50L11L
+
+M51 section (7 items):
+PLASTICS 6, VACUUM FORMEDM51
+    Custom faces to 32 sq. ft.M51L4
+    Custom faces to 50 sq. ft.M51L5
+     Custom faces over 50 sq. ft.M51L6
+    Prep. Existing Stock MoldM51L11
+
+M52 section (20 items):
+PLASTICS 7, LABOR EXTRASM52
+    Sizing: ______M52L8N
+    Seaming: ______M52L9N
+    Profiling: ______M52L10N
+    Cemented hanger bar: ______M52L11N
+
+M60 section (25 items):
+M60M86
+M60M61a
+$INSTALLATION 9, REMOTE WIRING EXTRASM60
+Time Switch, install at panelM60L1
+Install photocell in signM60L2
+
+M54 section (8 items):
+M54M55
+INSTALLATION 3, METAL LETTERSM54
+&Number of Letters of Same Height: ____M54L7p
+$Average Letter Height (%L1): _______M54L8
+    BlockM54L12
+
+M55 section (6 items):
+#INSTALLATION 4, MOUNT METAL LETTERSM55
+    Flush Wall mountM55L8
+    Pegged out wall mountM55L9
+    Free standing with bracesM55L10
+    Mount on deck cabinetM55L11
+
+M56 section (10 items):
+INSTALLATION 5, COLUMN MOUNTM56
+    Used PipeM56L4
+    New PipeM56L5
+    Square TubeM56L6
+Select if more than one columnM56L9
+
+M58 section (14 items):
+M58M59
+M58M59
+INSTALLATION 7, COLUMN SIZEM58
+Enter Column Size (%L1): ______M58L2x
+.Enter length of pipe or sq. tube (%L2): ______M58L5y
+
+M57 section (13 items):
+#More Than One Identical Foundation?M57L1
+    Enter number: ___M57L2r
+Total Concrete (%L3): ______M57L4s
+    Enter cost/%L3: _______M57L5}
+    Enter markup: ______M57L6~
+
+M59 section (17 items):
+    3" to 5": __M59L2
+    4" to 6": __M59L3
+    4" to 8": __M59L4
+    5" to 8": __M59L5
+    5" to 10": __M59L6
+
+M61 section (28 items):
+#INSTALLATION 11, HOLES THROUGH WALLM61
+'Enter Number of Holes Through Wall: ___M61L1{
+    1/2"M61L4
+    3/4"M61L5
+    1"M61L6
+
+M62 section (15 items):
+INSTALLATION 13, STRUCTURESM62
+!    4" tube, length (%L2): ______M62L2y
+!    5" tube, length (%L2): ______M62L3y
+!    6" tube, length (%L2): ______M62L4y
+!    8" tube, length (%L2): ______M62L5y
+
+M63 section (8 items):
+INSTALLATION, MISCELLANEOUSM63
+Item Description:M63L5
+______________________________M63L6O
+Labor Estimate: _______M63L8P
+Material Cost Estimate: ______M63L10
+
+M94 section (1 items):
+MISCELLANEOUS/BUY OUT ITEMSM94
+
+M97 section (7 items):
+Item Description:M97L5
+_______________________________M97L6O
+Labor Estimate: _______M97L8P
+Material Cost Estimate: _______M97L10
+Material Markup: ______M97L12
+
+M65 section (13 items):
+MAINTENANCE 2M65
+    With Plastic FacesM65L3
+    Wall mountedM65L4
+    Mounted on sign cabinetsM65L5
+    Mounted on deck cabinetsM65L6
+
+M66 section (6 items):
+M66M67M68M69
+MAINTENANCE 3M66
+Fluorescent Lamps & BallastsM66L7
+#    Length of Lamps, (%L1): _______M66L8`
+    Enter number of Lamps: ____M66L9_
+
+M67 section (11 items):
+MAINTENANCE 4M67
+(    Enter number of Lamps per Face: ____M67L3
+    11 to 25 wattM67L7
+    40 to 60 wattM67L8
+    Colored LampM67L9
+
+M68 section (5 items):
+MAINTENANCE 5M68
+#    Flasher, number of Contacts: __M68L9
+    Time Switch, SPSTM68L10
+    Time Switch, DPDTM68L11
+    Rotating unitM68L12
+
+M69 section (9 items):
+MAINTENANCE 6M69
+    Every 90 daysM69L5
+    Every 180 daysM69L6
+    Every 365 daysM69L7
+    Every 36 monthsM69L10
+
+M70 section (4 items):
+MAINTENANCE 7M70
+(    Describe: __________________________M70L7%
+    Enter monthly rate: _______M70L8
+$Repeat for other Special MaintenanceM70L11D
+
+M72 section (8 items):
+AWNINGS - TYPE OF AWNINGM72
+      ConvexM72L5
+      CanopyM72L6
+      MansardM72L7
+      DomeM72L8
+
+M78 section (15 items):
+M78M73
+%AWNINGS - CUT FRAME & BRACE TO LENGTHM78
+   1 to 5 lineal %L2: ______M78L2
+   6 to 12 lineal %L2: ______M78L3
+   13 to 25 lineal %L2: ______M78L4
+
+M73 section (17 items):
+AWNINGS - TYPE OF CONSTRUCTIONM73
+M73a
+(D6P1)M73L5
+(D6P2)M73L6
+(D6P42)M73L7
+
+M74 section (9 items):
+AWNINGS - CONVEX/CANOPYM74
+     Height (%L1): _______M74L5
+     Projection (%L1): _______M74L6
+     Length (%L1): _______M74L7
+     Radius (%L1): _______M74L8$
+
+M75 section (16 items):
+$AWNING - MANSARD/RECTANGLE/TRAPEZOIDM75
+    Height (%L1): _______M75L3
+    Projection (%L1): _______M75L4
+    Length (%L1): _______M75L5
+     Length of Bars (%L1): ______M75L6
+
+M76 section (8 items):
+AWNINGS - DOMESM76
+   Radius (%L1): _______M76L5$
+   Extended at BottomM76L6
+     Length (%L1): _____M76L7
+   Quarter DomeM76L12
+
+M77 section (14 items):
+AWNINGS - FACETED/OTHERM77
+FacetedM77L4
+   No. of Angled Facets: _____M77L5
+    Length per Facet (%L1): _____M77L6"
+   Projection (%L1): _____M77L7
+
+M79 section (10 items):
+$AWNINGS - ROLL RADIUS/ELIPTICAL BOWSM79
+  20" to 36"M79L5
+    Enter Number: ______M79L6
+  37" to 54"M79L7
+    Enter Number: ______M79L8
+
+M80 section (11 items):
+AWNINGS - PRESS FIT HARDWAREM80
+  Left Corner FittingsM80L5
+    (Enter Qty.): ______M80L6J
+  Right Corner FittingsM80L7
+    (Enter Qty.): ______M80L8J
+
+M81 section (15 items):
+"AWNINGS - PRESS FIT HARDWARE CONT.M81
+  Adjustable Angled BracketsM81L4
+    (Enter Qty.): ______M81L5J
+  90 Degree 3-Way FittingsM81L6
+    (Enter Qty.): ______M81L7J
+
+M82 section (9 items):
+AWNINGS - FABRIC COVERINGM82
+Total Sq. %L2 inc. waste: _____M82L5I
+$     No. Pieces < 100 Sq. ft.: _____M82L64
+$     No. Pieces > 100 Sq. ft.: _____M82L7
+Total %L2 of Seaming: ______M82L9N
+
+M83 section (11 items):
+AWNINGS - FABRICATION EXTRASM83
+Install Diagonal Truss CablesM83L2
+   Enter No. of pairs: ______M83L3
+!   Length per cable (%L2): ______M83L4
+#Bolt Assembly for Abutting SectionsM83L6
+
+M84 section (14 items):
+AWNINGS - EXTRASM84
+Paint Trim CapM84L1
+Egg CrateM84L3
+&   Rectangular cut length (%L1): _____M84L4
+'   Non-rectang. cut length (%L1): _____M84L5
+
+M85 section (8 items):
+AWNINGS, MISCELLANEOUSM85
+Item DescriptionM85L5
+(________________________________________M85L6O
+Labor Estimate: ______M85L8P
+Material Cost Estimate: ______M85L10
+
+M98 section (18 items):
+EXTRA COST FACTORS AND LEASINGM98
+    Patterns: ______M98L2
+    Sheet Metal: ______M98L3
+    Extrusions: ______M98L4
+    Fabricated Letters: ______M98L5
+
+M99 section (6 items):
+PRINTOUT SELECTIONM99
+Brief EstimateM99L8
+   Select to hide material costM99_HIDE_MATERIAL_COST
+Detailed EstimateM99L10
+Store Estimate with No PrintoutM99L14
+PS C:\windows\system32> Write-Host "`n=== TAX AND SYSTEM SETTINGS ==="
+>> # Check all files for tax/system settings
+>> $allFiles = Get-ChildItem "C:\Users\Brady\Desktop\ABC_Extracted\*.abc"
+>> foreach ($file in $allFiles) {
+>>     $bytes = [System.IO.File]::ReadAllBytes($file.FullName)
+>>     $text = [System.Text.Encoding]::ASCII.GetString($bytes)
+>>
+>>     if ($text -match "TAX|STATE_TAX|SALES_TAX|PERCENT") {
+>>         Write-Host "`nFound in $($file.Name):"
+>>         $matches = [regex]::Matches($text, '.{0,20}(TAX|PERCENT).{0,20}')
+>>         $matches | Select-Object -First 3 -ExpandProperty Value
+>>     }
+>> }
+
+=== TAX AND SYSTEM SETTINGS ===
+
+Found in macros_nm.abc:
+
+Found in menu_nm.abc:
+PS C:\windows\system32> Write-Host "`n=== ALTERNATIVE DATABASE EXTRACTION ==="
+>> # Look for common Access patterns
+>> $mdbBytes = [System.IO.File]::ReadAllBytes($mdbPath) | Select-Object -First 200000
+>> $mdbText = [System.Text.Encoding]::Unicode.GetString($mdbBytes)
+>>
+>> # Search for field names
+>> $fieldPatterns = [regex]::Matches($mdbText, '[A-Za-z]{3,20}')
+>> $commonFields = $fieldPatterns | Group-Object Value | Where-Object { $_.Count -gt 5 } | Sort-Object Count -Descending | Select-Object -First 20
+>>
+>> Write-Host "Common field names (likely table columns):"
+>> $commonFields | ForEach-Object {
+>>     Write-Host "  $($_.Name) (appears $($_.Count) times)"
+>> }
+
+=== ALTERNATIVE DATABASE EXTRACTION ===
+Common field names (likely table columns):
+  CustomerCards (appears 57 times)
+  adr (appears 27 times)
+  FROM (appears 25 times)
+  Addresses (appears 25 times)
+  SELECT (appears 23 times)
+  BillAddressId (appears 23 times)
+  AddressID (appears 19 times)
+  where (appears 18 times)
+  CustomerUniqueId (appears 14 times)
+  CustomerCardID (appears 14 times)
+  Customers (appears 12 times)
+  UniqueID (appears 11 times)
+  IIf (appears 10 times)
+  UniqueI (appears 9 times)
+  InstallAddressId (appears 9 times)
+  JobDescription (appears 9 times)
+  JOBTYPE (appears 8 times)
+  CUSTOMER (appears 8 times)
+  Notes (appears 7 times)
+  addresse (appears 7 times)
+PS C:\windows\system32> Write-Host "`n=== DEPARTMENT DATA ==="
+>> $deptBytes = Get-Content "C:\Users\Brady\Desktop\ABC_Extracted\dept_nm.abc" -Encoding Byte
+>> if ($deptBytes.Length -gt 0) {
+>>     $deptText = [System.Text.Encoding]::ASCII.GetString($deptBytes)
+>>     Write-Host "Department file content:"
+>>     Write-Host $deptText
+>> }
+>>
+>> Write-Host "`n=== SALES DATA ==="
+>> $salesBytes = Get-Content "C:\Users\Brady\Desktop\ABC_Extracted\sales_nm.abc" -Encoding Byte
+>> if ($salesBytes.Length -gt 0) {
+>>     $salesText = [System.Text.Encoding]::ASCII.GetString($salesBytes)
+>>     Write-Host "Sales file content:"
+>>     Write-Host $salesText
+>> }
+
+=== DEPARTMENT DATA ===
+Department file content:
+d♫☺☺♫Patterns / CADD@1@@♣M98L2☺☻♂Sheet MetalD@1@@♣M98L3☺♥
+ExtrusionsD@1@@♣M98L4☺♣↕Fabricated LettersD@1@@♣M98L5☺♠AwningsD@1@@♠M98L14☺♠FinishD@1@@♣M98L6♀IlluminationD@1@@♣M98L7☺
+▬CAD / CAM Machine TimeN@9@@♠M98L11☺♫♀Installation?W@I@@♠M98L12☺☼♂Maintenance?K@9@@♠M98L13☺►∟Miscellaneous /Buy Out Items?A@1@@
+
+=== SALES DATA ===
+Sales file content:
+d♥RWB☺▼??Q8f?@O►'S5 ?@?@☺R?▲?+??@?h$??F?@☺R?▲?+??@?,???F?@♥RWB☺♥?G?z¶i?@<6?jTF?@???????@??
+salespersonas☺☺=#??6?@☺?G?z4??@?Y?IM7?@☻▼??Qx??@?????8?@☻4333S??@W)QN▬9?@☺R?▲?+??@?V)Q?9?@☺??Q????@????o?@
+??P??@?↕?????@BRIAN B☺☺H?z¶???@R?▲????@
+PS C:\windows\system32> Write-Host "`n=== EXTRACTION SUMMARY UPDATE ==="
+>> Write-Host "√ SUCCESSFULLY EXTRACTED:"
+>> Write-Host "  - 342 Labor formulas"
+>> Write-Host "  - 244 Material items"
+>> Write-Host "  - Complete menu structure (customer info, addresses)"
+>> Write-Host "  - Sign type categories"
+>> Write-Host "  - Font multipliers"
+>> Write-Host ""
+>> Write-Host "? STILL NEED:"
+>> Write-Host "  - Exact markup percentages"
+>> Write-Host "  - Tax rate configuration"
+>> Write-Host "  - VBScript report templates (encoded)"
+>> Write-Host "  - Customer records from MDB"
+>> Write-Host "  - Historical pricing data"
+
+=== EXTRACTION SUMMARY UPDATE ===
+✓ SUCCESSFULLY EXTRACTED:
+  - 342 Labor formulas
+  - 244 Material items
+  - Complete menu structure (customer info, addresses)
+  - Sign type categories
+  - Font multipliers
+
+✗ STILL NEED:
+  - Exact markup percentages
+  - Tax rate configuration
+  - VBScript report templates (encoded)
+  - Customer records from MDB
+  - Historical pricing data
+PS C:\windows\system32>

@@ -1,0 +1,19 @@
+Work Order Cost History
+
+Part Number: ABC123
+Description: Test Part 1
+
+Work Order Date Complete
+12345 01/15/2024
+12346 01/16/2024
+12347 01/17/2024
+
+--- Part Section ---
+
+Part Number: XYZ789
+Description: Test Part 2
+
+Work Order Date Complete
+23456 02/01/2024
+23457 02/02/2024
+23458 02/03/2024 

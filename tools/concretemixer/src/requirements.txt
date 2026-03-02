@@ -1,0 +1,18 @@
+# MudMixer Generative Design Framework
+# Core dependencies
+
+# Required
+# (none - uses Python standard library only for core functionality)
+
+# Optional - for advanced features
+numpy>=1.21.0          # Numerical computations
+scipy>=1.7.0           # Optimization algorithms
+matplotlib>=3.4.0      # Visualization
+
+# Optional - for CAD export
+# cadquery>=2.0         # Parametric CAD (requires conda)
+# numpy-stl>=2.16.0     # STL file export
+
+# Optional - for CFD preprocessing
+# meshio>=5.0.0         # Mesh format conversion
+# pygmsh>=7.0.0         # Mesh generation
