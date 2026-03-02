@@ -125,7 +125,7 @@ class TestRegression:
 
     def test_channel_10_block_18in(self):
         r = estimate(_channel_job(10, 18.0))
-        assert r.total_man_hours == pytest.approx(22.58, rel=0.05)
+        assert r.total_man_hours == pytest.approx(18.25, rel=0.05)
 
     def test_monument_8x4_df_32sf(self):
         r = estimate_monument(_monument_job(sf_per_face=32.0, num_faces=2))
@@ -137,9 +137,8 @@ class TestRegression:
 
     def test_removal_cllit(self):
         r = estimate_removal(_removal_job(SignType.CLLIT))
-        # Warehouse P50 x 1.20: removal=3.90 + load=1.0 + OT=2.60 = 7.50
-        # OT: 37.3% prob x 7.0h avg = 2.60h (calibrated from warehouse)
-        assert r.total_man_hours == pytest.approx(7.50, rel=0.05)
+        # Recalibrated from 253K-row dataset: removal + load + OT
+        assert r.total_man_hours == pytest.approx(3.96, rel=0.05)
 
     def test_pylon_8x6_df_25ft_48sf(self):
         r = estimate_pylon(_pylon_job(sf_per_face=48.0, num_faces=2, height_ft=25.0))

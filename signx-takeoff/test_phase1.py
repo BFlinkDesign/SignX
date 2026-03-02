@@ -242,7 +242,7 @@ def test_non_cllit_0270_not_corrected():
 # ── Correction 3: OT Probability ─────────────────────────────────────────────
 
 def test_cllit_fab_ot_line_present():
-    """CLLIT estimate includes a 9200 (fab OT) line with correct probability hours."""
+    """CLLIT 9200 fab OT suppressed after 253K-row recalibration (0.38h < 0.50h threshold)."""
     job = JobInput(
         letter_count=10, letter_height_inches=12, font_type=FontType.BLOCK,
         construction=ConstructionType.FACE_LIT, sign_type=SignType.CLLIT,
@@ -250,10 +250,10 @@ def test_cllit_fab_ot_line_present():
     r = estimate(job)
     fab_ot = next((l for l in r.labor_lines if l.work_code == "9200"), None)
     ot = OT_FACTORS["CLLIT"]
-    expected_fab = round(ot[0] * ot[1], 2)  # 0.346 * 8.09 = 2.80
-    assert fab_ot is not None, "Expected 9200 fab OT line not found"
-    assert abs(fab_ot.hours - expected_fab) < 0.01, (
-        f"CLLIT 9200 hours: expected {expected_fab}h, got {fab_ot.hours}h"
+    expected_fab = round(ot[0] * ot[1], 2)  # 0.355 * 1.06 = 0.38h < 0.50 threshold
+    # Fab OT suppressed because probability-weighted hours < 0.50h threshold
+    assert fab_ot is None, (
+        f"CLLIT 9200 fab OT should be suppressed ({expected_fab}h < 0.50h threshold)"
     )
 
 
@@ -300,10 +300,10 @@ def test_gemini_install_ot_below_threshold():
 
 
 def test_other_sign_type_ot_from_calibration():
-    """OTHER sign type has OT factors from calibration auto-populate.
+    """OTHER sign type OT factors from 253K-row recalibration.
 
-    Calibration: fab_ot=0.088*3.88=0.34h (<0.50, suppressed),
-                 install_ot=0.23*3.28=0.75h (>=0.50, included as 9600).
+    Calibration: fab_ot=0.145*1.14=0.17h (<0.50, suppressed),
+                 install_ot=0.23*1.65=0.38h (<0.50, suppressed).
     """
     job_other = JobInput(
         letter_count=10, letter_height_inches=12, font_type=FontType.BLOCK,
@@ -312,13 +312,13 @@ def test_other_sign_type_ot_from_calibration():
     r_other = estimate(job_other)
     fab_ot = [l for l in r_other.labor_lines if l.work_code == "9200"]
     inst_ot = [l for l in r_other.install_lines if l.work_code == "9600"]
-    # Fab OT: 0.088 * 3.88 = 0.34h < 0.50 -> suppressed
+    # Fab OT: 0.145 * 1.14 = 0.17h < 0.50 -> suppressed
     assert not fab_ot, (
-        f"OTHER fab OT (9200) should be suppressed (0.34h < 0.50h threshold)"
+        f"OTHER fab OT (9200) should be suppressed (0.17h < 0.50h threshold)"
     )
-    # Install OT: 0.23 * 3.28 = 0.75h >= 0.50 -> present
-    assert len(inst_ot) == 1 and inst_ot[0].hours > 0, (
-        "OTHER install OT (9600) expected from calibration (0.75h >= 0.50h threshold)"
+    # Install OT: 0.23 * 1.65 = 0.38h < 0.50 -> suppressed
+    assert not inst_ot, (
+        f"OTHER install OT (9600) should be suppressed (0.38h < 0.50h threshold)"
     )
 
 

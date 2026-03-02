@@ -13,6 +13,7 @@ The "reasonable range" assertions provide an independent sanity layer.
 
 Baseline capture: 2026-02-17 using abc_engine.py @ commit 1781383
 Baseline refreshed: 2026-02-26 post OT-correction + removal formula engine update
+Baseline refreshed: 2026-03-02 post calibration with 253K-row temp_labor dataset (36 sign types, 948 cells)
 """
 
 import sys
@@ -50,9 +51,10 @@ def _assert_reasonable_range(value: float, lo: float, hi: float, label: str) -> 
 
 # ── Scenario 1: Standard CLLIT face-lit, 10 letters 18 inches ────────────────
 #
-# Locked baseline (refreshed 2026-02-26 post OT-correction + removal formula update):
-#   total_man_hours = 24.35   total_crew_hours = 9.90
-# Expected work codes: 0110 0200 0210 0270 0310 0410 9200 0640 0610 0620 0282 9600
+# Locked baseline (refreshed 2026-03-02 post 253K-row calibration):
+#   total_man_hours = 19.85   total_crew_hours = 4.21
+# Expected work codes: 0110 0200 0210 0270 0282 0310 0410 0610 0620 0640 9600
+# Note: 9200 fab OT dropped below threshold after recalibration (0.38h < 0.50h)
 
 CL_STD_JOB = JobInput(
     letter_count=10, letter_height_inches=18, font_type=FontType.BLOCK,
@@ -62,25 +64,25 @@ CL_STD_JOB = JobInput(
 
 
 def test_cl_std_total_man_hours_locked():
-    """Locked: standard CLLIT 10x18in total_man_hours == 24.35h."""
+    """Locked: standard CLLIT 10x18in total_man_hours == 19.85h."""
     r = estimate(CL_STD_JOB)
-    assert r.total_man_hours == pytest.approx(24.35, abs=0.01), (
-        f"Regression: expected 24.35h, got {r.total_man_hours}h"
+    assert r.total_man_hours == pytest.approx(19.85, abs=0.01), (
+        f"Regression: expected 19.85h, got {r.total_man_hours}h"
     )
 
 
 def test_cl_std_total_crew_hours_locked():
-    """Locked: standard CLLIT 10x18in total_crew_hours == 9.90h (install floor)."""
+    """Locked: standard CLLIT 10x18in total_crew_hours == 4.21h."""
     r = estimate(CL_STD_JOB)
-    assert r.total_crew_hours == pytest.approx(9.90, abs=0.01), (
-        f"Regression: expected 9.90h crew, got {r.total_crew_hours}h"
+    assert r.total_crew_hours == pytest.approx(4.21, abs=0.01), (
+        f"Regression: expected 4.21h crew, got {r.total_crew_hours}h"
     )
 
 
 def test_cl_std_work_codes_complete():
     """Standard CLLIT estimate has all expected work codes."""
     r = estimate(CL_STD_JOB)
-    expected = {"0110", "0200", "0210", "0270", "0310", "0410", "9200",
+    expected = {"0110", "0200", "0210", "0270", "0310", "0410",
                 "0640", "0610", "0620", "0282", "9600"}
     assert expected.issubset(_work_codes(r)), (
         f"Missing work codes: {expected - _work_codes(r)}"
@@ -106,8 +108,8 @@ def test_cl_std_bom_structure():
 
 # ── Scenario 2: CLLIT halo construction, 90 PF manual, 36-inch letters ───────
 #
-# Locked baseline (refreshed 2026-02-26 post OT-correction + removal formula update):
-#   total_man_hours = 23.79   total_crew_hours = 9.90
+# Locked baseline (refreshed 2026-03-02 post 253K-row calibration):
+#   total_man_hours = 19.29   total_crew_hours = 4.38
 
 CL_HALO_JOB = JobInput(
     pf_manual=90.0, letter_height_inches=36, font_type=FontType.BLOCK,
@@ -117,18 +119,18 @@ CL_HALO_JOB = JobInput(
 
 
 def test_cl_halo_total_man_hours_locked():
-    """Locked: CLLIT halo 90 PF 36-in total_man_hours == 23.79h."""
+    """Locked: CLLIT halo 90 PF 36-in total_man_hours == 19.29h."""
     r = estimate(CL_HALO_JOB)
-    assert r.total_man_hours == pytest.approx(23.79, abs=0.01), (
-        f"Regression: expected 23.79h, got {r.total_man_hours}h"
+    assert r.total_man_hours == pytest.approx(19.29, abs=0.01), (
+        f"Regression: expected 19.29h, got {r.total_man_hours}h"
     )
 
 
 def test_cl_halo_crew_hours_at_install_floor():
-    """Halo CLLIT: crew hours hit the CLLIT install floor (9.90h)."""
+    """Halo CLLIT: crew hours at calibrated install floor (4.38h)."""
     r = estimate(CL_HALO_JOB)
-    assert r.total_crew_hours == pytest.approx(9.90, abs=0.01), (
-        f"Regression: expected 9.90h crew, got {r.total_crew_hours}h"
+    assert r.total_crew_hours == pytest.approx(4.38, abs=0.01), (
+        f"Regression: expected 4.38h crew, got {r.total_crew_hours}h"
     )
 
 
@@ -141,9 +143,9 @@ def test_cl_halo_reasonable_range():
 
 # ── Scenario 3: CLNON non-illuminated, script font, 8 letters 12-inch ────────
 #
-# Locked baseline (refreshed 2026-02-26 post OT-correction + removal formula update):
-#   total_man_hours = 14.96   total_crew_hours = 3.09
-# CLNON: engine now emits 9200 fab OT and 9600 install OT after OT-correction update
+# Locked baseline (refreshed 2026-03-02 post 253K-row calibration):
+#   total_man_hours = 12.34   total_crew_hours = 3.09
+# CLNON: OT dropped below threshold after recalibration (fab 0.49h, install 0.27h < 0.50h)
 
 CL_NON_JOB = JobInput(
     letter_count=8, letter_height_inches=12, font_type=FontType.SCRIPT,
@@ -153,20 +155,20 @@ CL_NON_JOB = JobInput(
 
 
 def test_cl_non_total_man_hours_locked():
-    """Locked: CLNON script 8x12in total_man_hours == 14.96h."""
+    """Locked: CLNON script 8x12in total_man_hours == 12.34h."""
     r = estimate(CL_NON_JOB)
-    assert r.total_man_hours == pytest.approx(14.96, abs=0.01), (
-        f"Regression: expected 14.96h, got {r.total_man_hours}h"
+    assert r.total_man_hours == pytest.approx(12.34, abs=0.01), (
+        f"Regression: expected 12.34h, got {r.total_man_hours}h"
     )
 
 
 def test_cl_non_no_ot_lines():
-    """CLNON now emits 9200 fab OT and 9600 install OT after OT-correction update."""
+    """CLNON OT suppressed after recalibration (both below 0.50h threshold)."""
     r = estimate(CL_NON_JOB)
     ot_codes = {l.work_code for l in r.labor_lines + r.install_lines
                 if l.work_code in ("9200", "9600")}
-    assert ot_codes == {"9200", "9600"}, (
-        f"CLNON should have OT lines {{9200, 9600}}, found: {ot_codes}"
+    assert ot_codes == set(), (
+        f"CLNON OT should be suppressed (below threshold), found: {ot_codes}"
     )
 
 
@@ -179,8 +181,8 @@ def test_cl_non_reasonable_range():
 
 # ── Scenario 4: Strip channel letters 150 PF, 40-ft install height ───────────
 #
-# Locked baseline (refreshed 2026-02-26 post OT-correction + removal formula update):
-#   total_man_hours = 38.76   total_crew_hours = 9.90
+# Locked baseline (refreshed 2026-03-02 post 253K-row calibration):
+#   total_man_hours = 34.26   total_crew_hours = 9.05
 
 CL_STRIP_JOB = JobInput(
     pf_manual=150.0, letter_height_inches=36, font_type=FontType.BLOCK,
@@ -190,18 +192,18 @@ CL_STRIP_JOB = JobInput(
 
 
 def test_cl_strip_total_man_hours_locked():
-    """Locked: strip CLLIT 150 PF 40-ft install total_man_hours == 38.76h."""
+    """Locked: strip CLLIT 150 PF 40-ft install total_man_hours == 34.26h."""
     r = estimate(CL_STRIP_JOB)
-    assert r.total_man_hours == pytest.approx(38.76, abs=0.01), (
-        f"Regression: expected 38.76h, got {r.total_man_hours}h"
+    assert r.total_man_hours == pytest.approx(34.26, abs=0.01), (
+        f"Regression: expected 34.26h, got {r.total_man_hours}h"
     )
 
 
 def test_cl_strip_crew_at_floor():
-    """Strip CLLIT at 40ft: crew hours still hit CLLIT install floor (9.90)."""
+    """Strip CLLIT at 40ft: crew hours at calibrated floor (9.05)."""
     r = estimate(CL_STRIP_JOB)
-    assert r.total_crew_hours == pytest.approx(9.90, abs=0.01), (
-        f"Expected 9.90h crew (install floor), got {r.total_crew_hours}h"
+    assert r.total_crew_hours == pytest.approx(9.05, abs=0.01), (
+        f"Expected 9.05h crew, got {r.total_crew_hours}h"
     )
 
 
@@ -398,9 +400,9 @@ def test_awn_scales_linearly_with_sf():
 
 # ── Scenario 9: Removal of CLLIT channel letters ─────────────────────────────
 #
-# Locked baseline (refreshed 2026-02-26 post OT-correction + removal formula update):
-#   total_man_hours = 9.1   total_crew_hours = 0.0
-# Expected codes: 0625 0610 0620
+# Locked baseline (refreshed 2026-03-02 post 253K-row calibration):
+#   total_man_hours = 5.56   total_crew_hours = 0.0
+# Expected codes: 0625 0610 0620 9600
 
 REM_CLLIT_JOB = JobInput(
     sign_type=SignType.CLLIT, num_units=1, miles_one_way=20, crew_size=2,
@@ -408,10 +410,10 @@ REM_CLLIT_JOB = JobInput(
 
 
 def test_rem_cllit_total_man_hours_locked():
-    """Locked: CLLIT removal w/ 20 mi travel total_man_hours == 9.1h."""
+    """Locked: CLLIT removal w/ 20 mi travel total_man_hours == 5.56h."""
     r = estimate_removal(REM_CLLIT_JOB)
-    assert r.total_man_hours == pytest.approx(9.1, abs=0.01), (
-        f"Regression: expected 9.1h, got {r.total_man_hours}h"
+    assert r.total_man_hours == pytest.approx(5.56, abs=0.01), (
+        f"Regression: expected 5.56h, got {r.total_man_hours}h"
     )
 
 
@@ -445,8 +447,8 @@ def test_rem_cllit_reasonable_range():
 
 # ── Scenario 10: Removal of MONDF monument ───────────────────────────────────
 #
-# Locked baseline (refreshed 2026-02-26 post OT-correction + removal formula update):
-#   total_man_hours = 4.41   total_crew_hours = 0.0
+# Locked baseline (refreshed 2026-03-02 post 253K-row calibration):
+#   total_man_hours = 2.80   total_crew_hours = 0.0
 
 REM_MONDF_JOB = JobInput(
     sign_type=SignType.MONDF, num_units=1, miles_one_way=0, crew_size=2,
@@ -454,10 +456,10 @@ REM_MONDF_JOB = JobInput(
 
 
 def test_rem_mondf_total_man_hours_locked():
-    """Locked: MONDF removal (no travel) total_man_hours == 4.41h."""
+    """Locked: MONDF removal (no travel) total_man_hours == 2.80h."""
     r = estimate_removal(REM_MONDF_JOB)
-    assert r.total_man_hours == pytest.approx(4.41, abs=0.01), (
-        f"Regression: expected 4.41h, got {r.total_man_hours}h"
+    assert r.total_man_hours == pytest.approx(2.80, abs=0.01), (
+        f"Regression: expected 2.80h, got {r.total_man_hours}h"
     )
 
 
