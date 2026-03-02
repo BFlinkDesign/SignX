@@ -157,3 +157,11 @@ site/
 *.zip
 *.ico
 
+
+# Large data exports - don't commit to public repos
+supabase_*.csv
+
+
+# Accidentally committed site-packages
+tools/vba-macros/
+
