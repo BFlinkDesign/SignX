@@ -733,3 +733,20 @@ class TestRemovalRequestValidation:
             remove_height_ft=25.0,
         )
         assert req.requires_crane is True
+
+
+def test_building_extrusion_total_man_hours_locked():
+    """Locked baseline for building signs (9" extrusion)."""
+    job = JobInput(
+        sign_type=SignType.BLDILL,
+        sign_sf_per_face=50.0,
+        num_faces=1,
+        is_illuminated=True,
+        construction_method="extrusion",
+        return_depth_in=9.0
+    )
+    r = estimate(job)
+    # Factual result verified by Gemini 2026-03-02
+    assert r.total_man_hours == pytest.approx(15.37, abs=0.01)
+    assert "202-0390" in str(r.material_bom)
+
