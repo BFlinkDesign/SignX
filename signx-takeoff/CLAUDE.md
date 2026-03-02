@@ -251,10 +251,14 @@ All loaded via `.env` (python-dotenv). Never hardcoded.
 - Fixed test_phase1 OT failures, DuckDB skipif guards
 - 178 tests passing, 2 skipped, 15 files modified, net -56 lines
 
-## Sprint G — Backlog
-- [ ] POLLIT/POLNON regression tests (estimator exists, zero regression coverage per Gemini audit)
+## Sprint G — In Progress
+- [x] POLLIT/POLNON regression tests -- 13 tests added (test_pylon_regression.py, e0bda4e)
+- [x] calibrate.py fix -- migrated from missing so_contract_labor to temp_labor + wo_labor (f3a5696)
+- [x] Dead code removal -- 4 unused _cal_* functions removed from abc_engine.py (a15b178)
+- [x] Stale doc cleanup -- Gemini Task 2 found only 1 stale item (G: drive, already resolved)
 - [ ] BLDILL/BLDNON estimator (enum defined, no estimate function)
-- [ ] Stale doc cleanup (pending Gemini Task 2 report at C:\Temp\doc-staleness-report.md)
+- [ ] Calibration data refresh (run `python calibrate.py` -- will shift regression baselines)
+- [ ] AWNILL/DIRECT/MONSF calibration variance reduction
 
 ## Last Updated
-2026-03-01 — Sprint F complete, Sprint G backlog added
+2026-03-01 — Sprint G in progress: 247 tests, calibrate.py fixed, pylon tests added
