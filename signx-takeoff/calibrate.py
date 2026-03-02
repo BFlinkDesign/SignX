@@ -109,29 +109,29 @@ def query_calibration_matrix(
     con = duckdb.connect(db_path, read_only=True)
 
     where_clause = """
-        WHERE l.actual_hours > 0
-          AND c.sign_type IS NOT NULL
-          AND c.sign_type != ''
+        WHERE t.actual_hours > 0
+          AND w.sign_type IS NOT NULL
+          AND w.sign_type != ''
     """
     if sign_type_filter:
-        where_clause += f" AND c.sign_type = '{sign_type_filter}'"
+        where_clause += f" AND w.sign_type = '{sign_type_filter}'"
 
     rows = con.execute(f"""
         SELECT
-            c.sign_type,
-            l.work_code,
+            w.sign_type,
+            t.work_code,
             COUNT(*) as n,
-            ROUND(PERCENTILE_CONT(0.25) WITHIN GROUP (ORDER BY l.actual_hours), 2) as p25,
-            ROUND(PERCENTILE_CONT(0.50) WITHIN GROUP (ORDER BY l.actual_hours), 2) as p50,
-            ROUND(PERCENTILE_CONT(0.75) WITHIN GROUP (ORDER BY l.actual_hours), 2) as p75,
-            ROUND(AVG(l.actual_hours), 2) as mean,
-            ROUND(STDDEV(l.actual_hours), 2) as std
-        FROM so_contract_labor l
-        JOIN so_contracts c ON l.wo_number = c.work_order
+            ROUND(PERCENTILE_CONT(0.25) WITHIN GROUP (ORDER BY t.actual_hours), 2) as p25,
+            ROUND(PERCENTILE_CONT(0.50) WITHIN GROUP (ORDER BY t.actual_hours), 2) as p50,
+            ROUND(PERCENTILE_CONT(0.75) WITHIN GROUP (ORDER BY t.actual_hours), 2) as p75,
+            ROUND(AVG(t.actual_hours), 2) as mean,
+            ROUND(STDDEV(t.actual_hours), 2) as std
+        FROM temp_labor t
+        JOIN wo_labor w ON t.work_order = w.wo
         {where_clause}
-        GROUP BY c.sign_type, l.work_code
+        GROUP BY w.sign_type, t.work_code
         HAVING COUNT(*) >= {MIN_SAMPLES_USABLE}
-        ORDER BY c.sign_type, n DESC
+        ORDER BY w.sign_type, n DESC
     """).fetchall()
 
     con.close()
@@ -173,12 +173,12 @@ def compute_ot_factors(
     # Get total job count per sign type
     job_counts = {}
     for row in con.execute("""
-        SELECT c.sign_type, COUNT(DISTINCT l.wo_number) as n
-        FROM so_contract_labor l
-        JOIN so_contracts c ON l.wo_number = c.work_order
-        WHERE c.sign_type IS NOT NULL AND c.sign_type != ''
-        GROUP BY c.sign_type
-        HAVING COUNT(DISTINCT l.wo_number) >= 10
+        SELECT w.sign_type, COUNT(DISTINCT t.work_order) as n
+        FROM temp_labor t
+        JOIN wo_labor w ON t.work_order = w.wo
+        WHERE w.sign_type IS NOT NULL AND w.sign_type != ''
+        GROUP BY w.sign_type
+        HAVING COUNT(DISTINCT t.work_order) >= 10
     """).fetchall():
         job_counts[row[0]] = row[1]
 
@@ -190,14 +190,14 @@ def compute_ot_factors(
 
         # Fab OT (9200)
         fab_row = con.execute(f"""
-            SELECT COUNT(DISTINCT l.wo_number) as n_jobs,
-                   ROUND(AVG(l.actual_hours), 2) as avg_hrs,
-                   ROUND(MEDIAN(l.actual_hours), 2) as med_hrs
-            FROM so_contract_labor l
-            JOIN so_contracts c ON l.wo_number = c.work_order
-            WHERE c.sign_type = '{st}'
-              AND l.work_code = '9200'
-              AND l.actual_hours > 0
+            SELECT COUNT(DISTINCT t.work_order) as n_jobs,
+                   ROUND(AVG(t.actual_hours), 2) as avg_hrs,
+                   ROUND(MEDIAN(t.actual_hours), 2) as med_hrs
+            FROM temp_labor t
+            JOIN wo_labor w ON t.work_order = w.wo
+            WHERE w.sign_type = '{st}'
+              AND t.work_code = '9200'
+              AND t.actual_hours > 0
         """).fetchone()
 
         fab_n = fab_row[0] if fab_row else 0
@@ -206,14 +206,14 @@ def compute_ot_factors(
 
         # Install OT (9600)
         inst_row = con.execute(f"""
-            SELECT COUNT(DISTINCT l.wo_number) as n_jobs,
-                   ROUND(AVG(l.actual_hours), 2) as avg_hrs,
-                   ROUND(MEDIAN(l.actual_hours), 2) as med_hrs
-            FROM so_contract_labor l
-            JOIN so_contracts c ON l.wo_number = c.work_order
-            WHERE c.sign_type = '{st}'
-              AND l.work_code = '9600'
-              AND l.actual_hours > 0
+            SELECT COUNT(DISTINCT t.work_order) as n_jobs,
+                   ROUND(AVG(t.actual_hours), 2) as avg_hrs,
+                   ROUND(MEDIAN(t.actual_hours), 2) as med_hrs
+            FROM temp_labor t
+            JOIN wo_labor w ON t.work_order = w.wo
+            WHERE w.sign_type = '{st}'
+              AND t.work_code = '9600'
+              AND t.actual_hours > 0
         """).fetchone()
 
         inst_n = inst_row[0] if inst_row else 0
