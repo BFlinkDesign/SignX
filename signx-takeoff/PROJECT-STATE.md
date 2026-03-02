@@ -2,7 +2,7 @@
 Last updated: 2026-03-01 (Sprint F complete, benchmark report generated)
 
 ## Status Line
-**ACTIVE -- 178 tests passing (2 skipped), 30+ API endpoints functional, calibration pipeline connected to 253K-row warehouse**
+**ACTIVE -- 247 tests passing (2 skipped), 30+ API endpoints functional, calibration pipeline connected to 253K-row warehouse (36 sign types, 948 cells)**
 
 ---
 
@@ -94,10 +94,12 @@ Last updated: 2026-03-01 (Sprint F complete, benchmark report generated)
 
 ---
 
-### Sprint G -- Backlog
-- [ ] **POLLIT/POLNON regression tests** -- estimator exists, zero regression coverage (Gemini audit)
+### Sprint G -- In Progress
+- [x] **POLLIT/POLNON regression tests** -- 13 tests added (test_pylon_regression.py, commit e0bda4e)
+- [x] **Calibration pipeline fix** -- calibrate.py migrated from missing so_contract_labor to temp_labor + wo_labor (commit f3a5696). 36 sign types, 948 cells now available.
+- [x] **Dead code removal** -- 4 unused _cal_* functions removed from abc_engine.py (commit a15b178)
 - [ ] **BLDILL/BLDNON estimator** -- enum defined, no estimate function
-- [ ] **Calibration pipeline enhancement** -- connect 253K-row temp_labor to auto-calibration
+- [ ] **Calibration data refresh** -- run `python calibrate.py` to regenerate calibration.json with 253K-row dataset (will shift regression baselines)
 - [ ] **AWNILL calibration** -- +28.6% variance (most over-estimated sign type)
 - [ ] **DIRECT calibration** -- -19.1% variance (significantly under-estimated)
 - [ ] **MONSF calibration** -- -18.3% variance
@@ -109,9 +111,10 @@ Last updated: 2026-03-01 (Sprint F complete, benchmark report generated)
 | test_validation.py | 11 | PASS | Rolling (ground truth) |
 | test_regression.py | 70 | PASS | 2026-02-26 (cccba7d) |
 | test_phase1.py | 32 | PASS | 2026-03-01 (Sprint F) |
+| test_pylon_regression.py | 13 | PASS | 2026-03-01 (Sprint G) |
 | test_boundary.py | ~15 | PASS | 2026-02-17 |
 | tests/test_estimators.py | ~20 | PASS | 2026-02-17 |
-| **TOTAL** | **178** | **PASS (2 skipped)** | **2026-03-01** |
+| **TOTAL** | **247** | **PASS (2 skipped)** | **2026-03-01** |
 
 ---
 
