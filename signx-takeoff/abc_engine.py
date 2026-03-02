@@ -282,11 +282,44 @@ FAB_LAYOUT_HOURS = 1.50  # 0200
 # LED wiring rate
 LED_WIRE_RATE = 0.015  # PF * 0.015 = 0310 hours
 
+# ── Structural Standards Knowledge Base (Eagle Sign Co) ───────────────────────
+
+# HSS Sizing Map (based on SignX optimal_pole_sections view)
+HSS_SIZING_STANDARDS = {
+    "SMALL": {"LOW": "HSS6X6X3/16", "MED": "HSS6X6X1/4", "HIGH": "HSS8X8X1/4"},
+    "MEDIUM": {"LOW": "HSS8X8X1/4", "MED": "HSS8X8X3/8", "HIGH": "HSS10X10X3/8"},
+    "LARGE": {"LOW": "HSS10X10X3/8", "MED": "HSS12X12X3/8", "HIGH": "HSS12X12X1/2"}
+}
+
+# Foundation Sizing Standards (based on foundation_methods.json)
+FOUNDATION_STANDARDS = {
+    "SMALL": {"diam_in": 24, "depth_ft": 4.0},
+    "MEDIUM": {"diam_in": 30, "depth_ft": 6.0},
+    "LARGE": {"diam_in": 36, "depth_ft": 8.0},
+    "XLARGE": {"diam_in": 42, "depth_ft": 12.0}
+}
+
+# Construction Part Numbers
+EAGLE_INVENTORY = {
+    "HSS_STEEL": "205-STRUCTURAL",
+    "ALUM_ANGLE": "203-0100",
+    "ALUM_TUBE": "203-0310",
+    "CONCRETE": "600-CONCRETE",
+    "ABC_EXTRUSION_7": "202-EXT7",
+    "ABC_EXTRUSION_9": "202-EXT9",
+    "LED_THIN_FRAME": "202-0395"
+}
+
 
 # ── Section 10B: Installation (per PF, crew-hours) ──────────────────────────
 
 INSTALL_RATES = {
-    # {height_category: {"low": rate_0_35ft, "high": rate_over_35ft}}
+
+
+
+# ── Section 10B: Installation (per PF, crew-hours) ──────────────────────────
+
+
     HeightCategory.SMALL:  {"low": 0.051, "high": 0.066},
     HeightCategory.MEDIUM: {"low": 0.036, "high": 0.047},
     HeightCategory.LARGE:  {"low": 0.032, "high": 0.042},
@@ -1071,6 +1104,16 @@ def calculate_materials(pf: float, face_sf: float, return_depth_inches: float,
 
 @dataclass
 class JobInput:
+    # Unified Takeoff Fields
+    construction_method: str = "stick"
+    sign_sf_per_face: float = 0.0
+    num_faces: int = 1
+    is_illuminated: bool = True
+    has_vinyl: bool = False
+    has_structural_steel: bool = False
+    has_footing: bool = False
+    return_depth_in: Optional[float] = None
+    standoff_in: float = 0.0
     """Input parameters for a channel letter job estimate."""
     # PF source (one of these should be set)
     pf_from_pdf: Optional[float] = None
@@ -1236,7 +1279,18 @@ def _make_raceway_removal_line(job: JobInput) -> LaborLine | None:
 def estimate(job: JobInput) -> EstimateResult:
     """Run the full ABC estimation for a channel letter job."""
 
-    # ── Determine PF ─────────────────────────────────────────────────────
+    
+    # ── Dispatch to specialized estimators ──
+    if job.sign_type in [SignType.MONDF, SignType.MONSF]:
+        return estimate_monument(job)
+    
+    if job.sign_type in [SignType.POLLIT, SignType.POLNON]:
+        return estimate_pylon(job)
+        
+    if job.sign_type in [SignType.BLDILL, SignType.BLDNON]:
+        return estimate_building(job)
+
+# ── Determine PF ─────────────────────────────────────────────────────
     if job.pf_from_pdf is not None and job.pf_from_pdf > 0:
         total_pf = job.pf_from_pdf
         pf_source = "PDF extraction (PyMuPDF)"
@@ -1508,6 +1562,7 @@ def estimate(job: JobInput) -> EstimateResult:
             f"Substrate adjustment: {job.substrate} = x{substrate_mult}"
         )
 
+    result.warnings.extend(validate_bom_parts(result))
     return result
 
 
@@ -1553,6 +1608,39 @@ def load_comparable(wo_number: str,
 
 # ── Monument Estimation Engine ────────────────────────────────────────────────
 
+
+def validate_bom_parts(result: EstimateResult) -> list[str]:
+    """
+    Validate all part numbers in the BOM against the live Inventory List.csv.
+    Returns a list of warnings for any missing or non-standard parts.
+    """
+    inventory_path = r"C:\Users\Brady.EAGLE\Desktop\SignX\Eagle Data\BOT TRAINING\Eagle Data\Inventory List.csv"
+    if not os.path.exists(inventory_path):
+        return ["Inventory List.csv not found. Skipping part number validation."]
+    
+    valid_parts = set()
+    try:
+        with open(inventory_path, "r", encoding="utf-8-sig") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                pn = row.get("Part Nbr")
+                if pn:
+                    valid_parts.add(pn.strip())
+    except Exception as e:
+        return [f"Error reading inventory: {e}"]
+
+    warnings = []
+    for item in result.material_bom:
+        # Extract PN from BOM string (e.g., "202-EXT9: 30.6 LF" -> "202-EXT9")
+        match = re.match(r"^([A-Z0-9-]+):", item)
+        if match:
+            pn = match.group(1)
+            if pn not in valid_parts:
+                warnings.append(f"Non-standard PN in BOM: {pn} (Not found in inventory list)")
+    
+    return warnings
+
+
 def estimate_monument(job: JobInput) -> EstimateResult:
     """
     Estimate labor for a MONDF/MONSF monument sign.
@@ -1581,7 +1669,8 @@ def estimate_monument(job: JobInput) -> EstimateResult:
 
     if total_sf <= 0:
         result.warnings.append("sign_sf_per_face required for monument estimate.")
-        return result
+        result.warnings.extend(validate_bom_parts(result))
+    return result
 
     labor: list[LaborLine] = []
     install: list[LaborLine] = []
@@ -1851,6 +1940,7 @@ def estimate_monument(job: JobInput) -> EstimateResult:
         f"MONDF corrections applied: {', '.join(corrected_codes)}. "
         f"Segment: {seg_label}. Source: signx.duckdb so_contracts+so_contract_labor."
     )
+    result.warnings.extend(validate_bom_parts(result))
     return result
 
 
@@ -1931,6 +2021,7 @@ def estimate_removal(job: JobInput) -> EstimateResult:
         sum(l.hours for l in install if l.unit_type == "man-hrs"), 2
     )
     result.total_crew_hours = 0.0
+    result.warnings.extend(validate_bom_parts(result))
     return result
 
 
@@ -1966,7 +2057,8 @@ def estimate_awning(job: JobInput) -> EstimateResult:
             "sign_sf_per_face required for awning estimate. "
             "Set to (width_in × slope_in) / 144."
         )
-        return result
+        result.warnings.extend(validate_bom_parts(result))
+    return result
 
     # Complexity multiplier (standard, quarter_barrel, dome)
     # Default to standard — user can override via description or future field
@@ -2111,45 +2203,65 @@ def estimate_awning(job: JobInput) -> EstimateResult:
         f"Awning estimate: {total_sf:.1f} SF, complexity={complexity:.1f}x. "
         f"Source: Eagle actuals (Jobs #11530/#11532)."
     )
+    result.warnings.extend(validate_bom_parts(result))
     return result
 
 
 # ── Pylon/Pole Estimation Engine ────────────────────────────────────────────────
 
+
 def estimate_pylon(job: JobInput) -> EstimateResult:
     """
-    Estimate labor for a POLLIT/POLNON pylon/pole sign.
-
-    Uses ABC Section 2 (cabinet SF) + Section 5A (paint SF) formulas with
-    POLLIT_CORRECTION factors. Pylons have heavy structural steel (tall poles),
-    and require crane installation (0650 vs 0630).
-
-    POLNON (non-illuminated): Skips 0340 Electrical Wiring.
-    POLLIT (illuminated): Includes 0340 Electrical (long wire runs up poles).
-
-    For 0650 install: Uses warehouse median directly (crane crew).
-    For 0605 footing: Almost always self-performed for pylons.
-    OT: fab_total x 0.065, install x 0.12.
-
-    Requires sign_sf_per_face > 0 on JobInput.
-    [PROVISIONAL] — correction factors derived from MONDF pattern scaled for
-    pylon characteristics. Will refine with direct warehouse query (n=461).
+    Estimate labor for a POLLIT/POLNON pylon sign using EAGLE STANDARDS.
+    Determines HSS sizing and Foundation depth from structural knowledge base.
     """
-    sign_type_key = job.sign_type.value
     total_sf = job.sign_sf_per_face * job.num_faces
-    cab_face = CabinetFace.DOUBLE if job.num_faces >= 2 else CabinetFace.SINGLE
-
+    
+    # 1. Sizing Classification
+    if total_sf < 30: cat = "SMALL"
+    elif total_sf < 80: cat = "MEDIUM"
+    else: cat = "LARGE"
+    
+    h_ft = job.install_height_ft or 20.0
+    if h_ft < 20: h_range = "LOW"
+    elif h_ft <= 30: h_range = "MED"
+    else: h_range = "HIGH"
+    
+    hss = HSS_SIZING_STANDARDS[cat][h_range]
+    footing = FOUNDATION_STANDARDS[cat]
+    
     result = EstimateResult(
         total_pf=0.0,
-        pf_source="N/A (pylon — SF-based, not PF)",
-        construction=f"pylon_{sign_type_key.lower()}",
-        height_category="N/A",
-        letter_count=0,
+        pf_source="N/A (pylon — Structural Sizing)",
+        construction=f"pylon_{hss.lower()}",
+        height_category=h_range,
+        letter_count=0
     )
+    
+    # 2. BOM Generation
+    result.material_bom.append(f"{EAGLE_INVENTORY['HSS_STEEL']}: {hss} x {h_ft}ft")
+    result.material_bom.append(f"{EAGLE_INVENTORY['CONCRETE']}: {footing['diam_in']}in x {footing['depth_ft']}ft")
+    
+    # 3. Labor Lines
+    labor = []
+    # Design
+    labor.append(LaborLine("0110", "Design/Drafting", 1.0, "man-hrs", "100", "Standard", "Standard"))
+    
+    # Fab (Heuristic base adjusted by height)
+    fab_hrs = (total_sf * 0.15) * (1.2 if h_ft > 30 else 1.0)
+    labor.append(LaborLine("0270", "Fabrication", round(fab_hrs, 2), "man-hrs", "200", f"SF x 0.15 x HeightFactor", "Standard"))
+    
+    # Install (P50 from warehouse)
+    inst_floor = 2.25 if job.is_illuminated else 1.75
+    labor.append(LaborLine("0630", "Installation", inst_floor, "man-hrs", "600", f"P50 floor {inst_floor}h", "Warehouse"))
+    
+    result.labor_lines = labor
+    result.total_man_hours = sum(l.hours for l in labor)
+    result.summary_string = f"{result.total_man_hours:.1f}h total | {hss} | {footing['diam_in']}x{footing['depth_ft']} foundation"
+    
+    result.warnings.extend(validate_bom_parts(result))
+    return result
 
-    if total_sf <= 0:
-        result.warnings.append("sign_sf_per_face required for pylon estimate.")
-        return result
 
     labor: list[LaborLine] = []
     install: list[LaborLine] = []
@@ -2414,6 +2526,7 @@ def estimate_pylon(job: JobInput) -> EstimateResult:
     )
     if not job.is_illuminated:
         result.warnings.append("Non-illuminated: 0340 Electrical Wiring excluded.")
+    result.warnings.extend(validate_bom_parts(result))
     return result
 
 
@@ -2450,7 +2563,8 @@ def estimate_cabinet(job: JobInput) -> EstimateResult:
 
     if total_sf <= 0:
         result.warnings.append("sign_sf_per_face required for cabinet estimate.")
-        return result
+        result.warnings.extend(validate_bom_parts(result))
+    return result
 
     labor: list[LaborLine] = []
     install: list[LaborLine] = []
@@ -2691,6 +2805,7 @@ def estimate_cabinet(job: JobInput) -> EstimateResult:
         f"Source: MONDF pattern + 30% buffer (n=31 warehouse jobs only). "
         f"Treat estimates as provisional."
     )
+    result.warnings.extend(validate_bom_parts(result))
     return result
 
 
@@ -2720,7 +2835,8 @@ def estimate_directional(job: JobInput) -> EstimateResult:
 
     if total_sf <= 0:
         result.warnings.append("sign_sf_per_face required for directional estimate.")
-        return result
+        result.warnings.extend(validate_bom_parts(result))
+    return result
 
     labor: list[LaborLine] = []
     install: list[LaborLine] = []
@@ -2901,6 +3017,7 @@ def estimate_directional(job: JobInput) -> EstimateResult:
         "[PROVISIONAL] -- no ABC section. Rates derived from warehouse P50 (n=162). "
         "Directional signs = aluminum panels + vinyl on posts. Treat as provisional."
     )
+    result.warnings.extend(validate_bom_parts(result))
     return result
 
 
@@ -3060,6 +3177,7 @@ def estimate_dimensional(job: JobInput) -> EstimateResult:
         "[PROVISIONAL] -- no ABC section. Rates from warehouse P50 (n=115). "
         "Gemini letters = purchased, minimal fab. Treat as provisional."
     )
+    result.warnings.extend(validate_bom_parts(result))
     return result
 
 
@@ -3099,7 +3217,8 @@ def estimate_flatpanel(job: JobInput) -> EstimateResult:
 
     if total_sf <= 0:
         result.warnings.append("panel SF required for flat panel estimate (set cabinet_sf, face_sf_override, or sign_sf_per_face).")
-        return result
+        result.warnings.extend(validate_bom_parts(result))
+    return result
 
     labor: list[LaborLine] = []
     install: list[LaborLine] = []
@@ -3232,4 +3351,177 @@ def estimate_flatpanel(job: JobInput) -> EstimateResult:
         "Rates estimated from similar types (ALULIT sheet metal, VINYL graphics). "
         "Treat as provisional until warehouse calibration available."
     )
+    result.warnings.extend(validate_bom_parts(result))
     return result
+
+
+
+def estimate_building(job: JobInput) -> EstimateResult:
+    """
+    Estimate labor for a Building Sign (BLDILL/BLDNON).
+    Supports Stick Build (Standard) vs ABC Extrusion.
+    """
+    total_sf = job.sign_sf_per_face * job.num_faces
+    
+    result = EstimateResult(
+        total_pf=0.0,
+        pf_source="N/A (building — Component Takeoff)",
+        construction=f"building_{job.construction_method or 'stick'}",
+        height_category="N/A",
+        letter_count=0
+    )
+
+    if total_sf <= 0:
+        result.warnings.append("sign_sf_per_face required for building estimate.")
+        result.warnings.extend(validate_bom_parts(result))
+    return result
+
+    labor = []
+    
+    # ── 0110 Design
+    labor.append(LaborLine("0110", "Design/Drafting", 1.0, "man-hrs", "100", "Standard", "Standard"))
+
+    # ── Construction Logic (Stick vs Extrusion)
+    is_extrusion = (job.construction_method in ["extrusion", "thin_frame"])
+    
+    if is_extrusion:
+        # Perimeter LF for 0220 Extrusions
+        approx_h = math.sqrt(total_sf) * 1.5
+        approx_w = total_sf / approx_h if approx_h > 0 else 0
+        perimeter_lf = 2 * (approx_h + approx_w)
+        
+        # Labor 0220 (Section 2E rate: 0.208)
+        hrs_220 = perimeter_lf * 0.208
+        labor.append(LaborLine("0220", "Extrusions", round(hrs_220, 2), "man-hrs", "200", f"{perimeter_lf:.1f} LF x 0.208", "Section 2E"))
+        
+        # BOM
+        if job.construction_method == "thin_frame":
+            ext_type = "LED_THIN_FRAME"
+        else:
+            ext_type = "ABC_EXTRUSION_9" if (job.return_depth_in or 0) > 7 else "ABC_EXTRUSION_7"
+        result.material_bom.append(f"{EAGLE_INVENTORY[ext_type]}: {perimeter_lf:.1f} LF")
+    else:
+        # Stick Build (0210 Sheet Metal fallback)
+        hrs_210 = total_sf * 0.228 # Light frame rate
+        labor.append(LaborLine("0210", "Sheet Metal / Frame", round(hrs_210, 2), "man-hrs", "200", f"{total_sf:.1f} SF x 0.228", "Section 2 Light"))
+        
+        # BOM
+        result.material_bom.append(f"{EAGLE_INVENTORY['ALUM_ANGLE']}: Frame Stock")
+
+    # ── Assembly / Finishing (FACES 0260 + MISC FAB 0270)
+    # Using P50 floor derived from warehouse Task 28
+    labor.append(LaborLine("0260", "Faces (Assembly)", 1.75, "man-hrs", "200", "P50 Warehouse Floor", "Warehouse"))
+    
+    # ── 0310 Electrical (If Illuminated)
+    if job.is_illuminated:
+        elec_hrs = max(1.0, total_sf * 0.08)
+        labor.append(LaborLine("0310", "Electrical Wiring", round(elec_hrs, 2), "man-hrs", "300", f"{total_sf:.1f} SF x 0.08", "Standard"))
+
+    # ── Install (P50 Warehouse Floor)
+    inst_hrs = 2.25 if job.is_illuminated else 1.75
+    labor.append(LaborLine("0630", "Installation", inst_hrs, "man-hrs", "600", f"P50 floor {inst_hrs}h", "Warehouse"))
+
+    result.labor_lines = labor
+    result.total_man_hours = sum(l.hours for l in labor)
+    result.summary_string = f"{result.total_man_hours:.1f}h total | {result.construction}"
+    
+    result.warnings.extend(validate_bom_parts(result))
+    return result
+
+
+    labor = []
+    install = []
+    fab_total = 0.0
+
+    # —— 0110 Design
+    labor.append(LaborLine(
+        work_code="0110", description="Design / Drafting",
+        hours=1.0, unit_type="man-hrs",
+        department="Art/Design (100)",
+        formula="1.00 hr standard",
+        section="Standard",
+    ))
+
+    # —— Fabrication (0260 / 0270) based on SF
+    fab_hrs = max(1.0, total_sf * 0.15)
+    labor.append(LaborLine(
+        work_code="0270", description="Fabrication",
+        hours=round(fab_hrs, 2), unit_type="man-hrs",
+        department="Fabrication (200)",
+        formula=f"Heuristic: {total_sf:.1f} SF x 0.15",
+        section="Provisional",
+    ))
+    fab_total += fab_hrs
+
+    # —— Paint (0520) / Vinyl (0550)
+    paint_hrs = max(0.5, total_sf * 0.05)
+    labor.append(LaborLine(
+        work_code="0520", description="Paint",
+        hours=round(paint_hrs, 2), unit_type="man-hrs",
+        department="Paint (500)",
+        formula=f"Heuristic: {total_sf:.1f} SF x 0.05",
+        section="Provisional",
+    ))
+    fab_total += paint_hrs
+
+    # —— 0310 Electrical (If Illuminated)
+    if job.is_illuminated:
+        elec_hrs = max(1.0, total_sf * 0.08)
+        labor.append(LaborLine(
+            work_code="0310", description="Electrical Wiring",
+            hours=round(elec_hrs, 2), unit_type="man-hrs",
+            department="Electrical (300)",
+            formula=f"Heuristic: {total_sf:.1f} SF x 0.08",
+            section="Provisional",
+        ))
+        fab_total += elec_hrs
+
+    # —— Install (0630 / 0640)
+    p50_install = 2.25 if job.is_illuminated else 1.75
+    install_hrs = max(p50_install, total_sf * 0.05)
+    install.append(LaborLine(
+        work_code="0630", description="Installation",
+        hours=round(install_hrs, 2), unit_type="man-hrs",
+        department="Install (600)",
+        formula=f"Max(P50 {p50_install}h, {total_sf:.1f} SF x 0.05)",
+        section="Warehouse P50",
+    ))
+
+    # —— Travel (0610)
+    if job.miles_one_way > 0:
+        travel_hrs = (job.miles_one_way / 45.0) * job.crew_size * 2
+        install.append(LaborLine(
+            work_code="0610", description="Travel",
+            hours=round(travel_hrs, 2), unit_type="man-hrs",
+            department="Install (600)",
+            formula=f"({job.miles_one_way} mi / 45mph) x {job.crew_size} men x 2",
+            section="Standard",
+        ))
+
+    # Add overtime
+    if fab_total > 0:
+        labor.append(LaborLine(
+            work_code="9200", description="Fab Overtime",
+            hours=round(fab_total * 0.04, 2), unit_type="man-hrs",
+            department="Fabrication (200)",
+            formula="Fab Total x 4%",
+            section="Provisional OT",
+        ))
+
+    # Compile result
+    result.labor_lines = labor + install
+    result.total_man_hours = sum(line.hours for line in result.labor_lines)
+    
+    # Simple formatting for crew hours
+    if install:
+        inst_total = sum(line.hours for line in install)
+        crew_h = inst_total / job.crew_size if job.crew_size > 0 else inst_total
+        result.total_crew_hours = crew_h
+        result.summary_string = f"{result.total_man_hours:.1f}h total ({crew_h:.1f}h crew install)"
+    else:
+        result.total_crew_hours = 0.0
+        result.summary_string = f"{result.total_man_hours:.1f}h total"
+
+    result.warnings.extend(validate_bom_parts(result))
+    return result
+

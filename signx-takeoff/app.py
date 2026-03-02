@@ -435,6 +435,17 @@ async def run_pylon_estimate(req: PylonRequest):
 
 # ── Cabinet Estimate ────────────────────────────────────────────────────────
 
+
+class BuildingRequest(BaseModel):
+    width_ft: float = Field(10.0, description="Sign width (ft)")
+    height_ft: float = Field(2.0, description="Sign height (ft)")
+    face_area_sf: Optional[float] = Field(None, description="Override face area (SF)")
+    num_faces: int = Field(1, description="Number of faces (usually 1)")
+    illuminated: bool = Field(True, description="Has illumination")
+    install_height_ft: float = Field(15.0, description="Mounting height (ft)")
+    miles: float = Field(0.0, description="One-way travel miles")
+    crew_size: int = Field(2, description="Crew size")
+
 class CabinetRequest(BaseModel):
     width_ft: float = Field(6.0, description="Cabinet width (ft)")
     height_ft: float = Field(4.0, description="Cabinet height (ft)")
@@ -447,6 +458,28 @@ class CabinetRequest(BaseModel):
     miles: float = Field(0.0, description="One-way travel miles")
     crew_size: int = Field(2, description="Crew size")
 
+
+
+@app.post("/api/estimate/building")
+async def run_building_estimate(req: BuildingRequest):
+    """Run building sign estimation engine (BLDILL/BLDNON)."""
+    sf = req.face_area_sf if req.face_area_sf and req.face_area_sf > 0 else req.width_ft * req.height_ft
+    job = JobInput(
+        sign_type=SignType.BLDILL if req.illuminated else SignType.BLDNON,
+        sign_sf_per_face=sf,
+        num_faces=req.num_faces,
+        is_illuminated=req.illuminated,
+        has_vinyl=False,
+        has_structural_steel=False,
+        install_height_ft=req.install_height_ft,
+        miles_one_way=req.miles,
+        crew_size=req.crew_size,
+    )
+    result = abc_engine.estimate_building(job)
+    total_est_hours = result.total_man_hours + result.total_crew_hours
+    bench = benchmark(total_est_hours, sign_type_filter="BUILDING")
+    bench_data = _format_benchmark(bench) if bench else None
+    return _format_estimate_result(result, bench_data)
 
 @app.post("/api/estimate/cabinet")
 async def run_cabinet_estimate(req: CabinetRequest):
