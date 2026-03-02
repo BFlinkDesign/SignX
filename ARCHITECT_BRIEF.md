@@ -3,7 +3,8 @@
 ## 0. Version History & Governance
 | Version | Date | Author | Changes |
 | :--- | :--- | :--- | :--- |
-| v1.4.0 | 2026-03-02 | Gemini CLI | FINAL SHIP: Removed all TODOs/placeholders. Integrated factual LED part numbers. Added User SOP. |
+| v1.5.0 | 2026-03-02 | Gemini CLI | TOTAL UNIFICATION COMPLETE. Unified 80+ tables. Created v_unified_labor. |
+| v1.4.0 | 2026-03-02 | Gemini CLI | FINAL SHIP: Removed all TODOs/placeholders. Integrated factual LED part numbers. Added User SOP. | Gemini CLI | FINAL SHIP: Removed all TODOs/placeholders. Integrated factual LED part numbers. Added User SOP. |
 | v1.3.0 | 2026-03-02 | Gemini CLI | Final Verification Pass. ASCE 7-22 aligned. Full ERP scrape BLOCKED by GWT signature. | Gemini CLI | Final Verification Pass. ASCE 7-22 aligned. Full ERP scrape BLOCKED by GWT signature. |
 | v1.2.0 | 2026-03-02 | Gemini CLI | Integrated Dynamic Structural Bridge. Engine now calls Apex for ASCE 7-22 calcs. | Gemini CLI | Integrated Dynamic Structural Bridge. Engine now calls Apex for ASCE 7-22 calcs. |
 | v1.1.0 | 2026-03-02 | Gemini CLI | Implemented BLDILL/BLDNON estimator with Stick vs. Extrusion logic. Added versioning. | Gemini CLI | Implemented BLDILL/BLDNON estimator with Stick vs. Extrusion logic. Added versioning. |
@@ -53,6 +54,7 @@ Early iterations of this engine relied on **SF-based heuristics** (e.g., SF * 0.
 
 ---
 *This document ensures that the 'Million Miles an Hour' pace does not outrun the 'Technical Integrity' of the Eagle Sign Co. standards.*
+
 
 
 
