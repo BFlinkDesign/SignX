@@ -22,6 +22,7 @@ import pytest
 sys.path.insert(0, ".")
 
 from abc_engine import (
+    estimate_building,
     CabinetFace,
     CabinetFrame,
     CabinetShape,
@@ -745,7 +746,7 @@ def test_building_extrusion_total_man_hours_locked():
         construction_method="extrusion",
         return_depth_in=9.0
     )
-    r = estimate(job)
+    r = estimate_building(job)
     # Factual result verified by Gemini 2026-03-02
     assert r.total_man_hours == pytest.approx(15.37, abs=0.01)
     assert "202-0390" in str(r.material_bom)

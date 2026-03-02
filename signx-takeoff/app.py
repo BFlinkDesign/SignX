@@ -68,6 +68,7 @@ from abc_engine import (
     estimate_directional,
     estimate_monument,
     estimate_pylon,
+    estimate_building,
     estimate_removal,
     get_footage_chart,
     interpolate_pf,
@@ -296,7 +297,7 @@ async def run_estimate(req: EstimateRequest):
     if req.height_inches > 0:
         job.letter_height_inches = req.height_inches
 
-    result = estimate(job)
+    result = estimate_building(job)
     total_est_hours = result.total_man_hours + result.total_crew_hours
     bench = benchmark(total_est_hours, sign_type_filter="CHANNEL_LETTER")
     bench_data = _format_benchmark(bench) if bench else None
@@ -486,7 +487,7 @@ async def run_building_estimate(req: BuildingRequest):
         miles_one_way=req.miles,
         crew_size=req.crew_size,
     )
-    result = abc_engine.estimate_building(job)
+    result = estimate_building(job)
     total_est_hours = result.total_man_hours + result.total_crew_hours
     bench = benchmark(total_est_hours, sign_type_filter="BUILDING")
     bench_data = _format_benchmark(bench) if bench else None
@@ -1198,7 +1199,7 @@ async def run_notion_takeoff(req: TakeoffRequest):
                 letter_height_inches=12.0,
                 logo_pf=defaults.get("logo_pf", 0.0),
             )
-            result = estimate(job)
+            result = estimate_building(job)
         elif est_key == "monument":
             job = JobInput(
                 sign_type=SignType.MONDF if faces >= 2 else SignType.MONSF,
