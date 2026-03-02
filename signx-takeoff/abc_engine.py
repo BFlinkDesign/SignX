@@ -90,45 +90,6 @@ def reload_calibration() -> dict[str, Any]:
     _CALIBRATION = {}
     return _load_calibration()
 
-def _cal_install_floor(sign_type: str) -> float:
-    """Get install floor from calibration, falling back to INSTALL_FLOOR dict."""
-    cal = _CALIBRATION or _load_calibration()
-    floors = cal.get("install_floors", {})
-    if sign_type in floors:
-        return floors[sign_type]["value"]
-    return INSTALL_FLOOR.get(sign_type, cal.get("defaults", {}).get("install_floor", 4.80))
-
-def _cal_removal_floor(sign_type: str) -> float:
-    """Get removal floor from calibration, falling back to REMOVAL_FLOOR dict."""
-    cal = _CALIBRATION or _load_calibration()
-    floors = cal.get("removal_floors", {})
-    if sign_type in floors:
-        return floors[sign_type]["value"]
-    return REMOVAL_FLOOR.get(sign_type, cal.get("defaults", {}).get("removal_floor", REMOVAL_DEFAULT))
-
-def _cal_ot_factors(sign_type: str) -> tuple[float, float, float, float, float]:
-    """Get OT factors from calibration, falling back to OT_FACTORS dict."""
-    cal = _CALIBRATION or _load_calibration()
-    ot = cal.get("ot_factors", {}).get(sign_type, {})
-    if ot:
-        return (
-            ot.get("fab_ot_probability", 0.0),
-            ot.get("fab_ot_mean", 0.0),
-            ot.get("install_ot_probability", 0.0),
-            ot.get("install_ot_mean", 0.0),
-            ot.get("expected_total", 0.0),
-        )
-    # Fallback to hardcoded OT_FACTORS
-    return OT_FACTORS.get(sign_type, (0.0, 0.0, 0.0, 0.0, 0.0))
-
-def _cal_work_code_median(sign_type: str, work_code: str) -> float | None:
-    """Get warehouse P50 for a sign_type + work_code from calibration."""
-    cal = _CALIBRATION or _load_calibration()
-    medians = cal.get("work_code_medians", {})
-    if sign_type in medians and work_code in medians[sign_type]:
-        return medians[sign_type][work_code]["p50"]
-    return None
-
 # Initialize calibration on import
 _load_calibration()
 
