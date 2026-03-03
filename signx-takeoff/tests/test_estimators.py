@@ -51,12 +51,13 @@ def _channel_job(letter_count=10, height=18.0, font=FontType.BLOCK):
 
 
 def _monument_job(sf_per_face=32.0, num_faces=2, illuminated=False):
-    """Monument sign: DF by default, SF per face."""
+    """Monument sign: DF by default, SF per face. Vinyl graphics included (standard)."""
     job = JobInput()
     job.sign_type = SignType.MONDF
     job.num_faces = num_faces
     job.sign_sf_per_face = sf_per_face
     job.is_illuminated = illuminated
+    job.has_vinyl = True  # monuments always have vinyl copy
     return job
 
 
@@ -78,7 +79,7 @@ def _removal_job(sign_type=SignType.CLLIT, num_units=1):
 
 
 def _pylon_job(sf_per_face=48.0, num_faces=2, height_ft=25.0, footing=True):
-    """Pylon sign job (illuminated)."""
+    """Pylon sign job (illuminated, with vinyl face copy — standard)."""
     job = JobInput()
     job.sign_type = SignType.POLLIT
     job.num_faces = num_faces
@@ -86,11 +87,12 @@ def _pylon_job(sf_per_face=48.0, num_faces=2, height_ft=25.0, footing=True):
     job.install_height_ft = height_ft
     job.has_footing = footing
     job.is_illuminated = True
+    job.has_vinyl = True  # pylon faces typically carry vinyl copy
     return job
 
 
 def _polnon_job(sf_per_face=48.0, num_faces=2, height_ft=25.0, footing=True):
-    """Pole sign job (non-illuminated)."""
+    """Pole sign job (non-illuminated, with vinyl face copy — standard)."""
     job = JobInput()
     job.sign_type = SignType.POLNON
     job.num_faces = num_faces
@@ -98,16 +100,18 @@ def _polnon_job(sf_per_face=48.0, num_faces=2, height_ft=25.0, footing=True):
     job.install_height_ft = height_ft
     job.has_footing = footing
     job.is_illuminated = False
+    job.has_vinyl = True  # pylon faces typically carry vinyl copy
     return job
 
 
 def _cabinet_job(sf_per_face=24.0, num_faces=1, illuminated=True):
-    """Aluminum cabinet job."""
+    """Aluminum cabinet job. Vinyl face graphics included (standard for cabinets)."""
     job = JobInput()
     job.sign_type = SignType.ALULIT
     job.num_faces = num_faces
     job.sign_sf_per_face = sf_per_face
     job.is_illuminated = illuminated
+    job.has_vinyl = True  # cabinet faces carry vinyl or printed graphics
     return job
 
 

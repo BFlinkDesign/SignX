@@ -188,6 +188,7 @@ class SignType(str, Enum):
     BLDILL = "BLDILL"     # Building Illuminated
     BLDNON = "BLDNON"     # Building Non-Illuminated
     AWNNON = "AWNNON"     # Awning Non-Illuminated
+    AWNILL = "AWNILL"     # Awning Illuminated (LED strip, backlit valance)
     GEMINI = "GEMINI"     # Dimensional Letters
     LED = "LED"           # LED Conversion/Retrofit
     ALULIT = "ALULIT"     # Aluminum Cabinet Illuminated
@@ -432,6 +433,7 @@ INSTALL_FLOOR: dict[str, float] = {
     "MONSF":  8.40,   # warehouse P50=7.00 × 1.20 = 8.40, n=45
     "DIRECT": 7.20,   # warehouse P50=6.00 × 1.20 = 7.20, n=163
     "AWNNON": 9.75,   # warehouse P50=8.13 × 1.20 = 9.76, n=66
+    "AWNILL": 9.75,   # same install floor as AWNNON (warehouse P50=2.50h, n=115 → 3.00h x 1.2buffer reused)
     "GEMINI": 4.20,   # warehouse P50=3.50 × 1.20 = 4.20, n=104
     "LED":    4.50,   # warehouse P50=3.75 × 1.20 = 4.50, n=47
     "ALULIT": 4.80,   # warehouse P50=4.00 × 1.20 = 4.80, n=3 [LOW CONFIDENCE]
@@ -465,6 +467,7 @@ REMOVAL_FLOOR: dict[str, float] = {
     "CLNON":  1.50,   # warehouse P50=1.25 x 1.20, n=8,   calibrated 2026-02
     "BLDNON": 3.60,   # warehouse P50=3.00 x 1.20, n=5,   calibrated 2026-02
     "AWNNON": 3.00,   # warehouse P50=2.50 x 1.20, n=4,   calibrated 2026-02
+    "AWNILL": 3.00,   # same removal floor as AWNNON
     "MONSF": 10.20,   # warehouse P50=8.50 x 1.20, n=3,   calibrated 2026-02 [HIGH VARIANCE]
 }
 REMOVAL_DEFAULT = 2.40  # Overall P50 ~2.0 x 1.20 (Tier 3 fallback)
@@ -562,6 +565,42 @@ MONDF_0630_MEDIAN_LIT = 5.13      # 1-man install (n=10, LIT median)
 MONDF_0630_MEDIAN = 3.63          # Default to NONLIT (most common)
 MONDF_0625_MEDIAN = 2.00          # Removal (n=23, NONLIT median)
 MONDF_0620_MEDIAN_NONLIT = 1.38   # Travel (n=61, NONLIT median)
+
+# ── MONSF Correction Factors ──────────────────────────────────────────────────
+# Source: calibration.json MONSF P50s (n=189 jobs, calibrated 2026-03-02).
+# MONSF is a single-face cabinet — fundamentally less extrusion and routing work
+# than MONDF. The MONDF factors significantly over-estimate MONSF jobs.
+# Method: target = P50 × 1.20 buffer; factor = target / ABC_formula_output at 32SF.
+# LIT MONSF has limited data — factors are provisional.
+MONSF_CORRECTION_NONLIT: dict[str, Optional[float]] = {
+    # 0200 handled inline (MONSF corr_200 = 1.0; ABC 1.50h ≈ P50=1.25h × 1.20)
+    "0210": 0.32,   # Sheet Metal — wh P50=2.25h x1.20 / ABC 8.39h (n=50)
+    "0215": 0.32,   # Structural Steel — reuse 0210 MONSF factor (provisional)
+    "0220": 0.48,   # Extrusions — wh P50=2.25h x1.20 / ABC 5.60h (n=239, dominant code)
+    "0235": 0.61,   # Routing — wh P50=1.50h x1.20 / ABC 2.94h (n=75)
+    "0270": 0.36,   # Misc Fab — wh P50=1.75h x1.20 / ABC 5.89h (n=277)
+    "0410": 0.58,   # Clean & Etch — wh P50=0.75h x1.20 / ABC 1.54h (n=188)
+    "0420": 0.78,   # Prime & Finish — wh P50=1.00h x1.20 / ABC 1.54h (n=143)
+    "0630": None,   # 1-Man Install — use warehouse median directly
+}
+
+MONSF_CORRECTION_LIT: dict[str, Optional[float]] = {
+    # Same structure; lit MONSF is rare so use nonlit factors with higher multipliers
+    "0210": 0.54,   # [PROVISIONAL — reuse MONDF LIT factor]
+    "0215": 0.54,   # [PROVISIONAL]
+    "0220": 0.72,   # [PROVISIONAL — slightly higher than NONLIT for lit wiring frame]
+    "0235": 0.82,   # [PROVISIONAL]
+    "0270": 0.55,   # [PROVISIONAL]
+    "0310": 1.65,   # Electrical Wiring — wh P50=2.25h x1.20 / ABC 1.64h (n=59)
+    "0340": 1.83,   # Electrical Wiring — wh P50=2.50h x1.20 / ABC 1.64h (n=29)
+    "0410": 0.80,   # [PROVISIONAL]
+    "0420": 0.85,   # [PROVISIONAL]
+    "0630": None,   # 1-Man Install — use warehouse median directly
+}
+
+# MONSF install medians (from calibration.json: MONSF 0630 P50=2.50h × 1.20 = 3.00h)
+MONSF_0630_MEDIAN_NONLIT = 3.00   # 1-man install (P50=2.50h x1.20, n=295)
+MONSF_0620_MEDIAN = 0.60          # Travel (P50=0.50h x1.20, n=248)
 
 # OT factors — MEDIAN ratios from warehouse (not averages)
 MONDF_OT_FAB_NONLIT = 0.051       # 5.1% of fab hrs (n=207, median)
@@ -706,6 +745,7 @@ WORKFLOW_SEQUENCES: dict[str, list[str]] = {
     'POLLIT': ['0110', '0200', '0215', '0220', '0340', '0420', '0605', '0650'],
     'POLNON': ['0110', '0200', '0215', '0220', '0420', '0605', '0650'],
     'AWNNON': ['0110', '0200', '0250', '0270', '0610', '0620', '0630'],
+    'AWNILL': ['0110', '0200', '0250', '0270', '0310', '0610', '0620', '0630'],
 }
 
 
@@ -1174,14 +1214,13 @@ class JobInput:
     cabinet_shape: CabinetShape = CabinetShape.RECTANGULAR
     cabinet_frame: CabinetFrame = CabinetFrame.LIGHT
 
-    # Unified Takeoff Fields
+    # Unified Takeoff Fields (general defaults — all estimators use these)
     construction_method: str = "stick"
-    sign_sf_per_face: float = 0.0
-    num_faces: int = 1
-    is_illuminated: bool = True
-    has_vinyl: bool = False
-    has_structural_steel: bool = False
-    has_footing: bool = False
+    num_faces: int = 1             # Default single-face; monuments pass 2 explicitly
+    sign_sf_per_face: float = 0.0  # Square feet per face (for SF-based estimators)
+    has_vinyl: bool = False        # Has vinyl graphics — includes 0520, 0550
+    has_structural_steel: bool = False  # Steel posts/beams (vs aluminum tube/angle)
+    has_footing: bool = False      # Self-performed footing (vs sub)
     return_depth_in: Optional[float] = None
     standoff_in: float = 0.0
 
@@ -1193,14 +1232,9 @@ class JobInput:
     install_mount_type: str = "wall"  # wall, roof, pipe
     is_first_sign: bool = True
 
-    # Monument-specific fields (for estimate_monument)
+    # Monument/Pylon-specific fields
     is_illuminated: bool = False   # Has LED/electrical — includes 0260, 0310, 0340
-    has_vinyl: bool = True         # Has vinyl graphics — includes 0520, 0550
-    has_structural_steel: bool = False  # Steel posts/beams (vs aluminum tube/angle)
-    has_footing: bool = False      # Self-performed footing (vs sub)
     footing_sub_cost: float = 0.0  # Subcontracted footing cost ($)
-    num_faces: int = 2             # D/F=2, S/F=1
-    sign_sf_per_face: float = 0.0  # Square feet per face (for Section 2/5A calc)
 
 
 @dataclass
@@ -1338,7 +1372,11 @@ def estimate(job: JobInput) -> EstimateResult:
         face_sf = total_pf * job.letter_height_inches / 24.0 if job.letter_height_inches > 0 else total_pf * 0.5
 
     # ── Get rates ────────────────────────────────────────────────────────
+
     construction = job.construction
+    if job.sign_type == SignType.CLNON:
+        construction = 'non_illuminated'
+
     if construction == ConstructionType.OPEN_FACE:
         construction = ConstructionType.FACE_LIT
 
@@ -1653,9 +1691,13 @@ def estimate_monument(job: JobInput) -> EstimateResult:
     install: list[LaborLine] = []
     fab_total = 0.0  # Track for OT calc
 
-    # ── Select correction factors by illumination ──────────────────────
+    # ── Select correction factors by sign type + illumination ──────────
     seg_label = "LIT" if job.is_illuminated else "NONLIT"
-    corr_table = MONDF_CORRECTION_LIT if job.is_illuminated else MONDF_CORRECTION_NONLIT
+    is_monsf = (job.sign_type == SignType.MONSF)
+    if is_monsf:
+        corr_table = MONSF_CORRECTION_LIT if job.is_illuminated else MONSF_CORRECTION_NONLIT
+    else:
+        corr_table = MONDF_CORRECTION_LIT if job.is_illuminated else MONDF_CORRECTION_NONLIT
 
     def corrected(code: str, abc_hrs: float) -> float:
         factor = corr_table.get(code)
@@ -1690,16 +1732,21 @@ def estimate_monument(job: JobInput) -> EstimateResult:
         section="Standard",
     ))
 
-    # ── 0200 Fab Layout (correction: lit=3.6x, non-lit=1.75x from warehouse)
+    # ── 0200 Fab Layout ────────────────────────────────────────────────
     abc_200 = FAB_LAYOUT_HOURS
-    corr_200 = 3.6 if job.is_illuminated else 1.75  # nonlit: med 2.63h / 1.50h base
+    if is_monsf:
+        # MONSF: P50=1.25h x 1.20 = 1.50h. ABC 1.50h already matches.
+        corr_200 = 1.0
+    else:
+        # MONDF: nonlit=1.75x (med 2.63h / 1.50h base), lit=3.6x
+        corr_200 = 3.6 if job.is_illuminated else 1.75
     hrs_200 = abc_200 * corr_200
     labor.append(LaborLine(
         work_code="0200", description="Fabrication Layout",
         hours=round(hrs_200, 2), unit_type="man-hrs",
         department="Fabrication (200)",
-        formula=f"ABC {abc_200:.2f}h x {corr_200} ({'lit' if job.is_illuminated else 'non-lit'})",
-        section=f"Std x MONDF {corr_200}x",
+        formula=f"ABC {abc_200:.2f}h x {corr_200} ({'MONSF' if is_monsf else seg_label})",
+        section=f"Std x {'MONSF' if is_monsf else 'MONDF'} {corr_200}x",
     ))
     fab_total += hrs_200
 
@@ -1809,18 +1856,29 @@ def estimate_monument(job: JobInput) -> EstimateResult:
     # ── Vinyl (if applicable) ─────────────────────────────────────────
     if job.has_vinyl:
         vinyl_sf = total_sf
+        if is_monsf:
+            # MONSF: P50=0.50h for 0520/0550 (n=171/113). Use SF-scaling with P50 floor.
+            hrs_520 = max(0.50, round(vinyl_sf * 0.05, 2))
+            hrs_550 = max(0.50, round(vinyl_sf * 0.07, 2))
+            v_formula_520 = f"max(0.50, {vinyl_sf:.1f} SF x 0.05) [MONSF P50=0.50h]"
+            v_formula_550 = f"max(0.50, {vinyl_sf:.1f} SF x 0.07) [MONSF P50=0.50h]"
+        else:
+            hrs_520 = round(1.0 + vinyl_sf * 0.02, 2)
+            hrs_550 = round(1.0 + vinyl_sf * 0.03, 2)
+            v_formula_520 = f"1.0 + ({vinyl_sf:.1f} SF x 0.02)"
+            v_formula_550 = f"1.0 + ({vinyl_sf:.1f} SF x 0.03)"
         labor.append(LaborLine(
             work_code="0520", description="Cut / Weed Vinyl",
-            hours=round(1.0 + vinyl_sf * 0.02, 2), unit_type="man-hrs",
+            hours=hrs_520, unit_type="man-hrs",
             department="Vinyl (500)",
-            formula=f"1.0 + ({vinyl_sf:.1f} SF x 0.02)",
+            formula=v_formula_520,
             section="Est (vinyl/SF)",
         ))
         labor.append(LaborLine(
             work_code="0550", description="Vinyl Application",
-            hours=round(1.0 + vinyl_sf * 0.03, 2), unit_type="man-hrs",
+            hours=hrs_550, unit_type="man-hrs",
             department="Vinyl (500)",
-            formula=f"1.0 + ({vinyl_sf:.1f} SF x 0.03)",
+            formula=v_formula_550,
             section="Est (vinyl/SF)",
         ))
 
@@ -1849,13 +1907,17 @@ def estimate_monument(job: JobInput) -> EstimateResult:
     ))
 
     # 0620 Travel (batch-aware) — warehouse median when no distance given
-    _tl = _make_travel_line(job, fallback_hrs=MONDF_0620_MEDIAN_NONLIT,
-                            fallback_formula=f"Warehouse median {MONDF_0620_MEDIAN_NONLIT}h (n=61, NONLIT)")
+    travel_fb = MONSF_0620_MEDIAN if is_monsf else MONDF_0620_MEDIAN_NONLIT
+    _tl = _make_travel_line(job, fallback_hrs=travel_fb,
+                            fallback_formula=f"Warehouse median {travel_fb}h ({'MONSF' if is_monsf else 'MONDF NONLIT'})")
     if _tl:
         install.append(_tl)
 
     # 0630 1-Man Install — warehouse median by segment (no floor override)
-    install_median = MONDF_0630_MEDIAN_LIT if job.is_illuminated else MONDF_0630_MEDIAN_NONLIT
+    if is_monsf:
+        install_median = MONSF_0630_MEDIAN_NONLIT   # MONSF has no lit-specific median yet
+    else:
+        install_median = MONDF_0630_MEDIAN_LIT if job.is_illuminated else MONDF_0630_MEDIAN_NONLIT
     install_hrs = install_median
 
     install.append(LaborLine(
@@ -2050,9 +2112,23 @@ def estimate_awning(job: JobInput) -> EstimateResult:
         section="Standard",
     ))
 
+    # ── 0200 Fab Layout (AWNILL only — warehouse P50=3.00h, n=109) ────
+    is_illuminated_awning = (job.sign_type == SignType.AWNILL or job.is_illuminated)
+    if is_illuminated_awning:
+        hrs_200 = max(3.00, total_sf * 0.08)
+        labor.append(LaborLine(
+            work_code="0200", description="Fabrication Layout",
+            hours=round(hrs_200, 2), unit_type="man-hrs",
+            department="Fabrication (200)",
+            formula=f"AWNILL: max(3.00, {total_sf:.1f}SF x 0.08) = {hrs_200:.2f}h  [warehouse P50=3.00h, n=109]",
+            section="AWNILL warehouse",
+        ))
+        fab_total = hrs_200
+    else:
+        fab_total = 0.0
+
     # ── Fabrication codes (SF-based) ──────────────────────────────────
     fab_codes = ['0250', '0260', '0270']
-    fab_total = 0.0
     for code in fab_codes:
         rate = AWNING_LABOR_PER_SF.get(code, 0.0)
         if rate <= 0:
@@ -2067,6 +2143,18 @@ def estimate_awning(job: JobInput) -> EstimateResult:
             section="Awning (Eagle actuals)",
         ))
         fab_total += hrs
+
+    # ── 0310 Electrical (AWNILL only — LED strip/driver wiring) ──────
+    if is_illuminated_awning:
+        hrs_310 = max(1.50, total_sf * 0.04)
+        labor.append(LaborLine(
+            work_code="0310", description="Electrical Wiring",
+            hours=round(hrs_310, 2), unit_type="man-hrs",
+            department="Fabrication (300)",
+            formula=f"AWNILL: max(1.50, {total_sf:.1f}SF x 0.04) = {hrs_310:.2f}h  [LED driver/strip wiring]",
+            section="AWNILL warehouse",
+        ))
+        fab_total += hrs_310
 
     # ── 0282 Check-In Freight ─────────────────────────────────────────
     freight_rate = AWNING_LABOR_PER_SF.get('0282', 0.004)
@@ -2769,8 +2857,9 @@ def estimate_directional(job: JobInput) -> EstimateResult:
     Directional signs are typically small aluminum panels with vinyl graphics
     on posts. Simple fab, simple install.
 
-    [PROVISIONAL] — no ABC section. All rates derived from warehouse P50 (n=162).
-    Uses INSTALL_FLOOR["DIRECT"] = 7.20h and OT_FACTORS["DIRECT"].
+    Rates derived from warehouse P50 (n=759 jobs, calibrated 2026-03-02).
+    Primary fab code: 0220 Extrusions (n=479, 63% of DIRECT jobs).
+    Install floor auto-loaded from calibration.json (P50=1.75h x 1.20 = 2.10h).
 
     Requires sign_sf_per_face > 0 on JobInput (or width/height via app.py).
     """
@@ -2793,98 +2882,106 @@ def estimate_directional(job: JobInput) -> EstimateResult:
     fab_total = 0.0
 
     # ── 0110 Design ──────────────────────────────────────────────────────
+    # Warehouse P50=0.50h (n=249) — directionals need minimal design work
     labor.append(LaborLine(
         work_code="0110", description="Design / Drafting",
-        hours=1.00, unit_type="man-hrs",
+        hours=0.50, unit_type="man-hrs",
         department="Art/Design (100)",
-        formula="1.00h standard [PROVISIONAL]",
+        formula="0.50h warehouse P50 (n=249)",
         section="DIRECT warehouse",
     ))
 
     # ── 0200 Fab Layout ──────────────────────────────────────────────────
-    hrs_200 = 1.00
+    # Warehouse P50=0.75h x 1.20 buffer = 0.90h (n=305)
+    hrs_200 = 0.90
     labor.append(LaborLine(
         work_code="0200", description="Fabrication Layout",
         hours=hrs_200, unit_type="man-hrs",
         department="Fabrication (200)",
-        formula="1.00h simple layout [PROVISIONAL]",
+        formula="0.90h (P50=0.75 x 1.20, n=305)",
         section="DIRECT warehouse",
     ))
     fab_total += hrs_200
 
-    # ── 0210 Sheet Metal ─────────────────────────────────────────────────
-    hrs_210 = round(total_sf * 0.15, 2)
+    # ── 0220 Extrusions (primary fab code for directionals) ───────────────
+    # Directionals use aluminum extrusion frames (0220), not sheet metal (0210).
+    # Warehouse P50=1.75h (n=479, 63% of DIRECT jobs). 0210 only in 15% of jobs.
+    # Scale with SF for larger directory boards.
+    hrs_220 = max(2.10, round(total_sf * 0.14, 2))   # P50 x 1.20 = 2.10h base
     labor.append(LaborLine(
-        work_code="0210", description="Sheet Metal",
-        hours=hrs_210, unit_type="man-hrs",
+        work_code="0220", description="Extrusions",
+        hours=hrs_220, unit_type="man-hrs",
         department="Fabrication (200)",
-        formula=f"{total_sf:.1f} SF x 0.15 (simple flat panel) [PROVISIONAL]",
+        formula=f"max(2.10, {total_sf:.1f} SF x 0.14) [P50=1.75h x 1.20 buffer]",
         section="DIRECT warehouse",
     ))
-    fab_total += hrs_210
+    fab_total += hrs_220
 
     # ── 0235 Routing (if routed — many directionals are not) ─────────────
-    hrs_235 = round(total_sf * 0.08, 2)
+    hrs_235 = round(total_sf * 0.06, 2)
     if hrs_235 >= 0.25:
         labor.append(LaborLine(
             work_code="0235", description="Routing",
             hours=hrs_235, unit_type="man-hrs",
             department="Fabrication (200)",
-            formula=f"{total_sf:.1f} SF x 0.08 (if routed) [PROVISIONAL]",
+            formula=f"{total_sf:.1f} SF x 0.06 (if routed) [P50=0.75h n=253]",
             section="DIRECT warehouse",
         ))
         fab_total += hrs_235
 
     # ── 0270 Misc Fab (brackets, posts) ──────────────────────────────────
-    hrs_270 = round(total_sf * 0.10, 2)
+    # Warehouse P50=1.25h x 1.20 = 1.50h (n=757, 99% of DIRECT jobs)
+    hrs_270 = max(1.50, round(total_sf * 0.10, 2))
     labor.append(LaborLine(
         work_code="0270", description="Misc Fabrication",
-        hours=max(hrs_270, 0.50), unit_type="man-hrs",
+        hours=hrs_270, unit_type="man-hrs",
         department="Fabrication (200)",
-        formula=f"{total_sf:.1f} SF x 0.10 (brackets, posts) [PROVISIONAL]",
+        formula=f"max(1.50, {total_sf:.1f} SF x 0.10) [P50=1.25h x 1.20 n=757]",
         section="DIRECT warehouse",
     ))
-    fab_total += max(hrs_270, 0.50)
+    fab_total += hrs_270
 
-    # ── 0410 Clean & Etch (Section 5A rates) ─────────────────────────────
-    paint_rate = SECTION_5A_RATES.get(job.paint_colors, SECTION_5A_RATES[1])
+    # ── 0410 Clean & Etch ─────────────────────────────────────────────────
+    # Warehouse P50=0.50h (n=674). Section 5A formula over-estimates for small flat panels.
     paint_sf = job.paint_sf if job.paint_sf > 0 else total_sf
-
-    hrs_410 = round(paint_rate["constant"] + (paint_sf * paint_rate["labor"]), 2)
+    hrs_410 = max(0.50, round(paint_sf * 0.05, 2))
     labor.append(LaborLine(
         work_code="0410", description="Clean & Etch",
         hours=hrs_410, unit_type="man-hrs",
         department="Paint/Finish (400)",
-        formula=f"Sec5A: {paint_rate['constant']} + ({paint_sf:.1f} SF x {paint_rate['labor']})",
-        section=f"5A ({job.paint_colors} color)",
+        formula=f"max(0.50, {paint_sf:.1f} SF x 0.05) [P50=0.50h n=674]",
+        section="DIRECT warehouse",
     ))
 
-    # ── 0420 Prime & Finish (Section 5A rates) ───────────────────────────
-    hrs_420 = round(paint_rate["constant"] + (paint_sf * paint_rate["labor"]), 2)
+    # ── 0420 Prime & Finish ───────────────────────────────────────────────
+    # Warehouse P50=1.00h (n=596). Scale modestly with SF.
+    hrs_420 = max(0.75, round(paint_sf * 0.07, 2))
     labor.append(LaborLine(
         work_code="0420", description="Prime & Finish",
         hours=hrs_420, unit_type="man-hrs",
         department="Paint/Finish (400)",
-        formula=f"Sec5A: {paint_rate['constant']} + ({paint_sf:.1f} SF x {paint_rate['labor']})",
-        section=f"5A ({job.paint_colors} color)",
+        formula=f"max(0.75, {paint_sf:.1f} SF x 0.07) [P50=1.00h n=596]",
+        section="DIRECT warehouse",
     ))
 
     # ── Vinyl (if applicable) ────────────────────────────────────────────
+    # Warehouse P50=0.50h for both 0520 and 0550. Old formula (1.0 + SF*rate)
+    # had excessive constant overhead. Use SF-based scaling with P50 floor.
     if job.has_vinyl:
-        hrs_520 = round(1.0 + total_sf * 0.03, 2)
+        hrs_520 = max(0.50, round(total_sf * 0.06, 2))
         labor.append(LaborLine(
             work_code="0520", description="Cut / Weed Vinyl",
             hours=hrs_520, unit_type="man-hrs",
             department="Vinyl (500)",
-            formula=f"1.0 + ({total_sf:.1f} SF x 0.03) [PROVISIONAL]",
+            formula=f"max(0.50, {total_sf:.1f} SF x 0.06) [P50=0.50h n=991]",
             section="DIRECT warehouse",
         ))
-        hrs_550 = round(1.0 + total_sf * 0.04, 2)
+        hrs_550 = max(0.50, round(total_sf * 0.08, 2))
         labor.append(LaborLine(
             work_code="0550", description="Vinyl Application",
             hours=hrs_550, unit_type="man-hrs",
             department="Vinyl (500)",
-            formula=f"1.0 + ({total_sf:.1f} SF x 0.04) [PROVISIONAL]",
+            formula=f"max(0.50, {total_sf:.1f} SF x 0.08) [P50=0.50h n=891]",
             section="DIRECT warehouse",
         ))
 
@@ -2912,12 +3009,12 @@ def estimate_directional(job: JobInput) -> EstimateResult:
     ))
 
     # 0620 Travel (batch-aware)
-    _tl = _make_travel_line(job, fallback_hrs=1.50,
-                            fallback_formula="Warehouse median 1.50h (DIRECT P50)")
+    _tl = _make_travel_line(job, fallback_hrs=0.60,
+                            fallback_formula="0.60h (P50=0.50h x 1.20, DIRECT n=705)")
     if _tl:
         install.append(_tl)
 
-    # 0630 1-Man Install — INSTALL_FLOOR["DIRECT"] = 7.20h
+    # 0630 1-Man Install — INSTALL_FLOOR["DIRECT"] auto-loaded from calibration.json
     install_hrs = INSTALL_FLOOR.get("DIRECT", 7.20)
     install.append(LaborLine(
         work_code="0630", description="1 Man & Truck - Install",
@@ -3300,30 +3397,81 @@ def estimate_flatpanel(job: JobInput) -> EstimateResult:
     )
     return result
 
+
 def estimate_building(job: JobInput) -> EstimateResult:
+    """
+    Estimate labor for a Building Sign (BLDILL/BLDNON).
+    Refined with Task 28 Warehouse Research (n=1301).
+    """
     total_sf = job.sign_sf_per_face * job.num_faces
-    result = EstimateResult(total_pf=0.0, pf_source="N/A", construction=f"building_{job.construction_method or 'stick'}", height_category="N/A", letter_count=0)
-    if total_sf <= 0: return result
     
-    labor = [LaborLine("0110", "Design/Drafting", 1.0, "man-hrs", "100", "Standard", "Standard")]
+    result = EstimateResult(
+        total_pf=0.0,
+        pf_source="N/A (building — Component Takeoff)",
+        construction=f"building_{job.construction_method or 'stick'}",
+        height_category="N/A",
+        letter_count=0
+    )
+
+    if total_sf <= 0:
+        result.warnings.append("sign_sf_per_face required for building estimate.")
+        return result
+
+    labor = []
     
-    if job.construction_method in ["extrusion", "thin_frame"]:
+    # -- 0110 Design/Drafting (Warehouse P50: 0.75h)
+    labor.append(LaborLine("0110", "Design/Drafting", 0.75, "man-hrs", "100", "Warehouse P50", "Warehouse"))
+
+    # -- 0200 Layout (Warehouse P50: 1.25h)
+    labor.append(LaborLine("0200", "Fabrication Layout", 1.25, "man-hrs", "200", "Warehouse P50", "Warehouse"))
+
+    # -- Construction Logic (Stick vs Extrusion)
+    is_extrusion = (job.construction_method in ["extrusion", "thin_frame"])
+    
+    if is_extrusion:
+        import math
+        # Perimeter LF for 0220 Extrusions
         approx_h = math.sqrt(total_sf) * 1.5
-        perimeter_lf = 2 * (approx_h + (total_sf / approx_h if approx_h > 0 else 0))
-        labor.append(LaborLine("0220", "Extrusions", round(perimeter_lf * 0.208, 2), "man-hrs", "200", "Sec 2E", "Section 2E"))
-        ext_type = "LED_THIN_FRAME" if job.construction_method == "thin_frame" else ("ABC_EXTRUSION_9" if (job.return_depth_in or 0) > 7 else "ABC_EXTRUSION_7")
+        approx_w = total_sf / approx_h if approx_h > 0 else 0
+        perimeter_lf = 2 * (approx_h + approx_w)
+        
+        # Labor 0220 (Warehouse P50: 2.0h per segment, scaling with LF)
+        hrs_220 = max(2.0, perimeter_lf * 0.15)
+        labor.append(LaborLine("0220", "Extrusions", round(hrs_220, 2), "man-hrs", "200", f"{perimeter_lf:.1f} LF @ scale", "Warehouse"))
+        
+        # BOM
+        if job.construction_method == "thin_frame":
+            ext_type = "LED_THIN_FRAME"
+        else:
+            ext_type = "ABC_EXTRUSION_9" if (job.return_depth_in or 0) > 7 else "ABC_EXTRUSION_7"
         result.material_bom.append(f"{EAGLE_INVENTORY[ext_type]}: {perimeter_lf:.1f} LF")
     else:
-        labor.append(LaborLine("0210", "Frame", round(total_sf * 0.228, 2), "man-hrs", "200", "Sec 2", "Section 2"))
+        # Stick Build (0210 Sheet Metal / Frame)
+        hrs_210 = max(1.5, total_sf * 0.18)
+        labor.append(LaborLine("0210", "Sheet Metal / Frame", round(hrs_210, 2), "man-hrs", "200", f"{total_sf:.1f} SF @ scale", "Warehouse"))
         result.material_bom.append(f"{EAGLE_INVENTORY['ALUM_ANGLE']}: Frame Stock")
-        
-    labor.append(LaborLine("0260", "Faces (Assembly)", 1.75, "man-hrs", "200", "P50", "Warehouse"))
-    if job.is_illuminated: labor.append(LaborLine("0310", "Electrical", round(total_sf * 0.08, 2), "man-hrs", "300", "Std", "Standard"))
-    inst_hrs = 2.25 if job.is_illuminated else 1.75
-    labor.append(LaborLine("0630", "Installation", inst_hrs, "man-hrs", "600", "P50", "Warehouse"))
+
+    # -- 0260 Assembly / Faces (Warehouse P50: 0.75h floor, scaling with SF)
+    hrs_260 = max(0.75, total_sf * 0.05)
+    labor.append(LaborLine("0260", "Assembly / Faces", round(hrs_260, 2), "man-hrs", "200", "Warehouse-derived scale", "Warehouse"))
     
+    # -- 0270 Fabrication (Warehouse P50: 1.5h floor)
+    hrs_270 = max(1.5, total_sf * 0.10)
+    labor.append(LaborLine("0270", "Fabrication", round(hrs_270, 2), "man-hrs", "200", "Warehouse-derived scale", "Warehouse"))
+
+    # -- 0310 Electrical (If Illuminated)
+    if job.is_illuminated:
+        elec_hrs = max(1.5, total_sf * 0.08)
+        labor.append(LaborLine("0310", "Electrical Wiring", round(elec_hrs, 2), "man-hrs", "300", "Standard scale", "Standard"))
+
+    # -- 0630 Install (Warehouse P50 floor)
+    inst_hrs = 2.25 if job.is_illuminated else 1.75
+    labor.append(LaborLine("0630", "Installation", inst_hrs, "man-hrs", "600", f"P50 floor {inst_hrs}h", "Warehouse"))
+
     result.labor_lines = labor
-    result.total_man_hours = sum(l.hours for l in labor)
+    result.total_man_hours = round(sum(l.hours for l in labor), 2)
+    result.summary_string = f"{result.total_man_hours:.1f}h total | {result.construction}"
+    
     result.warnings.extend(validate_bom_parts(result.material_bom))
     return result
 

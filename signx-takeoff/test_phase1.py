@@ -35,7 +35,7 @@ def test_sign_type_enum_members():
     """All expected SignType enum members are present."""
     expected_types = {
         "CLLIT", "CLNON", "MONDF", "MONSF", "POLLIT", "POLNON", "DIRECT",
-        "BLDILL", "BLDNON", "AWNNON", "GEMINI", "LED",
+        "BLDILL", "BLDNON", "AWNNON", "AWNILL", "GEMINI", "LED",
         "ALULIT", "ALUNON", "VINYL", "NEON", "FLATPNL", "OTHER",
     }
     actual = {s.value for s in SignType}

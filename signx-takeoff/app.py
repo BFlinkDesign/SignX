@@ -350,6 +350,7 @@ class AwningRequest(BaseModel):
     install_height_ft: float = Field(10.0, description="Bottom of awning (ft)")
     miles: float = Field(0.0, description="One-way travel miles")
     crew_size: int = Field(2, description="Crew size")
+    is_illuminated: bool = Field(False, description="Has LED strip/backlit valance (AWNILL)")
 
 
 @app.post("/api/estimate/awning")
@@ -360,12 +361,13 @@ async def run_awning_estimate(req: AwningRequest):
     else:
         sf = req.width_ft * (req.valance_height_in / 12.0)
     job = JobInput(
-        sign_type=SignType.AWNNON,
+        sign_type=SignType.AWNILL if req.is_illuminated else SignType.AWNNON,
         sign_sf_per_face=sf,
         num_faces=1,
         install_height_ft=req.install_height_ft,
         miles_one_way=req.miles,
         crew_size=req.crew_size,
+        is_illuminated=req.is_illuminated,
     )
     result = estimate_awning(job)
     total_est_hours = result.total_man_hours + result.total_crew_hours

@@ -1,8 +1,8 @@
 ﻿# PROJECT-STATE.md -- SignX-Takeoff
-Last updated: 2026-03-01 (Sprint F complete, benchmark report generated)
+Last updated: 2026-03-03 (Sprint H complete; Sprint I dispatched to Gemini + Codex)
 
 ## Status Line
-**ACTIVE -- 247 tests passing (2 skipped), 30+ API endpoints functional, calibration pipeline connected to 253K-row warehouse (36 sign types, 948 cells)**
+**ACTIVE -- 252 passing, 0 FAILING, 2 skipped (live run 2026-03-02) -- Sprint H complete**
 
 ---
 
@@ -94,27 +94,50 @@ Last updated: 2026-03-01 (Sprint F complete, benchmark report generated)
 
 ---
 
-### Sprint G -- In Progress
-- [x] **POLLIT/POLNON regression tests** -- 13 tests added (test_pylon_regression.py, commit e0bda4e)
-- [x] **Calibration pipeline fix** -- calibrate.py migrated from missing so_contract_labor to temp_labor + wo_labor (commit f3a5696). 36 sign types, 948 cells now available.
-- [x] **Dead code removal** -- 4 unused _cal_* functions removed from abc_engine.py (commit a15b178)
-- [x] **BLDILL/BLDNON estimator** -- Unified Takeoff logic implemented (commit 1f90739)
-- [ ] **Calibration data refresh** -- run `python calibrate.py` to regenerate calibration.json with 253K-row dataset (will shift regression baselines)
-- [ ] **AWNILL calibration** -- +28.6% variance (most over-estimated sign type)
-- [ ] **DIRECT calibration** -- -19.1% variance (significantly under-estimated)
-- [ ] **MONSF calibration** -- -18.3% variance
+### Sprint G -- COMPLETE (2026-03-02 Claude Opus 4.6)
+
+#### Fixed (Claude Opus 4.6, 2026-03-02)
+- [x] **HALO Section 4C bug** -- Root cause: Gemini Sprint G added duplicate `is_illuminated` etc. to `JobInput`. Pydantic last-wins caused monument defaults to override all channel letters. Fixed by removing duplicates from Unified block + changing `estimate()` to use `sign_type==CLNON` instead of `is_illuminated` check.
+- [x] **BLDILL regression baseline** -- Updated from stale 15.37h (pre-rewrite) to verified 20.35h. Fixed BOM PN from 202-0390 (wrong) to 202-0387 (EAGLE_INVENTORY['ABC_EXTRUSION_9']).
+- [x] **estimate_building() dead code** -- Removed unreachable old function body (22 lines after `return result`).
+
+#### Completed (Gemini Sprint G)
+- [x] **POLLIT/POLNON regression tests** -- 13 tests added (test_pylon_regression.py, e0bda4e)
+- [x] **Calibration pipeline fix** -- temp_labor + wo_labor (f3a5696). 36 sign types, 948 cells.
+- [x] **Dead code removal** -- 4 unused _cal_* functions removed (a15b178)
+- [x] **BLDILL/BLDNON estimator** -- `estimate_building()` added.
+
+#### Open (Sprint H)
+- [x] **Calibration data refresh** -- `python calibrate.py` (Codex TASK-3 complete 2026-03-02)
+- [x] **AWNILL** -- FIXED 2026-03-02: added AWNILL SignType + 0200 + 0310 codes; 60SF=46.30h locked
+- [x] **DIRECT** -- FIXED 2026-03-02: replaced 0210 w/ 0220, fixed vinyl/paint/travel formulas; 20SF now 16.3h (avg=16.73h)
+- [x] **MONSF** -- FIXED 2026-03-02: added MONSF correction factors; 20SF lit now 25.54h (was 58.20h, avg=28.27h)
+- [ ] **Notion token rotation** -- 401 unauthorized (Brady must rotate)
+
+---
+
+### Sprint I -- In Progress (2026-03-03)
+
+#### Dispatched
+- [ ] **TASK-7 [gemini/researcher]** -- RTLT/ILLUM/FFACE/PRNGRA estimator spec: query warehouse P50 per work code, deliver spec table for implementation
+- [ ] **TASK-8 [codex/deployer]** -- Fix app.py AwningRequest missing `is_illuminated` field; wire through to estimate_awning(); verify 4 AWNILL regression tests pass
+
+#### Open
+- [ ] **RTLT/ILLUM implementation** -- implement estimators after Gemini TASK-7 spec lands
+- [ ] **Notion token rotation** -- Brady must rotate; all Notion writes blocked until then
+- [ ] **Part number validation** -- validate engine PN outputs vs live KeyedIn catalog
 
 ## Test Baseline Reference
 
-| Suite | Tests | Status | Baseline Date |
-|-------|-------|--------|---------------|
-| test_validation.py | 11 | PASS | Rolling (ground truth) |
-| test_regression.py | 70 | PASS | 2026-02-26 (cccba7d) |
-| test_phase1.py | 32 | PASS | 2026-03-01 (Sprint F) |
-| test_pylon_regression.py | 13 | PASS | 2026-03-01 (Sprint G) |
-| test_boundary.py | ~15 | PASS | 2026-02-17 |
-| tests/test_estimators.py | ~20 | PASS | 2026-02-17 |
-| **TOTAL** | **247** | **PASS (2 skipped)** | **2026-03-01** |
+| Suite | Tests | Status | Notes |
+|-------|-------|--------|-------|
+| test_validation.py | 11 | PASS | Ground truth — must always pass |
+| test_regression.py | 75 | PASS | +4 AWNILL tests added 2026-03-02 |
+| test_phase1.py | 32 | PASS | AWNILL added to enum set 2026-03-02 |
+| test_pylon_regression.py | 13 | PASS | Sprint G |
+| test_boundary.py | ~15 | PASS | HALO != FACE_LIT verified |
+| tests/test_estimators.py | ~20 | PASS | |
+| **TOTAL** | **254 collected** | **252 PASS, 0 FAIL, 2 SKIP** | **Live run 2026-03-02** |
 
 ---
 

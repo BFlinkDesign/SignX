@@ -277,8 +277,9 @@ def test_mon_df_nl_reasonable_range():
 
 # ── Scenario 6: Monument MONSF illuminated, 20 SF (5x4 ft) ──────────────────
 #
-# Locked baseline (captured 2026-02-17):
-#   total_man_hours = 58.20   total_crew_hours = 0.0
+# Locked baseline (recalibrated 2026-03-02 after MONSF correction factors added):
+#   total_man_hours = 25.54   total_crew_hours = 0.0
+# Prior stale baseline 58.20h used MONDF factors — MONSF is much simpler.
 
 MON_SF_LIT_JOB = JobInput(
     sign_type=SignType.MONSF, sign_sf_per_face=20.0, num_faces=1,
@@ -287,10 +288,10 @@ MON_SF_LIT_JOB = JobInput(
 
 
 def test_mon_sf_lit_total_man_hours_locked():
-    """Locked: MONSF illuminated 20 SF total_man_hours == 58.20h."""
+    """Locked: MONSF illuminated 20 SF total_man_hours == 25.54h."""
     r = estimate_monument(MON_SF_LIT_JOB)
-    assert r.total_man_hours == pytest.approx(58.20, abs=0.01), (
-        f"Regression: expected 58.20h, got {r.total_man_hours}h"
+    assert r.total_man_hours == pytest.approx(25.54, abs=0.01), (
+        f"Regression: expected 25.54h, got {r.total_man_hours}h"
     )
 
 
@@ -306,7 +307,7 @@ def test_mon_sf_lit_install_ot_present():
     r = estimate_monument(MON_SF_LIT_JOB)
     codes = _work_codes(r)
     assert "9600" in codes, (
-        "Expected 9600 install OT for illuminated MONSF (LIT rate=16.4%, install=5.13h)"
+        "Expected 9600 install OT for illuminated MONSF (LIT rate=16.4%, install=3.00h)"
     )
 
 
@@ -396,6 +397,58 @@ def test_awn_scales_linearly_with_sf():
     assert r100.total_man_hours > r60.total_man_hours, (
         f"100 SF awning should have more man-hours than 60 SF: "
         f"{r100.total_man_hours} vs {r60.total_man_hours}"
+    )
+
+
+# ── Scenario 8b: Illuminated awning AWNILL 60 SF ─────────────────────────────
+#
+# Locked baseline (captured 2026-03-02 after AWNILL SignType added):
+#   total_man_hours = 46.30   total_crew_hours = 8.52
+# vs AWNNON 60SF = 37.90h  (+8.40h for 0200 Fab Layout + 0310 Electrical)
+# Expected codes: 0110 0200 0250 0260 0270 0310 9200 0610 0620 0630 0640 9600
+
+AWNILL_60SF_JOB = JobInput(
+    sign_type=SignType.AWNILL,
+    sign_sf_per_face=60.0,
+    num_faces=1,
+    is_illuminated=True,
+)
+
+
+def test_awnill_60sf_total_man_hours_locked():
+    """Locked: illuminated awning 60 SF total_man_hours == 46.30h."""
+    r = estimate_awning(AWNILL_60SF_JOB)
+    assert r.total_man_hours == pytest.approx(46.30, abs=0.01), (
+        f"Regression: expected 46.30h, got {r.total_man_hours}h"
+    )
+
+
+def test_awnill_60sf_crew_hours_locked():
+    """Locked: illuminated awning 60 SF total_crew_hours == 8.52h."""
+    r = estimate_awning(AWNILL_60SF_JOB)
+    assert r.total_crew_hours == pytest.approx(8.52, abs=0.01), (
+        f"Regression: expected 8.52h crew, got {r.total_crew_hours}h"
+    )
+
+
+def test_awnill_has_electrical_codes():
+    """AWNILL must include 0200 (Fab Layout) and 0310 (Electrical); AWNNON must not."""
+    r_ill = estimate_awning(AWNILL_60SF_JOB)
+    codes_ill = _work_codes(r_ill)
+    assert "0200" in codes_ill, "AWNILL missing 0200 Fab Layout"
+    assert "0310" in codes_ill, "AWNILL missing 0310 Electrical"
+    r_non = estimate_awning(AWN_60SF_JOB)
+    codes_non = _work_codes(r_non)
+    assert "0200" not in codes_non, "AWNNON should not have 0200"
+    assert "0310" not in codes_non, "AWNNON should not have 0310"
+
+
+def test_awnill_more_hours_than_awnnon():
+    """AWNILL must produce more hours than AWNNON at same SF."""
+    r_ill = estimate_awning(AWNILL_60SF_JOB)
+    r_non = estimate_awning(AWN_60SF_JOB)
+    assert r_ill.total_man_hours > r_non.total_man_hours, (
+        f"AWNILL {r_ill.total_man_hours}h should exceed AWNNON {r_non.total_man_hours}h"
     )
 
 
@@ -747,7 +800,8 @@ def test_building_extrusion_total_man_hours_locked():
         return_depth_in=9.0
     )
     r = estimate_building(job)
-    # Factual result verified by Gemini 2026-03-02
-    assert r.total_man_hours == pytest.approx(15.37, abs=0.01)
-    assert "202-0390" in str(r.material_bom)
+    # Baseline updated 2026-03-02 Claude Opus 4.6 — post estimate_building() rewrite
+    # Breakdown: 0110=0.75h + 0200=1.25h + 0220=4.60h + 0260=2.50h + 0270=5.00h + 0310=4.00h + 0630=2.25h = 20.35h
+    assert r.total_man_hours == pytest.approx(20.35, abs=0.01)
+    assert "202-0387" in str(r.material_bom)
 
