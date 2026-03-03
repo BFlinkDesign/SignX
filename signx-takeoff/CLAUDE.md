@@ -220,6 +220,8 @@ Pydantic last-wins: duplicate fields in a unified JobInput model cause monument 
 - **`find_warehouse_db()`** in `sign_types.py` resolves the path; use it instead of hardcoding
 - **calibration.json auto-populates** `INSTALL_FLOOR` at module import — always query at runtime, not the constant
 - **Work-code P50 query:** `SELECT work_code, PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY hours) FROM temp_labor t JOIN wo_labor w ON t.work_order = w.wo WHERE w.sign_type = 'X' GROUP BY work_code`
+- **OT suppression threshold = 0.50h:** calibrated P50 OT below this is suppressed (set to None). Sub-0.50h OT is noise. Examples: CLNON 9600=0.27h suppressed, CLLIT 9200 fab=0.38h suppressed.
+- **253K-row calibration dataset:** 36 sign types, 948 cells. Recalibration can shift baselines significantly (CLLIT install floor: 9.90h -> 3.60h after 253K vs smaller prior dataset that overweighted outliers). Always run full regression suite after any `calibrate.py` run.
 
 ## Data Files
 
@@ -309,6 +311,9 @@ All loaded via `.env` (python-dotenv). Never hardcoded.
 - [ ] Notion token rotation (401 unauthorized — Brady must rotate)
 - [ ] RTLT/ILLUM/FFACE/PRNGRA sign types route to OTHER fallback (not yet estimated)
 - [ ] Part number validation vs live KeyedIn catalog
+- [ ] BLDILL/BLDNON estimator refinement — research done (Gemini Task 28, 2026-03-03):
+      Top codes: 0630 install (P50=2.25h BLD, 1.75h BLDNON), 0520/0550 vinyl, 0260 assembly,
+      0270 mount, 0200 fab, 0220 welding, 0310 electrical (BLDILL only). Mostly shares ALULIT code set.
 
 ## Last Updated
-2026-03-02 — Sprint H complete. 252/0/2.
+2026-03-03 — Sprint H complete. 252/0/2. Added: OT suppression threshold, calibration dataset notes, BLDILL/BLDNON research, Sprint I open items.
