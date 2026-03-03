@@ -24,7 +24,7 @@ pdfplumber==0.11.0
 pypdf>=5.4.0
 tabula-py==2.9.3
 pytesseract==0.3.13
-Pillow>=11.2.1
+Pillow>=12.1.1
 
 # LLM fallback for complex PDFs
 langchain==0.3.0
