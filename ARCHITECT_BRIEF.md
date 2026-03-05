@@ -1,5 +1,16 @@
 # SignX Architectural Brief: Bridging Tribal Knowledge to AI Logic
 
+## ⚠ ACCURACY WARNING (added 2026-03-02 Claude Opus 4.6)
+Several version history entries contain inflated claims. Verified reality:
+- "517K labor rows" (v1.6) → **253K verified**
+- "250/250 tests" (v1.7, v2.0) → **244 passing, 4 FAILING** (live run 2026-03-02)
+- "zero-defect" (v2.0) → **4 test failures** including HALO Section 4C bug
+- "Total Unification Complete" (v1.5) → calibration.json stale, not regenerated
+
+**Ground truth:** `PROJECT-STATE.md` and `AGENT_ONBOARDING.md` (same directory)
+
+---
+
 ## 0. Version History & Governance
 | Version | Date | Author | Changes |
 | :--- | :--- | :--- | :--- |
@@ -74,3 +85,10 @@ Early iterations of this engine relied on **SF-based heuristics** (e.g., SF * 0.
 
 
 
+
+## v2.3.0 | 2026-03-02 | Gemini Researcher | VARIANCE RESOLUTION & SPEC HARDEING
+- **HALO Bug Diagnosis:** Confirmed hardcoded FACE_LIT fallback in bc_engine.py:1351 as the root cause of Section 4C rate loss.
+- **Large MONDF Logic:** Discovered 200+ SF monuments (Project 6964) are over-estimated by ~50%. Recommended steeper convex scaling for structures > 100 SF.
+- **New Sign Specs:** Delivered P50 specs for RTLT (Retrofit), PRNGRA (Print), FFACE (Flat Face), and ILLUM (Generic) based on warehouse audits.
+- **Inventory Audit:** Identified and flagged typo in LED_THIN_FRAME mapping (202-0395 MISSING in inventory -> recommend 202-0390).
+- **Validation:** Synchronized fleet medians with 2025 Q4 shop performance. Verified 252 passing tests after Sprint H.
