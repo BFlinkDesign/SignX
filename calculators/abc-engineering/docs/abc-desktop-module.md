@@ -1,9 +1,8 @@
-# ABC Engineering Desktop Module - Complete Reference
+# Legacy Engineering Desktop Module - Complete Reference
 
 ## Overview
-- **Application**: ABC Engineering (AbcEng.exe) - desktop sign estimating software
-- **Developer**: ABC Sign Products, Inc. (Sandy Brooks, Tomas Davidonis "tomdav" at "No Magic" / "UAB BPI")
-- **Engineering Consultant**: R C Hansen Consulting, P.E., Fort Collins CO (Bob Hansen, P.E., Owner; P.O. Box 272427, Fort Collins, CO 80527; Phone 1-970-490-1720; FAX 1-970-490-1780; email: rch4oee@aol.com)
+- **Application**: Legacy Sign Engineering (AbcEng.exe) - desktop sign estimating software
+- **Developer**: Legacy vendor (Windows MFC/C++ application)
 - **Technology**: MFC/C++ Win32, Crystal Reports (crpe32.dll + p2*/u2* DLL series), Access MDB database (abcsignc.mdb)
 - **Code Basis**: "1997 UBC code is used as the engineering approach"
 - **Engineering Assumptions**: Concrete 3000 psi 28-day strength, normal weight; Steel A36 (36,000 psi yield); A307 bolts (20,000 psi Fb)
@@ -166,8 +165,8 @@ Report templates used with Crystal Reports/VBScript:
   - 15 psf for sheet metal/neon signs
 
 ### Gusset Table (Gusset table.htm, Gusset.jpg)
-- **Author**: Tomas Davidonis (tomdav) at "No Magic" company
-- **Engineering**: R C Hansen Consulting, P.E.
+- **Author**: Legacy developer
+- **Engineering**: R C Hansen Consulting, P.E. (engineering review)
 - **Created**: 2000-10-09, Last saved: 2002-03-18
 - Title: "Base Plate to Column Connections with Gussets"
 - Only for Schedule 40 pipe
@@ -214,7 +213,7 @@ Report templates used with Crystal Reports/VBScript:
 Min BP Square formula: OD + 2x(GussetLeg + WeldSize)
 
 ### Pipe Weight Chart (Pipe Weight Chart.htm)
-- **Author**: Tomas Davidonis (tomdav) at UAB BPI
+- **Author**: Legacy developer
 - **Created**: 2006-03-14
 
 **Schedule 40 (Standard) Pipe -- COMPLETE DATA with weights:**
@@ -345,8 +344,7 @@ Definitions for: Area, Centroid Height, Perimeter, Support Column, Steel Type (N
 - At least 3" inside outside edges of concrete foundation
 - Typically 12" on center spacing
 - Crosstie bars at intersections
-- Authors: Sandy Brooks (original), Tomas Davidonis (last edit)
-- Created: 2002-03-18, Last printed: 2002-02-25
+- Created: 2002-03-18
 
 ### UI Screenshots
 Available in `legacy/ui_screenshots/` (originally in CHM help):
@@ -364,9 +362,9 @@ Available in `legacy/ui_screenshots/` (originally in CHM help):
 - EstConv.exe - Estimate file converter
 - UserManager.exe - User management utility
 
-### ABC Libraries
-- abcapi.dll - ABC API library
-- abceng.dll - ABC Engineering library
+### Application Libraries
+- abcapi.dll - Application API library
+- abceng.dll - Engineering calculation library
 - jobAPI.dll, jobRep.dll, jobWrite.dll - Job management
 - CustomerCards.dll - Customer card management
 - NMDBBRLib.dll - "No Magic" DB/BR library
@@ -400,7 +398,7 @@ Available in `legacy/ui_screenshots/` (originally in CHM help):
 
 ## Relationship to Playground
 
-The ABC Engineering Playground (ABCEngineering_Playground.html) was built as a modern web-based replacement for this desktop application. Key mappings:
+The Sign Engineering Calculator (sign-engineering-calculator.html) was built as a modern web-based replacement for this desktop application. Key mappings:
 
 | Desktop Module | Playground Equivalent |
 |----------------|----------------------|

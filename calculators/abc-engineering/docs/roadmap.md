@@ -136,5 +136,5 @@ Since this is engineering software where wrong answers have safety implications:
 - Validate every formula against hand calculations
 - Cross-check against known-good engineering references
 - Test edge cases (very tall signs, very small foundations, max bolt sizes)
-- Compare results with Accutrack for same inputs (when possible)
+- Compare results with competing tools for same inputs (when possible)
 - Document all validation in a test log

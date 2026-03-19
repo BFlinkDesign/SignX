@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ABC Engineering Playground</title>
+<title>Sign Engineering Calculator</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -258,8 +258,7 @@
 
 <!-- ===== HEADER ===== -->
 <div class="header">
-  <h1>ABC Engineering Calculator</h1>
-  <span class="badge badge-co">Eagle Sign Co</span>
+  <h1>Sign Engineering Calculator</h1>
   <div class="code-picker">
     <span class="badge badge-code asce" id="codeBadge" onclick="toggleCodeDropdown()">ASCE 7-22</span>
     <div class="code-dropdown" id="codeDropdown">
@@ -1220,7 +1219,7 @@ function renderSoil() {
 function updatePrompt() {
   const c = lastCalc;
   const cL = curCode==='ubc97'?'1997 UBC':'ASCE 7 ('+curCode.replace('asce','')+')';
-  let t = `ABC Engineering [${cL}] | Sign: ${c.W}'W x ${c.H}'H @ ${c.GC}' clear | ${c.area} sf | ${c.N} col\n`;
+  let t = `Sign Engineering Calc [${cL}] | Sign: ${c.W}'W x ${c.H}'H @ ${c.GC}' clear | ${c.area} sf | ${c.N} col\n`;
   t += `Wind: ${c.PSF.toFixed(1)} PSF, Force: ${c.windForce.toLocaleString(undefined,{maximumFractionDigits:0})} lbs | M: ${c.momentFtLb.toLocaleString(undefined,{maximumFractionDigits:0})} ft-lb/col\n`;
   t += `Steel: ${c.st} A36, F_allow=${(c.Fallow/1000).toFixed(1)} ksi | S_req=${c.Sreq.toFixed(2)} in\u00B3\n`;
   const rec = c.shape==='square'?(c.recSq?c.recSq.side+'" sq tube':'Exceeds'):(c.recPipe?c.recPipe.nom+'" Sch40':'Exceeds');

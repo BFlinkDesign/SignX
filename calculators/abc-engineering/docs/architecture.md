@@ -1,7 +1,7 @@
 # Code Architecture
 
 ## File Structure
-Single file: `ABCEngineering_Playground.html` (~1270 lines)
+Single file: `sign-engineering-calculator.html` (~1270 lines)
 
 ```
 Lines 1-255:     CSS (styles, dark theme, component classes)

@@ -1,9 +1,8 @@
-# ABC Engineering Playground - Claude Code Context
+# Sign Engineering Calculator - Claude Code Context
 
 ## Project Overview
-Single-file HTML playground for sign structural engineering calculations.
-Licensed to Brady / Eagle Sign Co (GitHub: EAGLE605).
-Primary file: `ABCEngineering_Playground.html` (~1270 lines, self-contained, no dependencies).
+Single-file HTML application for sign structural engineering calculations.
+Primary file: `sign-engineering-calculator.html` (~1270 lines, self-contained, no dependencies).
 
 ## Architecture
 - **Single HTML file** with embedded CSS + JS (no build system, no dependencies)

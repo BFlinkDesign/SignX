@@ -1,10 +1,6 @@
-# calcusignY - ABC Engineering Playground
+# Sign Engineering Calculator
 
-Sign structural engineering calculator for Eagle Sign Co.
-
-## What This Is
-
-A single-file HTML application that performs structural engineering calculations for freestanding signs. Open `ABCEngineering_Playground.html` in any browser - no server, no dependencies, no build step.
+A single-file HTML application for structural engineering calculations for freestanding signs. Open `sign-engineering-calculator.html` in any browser — no server, no dependencies, no build step.
 
 ## Current Capabilities
 
@@ -26,7 +22,7 @@ A single-file HTML application that performs structural engineering calculations
 - Summary strip header showing S_req, wind force, moment, pipe, bolt, foundation
 
 ### Engineering Standards
-- **Default code**: ASCE 7-22 / IBC 2024 (current Iowa adoption)
+- **Default code**: ASCE 7-22 / IBC 2024
 - **Steel**: A36 (Fy = 36 ksi), New (0.66Fy) and Used (0.60Fy) allowable stress
 - **Bolts**: A307 (Fb = 20 ksi allowable tensile stress)
 - **Soil**: UBC Table 18-I-A (Clay, Sand, Gravel, Rock)
@@ -35,35 +31,20 @@ A single-file HTML application that performs structural engineering calculations
 ## Repository Structure
 
 ```
-ABCEngineering_Playground.html   # The application (self-contained)
-CLAUDE.md                        # AI session context for Claude Code
-README.md                        # This file
+sign-engineering-calculator.html   # The application (self-contained)
+CLAUDE.md                          # AI session context for Claude Code
+README.md                          # This file
 docs/
-  engineering-codes.md           # Gold standard code references
-  formulas.md                    # All engineering formulas used + needed
-  competitor-analysis.md         # CalcuSign, Accutrack research
-  roadmap.md                     # Development priorities
-  session-handoff.md             # Complete session context for continuation
-  architecture.md                # Code architecture and data flow
+  engineering-codes.md             # Gold standard code references
+  formulas.md                      # All engineering formulas used + needed
+  competitor-analysis.md           # Market research on competing tools
+  roadmap.md                       # Development priorities
+  session-handoff.md               # Complete session context for continuation
+  architecture.md                  # Code architecture and data flow
+  context.md                       # How the tool works (technical overview)
+  guide-simple-english.md          # Plain-language explanation of all calculations
 ```
-
-## Competitors
-
-| Feature | This App | CalcuSign | ABC Accutrack |
-|---------|----------|-----------|---------------|
-| Wind load calc | ASCE 7-22 | Yes | ASCE 7-10 (outdated) |
-| Section modulus | Yes | Yes | Yes |
-| Anchor bolts | A307 basic | Full | Unknown |
-| Foundation | Simplified | Full | Unknown |
-| ACI 318 anchor checks | Not yet | Unknown | Unknown |
-| IBC 1807.3 foundations | Not yet | Unknown | Unknown |
-| PDF reports | Not yet | Yes (PE-stampable) | Unknown |
-| Construction drawings | No | Yes | No |
-| Materials lists | No | Yes | Unknown |
-| Pricing | Free/local | SaaS subscription | SaaS |
-| Offline use | Yes | No | No |
-| Code transparency | Full source | Proprietary | Proprietary |
 
 ## License
 
-Proprietary - Eagle Sign Co. Not for redistribution.
+Proprietary. Not for redistribution.

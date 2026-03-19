@@ -1,14 +1,8 @@
 # Session Handoff Document
 
 ## Project Identity
-- **Project**: ABC Engineering Playground (sign structural engineering calculator)
-- **Owner**: Brady / Eagle Sign Co (GitHub: EAGLE605)
-- **Primary File**: `ABCEngineering_Playground.html` - single-file, self-contained HTML application
-- **Local paths on Brady's machine**:
-  - Working copy: `C:\Tools\ABCEngineering_Playground.html`
-  - Clone backup: `C:\Tools\ABC_Engineering_Clone\`
-  - This repo: `C:\Tools\calcusignY\`
-  - Claude memory: `C:\Users\Brady\.claude\projects\C--WINDOWS-system32\memory\`
+- **Project**: Sign Engineering Calculator (sign structural engineering calculator)
+- **Primary File**: `sign-engineering-calculator.html` - single-file, self-contained HTML application
 
 ## What Has Been Built (Complete Feature List)
 
@@ -56,7 +50,7 @@
 11. **42" frost line enforcement** - Iowa minimum depth warning
 
 ### High Priority (Business Value)
-12. **PDF report generation** - PE-stampable calculation sheets (CalcuSign's #1 feature)
+12. **PDF report generation** - PE-stampable calculation sheets
 13. **Materials list output** - bill of materials from calculations
 
 ### Medium Priority
@@ -75,9 +69,9 @@
 ## Research Completed
 
 ### Competitor Intelligence
-- **CalcuSign** (Murdoch Engineering): SaaS, Blazor app, generates construction drawings + materials lists + PE-stampable calc sheets, all 50 states, USPTO trademark #90099380
-- **ABC Accutrack**: WAaaS, Blazor app, on ASCE 7-10/IBC 2015 (outdated), Brady has login but couldn't reverse engineer (Blazor blocks scraping, PowerShell tab switching failed)
-- Neither competitor's actual calculations or UI could be captured
+- **Competitor A** (SaaS): Blazor app, generates construction drawings + materials lists + PE-stampable calc sheets, all 50 states
+- **Competitor B** (WAaaS): Blazor app, on ASCE 7-10/IBC 2015 (outdated)
+- Neither competitor's actual calculations or UI could be captured (Blazor blocks scraping)
 
 ### Code Standards Research
 - Complete reference for IBC 2024, ASCE 7-22, AISC 360-22, ACI 318-19/25, AISC DG1
@@ -86,26 +80,14 @@
 - Code timeline from UBC 1997 through IBC 2024
 
 ### Technology Research
-- CalcuSign and Accutrack both use Blazor/WebAssembly (C#/.NET in browser)
-- Signs101.com forums are active sign industry community
-- CCR-Mag (Custom Content & Research Magazine) covers sign engineering
-- NSSA (National Sign Supply Association) industry group
+- Competing tools both use Blazor/WebAssembly (C#/.NET in browser)
 
 ## Failed Attempts (Don't Retry These)
 
-1. **WebFetch on youtube.com/@calcusign** - YouTube blocks AI fetchers
-2. **WebFetch on calcusign.com** - Blazor returns empty shell + "unhandled error"
-3. **WebFetch on murdochengineering.com/calcusign** - same Blazor issue
-4. **PowerShell Chrome tab switching** (screenshot3/4/5.ps1) - unreliable, doesn't capture Accutrack
-5. **Trademark page scraping** (trademarks.justia.com) - returns 403
-6. **alter.com CalcuSign lookup** - returns 404
+1. **WebFetch on competitor SaaS sites** - Blazor returns empty shell + "unhandled error"
+2. **PowerShell Chrome tab switching** - unreliable, doesn't capture competitor app UI
 
 ## Technical Environment
-- **OS**: Windows 10/11 (Build 26200.7623)
-- **Browser**: Chrome (for testing playground)
-- **Git**: `C:\Program Files\Git\bin\git.exe`
-- **GitHub CLI**: `C:\Program Files\GitHub CLI\gh.exe`
-- **GitHub account**: EAGLE605
 - **No build system** - single HTML file, open directly in browser
 - **No dependencies** - everything is vanilla HTML/CSS/JS
 
@@ -121,7 +103,7 @@
 
 ## How to Continue Development
 1. Read `CLAUDE.md` for project context
-2. Read `ABCEngineering_Playground.html` for current code
+2. Read `sign-engineering-calculator.html` for current code
 3. Read `docs/roadmap.md` for prioritized work items
 4. Read `docs/formulas.md` for engineering reference
 5. Read `docs/engineering-codes.md` for code standard details

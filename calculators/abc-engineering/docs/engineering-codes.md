@@ -80,7 +80,7 @@ UBC 1997 (legacy)
 IBC 2000 (ASCE 7-98) -- first IBC edition
   |
   v
-IBC 2015 (ASCE 7-10) -- ABC Accutrack uses this (outdated)
+IBC 2015 (ASCE 7-10) -- outdated (some competing tools still on this version)
   |
   v
 IBC 2018 (ASCE 7-16) -- Ke factor introduced
