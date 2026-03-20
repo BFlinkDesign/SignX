@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sign Engineering Calculator</title>
+<title>SignCalc -- Sign Engineering Calculator</title>
+<link rel="icon" href="file:///C:/SignCalculator/logo/SignCalc.ico" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -258,7 +260,8 @@
 
 <!-- ===== HEADER ===== -->
 <div class="header">
-  <h1>Sign Engineering Calculator</h1>
+  <h1><span style="color:#9A9A9A;font-family:'Barlow Condensed',sans-serif;font-weight:800;letter-spacing:0;font-size:18px">SIGN</span><span style="color:#FFD700;font-family:'Barlow Condensed',sans-serif;font-weight:800;letter-spacing:0;font-size:18px">CALC</span></h1>
+  <span class="badge" style="background:#2a2a2a;color:#FFD700;border:1px solid #FFD700;font-size:9px;padding:2px 6px;border-radius:3px">v2.0</span>
   <div class="code-picker">
     <span class="badge badge-code asce" id="codeBadge" onclick="toggleCodeDropdown()">ASCE 7-22</span>
     <div class="code-dropdown" id="codeDropdown">
@@ -284,6 +287,7 @@
     <span>Bolt: <span class="sv" id="sumBolt">--</span></span>
     <span>Found: <span class="sv" id="sumFound">--</span></span>
   </div>
+  <button onclick="generatePDF()" style="margin-left:12px;padding:4px 14px;background:#FFD700;color:#111;border:none;border-radius:4px;font-size:11px;font-weight:800;cursor:pointer;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.05em">PDF REPORT</button>
 </div>
 
 <!-- ===== TABS ===== -->
@@ -365,7 +369,11 @@
           <div class="row2">
             <div class="field"><label>G <span class="unit">(gust)</span></label>
               <input type="number" id="G" value="0.85" min="0.5" max="1.5" step="0.01" oninput="calc()"></div>
-            <div class="field"><label>C<sub>f</sub> <span class="unit">(force)</span></label>
+            <div class="field"><label>C<sub>f</sub> <span class="unit">(force)</span>
+                <label style="font-size:10px;margin-left:6px">
+                  <input type="checkbox" id="cfAuto" onchange="toggleCfAuto();calc()"> Auto (ASCE 7 Fig 29.3-1)
+                </label>
+              </label>
               <input type="number" id="Cf" value="1.2" min="0.5" max="3.0" step="0.05" oninput="calc()"></div>
           </div>
           <div class="field"><label>Calculated PSF <span class="unit">(for reference)</span></label>
@@ -408,6 +416,15 @@
           <span class="toggle">&#9662;</span>
         </div>
         <div class="section-body">
+          <div class="field">
+            <label>Bolt Grade / Standard</label>
+            <select id="boltGrade" onchange="calc()">
+              <option value="A307">A307 (Fu=60 ksi, Ft=0.33Fu=19.8 ksi)</option>
+              <option value="F1554_36">F1554 Gr.36 (Fu=58 ksi, Ft=0.33Fu=19.14 ksi)</option>
+              <option value="F1554_55">F1554 Gr.55 (Fu=75 ksi, Ft=0.33Fu=24.75 ksi)</option>
+              <option value="F1554_105">F1554 Gr.105 (Fu=125 ksi, Ft=0.33Fu=41.25 ksi)</option>
+            </select>
+          </div>
           <div class="field"><label>Bolt Diameter</label>
             <select id="boltDia" onchange="calc()">
               <option value="0">Auto (smallest OK)</option>
@@ -463,6 +480,14 @@
             <div class="field"><label>Depth <span class="unit">(ft)</span></label>
               <input type="number" id="fD" value="5" min="2" max="30" step="0.5" oninput="calc()"></div>
           </div>
+          <div id="frostWarn" class="warn-box" style="display:none;margin-top:4px"></div>
+          <div class="field" style="margin-top:8px">
+            <label>Design Method</label>
+            <div class="radio-group" id="foundMethodGroup">
+              <div class="rbtn active" data-val="simplified" onclick="setRadio(this);calc()">Simplified</div>
+              <div class="rbtn" data-val="ibc1807" onclick="setRadio(this);calc()">IBC 1807.3</div>
+            </div>
+          </div>
           <div class="field hidden" id="fRatioField"><label>W/L Ratio <span class="unit">(%)</span></label>
             <input type="number" id="fRatio" value="50" min="30" max="100" step="5" oninput="calc()"></div>
           <div class="field"><label>Dead Load <span class="unit">(lbs, sign+pole)</span></label>
@@ -490,6 +515,21 @@
             <div class="field"><label>Lateral <span class="unit">(PSF)</span></label>
               <input type="number" id="Sl" value="150" min="50" max="2000" step="10" oninput="calc()"></div>
           </div>
+        </div>
+      </div>
+      <div class="sidebar-section" id="sec-aci">
+        <div class="section-header" onclick="toggleSection('sec-aci')">
+          <span class="label"><span class="dot" style="background:var(--red)"></span> CONCRETE (ACI 318-19)</span>
+          <span class="toggle">&#9662;</span>
+        </div>
+        <div class="section-body">
+          <div class="row2">
+            <div class="field"><label>f'c <span class="unit">(psi)</span></label>
+              <input type="number" id="fc" value="3000" min="2000" max="10000" step="500" oninput="calc()"></div>
+            <div class="field"><label>h_ef <span class="unit">(in)</span></label>
+              <input type="number" id="hef" value="24" min="6" max="120" step="1" oninput="calc()"></div>
+          </div>
+          <div class="info-box" style="font-size:10px">ACI 318-19 S17.6.2 Concrete Breakout in Tension</div>
         </div>
       </div>
     </div>
@@ -541,6 +581,7 @@
   </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 // ===================== DATA =====================
 const PIPE = [
@@ -689,6 +730,31 @@ function setSoil() {
   if(SOIL[t]){document.getElementById('Sv').value=SOIL[t].v;document.getElementById('Sl').value=SOIL[t].l;}
 }
 
+// ===================== Cf AUTO (ASCE 7 Figure 29.3-1) =====================
+function autoCf(W_ft, H_ft) {
+  const ratio = W_ft / H_ft;
+  let cf;
+  if (ratio <= 4)       cf = 1.30;
+  else if (ratio <= 6)  cf = 1.30 - (ratio - 4) / (6 - 4) * (1.30 - 1.20);
+  else if (ratio <= 10) cf = 1.20 - (ratio - 6) / (10 - 6) * (1.20 - 1.10);
+  else if (ratio <= 12) cf = 1.10 - (ratio - 10) / (12 - 10) * (1.10 - 1.05);
+  else if (ratio <= 15) cf = 1.05 - (ratio - 12) / (15 - 12) * (1.05 - 1.00);
+  else                  cf = 1.00;
+  return Math.round(cf * 100) / 100;
+}
+
+function toggleCfAuto() {
+  const auto = document.getElementById('cfAuto').checked;
+  const cfInput = document.getElementById('Cf');
+  cfInput.readOnly = auto;
+  cfInput.style.color = auto ? 'var(--cyan)' : '';
+  if (auto) {
+    const W_ = parseFloat(document.getElementById('W').value);
+    const H_ = parseFloat(document.getElementById('H').value);
+    cfInput.value = autoCf(W_, H_);
+  }
+}
+
 // ===================== CORE CALCULATIONS =====================
 function calcWindPSF() {
   if(curCode==='ubc97') return v('PSF',20);
@@ -748,13 +814,26 @@ function calcShared() {
   return lastCalc;
 }
 
+const BOLT_GRADES = {
+  'A307':      { Fu: 60,  Ft: 19.8,  name: 'A307' },
+  'F1554_36':  { Fu: 58,  Ft: 19.14, name: 'F1554 Gr.36' },
+  'F1554_55':  { Fu: 75,  Ft: 24.75, name: 'F1554 Gr.55' },
+  'F1554_105': { Fu: 125, Ft: 41.25, name: 'F1554 Gr.105' },
+};
+
+function getBoltGrade() {
+  const boltGradeKey = document.getElementById('boltGrade')?.value || 'A307';
+  return BOLT_GRADES[boltGradeKey] || BOLT_GRADES['A307'];
+}
+
 function calcBoltData() {
   const c = lastCalc;
   const desD = v('boltDia',0);
   const bpr = v('bPerRow',2), br = v('bRows',2), bsp = v('bSpace',6);
   const total = bpr * br;
-  const Fb = 20000; // A307 allowable
-  const reqAt = c.momentInLb / (bpr * bsp * Fb);
+  const boltGrade = getBoltGrade();
+  const Ft_psi = boltGrade.Ft * 1000; // ksi to psi
+  const reqAt = c.momentInLb / (bpr * bsp * Ft_psi);
 
   let bolt;
   if(desD>0) {
@@ -841,6 +920,48 @@ function calcFoundData() {
   return f;
 }
 
+// IBC 1807.3 Equation 18-1 -- Nonconstrained embedded post
+function calcFoundationIBC1807(P_lbs, h_ft, b_ft, S1_psf) {
+  // P = lateral load at top of embedment (lbs)
+  // h = distance from ground to point of load application (ft)
+  // b = diameter/width of footing (ft)
+  // S1 = allowable lateral soil bearing pressure (PSF/ft depth)
+  const A = 2.34 * P_lbs / (S1_psf * b_ft);
+  const d = 0.5 * A * (1 + Math.sqrt(1 + (4.36 * h_ft / A)));
+  return { A, d };
+}
+
+// Iowa frost line check
+function checkFrostLine() {
+  const fD = v('fD', 5);
+  const FROST_MIN_FT = 3.5;
+  const frostWarn = document.getElementById('frostWarn');
+  if (frostWarn) {
+    if (fD < FROST_MIN_FT) {
+      frostWarn.style.display = 'block';
+      frostWarn.textContent = 'Warning: Iowa Frost Line: Minimum depth is 42" (3.5 ft). Current depth ' + (fD*12).toFixed(0) + '" is insufficient.';
+    } else {
+      frostWarn.style.display = 'none';
+    }
+  }
+}
+
+// ACI 318-19 Chapter 17 Concrete Breakout in Tension
+function calcACI318Breakout(Nu_lbs, hef_in, boltDia_in, fc_psi, edgeMin_in, nBolts) {
+  const ANco = 9 * hef_in * hef_in;
+  const ANc = Math.min(9 * hef_in * hef_in * nBolts, ANco * nBolts);
+  // Basic breakout strength (ACI 318-19 Eq 17.6.2.2b), lambda_a=1.0
+  const Nb = 24 * Math.sqrt(fc_psi) * Math.pow(hef_in, 1.5);
+  const psi_ec = 1.0;
+  const psi_ed = Math.min(1.0, 0.7 + 0.3 * edgeMin_in / (1.5 * hef_in));
+  const psi_c  = 1.0;
+  const psi_cp = 1.0;
+  const Ncbg = (ANc / ANco) * psi_ec * psi_ed * psi_c * psi_cp * Nb;
+  const phi = 0.70;
+  const phiNcbg = phi * Ncbg;
+  return { ANco, ANc, Nb, psi_ed, Ncbg, phiNcbg };
+}
+
 // ===================== SVG DIAGRAMS =====================
 function svgSign(c) {
   const W=440,H=320,m={t:18,b:35,l:70,r:90};
@@ -923,8 +1044,9 @@ function sfCls(v,t){return v>=t?'pass':v>=t*0.8?'warn':'fail';}
 // Auto-size bolt: find smallest bolt that works with default 2x2 at 6" spacing
 function autoBoltSize(c) {
   const bpr=2, br=2, bsp=6;
-  const Fb=20000;
-  const reqAt = c.momentInLb / (bpr * bsp * Fb);
+  const boltGrade = getBoltGrade();
+  const Ft_psi = boltGrade.Ft * 1000;
+  const reqAt = c.momentInLb / (bpr * bsp * Ft_psi);
   const bolt = BOLT.find(b=>b.At>=reqAt);
   if(!bolt || bolt.dia>3) return null;
   let minBP = null;
@@ -962,7 +1084,7 @@ function renderSection() {
   feasHTML += '<div style="font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:var(--cyan);font-weight:700;margin-bottom:6px">Anchor Bolts</div>';
   if(ab) {
     feasHTML += `<div style="font-size:16px;font-weight:800;color:var(--green)">${ab.bolt.lbl}</div>`;
-    feasHTML += `<div style="font-size:10px;color:var(--text2)">A307 | ${ab.total} bolts (${ab.bpr}&times;${ab.br}) @ ${ab.bsp}"</div>`;
+    feasHTML += `<div style="font-size:10px;color:var(--text2)">${getBoltGrade().name} | ${ab.total} bolts (${ab.bpr}&times;${ab.br}) @ ${ab.bsp}"</div>`;
     feasHTML += `<div style="font-size:10px;color:var(--text2)">A<sub>t</sub>=${ab.bolt.At} in&sup2; (need ${ab.reqAt.toFixed(3)})</div>`;
     if(ab.minBP) feasHTML += `<div style="font-size:10px;color:var(--text2)">Min BP: ${ab.minBP.toFixed(1)}" sq</div>`;
   } else {
@@ -1052,8 +1174,11 @@ function renderBolt() {
   let boltCard='';
   if(b.bolt) {
     const up = b.desD>0 && b.bolt.dia>b.desD;
+    const bg = getBoltGrade();
     boltCard=`<div class="card"><h3>Accepted Bolt</h3>
-      <div class="rrow"><span class="rlabel">Bolt</span><span class="rval pass">${b.bolt.lbl} A307</span></div>
+      <div class="rrow"><span class="rlabel">Bolt</span><span class="rval pass">${b.bolt.lbl} ${bg.name}</span></div>
+      <div class="rrow"><span class="rlabel">Bolt Grade</span><span class="rval">${bg.name} (Fu=${bg.Fu} ksi)</span></div>
+      <div class="rrow"><span class="rlabel">Allowable Tensile (Ft)</span><span class="rval">${bg.Ft} ksi</span></div>
       <div class="rrow"><span class="rlabel">Tensile Area</span><span class="rval">${b.bolt.At} in&sup2;</span></div>
       <div class="rrow"><span class="rlabel">Required A<sub>t</sub>/bolt</span><span class="rval">${b.reqAt.toFixed(3)} in&sup2;</span></div>
       <div class="rrow"><span class="rlabel">Total Bolts</span><span class="rval">${b.total} (${b.bpr}&times;${b.br})</span></div>
@@ -1080,14 +1205,15 @@ function renderBolt() {
       <div class="step"><span class="l">Force/col</span><span class="r">${c.forcePerCol.toLocaleString(undefined,{maximumFractionDigits:0})} lbs</span></div>
       <div class="step"><span class="l">Moment/col</span><span class="r">${c.momentFtLb.toLocaleString(undefined,{maximumFractionDigits:0})} ft-lbs</span></div>
       <div class="step final"><span class="l">S<sub>req</sub></span><span class="r">${c.Sreq.toFixed(2)} in&sup3;</span></div>
-      <div class="step"><span class="l">T<sub>req</sub> = M<sub>in</sub> / (n &times; d &times; F<sub>b</sub>)</span><span class="r">${b.reqAt.toFixed(3)} in&sup2;/bolt</span></div>
+      <div class="step"><span class="l">T<sub>req</sub> = M<sub>in</sub> / (n &times; d &times; F<sub>t</sub>) [${getBoltGrade().name}, Ft=${getBoltGrade().Ft} ksi]</span><span class="r">${b.reqAt.toFixed(3)} in&sup2;/bolt</span></div>
     </div>
     ${boltCard}
     ${pipeCard}
     <div class="card"><h3>Notes</h3><div class="info-box">
       All base plates fully grouted after installation.<br>
       Bolt spacing &ge; pipe OD. Max bolt: 3".<br>
-      A307 F<sub>b</sub> = 20,000 psi.
+      Ft = 0.33 &times; Fu per AISC (allowable tensile stress).<br>
+      Grades: A307, ASTM F1554 Gr.36/55/105.
     </div></div>`;
 }
 
@@ -1116,10 +1242,40 @@ function renderFoundation() {
     autoHint = '<div class="warn-box">No standard size passes. Special engineering required.</div>';
   }
 
+  // IBC 1807.3 calculation
+  const foundMethod = rv('foundMethodGroup') || 'simplified';
+  let ibcHTML = '';
+  if (foundMethod === 'ibc1807') {
+    const h_load = c.centroid; // height from ground to resultant wind load
+    const ibc = calcFoundationIBC1807(c.forcePerCol, h_load, f.fw, f.Sl);
+    const ibcDepthIn = (ibc.d * 12).toFixed(0);
+    const currentDepthIn = (f.fd * 12).toFixed(0);
+    const ibcPass = f.fd >= ibc.d;
+    ibcHTML = `<div class="card">
+      <h3>IBC 1807.3 Eq. 18-1 -- Nonconstrained</h3>
+      <div class="formula-box">A = 2.34P / (S1 x b)</div>
+      <div class="step"><span class="l">P (lateral load/col)</span><span class="r">${c.forcePerCol.toLocaleString(undefined,{maximumFractionDigits:0})} lbs</span></div>
+      <div class="step"><span class="l">h (load height above grade)</span><span class="r">${h_load.toFixed(2)} ft</span></div>
+      <div class="step"><span class="l">b (footing width/dia)</span><span class="r">${f.fw.toFixed(2)} ft</span></div>
+      <div class="step"><span class="l">S1 (lateral bearing)</span><span class="r">${f.Sl} PSF/ft</span></div>
+      <div class="step final"><span class="l">A = 2.34 x ${c.forcePerCol.toFixed(0)} / (${f.Sl} x ${f.fw})</span><span class="r">${ibc.A.toFixed(2)}</span></div>
+      <div class="formula-box">d = 0.5A[1 + sqrt(1 + 4.36h/A)]</div>
+      <div class="step"><span class="l">4.36h/A = 4.36 x ${h_load.toFixed(2)} / ${ibc.A.toFixed(2)}</span><span class="r">${(4.36 * h_load / ibc.A).toFixed(2)}</span></div>
+      <div class="step final"><span class="l">Required depth d</span><span class="r">${ibc.d.toFixed(2)} ft (${ibcDepthIn}")</span></div>
+      <div class="rrow"><span class="rlabel">Provided: ${f.fd} ft (${currentDepthIn}") vs Required: ${ibc.d.toFixed(2)} ft (${ibcDepthIn}")</span><span class="rval ${ibcPass?'pass':'fail'}">${ibcPass?'PASS':'FAIL'}</span></div>
+      ${!ibcPass?'<div class="warn-box">Foundation depth does not meet IBC 1807.3 requirement. Increase depth to at least '+ibc.d.toFixed(1)+' ft ('+(ibc.d*12).toFixed(0)+'").</div>':''}
+    </div>`;
+  }
+
+  // Frost line display in results
+  const frostPass = f.fd >= 3.5;
+  const frostHTML = `<div class="rrow"><span class="rlabel">Iowa Frost Line (42" / 3.5 ft min)</span><span class="rval ${frostPass?'pass':'fail'}">${frostPass?'PASS: '+(f.fd*12).toFixed(0)+'" >= 42"':'FAIL: '+(f.fd*12).toFixed(0)+'" < 42"'}</span></div>`;
+
   document.getElementById('preview').innerHTML = `
     <div class="diagram">${svgFound(f, pOD)}</div>
+    ${ibcHTML}
     <div class="card">
-      <h3>${tLbl} Foundation</h3>
+      <h3>${tLbl} Foundation${foundMethod==='ibc1807'?' (Simplified Check)':''}</h3>
       <div class="step"><span class="l">Applied loads from Section Modulus:</span><span class="r"></span></div>
       <div class="step"><span class="l">&nbsp; Moment/col</span><span class="r">${c.momentFtLb.toLocaleString(undefined,{maximumFractionDigits:0})} ft-lbs</span></div>
       <div class="step"><span class="l">&nbsp; Shear/col</span><span class="r">${c.forcePerCol.toLocaleString(undefined,{maximumFractionDigits:0})} lbs</span></div>
@@ -1134,6 +1290,7 @@ function renderFoundation() {
       <div class="rrow"><span class="rlabel">Bearing: ${f.bearPSF.toFixed(0)} / ${f.Sv} PSF</span><span class="rval ${f.bearOK?'pass':'fail'}">${f.bearOK?'OK':'NG'}</span></div>
       <div class="rrow"><span class="rlabel">Overturning SF (&ge;1.5)</span><span class="rval ${sfCls(f.otSF,1.5)}">${f.otSF.toFixed(2)}</span></div>
       <div class="rrow"><span class="rlabel">Sliding SF (&ge;1.5)</span><span class="rval ${sfCls(f.latSF,1.5)}">${f.latSF.toFixed(2)}</span></div>
+      ${frostHTML}
       ${(!f.bearOK||!f.otOK||!f.latOK)?'<div class="warn-box">Current size does not pass all checks.</div>':''}
       ${autoHint}
       <div style="margin-top:10px">
@@ -1148,7 +1305,41 @@ function renderFoundation() {
         <div class="step"><span class="l">&nbsp; Passive = ${f.Sl}&times;${f.fw}&times;${f.fd}</span><span class="r">${f.passive.toLocaleString(undefined,{maximumFractionDigits:0})} lbs</span></div>
         <div class="step final"><span class="l">&nbsp; Total vs ${c.forcePerCol.toLocaleString(undefined,{maximumFractionDigits:0})} lbs shear</span><span class="r">${f.latResist.toLocaleString(undefined,{maximumFractionDigits:0})} lbs</span></div>
       </div>
-    </div>`;
+    </div>
+    ${renderACI318Card(c, f)}`;
+}
+
+function renderACI318Card(c, f) {
+  const fc_ = v('fc', 3000);
+  const hef_ = v('hef', 24);
+  const bDia_ = v('boltDia', 0.75) || 0.75;
+  const bPerRow_ = v('bPerRow', 2), bRows_ = v('bRows', 2);
+  const bSpace_ = v('bSpace', 6);
+  const nBolts_ = bPerRow_ * bRows_;
+  const edgeMin_ = Math.max(3, (f.fw * 12 / 2) - (bSpace_ / 2));
+  // Uplift demand: overturning moment / (lever arm = half footing width)
+  const uplift_ = c.windForce * c.centroid / (f.fw / 2);
+  const Nu_per = uplift_ / nBolts_;
+  const aci = calcACI318Breakout(Nu_per, hef_, bDia_, fc_, edgeMin_, nBolts_);
+  const aciPass = aci.phiNcbg >= Nu_per;
+
+  return `<div class="card">
+    <h3 style="cursor:pointer" onclick="this.parentElement.querySelector('.aci-body').classList.toggle('hidden')">ACI 318-19 Concrete Breakout (S17.6.2) <span class="toggle" style="font-size:14px;color:var(--text2)">&#9662;</span></h3>
+    <div class="aci-body">
+      <div class="formula-box">Nb = 24 * sqrt(f'c) * hef^1.5 (Eq 17.6.2.2b)</div>
+      <div class="step"><span class="l">f'c (concrete)</span><span class="r">${fc_} psi</span></div>
+      <div class="step"><span class="l">h_ef (embedment)</span><span class="r">${hef_}" </span></div>
+      <div class="step"><span class="l">Edge distance (min)</span><span class="r">${edgeMin_.toFixed(1)}"</span></div>
+      <div class="step"><span class="l">ANco = 9 x hef^2</span><span class="r">${aci.ANco.toFixed(1)} in2</span></div>
+      <div class="step"><span class="l">Nb (basic breakout)</span><span class="r">${aci.Nb.toLocaleString(undefined,{maximumFractionDigits:0})} lbs</span></div>
+      <div class="step"><span class="l">psi_ed (edge factor)</span><span class="r">${aci.psi_ed.toFixed(3)}</span></div>
+      <div class="step"><span class="l">phi (0.70, Condition B)</span><span class="r">0.70</span></div>
+      <div class="step final"><span class="l">phi*Ncbg (capacity)</span><span class="r">${aci.phiNcbg.toLocaleString(undefined,{maximumFractionDigits:0})} lbs</span></div>
+      <div class="step"><span class="l">Nu (demand/anchor)</span><span class="r">${Nu_per.toLocaleString(undefined,{maximumFractionDigits:0})} lbs</span></div>
+      <div class="rrow"><span class="rlabel">Concrete Breakout Check</span><span class="rval ${aciPass?'pass':'fail'}">${aciPass?'PASS':'FAIL'} (${(aci.phiNcbg/Math.max(Nu_per,1)).toFixed(2)}x)</span></div>
+      ${!aciPass?'<div class="warn-box">Concrete breakout capacity insufficient. Increase h_ef, f\'c, or footing width.</div>':''}
+    </div>
+  </div>`;
 }
 
 function renderGusset() {
@@ -1228,7 +1419,7 @@ function updatePrompt() {
   // Always include bolt data
   const b=calcBoltData();
   t += `\nBolts: ${b.total} (${b.bpr}x${b.br}), spacing ${b.bsp}"`;
-  if(b.bolt) t += ` | ${b.bolt.lbl} A307 (At=${b.bolt.At})`;
+  if(b.bolt) t += ` | ${b.bolt.lbl} ${getBoltGrade().name} (At=${b.bolt.At})`;
   if(b.minBP) t += ` | Min BP: ${b.minBP.toFixed(2)}"`;
 
   // Always include foundation data
@@ -1251,11 +1442,232 @@ function copyPrompt() {
   });
 }
 
+// ===================== PDF REPORT =====================
+function generatePDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'letter' });
+  const margin = 20;
+  const pageW = 215.9;
+  const pageH = 279.4;
+  let y = margin;
+
+  function checkPage(need) { if (y + need > pageH - 20) { doc.addPage(); y = margin; } }
+  function addLine(label, value, indent) {
+    checkPage(6);
+    indent = indent || 0;
+    doc.setFont('courier', 'normal'); doc.setFontSize(9); doc.setTextColor(80,80,80);
+    doc.text(label, margin + indent, y);
+    doc.setTextColor(0,0,0); doc.setFont('courier', 'bold');
+    doc.text(String(value), 160, y, { align: 'right' });
+    y += 5.5;
+  }
+  function addHeader(text) {
+    checkPage(14);
+    doc.setFillColor(17,17,17);
+    doc.rect(margin, y-4, pageW - 2*margin, 8, 'F');
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(255,215,0);
+    doc.text(text, margin + 3, y + 1);
+    doc.setTextColor(0,0,0); y += 10;
+  }
+  function addFormula(text) {
+    checkPage(6);
+    doc.setFont('courier', 'italic'); doc.setFontSize(8); doc.setTextColor(100,50,150);
+    doc.text('  ' + text, margin, y); doc.setTextColor(0,0,0); y += 5;
+  }
+  function hline() { doc.setDrawColor(200,200,200); doc.line(margin, y, pageW - margin, y); y += 3; }
+
+  const c = lastCalc;
+  const W_ = c.W, H_ = c.H, GC_ = c.GC, N_ = c.N;
+  const Vmph_ = v('Vmph',115), Kd_ = v('Kd',0.85), Kzt_ = v('Kzt',1.0), Ke_ = v('Ke',1.0);
+  const G_ = v('G',0.85), Cf_ = v('Cf',1.2);
+  const exposure_ = document.getElementById('exposure')?.value || 'C';
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'});
+
+  // TITLE
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(18); doc.setTextColor(17,17,17);
+  doc.text('SIGNCALC', margin, y);
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(100,100,100);
+  doc.text('STRUCTURAL CALCULATION REPORT', margin, y + 7);
+  doc.setFontSize(9);
+  doc.text('Eagle Sign & Design Inc.  |  Sign Engineering Calculator v2.0', margin, y + 13);
+  doc.text('Generated: ' + dateStr, margin, y + 19);
+  y += 28;
+  doc.setDrawColor(255,215,0); doc.setLineWidth(1.5);
+  doc.line(margin, y, pageW - margin, y); doc.setLineWidth(0.3); y += 8;
+
+  // SIGN INPUTS
+  addHeader('SIGN INPUTS');
+  addLine('Sign Width (W)', W_.toFixed(1) + ' ft');
+  addLine('Sign Height (H)', H_.toFixed(1) + ' ft');
+  addLine('Ground Clearance (GC)', GC_.toFixed(1) + ' ft');
+  addLine('Number of Columns (N)', N_.toString());
+  addLine('Sign Area (A = W x H)', (W_ * H_).toFixed(2) + ' ft2');
+  addLine('Top of Sign Elevation', (GC_ + H_).toFixed(1) + ' ft AGL');
+  hline();
+
+  // WIND LOAD
+  addHeader('WIND LOAD CALCULATION');
+  const codeEl = document.getElementById('codeBadge');
+  const codeStr = codeEl ? codeEl.textContent : 'ASCE 7-22';
+  addLine('Design Code', codeStr);
+  if (curCode !== 'ubc97') {
+    addLine('Basic Wind Speed (V)', Vmph_ + ' mph');
+    addLine('Exposure Category', exposure_);
+    addLine('Directionality Factor (Kd)', Kd_.toFixed(2));
+    addLine('Topographic Factor (Kzt)', Kzt_.toFixed(2));
+    addLine('Ground Elevation Factor (Ke)', Ke_.toFixed(2));
+    addLine('Gust Factor (G)', G_.toFixed(2));
+    addLine('Force Coefficient (Cf)', Cf_.toFixed(2));
+    y += 2;
+    const h_bar = GC_ + H_ / 2;
+    const KZ_EXP = { B:{zg:1200,alpha:7}, C:{zg:900,alpha:9.5}, D:{zg:700,alpha:11.5} };
+    const exp = KZ_EXP[exposure_] || KZ_EXP['C'];
+    const Kz = Math.max(0.85, 2.01 * Math.pow(Math.max(h_bar, 15) / exp.zg, 2 / exp.alpha));
+    const qz = 0.00256 * Kz * Kzt_ * Kd_ * Ke_ * Vmph_ * Vmph_;
+    const psf = qz * G_ * Cf_;
+    addFormula('qz = 0.00256 x Kz x Kzt x Kd x Ke x V^2');
+    addLine('Velocity Pressure Coeff (Kz)', Kz.toFixed(3));
+    addLine('Velocity Pressure (qz)', qz.toFixed(2) + ' psf');
+    addFormula('p = qz x G x Cf');
+    addLine('Design Pressure (p)', psf.toFixed(2) + ' psf');
+  } else {
+    addLine('Direct Wind Pressure (UBC)', c.PSF.toFixed(1) + ' PSF');
+  }
+  addFormula('F = p x W x H');
+  addLine('Total Wind Force (F)', c.windForce.toFixed(0) + ' lbs');
+  hline();
+
+  // SECTION MODULUS
+  addHeader('SECTION MODULUS REQUIREMENT');
+  addLine('Centroid Height above grade', c.centroid.toFixed(2) + ' ft');
+  addFormula('M = F/N x h_centroid');
+  addLine('Moment at Base per Column', c.momentFtLb.toFixed(0) + ' ft-lb = ' + c.momentInLb.toFixed(0) + ' in-lb');
+  addLine('Steel Type', c.st === 'new' ? 'New (Fb = 0.66Fy)' : 'Used (Fb = 0.60Fy)');
+  addLine('Yield Strength (Fy)', '36 ksi (A36)');
+  addLine('Allowable Bending Stress (Fb)', (c.Fallow/1000).toFixed(2) + ' ksi');
+  addFormula('S_req = M / Fb');
+  addLine('Required Section Modulus', c.Sreq.toFixed(3) + ' in3');
+  const sumPipe_ = document.getElementById('sumPipe')?.textContent || '--';
+  addLine('Selected Column', sumPipe_);
+  if (c.recPipe) {
+    addLine('Actual Section Modulus', c.recPipe.sm + ' in3');
+    const smRatio = c.recPipe.sm / c.Sreq;
+    addLine('Ratio (S_actual / S_req)', smRatio.toFixed(2) + (smRatio >= 1.0 ? ' -- PASS' : ' -- FAIL'));
+  }
+  hline();
+
+  // ANCHOR BOLT
+  addHeader('ANCHOR BOLT CHECK');
+  const bg = getBoltGrade();
+  const bDia_ = v('boltDia', 0.75);
+  const bPerRow_ = v('bPerRow', 2), bRows_ = v('bRows', 2), bSpace_ = v('bSpace', 6);
+  addLine('Bolt Grade', bg.name);
+  addLine('Allowable Tensile Stress (Ft)', bg.Ft.toFixed(2) + ' ksi');
+  addLine('Bolt Diameter', bDia_ > 0 ? bDia_ + '"' : 'Auto');
+  addLine('Bolt Layout', (bPerRow_ * bRows_) + ' bolts (' + bPerRow_ + '/row x ' + bRows_ + ' rows)');
+  addLine('Bolt Spacing', bSpace_ + ' in');
+  const bData = calcBoltData();
+  if (bData.bolt) {
+    addLine('Selected Bolt', bData.bolt.lbl + ' ' + bg.name);
+    addLine('Tensile Area (At)', bData.bolt.At + ' in2');
+    addLine('Required At/bolt', bData.reqAt.toFixed(3) + ' in2');
+    addLine('Result', bData.bolt.At >= bData.reqAt ? 'PASS' : 'FAIL');
+  }
+  hline();
+
+  // FOUNDATION
+  addHeader('FOUNDATION DESIGN');
+  const fW_ = v('fW', 3), fD_ = v('fD', 5), DL_ = v('DL', 500);
+  const Sv_ = v('Sv', 1500), Sl_ = v('Sl', 150);
+  const soilType_ = document.getElementById('soilType')?.value || 'sand';
+  const fTypeEl_ = document.querySelector('#fTypeGroup .rbtn.active');
+  const fType_ = fTypeEl_ ? fTypeEl_.dataset.val : 'circular';
+  const foundMethod_ = rv('foundMethodGroup') || 'simplified';
+
+  addLine('Foundation Type', fType_.charAt(0).toUpperCase() + fType_.slice(1));
+  addLine('Foundation Width/Dia', fW_.toFixed(2) + ' ft');
+  addLine('Foundation Depth', fD_.toFixed(2) + ' ft = ' + (fD_*12).toFixed(0) + '"');
+  addLine('Soil Type', soilType_);
+  addLine('Vertical Bearing (Sv)', Sv_ + ' PSF');
+  addLine('Lateral Bearing (Sl)', Sl_ + ' PSF/ft');
+  addLine('Dead Load', DL_ + ' lbs');
+  addLine('Design Method', foundMethod_ === 'ibc1807' ? 'IBC 1807.3 Eq. 18-1' : 'Simplified Overturning');
+
+  // Foundation checks
+  const fCalc = calcFoundData();
+  y += 2;
+  addLine('Bearing', fCalc.bearPSF.toFixed(0) + ' / ' + Sv_ + ' PSF -- ' + (fCalc.bearOK ? 'OK' : 'NG'));
+  addLine('Overturning SF (>=1.5)', fCalc.otSF.toFixed(2) + ' -- ' + (fCalc.otOK ? 'PASS' : 'FAIL'));
+  addLine('Sliding SF (>=1.5)', fCalc.latSF.toFixed(2) + ' -- ' + (fCalc.latOK ? 'PASS' : 'FAIL'));
+
+  // IBC 1807.3 if selected
+  if (foundMethod_ === 'ibc1807') {
+    y += 2;
+    const ibcRes = calcFoundationIBC1807(c.forcePerCol, c.centroid, fW_, Sl_);
+    addFormula('IBC 1807.3 Eq. 18-1: A = 2.34P / (S1 x b)');
+    addLine('A', ibcRes.A.toFixed(2));
+    addFormula('d = 0.5A[1 + sqrt(1 + 4.36h/A)]');
+    addLine('Required Depth (d)', ibcRes.d.toFixed(2) + ' ft (' + (ibcRes.d*12).toFixed(0) + '")');
+    addLine('IBC 1807.3 Check', fD_ >= ibcRes.d ? 'PASS' : 'FAIL');
+  }
+
+  // Frost line
+  y += 2;
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(9);
+  if (fD_ >= 3.5) {
+    doc.setTextColor(52,211,153);
+    doc.text('Iowa Frost Line: Depth ' + (fD_*12).toFixed(0) + '" >= 42" minimum -- OK', margin, y);
+  } else {
+    doc.setTextColor(239,68,68);
+    doc.text('Iowa Frost Line: Depth ' + (fD_*12).toFixed(0) + '" < 42" minimum -- FAIL', margin, y);
+  }
+  doc.setTextColor(0,0,0); y += 6;
+  hline();
+
+  // ACI 318 if applicable
+  const fc_ = v('fc', 3000), hef_ = v('hef', 24);
+  const edgeMin_ = Math.max(3, (fW_ * 12 / 2) - (bSpace_ / 2));
+  const nBolts_ = bPerRow_ * bRows_;
+  const uplift_ = c.windForce * c.centroid / (fW_ / 2);
+  const aci = calcACI318Breakout(uplift_ / nBolts_, hef_, bDia_ > 0 ? bDia_ : 0.75, fc_, edgeMin_, nBolts_);
+  addHeader('ACI 318-19 CONCRETE BREAKOUT (S17.6.2)');
+  addLine("f'c (concrete strength)", fc_ + ' psi');
+  addLine('h_ef (embedment depth)', hef_ + ' in');
+  addLine('Edge Distance (min)', edgeMin_.toFixed(1) + ' in');
+  addLine('ANco (single anchor)', aci.ANco.toFixed(1) + ' in2');
+  addLine('Nb (basic breakout)', aci.Nb.toFixed(0) + ' lbs');
+  addLine('psi_ed (edge mod)', aci.psi_ed.toFixed(3));
+  addLine('phi*Ncbg (capacity)', aci.phiNcbg.toFixed(0) + ' lbs');
+  addLine('Nu (demand/anchor)', (uplift_ / nBolts_).toFixed(0) + ' lbs');
+  addLine('Result', aci.phiNcbg >= (uplift_ / nBolts_) ? 'PASS' : 'FAIL');
+
+  // FOOTER on all pages
+  const pageCount = doc.internal.getNumberOfPages();
+  for (let i = 1; i <= pageCount; i++) {
+    doc.setPage(i);
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(7); doc.setTextColor(150,150,150);
+    doc.text('SignCalc v2.0 -- Eagle Sign & Design Inc. -- Generated ' + dateStr, margin, pageH - 8);
+    doc.text('Page ' + i + ' of ' + pageCount, pageW - margin, pageH - 8, { align: 'right' });
+    doc.setDrawColor(255,215,0); doc.setLineWidth(0.5);
+    doc.line(margin, pageH - 12, pageW - margin, pageH - 12);
+    doc.setLineWidth(0.3);
+  }
+
+  doc.save('SignCalc-Report-' + now.toISOString().slice(0,10) + '.pdf');
+}
+
 // ===================== MAIN =====================
 const renderers = {section:renderSection,bolt:renderBolt,foundation:renderFoundation,gusset:renderGusset,soil:renderSoil};
 
 function calc() {
   calcShared();
+  checkFrostLine();
+  // Auto Cf update if checked
+  if (document.getElementById('cfAuto') && document.getElementById('cfAuto').checked) {
+    const cfInput = document.getElementById('Cf');
+    cfInput.value = autoCf(v('W',8), v('H',4));
+  }
   (renderers[curTab]||renderSection)();
   updatePrompt();
 }
