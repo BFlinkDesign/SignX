@@ -9,248 +9,289 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #0c0e14; --surface: #141720; --surface2: #1c2030; --surface3: #242940;
-    --border: #2a3050; --border2: #3a4570; --text: #e4e8f4; --text2: #8890aa;
-    --accent: #4a9eff; --accent2: #2d6fd6; --accent-bg: rgba(74,158,255,0.08);
-    --green: #34d399; --green-bg: rgba(52,211,153,0.08);
-    --orange: #f59e0b; --orange-bg: rgba(245,158,11,0.08);
-    --red: #ef4444; --red-bg: rgba(239,68,68,0.08);
-    --purple: #a78bfa; --purple-bg: rgba(167,139,250,0.08);
-    --cyan: #22d3ee;
+    --bg: #111111;
+    --surface: #191919;
+    --surface2: #202020;
+    --surface3: #2a2a2a;
+    --border: #2e2e2e;
+    --border2: #3d3d3d;
+    --text: #d8d8d8;
+    --text2: #888888;
+    --dim: #c8960c;
+    --gold: #FFD700;
+    --gold2: #B8960A;
+    --gold-bg: rgba(255,215,0,0.07);
+    --green: #34d399;
+    --orange: #f59e0b;
+    --red: #ef4444;
+    --purple: #c4a95a;
+    --grid-line: rgba(255,255,255,0.025);
   }
   html, body { height: 100%; overflow: hidden; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
     background: var(--bg); color: var(--text); line-height: 1.5;
+    display: grid;
+    grid-template-rows: 44px 1fr 22px;
+    grid-template-columns: 280px 1fr 320px;
   }
 
   /* ===== HEADER ===== */
   .header {
+    grid-column: 1 / -1;
     background: var(--surface); border-bottom: 1px solid var(--border);
-    padding: 8px 20px; display: flex; align-items: center; gap: 12px; height: 44px;
+    padding: 0 16px; display: flex; align-items: center; gap: 10px; height: 44px;
   }
-  .header h1 { font-size: 15px; font-weight: 700; letter-spacing: -0.3px; white-space: nowrap; }
+  .header h1 { font-size: 15px; font-weight: 700; white-space: nowrap; }
   .header .badge {
-    font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600;
-    white-space: nowrap;
+    font-size: 9px; padding: 2px 6px; border-radius: 3px; font-weight: 600;
+    white-space: nowrap; background: #2a2a2a; color: var(--gold); border: 1px solid var(--gold);
   }
-  .badge-co { background: var(--accent2); color: white; }
-  .badge-code { cursor: pointer; transition: all 0.15s; border: 1px solid transparent; }
-  .badge-code.ubc { background: #2d4a1f; color: #86efac; border-color: #2d6b2f; }
-  .badge-code.asce { background: #1a3a5c; color: #7dd3fc; border-color: #2563eb; }
 
-  .code-picker {
-    position: relative; display: inline-block;
+  .status-bar { display: flex; gap: 8px; margin-left: 16px; }
+  .status-chip {
+    font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 12px;
+    display: flex; align-items: center; gap: 4px; cursor: pointer; transition: all 0.15s;
+    font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.3px;
   }
+  .status-chip.pass { background: rgba(255,215,0,0.12); color: var(--gold); border: 1px solid rgba(255,215,0,0.3); }
+  .status-chip.fail { background: rgba(239,68,68,0.1); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
+  .status-chip.warn { background: rgba(245,158,11,0.1); color: var(--orange); border: 1px solid rgba(245,158,11,0.3); }
+
+  .header-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+
+  .code-picker { position: relative; display: inline-block; }
   .code-dropdown {
-    display: none; position: absolute; top: 100%; left: 0; margin-top: 4px;
+    display: none; position: absolute; top: 100%; right: 0; margin-top: 4px;
     background: var(--surface2); border: 1px solid var(--border2); border-radius: 8px;
-    padding: 4px; z-index: 100; min-width: 200px; box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    padding: 4px; z-index: 100; min-width: 210px; box-shadow: 0 8px 32px rgba(0,0,0,0.5);
   }
   .code-dropdown.open { display: block; }
   .code-option {
-    padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;
+    padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 11px;
     color: var(--text2); transition: all 0.1s; display: flex; justify-content: space-between;
   }
   .code-option:hover { background: var(--surface3); color: var(--text); }
-  .code-option.active { background: var(--accent-bg); color: var(--accent); }
+  .code-option.active { background: var(--gold-bg); color: var(--gold); }
 
-  .summary-strip {
-    margin-left: auto; display: flex; gap: 16px; font-size: 11px;
-    font-family: 'SF Mono','Cascadia Code','Consolas', monospace;
-    color: var(--text2); align-items: center;
+  .badge-code {
+    font-size: 10px; padding: 3px 10px; border-radius: 10px; font-weight: 700;
+    cursor: pointer; transition: all 0.15s; border: 1px solid transparent;
   }
-  .summary-strip .sv { color: var(--green); font-weight: 600; }
-  .summary-strip .sw { color: var(--orange); font-weight: 600; }
+  .badge-code.ubc { background: rgba(134,239,172,0.12); color: #86efac; border-color: #2d6b2f; }
+  .badge-code.asce { background: rgba(255,215,0,0.12); color: var(--gold); border-color: var(--gold); }
 
-  /* ===== TABS ===== */
-  .tabs {
-    display: flex; background: var(--surface); border-bottom: 1px solid var(--border);
-    padding: 0 20px; height: 38px; gap: 0;
+  .pdf-btn {
+    padding: 5px 16px; background: var(--gold); color: #111; border: none; border-radius: 4px;
+    font-size: 11px; font-weight: 800; cursor: pointer; font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 0.05em; transition: all 0.15s;
   }
-  .tab {
-    padding: 8px 18px; cursor: pointer; font-size: 12px; font-weight: 600;
-    color: var(--text2); border-bottom: 2px solid transparent;
-    transition: all 0.15s; background: none; border-top: none;
-    border-left: none; border-right: none; letter-spacing: 0.2px;
-  }
-  .tab:hover { color: var(--text); }
-  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .pdf-btn:hover { background: #ffe44d; }
 
-  /* ===== MAIN LAYOUT ===== */
-  .layout {
-    display: grid; grid-template-columns: 360px 1fr;
-    height: calc(100vh - 82px);
-  }
-  .sidebar {
+  /* ===== LEFT INPUT PANEL ===== */
+  .input-panel {
     background: var(--surface); border-right: 1px solid var(--border);
-    overflow-y: auto; display: flex; flex-direction: column;
+    overflow-y: auto; overflow-x: hidden;
   }
-  .main-area {
-    display: flex; flex-direction: column; overflow: hidden;
-  }
-  .preview { flex: 1; overflow-y: auto; padding: 20px; }
-  .prompt-area {
-    border-top: 1px solid var(--border); background: var(--surface);
-    padding: 12px 20px; min-height: 64px; position: relative;
-  }
-
-  /* ===== SIDEBAR SECTIONS ===== */
-  .sidebar-section {
-    padding: 14px 16px; border-bottom: 1px solid var(--border);
-  }
+  .sidebar-section { padding: 12px 14px; border-bottom: 1px solid var(--border); }
   .sidebar-section.collapsed .section-body { display: none; }
   .section-header {
-    font-size: 10px; text-transform: uppercase; letter-spacing: 1.2px;
-    font-weight: 700; margin-bottom: 10px; display: flex;
-    align-items: center; justify-content: space-between; cursor: pointer;
-    user-select: none;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
+    font-weight: 700; margin-bottom: 8px; display: flex;
+    align-items: center; justify-content: space-between; cursor: pointer; user-select: none;
   }
-  .section-header .label { display: flex; align-items: center; gap: 6px; }
-  .section-header .dot {
-    width: 6px; height: 6px; border-radius: 50%; display: inline-block;
-  }
-  .section-header .toggle {
-    font-size: 14px; color: var(--text2); transition: transform 0.2s;
-  }
+  .section-header .label { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+  .section-header .dot { width: 5px; height: 5px; border-radius: 50%; display: inline-block; }
+  .section-header .toggle { font-size: 13px; color: var(--text2); transition: transform 0.2s; }
   .sidebar-section.collapsed .toggle { transform: rotate(-90deg); }
 
-  .field { margin-bottom: 10px; }
-  .field label {
-    display: block; font-size: 11px; color: var(--text2);
-    margin-bottom: 3px; font-weight: 500;
-  }
+  .field { margin-bottom: 8px; }
+  .field label { display: block; font-size: 10px; color: var(--text2); margin-bottom: 2px; font-weight: 500; }
   .field input, .field select {
     width: 100%; background: var(--surface2); border: 1px solid var(--border);
-    color: var(--text); padding: 7px 9px; border-radius: 5px; font-size: 12px;
+    color: var(--text); padding: 6px 8px; border-radius: 4px; font-size: 11px;
     font-family: 'SF Mono','Cascadia Code','Consolas', monospace;
   }
   .field input:focus, .field select:focus {
-    outline: none; border-color: var(--accent);
-    box-shadow: 0 0 0 2px rgba(74,158,255,0.12);
+    outline: none; border-color: var(--gold); box-shadow: 0 0 0 2px rgba(255,215,0,0.12);
   }
-  .unit { font-size: 10px; color: var(--text2); }
-  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-  .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+  .unit { font-size: 9px; color: var(--text2); }
+  .unit-hint { font-size: 9px; color: var(--text2); font-family: monospace; margin-top: 1px; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+  .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; }
 
-  .radio-group { display: flex; gap: 4px; }
+  .radio-group { display: flex; gap: 3px; }
   .rbtn {
-    flex: 1; padding: 6px 8px; text-align: center; font-size: 11px;
+    flex: 1; padding: 5px 6px; text-align: center; font-size: 10px;
     background: var(--surface2); border: 1px solid var(--border);
-    border-radius: 5px; cursor: pointer; color: var(--text2);
+    border-radius: 4px; cursor: pointer; color: var(--text2);
     transition: all 0.12s; font-weight: 500;
   }
   .rbtn.active {
-    background: var(--accent2); border-color: var(--accent);
-    color: white; font-weight: 700;
+    background: rgba(255,215,0,0.12); border-color: var(--gold);
+    color: var(--gold); font-weight: 700;
   }
   .rbtn:hover:not(.active) { border-color: var(--text2); }
 
-  .preset-bar { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 10px; }
+  .preset-bar { display: flex; gap: 3px; flex-wrap: wrap; margin-bottom: 8px; }
   .preset {
-    padding: 4px 10px; font-size: 10px; background: var(--surface2);
-    border: 1px solid var(--border); border-radius: 12px; cursor: pointer;
+    padding: 3px 8px; font-size: 9px; background: var(--surface2);
+    border: 1px solid var(--border); border-radius: 10px; cursor: pointer;
     color: var(--text2); transition: all 0.12s; font-weight: 600;
   }
-  .preset:hover { border-color: var(--accent); color: var(--accent); }
+  .preset:hover { border-color: var(--gold); color: var(--gold); }
 
-  /* ===== RESULT CARDS ===== */
-  .card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 8px; padding: 16px; margin-bottom: 12px;
+  .cite {
+    font-size: 8px; font-weight: 700; color: var(--gold2);
+    background: var(--gold-bg); border: 1px solid rgba(255,215,0,0.2);
+    border-radius: 3px; padding: 1px 4px; margin-left: 4px;
+    white-space: nowrap; vertical-align: middle;
   }
-  .card h3 {
-    font-size: 13px; color: var(--accent); margin-bottom: 10px;
-    display: flex; align-items: center; gap: 6px;
-    padding-bottom: 8px; border-bottom: 1px solid var(--border);
+  .cite-block {
+    font-size: 9px; color: #6a5800; margin-top: 5px; line-height: 1.6;
+    border-top: 1px solid rgba(255,215,0,0.1); padding-top: 5px;
   }
-  .rrow {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 5px 0; border-bottom: 1px solid rgba(42,48,80,0.5);
-    font-size: 12px;
-  }
-  .rrow:last-child { border-bottom: none; }
-  .rlabel { color: var(--text2); }
-  .rval {
-    font-weight: 700; font-family: 'SF Mono','Cascadia Code','Consolas', monospace;
-    font-size: 13px;
-  }
-  .pass { color: var(--green); }
-  .warn { color: var(--orange); }
-  .fail { color: var(--red); }
+  .cite-block strong { color: var(--gold2); }
 
-  .pipe-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-  .pipe-card {
-    background: var(--surface2); border: 1px solid var(--border);
-    border-radius: 8px; padding: 12px; text-align: center;
-  }
-  .pipe-card.rec { border-color: var(--green); }
-  .pipe-card .size { font-size: 20px; font-weight: 800; }
-  .pipe-card .sub { font-size: 10px; color: var(--text2); margin-top: 2px; }
-  .pipe-card .sm-val { font-size: 12px; color: var(--green); font-weight: 600; margin-top: 4px; }
-
-  .step { display: flex; justify-content: space-between; padding: 3px 8px; font-size: 11px;
-    font-family: 'SF Mono','Cascadia Code','Consolas', monospace; }
-  .step .l { color: var(--text2); }
-  .step .r { color: var(--purple); font-weight: 600; }
-  .step.final { background: var(--surface2); border-radius: 4px; margin-top: 4px; }
-  .step.final .r { color: var(--green); font-size: 13px; }
-
-  .diagram {
-    background: var(--surface2); border-radius: 8px; padding: 16px;
-    display: flex; justify-content: center; min-height: 280px; margin-bottom: 12px;
+  .area-display {
+    font-size: 10px; color: var(--dim); font-family: monospace;
+    padding: 3px 8px; background: rgba(200,150,12,0.06); border-radius: 3px;
+    margin-top: 4px; text-align: center;
   }
 
-  .eng-table { width: 100%; border-collapse: collapse; font-size: 11px; }
-  .eng-table th {
-    background: var(--surface2); color: var(--accent); font-size: 10px;
-    text-transform: uppercase; letter-spacing: 0.5px; padding: 7px 8px;
-    border-bottom: 2px solid var(--border); text-align: center; font-weight: 700;
-    position: sticky; top: 0; z-index: 2;
+  .psf-display {
+    font-size: 14px; font-weight: 800; color: var(--gold); text-align: center;
+    padding: 6px; background: var(--gold-bg); border: 1px solid rgba(255,215,0,0.2);
+    border-radius: 4px; margin: 6px 0; font-family: monospace;
   }
-  .eng-table td {
-    padding: 5px 8px; border-bottom: 1px solid var(--border); text-align: center;
-    font-family: 'SF Mono','Cascadia Code','Consolas', monospace; font-size: 11px;
-  }
-  .eng-table tr:hover td { background: rgba(74,158,255,0.04); }
-  .eng-table tr.hl td { background: var(--green-bg); color: var(--green); font-weight: 700; }
+
+  .inline-warn { font-size: 9px; color: var(--orange); margin-top: 2px; display: flex; align-items: center; gap: 4px; }
+  .inline-warn.error { color: var(--red); }
 
   .info-box {
-    background: var(--accent-bg); border: 1px solid var(--accent2);
-    border-radius: 6px; padding: 8px 12px; font-size: 11px; color: var(--accent);
-    margin: 8px 0; line-height: 1.6;
+    background: rgba(255,215,0,0.06); border: 1px solid rgba(255,215,0,0.3);
+    border-radius: 5px; padding: 6px 10px; font-size: 10px; color: #D4A800;
+    margin: 6px 0; line-height: 1.5;
   }
   .warn-box {
-    background: var(--red-bg); border: 1px solid var(--red);
-    border-radius: 6px; padding: 8px 12px; font-size: 11px; color: var(--red);
-    margin: 8px 0;
-  }
-  .formula-box {
-    font-family: 'SF Mono','Cascadia Code','Consolas', monospace;
-    font-size: 12px; color: var(--purple); background: var(--purple-bg);
-    padding: 6px 10px; border-radius: 5px; margin: 6px 0;
-    border-left: 3px solid var(--purple);
+    background: rgba(239,68,68,0.08); border: 1px solid var(--red);
+    border-radius: 5px; padding: 6px 10px; font-size: 10px; color: var(--red);
+    margin: 6px 0;
   }
 
-  .prompt-text {
-    font-family: 'SF Mono','Cascadia Code','Consolas', monospace;
-    font-size: 11px; color: var(--text2); line-height: 1.5;
-    white-space: pre-wrap; max-height: 100px; overflow-y: auto;
+  .find-min-btn {
+    width: 100%; padding: 5px; font-size: 10px; font-weight: 700; cursor: pointer;
+    background: rgba(200,150,12,0.08); border: 1px solid rgba(200,150,12,0.25);
+    color: var(--dim); border-radius: 4px; margin-top: 4px; transition: all 0.15s;
+    text-transform: uppercase; letter-spacing: 0.5px;
   }
-  .copy-btn {
-    position: absolute; right: 20px; top: 10px; padding: 4px 12px;
-    background: var(--accent2); border: none; color: white; border-radius: 5px;
-    font-size: 11px; cursor: pointer; font-weight: 600;
-  }
-  .copy-btn:hover { background: var(--accent); }
-  .copy-btn.copied { background: var(--green); }
+  .find-min-btn:hover { background: rgba(200,150,12,0.16); border-color: var(--dim); }
 
   .hidden { display: none !important; }
-  .ctrl-panel { display: none; }
-  .ctrl-panel.active { display: block; }
+
+  .adv-toggle {
+    font-size: 9px; color: var(--text2); cursor: pointer; padding: 3px 0;
+    display: flex; align-items: center; gap: 4px; margin-bottom: 4px;
+  }
+  .adv-toggle:hover { color: var(--text); }
+
+  /* ===== CENTER DRAWING PANEL ===== */
+  .drawing-panel {
+    overflow: hidden; position: relative;
+    background-color: #f5f0e6;
+    background-image:
+      linear-gradient(rgba(100,130,200,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(100,130,200,0.07) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+  #structuralDrawing { width: 100%; height: 100%; display: block; }
+
+  /* ===== RIGHT RESULTS PANEL ===== */
+  .results-panel {
+    background: var(--surface); border-left: 1px solid var(--border);
+    overflow-y: auto; overflow-x: hidden; padding: 8px;
+  }
+
+  .result-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-left: 3px solid var(--border2); border-radius: 6px;
+    margin-bottom: 8px; overflow: hidden;
+  }
+  .result-card.pass { border-left-color: var(--gold); }
+  .result-card.warn { border-left-color: var(--orange); }
+  .result-card.fail { border-left-color: var(--red); }
+
+  .card-header {
+    display: flex; align-items: center; gap: 5px; padding: 7px 10px;
+    background: var(--surface2); cursor: pointer; user-select: none;
+  }
+  .card-icon { font-size: 11px; }
+  .card-title {
+    font-size: 10px; font-weight: 800; letter-spacing: 0.5px;
+    text-transform: uppercase; flex: 1; color: var(--text);
+  }
+  .card-status {
+    font-size: 9px; font-weight: 800; padding: 2px 7px; border-radius: 10px;
+  }
+  .card-status.pass { background: var(--gold-bg); color: var(--gold); border: 1px solid rgba(255,215,0,0.3); }
+  .card-status.warn { background: rgba(245,158,11,0.1); color: var(--orange); border: 1px solid rgba(245,158,11,0.3); }
+  .card-status.fail { background: rgba(239,68,68,0.1); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
+
+  .card-body { padding: 8px 10px; }
+  .card-body.collapsed { display: none; }
+
+  .formula-box {
+    font-family: 'SF Mono','Cascadia Code','Consolas', monospace;
+    font-size: 10px; color: var(--purple); background: rgba(196,169,90,0.08);
+    padding: 5px 8px; border-radius: 4px; margin: 5px 0;
+    border-left: 2px solid var(--purple);
+  }
+
+  .rrow {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 3px 0; border-bottom: 1px solid rgba(60,60,60,0.7); font-size: 11px;
+  }
+  .rrow:last-child { border-bottom: none; }
+  .rlabel { color: var(--text2); font-size: 10px; }
+  .rval {
+    font-weight: 700; font-family: 'SF Mono','Cascadia Code','Consolas', monospace;
+    font-size: 11px;
+  }
+  .rval.pass, .pass { color: var(--green); }
+  .rval.warn, .warn { color: var(--orange); }
+  .rval.fail, .fail { color: var(--red); }
+
+  .step {
+    display: flex; justify-content: space-between; padding: 2px 6px; font-size: 10px;
+    font-family: 'SF Mono','Cascadia Code','Consolas', monospace;
+  }
+  .step .l { color: var(--text2); }
+  .step .r { color: var(--purple); font-weight: 600; }
+  .step.final { background: var(--surface2); border-radius: 3px; margin-top: 3px; }
+  .step.final .r { color: var(--gold); font-size: 11px; }
+
+  .bom-row {
+    display: flex; justify-content: space-between; padding: 3px 0;
+    border-bottom: 1px solid rgba(60,60,60,0.7); font-size: 10px;
+  }
+  .bom-desc { color: var(--text); flex: 1; }
+  .bom-qty { color: var(--gold); font-weight: 700; font-family: monospace; white-space: nowrap; margin-left: 8px; }
+
+  /* ===== FOOTER ===== */
+  .footer-bar {
+    grid-column: 1 / -1;
+    background: var(--surface); border-top: 1px solid var(--border);
+    display: flex; align-items: center; gap: 16px; padding: 0 16px;
+    font-size: 9px; color: var(--text2); font-weight: 500; height: 22px;
+    overflow: hidden; white-space: nowrap;
+  }
+  .footer-brand {
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+    font-size: 10px; color: var(--gold); letter-spacing: 0.5px;
+  }
 
   /* scrollbar */
-  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--border2); }
@@ -260,331 +301,303 @@
 
 <!-- ===== HEADER ===== -->
 <div class="header">
-  <h1><span style="color:#9A9A9A;font-family:'Barlow Condensed',sans-serif;font-weight:800;letter-spacing:0;font-size:18px">SIGN</span><span style="color:#FFD700;font-family:'Barlow Condensed',sans-serif;font-weight:800;letter-spacing:0;font-size:18px">CALC</span></h1>
-  <span class="badge" style="background:#2a2a2a;color:#FFD700;border:1px solid #FFD700;font-size:9px;padding:2px 6px;border-radius:3px">v2.0</span>
-  <div class="code-picker">
-    <span class="badge badge-code asce" id="codeBadge" onclick="toggleCodeDropdown()">ASCE 7-22</span>
-    <div class="code-dropdown" id="codeDropdown">
-      <div class="code-option" data-code="ubc97" onclick="setCode('ubc97')">
-        <span>1997 UBC (Legacy)</span><span style="color:var(--text2)">PSF direct</span>
-      </div>
-      <div class="code-option" data-code="asce710" onclick="setCode('asce710')">
-        <span>ASCE 7-10 / IBC 2015</span><span style="color:var(--text2)">V mph</span>
-      </div>
-      <div class="code-option" data-code="asce716" onclick="setCode('asce716')">
-        <span>ASCE 7-16 / IBC 2018</span><span style="color:var(--text2)">V mph</span>
-      </div>
-      <div class="code-option active" data-code="asce722" onclick="setCode('asce722')">
-        <span>ASCE 7-22 / IBC 2024</span><span style="color:var(--text2)">V mph</span>
-      </div>
-    </div>
+  <h1><span style="color:#9A9A9A;font-family:'Barlow Condensed',sans-serif;font-weight:800;letter-spacing:0;font-size:20px">SIGN</span><span style="color:#FFD700;font-family:'Barlow Condensed',sans-serif;font-weight:800;letter-spacing:0;font-size:20px">CALC</span></h1>
+  <span class="badge">v3.0</span>
+
+  <div class="status-bar">
+    <div class="status-chip pass" id="chipWind" onclick="scrollToCard('card-wind')"><span id="chipWindIcon">&#10003;</span> WIND</div>
+    <div class="status-chip pass" id="chipSection" onclick="scrollToCard('card-section')"><span id="chipSectionIcon">&#10003;</span> SECTION</div>
+    <div class="status-chip pass" id="chipFoundation" onclick="scrollToCard('card-foundation')"><span id="chipFoundIcon">&#10003;</span> FOUNDATION</div>
+    <div class="status-chip pass" id="chipBolts" onclick="scrollToCard('card-bolts')"><span id="chipBoltIcon">&#10003;</span> BOLTS</div>
   </div>
-  <div class="summary-strip" id="summaryStrip">
-    <span>S<sub>req</sub> = <span class="sv" id="sumSreq">--</span> in&sup3;</span>
-    <span>Wind = <span class="sw" id="sumWind">--</span> lbs</span>
-    <span>M = <span class="sv" id="sumMoment">--</span> ft-lb</span>
-    <span>Pipe: <span class="sv" id="sumPipe">--</span></span>
-    <span>Bolt: <span class="sv" id="sumBolt">--</span></span>
-    <span>Found: <span class="sv" id="sumFound">--</span></span>
-  </div>
-  <button onclick="generatePDF()" style="margin-left:12px;padding:4px 14px;background:#FFD700;color:#111;border:none;border-radius:4px;font-size:11px;font-weight:800;cursor:pointer;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.05em">PDF REPORT</button>
-</div>
 
-<!-- ===== TABS ===== -->
-<div class="tabs" id="tabBar">
-  <button class="tab active" data-tab="section">Section Modulus</button>
-  <button class="tab" data-tab="bolt">Anchor Bolt</button>
-  <button class="tab" data-tab="foundation">Foundation</button>
-  <button class="tab" data-tab="gusset">Gusset Table</button>
-  <button class="tab" data-tab="soil">Soil Reference</button>
-</div>
-
-<div class="layout">
-  <!-- ===== SIDEBAR ===== -->
-  <div class="sidebar">
-
-    <!-- SHARED: Sign Dimensions (always visible) -->
-    <div class="sidebar-section" id="sec-sign">
-      <div class="section-header" onclick="toggleSection('sec-sign')">
-        <span class="label"><span class="dot" style="background:var(--green)"></span> SIGN DIMENSIONS</span>
-        <span class="toggle">&#9662;</span>
-      </div>
-      <div class="section-body">
-        <div class="preset-bar">
-          <button class="preset" onclick="preset('small')">Small</button>
-          <button class="preset" onclick="preset('medium')">Medium</button>
-          <button class="preset" onclick="preset('monument')">Monument</button>
-          <button class="preset" onclick="preset('pole')">Pole Sign</button>
-          <button class="preset" onclick="preset('highway')">Highway</button>
-          <button class="preset" onclick="preset('emc')">EMC</button>
+  <div class="header-right">
+    <div class="code-picker">
+      <span class="badge-code asce" id="codeBadge" onclick="toggleCodeDropdown()">ASCE 7-22</span>
+      <div class="code-dropdown" id="codeDropdown">
+        <div class="code-option" data-code="ubc97" onclick="setCode('ubc97')">
+          <span>1997 UBC (Legacy)</span><span style="color:var(--text2)">PSF direct</span>
         </div>
-        <div class="row2">
-          <div class="field"><label>Width <span class="unit">(ft)</span></label>
-            <input type="number" id="W" value="8" min="0.5" max="100" step="0.5" oninput="calc()"></div>
-          <div class="field"><label>Height <span class="unit">(ft)</span></label>
-            <input type="number" id="H" value="4" min="0.5" max="50" step="0.5" oninput="calc()"></div>
+        <div class="code-option" data-code="asce710" onclick="setCode('asce710')">
+          <span>ASCE 7-10 / IBC 2015</span><span style="color:var(--text2)">V mph</span>
         </div>
-        <div class="row2">
-          <div class="field"><label>Ground Clearance <span class="unit">(ft)</span></label>
-            <input type="number" id="GC" value="8" min="0" max="100" step="0.5" oninput="calc()"></div>
-          <div class="field"><label>Columns</label>
-            <input type="number" id="N" value="1" min="1" max="6" step="1" oninput="calc()"></div>
+        <div class="code-option" data-code="asce716" onclick="setCode('asce716')">
+          <span>ASCE 7-16 / IBC 2018</span><span style="color:var(--text2)">V mph</span>
+        </div>
+        <div class="code-option active" data-code="asce722" onclick="setCode('asce722')">
+          <span>ASCE 7-22 / IBC 2024</span><span style="color:var(--text2)">V mph</span>
         </div>
       </div>
     </div>
+    <button class="pdf-btn" onclick="generatePDF()">PDF REPORT</button>
+  </div>
+</div>
 
-    <!-- SHARED: Wind & Steel -->
-    <div class="sidebar-section" id="sec-wind">
-      <div class="section-header" onclick="toggleSection('sec-wind')">
-        <span class="label"><span class="dot" style="background:var(--orange)"></span> WIND &amp; STEEL</span>
-        <span class="toggle">&#9662;</span>
+<!-- ===== LEFT INPUT PANEL ===== -->
+<div class="input-panel">
+
+  <!-- 1. SIGN DIMENSIONS -->
+  <div class="sidebar-section" id="sec-sign">
+    <div class="section-header" onclick="toggleSection('sec-sign')">
+      <span class="label"><span class="dot" style="background:var(--green)"></span> SIGN DIMENSIONS <span class="cite">ASCE 7-22 S29.3</span></span>
+      <span class="toggle">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="preset-bar">
+        <button class="preset" onclick="preset('small')">Small</button>
+        <button class="preset" onclick="preset('medium')">Medium</button>
+        <button class="preset" onclick="preset('monument')">Monument</button>
+        <button class="preset" onclick="preset('pole')">Pole</button>
+        <button class="preset" onclick="preset('highway')">Highway</button>
+        <button class="preset" onclick="preset('emc')">EMC</button>
       </div>
-      <div class="section-body">
-        <!-- UBC mode: direct PSF -->
-        <div id="windUBC" class="hidden">
-          <div class="field"><label>Wind Pressure <span class="unit">(PSF)</span></label>
-            <input type="number" id="PSF" value="20" min="5" max="80" step="1" oninput="calc()"></div>
+      <div class="row2">
+        <div class="field"><label>Width <span class="unit">(ft)</span></label>
+          <input type="number" id="W" value="8" min="0.5" max="100" step="0.5" oninput="calc()">
+          <div class="unit-hint" id="hintW"></div></div>
+        <div class="field"><label>Height <span class="unit">(ft)</span></label>
+          <input type="number" id="H" value="4" min="0.5" max="50" step="0.5" oninput="calc()">
+          <div class="unit-hint" id="hintH"></div></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label>Ground Clearance <span class="unit">(ft)</span></label>
+          <input type="number" id="GC" value="8" min="0" max="100" step="0.5" oninput="calc()">
+          <div class="unit-hint" id="hintGC"></div></div>
+        <div class="field"><label>Columns</label>
+          <input type="number" id="N" value="1" min="1" max="6" step="1" oninput="calc()"></div>
+      </div>
+      <div class="area-display" id="areaDisplay">A = 8 x 4 = 32.0 ft2</div>
+    </div>
+  </div>
+
+  <!-- 2. WIND PARAMETERS -->
+  <div class="sidebar-section" id="sec-wind">
+    <div class="section-header" onclick="toggleSection('sec-wind')">
+      <span class="label"><span class="dot" style="background:var(--orange)"></span> WIND PARAMETERS <span class="cite">ASCE 7-22 S26, S29.3</span></span>
+      <span class="toggle">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div id="windUBC" class="hidden">
+        <div class="field"><label>Wind Pressure <span class="unit">(PSF)</span></label>
+          <input type="number" id="PSF" value="20" min="5" max="80" step="1" oninput="calc()"></div>
+      </div>
+      <div id="windASCE">
+        <div class="row2">
+          <div class="field"><label>Wind Speed V <span class="unit">(mph)</span></label>
+            <input type="number" id="Vmph" value="115" min="50" max="200" step="1" oninput="calc()"></div>
+          <div class="field"><label>Exposure</label>
+            <select id="exposure" onchange="calc()">
+              <option value="B">B - Urban/Suburban</option>
+              <option value="C" selected>C - Open Terrain</option>
+              <option value="D">D - Flat/Water</option>
+            </select></div>
         </div>
-        <!-- ASCE mode: wind speed + factors -->
-        <div id="windASCE">
-          <div class="row2">
-            <div class="field"><label>Wind Speed V <span class="unit">(mph)</span></label>
-              <input type="number" id="Vmph" value="115" min="50" max="200" step="1" oninput="calc()"></div>
-            <div class="field"><label>Exposure</label>
-              <select id="exposure" onchange="calc()">
-                <option value="B">B - Urban/Suburban</option>
-                <option value="C" selected>C - Open Terrain</option>
-                <option value="D">D - Flat/Water</option>
-              </select>
-            </div>
-          </div>
+        <div class="row2">
+          <div class="field"><label>G <span class="unit">(gust)</span></label>
+            <input type="number" id="G" value="0.85" min="0.5" max="1.5" step="0.01" oninput="calc()"></div>
+          <div class="field"><label>Cf <span class="unit">(force)</span>
+              <label style="font-size:9px;margin-left:4px">
+                <input type="checkbox" id="cfAuto" onchange="toggleCfAuto();calc()"> Auto
+              </label>
+            </label>
+            <input type="number" id="Cf" value="1.2" min="0.5" max="3.0" step="0.05" oninput="calc()"></div>
+        </div>
+        <div class="adv-toggle" onclick="document.getElementById('advWind').classList.toggle('hidden');this.querySelector('span').textContent=document.getElementById('advWind').classList.contains('hidden')?'&#9654;':'&#9660;'">
+          <span>&#9654;</span> Advanced Factors (Kd, Kzt, Ke)
+        </div>
+        <div id="advWind" class="hidden">
           <div class="row3">
-            <div class="field"><label>K<sub>d</sub> <span class="unit">(dir)</span></label>
+            <div class="field"><label>Kd <span class="unit">(dir)</span></label>
               <input type="number" id="Kd" value="0.85" min="0.5" max="1.0" step="0.01" oninput="calc()"></div>
-            <div class="field"><label>K<sub>zt</sub> <span class="unit">(topo)</span></label>
+            <div class="field"><label>Kzt <span class="unit">(topo)</span></label>
               <input type="number" id="Kzt" value="1.0" min="0.5" max="2.0" step="0.05" oninput="calc()"></div>
-            <div class="field"><label>K<sub>e</sub> <span class="unit">(elev)</span></label>
+            <div class="field"><label>Ke <span class="unit">(elev)</span></label>
               <input type="number" id="Ke" value="1.0" min="0.8" max="1.2" step="0.01" oninput="calc()"></div>
           </div>
-          <div class="row2">
-            <div class="field"><label>G <span class="unit">(gust)</span></label>
-              <input type="number" id="G" value="0.85" min="0.5" max="1.5" step="0.01" oninput="calc()"></div>
-            <div class="field"><label>C<sub>f</sub> <span class="unit">(force)</span>
-                <label style="font-size:10px;margin-left:6px">
-                  <input type="checkbox" id="cfAuto" onchange="toggleCfAuto();calc()"> Auto (ASCE 7 Fig 29.3-1)
-                </label>
-              </label>
-              <input type="number" id="Cf" value="1.2" min="0.5" max="3.0" step="0.05" oninput="calc()"></div>
-          </div>
-          <div class="field"><label>Calculated PSF <span class="unit">(for reference)</span></label>
-            <input type="text" id="calcPSF" readonly style="color:var(--cyan);background:var(--surface3);border-style:dashed"></div>
         </div>
-        <div class="field" style="margin-top:6px">
-          <label>Steel</label>
-          <div class="radio-group" id="steelGroup">
-            <div class="rbtn active" data-val="new" onclick="setRadio(this);calc()">New (0.66 Fy)</div>
-            <div class="rbtn" data-val="used" onclick="setRadio(this);calc()">Used (0.60 Fy)</div>
-          </div>
-        </div>
-        <div class="field">
-          <label>Column Shape</label>
-          <div class="radio-group" id="shapeGroup">
-            <div class="rbtn active" data-val="pipe" onclick="setRadio(this);calc()">Round Pipe</div>
-            <div class="rbtn" data-val="square" onclick="setRadio(this);calc()">Square Tube</div>
-          </div>
+        <div class="psf-display" id="psfDisplay">-- PSF</div>
+        <div class="cite-block">
+          <strong>qz</strong> = 0.00256 Kz Kzt Kd Ke V2 -- ASCE 7-22 Eq. 26.10-1<br>
+          <strong>F</strong> = qz G Cf Af -- ASCE 7-22 S29.3.1
         </div>
       </div>
-    </div>
-
-    <!-- TAB-SPECIFIC CONTROLS -->
-
-    <!-- Section Modulus tab: no extra controls needed -->
-    <div class="ctrl-panel" id="ctrl-section">
-      <div class="sidebar-section">
-        <div class="info-box">
-          Section Modulus uses all shared inputs above.<br>
-          Results auto-flow to Anchor Bolt and Foundation tabs.
-        </div>
-      </div>
-    </div>
-
-    <!-- Anchor Bolt tab -->
-    <div class="ctrl-panel" id="ctrl-bolt">
-      <div class="sidebar-section" id="sec-bolt">
-        <div class="section-header" onclick="toggleSection('sec-bolt')">
-          <span class="label"><span class="dot" style="background:var(--cyan)"></span> BOLT PARAMETERS</span>
-          <span class="toggle">&#9662;</span>
-        </div>
-        <div class="section-body">
-          <div class="field">
-            <label>Bolt Grade / Standard</label>
-            <select id="boltGrade" onchange="calc()">
-              <option value="A307">A307 (Fu=60 ksi, Ft=0.33Fu=19.8 ksi)</option>
-              <option value="F1554_36">F1554 Gr.36 (Fu=58 ksi, Ft=0.33Fu=19.14 ksi)</option>
-              <option value="F1554_55">F1554 Gr.55 (Fu=75 ksi, Ft=0.33Fu=24.75 ksi)</option>
-              <option value="F1554_105">F1554 Gr.105 (Fu=125 ksi, Ft=0.33Fu=41.25 ksi)</option>
-            </select>
-          </div>
-          <div class="field"><label>Bolt Diameter</label>
-            <select id="boltDia" onchange="calc()">
-              <option value="0">Auto (smallest OK)</option>
-              <option value="0.5">1/2"</option>
-              <option value="0.625">5/8"</option>
-              <option value="0.75" selected>3/4"</option>
-              <option value="0.875">7/8"</option>
-              <option value="1.0">1"</option>
-              <option value="1.25">1-1/4"</option>
-              <option value="1.5">1-1/2"</option>
-              <option value="1.75">1-3/4"</option>
-              <option value="2.0">2"</option>
-              <option value="2.5">2-1/2"</option>
-              <option value="3.0">3"</option>
-            </select>
-          </div>
-          <div class="row3">
-            <div class="field"><label>Bolts/Row</label>
-              <input type="number" id="bPerRow" value="2" min="1" max="8" step="1" oninput="calc()"></div>
-            <div class="field"><label>Rows</label>
-              <input type="number" id="bRows" value="2" min="1" max="8" step="1" oninput="calc()"></div>
-            <div class="field"><label>Spacing <span class="unit">(in)</span></label>
-              <input type="number" id="bSpace" value="6" min="2" max="36" step="0.5" oninput="calc()"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Foundation tab -->
-    <div class="ctrl-panel" id="ctrl-foundation">
-      <div class="sidebar-section" id="sec-found">
-        <div class="section-header" onclick="toggleSection('sec-found')">
-          <span class="label"><span class="dot" style="background:var(--purple)"></span> FOUNDATION</span>
-          <span class="toggle">&#9662;</span>
-        </div>
-        <div class="section-body">
-          <div class="preset-bar">
-            <button class="preset" onclick="fpreset('sm_cais')">Sm Caisson</button>
-            <button class="preset" onclick="fpreset('med_cais')">Med Caisson</button>
-            <button class="preset" onclick="fpreset('lg_sq')">Lg Square</button>
-            <button class="preset" onclick="fpreset('spread')">Spread</button>
-          </div>
-          <div class="field"><label>Foundation Type</label>
-            <div class="radio-group" id="fTypeGroup">
-              <div class="rbtn active" data-val="circular" onclick="setRadio(this);calc()">Circular</div>
-              <div class="rbtn" data-val="square" onclick="setRadio(this);calc()">Square</div>
-              <div class="rbtn" data-val="rectangular" onclick="setRadio(this);calc()">Rect</div>
-            </div>
-          </div>
-          <div class="row2">
-            <div class="field"><label>Width/Dia <span class="unit">(ft)</span></label>
-              <input type="number" id="fW" value="3" min="1" max="20" step="0.25" oninput="calc()"></div>
-            <div class="field"><label>Depth <span class="unit">(ft)</span></label>
-              <input type="number" id="fD" value="5" min="2" max="30" step="0.5" oninput="calc()"></div>
-          </div>
-          <div id="frostWarn" class="warn-box" style="display:none;margin-top:4px"></div>
-          <div class="field" style="margin-top:8px">
-            <label>Design Method</label>
-            <div class="radio-group" id="foundMethodGroup">
-              <div class="rbtn active" data-val="simplified" onclick="setRadio(this);calc()">Simplified</div>
-              <div class="rbtn" data-val="ibc1807" onclick="setRadio(this);calc()">IBC 1807.3</div>
-            </div>
-          </div>
-          <div class="field hidden" id="fRatioField"><label>W/L Ratio <span class="unit">(%)</span></label>
-            <input type="number" id="fRatio" value="50" min="30" max="100" step="5" oninput="calc()"></div>
-          <div class="field"><label>Dead Load <span class="unit">(lbs, sign+pole)</span></label>
-            <input type="number" id="DL" value="500" min="0" max="50000" step="50" oninput="calc()"></div>
-        </div>
-      </div>
-      <div class="sidebar-section" id="sec-soil">
-        <div class="section-header" onclick="toggleSection('sec-soil')">
-          <span class="label"><span class="dot" style="background:var(--orange)"></span> SOIL</span>
-          <span class="toggle">&#9662;</span>
-        </div>
-        <div class="section-body">
-          <div class="field"><label>Soil Type</label>
-            <select id="soilType" onchange="setSoil();calc()">
-              <option value="clay">Clay (1000/100)</option>
-              <option value="sand" selected>Sand (1500/150)</option>
-              <option value="gravel">Gravel (2000/200)</option>
-              <option value="rock">Rock (2000/400)</option>
-              <option value="custom">Custom</option>
-            </select>
-          </div>
-          <div class="row2">
-            <div class="field"><label>Vertical <span class="unit">(PSF)</span></label>
-              <input type="number" id="Sv" value="1500" min="100" max="10000" step="50" oninput="calc()"></div>
-            <div class="field"><label>Lateral <span class="unit">(PSF)</span></label>
-              <input type="number" id="Sl" value="150" min="50" max="2000" step="10" oninput="calc()"></div>
-          </div>
-        </div>
-      </div>
-      <div class="sidebar-section" id="sec-aci">
-        <div class="section-header" onclick="toggleSection('sec-aci')">
-          <span class="label"><span class="dot" style="background:var(--red)"></span> CONCRETE (ACI 318-19)</span>
-          <span class="toggle">&#9662;</span>
-        </div>
-        <div class="section-body">
-          <div class="row2">
-            <div class="field"><label>f'c <span class="unit">(psi)</span></label>
-              <input type="number" id="fc" value="3000" min="2000" max="10000" step="500" oninput="calc()"></div>
-            <div class="field"><label>h_ef <span class="unit">(in)</span></label>
-              <input type="number" id="hef" value="24" min="6" max="120" step="1" oninput="calc()"></div>
-          </div>
-          <div class="info-box" style="font-size:10px">ACI 318-19 S17.6.2 Concrete Breakout in Tension</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Gusset tab -->
-    <div class="ctrl-panel" id="ctrl-gusset">
-      <div class="sidebar-section">
-        <div class="info-box">
-          Schedule 40 pipe. 4 gussets at 90&deg;.<br>
-          BP thickness &ge; 2&times; column wall.<br>
-          Gussets welded all around &ge; 2&times; wall.<br>
-          <b>Highlighted row</b> = first pipe meeting S<sub>req</sub> from Section Modulus.
-        </div>
-        <div class="formula-box">Min BP = OD + 2 &times; (Gusset Leg + Fillet Weld)</div>
-        <div class="formula-box">Without gussets &asymp; 70% of column S</div>
-      </div>
-    </div>
-
-    <!-- Soil tab -->
-    <div class="ctrl-panel" id="ctrl-soil">
-      <div class="sidebar-section">
-        <div class="info-box">
-          From UBC Table 18-I-A (1997).<br>
-          Organic soils &amp; Peat require investigation.<br>
-          Spread footings need special engineering for expansive soils.
-        </div>
-        <div style="margin-top:10px;font-size:11px;color:var(--text2)">
-          <b style="color:var(--accent)">AbcEng Registry Defaults</b>
-          <table style="width:100%;border-collapse:collapse;margin-top:6px">
-            <tr style="border-bottom:1px solid var(--border)"><td style="padding:4px 0">Default</td><td style="text-align:right;color:var(--green)">150 / 1,500</td></tr>
-            <tr style="border-bottom:1px solid var(--border)"><td style="padding:4px 0">Clay</td><td style="text-align:right">100 / 1,000</td></tr>
-            <tr style="border-bottom:1px solid var(--border)"><td style="padding:4px 0">Sandy</td><td style="text-align:right">150 / 1,500</td></tr>
-            <tr style="border-bottom:1px solid var(--border)"><td style="padding:4px 0">Gravel</td><td style="text-align:right">200 / 2,000</td></tr>
-            <tr><td style="padding:4px 0">Rock</td><td style="text-align:right">400 / 2,000</td></tr>
-          </table>
-        </div>
-      </div>
-    </div>
-
-  </div><!-- /sidebar -->
-
-  <!-- ===== MAIN AREA ===== -->
-  <div class="main-area">
-    <div class="preview" id="preview"></div>
-    <div class="prompt-area">
-      <button class="copy-btn" onclick="copyPrompt()">Copy</button>
-      <div class="prompt-text" id="promptOut"></div>
     </div>
   </div>
+
+  <!-- 3. COLUMN -->
+  <div class="sidebar-section" id="sec-col">
+    <div class="section-header" onclick="toggleSection('sec-col')">
+      <span class="label"><span class="dot" style="background:var(--dim)"></span> COLUMN <span class="cite">AISC 360-22 / ASTM A53</span></span>
+      <span class="toggle">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="field"><label>Shape</label>
+        <div class="radio-group" id="shapeGroup">
+          <div class="rbtn active" data-val="pipe" onclick="setRadio(this);calc()">Round Pipe</div>
+          <div class="rbtn" data-val="square" onclick="setRadio(this);calc()">Square Tube</div>
+        </div>
+      </div>
+      <div class="field"><label>Steel</label>
+        <div class="radio-group" id="steelGroup">
+          <div class="rbtn active" data-val="new" onclick="setRadio(this);calc()">New (0.66Fy)</div>
+          <div class="rbtn" data-val="used" onclick="setRadio(this);calc()">Used (0.60Fy)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. FOUNDATION -->
+  <div class="sidebar-section" id="sec-found">
+    <div class="section-header" onclick="toggleSection('sec-found')">
+      <span class="label"><span class="dot" style="background:var(--purple)"></span> FOUNDATION <span class="cite">IBC 2021 S1807.3</span></span>
+      <span class="toggle">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="preset-bar">
+        <button class="preset" onclick="fpreset('sm_cais')">Sm Caisson</button>
+        <button class="preset" onclick="fpreset('med_cais')">Med Caisson</button>
+        <button class="preset" onclick="fpreset('lg_sq')">Lg Square</button>
+        <button class="preset" onclick="fpreset('spread')">Spread</button>
+      </div>
+      <div class="field"><label>Foundation Type</label>
+        <div class="radio-group" id="fTypeGroup">
+          <div class="rbtn active" data-val="circular" onclick="setRadio(this);calc()">Circular</div>
+          <div class="rbtn" data-val="square" onclick="setRadio(this);calc()">Square</div>
+          <div class="rbtn" data-val="rectangular" onclick="setRadio(this);calc()">Rect</div>
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field"><label>Width/Dia <span class="unit">(ft)</span></label>
+          <input type="number" id="fW" value="3" min="1" max="20" step="0.25" oninput="calc()"></div>
+        <div class="field"><label>Depth <span class="unit">(ft)</span></label>
+          <input type="number" id="fD" value="5" min="2" max="30" step="0.5" oninput="calc()"></div>
+      </div>
+      <div id="frostWarn" class="inline-warn error" style="display:none"></div>
+      <div class="field" style="margin-top:6px"><label>Design Method</label>
+        <div class="radio-group" id="foundMethodGroup">
+          <div class="rbtn active" data-val="simplified" onclick="setRadio(this);calc()">Simplified</div>
+          <div class="rbtn" data-val="ibc1807" onclick="setRadio(this);calc()">IBC Eq.18-1</div>
+          <div class="rbtn" data-val="ibc1807c" onclick="setRadio(this);calc()">IBC Eq.18-2</div>
+        </div>
+      </div>
+      <div class="field hidden" id="fRatioField"><label>W/L Ratio <span class="unit">(%)</span></label>
+        <input type="number" id="fRatio" value="50" min="30" max="100" step="5" oninput="calc()"></div>
+      <div class="field"><label>Dead Load <span class="unit">(lbs, sign+pole)</span></label>
+        <input type="number" id="DL" value="500" min="0" max="50000" step="50" oninput="calc()"></div>
+      <button class="find-min-btn" onclick="findMinFoundation()">Find Minimum Foundation</button>
+    </div>
+  </div>
+
+  <!-- 5. SOIL -->
+  <div class="sidebar-section" id="sec-soil">
+    <div class="section-header" onclick="toggleSection('sec-soil')">
+      <span class="label"><span class="dot" style="background:var(--orange)"></span> SOIL <span class="cite">IBC 2021 Tbl 1806.2</span></span>
+      <span class="toggle">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="field"><label>Soil Type</label>
+        <select id="soilType" onchange="setSoil();calc()">
+          <option value="clay">Clay (S1=100 psf/ft)</option>
+          <option value="sand" selected>Sand (S1=150 psf/ft)</option>
+          <option value="gravel">Gravel (S1=200 psf/ft)</option>
+          <option value="rock">Rock (S1=400 psf/ft)</option>
+          <option value="custom">Custom</option>
+        </select>
+      </div>
+      <div class="row2">
+        <div class="field"><label>Vertical <span class="unit">(PSF)</span></label>
+          <input type="number" id="Sv" value="1500" min="100" max="10000" step="50" oninput="calc()"></div>
+        <div class="field"><label>Lateral <span class="unit">(PSF/ft)</span></label>
+          <input type="number" id="Sl" value="150" min="50" max="2000" step="10" oninput="calc()"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. ANCHOR BOLTS -->
+  <div class="sidebar-section" id="sec-bolt">
+    <div class="section-header" onclick="toggleSection('sec-bolt')">
+      <span class="label"><span class="dot" style="background:var(--dim)"></span> ANCHOR BOLTS <span class="cite">ASTM F1554</span></span>
+      <span class="toggle">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="field"><label>Bolt Grade</label>
+        <select id="boltGrade" onchange="calc()">
+          <option value="A307">A307 (Fu=60, Ft=19.8 ksi)</option>
+          <option value="F1554_36">F1554 Gr.36 (Fu=58, Ft=21.75 ksi)</option>
+          <option value="F1554_55">F1554 Gr.55 (Fu=75, Ft=28.13 ksi)</option>
+          <option value="F1554_105">F1554 Gr.105 (Fu=125, Ft=46.88 ksi)</option>
+        </select>
+      </div>
+      <div class="field"><label>Bolt Diameter</label>
+        <select id="boltDia" onchange="calc()">
+          <option value="0">Auto (smallest OK)</option>
+          <option value="0.5">1/2"</option>
+          <option value="0.625">5/8"</option>
+          <option value="0.75" selected>3/4"</option>
+          <option value="0.875">7/8"</option>
+          <option value="1.0">1"</option>
+          <option value="1.25">1-1/4"</option>
+          <option value="1.5">1-1/2"</option>
+          <option value="1.75">1-3/4"</option>
+          <option value="2.0">2"</option>
+          <option value="2.5">2-1/2"</option>
+          <option value="3.0">3"</option>
+        </select>
+      </div>
+      <div class="row3">
+        <div class="field"><label>Bolts/Row</label>
+          <input type="number" id="bPerRow" value="2" min="1" max="8" step="1" oninput="calc()"></div>
+        <div class="field"><label>Rows</label>
+          <input type="number" id="bRows" value="2" min="1" max="8" step="1" oninput="calc()"></div>
+        <div class="field"><label>Spacing <span class="unit">(in)</span></label>
+          <input type="number" id="bSpace" value="6" min="2" max="36" step="0.5" oninput="calc()"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. CONCRETE -->
+  <div class="sidebar-section" id="sec-aci">
+    <div class="section-header" onclick="toggleSection('sec-aci')">
+      <span class="label"><span class="dot" style="background:var(--red)"></span> CONCRETE <span class="cite">ACI 318-19 S17.6</span></span>
+      <span class="toggle">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="row2">
+        <div class="field"><label>f'c <span class="unit">(psi)</span></label>
+          <input type="number" id="fc" value="3000" min="2000" max="10000" step="500" oninput="calc()"></div>
+        <div class="field"><label>h_ef <span class="unit">(in)</span></label>
+          <input type="number" id="hef" value="24" min="6" max="120" step="1" oninput="calc()"></div>
+      </div>
+      <div style="font-size:9px;color:var(--text2);margin-top:4px">Cast-in anchors, normal-weight concrete (lambda=1.0), phi=0.70 Condition B</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== CENTER DRAWING PANEL ===== -->
+<div class="drawing-panel">
+  <svg id="structuralDrawing" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"></svg>
+</div>
+
+<!-- ===== RIGHT RESULTS PANEL ===== -->
+<div class="results-panel" id="resultsPanel"></div>
+
+<!-- ===== FOOTER ===== -->
+<div class="footer-bar">
+  <span class="footer-brand">SIGNCALC</span>
+  <span>ASCE 7-22 / IBC 2021</span>
+  <span>ACI 318-19 §17.6.2</span>
+  <span>AISC 360-22 ASD</span>
+  <span>ASTM F1554 / A307 / A36 / A53</span>
+  <span>AWS D1.1</span>
+  <span>UBC 1997 (legacy)</span>
+  <span style="margin-left:auto">Eagle Sign Co.</span>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 // ===================== DATA =====================
-const PIPE = [
+var PIPE = [
   {nom:2,od:2.375,wall:0.154,sm:0.561,gLeg:1.000,gThk:0.375,weld:0.1875},
   {nom:2.5,od:2.875,wall:0.203,sm:1.06,gLeg:1.000,gThk:0.500,weld:0.250},
   {nom:3,od:3.500,wall:0.216,sm:1.72,gLeg:1.125,gThk:0.500,weld:0.250},
@@ -605,72 +618,82 @@ const PIPE = [
   {nom:26,od:26.00,wall:0.375,sm:190.3,gLeg:4.500,gThk:1.000,weld:0.375},
   {nom:30,od:30.00,wall:0.375,sm:254.7,gLeg:4.625,gThk:1.000,weld:0.375},
   {nom:34,od:34.00,wall:0.375,sm:328.8,gLeg:5.750,gThk:1.000,weld:0.375},
-  {nom:36,od:36.00,wall:0.375,sm:369.2,gLeg:6.125,gThk:1.000,weld:0.375},
+  {nom:36,od:36.00,wall:0.375,sm:369.2,gLeg:6.125,gThk:1.000,weld:0.375}
 ];
 
-const SQ = [
+var SQ = [
   {side:2,wall:0.125,sm:0.51},{side:2.5,wall:0.188,sm:1.15},
   {side:3,wall:0.188,sm:1.78},{side:3.5,wall:0.188,sm:2.56},
   {side:4,wall:0.188,sm:3.52},{side:5,wall:0.250,sm:7.23},
   {side:6,wall:0.250,sm:10.8},{side:8,wall:0.312,sm:24.1},
-  {side:10,wall:0.375,sm:44.7},{side:12,wall:0.375,sm:65.2},
+  {side:10,wall:0.375,sm:44.7},{side:12,wall:0.375,sm:65.2}
 ];
 
-const BOLT = [
-  {dia:0.5,At:0.142,lbl:'1/2"'},{dia:0.625,At:0.226,lbl:'5/8"'},
-  {dia:0.75,At:0.334,lbl:'3/4"'},{dia:0.875,At:0.462,lbl:'7/8"'},
-  {dia:1.0,At:0.606,lbl:'1"'},{dia:1.25,At:0.969,lbl:'1-1/4"'},
-  {dia:1.5,At:1.405,lbl:'1-1/2"'},{dia:1.75,At:1.90,lbl:'1-3/4"'},
-  {dia:2.0,At:2.50,lbl:'2"'},{dia:2.5,At:3.25,lbl:'2-1/2"'},
-  {dia:3.0,At:5.03,lbl:'3"'},
+var BOLT = [
+  {dia:0.5,At:0.142,lbl:'1/2"',Abrg:0.146},
+  {dia:0.625,At:0.226,lbl:'5/8"',Abrg:0.202},
+  {dia:0.75,At:0.334,lbl:'3/4"',Abrg:0.291},
+  {dia:0.875,At:0.462,lbl:'7/8"',Abrg:0.388},
+  {dia:1.0,At:0.606,lbl:'1"',Abrg:0.507},
+  {dia:1.25,At:0.969,lbl:'1-1/4"',Abrg:0.790},
+  {dia:1.5,At:1.405,lbl:'1-1/2"',Abrg:1.12},
+  {dia:1.75,At:1.90,lbl:'1-3/4"',Abrg:1.50},
+  {dia:2.0,At:2.50,lbl:'2"',Abrg:1.95},
+  {dia:2.5,At:3.25,lbl:'2-1/2"',Abrg:3.07},
+  {dia:3.0,At:5.03,lbl:'3"',Abrg:4.72}
 ];
 
-const SOIL = {clay:{v:1000,l:100},sand:{v:1500,l:150},gravel:{v:2000,l:200},rock:{v:2000,l:400}};
+var SOIL = {clay:{v:1000,l:100},sand:{v:1500,l:150},gravel:{v:2000,l:200},rock:{v:2000,l:400}};
 
-// Kz table (ASCE 7, Table 26.10-1) - simplified height-based lookup
+// Ft = 0.375 * Fu per AISC 360-22 ASD (current). Note: 0.33*Fu is pre-9th-edition, outdated.
+var BOLT_GRADES = {
+  'A307':      { Fu: 60,  Ft: 19.8,  name: 'A307',         std: 'ASTM A307' },
+  'F1554_36':  { Fu: 58,  Ft: 21.75, name: 'F1554 Gr.36',  std: 'ASTM F1554' },
+  'F1554_55':  { Fu: 75,  Ft: 28.13, name: 'F1554 Gr.55',  std: 'ASTM F1554' },
+  'F1554_105': { Fu: 125, Ft: 46.88, name: 'F1554 Gr.105', std: 'ASTM F1554' }
+};
+
 function getKz(h, exp) {
-  // h in feet, returns Kz
-  const alphas = {B:7.0, C:9.5, D:11.5};
-  const zgs    = {B:1200, C:900, D:700};
-  const alpha = alphas[exp] || 9.5;
-  const zg = zgs[exp] || 900;
-  const z = Math.max(15, Math.min(h, zg));
+  var alphas = {B:7.0, C:9.5, D:11.5};
+  var zgs    = {B:1200, C:900, D:700};
+  var alpha = alphas[exp] || 9.5;
+  var zg = zgs[exp] || 900;
+  var z = Math.max(15, Math.min(h, zg));
   return 2.01 * Math.pow(z / zg, 2.0 / alpha);
 }
 
 // ===================== STATE =====================
-let curTab = 'section';
-let curCode = 'asce722';
-let lastCalc = {}; // shared calc results
+var curCode = 'asce722';
+var lastCalc = {};
+var lastFoundCalc = {};
+var lastBoltCalc = {};
+var lastACI = {};
+var lastPullout = {};
+var lastBearing = {};
 
-function v(id, fb) { const el=document.getElementById(id); if(!el) return fb; const n=parseFloat(el.value); return isNaN(n)?fb:n; }
-function rv(gid) { const g=document.getElementById(gid); if(!g) return ''; const a=g.querySelector('.rbtn.active'); return a?a.dataset.val:''; }
+function val(id, fb) { var el=document.getElementById(id); if(!el) return fb; var n=parseFloat(el.value); return isNaN(n)?fb:n; }
+function rv(gid) { var g=document.getElementById(gid); if(!g) return ''; var a=g.querySelector('.rbtn.active'); return a?a.dataset.val:''; }
 
 // ===================== UI HELPERS =====================
 function setRadio(btn) {
-  btn.parentElement.querySelectorAll('.rbtn').forEach(b=>b.classList.remove('active'));
+  btn.parentElement.querySelectorAll('.rbtn').forEach(function(b){b.classList.remove('active');});
   btn.classList.add('active');
-  // Show/hide rect ratio field
   if(btn.parentElement.id==='fTypeGroup') {
     document.getElementById('fRatioField').classList.toggle('hidden', btn.dataset.val!=='rectangular');
   }
 }
 
-function toggleSection(id) {
-  document.getElementById(id).classList.toggle('collapsed');
-}
+function toggleSection(id) { document.getElementById(id).classList.toggle('collapsed'); }
 
-function toggleCodeDropdown() {
-  document.getElementById('codeDropdown').classList.toggle('open');
-}
+function toggleCodeDropdown() { document.getElementById('codeDropdown').classList.toggle('open'); }
 
 function setCode(code) {
   curCode = code;
-  document.querySelectorAll('.code-option').forEach(o=>o.classList.toggle('active',o.dataset.code===code));
-  const badge = document.getElementById('codeBadge');
-  const labels = {ubc97:'1997 UBC',asce710:'ASCE 7-10',asce716:'ASCE 7-16',asce722:'ASCE 7-22'};
+  document.querySelectorAll('.code-option').forEach(function(o){o.classList.toggle('active',o.dataset.code===code);});
+  var badge = document.getElementById('codeBadge');
+  var labels = {ubc97:'1997 UBC',asce710:'ASCE 7-10',asce716:'ASCE 7-16',asce722:'ASCE 7-22'};
   badge.textContent = labels[code];
-  badge.className = 'badge badge-code ' + (code==='ubc97'?'ubc':'asce');
+  badge.className = 'badge-code ' + (code==='ubc97'?'ubc':'asce');
   document.getElementById('windUBC').classList.toggle('hidden', code!=='ubc97');
   document.getElementById('windASCE').classList.toggle('hidden', code==='ubc97');
   document.getElementById('codeDropdown').classList.remove('open');
@@ -681,59 +704,59 @@ document.addEventListener('click', function(e) {
   if(!e.target.closest('.code-picker')) document.getElementById('codeDropdown').classList.remove('open');
 });
 
-// ===================== TABS =====================
-document.getElementById('tabBar').addEventListener('click', function(e) {
-  const t = e.target.closest('.tab'); if(!t) return;
-  curTab = t.dataset.tab;
-  document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b===t));
-  document.querySelectorAll('.ctrl-panel').forEach(p=>p.classList.remove('active'));
-  const cp = document.getElementById('ctrl-'+curTab); if(cp) cp.classList.add('active');
-  calc();
-});
+function scrollToCard(id) {
+  var el = document.getElementById(id);
+  if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+}
 
 // ===================== PRESETS =====================
 function preset(name) {
-  const p = {
+  var p = {
     small:    {W:4,H:3,GC:3,PSF:20,N:1,Vmph:115},
     medium:   {W:8,H:4,GC:8,PSF:20,N:1,Vmph:115},
     monument: {W:10,H:6,GC:2,PSF:20,N:2,Vmph:115},
     pole:     {W:10,H:5,GC:15,PSF:25,N:1,Vmph:120},
     highway:  {W:20,H:8,GC:20,PSF:30,N:2,Vmph:130},
-    emc:      {W:12,H:8,GC:6,PSF:25,N:2,Vmph:120},
+    emc:      {W:12,H:8,GC:6,PSF:25,N:2,Vmph:120}
   }[name]; if(!p) return;
-  Object.keys(p).forEach(k=>{const el=document.getElementById(k);if(el)el.value=p[k];});
+  Object.keys(p).forEach(function(k){var el=document.getElementById(k);if(el)el.value=p[k];});
   calc();
+  // Auto-size foundation whenever a sign preset is applied
+  findMinFoundation();
 }
 
 function fpreset(name) {
-  const p = {
+  var p = {
     sm_cais:  {fType:'circular',fW:2,fD:4,DL:300,soilType:'sand'},
     med_cais: {fType:'circular',fW:3,fD:6,DL:800,soilType:'sand'},
     lg_sq:    {fType:'square',fW:5,fD:6,DL:2000,soilType:'gravel'},
-    spread:   {fType:'rectangular',fW:4,fD:3,DL:1200,soilType:'clay'},
+    spread:   {fType:'rectangular',fW:4,fD:3,DL:1200,soilType:'clay'}
   }[name]; if(!p) return;
-  Object.keys(p).forEach(k=>{
+  Object.keys(p).forEach(function(k){
     if(k==='fType'){
-      document.querySelectorAll('#fTypeGroup .rbtn').forEach(b=>b.classList.toggle('active',b.dataset.val===p[k]));
+      document.querySelectorAll('#fTypeGroup .rbtn').forEach(function(b){b.classList.toggle('active',b.dataset.val===p[k]);});
       document.getElementById('fRatioField').classList.toggle('hidden',p[k]!=='rectangular');
     } else if(k==='soilType'){
       document.getElementById('soilType').value=p[k]; setSoil();
     } else {
-      const el=document.getElementById(k);if(el)el.value=p[k];
+      var el=document.getElementById(k);if(el)el.value=p[k];
     }
   });
   calc();
 }
 
 function setSoil() {
-  const t=document.getElementById('soilType').value;
+  var t=document.getElementById('soilType').value;
   if(SOIL[t]){document.getElementById('Sv').value=SOIL[t].v;document.getElementById('Sl').value=SOIL[t].l;}
 }
 
-// ===================== Cf AUTO (ASCE 7 Figure 29.3-1) =====================
+// ===================== Cf AUTO =====================
+// NOTE: ASCE 7-22 §29.3 Fig. 29.3-1 Cf depends on B/s (width/clearance) AND s/h (sign ht / total ht).
+// This simplified lookup uses aspect ratio W/H as a conservative approximation.
+// For rigorous Cf, provide actual s (clearance) and compute both B/s and s/h.
 function autoCf(W_ft, H_ft) {
-  const ratio = W_ft / H_ft;
-  let cf;
+  var ratio = W_ft / H_ft;
+  var cf;
   if (ratio <= 4)       cf = 1.30;
   else if (ratio <= 6)  cf = 1.30 - (ratio - 4) / (6 - 4) * (1.30 - 1.20);
   else if (ratio <= 10) cf = 1.20 - (ratio - 6) / (10 - 6) * (1.20 - 1.10);
@@ -744,717 +767,830 @@ function autoCf(W_ft, H_ft) {
 }
 
 function toggleCfAuto() {
-  const auto = document.getElementById('cfAuto').checked;
-  const cfInput = document.getElementById('Cf');
+  var auto = document.getElementById('cfAuto').checked;
+  var cfInput = document.getElementById('Cf');
   cfInput.readOnly = auto;
-  cfInput.style.color = auto ? 'var(--cyan)' : '';
-  if (auto) {
-    const W_ = parseFloat(document.getElementById('W').value);
-    const H_ = parseFloat(document.getElementById('H').value);
-    cfInput.value = autoCf(W_, H_);
-  }
+  cfInput.style.color = auto ? 'var(--dim)' : '';
+  if (auto) cfInput.value = autoCf(parseFloat(document.getElementById('W').value), parseFloat(document.getElementById('H').value));
 }
 
 // ===================== CORE CALCULATIONS =====================
 function calcWindPSF() {
-  if(curCode==='ubc97') return v('PSF',20);
-  // ASCE 7: qz = 0.00256 * Kz * Kzt * Kd * Ke * V^2
-  const V=v('Vmph',115), Kd=v('Kd',0.85), Kzt_=v('Kzt',1.0), Ke_=v('Ke',1.0);
-  const G_=v('G',0.85), Cf_=v('Cf',1.2);
-  const exp=document.getElementById('exposure').value;
-  const W=v('W',8), H_=v('H',4), GC_=v('GC',8);
-  const centH = GC_ + H_/2;
-  const Kz = getKz(centH, exp);
-  const qz = 0.00256 * Kz * Kzt_ * Kd * Ke_ * V * V;
-  // F per unit area = qz * G * Cf (PSF equivalent)
-  const psf = qz * G_ * Cf_;
-  document.getElementById('calcPSF').value = psf.toFixed(2) + ' PSF  (qz=' + qz.toFixed(2) + ', Kz=' + Kz.toFixed(3) + ')';
+  if(curCode==='ubc97') return val('PSF',20);
+  var V=val('Vmph',115), Kd=val('Kd',0.85), Kzt_=val('Kzt',1.0), Ke_=val('Ke',1.0);
+  var G_=val('G',0.85), Cf_=val('Cf',1.2);
+  var exp=document.getElementById('exposure').value;
+  var W=val('W',8), H_=val('H',4), GC_=val('GC',8);
+  var centH = GC_ + H_/2;
+  var Kz = getKz(centH, exp);
+  var qz = 0.00256 * Kz * Kzt_ * Kd * Ke_ * V * V;
+  var psf = qz * G_ * Cf_;
+  var disp = document.getElementById('psfDisplay');
+  if (disp) disp.textContent = psf.toFixed(2) + ' PSF  (qz=' + qz.toFixed(2) + ', Kz=' + Kz.toFixed(3) + ')';
   return psf;
 }
 
+function getBoltGrade() {
+  var boltGradeKey = document.getElementById('boltGrade') ? document.getElementById('boltGrade').value : 'A307';
+  return BOLT_GRADES[boltGradeKey] || BOLT_GRADES['A307'];
+}
+
 function calcShared() {
-  const W_=v('W',8), H_=v('H',4), GC_=v('GC',8), N_=v('N',1);
-  const st = rv('steelGroup');
-  const shape = rv('shapeGroup');
-  const PSF_ = calcWindPSF();
+  var W_=val('W',8), H_=val('H',4), GC_=val('GC',8), N_=val('N',1);
+  var st = rv('steelGroup');
+  var shape = rv('shapeGroup');
+  var PSF_ = calcWindPSF();
 
-  const area = W_ * H_;
-  const centroid = GC_ + H_/2;
-  const perimeter = 2*(W_+H_);
-  const windForce = PSF_ * area;
-  const forcePerCol = windForce / N_;
-  const momentFtLb = forcePerCol * centroid;
-  const momentInLb = momentFtLb * 12;
+  var area = W_ * H_;
+  var centroid = GC_ + H_/2;
+  var perimeter = 2*(W_+H_);
+  var windForce = PSF_ * area;
+  var forcePerCol = windForce / N_;
+  var momentFtLb = forcePerCol * centroid;
+  var momentInLb = momentFtLb * 12;
 
-  const Fy = 36000;
-  const Fallow = st==='used' ? 0.60*Fy : 0.66*Fy;
-  const Sreq = momentInLb / Fallow;
+  var Fy = 36000;
+  var Fallow = st==='used' ? 0.60*Fy : 0.66*Fy;
+  var Sreq = momentInLb / Fallow;
 
-  const recPipe = PIPE.find(p=>p.sm>=Sreq);
-  const recSq = SQ.find(s=>s.sm>=Sreq);
-  const pbf = windForce / perimeter;
+  var recPipe = PIPE.find(function(p){return p.sm>=Sreq;});
+  var recSq = SQ.find(function(s){return s.sm>=Sreq;});
+  var pbf = windForce / perimeter;
 
-  lastCalc = {W:W_,H:H_,GC:GC_,N:N_,PSF:PSF_,st,shape,area,centroid,perimeter,
-    windForce,forcePerCol,momentFtLb,momentInLb,Fy,Fallow,Sreq,recPipe,recSq,pbf};
+  lastCalc = {W:W_,H:H_,GC:GC_,N:N_,PSF:PSF_,st:st,shape:shape,area:area,centroid:centroid,perimeter:perimeter,
+    windForce:windForce,forcePerCol:forcePerCol,momentFtLb:momentFtLb,momentInLb:momentInLb,Fy:Fy,Fallow:Fallow,Sreq:Sreq,recPipe:recPipe,recSq:recSq,pbf:pbf};
 
-  // Update summary strip
-  document.getElementById('sumSreq').textContent = Sreq.toFixed(2);
-  document.getElementById('sumWind').textContent = windForce.toLocaleString(undefined,{maximumFractionDigits:0});
-  document.getElementById('sumMoment').textContent = momentFtLb.toLocaleString(undefined,{maximumFractionDigits:0});
-  const rec = shape==='square'?(recSq?recSq.side+'" sq':'--'):(recPipe?recPipe.nom+'" Sch40':'--');
-  document.getElementById('sumPipe').textContent = rec;
+  // Update unit hints
+  var hW = document.getElementById('hintW');
+  var hH = document.getElementById('hintH');
+  var hGC = document.getElementById('hintGC');
+  if(hW) hW.textContent = '= ' + (W_*12).toFixed(0) + '"';
+  if(hH) hH.textContent = '= ' + (H_*12).toFixed(0) + '"';
+  if(hGC) hGC.textContent = '= ' + (GC_*12).toFixed(0) + '"';
 
-  // Auto bolt for summary
-  const _ab = autoBoltSize(lastCalc);
-  document.getElementById('sumBolt').textContent = _ab ? _ab.bolt.lbl : '--';
-  // Auto foundation for summary
-  const _af = autoSizeFound(lastCalc);
-  document.getElementById('sumFound').textContent = _af ? _af.fw+"'x"+_af.fd+"'" : '--';
+  var ad = document.getElementById('areaDisplay');
+  if(ad) ad.textContent = 'A = ' + W_ + ' x ' + H_ + ' = ' + area.toFixed(1) + ' ft2';
 
   return lastCalc;
 }
 
-const BOLT_GRADES = {
-  'A307':      { Fu: 60,  Ft: 19.8,  name: 'A307' },
-  'F1554_36':  { Fu: 58,  Ft: 19.14, name: 'F1554 Gr.36' },
-  'F1554_55':  { Fu: 75,  Ft: 24.75, name: 'F1554 Gr.55' },
-  'F1554_105': { Fu: 125, Ft: 41.25, name: 'F1554 Gr.105' },
-};
-
-function getBoltGrade() {
-  const boltGradeKey = document.getElementById('boltGrade')?.value || 'A307';
-  return BOLT_GRADES[boltGradeKey] || BOLT_GRADES['A307'];
-}
-
 function calcBoltData() {
-  const c = lastCalc;
-  const desD = v('boltDia',0);
-  const bpr = v('bPerRow',2), br = v('bRows',2), bsp = v('bSpace',6);
-  const total = bpr * br;
-  const boltGrade = getBoltGrade();
-  const Ft_psi = boltGrade.Ft * 1000; // ksi to psi
-  const reqAt = c.momentInLb / (bpr * bsp * Ft_psi);
+  var c = lastCalc;
+  var desD = val('boltDia',0);
+  var bpr = val('bPerRow',2), br = val('bRows',2), bsp = val('bSpace',6);
+  var total = bpr * br;
+  var boltGrade = getBoltGrade();
+  var Ft_psi = boltGrade.Ft * 1000;
+  var reqAt = c.momentInLb / (bpr * bsp * Ft_psi);
 
-  let bolt;
+  var bolt;
   if(desD>0) {
-    bolt = BOLT.find(b=>b.dia>=desD);
-    if(bolt && bolt.At<reqAt) bolt = BOLT.find(b=>b.At>=reqAt);
+    bolt = BOLT.find(function(b){return b.dia>=desD;});
+    if(bolt && bolt.At<reqAt) bolt = BOLT.find(function(b){return b.At>=reqAt;});
   } else {
-    bolt = BOLT.find(b=>b.At>=reqAt);
+    bolt = BOLT.find(function(b){return b.At>=reqAt;});
   }
   if(bolt && bolt.dia>3) bolt=null;
 
-  let minBP = null;
-  if(c.recPipe) {
-    minBP = c.recPipe.od + 2*(c.recPipe.gLeg + c.recPipe.weld);
-  }
-  return {desD,bpr,br,bsp,total,reqAt,bolt,minBP};
+  var minBP = null;
+  if(c.recPipe) minBP = c.recPipe.od + 2*(c.recPipe.gLeg + c.recPipe.weld);
+  lastBoltCalc = {desD:desD,bpr:bpr,br:br,bsp:bsp,total:total,reqAt:reqAt,bolt:bolt,minBP:minBP};
+  return lastBoltCalc;
 }
 
 function calcFoundSized(fw, fd, fType, dl, Sv_, Sl_, ratio, c) {
-  let fArea, fVol, fLen;
+  var fArea, fVol, fLen;
   if(fType==='circular') { fArea=Math.PI*(fw/2)*(fw/2); fVol=fArea*fd; fLen=fw; }
   else if(fType==='square') { fArea=fw*fw; fVol=fArea*fd; fLen=fw; }
   else { fLen=fw/ratio; fArea=fw*fLen; fVol=fArea*fd; }
 
-  const fWt = fVol * 150; // concrete 150 pcf
-  const totVert = dl + fWt;
-  const bearPSF = totVert / fArea;
-  const bearOK = bearPSF <= Sv_;
+  var fWt = fVol * 150;
+  var totVert = dl + fWt;
+  var bearPSF = totVert / fArea;
+  var bearOK = bearPSF <= Sv_;
 
-  // Overturning about base of pier
-  const otM = c.momentFtLb + c.forcePerCol * fd;
-  // Resisting = gravity + lateral soil passive pressure on pier shaft
-  // Gravity: weight * half-width (moment arm to edge)
-  const rM_grav = totVert * (fw / 2);
-  // Lateral soil: UBC lateral bearing (PSF) applied uniformly over depth
-  // Force = Sl * D * d, acts at centroid d/2 from top = d/2 from base
-  // Moment about base = Sl * D * d * (d/2) = Sl * D * d^2 / 2
-  const rM_soil = Sl_ * fw * fd * fd / 2;
-  const rM = rM_grav + rM_soil;
-  const otSF = rM / Math.max(otM, 1);
+  var otM = c.momentFtLb + c.forcePerCol * fd;
+  var rM_grav = totVert * (fw / 2);
+  var rM_soil = Sl_ * fw * fd * fd / 2;
+  var rM = rM_grav + rM_soil;
+  var otSF = rM / Math.max(otM, 1);
 
-  // Sliding: friction + passive soil resistance
-  const friction = totVert * 0.35;
-  const passive = Sl_ * fw * fd;
-  const latResist = friction + passive;
-  const latSF = latResist / Math.max(c.forcePerCol, 1);
+  var friction = totVert * 0.35;
+  var passive = Sl_ * fw * fd;
+  var latResist = friction + passive;
+  var latSF = latResist / Math.max(c.forcePerCol, 1);
 
-  const cuYd = fVol / 27;
+  var cuYd = fVol / 27;
 
-  return {fType,fw,fd,dl,Sv:Sv_,Sl:Sl_,ratio,fLen,fArea,fVol,fWt,totVert,
-    bearPSF,bearOK,otM,rM,rM_grav,rM_soil,otSF,otOK:otSF>=1.5,
-    friction,passive,latResist,latSF,latOK:latSF>=1.5,cuYd};
-}
-
-// Auto-size foundation: find minimum diameter and depth that passes all checks
-function autoSizeFound(c) {
-  const fType = rv('fTypeGroup')||'circular';
-  const dl = v('DL',500);
-  const Sv_ = v('Sv',1500), Sl_ = v('Sl',150);
-  const ratio = v('fRatio',50)/100;
-  // Try increasing sizes until all checks pass with SF >= 1.5
-  const diams = [2, 2.5, 3, 3.5, 4, 4.5, 5, 6, 7, 8, 10, 12];
-  const depths = [3, 3.5, 4, 4.5, 5, 5.5, 6, 7, 8, 10, 12];
-  for (const d of diams) {
-    for (const dp of depths) {
-      const f = calcFoundSized(d, dp, fType, dl, Sv_, Sl_, ratio, c);
-      if (f.bearOK && f.otSF >= 1.5 && f.latSF >= 1.5) {
-        return {fw: d, fd: dp};
-      }
-    }
-  }
-  return null; // nothing found
+  return {fType:fType,fw:fw,fd:fd,dl:dl,Sv:Sv_,Sl:Sl_,ratio:ratio,fLen:fLen,fArea:fArea,fVol:fVol,fWt:fWt,totVert:totVert,
+    bearPSF:bearPSF,bearOK:bearOK,otM:otM,rM:rM,rM_grav:rM_grav,rM_soil:rM_soil,otSF:otSF,otOK:otSF>=1.5,
+    friction:friction,passive:passive,latResist:latResist,latSF:latSF,latOK:latSF>=1.5,cuYd:cuYd};
 }
 
 function calcFoundData() {
-  const c = lastCalc;
-  const fType = rv('fTypeGroup')||'circular';
-  const fw = v('fW',3), fd = v('fD',5), dl = v('DL',500);
-  const Sv_ = v('Sv',1500), Sl_ = v('Sl',150);
-  const ratio = v('fRatio',50)/100;
-
-  const f = calcFoundSized(fw, fd, fType, dl, Sv_, Sl_, ratio, c);
-  // Also compute auto-suggested minimum
-  f.autoMin = autoSizeFound(c);
+  var c = lastCalc;
+  var fType = rv('fTypeGroup')||'circular';
+  var fw = val('fW',3), fd = val('fD',5), dl = val('DL',500);
+  var Sv_ = val('Sv',1500), Sl_ = val('Sl',150);
+  var ratio = val('fRatio',50)/100;
+  var f = calcFoundSized(fw, fd, fType, dl, Sv_, Sl_, ratio, c);
+  lastFoundCalc = f;
   return f;
 }
 
-// IBC 1807.3 Equation 18-1 -- Nonconstrained embedded post
 function calcFoundationIBC1807(P_lbs, h_ft, b_ft, S1_psf) {
-  // P = lateral load at top of embedment (lbs)
-  // h = distance from ground to point of load application (ft)
-  // b = diameter/width of footing (ft)
-  // S1 = allowable lateral soil bearing pressure (PSF/ft depth)
-  const A = 2.34 * P_lbs / (S1_psf * b_ft);
-  const d = 0.5 * A * (1 + Math.sqrt(1 + (4.36 * h_ft / A)));
-  return { A, d };
+  var A = 2.34 * P_lbs / (S1_psf * b_ft);
+  var d = 0.5 * A * (1 + Math.sqrt(1 + (4.36 * h_ft / A)));
+  return { A: A, d: d };
 }
 
-// Iowa frost line check
+function calcFoundationIBC1807Constrained(P_lbs, h_ft, b_ft, S3_psf) {
+  var d = Math.sqrt(4.25 * P_lbs * h_ft / (S3_psf * b_ft));
+  return { d: d };
+}
+
 function checkFrostLine() {
-  const fD = v('fD', 5);
-  const FROST_MIN_FT = 3.5;
-  const frostWarn = document.getElementById('frostWarn');
+  var fD = val('fD', 5);
+  var frostWarn = document.getElementById('frostWarn');
   if (frostWarn) {
-    if (fD < FROST_MIN_FT) {
-      frostWarn.style.display = 'block';
-      frostWarn.textContent = 'Warning: Iowa Frost Line: Minimum depth is 42" (3.5 ft). Current depth ' + (fD*12).toFixed(0) + '" is insufficient.';
+    if (fD < 3.5) {
+      frostWarn.style.display = 'flex';
+      frostWarn.textContent = 'Below Iowa frost line (42" min) -- current: ' + (fD*12).toFixed(0) + '"';
     } else {
       frostWarn.style.display = 'none';
     }
   }
 }
 
-// ACI 318-19 Chapter 17 Concrete Breakout in Tension
 function calcACI318Breakout(Nu_lbs, hef_in, boltDia_in, fc_psi, edgeMin_in, nBolts) {
-  const ANco = 9 * hef_in * hef_in;
-  const ANc = Math.min(9 * hef_in * hef_in * nBolts, ANco * nBolts);
-  // Basic breakout strength (ACI 318-19 Eq 17.6.2.2b), lambda_a=1.0
-  const Nb = 24 * Math.sqrt(fc_psi) * Math.pow(hef_in, 1.5);
-  const psi_ec = 1.0;
-  const psi_ed = Math.min(1.0, 0.7 + 0.3 * edgeMin_in / (1.5 * hef_in));
-  const psi_c  = 1.0;
-  const psi_cp = 1.0;
-  const Ncbg = (ANc / ANco) * psi_ec * psi_ed * psi_c * psi_cp * Nb;
-  const phi = 0.70;
-  const phiNcbg = phi * Ncbg;
-  return { ANco, ANc, Nb, psi_ed, Ncbg, phiNcbg };
+  var ANco = 9 * hef_in * hef_in;
+  var ANc = Math.min(9 * hef_in * hef_in * nBolts, ANco * nBolts);
+  var lambda = 1.0; // ACI 318-19 §17.2.6: lambda=1.0 normal-weight, 0.75 lightweight
+  var Nb = 24 * lambda * Math.sqrt(fc_psi) * Math.pow(hef_in, 1.5);
+  var psi_ec = 1.0;
+  var psi_ed = Math.min(1.0, 0.7 + 0.3 * edgeMin_in / (1.5 * hef_in));
+  var psi_c  = 1.0;
+  var psi_cp = 1.0;
+  var Ncbg = (ANc / ANco) * psi_ec * psi_ed * psi_c * psi_cp * Nb;
+  var phi = 0.70;
+  var phiNcbg = phi * Ncbg;
+  return { ANco: ANco, ANc: ANc, Nb: Nb, psi_ed: psi_ed, Ncbg: Ncbg, phiNcbg: phiNcbg };
 }
 
-// ===================== SVG DIAGRAMS =====================
-function svgSign(c) {
-  const W=440,H=320,m={t:18,b:35,l:70,r:90};
-  const dH=H-m.t-m.b, dW=W-m.l-m.r;
-  const totH=c.GC+c.H;
-  const sc=dH/totH;
-  const gY=m.t+dH, cx=m.l+dW/2;
-  const sH=c.H*sc, sW=Math.min(dW-30, c.W*sc*1.5);
-  const clPx=c.GC*sc, sBot=gY-clPx, sTop=sBot-sH, ctrY=sTop+sH/2;
-  const colSp=c.N>1?sW*0.6/c.N:0, colX0=cx-(c.N-1)*colSp/2;
+function calcACI318Pullout(Nu_per_bolt, bearing_area_in2, fc_psi) {
+  var Np = 8 * bearing_area_in2 * fc_psi;
+  var phiNpn = 0.70 * Np;
+  return { Np: Np, phiNpn: phiNpn, pass: phiNpn >= Nu_per_bolt };
+}
 
-  let cols='';
-  for(let i=0;i<c.N;i++){
-    const x=colX0+i*colSp;
-    cols+=`<rect x="${x-3}" y="${sBot}" width="6" height="${clPx}" fill="#4a9eff" rx="2"/>`;
-    cols+=`<rect x="${x-3}" y="${gY}" width="6" height="14" fill="#4a9eff" opacity="0.3" rx="1"/>`;
+function calcBasePlateBearing(fc_psi, A1_in2, A2_in2) {
+  var Pp_raw = 0.85 * fc_psi * A1_in2 * Math.sqrt(A2_in2 / A1_in2);
+  var Pp_max = 1.7 * fc_psi * A1_in2;
+  var phi = 0.65;
+  var phiPp = phi * Math.min(Pp_raw, Pp_max);
+  return { phiPp: phiPp, Pp_raw: Pp_raw, Pp_max: Pp_max };
+}
+
+function autoSizeFound(c) {
+  var fType = rv('fTypeGroup')||'circular';
+  var dl = val('DL',500);
+  var Sv_ = val('Sv',1500), Sl_ = val('Sl',150);
+  var ratio = val('fRatio',50)/100;
+  var diams = [2, 2.5, 3, 3.5, 4, 4.5, 5, 6, 7, 8, 10, 12];
+  var depths = [3, 3.5, 4, 4.5, 5, 5.5, 6, 7, 8, 10, 12];
+  for (var di = 0; di < diams.length; di++) {
+    for (var dj = 0; dj < depths.length; dj++) {
+      var f = calcFoundSized(diams[di], depths[dj], fType, dl, Sv_, Sl_, ratio, c);
+      if (f.bearOK && f.otSF >= 1.5 && f.latSF >= 1.5) {
+        return {fw: diams[di], fd: depths[dj]};
+      }
+    }
   }
-
-  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <marker id="au" viewBox="0 0 6 10" refX="3" refY="0" markerWidth="4" markerHeight="6" orient="auto"><path d="M0 10 L3 0 L6 10" fill="#555"/></marker>
-      <marker id="ad" viewBox="0 0 6 10" refX="3" refY="10" markerWidth="4" markerHeight="6" orient="auto"><path d="M0 0 L3 10 L6 0" fill="#555"/></marker>
-      <marker id="wa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#ef4444"/></marker>
-    </defs>
-    <line x1="${m.l-15}" y1="${gY}" x2="${W-m.r+15}" y2="${gY}" stroke="#4a5568" stroke-width="2"/>
-    ${Array.from({length:11},(_,i)=>`<line x1="${m.l-15+i*28}" y1="${gY}" x2="${m.l-23+i*28}" y2="${gY+9}" stroke="#4a5568" stroke-width="1"/>`).join('')}
-    <text x="${W-m.r+4}" y="${gY+4}" fill="#8b90a0" font-size="9" font-family="monospace">GRADE</text>
-    ${cols}
-    <rect x="${cx-sW/2}" y="${sTop}" width="${sW}" height="${sH}" fill="rgba(52,211,153,0.06)" stroke="#34d399" stroke-width="2" rx="4"/>
-    <text x="${cx}" y="${sTop+sH/2-5}" fill="#34d399" font-size="11" text-anchor="middle" font-weight="700" font-family="monospace">${c.W}' x ${c.H}'</text>
-    <text x="${cx}" y="${sTop+sH/2+9}" fill="#34d399" font-size="9" text-anchor="middle" font-family="monospace">${c.area} sf</text>
-    <circle cx="${cx-sW/2-10}" cy="${ctrY}" r="3" fill="#f59e0b"/>
-    <line x1="${cx-sW/2-7}" y1="${ctrY}" x2="${cx-sW/2}" y2="${ctrY}" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3,2"/>
-    <line x1="${m.l-10}" y1="${gY}" x2="${m.l-10}" y2="${ctrY}" stroke="#555" stroke-width="1" marker-start="url(#ad)" marker-end="url(#au)"/>
-    <text x="${m.l-15}" y="${(gY+ctrY)/2+4}" fill="#f59e0b" font-size="9" text-anchor="end" font-family="monospace" font-weight="700">${c.centroid.toFixed(1)}'</text>
-    <text x="${m.l-15}" y="${(gY+ctrY)/2+14}" fill="#8b90a0" font-size="7" text-anchor="end" font-family="monospace">centroid</text>
-    <line x1="${cx+sW/2+30}" y1="${ctrY}" x2="${cx+sW/2+5}" y2="${ctrY}" stroke="#ef4444" stroke-width="2" marker-end="url(#wa)"/>
-    <text x="${cx+sW/2+33}" y="${ctrY-3}" fill="#ef4444" font-size="9" font-family="monospace" font-weight="700">${c.PSF.toFixed(1)} PSF</text>
-    <text x="${cx+sW/2+33}" y="${ctrY+9}" fill="#ef4444" font-size="9" font-family="monospace">${c.windForce.toLocaleString(undefined,{maximumFractionDigits:0})} lbs</text>
-  </svg>`;
+  return null;
 }
 
-function svgFound(f, pipeOD) {
-  const W=380,H=260,gY=55,cx=W/2;
-  const maxDp=170,maxWp=220;
-  const dp=Math.min(maxDp,Math.max(55,f.fd*24));
-  const wp=Math.min(maxWp,Math.max(55,f.fw*34));
-  const pp=Math.max(4,(pipeOD||4.5)/12*wp/f.fw*2);
-
-  let shape;
-  if(f.fType==='circular') shape=`<rect x="${cx-wp/2}" y="${gY}" width="${wp}" height="${dp}" fill="rgba(74,158,255,0.10)" stroke="#4a9eff" stroke-width="2" rx="8"/>`;
-  else shape=`<rect x="${cx-wp/2}" y="${gY}" width="${wp}" height="${dp}" fill="rgba(74,158,255,0.10)" stroke="#4a9eff" stroke-width="2" rx="3"/>`;
-
-  const dimLbl = f.fType==='rectangular'?`${f.fw}' x ${f.fLen.toFixed(1)}'`:f.fType==='circular'?`${f.fw}' dia`:`${f.fw}' sq`;
-
-  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
-    <line x1="25" y1="${gY}" x2="${W-25}" y2="${gY}" stroke="#4a5568" stroke-width="2"/>
-    ${Array.from({length:11},(_,i)=>`<line x1="${25+i*28}" y1="${gY}" x2="${17+i*28}" y2="${gY+8}" stroke="#4a5568" stroke-width="1"/>`).join('')}
-    <rect x="${cx-pp/2}" y="${gY-30}" width="${pp}" height="30" fill="#34d399" rx="2"/>
-    ${shape}
-    <rect x="${cx-pp/2}" y="${gY}" width="${pp}" height="${dp*0.8}" fill="rgba(52,211,153,0.25)" stroke="#34d399" stroke-width="1" stroke-dasharray="4,3"/>
-    <text x="${cx}" y="${gY+dp/2+4}" fill="#4a9eff" font-size="10" text-anchor="middle" font-family="monospace" font-weight="700">${dimLbl}</text>
-    <line x1="${cx+wp/2+12}" y1="${gY}" x2="${cx+wp/2+12}" y2="${gY+dp}" stroke="#555" stroke-width="1"/>
-    <text x="${cx+wp/2+17}" y="${gY+dp/2+4}" fill="#8b90a0" font-size="9" font-family="monospace">${f.fd}'</text>
-    <text x="${cx}" y="${gY+dp+16}" fill="#8b90a0" font-size="9" text-anchor="middle" font-family="monospace">${f.fVol.toFixed(1)} cf (${f.cuYd.toFixed(2)} cy)</text>
-  </svg>`;
+function findMinFoundation() {
+  var c = lastCalc;
+  var fType = rv('fTypeGroup')||'circular';
+  var dl = val('DL',500);
+  var Sv_ = val('Sv',1500), Sl_ = val('Sl',150);
+  var ratio = val('fRatio',50)/100;
+  for (var d = 3.5; d <= 20; d += 0.5) {
+    for (var w = 1.5; w <= 10; w += 0.25) {
+      var f = calcFoundSized(w, d, fType, dl, Sv_, Sl_, ratio, c);
+      if (f.bearOK && f.otSF >= 1.5 && f.latSF >= 1.5) {
+        document.getElementById('fD').value = d;
+        document.getElementById('fW').value = w;
+        calc();
+        return;
+      }
+    }
+  }
 }
 
-// ===================== RENDERERS =====================
+// ===================== UTILITY =====================
 function toFrac(d) {
-  const f=[[1,'1'],[0.875,'7/8'],[0.75,'3/4'],[0.6875,'11/16'],[0.625,'5/8'],
+  var f=[[1,'1'],[0.875,'7/8'],[0.75,'3/4'],[0.6875,'11/16'],[0.625,'5/8'],
     [0.5625,'9/16'],[0.5,'1/2'],[0.4375,'7/16'],[0.375,'3/8'],[0.34375,'11/32'],
     [0.3125,'5/16'],[0.28125,'9/32'],[0.25,'1/4'],[0.1875,'3/16'],[0.125,'1/8']];
-  for(const[v,s]of f) if(Math.abs(d-v)<0.002) return s;
+  for(var i=0;i<f.length;i++) if(Math.abs(d-f[i][0])<0.002) return f[i][1];
   return d.toFixed(3);
 }
 
 function sfCls(v,t){return v>=t?'pass':v>=t*0.8?'warn':'fail';}
+function fmtN(n,d){return n.toLocaleString(undefined,{maximumFractionDigits:d===undefined?0:d});}
 
-// Auto-size bolt: find smallest bolt that works with default 2x2 at 6" spacing
-function autoBoltSize(c) {
-  const bpr=2, br=2, bsp=6;
-  const boltGrade = getBoltGrade();
-  const Ft_psi = boltGrade.Ft * 1000;
-  const reqAt = c.momentInLb / (bpr * bsp * Ft_psi);
-  const bolt = BOLT.find(b=>b.At>=reqAt);
-  if(!bolt || bolt.dia>3) return null;
-  let minBP = null;
-  if(c.recPipe) minBP = c.recPipe.od + 2*(c.recPipe.gLeg + c.recPipe.weld);
-  return {bolt, reqAt, bpr, br, bsp, total:bpr*br, minBP};
+// ===================== SVG STRUCTURAL DRAWING =====================
+// ANSI/GD&T standard SVG defs
+function getSVGDefs() {
+  return '<defs>' +
+    // ANSI31 general-purpose section lines (45 deg, thin)
+    '<pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">' +
+      '<line x1="0" y1="0" x2="0" y2="6" stroke="rgba(0,0,0,0.18)" stroke-width="0.6"/>' +
+    '</pattern>' +
+    // AR-CONC style (aggregate dots + angled lines — no ANSI number for concrete; ANSI37 = metals)
+    '<pattern id="concreteHatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">' +
+      '<line x1="0" y1="0" x2="0" y2="10" stroke="rgba(0,0,0,0.14)" stroke-width="0.6"/>' +
+      '<line x1="5" y1="0" x2="5" y2="10" stroke="rgba(0,0,0,0.06)" stroke-width="0.4"/>' +
+      '<circle cx="2.5" cy="5" r="0.5" fill="rgba(0,0,0,0.2)"/>' +
+    '</pattern>' +
+    // Soil: horizontal lines + small verticals (ANSI standard earth)
+    '<pattern id="soilHatch" width="8" height="8" patternUnits="userSpaceOnUse">' +
+      '<line x1="0" y1="4" x2="8" y2="4" stroke="rgba(100,80,40,0.25)" stroke-width="0.7"/>' +
+      '<line x1="2" y1="4" x2="0" y2="8" stroke="rgba(100,80,40,0.18)" stroke-width="0.6"/>' +
+      '<line x1="6" y1="4" x2="4" y2="8" stroke="rgba(100,80,40,0.18)" stroke-width="0.6"/>' +
+    '</pattern>' +
+    // Steel cross-hatch ANSI32
+    '<pattern id="steelHatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">' +
+      '<line x1="0" y1="0" x2="0" y2="6" stroke="rgba(0,0,0,0.2)" stroke-width="0.6"/>' +
+      '<line x1="0" y1="0" x2="6" y2="0" stroke="rgba(0,0,0,0.2)" stroke-width="0.6"/>' +
+    '</pattern>' +
+    // Wind load shading (very light)
+    '<pattern id="windHatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">' +
+      '<line x1="0" y1="0" x2="0" y2="10" stroke="rgba(0,0,0,0.04)" stroke-width="0.8"/>' +
+    '</pattern>' +
+    // GD&T dimension arrowheads — filled, narrow (ASME Y14.5)
+    '<marker id="dimArrowR" markerWidth="8" markerHeight="5" refX="8" refY="2.5" orient="auto">' +
+      '<polygon points="0,0 8,2.5 0,5" fill="#222222"/>' +
+    '</marker>' +
+    '<marker id="dimArrowL" markerWidth="8" markerHeight="5" refX="0" refY="2.5" orient="auto-start-reverse">' +
+      '<polygon points="0,0 8,2.5 0,5" fill="#222222"/>' +
+    '</marker>' +
+    // Wind force arrow
+    '<marker id="arrowWind" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">' +
+      '<polygon points="0,0 8,4 0,8" fill="#b85c00"/>' +
+    '</marker>' +
+    '</defs>';
 }
 
-function renderSection() {
-  const c = lastCalc;
-  const codeLabel = curCode==='ubc97'?'1997 UBC':'ASCE 7 ('+curCode.replace('asce','')+')';
+// GD&T-compliant dimension line per ASME Y14.5-2018
+// Extension lines: start with GAP from object, end OVERSHOOT past dim line
+function buildDimLine(x1, y1, x2, y2, label, side, color) {
+  color = color || '#333333';
+  var s = '';
+  var GAP      = 4;   // gap from measured edge to extension line start
+  var OVERSHOOT= 5;   // extension line protrusion past dim line
+  var OFFSET   = 26;  // dim line distance from object edge
 
-  let pipeHTML='';
-  if(c.shape==='pipe'||c.shape==='') {
-    if(c.recPipe) pipeHTML+=`<div class="pipe-card rec"><div class="sub">Round Pipe (Sch 40)</div><div class="size">${c.recPipe.nom}"</div><div class="sub">OD ${c.recPipe.od}" | Wall ${c.recPipe.wall}"</div><div class="sm-val">S = ${c.recPipe.sm} in&sup3;</div></div>`;
-    else pipeHTML+=`<div class="pipe-card"><div class="size" style="color:var(--red);font-size:13px">Exceeds</div><div class="sub">Special engineering req'd</div></div>`;
-    if(c.recSq) pipeHTML+=`<div class="pipe-card"><div class="sub">Square Tube</div><div class="size">${c.recSq.side}" sq</div><div class="sub">Wall ${c.recSq.wall}"</div><div class="sm-val">S = ${c.recSq.sm} in&sup3;</div></div>`;
+  if (y1 === y2) {
+    // ── Horizontal dimension ──
+    var dimY    = (side === 'above') ? y1 - OFFSET : y1 + OFFSET;
+    // Extension lines: run from (object ± GAP) through dim line to (dimY ∓ OVERSHOOT)
+    var objY    = (side === 'above') ? y1 - GAP    : y1 + GAP;
+    var pastY   = (side === 'above') ? dimY - OVERSHOOT : dimY + OVERSHOOT;
+    s += '<line x1="'+x1+'" y1="'+objY+'" x2="'+x1+'" y2="'+pastY+'" stroke="'+color+'" stroke-width="0.5"/>';
+    s += '<line x1="'+x2+'" y1="'+objY+'" x2="'+x2+'" y2="'+pastY+'" stroke="'+color+'" stroke-width="0.5"/>';
+    // Dimension line with filled arrowheads (GD&T closed/filled per ASME)
+    s += '<line x1="'+x1+'" y1="'+dimY+'" x2="'+x2+'" y2="'+dimY+'" stroke="'+color+'" stroke-width="0.8" marker-start="url(#dimArrowL)" marker-end="url(#dimArrowR)"/>';
+    // Text on paper mask background
+    var mx  = (x1 + x2) / 2;
+    var tw  = Math.max(label.length * 6.2 + 6, 28);
+    var ty  = (side === 'above') ? dimY - 4 : dimY + 11;
+    s += '<rect x="'+(mx-tw/2)+'" y="'+(ty-10)+'" width="'+tw+'" height="13" fill="#f5f0e6"/>';
+    s += '<text x="'+mx+'" y="'+ty+'" fill="'+color+'" font-size="9.5" text-anchor="middle" font-family="\'Courier New\',Courier,monospace" font-weight="700">'+label+'</text>';
   } else {
-    if(c.recSq) pipeHTML+=`<div class="pipe-card rec"><div class="sub">Square Tube</div><div class="size">${c.recSq.side}" sq</div><div class="sub">Wall ${c.recSq.wall}"</div><div class="sm-val">S = ${c.recSq.sm} in&sup3;</div></div>`;
-    else pipeHTML+=`<div class="pipe-card"><div class="size" style="color:var(--red);font-size:13px">Exceeds</div><div class="sub">Special engineering req'd</div></div>`;
-    if(c.recPipe) pipeHTML+=`<div class="pipe-card"><div class="sub">Round Pipe (Sch 40)</div><div class="size">${c.recPipe.nom}"</div><div class="sub">OD ${c.recPipe.od}" | Wall ${c.recPipe.wall}"</div><div class="sm-val">S = ${c.recPipe.sm} in&sup3;</div></div>`;
+    // ── Vertical dimension ──
+    var dimX    = (side === 'left') ? x1 - OFFSET : x1 + OFFSET;
+    var objX    = (side === 'left') ? x1 - GAP    : x1 + GAP;
+    var pastX   = (side === 'left') ? dimX - OVERSHOOT : dimX + OVERSHOOT;
+    s += '<line x1="'+objX+'" y1="'+y1+'" x2="'+pastX+'" y2="'+y1+'" stroke="'+color+'" stroke-width="0.5"/>';
+    s += '<line x1="'+objX+'" y1="'+y2+'" x2="'+pastX+'" y2="'+y2+'" stroke="'+color+'" stroke-width="0.5"/>';
+    s += '<line x1="'+dimX+'" y1="'+y1+'" x2="'+dimX+'" y2="'+y2+'" stroke="'+color+'" stroke-width="0.8" marker-start="url(#dimArrowL)" marker-end="url(#dimArrowR)"/>';
+    // Rotated text — group handles both mask and text together
+    var my = (y1 + y2) / 2;
+    var tw = Math.max(label.length * 6.2 + 6, 28);
+    s += '<g transform="rotate(-90,'+dimX+','+my+')">';
+    s += '<rect x="'+(dimX-tw/2)+'" y="'+(my-10)+'" width="'+tw+'" height="13" fill="#f5f0e6"/>';
+    s += '<text x="'+dimX+'" y="'+my+'" fill="'+color+'" font-size="9.5" text-anchor="middle" dominant-baseline="middle" font-family="\'Courier New\',Courier,monospace" font-weight="700">'+label+'</text>';
+    s += '</g>';
   }
-
-  const asceNote = curCode!=='ubc97' ? `<div class="info-box" style="margin-bottom:12px"><b>${codeLabel}</b> &mdash; F = q<sub>z</sub> &times; G &times; C<sub>f</sub> &times; A<sub>s</sub><br>q<sub>z</sub> = 0.00256 &times; K<sub>z</sub> &times; K<sub>zt</sub> &times; K<sub>d</sub> &times; K<sub>e</sub> &times; V&sup2;</div>` : '';
-
-  // Auto-calculate downstream feasibility
-  const ab = autoBoltSize(c);
-  const af = autoSizeFound(c);
-  const gus = c.recPipe;
-
-  let feasHTML = '<div class="card"><h3>Auto-Feasibility Summary</h3>';
-  feasHTML += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">';
-
-  // Bolt summary
-  feasHTML += '<div style="background:var(--surface2);border-radius:6px;padding:10px;border:1px solid var(--border)">';
-  feasHTML += '<div style="font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:var(--cyan);font-weight:700;margin-bottom:6px">Anchor Bolts</div>';
-  if(ab) {
-    feasHTML += `<div style="font-size:16px;font-weight:800;color:var(--green)">${ab.bolt.lbl}</div>`;
-    feasHTML += `<div style="font-size:10px;color:var(--text2)">${getBoltGrade().name} | ${ab.total} bolts (${ab.bpr}&times;${ab.br}) @ ${ab.bsp}"</div>`;
-    feasHTML += `<div style="font-size:10px;color:var(--text2)">A<sub>t</sub>=${ab.bolt.At} in&sup2; (need ${ab.reqAt.toFixed(3)})</div>`;
-    if(ab.minBP) feasHTML += `<div style="font-size:10px;color:var(--text2)">Min BP: ${ab.minBP.toFixed(1)}" sq</div>`;
-  } else {
-    feasHTML += '<div style="font-size:12px;color:var(--red)">No bolt &le;3" works</div>';
-  }
-  feasHTML += '</div>';
-
-  // Foundation summary
-  feasHTML += '<div style="background:var(--surface2);border-radius:6px;padding:10px;border:1px solid var(--border)">';
-  feasHTML += '<div style="font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:var(--purple);font-weight:700;margin-bottom:6px">Min Foundation</div>';
-  if(af) {
-    const fType = rv('fTypeGroup')||'circular';
-    const fLabel = fType==='circular'?'dia':fType==='square'?'sq':'rect';
-    feasHTML += `<div style="font-size:16px;font-weight:800;color:var(--green)">${af.fw}' &times; ${af.fd}'</div>`;
-    feasHTML += `<div style="font-size:10px;color:var(--text2)">${fLabel} | SF &ge; 1.5 all checks</div>`;
-    // Compute volume for display
-    let afVol;
-    if(fType==='circular') afVol = Math.PI*(af.fw/2)*(af.fw/2)*af.fd;
-    else afVol = af.fw*af.fw*af.fd;
-    feasHTML += `<div style="font-size:10px;color:var(--text2)">${(afVol/27).toFixed(2)} cy concrete</div>`;
-  } else {
-    feasHTML += '<div style="font-size:12px;color:var(--red)">No standard size passes</div>';
-  }
-  feasHTML += '</div>';
-
-  // Gusset / base plate summary
-  feasHTML += '<div style="background:var(--surface2);border-radius:6px;padding:10px;border:1px solid var(--border)">';
-  feasHTML += '<div style="font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:var(--green);font-weight:700;margin-bottom:6px">Gusset / Base Plate</div>';
-  if(gus) {
-    const bp = gus.od + 2*(gus.gLeg + gus.weld);
-    feasHTML += `<div style="font-size:16px;font-weight:800;color:var(--green)">${gus.nom}" pipe</div>`;
-    feasHTML += `<div style="font-size:10px;color:var(--text2)">Gusset: ${gus.gLeg}" leg &times; ${toFrac(gus.gThk)}" thk</div>`;
-    feasHTML += `<div style="font-size:10px;color:var(--text2)">Weld: ${toFrac(gus.weld)}" fillet</div>`;
-    feasHTML += `<div style="font-size:10px;color:var(--text2)">Min BP: ${bp.toFixed(1)}" sq &times; ${toFrac(gus.gThk)}" thk</div>`;
-  } else {
-    feasHTML += '<div style="font-size:12px;color:var(--red)">Exceeds table</div>';
-  }
-  feasHTML += '</div>';
-
-  // Column weight estimate
-  feasHTML += '<div style="background:var(--surface2);border-radius:6px;padding:10px;border:1px solid var(--border)">';
-  feasHTML += '<div style="font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:var(--orange);font-weight:700;margin-bottom:6px">Quick Estimate</div>';
-  if(c.recPipe) {
-    const colHt = c.GC + c.H/2;
-    const pipeWt = 10.69 * (c.recPipe.od - c.recPipe.wall) * c.recPipe.wall;
-    const colWt = pipeWt * colHt;
-    feasHTML += `<div style="font-size:10px;color:var(--text2)">Column: ~${colHt.toFixed(0)}' tall &times; ${pipeWt.toFixed(1)} lb/ft</div>`;
-    feasHTML += `<div style="font-size:10px;color:var(--text2)">Col weight: ~${colWt.toFixed(0)} lbs</div>`;
-    feasHTML += `<div style="font-size:10px;color:var(--text2)">Sign area: ${c.area} sf</div>`;
-    feasHTML += `<div style="font-size:10px;color:var(--text2)">Wind: ${c.windForce.toLocaleString(undefined,{maximumFractionDigits:0})} lbs total</div>`;
-  } else {
-    feasHTML += '<div style="font-size:10px;color:var(--text2)">Column exceeds standard sizes</div>';
-  }
-  feasHTML += '</div>';
-
-  feasHTML += '</div>';
-  feasHTML += '<div style="font-size:10px;color:var(--text2);margin-top:8px;text-align:center">Click tabs above for detailed calculations. All values update in real-time.</div>';
-  feasHTML += '</div>';
-
-  document.getElementById('preview').innerHTML = `
-    ${asceNote}
-    <div class="diagram">${svgSign(c)}</div>
-    <div class="card">
-      <h3>Calculation Steps &mdash; ${codeLabel}</h3>
-      <div class="step"><span class="l">Area = ${c.W} &times; ${c.H}</span><span class="r">${c.area} sf</span></div>
-      <div class="step"><span class="l">Centroid = ${c.GC} + ${c.H}/2</span><span class="r">${c.centroid.toFixed(1)} ft</span></div>
-      <div class="step"><span class="l">Perimeter = 2(${c.W}+${c.H})</span><span class="r">${c.perimeter} ft</span></div>
-      <div class="step"><span class="l">Wind Force = ${c.PSF.toFixed(1)} &times; ${c.area}</span><span class="r">${c.windForce.toLocaleString(undefined,{maximumFractionDigits:0})} lbs</span></div>
-      <div class="step"><span class="l">Force/col = ${c.windForce.toLocaleString(undefined,{maximumFractionDigits:0})} / ${c.N}</span><span class="r">${c.forcePerCol.toLocaleString(undefined,{maximumFractionDigits:0})} lbs</span></div>
-      <div class="step"><span class="l">M = ${c.forcePerCol.toLocaleString(undefined,{maximumFractionDigits:0})} &times; ${c.centroid.toFixed(1)}</span><span class="r">${c.momentFtLb.toLocaleString(undefined,{maximumFractionDigits:0})} ft-lbs</span></div>
-      <div class="step"><span class="l">M = ${c.momentFtLb.toLocaleString(undefined,{maximumFractionDigits:0})} &times; 12</span><span class="r">${c.momentInLb.toLocaleString(undefined,{maximumFractionDigits:0})} in-lbs</span></div>
-      <div class="step"><span class="l">F<sub>allow</sub> = ${c.st==='used'?'0.60':'0.66'} &times; 36,000</span><span class="r">${c.Fallow.toLocaleString()} psi</span></div>
-      <div class="step final"><span class="l">S<sub>req</sub> = ${c.momentInLb.toLocaleString(undefined,{maximumFractionDigits:0})} / ${c.Fallow.toLocaleString()}</span><span class="r">${c.Sreq.toFixed(2)} in&sup3;</span></div>
-      <div class="step"><span class="l">PBF = ${c.windForce.toLocaleString(undefined,{maximumFractionDigits:0})} / ${c.perimeter}</span><span class="r">${c.pbf.toFixed(1)} lbs/ft</span></div>
-    </div>
-    <div class="card">
-      <h3>Recommended Column</h3>
-      <div class="pipe-grid">${pipeHTML}</div>
-    </div>
-    ${feasHTML}`;
+  return s;
 }
 
-function renderBolt() {
-  const c = lastCalc;
-  const b = calcBoltData();
-
-  let boltCard='';
-  if(b.bolt) {
-    const up = b.desD>0 && b.bolt.dia>b.desD;
-    const bg = getBoltGrade();
-    boltCard=`<div class="card"><h3>Accepted Bolt</h3>
-      <div class="rrow"><span class="rlabel">Bolt</span><span class="rval pass">${b.bolt.lbl} ${bg.name}</span></div>
-      <div class="rrow"><span class="rlabel">Bolt Grade</span><span class="rval">${bg.name} (Fu=${bg.Fu} ksi)</span></div>
-      <div class="rrow"><span class="rlabel">Allowable Tensile (Ft)</span><span class="rval">${bg.Ft} ksi</span></div>
-      <div class="rrow"><span class="rlabel">Tensile Area</span><span class="rval">${b.bolt.At} in&sup2;</span></div>
-      <div class="rrow"><span class="rlabel">Required A<sub>t</sub>/bolt</span><span class="rval">${b.reqAt.toFixed(3)} in&sup2;</span></div>
-      <div class="rrow"><span class="rlabel">Total Bolts</span><span class="rval">${b.total} (${b.bpr}&times;${b.br})</span></div>
-      <div class="rrow"><span class="rlabel">Spacing (wind dir)</span><span class="rval">${b.bsp}"</span></div>
-      ${up?'<div class="warn-box">Desired bolt too small, upgraded to meet load.</div>':''}
-    </div>`;
-  } else {
-    boltCard='<div class="warn-box">No bolt &le;3" satisfies requirements. Special engineering needed.</div>';
-  }
-
-  let pipeCard='';
-  if(c.recPipe) {
-    pipeCard=`<div class="card"><h3>Column &amp; Base Plate</h3>
-      <div class="rrow"><span class="rlabel">Pipe</span><span class="rval pass">${c.recPipe.nom}" Sch 40</span></div>
-      <div class="rrow"><span class="rlabel">S</span><span class="rval">${c.recPipe.sm} in&sup3; (need ${c.Sreq.toFixed(2)})</span></div>
-      ${b.minBP?`<div class="rrow"><span class="rlabel">Min Base Plate (w/ gussets)</span><span class="rval">${b.minBP.toFixed(2)}" sq</span></div>`:''}
-    </div>`;
-  }
-
-  document.getElementById('preview').innerHTML = `
-    <div class="card">
-      <h3>Bolt Analysis (from shared inputs)</h3>
-      <div class="step"><span class="l">Wind Force = ${c.PSF.toFixed(1)} &times; ${c.area}</span><span class="r">${c.windForce.toLocaleString(undefined,{maximumFractionDigits:0})} lbs</span></div>
-      <div class="step"><span class="l">Force/col</span><span class="r">${c.forcePerCol.toLocaleString(undefined,{maximumFractionDigits:0})} lbs</span></div>
-      <div class="step"><span class="l">Moment/col</span><span class="r">${c.momentFtLb.toLocaleString(undefined,{maximumFractionDigits:0})} ft-lbs</span></div>
-      <div class="step final"><span class="l">S<sub>req</sub></span><span class="r">${c.Sreq.toFixed(2)} in&sup3;</span></div>
-      <div class="step"><span class="l">T<sub>req</sub> = M<sub>in</sub> / (n &times; d &times; F<sub>t</sub>) [${getBoltGrade().name}, Ft=${getBoltGrade().Ft} ksi]</span><span class="r">${b.reqAt.toFixed(3)} in&sup2;/bolt</span></div>
-    </div>
-    ${boltCard}
-    ${pipeCard}
-    <div class="card"><h3>Notes</h3><div class="info-box">
-      All base plates fully grouted after installation.<br>
-      Bolt spacing &ge; pipe OD. Max bolt: 3".<br>
-      Ft = 0.33 &times; Fu per AISC (allowable tensile stress).<br>
-      Grades: A307, ASTM F1554 Gr.36/55/105.
-    </div></div>`;
+// Status flag per GD&T callout style (ASME Y14.41)
+function buildStatusBubble(x, y, pass, label) {
+  var bg     = pass ? 'rgba(30,120,55,0.12)'  : 'rgba(190,25,25,0.12)';
+  var border = pass ? '#1e7a3c' : '#bb1111';
+  var icon   = pass ? '\u2713' : '\u2717';
+  var color  = pass ? '#1e5c2d' : '#9e0f0f';
+  var text   = icon + ' ' + label;
+  var bw     = text.length * 6.5 + 14;
+  return '<rect x="'+(x-bw/2)+'" y="'+(y-11)+'" width="'+bw+'" height="22" rx="2" fill="'+bg+'" stroke="'+border+'" stroke-width="0.8"/>' +
+    '<text x="'+x+'" y="'+(y+4)+'" fill="'+color+'" font-size="9.5" text-anchor="middle" font-family="\'Courier New\',Courier,monospace" font-weight="700">'+text+'</text>';
 }
 
-function applyAutoSize() {
-  const c = lastCalc;
-  const auto = autoSizeFound(c);
-  if (auto) {
-    document.getElementById('fW').value = auto.fw;
-    document.getElementById('fD').value = auto.fd;
-    calc();
+function updateDrawing() {
+  var c = lastCalc;
+  var f = lastFoundCalc;
+  var b = lastBoltCalc;
+  var svg = document.getElementById('structuralDrawing');
+  if (!svg || !c.W) return;
+  var W = svg.clientWidth || 500;
+  var H = svg.clientHeight || 600;
+  if (W < 50 || H < 50) return;
+
+  var fd = (f && f.fd) ? f.fd : 5;
+  var fw = (f && f.fw) ? f.fw : 3;
+  var fType = (f && f.fType) ? f.fType : 'circular';
+
+  var totalFt = c.GC + c.H + fd + 4;
+  var totalWft = Math.max(c.W + 8, 14);
+  // Reserve 220px right for title block, 110px left for wind arrows + dims
+  var drawW = W - 240;
+  var drawH = H - 120;  // reserve bottom for title block + bolt inset
+  var scale = Math.min((drawW * 0.72) / totalWft, (drawH * 0.72) / totalFt);
+  scale = Math.max(scale, 5);
+
+  // Grade line at 55% of usable height, with 55px top margin for above-sign dims
+  var gradeY = 55 + (c.GC + c.H) * scale;
+  var centerX = W / 2;
+
+  var signH_px = c.H * scale;
+  var signW_px = c.W * scale;
+  var gc_px   = c.GC * scale;
+  var fd_px   = fd * scale;
+  var fw_px   = fw * scale;
+
+  var signBot  = gradeY - gc_px;
+  var signTop  = signBot - signH_px;
+  var signLeft = centerX - signW_px / 2;
+  var signRight= centerX + signW_px / 2;
+  var foundTop = gradeY;
+  var foundBot = gradeY + fd_px;
+  var foundLeft= centerX - fw_px / 2;
+  var foundRight=centerX + fw_px / 2;
+  var frostY   = gradeY + 3.5 * scale;
+  var frostPass= fd >= 3.5;
+
+  // Line weight constants (ASME Y14.2)
+  var LW_VISIBLE = '1.4';   // thick — object/outline
+  var LW_HIDDEN  = '0.7';   // medium — hidden features
+  var LW_THIN    = '0.5';   // thin — dimensions, hatch borders
+  var LW_CENTER  = '0.4';   // center lines
+
+  var INK = '#111111';       // object lines
+  var INK2= '#444444';       // secondary annotation
+  var INK3= '#888888';       // tertiary notes
+  var PAPER = '#f5f0e6';
+
+  var s = getSVGDefs();
+
+  // ── Drawing border (ANSI frame)
+  s += '<rect x="8" y="8" width="'+(W-16)+'" height="'+(H-16)+'" fill="none" stroke="'+INK+'" stroke-width="1.5"/>';
+  s += '<rect x="14" y="14" width="'+(W-28)+'" height="'+(H-28)+'" fill="none" stroke="'+INK+'" stroke-width="0.4"/>';
+
+  // ── Soil section (ANSI earth hatch)
+  var soilLabel = (document.getElementById('soilType') ? document.getElementById('soilType').value : 'sand').toUpperCase();
+  var slVal = val('Sl', 150);
+  s += '<rect x="15" y="'+gradeY+'" width="'+(W-30)+'" height="'+(H-gradeY-15)+'" fill="rgba(210,190,150,0.12)"/>';
+  s += '<rect x="15" y="'+gradeY+'" width="'+(W-30)+'" height="'+(H-gradeY-15)+'" fill="url(#soilHatch)"/>';
+
+  // ── Foundation (concrete hatch, AR-CONC style)
+  var foundStroke = frostPass ? INK : '#cc2222';
+  var foundRx = fType === 'circular' ? (fw_px * 0.12) : 0;
+  s += '<rect x="'+foundLeft+'" y="'+foundTop+'" width="'+fw_px+'" height="'+fd_px+'" rx="'+foundRx+'" fill="rgba(220,215,205,0.6)" stroke="'+foundStroke+'" stroke-width="'+LW_VISIBLE+'"/>';
+  s += '<rect x="'+foundLeft+'" y="'+foundTop+'" width="'+fw_px+'" height="'+fd_px+'" rx="'+foundRx+'" fill="url(#concreteHatch)" stroke="none"/>';
+
+  // Foundation centerline (long-dash short-dash)
+  s += '<line x1="'+centerX+'" y1="'+(foundTop-8)+'" x2="'+centerX+'" y2="'+(foundBot+8)+'" stroke="'+INK2+'" stroke-width="'+LW_CENTER+'" stroke-dasharray="12,3,3,3"/>';
+
+  // Foundation dimensions
+  s += buildDimLine(foundLeft, foundBot, foundRight, foundBot, fw.toFixed(2)+'\u2019', 'below');
+  s += buildDimLine(foundRight, foundTop, foundRight, foundBot, fd.toFixed(2)+'\u2019', 'right');
+
+  // ── Frost line (phantom line — long dash short-dash-dash)
+  var frostColor = frostPass ? '#b05800' : '#cc2222';
+  if (frostY < H - 40) {
+    s += '<line x1="20" y1="'+frostY+'" x2="'+(W-20)+'" y2="'+frostY+'" stroke="'+frostColor+'" stroke-width="0.6" stroke-dasharray="14,3,3,3,3,3"/>';
+    s += '<rect x="'+(centerX+20)+'" y="'+(frostY-8)+'" width="102" height="11" fill="'+PAPER+'"/>';
+    s += '<text x="'+(centerX+22)+'" y="'+(frostY+2)+'" fill="'+frostColor+'" font-size="8" font-family="\'Courier New\',monospace" font-weight="700">FROST DEPTH -- 42" MIN</text>';
   }
+
+  // ── Grade line (break line per ASME Y14.2)
+  s += '<line x1="20" y1="'+gradeY+'" x2="'+(W-20)+'" y2="'+gradeY+'" stroke="'+INK+'" stroke-width="'+LW_VISIBLE+'"/>';
+  for (var gi = 0; gi < 22; gi++) {
+    var gx = 20 + gi * ((W-40)/21);
+    s += '<line x1="'+gx+'" y1="'+gradeY+'" x2="'+(gx-8)+'" y2="'+(gradeY+8)+'" stroke="'+INK+'" stroke-width="'+LW_THIN+'"/>';
+  }
+  s += '<rect x="'+(W-65)+'" y="'+(gradeY-11)+'" width="48" height="10" fill="'+PAPER+'"/>';
+  s += '<text x="'+(W-40)+'" y="'+(gradeY-3)+'" fill="'+INK2+'" font-size="8" text-anchor="middle" font-family="\'Courier New\',monospace" font-weight="700">F.G.</text>';
+
+  // ── Columns
+  var colW_px = Math.max(5, Math.min(signW_px * 0.045, 14));
+  var isSquare = c.shape === 'square';
+  var colSpacing = c.N > 1 ? signW_px * 0.55 / (c.N - 1) : 0;
+  var colX0 = c.N > 1 ? centerX - (c.N - 1) * colSpacing / 2 : centerX;
+
+  for (var ci = 0; ci < c.N; ci++) {
+    var cx = colX0 + ci * colSpacing;
+    var colFill = 'url(#steelHatch)';
+    // Above grade: visible — thick outline
+    if (isSquare) {
+      s += '<rect x="'+(cx-colW_px/2)+'" y="'+signBot+'" width="'+colW_px+'" height="'+gc_px+'" fill="rgba(180,180,180,0.25)" stroke="'+INK+'" stroke-width="'+LW_VISIBLE+'"/>';
+      s += '<rect x="'+(cx-colW_px/2)+'" y="'+signBot+'" width="'+colW_px+'" height="'+gc_px+'" fill="url(#steelHatch)" stroke="none"/>';
+    } else {
+      s += '<rect x="'+(cx-colW_px/2)+'" y="'+signBot+'" width="'+colW_px+'" height="'+gc_px+'" fill="rgba(180,180,180,0.25)" stroke="'+INK+'" stroke-width="'+LW_VISIBLE+'" rx="'+(colW_px/2)+'"/>';
+      s += '<rect x="'+(cx-colW_px/2)+'" y="'+signBot+'" width="'+colW_px+'" height="'+gc_px+'" fill="url(#steelHatch)" stroke="none" rx="'+(colW_px/2)+'"/>';
+    }
+    // Below grade: hidden line (dashed)
+    s += '<rect x="'+(cx-colW_px/2)+'" y="'+gradeY+'" width="'+colW_px+'" height="'+(fd_px*0.7)+'" fill="none" stroke="'+INK2+'" stroke-width="'+LW_HIDDEN+'" stroke-dasharray="6,3"/>';
+    // Column centerline
+    s += '<line x1="'+cx+'" y1="'+(signBot-12)+'" x2="'+cx+'" y2="'+(signBot+gc_px+12)+'" stroke="'+INK2+'" stroke-width="'+LW_CENTER+'" stroke-dasharray="12,3,3,3"/>';
+  }
+
+  // Column size note (leader line)
+  var colLabel = isSquare ? (c.recSq ? c.recSq.side+'" SQ TUBE' : 'SIZE TBD') : (c.recPipe ? c.recPipe.nom+'" Ø SCH40' : 'SIZE TBD');
+  var noteX = colX0 + (c.N > 1 ? (c.N-1)*colSpacing/2 : 0) + colW_px/2 + 8;
+  var noteY = (signBot + gradeY)/2;
+  s += '<line x1="'+(noteX-4)+'" y1="'+noteY+'" x2="'+(noteX+18)+'" y2="'+noteY+'" stroke="'+INK2+'" stroke-width="'+LW_THIN+'"/>';
+  s += '<text x="'+(noteX+20)+'" y="'+(noteY+3)+'" fill="'+INK2+'" font-size="8" font-family="\'Courier New\',monospace">'+colLabel+'</text>';
+
+  // ── Base plate (thick steel section)
+  var bpW = colW_px * 3.5;
+  for (var bpi = 0; bpi < c.N; bpi++) {
+    var bpx = (c.N > 1 ? colX0 + bpi * colSpacing : centerX);
+    s += '<rect x="'+(bpx-bpW/2)+'" y="'+(gradeY-4)+'" width="'+bpW+'" height="8" fill="rgba(60,60,60,0.7)" stroke="'+INK+'" stroke-width="'+LW_VISIBLE+'"/>';
+  }
+
+  // ── Sign panel (visible outline, light internal shading)
+  s += '<rect x="'+signLeft+'" y="'+signTop+'" width="'+signW_px+'" height="'+signH_px+'" fill="rgba(220,215,205,0.4)" stroke="'+INK+'" stroke-width="'+LW_VISIBLE+'"/>';
+  s += '<rect x="'+signLeft+'" y="'+signTop+'" width="'+signW_px+'" height="'+signH_px+'" fill="url(#windHatch)" stroke="none"/>';
+  // Sign annotation
+  s += '<text x="'+centerX+'" y="'+(signTop+signH_px/2-5)+'" fill="'+INK2+'" font-size="10" text-anchor="middle" font-family="\'Courier New\',monospace" font-weight="700" letter-spacing="1">SIGN FACE</text>';
+  s += '<text x="'+centerX+'" y="'+(signTop+signH_px/2+8)+'" fill="'+INK3+'" font-size="8" text-anchor="middle" font-family="\'Courier New\',monospace">'+c.W.toFixed(1)+'\' x '+c.H.toFixed(1)+'\' ('+c.area.toFixed(0)+' SF)</text>';
+
+  // ── Sign dimensions
+  s += buildDimLine(signLeft, signTop, signRight, signTop, c.W.toFixed(2)+'\u2019', 'above');
+  s += buildDimLine(signRight, signTop, signRight, signBot, c.H.toFixed(2)+'\u2019', 'right');
+  s += buildDimLine(signLeft, signBot, signLeft, gradeY, c.GC.toFixed(2)+'\u2019 CLR', 'left');
+
+  // ── Wind load arrow (heavy, with label)
+  var windY = signTop + signH_px / 2;
+  var arrowStart = Math.max(20, signLeft - 70);
+  s += '<line x1="'+arrowStart+'" y1="'+windY+'" x2="'+(signLeft-2)+'" y2="'+windY+'" stroke="#b85c00" stroke-width="2" marker-end="url(#arrowWind)"/>';
+  s += '<rect x="'+(arrowStart-2)+'" y="'+(windY-14)+'" width="62" height="11" fill="'+PAPER+'"/>';
+  s += '<text x="'+(arrowStart-2)+'" y="'+(windY-5)+'" fill="#b85c00" font-size="8" font-family="\'Courier New\',monospace" font-weight="700">F = '+fmtN(c.windForce)+' lbs</text>';
+  s += '<rect x="'+(arrowStart-2)+'" y="'+(windY+3)+'" width="56" height="9" fill="'+PAPER+'"/>';
+  s += '<text x="'+(arrowStart-2)+'" y="'+(windY+10)+'" fill="'+INK3+'" font-size="7" font-family="\'Courier New\',monospace">ASCE 7-22 §29.3.1</text>';
+
+  // ── Status callouts (pass/fail flags)
+  var sectionPass = c.recPipe || c.recSq;
+  s += buildStatusBubble(centerX, signTop + signH_px*0.7, sectionPass, sectionPass ? 'SECTION OK' : 'SECTION NG');
+  if (b) s += buildStatusBubble(centerX, gradeY - 14, !!(b.bolt && b.bolt.At >= b.reqAt), b.bolt ? 'BOLTS OK' : 'BOLTS NG');
+  if (f) {
+    var foundOK = f.bearOK && f.otOK && f.latOK && frostPass;
+    s += buildStatusBubble(centerX, foundTop + fd_px/2, foundOK, foundOK ? 'FND OK' : 'FND NG');
+  }
+
+  // ── Soil note
+  s += '<text x="22" y="'+(gradeY+15)+'" fill="'+INK2+'" font-size="9" font-family="\'Courier New\',monospace" font-weight="700">SOIL: '+soilLabel+'   S1='+slVal+' PSF/FT</text>';
+
+  // ── ANSI Y14.1 title block (lower right)
+  var tbW = 220, tbH = 96;
+  var tbx = W - tbW - 18, tby = H - tbH - 18;
+  var F_LABEL = '7.5';   // field label font
+  var F_VALUE = '9.5';   // field value font
+  var F_TITLE = '9';     // drawing title
+  var F_CO    = '10';    // company name
+  s += '<rect x="'+tbx+'" y="'+tby+'" width="'+tbW+'" height="'+tbH+'" fill="'+PAPER+'" stroke="'+INK+'" stroke-width="1.2"/>';
+  // Row dividers
+  s += '<line x1="'+tbx+'" y1="'+(tby+26)+'" x2="'+(tbx+tbW)+'" y2="'+(tby+26)+'" stroke="'+INK+'" stroke-width="0.7"/>';
+  s += '<line x1="'+tbx+'" y1="'+(tby+54)+'" x2="'+(tbx+tbW)+'" y2="'+(tby+54)+'" stroke="'+INK+'" stroke-width="0.7"/>';
+  s += '<line x1="'+tbx+'" y1="'+(tby+72)+'" x2="'+(tbx+tbW)+'" y2="'+(tby+72)+'" stroke="'+INK+'" stroke-width="0.5"/>';
+  // Col dividers (bottom rows)
+  s += '<line x1="'+(tbx+80)+'" y1="'+(tby+54)+'" x2="'+(tbx+80)+'" y2="'+(tby+tbH)+'" stroke="'+INK+'" stroke-width="0.5"/>';
+  s += '<line x1="'+(tbx+148)+'" y1="'+(tby+54)+'" x2="'+(tbx+148)+'" y2="'+(tby+tbH)+'" stroke="'+INK+'" stroke-width="0.5"/>';
+  s += '<line x1="'+(tbx+192)+'" y1="'+(tby+54)+'" x2="'+(tbx+192)+'" y2="'+(tby+tbH)+'" stroke="'+INK+'" stroke-width="0.5"/>';
+  // Company / project header
+  s += '<text x="'+(tbx+tbW/2)+'" y="'+(tby+12)+'" fill="'+INK+'" font-size="'+F_CO+'" text-anchor="middle" font-family="\'Courier New\',monospace" font-weight="700">EAGLE SIGN CO.</text>';
+  s += '<text x="'+(tbx+tbW/2)+'" y="'+(tby+22)+'" fill="'+INK2+'" font-size="'+F_LABEL+'" text-anchor="middle" font-family="\'Courier New\',monospace">605 SW 37TH ST, GRIMES, IA 50111   (515) 243-5663</text>';
+  // Title row
+  s += '<text x="'+(tbx+tbW/2)+'" y="'+(tby+38)+'" fill="'+INK+'" font-size="'+F_TITLE+'" text-anchor="middle" font-family="\'Courier New\',monospace" font-weight="700">SIGN STRUCTURAL ENGINEERING CALC</text>';
+  s += '<text x="'+(tbx+tbW/2)+'" y="'+(tby+50)+'" fill="'+INK2+'" font-size="'+F_LABEL+'" text-anchor="middle" font-family="\'Courier New\',monospace">ASCE 7-22 / IBC 2021 / ACI 318-19 / AISC 360-22</text>';
+  // Info cells — row 3 (labels)
+  s += '<text x="'+(tbx+4)+'" y="'+(tby+62)+'" fill="'+INK3+'" font-size="'+F_LABEL+'" font-family="\'Courier New\',monospace">DRAWN BY</text>';
+  s += '<text x="'+(tbx+82)+'" y="'+(tby+62)+'" fill="'+INK3+'" font-size="'+F_LABEL+'" font-family="\'Courier New\',monospace">DATE</text>';
+  s += '<text x="'+(tbx+150)+'" y="'+(tby+62)+'" fill="'+INK3+'" font-size="'+F_LABEL+'" font-family="\'Courier New\',monospace">SCALE</text>';
+  s += '<text x="'+(tbx+194)+'" y="'+(tby+62)+'" fill="'+INK3+'" font-size="'+F_LABEL+'" font-family="\'Courier New\',monospace">REV</text>';
+  // Info cells — row 3 (values)
+  var today = new Date().toISOString().slice(0,10);
+  s += '<text x="'+(tbx+4)+'" y="'+(tby+70)+'" fill="'+INK+'" font-size="'+F_VALUE+'" font-family="\'Courier New\',monospace">SignCalc</text>';
+  s += '<text x="'+(tbx+82)+'" y="'+(tby+70)+'" fill="'+INK+'" font-size="'+F_VALUE+'" font-family="\'Courier New\',monospace">'+today+'</text>';
+  s += '<text x="'+(tbx+150)+'" y="'+(tby+70)+'" fill="'+INK+'" font-size="'+F_VALUE+'" font-family="\'Courier New\',monospace">NTS</text>';
+  s += '<text x="'+(tbx+194)+'" y="'+(tby+70)+'" fill="'+INK+'" font-size="'+F_VALUE+'" font-family="\'Courier New\',monospace">-</text>';
+  // DWG NO row
+  s += '<text x="'+(tbx+4)+'" y="'+(tby+80)+'" fill="'+INK3+'" font-size="'+F_LABEL+'" font-family="\'Courier New\',monospace">DWG NO.</text>';
+  s += '<text x="'+(tbx+4)+'" y="'+(tby+91)+'" fill="'+INK+'" font-size="'+F_VALUE+'" font-family="\'Courier New\',monospace">SC-'+new Date().getFullYear()+'-001</text>';
+  s += '<text x="'+(tbx+130)+'" y="'+(tby+80)+'" fill="'+INK3+'" font-size="'+F_LABEL+'" font-family="\'Courier New\',monospace">SHEET</text>';
+  s += '<text x="'+(tbx+130)+'" y="'+(tby+91)+'" fill="'+INK+'" font-size="'+F_VALUE+'" font-family="\'Courier New\',monospace">1 OF 1</text>';
+
+  // ── Base plate plan inset (lower left)
+  if (b && b.bolt) {
+    var ipx = 16, ipy = H - 96 - 16;
+    var ipW = 96, ipH = 90;
+    s += '<rect x="'+ipx+'" y="'+ipy+'" width="'+ipW+'" height="'+ipH+'" fill="'+PAPER+'" stroke="'+INK+'" stroke-width="1"/>';
+    s += '<line x1="'+ipx+'" y1="'+(ipy+14)+'" x2="'+(ipx+ipW)+'" y2="'+(ipy+14)+'" stroke="'+INK+'" stroke-width="0.5"/>';
+    s += '<text x="'+(ipx+ipW/2)+'" y="'+(ipy+9)+'" fill="'+INK+'" font-size="7" text-anchor="middle" font-family="\'Courier New\',monospace" font-weight="700">BASE PLATE PLAN</text>';
+
+    var bpSize = b.minBP || 12;
+    var bpScale = Math.min((ipW-24)/bpSize, (ipH-32)/bpSize) * 0.75;
+    var bcx = ipx + ipW/2, bcy = ipy + 14 + (ipH-24)/2;
+    var bpPx = bpSize * bpScale;
+    // Base plate outline
+    s += '<rect x="'+(bcx-bpPx/2)+'" y="'+(bcy-bpPx/2)+'" width="'+bpPx+'" height="'+bpPx+'" fill="rgba(180,175,165,0.3)" stroke="'+INK+'" stroke-width="1"/>';
+    // Bolt circles
+    var bpr = b.bpr, brows = b.br, bsp_in = b.bsp;
+    var bspPx = bsp_in * bpScale;
+    for (var bri = 0; bri < brows; bri++) {
+      for (var bci = 0; bci < bpr; bci++) {
+        var bxx = bcx + (bci - (bpr-1)/2) * bspPx;
+        var byy = bcy + (bri - (brows-1)/2) * bspPx;
+        s += '<circle cx="'+bxx+'" cy="'+byy+'" r="3" fill="none" stroke="'+INK+'" stroke-width="0.8"/>';
+        s += '<circle cx="'+bxx+'" cy="'+byy+'" r="1" fill="'+INK+'"/>';
+      }
+    }
+    // Centerlines on bolt pattern
+    s += '<line x1="'+(bcx-bpPx/2-4)+'" y1="'+bcy+'" x2="'+(bcx+bpPx/2+4)+'" y2="'+bcy+'" stroke="'+INK2+'" stroke-width="'+LW_CENTER+'" stroke-dasharray="8,2,2,2"/>';
+    s += '<line x1="'+bcx+'" y1="'+(bcy-bpPx/2-4)+'" x2="'+bcx+'" y2="'+(bcy+bpPx/2+4)+'" stroke="'+INK2+'" stroke-width="'+LW_CENTER+'" stroke-dasharray="8,2,2,2"/>';
+    s += '<text x="'+(ipx+ipW/2)+'" y="'+(ipy+ipH-4)+'" fill="'+INK2+'" font-size="7" text-anchor="middle" font-family="\'Courier New\',monospace">'+bpr+' x '+brows+' BOLTS @ '+bsp_in+'" B.C.</text>';
+  }
+
+  svg.innerHTML = s;
 }
 
-function renderFoundation() {
-  const c = lastCalc;
-  const f = calcFoundData();
-  const pOD = c.recPipe ? c.recPipe.od : 4.5;
-  const tLbl = f.fType.charAt(0).toUpperCase()+f.fType.slice(1);
+// ===================== RESULT CARDS =====================
+function renderAllResults() {
+  var c = lastCalc;
+  var b = calcBoltData();
+  var f = calcFoundData();
 
-  let autoHint = '';
-  if (f.autoMin && (!f.bearOK || !f.otOK || !f.latOK)) {
-    autoHint = `<div class="info-box" style="cursor:pointer;border-color:var(--green);color:var(--green)" onclick="applyAutoSize()">
-      Minimum passing: <b>${f.autoMin.fw}' dia &times; ${f.autoMin.fd}' deep</b> &mdash; click to apply
-    </div>`;
-  } else if (!f.autoMin && (!f.bearOK || !f.otOK || !f.latOK)) {
-    autoHint = '<div class="warn-box">No standard size passes. Special engineering required.</div>';
-  }
+  var fc_ = val('fc', 3000);
+  var hef_ = val('hef', 24);
+  var bDia_ = (b.bolt ? b.bolt.dia : 0.75);
+  var nBolts_ = b.bpr * b.br;
+  var edgeMin_ = Math.max(3, (f.fw * 12 / 2) - (b.bsp / 2));
+  var uplift_ = c.windForce * c.centroid / (f.fw / 2);
+  var Nu_per = uplift_ / nBolts_;
 
-  // IBC 1807.3 calculation
-  const foundMethod = rv('foundMethodGroup') || 'simplified';
-  let ibcHTML = '';
+  var aci = calcACI318Breakout(Nu_per, hef_, bDia_, fc_, edgeMin_, nBolts_);
+  lastACI = aci;
+  var aciPass = aci.phiNcbg >= Nu_per;
+
+  // ACI Pullout
+  var boltAbrg = (b.bolt && b.bolt.Abrg) ? b.bolt.Abrg : 0.291;
+  var pullout = calcACI318Pullout(Nu_per, boltAbrg, fc_);
+  lastPullout = pullout;
+
+  // Base plate bearing
+  var minBP_in = b.minBP || 10;
+  var A1 = minBP_in * minBP_in;
+  var fArea_in2 = f.fArea * 144;
+  var bearing = calcBasePlateBearing(fc_, A1, fArea_in2);
+  var totalAxial = c.windForce; // simplified axial
+  var bearingPass = bearing.phiPp >= totalAxial;
+  lastBearing = bearing;
+
+  // Foundation method
+  var foundMethod = rv('foundMethodGroup') || 'simplified';
+  var ibcRes = null, ibcConstrained = null;
   if (foundMethod === 'ibc1807') {
-    const h_load = c.centroid; // height from ground to resultant wind load
-    const ibc = calcFoundationIBC1807(c.forcePerCol, h_load, f.fw, f.Sl);
-    const ibcDepthIn = (ibc.d * 12).toFixed(0);
-    const currentDepthIn = (f.fd * 12).toFixed(0);
-    const ibcPass = f.fd >= ibc.d;
-    ibcHTML = `<div class="card">
-      <h3>IBC 1807.3 Eq. 18-1 -- Nonconstrained</h3>
-      <div class="formula-box">A = 2.34P / (S1 x b)</div>
-      <div class="step"><span class="l">P (lateral load/col)</span><span class="r">${c.forcePerCol.toLocaleString(undefined,{maximumFractionDigits:0})} lbs</span></div>
-      <div class="step"><span class="l">h (load height above grade)</span><span class="r">${h_load.toFixed(2)} ft</span></div>
-      <div class="step"><span class="l">b (footing width/dia)</span><span class="r">${f.fw.toFixed(2)} ft</span></div>
-      <div class="step"><span class="l">S1 (lateral bearing)</span><span class="r">${f.Sl} PSF/ft</span></div>
-      <div class="step final"><span class="l">A = 2.34 x ${c.forcePerCol.toFixed(0)} / (${f.Sl} x ${f.fw})</span><span class="r">${ibc.A.toFixed(2)}</span></div>
-      <div class="formula-box">d = 0.5A[1 + sqrt(1 + 4.36h/A)]</div>
-      <div class="step"><span class="l">4.36h/A = 4.36 x ${h_load.toFixed(2)} / ${ibc.A.toFixed(2)}</span><span class="r">${(4.36 * h_load / ibc.A).toFixed(2)}</span></div>
-      <div class="step final"><span class="l">Required depth d</span><span class="r">${ibc.d.toFixed(2)} ft (${ibcDepthIn}")</span></div>
-      <div class="rrow"><span class="rlabel">Provided: ${f.fd} ft (${currentDepthIn}") vs Required: ${ibc.d.toFixed(2)} ft (${ibcDepthIn}")</span><span class="rval ${ibcPass?'pass':'fail'}">${ibcPass?'PASS':'FAIL'}</span></div>
-      ${!ibcPass?'<div class="warn-box">Foundation depth does not meet IBC 1807.3 requirement. Increase depth to at least '+ibc.d.toFixed(1)+' ft ('+(ibc.d*12).toFixed(0)+'").</div>':''}
-    </div>`;
+    ibcRes = calcFoundationIBC1807(c.forcePerCol, c.centroid, f.fw, f.Sl);
+  } else if (foundMethod === 'ibc1807c') {
+    var S3 = f.Sl * 2;
+    ibcConstrained = calcFoundationIBC1807Constrained(c.forcePerCol, c.centroid, f.fw, S3);
   }
 
-  // Frost line display in results
-  const frostPass = f.fd >= 3.5;
-  const frostHTML = `<div class="rrow"><span class="rlabel">Iowa Frost Line (42" / 3.5 ft min)</span><span class="rval ${frostPass?'pass':'fail'}">${frostPass?'PASS: '+(f.fd*12).toFixed(0)+'" >= 42"':'FAIL: '+(f.fd*12).toFixed(0)+'" < 42"'}</span></div>`;
+  var frostPass = f.fd >= 3.5;
+  var foundAllPass = f.bearOK && f.otOK && f.latOK && frostPass;
+  if (ibcRes) foundAllPass = foundAllPass && (f.fd >= ibcRes.d);
+  if (ibcConstrained) foundAllPass = foundAllPass && (f.fd >= ibcConstrained.d);
 
-  document.getElementById('preview').innerHTML = `
-    <div class="diagram">${svgFound(f, pOD)}</div>
-    ${ibcHTML}
-    <div class="card">
-      <h3>${tLbl} Foundation${foundMethod==='ibc1807'?' (Simplified Check)':''}</h3>
-      <div class="step"><span class="l">Applied loads from Section Modulus:</span><span class="r"></span></div>
-      <div class="step"><span class="l">&nbsp; Moment/col</span><span class="r">${c.momentFtLb.toLocaleString(undefined,{maximumFractionDigits:0})} ft-lbs</span></div>
-      <div class="step"><span class="l">&nbsp; Shear/col</span><span class="r">${c.forcePerCol.toLocaleString(undefined,{maximumFractionDigits:0})} lbs</span></div>
-      <div class="step"><span class="l">&nbsp; Column</span><span class="r">${c.recPipe?c.recPipe.nom+'" Sch40':'--'} (OD ${pOD}")</span></div>
-      <div class="step"><span class="l">Foundation Area</span><span class="r">${f.fArea.toFixed(1)} sf</span></div>
-      <div class="step"><span class="l">Volume</span><span class="r">${f.fVol.toFixed(1)} cf (${f.cuYd.toFixed(2)} cy)</span></div>
-      <div class="step"><span class="l">Concrete Wt (150 pcf)</span><span class="r">${f.fWt.toLocaleString(undefined,{maximumFractionDigits:0})} lbs</span></div>
-      <div class="step"><span class="l">Total Vert = ${f.dl} + ${f.fWt.toLocaleString(undefined,{maximumFractionDigits:0})}</span><span class="r">${f.totVert.toLocaleString(undefined,{maximumFractionDigits:0})} lbs</span></div>
-    </div>
-    <div class="card">
-      <h3>Safety Factors</h3>
-      <div class="rrow"><span class="rlabel">Bearing: ${f.bearPSF.toFixed(0)} / ${f.Sv} PSF</span><span class="rval ${f.bearOK?'pass':'fail'}">${f.bearOK?'OK':'NG'}</span></div>
-      <div class="rrow"><span class="rlabel">Overturning SF (&ge;1.5)</span><span class="rval ${sfCls(f.otSF,1.5)}">${f.otSF.toFixed(2)}</span></div>
-      <div class="rrow"><span class="rlabel">Sliding SF (&ge;1.5)</span><span class="rval ${sfCls(f.latSF,1.5)}">${f.latSF.toFixed(2)}</span></div>
-      ${frostHTML}
-      ${(!f.bearOK||!f.otOK||!f.latOK)?'<div class="warn-box">Current size does not pass all checks.</div>':''}
-      ${autoHint}
-      <div style="margin-top:10px">
-        <div class="step"><span class="l"><b>Overturning Moment:</b></span><span class="r"></span></div>
-        <div class="step"><span class="l">&nbsp; Applied = ${c.momentFtLb.toLocaleString(undefined,{maximumFractionDigits:0})} + ${c.forcePerCol.toLocaleString(undefined,{maximumFractionDigits:0})}&times;${f.fd}</span><span class="r">${f.otM.toLocaleString(undefined,{maximumFractionDigits:0})} ft-lb</span></div>
-        <div class="step"><span class="l"><b>Resisting Moment:</b></span><span class="r"></span></div>
-        <div class="step"><span class="l">&nbsp; Gravity = ${f.totVert.toLocaleString(undefined,{maximumFractionDigits:0})}&times;${(f.fw/2).toFixed(1)}</span><span class="r">${f.rM_grav.toLocaleString(undefined,{maximumFractionDigits:0})} ft-lb</span></div>
-        <div class="step"><span class="l">&nbsp; Soil lateral = ${f.Sl}&times;${f.fw}&times;${f.fd}&sup2;/2</span><span class="r">${f.rM_soil.toLocaleString(undefined,{maximumFractionDigits:0})} ft-lb</span></div>
-        <div class="step final"><span class="l">&nbsp; Total resist</span><span class="r">${f.rM.toLocaleString(undefined,{maximumFractionDigits:0})} ft-lb</span></div>
-        <div class="step" style="margin-top:8px"><span class="l"><b>Sliding:</b></span><span class="r"></span></div>
-        <div class="step"><span class="l">&nbsp; Friction = ${f.totVert.toLocaleString(undefined,{maximumFractionDigits:0})}&times;0.35</span><span class="r">${f.friction.toLocaleString(undefined,{maximumFractionDigits:0})} lbs</span></div>
-        <div class="step"><span class="l">&nbsp; Passive = ${f.Sl}&times;${f.fw}&times;${f.fd}</span><span class="r">${f.passive.toLocaleString(undefined,{maximumFractionDigits:0})} lbs</span></div>
-        <div class="step final"><span class="l">&nbsp; Total vs ${c.forcePerCol.toLocaleString(undefined,{maximumFractionDigits:0})} lbs shear</span><span class="r">${f.latResist.toLocaleString(undefined,{maximumFractionDigits:0})} lbs</span></div>
-      </div>
-    </div>
-    ${renderACI318Card(c, f)}`;
+  var sectionPass = !!(c.recPipe || c.recSq);
+  var boltPass = !!(b.bolt && b.bolt.At >= b.reqAt);
+
+  // Update status chips
+  updateChip('chipWind', 'chipWindIcon', true);
+  updateChip('chipSection', 'chipSectionIcon', sectionPass);
+  updateChip('chipFoundation', 'chipFoundIcon', foundAllPass);
+  updateChip('chipBolts', 'chipBoltIcon', boltPass && aciPass);
+
+  var html = '';
+
+  // 1. WIND LOAD
+  var codeLabel = curCode==='ubc97'?'1997 UBC':'ASCE 7-22';
+  var exp = document.getElementById('exposure') ? document.getElementById('exposure').value : 'C';
+  var Kz = getKz(c.centroid, exp);
+  html += '<div class="result-card pass" id="card-wind">';
+  html += '<div class="card-header" onclick="this.nextElementSibling.classList.toggle(\'collapsed\')"><span class="card-icon" style="color:var(--gold)">&#10003;</span><span class="card-title">Wind Load</span><span class="cite">'+codeLabel+'</span><span class="card-status pass">PASS</span></div>';
+  html += '<div class="card-body">';
+  html += '<div class="step"><span class="l">Kz (h='+c.centroid.toFixed(1)+'\')</span><span class="r">'+Kz.toFixed(3)+'</span></div>';
+  html += '<div class="step"><span class="l">qz (vel. pressure)</span><span class="r">'+c.PSF.toFixed(2)+' psf</span></div>';
+  html += '<div class="step"><span class="l">F = qz G Cf Af</span><span class="r">'+fmtN(c.windForce)+' lbs</span></div>';
+  html += '<div class="step final"><span class="l">M = F/N x h</span><span class="r">'+fmtN(c.momentFtLb)+' ft-lb</span></div>';
+  html += '<div class="formula-box">F = qz x G x Cf x Af</div>';
+  html += '</div></div>';
+
+  // 2. COLUMN SIZING
+  var secStatus = sectionPass ? 'pass' : 'fail';
+  var secIcon = sectionPass ? '&#10003;' : '&#10007;';
+  var secLabel = sectionPass ? 'PASS' : 'FAIL';
+  html += '<div class="result-card '+secStatus+'" id="card-section">';
+  html += '<div class="card-header" onclick="this.nextElementSibling.classList.toggle(\'collapsed\')"><span class="card-icon" style="color:var(--'+(sectionPass?'gold':'red')+')">'+secIcon+'</span><span class="card-title">Column Sizing</span><span class="cite">AISC 360-22</span><span class="card-status '+secStatus+'">'+secLabel+'</span></div>';
+  html += '<div class="card-body">';
+  html += '<div class="step"><span class="l">Fb = '+(c.st==='used'?'0.60':'0.66')+' x 36 ksi</span><span class="r">'+(c.Fallow/1000).toFixed(2)+' ksi</span></div>';
+  html += '<div class="step final"><span class="l">S_req = M / Fb</span><span class="r">'+c.Sreq.toFixed(2)+' in3</span></div>';
+  if (c.recPipe) {
+    html += '<div class="rrow"><span class="rlabel">Round Pipe (rec.)</span><span class="rval pass">'+c.recPipe.nom+'" Sch40 (S='+c.recPipe.sm+' in3)</span></div>';
+  }
+  if (c.recSq) {
+    html += '<div class="rrow"><span class="rlabel">Square Tube (alt.)</span><span class="rval">'+c.recSq.side+'" sq (S='+c.recSq.sm+' in3)</span></div>';
+  }
+  if (!c.recPipe && !c.recSq) {
+    html += '<div style="color:var(--red);font-size:10px;padding:4px 0">Exceeds standard sizes -- special engineering required</div>';
+  }
+  html += '<div class="formula-box">S_req = M / Fb</div>';
+  html += '</div></div>';
+
+  // 3. ANCHOR BOLTS
+  var bStatus = boltPass ? 'pass' : 'fail';
+  var bIcon = boltPass ? '&#10003;' : '&#10007;';
+  var bLabel = boltPass ? 'PASS' : 'FAIL';
+  var bg = getBoltGrade();
+  html += '<div class="result-card '+bStatus+'" id="card-bolts">';
+  html += '<div class="card-header" onclick="this.nextElementSibling.classList.toggle(\'collapsed\')"><span class="card-icon" style="color:var(--'+(boltPass?'gold':'red')+')">'+bIcon+'</span><span class="card-title">Anchor Bolts</span><span class="cite">AISC 360 ASD / ASTM F1554</span><span class="card-status '+bStatus+'">'+bLabel+'</span></div>';
+  html += '<div class="card-body">';
+  html += '<div class="step"><span class="l">Grade</span><span class="r">'+bg.name+' (Ft='+bg.Ft+' ksi)</span></div>';
+  html += '<div class="step"><span class="l">T_req per bolt</span><span class="r">'+b.reqAt.toFixed(3)+' in2</span></div>';
+  if (b.bolt) {
+    html += '<div class="rrow"><span class="rlabel">Selected: '+b.bolt.lbl+'</span><span class="rval '+(boltPass?'pass':'fail')+'">At='+b.bolt.At+' in2 ('+((b.bolt.At/b.reqAt)*100).toFixed(0)+'%)</span></div>';
+  } else {
+    html += '<div style="color:var(--red);font-size:10px;padding:4px 0">No bolt &lt;=3" satisfies -- special eng. required</div>';
+  }
+  html += '<div class="formula-box">T_req = M / (n x s x Ft)</div>';
+  html += '</div></div>';
+
+  // 4. FOUNDATION
+  var fStatus = foundAllPass ? 'pass' : 'fail';
+  var fIcon = foundAllPass ? '&#10003;' : '&#10007;';
+  var fLabel = foundAllPass ? 'PASS' : 'FAIL';
+  var tLbl = f.fType.charAt(0).toUpperCase() + f.fType.slice(1);
+  html += '<div class="result-card '+fStatus+'" id="card-foundation">';
+  html += '<div class="card-header" onclick="this.nextElementSibling.classList.toggle(\'collapsed\')"><span class="card-icon" style="color:var(--'+(foundAllPass?'gold':'red')+')">'+fIcon+'</span><span class="card-title">Foundation</span><span class="cite">IBC 2021 S1807.3</span><span class="card-status '+fStatus+'">'+fLabel+'</span></div>';
+  html += '<div class="card-body">';
+  html += '<div class="step"><span class="l">Method</span><span class="r">'+(foundMethod==='ibc1807'?'IBC Eq.18-1':(foundMethod==='ibc1807c'?'IBC Eq.18-2':'Simplified'))+'</span></div>';
+
+  if (ibcRes) {
+    html += '<div class="step"><span class="l">A = 2.34P / (S1 b)</span><span class="r">'+ibcRes.A.toFixed(2)+'</span></div>';
+    html += '<div class="step final"><span class="l">d_req</span><span class="r">'+ibcRes.d.toFixed(2)+'\' ('+(ibcRes.d*12).toFixed(0)+'")</span></div>';
+    html += '<div class="rrow"><span class="rlabel">IBC depth check</span><span class="rval '+(f.fd>=ibcRes.d?'pass':'fail')+'">'+(f.fd>=ibcRes.d?'PASS':'FAIL')+' ('+f.fd+'\' vs '+ibcRes.d.toFixed(2)+'\')</span></div>';
+  }
+  if (ibcConstrained) {
+    html += '<div class="step"><span class="l">S3 = 2 x S1 (constrained)</span><span class="r">'+(f.Sl*2)+' psf</span></div>';
+    html += '<div class="step final"><span class="l">d_req = sqrt(4.25Ph/(S3 b))</span><span class="r">'+ibcConstrained.d.toFixed(2)+'\' ('+(ibcConstrained.d*12).toFixed(0)+'")</span></div>';
+    html += '<div class="rrow"><span class="rlabel">IBC depth check</span><span class="rval '+(f.fd>=ibcConstrained.d?'pass':'fail')+'">'+(f.fd>=ibcConstrained.d?'PASS':'FAIL')+'</span></div>';
+  }
+
+  html += '<div class="rrow"><span class="rlabel">Overturning SF (>=1.5)</span><span class="rval '+sfCls(f.otSF,1.5)+'">'+f.otSF.toFixed(2)+'</span></div>';
+  html += '<div class="rrow"><span class="rlabel">Sliding SF (>=1.5)</span><span class="rval '+sfCls(f.latSF,1.5)+'">'+f.latSF.toFixed(2)+'</span></div>';
+  html += '<div class="rrow"><span class="rlabel">Bearing ('+f.bearPSF.toFixed(0)+'/'+f.Sv+' psf)</span><span class="rval '+(f.bearOK?'pass':'fail')+'">'+(f.bearOK?'OK':'NG')+'</span></div>';
+  html += '<div class="rrow"><span class="rlabel">Iowa Frost Line (42" min)</span><span class="rval '+(frostPass?'pass':'fail')+'">'+(frostPass?'PASS: '+(f.fd*12).toFixed(0)+'">42"':'FAIL: '+(f.fd*12).toFixed(0)+'"<42"')+'</span></div>';
+
+  html += '<div class="formula-box">SF_ot = R_moment / O_moment >= 1.5</div>';
+  html += '</div></div>';
+
+  // 5. CONCRETE BREAKOUT
+  var aciStatus = aciPass ? 'pass' : 'fail';
+  html += '<div class="result-card '+aciStatus+'" id="card-aci">';
+  html += '<div class="card-header" onclick="this.nextElementSibling.classList.toggle(\'collapsed\')"><span class="card-icon" style="color:var(--'+(aciPass?'gold':'red')+')">'+( aciPass?'&#10003;':'&#10007;')+'</span><span class="card-title">Concrete Breakout</span><span class="cite">ACI 318-19 S17.6.2</span><span class="card-status '+aciStatus+'">'+(aciPass?'PASS':'FAIL')+'</span></div>';
+  html += '<div class="card-body">';
+  html += '<div class="step"><span class="l">ANco = 9 hef2</span><span class="r">'+aci.ANco.toFixed(1)+' in2</span></div>';
+  html += '<div class="step"><span class="l">Nb (basic breakout)</span><span class="r">'+fmtN(aci.Nb)+' lbs</span></div>';
+  html += '<div class="step"><span class="l">psi_ed (edge)</span><span class="r">'+aci.psi_ed.toFixed(3)+'</span></div>';
+  html += '<div class="step final"><span class="l">phi Ncbg</span><span class="r">'+fmtN(aci.phiNcbg)+' lbs</span></div>';
+  html += '<div class="rrow"><span class="rlabel">Nu/anchor vs phi Ncbg</span><span class="rval '+(aciPass?'pass':'fail')+'">'+fmtN(Nu_per)+' vs '+fmtN(aci.phiNcbg)+' ('+(aci.phiNcbg/Math.max(Nu_per,1)).toFixed(2)+'x)</span></div>';
+  html += '<div class="formula-box">Nb = 24 &lambda; sqrt(f\'c) hef^1.5 &nbsp; [ACI 318-19 §17.6.2.2, &lambda;=1.0 NW]</div>';
+  html += '</div></div>';
+
+  // 6. BASE PLATE BEARING
+  var bpStatus = bearingPass ? 'pass' : 'fail';
+  html += '<div class="result-card '+bpStatus+'" id="card-bearing">';
+  html += '<div class="card-header" onclick="this.nextElementSibling.classList.toggle(\'collapsed\')"><span class="card-icon" style="color:var(--'+(bearingPass?'gold':'red')+')">'+( bearingPass?'&#10003;':'&#10007;')+'</span><span class="card-title">Base Plate Bearing</span><span class="cite">AISC 360-22 Eq.J8-2</span><span class="card-status '+bpStatus+'">'+(bearingPass?'PASS':'FAIL')+'</span></div>';
+  html += '<div class="card-body">';
+  html += '<div class="step"><span class="l">A1 (base plate)</span><span class="r">'+A1.toFixed(1)+' in2</span></div>';
+  html += '<div class="step"><span class="l">A2 (foundation)</span><span class="r">'+fArea_in2.toFixed(0)+' in2</span></div>';
+  html += '<div class="step final"><span class="l">phi Pp</span><span class="r">'+fmtN(bearing.phiPp)+' lbs</span></div>';
+  html += '<div class="rrow"><span class="rlabel">Load vs Capacity</span><span class="rval '+(bearingPass?'pass':'fail')+'">'+fmtN(totalAxial)+' vs '+fmtN(bearing.phiPp)+'</span></div>';
+  html += '<div class="formula-box">phi Pp = 0.65 x 0.85 f\'c A1 sqrt(A2/A1)</div>';
+  html += '</div></div>';
+
+  // 7. BOM
+  html += '<div class="result-card pass" id="card-bom">';
+  html += '<div class="card-header" onclick="this.nextElementSibling.classList.toggle(\'collapsed\')"><span class="card-icon" style="color:var(--gold)">&#9776;</span><span class="card-title">Bill of Materials</span><span class="card-status pass">BOM</span></div>';
+  html += '<div class="card-body">';
+
+  var colHt = c.GC + c.H + 2;
+  var pipeName = c.recPipe ? c.recPipe.nom+'" Sch.40 pipe' : '--';
+  html += '<div class="bom-row"><span class="bom-desc">Column: '+pipeName+' x '+colHt+'\' (est.)</span><span class="bom-qty">'+c.N+' ea</span></div>';
+
+  if (b.minBP) {
+    var bpThk = c.recPipe ? toFrac(c.recPipe.gThk) : '1/2';
+    html += '<div class="bom-row"><span class="bom-desc">Base Plate: '+b.minBP.toFixed(1)+'" x '+b.minBP.toFixed(1)+'" x '+bpThk+'" PL A36</span><span class="bom-qty">'+c.N+' ea</span></div>';
+  }
+
+  if (b.bolt) {
+    var totalBolts = b.total * c.N;
+    html += '<div class="bom-row"><span class="bom-desc">Anchor Bolts: '+b.bolt.lbl+' dia '+bg.std+'</span><span class="bom-qty">'+totalBolts+' ea</span></div>';
+  }
+
+  var fndLabel = f.fType === 'circular' ? f.fw+'\' dia' : f.fw+'\' sq';
+  html += '<div class="bom-row"><span class="bom-desc">Foundation: '+fndLabel+' x '+f.fd+'\' deep ('+f.cuYd.toFixed(2)+' CY)</span><span class="bom-qty">'+c.N+' ea</span></div>';
+
+  if (c.recPipe) {
+    var gusQty = c.N * 4;
+    html += '<div class="bom-row"><span class="bom-desc">Gussets: '+c.recPipe.gLeg+'" x '+c.recPipe.gLeg+'" x '+toFrac(c.recPipe.gThk)+'" PL A36</span><span class="bom-qty">'+gusQty+' ea</span></div>';
+  }
+
+  html += '</div></div>';
+
+  document.getElementById('resultsPanel').innerHTML = html;
 }
 
-function renderACI318Card(c, f) {
-  const fc_ = v('fc', 3000);
-  const hef_ = v('hef', 24);
-  const bDia_ = v('boltDia', 0.75) || 0.75;
-  const bPerRow_ = v('bPerRow', 2), bRows_ = v('bRows', 2);
-  const bSpace_ = v('bSpace', 6);
-  const nBolts_ = bPerRow_ * bRows_;
-  const edgeMin_ = Math.max(3, (f.fw * 12 / 2) - (bSpace_ / 2));
-  // Uplift demand: overturning moment / (lever arm = half footing width)
-  const uplift_ = c.windForce * c.centroid / (f.fw / 2);
-  const Nu_per = uplift_ / nBolts_;
-  const aci = calcACI318Breakout(Nu_per, hef_, bDia_, fc_, edgeMin_, nBolts_);
-  const aciPass = aci.phiNcbg >= Nu_per;
-
-  return `<div class="card">
-    <h3 style="cursor:pointer" onclick="this.parentElement.querySelector('.aci-body').classList.toggle('hidden')">ACI 318-19 Concrete Breakout (S17.6.2) <span class="toggle" style="font-size:14px;color:var(--text2)">&#9662;</span></h3>
-    <div class="aci-body">
-      <div class="formula-box">Nb = 24 * sqrt(f'c) * hef^1.5 (Eq 17.6.2.2b)</div>
-      <div class="step"><span class="l">f'c (concrete)</span><span class="r">${fc_} psi</span></div>
-      <div class="step"><span class="l">h_ef (embedment)</span><span class="r">${hef_}" </span></div>
-      <div class="step"><span class="l">Edge distance (min)</span><span class="r">${edgeMin_.toFixed(1)}"</span></div>
-      <div class="step"><span class="l">ANco = 9 x hef^2</span><span class="r">${aci.ANco.toFixed(1)} in2</span></div>
-      <div class="step"><span class="l">Nb (basic breakout)</span><span class="r">${aci.Nb.toLocaleString(undefined,{maximumFractionDigits:0})} lbs</span></div>
-      <div class="step"><span class="l">psi_ed (edge factor)</span><span class="r">${aci.psi_ed.toFixed(3)}</span></div>
-      <div class="step"><span class="l">phi (0.70, Condition B)</span><span class="r">0.70</span></div>
-      <div class="step final"><span class="l">phi*Ncbg (capacity)</span><span class="r">${aci.phiNcbg.toLocaleString(undefined,{maximumFractionDigits:0})} lbs</span></div>
-      <div class="step"><span class="l">Nu (demand/anchor)</span><span class="r">${Nu_per.toLocaleString(undefined,{maximumFractionDigits:0})} lbs</span></div>
-      <div class="rrow"><span class="rlabel">Concrete Breakout Check</span><span class="rval ${aciPass?'pass':'fail'}">${aciPass?'PASS':'FAIL'} (${(aci.phiNcbg/Math.max(Nu_per,1)).toFixed(2)}x)</span></div>
-      ${!aciPass?'<div class="warn-box">Concrete breakout capacity insufficient. Increase h_ef, f\'c, or footing width.</div>':''}
-    </div>
-  </div>`;
+function updateChip(chipId, iconId, pass) {
+  var chip = document.getElementById(chipId);
+  var icon = document.getElementById(iconId);
+  if (!chip) return;
+  chip.className = 'status-chip ' + (pass ? 'pass' : 'fail');
+  if (icon) icon.innerHTML = pass ? '&#10003;' : '&#10007;';
 }
 
-function renderGusset() {
-  const sreq = lastCalc.Sreq;
-  let rows='';
-  PIPE.forEach((p,i)=>{
-    const bp=p.od+2*(p.gLeg+p.weld);
-    const hl= !isNaN(sreq) && sreq>0 && p.sm>=sreq && (i===0||PIPE[i-1].sm<sreq);
-    rows+=`<tr class="${hl?'hl':''}">
-      <td>${p.nom}"</td><td>${p.od}"</td><td>${p.wall}"</td><td>${p.sm}</td>
-      <td>${p.gLeg}"</td><td>${toFrac(p.gThk)}"</td><td>${toFrac(p.weld)}"</td>
-      <td>${bp.toFixed(2)}"</td><td>${toFrac(p.gThk)}"</td>
-    </tr>`;
+// ===================== LOCAL STORAGE =====================
+function saveToStorage() {
+  var inputs = {};
+  document.querySelectorAll('input[id], select[id]').forEach(function(el) {
+    inputs[el.id] = el.type === 'checkbox' ? el.checked : el.value;
   });
-
-  document.getElementById('preview').innerHTML = `
-    <div class="card">
-      <h3>Gusset Table &mdash; S<sub>req</sub> = ${lastCalc.Sreq.toFixed(2)} in&sup3;</h3>
-      <div style="overflow:auto;max-height:520px">
-        <table class="eng-table">
-          <thead><tr><th>Nom</th><th>OD</th><th>Wall</th><th>S</th><th>Gus Leg</th><th>Gus Thk</th><th>Weld</th><th>Min BP</th><th>BP Thk</th></tr></thead>
-          <tbody>${rows}</tbody>
-        </table>
-      </div>
-    </div>`;
+  // Save radio states
+  ['steelGroup','shapeGroup','fTypeGroup','foundMethodGroup'].forEach(function(gid) {
+    inputs['_radio_'+gid] = rv(gid);
+  });
+  inputs['_code'] = curCode;
+  try { localStorage.setItem('signcalc_v3', JSON.stringify(inputs)); } catch(e) {}
 }
 
-function renderSoil() {
-  document.getElementById('preview').innerHTML = `
-    <div class="card">
-      <h3>Soil Classification (UBC / IBC)</h3>
-      <table class="eng-table" style="text-align:left">
-        <thead><tr><th style="text-align:left">Classification</th><th>Size (mm)</th></tr></thead>
-        <tbody>
-          <tr><td style="text-align:left">Gravel</td><td>&gt; 4.75</td></tr>
-          <tr><td style="text-align:left">Coarse Sand</td><td>2.0 - 4.75</td></tr>
-          <tr><td style="text-align:left">Medium Sand</td><td>0.425 - 2.0</td></tr>
-          <tr><td style="text-align:left">Fine Sand</td><td>0.075 - 0.425</td></tr>
-          <tr><td style="text-align:left">Clays &amp; Silt</td><td>&lt; 0.075</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card">
-      <h3>Allowable Bearing (UBC Table 18-I-A)</h3>
-      <table class="eng-table" style="text-align:left">
-        <thead><tr><th style="text-align:left">Soil Type</th><th>Vertical (PSF)</th><th>Lateral (PSF)</th></tr></thead>
-        <tbody>
-          <tr><td style="text-align:left">Clay, Sandy Clay, Silty Clay</td><td>1,000</td><td>100</td></tr>
-          <tr><td style="text-align:left">Sand, Silty Sand, Clayey Sand</td><td>1,500</td><td>150</td></tr>
-          <tr><td style="text-align:left">Sandy Gravel, Gravel</td><td>2,000</td><td>200</td></tr>
-          <tr><td style="text-align:left">Sedimentary / Foliated Rock</td><td>2,000</td><td>400</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="card">
-      <h3>Notes</h3>
-      <ul style="font-size:12px;color:var(--text2);padding-left:18px;line-height:2">
-        <li>Not applicable where foundation affected by wind/water scour</li>
-        <li>Spread footings need special eng. for expansive soils (use caisson)</li>
-        <li>Organic soils / Peat require foundation investigation</li>
-        <li>All base plates fully grouted after pipe installation</li>
-        <li>No washers for caisson designs without eng. approval (fracture plane)</li>
-      </ul>
-    </div>`;
-}
-
-// ===================== PROMPT =====================
-function updatePrompt() {
-  const c = lastCalc;
-  const cL = curCode==='ubc97'?'1997 UBC':'ASCE 7 ('+curCode.replace('asce','')+')';
-  let t = `Sign Engineering Calc [${cL}] | Sign: ${c.W}'W x ${c.H}'H @ ${c.GC}' clear | ${c.area} sf | ${c.N} col\n`;
-  t += `Wind: ${c.PSF.toFixed(1)} PSF, Force: ${c.windForce.toLocaleString(undefined,{maximumFractionDigits:0})} lbs | M: ${c.momentFtLb.toLocaleString(undefined,{maximumFractionDigits:0})} ft-lb/col\n`;
-  t += `Steel: ${c.st} A36, F_allow=${(c.Fallow/1000).toFixed(1)} ksi | S_req=${c.Sreq.toFixed(2)} in\u00B3\n`;
-  const rec = c.shape==='square'?(c.recSq?c.recSq.side+'" sq tube':'Exceeds'):(c.recPipe?c.recPipe.nom+'" Sch40':'Exceeds');
-  t += `Column: ${rec} | PBF: ${c.pbf.toFixed(1)} lbs/ft`;
-
-  // Always include bolt data
-  const b=calcBoltData();
-  t += `\nBolts: ${b.total} (${b.bpr}x${b.br}), spacing ${b.bsp}"`;
-  if(b.bolt) t += ` | ${b.bolt.lbl} ${getBoltGrade().name} (At=${b.bolt.At})`;
-  if(b.minBP) t += ` | Min BP: ${b.minBP.toFixed(2)}"`;
-
-  // Always include foundation data
-  const f=calcFoundData();
-  t += `\nFound: ${f.fType} ${f.fw}'x${f.fd}' | ${f.cuYd.toFixed(2)} cy | Bear:${f.bearOK?'OK':'NG'} OT:${f.otSF.toFixed(2)} Slide:${f.latSF.toFixed(2)}`;
-  if(f.autoMin) t += ` | Min: ${f.autoMin.fw}'x${f.autoMin.fd}'`;
-
-  // Gusset info
-  if(c.recPipe) {
-    const bp = c.recPipe.od + 2*(c.recPipe.gLeg + c.recPipe.weld);
-    t += `\nGusset: ${c.recPipe.nom}" pipe, ${c.recPipe.gLeg}" leg, ${toFrac(c.recPipe.gThk)}" thk, BP ${bp.toFixed(1)}" sq`;
-  }
-  document.getElementById('promptOut').textContent = t;
-}
-
-function copyPrompt() {
-  navigator.clipboard.writeText(document.getElementById('promptOut').textContent).then(()=>{
-    const b=document.querySelector('.copy-btn');b.textContent='Copied!';b.classList.add('copied');
-    setTimeout(()=>{b.textContent='Copy';b.classList.remove('copied');},1200);
+function loadFromStorage() {
+  var saved;
+  try { saved = localStorage.getItem('signcalc_v3'); } catch(e) { return; }
+  if (!saved) return;
+  var inputs = JSON.parse(saved);
+  Object.entries(inputs).forEach(function(pair) {
+    var id = pair[0], v = pair[1];
+    if (id.startsWith('_radio_')) {
+      var gid = id.replace('_radio_', '');
+      var g = document.getElementById(gid);
+      if (g) g.querySelectorAll('.rbtn').forEach(function(b) { b.classList.toggle('active', b.dataset.val === v); });
+      if (gid === 'fTypeGroup') document.getElementById('fRatioField').classList.toggle('hidden', v !== 'rectangular');
+      return;
+    }
+    if (id === '_code') { setCode(v); return; }
+    var el = document.getElementById(id);
+    if (!el) return;
+    if (el.type === 'checkbox') el.checked = v;
+    else el.value = v;
   });
 }
 
 // ===================== PDF REPORT =====================
 function generatePDF() {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'letter' });
-  const margin = 20;
-  const pageW = 215.9;
-  const pageH = 279.4;
-  let y = margin;
+  var jsPDF = window.jspdf.jsPDF;
+  var doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'letter' });
+  var margin = 20;
+  var pageW = 215.9;
+  var pageH = 279.4;
+  var y = margin;
 
   function checkPage(need) { if (y + need > pageH - 20) { doc.addPage(); y = margin; } }
   function addLine(label, value, indent) {
-    checkPage(6);
-    indent = indent || 0;
+    checkPage(6); indent = indent || 0;
     doc.setFont('courier', 'normal'); doc.setFontSize(9); doc.setTextColor(80,80,80);
     doc.text(label, margin + indent, y);
     doc.setTextColor(0,0,0); doc.setFont('courier', 'bold');
@@ -1476,13 +1612,15 @@ function generatePDF() {
   }
   function hline() { doc.setDrawColor(200,200,200); doc.line(margin, y, pageW - margin, y); y += 3; }
 
-  const c = lastCalc;
-  const W_ = c.W, H_ = c.H, GC_ = c.GC, N_ = c.N;
-  const Vmph_ = v('Vmph',115), Kd_ = v('Kd',0.85), Kzt_ = v('Kzt',1.0), Ke_ = v('Ke',1.0);
-  const G_ = v('G',0.85), Cf_ = v('Cf',1.2);
-  const exposure_ = document.getElementById('exposure')?.value || 'C';
-  const now = new Date();
-  const dateStr = now.toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'});
+  var c = lastCalc;
+  var f = lastFoundCalc;
+  var b = lastBoltCalc;
+  var bg = getBoltGrade();
+  var now = new Date();
+  var dateStr = now.toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'});
+  var Vmph_ = val('Vmph',115), Kd_ = val('Kd',0.85), Kzt_ = val('Kzt',1.0), Ke_ = val('Ke',1.0);
+  var G_ = val('G',0.85), Cf_ = val('Cf',1.2);
+  var exposure_ = document.getElementById('exposure') ? document.getElementById('exposure').value : 'C';
 
   // TITLE
   doc.setFont('helvetica', 'bold'); doc.setFontSize(18); doc.setTextColor(17,17,17);
@@ -1490,164 +1628,97 @@ function generatePDF() {
   doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(100,100,100);
   doc.text('STRUCTURAL CALCULATION REPORT', margin, y + 7);
   doc.setFontSize(9);
-  doc.text('Eagle Sign & Design Inc.  |  Sign Engineering Calculator v2.0', margin, y + 13);
+  doc.text('Eagle Sign Co.  |  Sign Engineering Calculator v3.0', margin, y + 13);
   doc.text('Generated: ' + dateStr, margin, y + 19);
   y += 28;
   doc.setDrawColor(255,215,0); doc.setLineWidth(1.5);
   doc.line(margin, y, pageW - margin, y); doc.setLineWidth(0.3); y += 8;
 
-  // SIGN INPUTS
+  // SIGN
   addHeader('SIGN INPUTS');
-  addLine('Sign Width (W)', W_.toFixed(1) + ' ft');
-  addLine('Sign Height (H)', H_.toFixed(1) + ' ft');
-  addLine('Ground Clearance (GC)', GC_.toFixed(1) + ' ft');
-  addLine('Number of Columns (N)', N_.toString());
-  addLine('Sign Area (A = W x H)', (W_ * H_).toFixed(2) + ' ft2');
-  addLine('Top of Sign Elevation', (GC_ + H_).toFixed(1) + ' ft AGL');
+  addLine('Sign Width (W)', c.W.toFixed(1) + ' ft');
+  addLine('Sign Height (H)', c.H.toFixed(1) + ' ft');
+  addLine('Ground Clearance (GC)', c.GC.toFixed(1) + ' ft');
+  addLine('Number of Columns (N)', c.N.toString());
+  addLine('Sign Area (A = W x H)', c.area.toFixed(2) + ' ft2');
   hline();
 
-  // WIND LOAD
+  // WIND
   addHeader('WIND LOAD CALCULATION');
-  const codeEl = document.getElementById('codeBadge');
-  const codeStr = codeEl ? codeEl.textContent : 'ASCE 7-22';
+  var codeStr = document.getElementById('codeBadge') ? document.getElementById('codeBadge').textContent : 'ASCE 7-22';
   addLine('Design Code', codeStr);
   if (curCode !== 'ubc97') {
     addLine('Basic Wind Speed (V)', Vmph_ + ' mph');
     addLine('Exposure Category', exposure_);
-    addLine('Directionality Factor (Kd)', Kd_.toFixed(2));
-    addLine('Topographic Factor (Kzt)', Kzt_.toFixed(2));
-    addLine('Ground Elevation Factor (Ke)', Ke_.toFixed(2));
-    addLine('Gust Factor (G)', G_.toFixed(2));
-    addLine('Force Coefficient (Cf)', Cf_.toFixed(2));
-    y += 2;
-    const h_bar = GC_ + H_ / 2;
-    const KZ_EXP = { B:{zg:1200,alpha:7}, C:{zg:900,alpha:9.5}, D:{zg:700,alpha:11.5} };
-    const exp = KZ_EXP[exposure_] || KZ_EXP['C'];
-    const Kz = Math.max(0.85, 2.01 * Math.pow(Math.max(h_bar, 15) / exp.zg, 2 / exp.alpha));
-    const qz = 0.00256 * Kz * Kzt_ * Kd_ * Ke_ * Vmph_ * Vmph_;
-    const psf = qz * G_ * Cf_;
+    addLine('Kd / Kzt / Ke', Kd_ + ' / ' + Kzt_ + ' / ' + Ke_);
+    addLine('G (Gust) / Cf (Force)', G_ + ' / ' + Cf_);
+    var Kz = getKz(c.centroid, exposure_);
     addFormula('qz = 0.00256 x Kz x Kzt x Kd x Ke x V^2');
-    addLine('Velocity Pressure Coeff (Kz)', Kz.toFixed(3));
-    addLine('Velocity Pressure (qz)', qz.toFixed(2) + ' psf');
-    addFormula('p = qz x G x Cf');
-    addLine('Design Pressure (p)', psf.toFixed(2) + ' psf');
+    addLine('Kz', Kz.toFixed(3));
+    addLine('Design Pressure', c.PSF.toFixed(2) + ' psf');
   } else {
     addLine('Direct Wind Pressure (UBC)', c.PSF.toFixed(1) + ' PSF');
   }
   addFormula('F = p x W x H');
-  addLine('Total Wind Force (F)', c.windForce.toFixed(0) + ' lbs');
+  addLine('Total Wind Force (F)', fmtN(c.windForce) + ' lbs');
+  addLine('Moment per Column', fmtN(c.momentFtLb) + ' ft-lb');
   hline();
 
-  // SECTION MODULUS
-  addHeader('SECTION MODULUS REQUIREMENT');
-  addLine('Centroid Height above grade', c.centroid.toFixed(2) + ' ft');
-  addFormula('M = F/N x h_centroid');
-  addLine('Moment at Base per Column', c.momentFtLb.toFixed(0) + ' ft-lb = ' + c.momentInLb.toFixed(0) + ' in-lb');
-  addLine('Steel Type', c.st === 'new' ? 'New (Fb = 0.66Fy)' : 'Used (Fb = 0.60Fy)');
-  addLine('Yield Strength (Fy)', '36 ksi (A36)');
-  addLine('Allowable Bending Stress (Fb)', (c.Fallow/1000).toFixed(2) + ' ksi');
+  // SECTION
+  addHeader('SECTION MODULUS');
+  addLine('Steel', c.st === 'new' ? 'New (Fb = 0.66Fy)' : 'Used (Fb = 0.60Fy)');
+  addLine('Fb', (c.Fallow/1000).toFixed(2) + ' ksi');
   addFormula('S_req = M / Fb');
-  addLine('Required Section Modulus', c.Sreq.toFixed(3) + ' in3');
-  const sumPipe_ = document.getElementById('sumPipe')?.textContent || '--';
-  addLine('Selected Column', sumPipe_);
+  addLine('S_req', c.Sreq.toFixed(3) + ' in3');
   if (c.recPipe) {
-    addLine('Actual Section Modulus', c.recPipe.sm + ' in3');
-    const smRatio = c.recPipe.sm / c.Sreq;
-    addLine('Ratio (S_actual / S_req)', smRatio.toFixed(2) + (smRatio >= 1.0 ? ' -- PASS' : ' -- FAIL'));
+    addLine('Column', c.recPipe.nom + '" Sch40 (S=' + c.recPipe.sm + ' in3)');
+    addLine('Ratio', (c.recPipe.sm / c.Sreq).toFixed(2) + ' -- ' + (c.recPipe.sm >= c.Sreq ? 'PASS' : 'FAIL'));
   }
   hline();
 
-  // ANCHOR BOLT
+  // BOLTS
   addHeader('ANCHOR BOLT CHECK');
-  const bg = getBoltGrade();
-  const bDia_ = v('boltDia', 0.75);
-  const bPerRow_ = v('bPerRow', 2), bRows_ = v('bRows', 2), bSpace_ = v('bSpace', 6);
-  addLine('Bolt Grade', bg.name);
-  addLine('Allowable Tensile Stress (Ft)', bg.Ft.toFixed(2) + ' ksi');
-  addLine('Bolt Diameter', bDia_ > 0 ? bDia_ + '"' : 'Auto');
-  addLine('Bolt Layout', (bPerRow_ * bRows_) + ' bolts (' + bPerRow_ + '/row x ' + bRows_ + ' rows)');
-  addLine('Bolt Spacing', bSpace_ + ' in');
-  const bData = calcBoltData();
-  if (bData.bolt) {
-    addLine('Selected Bolt', bData.bolt.lbl + ' ' + bg.name);
-    addLine('Tensile Area (At)', bData.bolt.At + ' in2');
-    addLine('Required At/bolt', bData.reqAt.toFixed(3) + ' in2');
-    addLine('Result', bData.bolt.At >= bData.reqAt ? 'PASS' : 'FAIL');
+  addLine('Bolt Grade', bg.name + ' (Ft=' + bg.Ft + ' ksi)');
+  addLine('Layout', b.total + ' bolts (' + b.bpr + 'x' + b.br + ') @ ' + b.bsp + '"');
+  if (b.bolt) {
+    addLine('Selected', b.bolt.lbl + ' (At=' + b.bolt.At + ' in2)');
+    addLine('Required At', b.reqAt.toFixed(3) + ' in2');
+    addLine('Result', b.bolt.At >= b.reqAt ? 'PASS' : 'FAIL');
   }
   hline();
 
   // FOUNDATION
-  addHeader('FOUNDATION DESIGN');
-  const fW_ = v('fW', 3), fD_ = v('fD', 5), DL_ = v('DL', 500);
-  const Sv_ = v('Sv', 1500), Sl_ = v('Sl', 150);
-  const soilType_ = document.getElementById('soilType')?.value || 'sand';
-  const fTypeEl_ = document.querySelector('#fTypeGroup .rbtn.active');
-  const fType_ = fTypeEl_ ? fTypeEl_.dataset.val : 'circular';
-  const foundMethod_ = rv('foundMethodGroup') || 'simplified';
-
-  addLine('Foundation Type', fType_.charAt(0).toUpperCase() + fType_.slice(1));
-  addLine('Foundation Width/Dia', fW_.toFixed(2) + ' ft');
-  addLine('Foundation Depth', fD_.toFixed(2) + ' ft = ' + (fD_*12).toFixed(0) + '"');
-  addLine('Soil Type', soilType_);
-  addLine('Vertical Bearing (Sv)', Sv_ + ' PSF');
-  addLine('Lateral Bearing (Sl)', Sl_ + ' PSF/ft');
-  addLine('Dead Load', DL_ + ' lbs');
-  addLine('Design Method', foundMethod_ === 'ibc1807' ? 'IBC 1807.3 Eq. 18-1' : 'Simplified Overturning');
-
-  // Foundation checks
-  const fCalc = calcFoundData();
-  y += 2;
-  addLine('Bearing', fCalc.bearPSF.toFixed(0) + ' / ' + Sv_ + ' PSF -- ' + (fCalc.bearOK ? 'OK' : 'NG'));
-  addLine('Overturning SF (>=1.5)', fCalc.otSF.toFixed(2) + ' -- ' + (fCalc.otOK ? 'PASS' : 'FAIL'));
-  addLine('Sliding SF (>=1.5)', fCalc.latSF.toFixed(2) + ' -- ' + (fCalc.latOK ? 'PASS' : 'FAIL'));
-
-  // IBC 1807.3 if selected
-  if (foundMethod_ === 'ibc1807') {
-    y += 2;
-    const ibcRes = calcFoundationIBC1807(c.forcePerCol, c.centroid, fW_, Sl_);
-    addFormula('IBC 1807.3 Eq. 18-1: A = 2.34P / (S1 x b)');
-    addLine('A', ibcRes.A.toFixed(2));
-    addFormula('d = 0.5A[1 + sqrt(1 + 4.36h/A)]');
-    addLine('Required Depth (d)', ibcRes.d.toFixed(2) + ' ft (' + (ibcRes.d*12).toFixed(0) + '")');
-    addLine('IBC 1807.3 Check', fD_ >= ibcRes.d ? 'PASS' : 'FAIL');
-  }
-
-  // Frost line
-  y += 2;
-  doc.setFont('helvetica', 'bold'); doc.setFontSize(9);
-  if (fD_ >= 3.5) {
-    doc.setTextColor(52,211,153);
-    doc.text('Iowa Frost Line: Depth ' + (fD_*12).toFixed(0) + '" >= 42" minimum -- OK', margin, y);
-  } else {
-    doc.setTextColor(239,68,68);
-    doc.text('Iowa Frost Line: Depth ' + (fD_*12).toFixed(0) + '" < 42" minimum -- FAIL', margin, y);
-  }
-  doc.setTextColor(0,0,0); y += 6;
+  addHeader('FOUNDATION');
+  addLine('Type', f.fType);
+  addLine('Size', f.fw + "' x " + f.fd + "'");
+  addLine('Soil', document.getElementById('soilType') ? document.getElementById('soilType').value : 'sand');
+  addLine('Bearing', f.bearPSF.toFixed(0) + '/' + f.Sv + ' psf -- ' + (f.bearOK?'OK':'NG'));
+  addLine('Overturning SF', f.otSF.toFixed(2) + ' -- ' + (f.otOK?'PASS':'FAIL'));
+  addLine('Sliding SF', f.latSF.toFixed(2) + ' -- ' + (f.latOK?'PASS':'FAIL'));
+  addLine('Frost Line', (f.fd*12).toFixed(0) + '" -- ' + (f.fd>=3.5?'PASS':'FAIL'));
   hline();
 
-  // ACI 318 if applicable
-  const fc_ = v('fc', 3000), hef_ = v('hef', 24);
-  const edgeMin_ = Math.max(3, (fW_ * 12 / 2) - (bSpace_ / 2));
-  const nBolts_ = bPerRow_ * bRows_;
-  const uplift_ = c.windForce * c.centroid / (fW_ / 2);
-  const aci = calcACI318Breakout(uplift_ / nBolts_, hef_, bDia_ > 0 ? bDia_ : 0.75, fc_, edgeMin_, nBolts_);
-  addHeader('ACI 318-19 CONCRETE BREAKOUT (S17.6.2)');
-  addLine("f'c (concrete strength)", fc_ + ' psi');
-  addLine('h_ef (embedment depth)', hef_ + ' in');
-  addLine('Edge Distance (min)', edgeMin_.toFixed(1) + ' in');
-  addLine('ANco (single anchor)', aci.ANco.toFixed(1) + ' in2');
-  addLine('Nb (basic breakout)', aci.Nb.toFixed(0) + ' lbs');
-  addLine('psi_ed (edge mod)', aci.psi_ed.toFixed(3));
-  addLine('phi*Ncbg (capacity)', aci.phiNcbg.toFixed(0) + ' lbs');
-  addLine('Nu (demand/anchor)', (uplift_ / nBolts_).toFixed(0) + ' lbs');
-  addLine('Result', aci.phiNcbg >= (uplift_ / nBolts_) ? 'PASS' : 'FAIL');
+  // ACI
+  addHeader('ACI 318-19 CONCRETE BREAKOUT');
+  var fc_ = val('fc', 3000), hef_ = val('hef', 24);
+  addLine("f'c", fc_ + ' psi');
+  addLine('h_ef', hef_ + ' in');
+  if (lastACI.phiNcbg) {
+    addLine('phi Ncbg', fmtN(lastACI.phiNcbg) + ' lbs');
+    var edgeMin_ = Math.max(3, (f.fw * 12 / 2) - (b.bsp / 2));
+    var nBolts_ = b.bpr * b.br;
+    var uplift_ = c.windForce * c.centroid / (f.fw / 2);
+    var Nu_per = uplift_ / nBolts_;
+    addLine('Nu/anchor', fmtN(Nu_per) + ' lbs');
+    addLine('Result', lastACI.phiNcbg >= Nu_per ? 'PASS' : 'FAIL');
+  }
 
-  // FOOTER on all pages
-  const pageCount = doc.internal.getNumberOfPages();
-  for (let i = 1; i <= pageCount; i++) {
+  // FOOTER
+  var pageCount = doc.internal.getNumberOfPages();
+  for (var i = 1; i <= pageCount; i++) {
     doc.setPage(i);
     doc.setFont('helvetica', 'normal'); doc.setFontSize(7); doc.setTextColor(150,150,150);
-    doc.text('SignCalc v2.0 -- Eagle Sign & Design Inc. -- Generated ' + dateStr, margin, pageH - 8);
+    doc.text('SignCalc v3.0 -- Eagle Sign Co. -- Generated' + dateStr, margin, pageH - 8);
     doc.text('Page ' + i + ' of ' + pageCount, pageW - margin, pageH - 8, { align: 'right' });
     doc.setDrawColor(255,215,0); doc.setLineWidth(0.5);
     doc.line(margin, pageH - 12, pageW - margin, pageH - 12);
@@ -1658,23 +1729,31 @@ function generatePDF() {
 }
 
 // ===================== MAIN =====================
-const renderers = {section:renderSection,bolt:renderBolt,foundation:renderFoundation,gusset:renderGusset,soil:renderSoil};
-
 function calc() {
-  calcShared();
-  checkFrostLine();
   // Auto Cf update if checked
   if (document.getElementById('cfAuto') && document.getElementById('cfAuto').checked) {
-    const cfInput = document.getElementById('Cf');
-    cfInput.value = autoCf(v('W',8), v('H',4));
+    var cfInput = document.getElementById('Cf');
+    cfInput.value = autoCf(val('W',8), val('H',4));
   }
-  (renderers[curTab]||renderSection)();
-  updatePrompt();
+  calcShared();
+  checkFrostLine();
+  renderAllResults();
+  updateDrawing();
+  saveToStorage();
 }
 
-// Init: show section tab controls
-document.getElementById('ctrl-section').classList.add('active');
+// Init — auto-size foundation if defaults would fail
+loadFromStorage();
 calc();
+(function() {
+  var f = lastFoundCalc;
+  if (!f || !f.bearOK || !f.otOK || !f.latOK || f.fd < 3.5) {
+    findMinFoundation();
+  }
+})();
+
+// Resize handler
+window.addEventListener('resize', function() { updateDrawing(); });
 </script>
 </body>
 </html>
