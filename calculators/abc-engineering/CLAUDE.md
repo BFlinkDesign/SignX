@@ -56,8 +56,16 @@ BOLT_GRADES = {
 - **Background**: vellum paper `#f5f0e6` with 20px blueprint grid
 - **Line weights**: visible=1.4, hidden=0.7, thin=0.5, centerline=0.4 (ASME Y14.2)
 - **Hatches**: soil=earth hatch, concrete=AR-CONC style (NOT ANSI37 — that's metals), steel=ANSI32 cross-hatch, general=ANSI31 45°
+- **Hatch tile details**: AR-CONC = 24×24 tile (10 diagonal lines + 6 irregular aggregate ellipses); ANSI Earth = horizontal lines + diagonal downward ticks; ANSI32 steel = 45° + 135° cross-hatch
 - **Dimension lines**: `buildDimLine()` — GAP=4, OVERSHOOT=5, OFFSET=26; paper mask behind text; closed filled arrowheads per ASME Y14.5
 - **Title block**: ANSI Y14.1 format — company="Eagle Sign Co.", DWG NO, date, scale, revision, sheet
+
+## Drawing Proportion Constants (updateDrawing)
+| Element | Formula | Notes |
+|---------|---------|-------|
+| Column width | `Math.max(8, signW_px * 0.06, 20)` | Min 8px floor prevents vanishing at small sizes |
+| Base plate width | `colW_px * 2.8` | 2.8× reads proportional; was 3.5× (too wide) |
+| Column hidden line | Full `fd_px` depth | Was `fd_px * 0.7` — short line implied floating column |
 
 ## Company Name Rule (MANDATORY)
 - **Display name**: **"Eagle Sign Co."** — use in all UI labels, drawing title blocks, PDF reports
@@ -88,3 +96,11 @@ BOLT_GRADES = {
 - Result cards generated as innerHTML strings, not DOM manipulation
 - `lastCalc`, `lastFoundCalc`, `lastACI` store results for cross-function access
 - Presets call `calc()` then `findMinFoundation()` to auto-size foundation
+- **Theme**: instrument-panel aesthetic — `Courier New` monospace everywhere, zero `border-radius`, 16px grid overlay on side panels, vellum blueprint grid on center panel
+- **LED dots**: status chips include `.chip-led` span (5px circle with colored `box-shadow` glow)
+- **Separators**: `.header-sep` / `.footer-sep` — 1px vertical divider bars for visual grouping
+
+## Editing Gotcha — CRLF + Large Blocks
+- Claude Code Edit tool FAILS on large CSS/HTML block replacements when the file has CRLF line endings — the `old_string` match silently misses.
+- **Workaround**: write a Python script: read `'rb'`, decode UTF-8, do `str.replace()` or index-slice, write `'wb'`. Pattern: `C:/Temp/replace_style.py`
+- Small edits (under ~30 lines) work fine even with CRLF.
