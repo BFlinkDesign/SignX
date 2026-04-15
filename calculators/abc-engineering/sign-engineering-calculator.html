@@ -101,6 +101,55 @@
   }
   .pdf-btn:hover { background: #ffe44d; }
 
+  .proj-btn {
+    padding: 4px 12px; background: var(--surface3); color: var(--text);
+    border: 1px solid var(--border2); font-size: 10px; font-weight: 800; cursor: pointer;
+    font-family: 'Courier New', Courier, monospace;
+    letter-spacing: 0.1em; text-transform: uppercase; transition: all 0.12s;
+  }
+  .proj-btn:hover { background: var(--surface2); border-color: var(--gold); color: var(--gold); }
+
+  .proj-name-badge {
+    font-size: 9px; color: var(--gold); font-weight: 700; letter-spacing: 0.06em;
+    white-space: nowrap; max-width: 200px; overflow: hidden; text-overflow: ellipsis;
+    border-left: 2px solid var(--gold2); padding-left: 8px; display: none;
+  }
+
+  /* Project modal */
+  .proj-modal-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+    z-index: 9999; align-items: center; justify-content: center;
+  }
+  .proj-modal-overlay.active { display: flex; }
+  .proj-modal {
+    background: var(--surface); border: 1px solid var(--border2); padding: 24px;
+    width: 440px; font-family: 'Courier New', monospace;
+  }
+  .proj-modal h2 {
+    font-size: 12px; font-weight: 800; color: var(--gold); letter-spacing: 0.1em;
+    margin-bottom: 16px; text-transform: uppercase; border-bottom: 1px solid var(--border2); padding-bottom: 8px;
+  }
+  .proj-modal .mrow { margin-bottom: 11px; }
+  .proj-modal label {
+    display: block; font-size: 9px; font-weight: 700; color: var(--text2);
+    letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px;
+  }
+  .proj-modal input, .proj-modal textarea {
+    width: 100%; background: var(--bg); border: 1px solid var(--border2); color: var(--text);
+    font-family: 'Courier New', monospace; font-size: 12px; padding: 6px 8px; outline: none;
+  }
+  .proj-modal textarea { resize: vertical; min-height: 64px; }
+  .proj-modal input:focus, .proj-modal textarea:focus { border-color: var(--gold); }
+  .proj-modal .mbtn-row { display: flex; gap: 8px; margin-top: 16px; justify-content: flex-end; }
+  .proj-modal .mbtn {
+    padding: 6px 18px; border: none; font-family: 'Courier New', monospace;
+    font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
+  }
+  .proj-modal .mbtn-save { background: var(--gold); color: #0d0d0d; }
+  .proj-modal .mbtn-save:hover { background: #ffe44d; }
+  .proj-modal .mbtn-cancel { background: var(--surface3); color: var(--text); border: 1px solid var(--border2); }
+  .proj-modal .mbtn-cancel:hover { border-color: var(--gold); color: var(--gold); }
+
   /* ===== LEFT INPUT PANEL ===== */
   .input-panel {
     background: var(--surface);
@@ -346,6 +395,7 @@
   <span class="badge">v3.0</span>
 
   <div class="header-sep"></div>
+  <span class="proj-name-badge" id="projNameBadge"></span>
   <div class="status-bar">
     <div class="status-chip pass" id="chipWind" onclick="scrollToCard('card-wind')"><span class="chip-led"></span><span id="chipWindIcon">&#10003;</span> WIND</div>
     <div class="status-chip pass" id="chipSection" onclick="scrollToCard('card-section')"><span class="chip-led"></span><span id="chipSectionIcon">&#10003;</span> SECTION</div>
@@ -371,7 +421,37 @@
         </div>
       </div>
     </div>
+    <button class="proj-btn" onclick="showSaveModal()" title="Save all inputs as a named project file">&#128190; SAVE</button>
+    <button class="proj-btn" onclick="document.getElementById('projFileInput').click()" title="Open a saved .signcalc project file">&#128194; OPEN</button>
+    <input type="file" id="projFileInput" accept=".signcalc,.json" style="display:none" onchange="loadProject(this)">
     <button class="pdf-btn" onclick="generatePDF()">PDF REPORT</button>
+  </div>
+</div>
+
+<!-- ===== PROJECT MODAL ===== -->
+<div class="proj-modal-overlay" id="projModalOverlay" onclick="closeSaveModal(event)">
+  <div class="proj-modal">
+    <h2>&#128190; Save Project</h2>
+    <div class="mrow">
+      <label>Project Name *</label>
+      <input type="text" id="mProjName" placeholder="e.g. Main St Monument Sign">
+    </div>
+    <div class="mrow">
+      <label>Estimate #</label>
+      <input type="text" id="mEstimate" placeholder="e.g. E-2024-0123">
+    </div>
+    <div class="mrow">
+      <label>Customer / Company</label>
+      <input type="text" id="mCustomer" placeholder="Customer or company name">
+    </div>
+    <div class="mrow">
+      <label>Description / Notes</label>
+      <textarea id="mNotes" placeholder="Location, special conditions, AHJ notes..."></textarea>
+    </div>
+    <div class="mbtn-row">
+      <button class="mbtn mbtn-cancel" onclick="closeSaveModal()">Cancel</button>
+      <button class="mbtn mbtn-save" onclick="confirmSaveProject()">Download .signcalc</button>
+    </div>
   </div>
 </div>
 
@@ -1607,6 +1687,118 @@ function updateChip(chipId, iconId, pass) {
   if (icon) icon.innerHTML = pass ? '&#10003;' : '&#10007;';
 }
 
+// ===================== PROJECT SAVE / LOAD =====================
+var currentProject = null;
+
+function showSaveModal() {
+  if (currentProject && currentProject.meta) {
+    document.getElementById('mProjName').value = currentProject.meta.name    || '';
+    document.getElementById('mEstimate').value = currentProject.meta.estimate || '';
+    document.getElementById('mCustomer').value = currentProject.meta.customer || '';
+    document.getElementById('mNotes').value    = currentProject.meta.notes    || '';
+  }
+  document.getElementById('projModalOverlay').classList.add('active');
+  setTimeout(function() { document.getElementById('mProjName').focus(); }, 50);
+}
+
+function closeSaveModal(e) {
+  if (e && e.target !== document.getElementById('projModalOverlay')) return;
+  document.getElementById('projModalOverlay').classList.remove('active');
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') document.getElementById('projModalOverlay').classList.remove('active');
+});
+
+function gatherInputState() {
+  var inputs = {};
+  document.querySelectorAll('input[id], select[id]').forEach(function(el) {
+    inputs[el.id] = el.type === 'checkbox' ? el.checked : el.value;
+  });
+  ['steelGroup','shapeGroup','fTypeGroup','foundMethodGroup'].forEach(function(gid) {
+    inputs['_radio_'+gid] = rv(gid);
+  });
+  inputs['_code'] = curCode;
+  return inputs;
+}
+
+function confirmSaveProject() {
+  var name = document.getElementById('mProjName').value.trim();
+  if (!name) { document.getElementById('mProjName').style.borderColor='var(--red)'; document.getElementById('mProjName').focus(); return; }
+  document.getElementById('mProjName').style.borderColor = '';
+
+  var meta = {
+    name:     name,
+    estimate: document.getElementById('mEstimate').value.trim(),
+    customer: document.getElementById('mCustomer').value.trim(),
+    notes:    document.getElementById('mNotes').value.trim(),
+    saved:    new Date().toISOString(),
+    version:  '3.0'
+  };
+
+  var project = { meta: meta, inputs: gatherInputState() };
+  currentProject = project;
+  updateProjBadge(name);
+
+  var json = JSON.stringify(project, null, 2);
+  var blob = new Blob([json], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  var fname = name.replace(/[^a-zA-Z0-9_\-]/g, '_').replace(/_+/g, '_') + '.signcalc';
+  a.href = url; a.download = fname; a.click();
+  setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
+
+  document.getElementById('projModalOverlay').classList.remove('active');
+}
+
+function loadProject(input) {
+  var file = input.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      var project = JSON.parse(e.target.result);
+      if (!project || !project.inputs) throw new Error('Not a valid SignCalc project file.');
+      currentProject = project;
+
+      var inputs = project.inputs;
+      Object.entries(inputs).forEach(function(pair) {
+        var id = pair[0], v = pair[1];
+        if (id.startsWith('_radio_')) {
+          var gid = id.replace('_radio_', '');
+          var g = document.getElementById(gid);
+          if (g) g.querySelectorAll('.rbtn').forEach(function(b) { b.classList.toggle('active', b.dataset.val === v); });
+          if (gid === 'fTypeGroup') {
+            var frf = document.getElementById('fRatioField');
+            if (frf) frf.classList.toggle('hidden', v !== 'rectangular');
+          }
+          return;
+        }
+        if (id === '_code') { setCode(v); return; }
+        var el = document.getElementById(id);
+        if (!el) return;
+        if (el.type === 'checkbox') el.checked = v; else el.value = v;
+      });
+
+      calc();
+      var projName = (project.meta && project.meta.name) ? project.meta.name : file.name;
+      updateProjBadge(projName);
+    } catch(ex) {
+      alert('Error loading project: ' + ex.message);
+    }
+    input.value = '';
+  };
+  reader.readAsText(file);
+}
+
+function updateProjBadge(name) {
+  var badge = document.getElementById('projNameBadge');
+  if (!badge) return;
+  badge.textContent = name;
+  badge.style.display = 'block';
+  badge.title = name;
+}
+
 // ===================== LOCAL STORAGE =====================
 function saveToStorage() {
   var inputs = {};
@@ -1687,6 +1879,7 @@ function generatePDF() {
   var exposure_ = document.getElementById('exposure') ? document.getElementById('exposure').value : 'C';
 
   // TITLE
+  var pm = (currentProject && currentProject.meta) ? currentProject.meta : {};
   doc.setFont('helvetica', 'bold'); doc.setFontSize(18); doc.setTextColor(17,17,17);
   doc.text('SIGNCALC', margin, y);
   doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(100,100,100);
@@ -1694,6 +1887,15 @@ function generatePDF() {
   doc.setFontSize(9);
   doc.text('Eagle Sign Co.  |  Sign Engineering Calculator v3.0', margin, y + 13);
   doc.text('Generated: ' + dateStr, margin, y + 19);
+  // Project metadata block (right column)
+  if (pm.name) {
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(10); doc.setTextColor(17,17,17);
+    doc.text(pm.name, pageW - margin, y, { align: 'right' });
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(8); doc.setTextColor(100,100,100);
+    if (pm.estimate) { doc.text('Est: ' + pm.estimate, pageW - margin, y + 6, { align: 'right' }); }
+    if (pm.customer) { doc.text(pm.customer, pageW - margin, y + 12, { align: 'right' }); }
+    if (pm.notes)    { doc.text(pm.notes.slice(0,60), pageW - margin, y + 18, { align: 'right' }); }
+  }
   y += 28;
   doc.setDrawColor(255,215,0); doc.setLineWidth(1.5);
   doc.line(margin, y, pageW - margin, y); doc.setLineWidth(0.3); y += 8;
@@ -1789,7 +1991,9 @@ function generatePDF() {
     doc.setLineWidth(0.3);
   }
 
-  doc.save('SignCalc-Report-' + now.toISOString().slice(0,10) + '.pdf');
+  var pdfName = 'SignCalc-Report-' + now.toISOString().slice(0,10);
+  if (pm && pm.name) pdfName = pm.name.replace(/[^a-zA-Z0-9_\-]/g, '_').replace(/_+/g, '_') + '-' + now.toISOString().slice(0,10);
+  doc.save(pdfName + '.pdf');
 }
 
 // ===================== MAIN =====================
