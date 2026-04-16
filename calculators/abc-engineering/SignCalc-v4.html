@@ -1,0 +1,3462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SignCalc -- Sign Engineering Calculator</title>
+<link rel="icon" href="file:///C:/SignCalculator/logo/SignCalc.ico" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:       #0d0d0d;
+    --surface:  #141414;
+    --surface2: #1a1a1a;
+    --surface3: #222222;
+    --border:   #282828;
+    --border2:  #363636;
+    --text:     #d0d0d0;
+    --text2:    #666666;
+    --text3:    #444444;
+    --dim:      #c8960c;
+    --gold:     #FFD700;
+    --gold2:    #B8960A;
+    --gold-bg:  rgba(255,215,0,0.06);
+    --green:    #22c55e;
+    --orange:   #f59e0b;
+    --red:      #dc2626;
+    --amber:    #c4a95a;
+    --panel-grid: rgba(255,255,255,0.018);
+  }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    font-family: 'Courier New', Courier, monospace;
+    background: var(--bg); color: var(--text); line-height: 1.4;
+    display: grid;
+    grid-template-rows: 42px 1fr 20px;
+    grid-template-columns: 274px 1fr 316px;
+  }
+
+  /* ===== HEADER ===== */
+  .header {
+    grid-column: 1 / -1;
+    background: var(--bg);
+    border-bottom: 2px solid var(--border2);
+    padding: 0 14px; display: flex; align-items: center; gap: 10px; height: 42px;
+  }
+  .header h1 { font-size: 15px; font-weight: 700; white-space: nowrap; letter-spacing: 0.02em; }
+  .header .badge {
+    font-size: 8px; padding: 1px 5px; font-weight: 700; letter-spacing: 0.08em;
+    white-space: nowrap; background: transparent; color: var(--text2);
+    border: 1px solid var(--border2); text-transform: uppercase;
+  }
+  .header-sep { width: 1px; height: 20px; background: var(--border2); flex-shrink: 0; }
+
+  .status-bar { display: flex; gap: 4px; }
+  .status-chip {
+    font-size: 9px; font-weight: 700; padding: 2px 8px;
+    display: flex; align-items: center; gap: 4px; cursor: pointer;
+    letter-spacing: 0.08em; text-transform: uppercase; border: 1px solid;
+    transition: opacity 0.1s; font-family: 'Courier New', Courier, monospace;
+  }
+  .status-chip.pass { background: rgba(255,215,0,0.07); color: var(--gold); border-color: rgba(255,215,0,0.22); }
+  .status-chip.fail { background: rgba(220,38,38,0.08); color: var(--red);  border-color: rgba(220,38,38,0.30); }
+  .status-chip.warn { background: rgba(245,158,11,0.07); color: var(--orange); border-color: rgba(245,158,11,0.25); }
+  .status-chip:hover { opacity: 0.8; }
+  .chip-led { width: 5px; height: 5px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+  .pass .chip-led  { background: var(--gold); box-shadow: 0 0 4px var(--gold); }
+  .fail .chip-led  { background: var(--red);  box-shadow: 0 0 4px var(--red);  }
+  .warn .chip-led  { background: var(--orange); box-shadow: 0 0 4px var(--orange); }
+
+  .header-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+
+  .code-picker { position: relative; display: inline-block; }
+  .code-dropdown {
+    display: none; position: absolute; top: 100%; right: 0; margin-top: 2px;
+    background: var(--surface2); border: 1px solid var(--border2);
+    padding: 2px; z-index: 100; min-width: 210px; box-shadow: 0 6px 24px rgba(0,0,0,0.7);
+  }
+  .code-dropdown.open { display: block; }
+  .code-option {
+    padding: 6px 10px; cursor: pointer; font-size: 10px;
+    color: var(--text2); transition: background 0.08s; display: flex;
+    justify-content: space-between; letter-spacing: 0.03em;
+  }
+  .code-option:hover { background: var(--surface3); color: var(--text); }
+  .code-option.active { background: var(--gold-bg); color: var(--gold); }
+
+  .badge-code {
+    font-size: 9px; padding: 2px 8px; font-weight: 700; letter-spacing: 0.08em;
+    cursor: pointer; border: 1px solid; text-transform: uppercase;
+    font-family: 'Courier New', Courier, monospace;
+  }
+  .badge-code.ubc  { color: #86efac; border-color: #2d6b2f; background: rgba(134,239,172,0.06); }
+  .badge-code.asce { color: var(--gold); border-color: rgba(255,215,0,0.4); background: var(--gold-bg); }
+
+  .pdf-btn {
+    padding: 4px 14px; background: var(--gold); color: #0d0d0d; border: none;
+    font-size: 10px; font-weight: 800; cursor: pointer;
+    font-family: 'Courier New', Courier, monospace;
+    letter-spacing: 0.1em; text-transform: uppercase; transition: background 0.12s;
+  }
+  .pdf-btn:hover { background: #ffe44d; }
+
+  .proj-btn {
+    padding: 4px 12px; background: var(--surface3); color: var(--text);
+    border: 1px solid var(--border2); font-size: 10px; font-weight: 800; cursor: pointer;
+    font-family: 'Courier New', Courier, monospace;
+    letter-spacing: 0.1em; text-transform: uppercase; transition: all 0.12s;
+  }
+  .proj-btn:hover { background: var(--surface2); border-color: var(--gold); color: var(--gold); }
+
+  .proj-name-badge {
+    font-size: 9px; color: var(--gold); font-weight: 700; letter-spacing: 0.06em;
+    white-space: nowrap; max-width: 200px; overflow: hidden; text-overflow: ellipsis;
+    border-left: 2px solid var(--gold2); padding-left: 8px; display: none;
+  }
+
+  /* Project modal */
+  .proj-modal-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+    z-index: 9999; align-items: center; justify-content: center;
+  }
+  .proj-modal-overlay.active { display: flex; }
+  .proj-modal {
+    background: var(--surface); border: 1px solid var(--border2); padding: 24px;
+    width: 440px; font-family: 'Courier New', monospace;
+  }
+  .proj-modal h2 {
+    font-size: 12px; font-weight: 800; color: var(--gold); letter-spacing: 0.1em;
+    margin-bottom: 16px; text-transform: uppercase; border-bottom: 1px solid var(--border2); padding-bottom: 8px;
+  }
+  .proj-modal .mrow { margin-bottom: 11px; }
+  .proj-modal label {
+    display: block; font-size: 9px; font-weight: 700; color: var(--text2);
+    letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px;
+  }
+  .proj-modal input, .proj-modal textarea {
+    width: 100%; background: var(--bg); border: 1px solid var(--border2); color: var(--text);
+    font-family: 'Courier New', monospace; font-size: 12px; padding: 6px 8px; outline: none;
+  }
+  .proj-modal textarea { resize: vertical; min-height: 64px; }
+  .proj-modal input:focus, .proj-modal textarea:focus { border-color: var(--gold); }
+  .proj-modal .mbtn-row { display: flex; gap: 8px; margin-top: 16px; justify-content: flex-end; }
+  .proj-modal .mbtn {
+    padding: 6px 18px; border: none; font-family: 'Courier New', monospace;
+    font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
+  }
+  .proj-modal .mbtn-save { background: var(--gold); color: #0d0d0d; }
+  .proj-modal .mbtn-save:hover { background: #ffe44d; }
+  .proj-modal .mbtn-cancel { background: var(--surface3); color: var(--text); border: 1px solid var(--border2); }
+  .proj-modal .mbtn-cancel:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* Projects slide panel */
+  .proj-panel-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.72);
+    z-index: 9998; justify-content: flex-end;
+  }
+  .proj-panel-overlay.active { display: flex; }
+  .proj-panel {
+    background: var(--surface); border-left: 2px solid var(--gold);
+    width: 390px; height: 100vh; display: flex; flex-direction: column;
+    font-family: 'Courier New', monospace; box-shadow: -6px 0 32px rgba(0,0,0,0.5);
+  }
+  .proj-panel-hdr {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 13px 16px; border-bottom: 1px solid var(--border2); flex-shrink: 0;
+  }
+  .proj-panel-hdr h2 {
+    font-size: 11px; font-weight: 800; color: var(--gold);
+    letter-spacing: 0.12em; text-transform: uppercase; margin: 0;
+  }
+  .proj-panel-close {
+    background: none; border: none; color: var(--text2); font-size: 15px;
+    cursor: pointer; padding: 2px 6px; line-height: 1;
+  }
+  .proj-panel-close:hover { color: var(--gold); }
+  .proj-panel-body { flex: 1; overflow-y: auto; padding: 10px 12px; }
+  .proj-panel-footer {
+    padding: 10px 12px; border-top: 1px solid var(--border2); flex-shrink: 0;
+    display: flex; gap: 8px;
+  }
+  .proj-card {
+    background: var(--surface3); border: 1px solid var(--border2);
+    padding: 10px 12px; margin-bottom: 8px; cursor: default;
+  }
+  .proj-card:hover { border-color: var(--border2); }
+  .proj-card-name {
+    font-size: 11px; font-weight: 800; color: var(--text);
+    letter-spacing: 0.04em; margin-bottom: 3px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .proj-card-meta {
+    font-size: 9px; color: var(--text2); margin-bottom: 8px; line-height: 1.6;
+  }
+  .proj-card-actions { display: flex; gap: 6px; }
+  .proj-card-btn {
+    font-size: 9px; font-weight: 700; font-family: 'Courier New', monospace;
+    letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 10px;
+    border: 1px solid var(--border2); background: var(--surface);
+    color: var(--text); cursor: pointer; flex-shrink: 0;
+  }
+  .proj-card-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .proj-card-btn.del:hover { border-color: #c0392b; color: #c0392b; }
+  .proj-empty {
+    font-size: 10px; color: var(--text2); text-align: center;
+    padding: 48px 20px; letter-spacing: 0.05em; line-height: 1.8;
+  }
+  .proj-count-badge {
+    display: inline-block; background: var(--gold); color: #0d0d0d;
+    font-size: 8px; font-weight: 900; padding: 1px 5px; margin-left: 6px;
+    vertical-align: middle; min-width: 16px; text-align: center;
+  }
+
+  /* Drawing analysis modal */
+  .draw-modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.80); z-index:9999; align-items:flex-start; justify-content:center; padding-top:32px; }
+  .draw-modal-overlay.active { display:flex; }
+  .draw-modal { background:var(--surface); border:1px solid var(--border2); width:560px; max-height:80vh; overflow-y:auto; font-family:'Courier New',monospace; }
+  .draw-modal-hdr { background:var(--surface3); padding:12px 16px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border2); }
+  .draw-modal-hdr h2 { font-size:11px; font-weight:800; color:var(--gold); letter-spacing:0.1em; text-transform:uppercase; }
+  .draw-modal-body { padding:16px; }
+  .draw-section { margin-bottom:14px; border-left:2px solid var(--border2); padding-left:10px; }
+  .draw-section.ok { border-color:var(--green); }
+  .draw-section.warn { border-color:var(--orange); }
+  .draw-section.fail { border-color:var(--red); }
+  .draw-section h3 { font-size:9px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:6px; }
+  .draw-section.ok h3 { color:var(--green); }
+  .draw-section.warn h3 { color:var(--orange); }
+  .draw-section.fail h3 { color:var(--red); }
+  .draw-row { display:flex; justify-content:space-between; font-size:10px; color:var(--text); padding:2px 0; }
+  .draw-row .val { color:var(--gold); font-weight:700; }
+  .draw-row .conf { font-size:9px; color:var(--text2); }
+  .draw-issue { font-size:10px; color:var(--orange); padding:3px 0; }
+  .draw-missing { font-size:10px; color:var(--red); padding:3px 0; }
+  .draw-apikey { width:100%; background:var(--bg); border:1px solid var(--border2); color:var(--text); font-family:'Courier New',monospace; font-size:11px; padding:6px 8px; margin-top:6px; }
+  .draw-apikey:focus { outline:none; border-color:var(--gold); }
+  .draw-spinner { text-align:center; padding:24px; color:var(--text2); font-size:11px; }
+  .draw-apply-btn { background:var(--green); color:#0d0d0d; border:none; padding:7px 18px; font-family:'Courier New',monospace; font-size:10px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer; }
+  .draw-apply-btn:hover { background:#16a34a; color:#fff; }
+  .draw-close-btn { background:var(--surface3); color:var(--text); border:1px solid var(--border2); padding:5px 12px; font-family:'Courier New',monospace; font-size:10px; font-weight:800; cursor:pointer; }
+
+  /* Drag-drop overlay */
+  .drop-overlay { display:none; position:fixed; inset:0; background:rgba(255,215,0,0.10); border:3px dashed var(--gold); z-index:8888; pointer-events:none; align-items:center; justify-content:center; }
+  .drop-overlay.active { display:flex; }
+  .drop-overlay span { font-size:18px; font-weight:800; color:var(--gold); letter-spacing:0.1em; font-family:'Courier New',monospace; text-transform:uppercase; }
+
+  /* ===== LEFT INPUT PANEL ===== */
+  .input-panel {
+    background: var(--surface);
+    border-right: 1px solid var(--border2);
+    overflow-y: auto; overflow-x: hidden;
+    background-image:
+      linear-gradient(var(--panel-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--panel-grid) 1px, transparent 1px);
+    background-size: 16px 16px;
+    background-color: var(--surface);
+  }
+  .sidebar-section { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+  .sidebar-section.collapsed .section-body { display: none; }
+  .section-header {
+    font-size: 9px; text-transform: uppercase; letter-spacing: 0.12em;
+    font-weight: 700; margin-bottom: 8px; display: flex;
+    align-items: center; justify-content: space-between; cursor: pointer; user-select: none;
+    color: var(--text2);
+  }
+  .section-header .label { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .section-header .zone-bar { width: 2px; height: 10px; flex-shrink: 0; display: inline-block; }
+  .section-header .dot { width: 4px; height: 4px; border-radius: 50%; display: inline-block; }
+  .section-header .toggle { font-size: 10px; color: var(--text3); transition: transform 0.15s; }
+  .sidebar-section.collapsed .toggle { transform: rotate(-90deg); }
+
+  .field { margin-bottom: 7px; }
+  .field label {
+    display: block; font-size: 9px; color: var(--text2);
+    margin-bottom: 2px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .field input, .field select {
+    width: 100%; background: var(--bg); border: 1px solid var(--border2);
+    color: var(--text); padding: 5px 7px; font-size: 11px;
+    font-family: 'Courier New', Courier, monospace; transition: border-color 0.1s;
+  }
+  .field input:focus, .field select:focus {
+    outline: none; border-color: var(--gold);
+    box-shadow: inset 0 0 0 1px rgba(255,215,0,0.08);
+  }
+  .unit { font-size: 8px; color: var(--text3); letter-spacing: 0.04em; }
+  .unit-hint { font-size: 9px; color: var(--dim); font-family: 'Courier New',monospace; margin-top: 1px; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+  .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; }
+
+  .radio-group { display: flex; gap: 2px; }
+  .rbtn {
+    flex: 1; padding: 4px 5px; text-align: center; font-size: 9px;
+    background: var(--bg); border: 1px solid var(--border);
+    cursor: pointer; color: var(--text2); transition: all 0.1s;
+    font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+    font-family: 'Courier New', Courier, monospace;
+  }
+  .rbtn.active { background: var(--gold-bg); border-color: rgba(255,215,0,0.35); color: var(--gold); }
+  .rbtn:hover:not(.active) { border-color: var(--text3); color: var(--text); }
+
+  .preset-bar { display: flex; gap: 2px; flex-wrap: wrap; margin-bottom: 7px; }
+  .preset {
+    padding: 2px 7px; font-size: 8px; background: var(--bg);
+    border: 1px solid var(--border); cursor: pointer; letter-spacing: 0.06em;
+    color: var(--text2); transition: all 0.1s; font-weight: 700; text-transform: uppercase;
+    font-family: 'Courier New', Courier, monospace;
+  }
+  .preset:hover { border-color: var(--gold); color: var(--gold); }
+
+  .cite {
+    font-size: 7px; font-weight: 700; color: var(--text3);
+    border: 1px solid var(--border); padding: 1px 4px; margin-left: 4px;
+    white-space: nowrap; vertical-align: middle; letter-spacing: 0.04em;
+  }
+  .cite-block {
+    font-size: 9px; color: var(--text3); margin-top: 5px; line-height: 1.6;
+    border-top: 1px solid var(--border); padding-top: 5px;
+  }
+  .cite-block strong { color: var(--gold2); }
+
+  .area-display {
+    font-size: 10px; color: var(--dim);
+    padding: 3px 8px; background: rgba(200,150,12,0.05);
+    border: 1px solid rgba(200,150,12,0.15);
+    margin-top: 4px; text-align: center; letter-spacing: 0.04em;
+  }
+
+  .psf-display {
+    font-size: 15px; font-weight: 700; color: var(--gold); text-align: center;
+    padding: 5px 8px; background: var(--bg);
+    border: 1px solid rgba(255,215,0,0.18);
+    border-left: 3px solid var(--gold);
+    margin: 6px 0; letter-spacing: 0.06em;
+  }
+
+  .inline-warn { font-size: 9px; color: var(--orange); margin-top: 2px; display: flex; align-items: center; gap: 4px; }
+  .inline-warn.error { color: var(--red); }
+
+  .info-box {
+    background: rgba(255,215,0,0.04); border: 1px solid rgba(255,215,0,0.2);
+    border-left: 2px solid var(--gold);
+    padding: 5px 8px; font-size: 9px; color: #c4960c;
+    margin: 5px 0; line-height: 1.5;
+  }
+  .warn-box {
+    background: rgba(220,38,38,0.06); border: 1px solid rgba(220,38,38,0.3);
+    border-left: 2px solid var(--red);
+    padding: 5px 8px; font-size: 9px; color: var(--red); margin: 5px 0;
+  }
+
+  .find-min-btn {
+    width: 100%; padding: 5px; font-size: 9px; font-weight: 700; cursor: pointer;
+    background: transparent; border: 1px solid rgba(200,150,12,0.3);
+    color: var(--dim); margin-top: 4px; transition: all 0.12s;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    font-family: 'Courier New', Courier, monospace;
+  }
+  .find-min-btn:hover { background: rgba(200,150,12,0.08); border-color: var(--dim); color: var(--gold); }
+
+  .hidden { display: none !important; }
+
+  .adv-toggle {
+    font-size: 9px; color: var(--text3); cursor: pointer; padding: 3px 0;
+    display: flex; align-items: center; gap: 4px; margin-bottom: 4px; letter-spacing: 0.05em;
+  }
+  .adv-toggle:hover { color: var(--text2); }
+
+  /* ===== CENTER DRAWING PANEL ===== */
+  .drawing-panel {
+    overflow: hidden; position: relative;
+    background-color: #f4efe4;
+    background-image:
+      linear-gradient(rgba(70,100,160,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(70,100,160,0.07) 1px, transparent 1px),
+      linear-gradient(rgba(70,100,160,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(70,100,160,0.03) 1px, transparent 1px);
+    background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+  }
+  #structuralDrawing { width: 100%; height: 100%; display: block; }
+
+  /* ===== RIGHT RESULTS PANEL ===== */
+  .results-panel {
+    background: var(--surface);
+    border-left: 1px solid var(--border2);
+    overflow-y: auto; overflow-x: hidden; padding: 6px;
+    background-image:
+      linear-gradient(var(--panel-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--panel-grid) 1px, transparent 1px);
+    background-size: 16px 16px;
+    background-color: var(--surface);
+  }
+
+  .result-card {
+    background: var(--bg); border: 1px solid var(--border);
+    border-left: 2px solid var(--border2);
+    margin-bottom: 6px; overflow: hidden;
+  }
+  .result-card.pass { border-left-color: var(--gold); }
+  .result-card.warn { border-left-color: var(--orange); }
+  .result-card.fail { border-left-color: var(--red); }
+
+  .card-header {
+    display: flex; align-items: center; gap: 5px; padding: 6px 8px;
+    background: var(--surface2); border-bottom: 1px solid var(--border);
+    cursor: pointer; user-select: none;
+  }
+  .card-icon { font-size: 10px; }
+  .card-title {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; flex: 1; color: var(--text);
+  }
+  .card-status {
+    font-size: 8px; font-weight: 700; padding: 1px 6px;
+    border: 1px solid; text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .card-status.pass { color: var(--gold);   border-color: rgba(255,215,0,0.35); background: var(--gold-bg); }
+  .card-status.warn { color: var(--orange); border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.06); }
+  .card-status.fail { color: var(--red);    border-color: rgba(220,38,38,0.35); background: rgba(220,38,38,0.06); }
+
+  .card-body { padding: 6px 8px; }
+  .card-body.collapsed { display: none; }
+
+  .formula-box {
+    font-size: 9px; color: var(--amber); background: rgba(196,169,90,0.06);
+    padding: 4px 8px; margin: 4px 0;
+    border-left: 2px solid rgba(196,169,90,0.4);
+    letter-spacing: 0.02em; line-height: 1.5;
+  }
+
+  .rrow {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 3px 0; border-bottom: 1px solid var(--border); font-size: 10px;
+  }
+  .rrow:last-child { border-bottom: none; }
+  .rlabel { color: var(--text2); font-size: 9px; letter-spacing: 0.04em; }
+  .rval { font-weight: 700; font-size: 10px; }
+  .rval.pass, .pass { color: var(--green); }
+  .rval.warn, .warn { color: var(--orange); }
+  .rval.fail, .fail { color: var(--red); }
+
+  .step {
+    display: flex; justify-content: space-between; padding: 2px 4px; font-size: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .step:last-of-type { border-bottom: none; }
+  .step .l { color: var(--text2); }
+  .step .r { color: var(--amber); font-weight: 600; }
+  .step.final {
+    background: rgba(255,215,0,0.04);
+    border-top: 1px solid rgba(255,215,0,0.15);
+    border-bottom: 1px solid rgba(255,215,0,0.15);
+    margin-top: 2px; padding: 3px 4px;
+  }
+  .step.final .r { color: var(--gold); font-size: 11px; }
+
+  .bom-row {
+    display: flex; justify-content: space-between; padding: 3px 0;
+    border-bottom: 1px solid var(--border); font-size: 10px;
+  }
+  .bom-desc { color: var(--text); flex: 1; }
+  .bom-qty { color: var(--gold); font-weight: 700; white-space: nowrap; margin-left: 8px; }
+
+  /* ===== FOOTER ===== */
+  .footer-bar {
+    grid-column: 1 / -1;
+    background: var(--bg); border-top: 2px solid var(--border2);
+    display: flex; align-items: center; gap: 14px; padding: 0 14px;
+    font-size: 8px; color: var(--text3); font-weight: 700; height: 20px;
+    overflow: hidden; white-space: nowrap; letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .footer-brand {
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+    font-size: 11px; color: var(--gold); letter-spacing: 0.08em;
+  }
+  .footer-sep { width: 1px; height: 12px; background: var(--border2); }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border2); }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="header">
+  <h1><span style="color:#9A9A9A;font-family:'Barlow Condensed',sans-serif;font-weight:800;letter-spacing:0;font-size:20px">SIGN</span><span style="color:#FFD700;font-family:'Barlow Condensed',sans-serif;font-weight:800;letter-spacing:0;font-size:20px">CALC</span></h1>
+  <span class="badge">v4.0</span>
+
+  <div class="header-sep"></div>
+  <span class="proj-name-badge" id="projNameBadge"></span>
+  <div class="status-bar">
+    <div class="status-chip pass" id="chipWind" onclick="scrollToCard('card-wind')"><span class="chip-led"></span><span id="chipWindIcon">&#10003;</span> WIND</div>
+    <div class="status-chip pass" id="chipSection" onclick="scrollToCard('card-section')"><span class="chip-led"></span><span id="chipSectionIcon">&#10003;</span> SECTION</div>
+    <div class="status-chip pass" id="chipFoundation" onclick="scrollToCard('card-foundation')"><span class="chip-led"></span><span id="chipFoundIcon">&#10003;</span> FOUNDATION</div>
+    <div class="status-chip pass" id="chipBolts" onclick="scrollToCard('card-bolts')"><span class="chip-led"></span><span id="chipBoltIcon">&#10003;</span> BOLTS</div>
+  </div>
+
+  <div class="header-right">
+    <div class="code-picker">
+      <span class="badge-code asce" id="codeBadge" onclick="toggleCodeDropdown()">ASCE 7-22</span>
+      <div class="code-dropdown" id="codeDropdown">
+        <div class="code-option" data-code="ubc97" onclick="setCode('ubc97')">
+          <span>1997 UBC (Legacy)</span><span style="color:var(--text2)">PSF direct</span>
+        </div>
+        <div class="code-option" data-code="asce710" onclick="setCode('asce710')">
+          <span>ASCE 7-10 / IBC 2015</span><span style="color:var(--text2)">V mph</span>
+        </div>
+        <div class="code-option" data-code="asce716" onclick="setCode('asce716')">
+          <span>ASCE 7-16 / IBC 2018</span><span style="color:var(--text2)">V mph</span>
+        </div>
+        <div class="code-option active" data-code="asce722" onclick="setCode('asce722')">
+          <span>ASCE 7-22 / IBC 2024</span><span style="color:var(--text2)">V mph</span>
+        </div>
+      </div>
+    </div>
+    <button class="proj-btn" id="projPanelBtn" onclick="showProjectsPanel()" title="View and load cached projects">&#128230; PROJECTS<span class="proj-count-badge" id="projCountBadge" style="display:none">0</span></button>
+    <button class="proj-btn" onclick="showSaveModal()" title="Save current calc to browser projects">&#128190; SAVE</button>
+    <button class="proj-btn" onclick="document.getElementById('projFileInput').click()" title="Open a saved .signcalc project file">&#128194; OPEN</button>
+    <input type="file" id="projFileInput" accept=".signcalc,.json" style="display:none" onchange="loadProject(this)">
+    <button class="proj-btn" onclick="document.getElementById('drawingFileInput').click()" title="Upload a drawing (PDF or image) to auto-populate fields via AI">&#128247; ANALYZE DRAWING</button>
+    <input type="file" id="drawingFileInput" accept="image/*,.pdf" style="display:none" onchange="analyzeDrawing(this)">
+    <button class="pdf-btn" onclick="generatePDF()">PDF REPORT</button>
+  </div>
+</div>
+
+<!-- ===== PROJECT MODAL ===== -->
+<div class="proj-modal-overlay" id="projModalOverlay" onclick="closeSaveModal(event)">
+  <div class="proj-modal">
+    <h2>&#128190; Save Project</h2>
+    <div class="mrow">
+      <label>Project Name</label>
+      <input type="text" id="mProjName" placeholder="e.g. Main St Monument Sign">
+    </div>
+    <div class="mrow">
+      <label>Estimate #</label>
+      <input type="text" id="mEstimate" placeholder="e.g. E-2024-0123">
+    </div>
+    <div class="mrow">
+      <label>Customer / Company</label>
+      <input type="text" id="mCustomer" placeholder="Customer or company name">
+    </div>
+    <div class="mrow">
+      <label>Description / Notes</label>
+      <textarea id="mNotes" placeholder="Location, special conditions, AHJ notes..."></textarea>
+    </div>
+    <div class="mbtn-row">
+      <button class="mbtn mbtn-cancel" onclick="closeSaveModal()">Cancel</button>
+      <button class="mbtn mbtn-save" id="saveModalBtn" onclick="confirmSaveProject()">&#128190; Save to Projects</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PROJECTS PANEL ===== -->
+<div class="proj-panel-overlay" id="projPanelOverlay" onclick="closeProjPanel(event)">
+  <div class="proj-panel">
+    <div class="proj-panel-hdr">
+      <h2>&#128230; Saved Projects</h2>
+      <button class="proj-panel-close" onclick="closeProjectsPanel()" title="Close">&#x2715;</button>
+    </div>
+    <div class="proj-panel-body" id="projPanelBody">
+      <div class="proj-empty">Loading...</div>
+    </div>
+    <div class="proj-panel-footer">
+      <button class="proj-btn" onclick="document.getElementById('projFileInput').click()" title="Import a .signcalc file saved from a previous session" style="font-size:9px">&#128196; IMPORT .SIGNCALC</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== DRAWING ANALYSIS MODAL ===== -->
+<div class="draw-modal-overlay" id="drawModalOverlay">
+  <div class="draw-modal" id="drawModal">
+    <div class="draw-modal-hdr">
+      <h2 id="drawModalTitle">&#128247; Drawing Analysis</h2>
+      <button class="draw-close-btn" onclick="closeDrawModal()">&#x2715; Close</button>
+    </div>
+    <div class="draw-modal-body" id="drawModalBody">
+      <div class="draw-section warn">
+        <h3>Anthropic API Key Required</h3>
+        <div style="font-size:10px;color:var(--text2);margin-bottom:6px;">Enter your API key to enable drawing analysis. Stored locally only, never sent anywhere except Anthropic's API.</div>
+        <input type="password" class="draw-apikey" id="drawApiKey" placeholder="sk-ant-..." oninput="saveDrawApiKey()" autocomplete="off">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Drag-drop overlay -->
+<div class="drop-overlay" id="dropOverlay"><span>&#128247; Drop Drawing to Analyze</span></div>
+
+<!-- ===== LEFT INPUT PANEL ===== -->
+<div class="input-panel">
+
+  <!-- 1. SIGN DIMENSIONS -->
+  <div class="sidebar-section" id="sec-sign">
+    <div class="section-header" onclick="toggleSection('sec-sign')">
+      <span class="label"><span class="dot" style="background:var(--green)"></span> SIGN DIMENSIONS <span class="cite">ASCE 7-22 S29.3</span></span>
+      <span class="toggle">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="preset-bar">
+        <button class="preset" onclick="preset('small')">Small</button>
+        <button class="preset" onclick="preset('medium')">Medium</button>
+        <button class="preset" onclick="preset('monument')">Monument</button>
+        <button class="preset" onclick="preset('pole')">Pole</button>
+        <button class="preset" onclick="preset('highway')">Highway</button>
+        <button class="preset" onclick="preset('emc')">EMC</button>
+      </div>
+      <div class="row2">
+        <div class="field"><label>Width <span class="unit">(ft)</span></label>
+          <input type="number" id="W" value="8" min="0.5" max="100" step="0.5" oninput="calc()">
+          <div class="unit-hint" id="hintW"></div></div>
+        <div class="field"><label>Height <span class="unit">(ft)</span></label>
+          <input type="number" id="H" value="4" min="0.5" max="50" step="0.5" oninput="calc()">
+          <div class="unit-hint" id="hintH"></div></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label>Ground Clearance <span class="unit">(ft)</span></label>
+          <input type="number" id="GC" value="8" min="0" max="100" step="0.5" oninput="calc()">
+          <div class="unit-hint" id="hintGC"></div></div>
+        <div class="field"><label>Columns</label>
+          <input type="number" id="N" value="1" min="1" max="6" step="1" oninput="calc()"></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label>Solidity Ratio <span class="unit">(%)</span></label>
+          <input type="number" id="solidity" value="100" min="10" max="100" step="5" oninput="calc()" title="% of sign face that is solid. Solid cabinet=100%, channel letters on open frame ~30-70%, open lattice ~20-50%">
+        </div>
+        <div class="field" style="display:flex;align-items:center;font-size:10px;color:var(--text2);padding-top:18px">
+          100%=solid, ~60%=channel letters, ~30%=open lattice
+        </div>
+      </div>
+      <div class="area-display" id="areaDisplay">A = 8 x 4 = 32.0 ft2</div>
+    </div>
+  </div>
+
+  <!-- 2. WIND PARAMETERS -->
+  <div class="sidebar-section" id="sec-wind">
+    <div class="section-header" onclick="toggleSection('sec-wind')">
+      <span class="label"><span class="dot" style="background:var(--orange)"></span> WIND PARAMETERS <span class="cite">ASCE 7-22 S26, S29.3</span></span>
+      <span class="toggle">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div id="windUBC" class="hidden">
+        <div class="field"><label>Wind Pressure <span class="unit">(PSF)</span></label>
+          <input type="number" id="PSF" value="20" min="5" max="80" step="1" oninput="calc()"></div>
+      </div>
+      <div id="windASCE">
+        <div class="row2">
+          <div class="field"><label>Wind Speed V <span class="unit">(mph)</span></label>
+            <input type="number" id="Vmph" value="115" min="50" max="200" step="1" oninput="calc()"></div>
+          <div class="field"><label>Exposure</label>
+            <select id="exposure" onchange="calc()">
+              <option value="B">B - Urban/Suburban</option>
+              <option value="C" selected>C - Open Terrain</option>
+              <option value="D">D - Flat/Water</option>
+            </select></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label>G <span class="unit">(gust)</span></label>
+            <input type="number" id="G" value="0.85" min="0.5" max="1.5" step="0.01" oninput="calc()"></div>
+          <div class="field"><label>Cf <span class="unit">(force)</span>
+              <label style="font-size:9px;margin-left:4px">
+                <input type="checkbox" id="cfAuto" onchange="toggleCfAuto();calc()"> Auto
+              </label>
+            </label>
+            <input type="number" id="Cf" value="1.2" min="0.5" max="3.0" step="0.05" oninput="calc()"></div>
+        </div>
+        <div class="adv-toggle" onclick="document.getElementById('advWind').classList.toggle('hidden');this.querySelector('span').textContent=document.getElementById('advWind').classList.contains('hidden')?'&#9654;':'&#9660;'">
+          <span>&#9654;</span> Advanced Factors (Kd, Kzt, Ke)
+        </div>
+        <div id="advWind" class="hidden">
+          <div class="row3">
+            <div class="field"><label>Kd <span class="unit">(dir)</span></label>
+              <input type="number" id="Kd" value="0.85" min="0.5" max="1.0" step="0.01" oninput="calc()"></div>
+            <div class="field"><label>Kzt <span class="unit">(topo)</span></label>
+              <input type="number" id="Kzt" value="1.0" min="0.5" max="2.0" step="0.05" oninput="calc()"></div>
+            <div class="field"><label>Ke <span class="unit">(elev)</span></label>
+              <input type="number" id="Ke" value="1.0" min="0.8" max="1.2" step="0.01" oninput="calc()"></div>
+          </div>
+        </div>
+        <div class="psf-display" id="psfDisplay">-- PSF</div>
+        <div class="cite-block">
+          <strong>qz</strong> = 0.00256 Kz Kzt Kd Ke V2 -- ASCE 7-22 Eq. 26.10-1<br>
+          <strong>F</strong> = qz G Cf Af -- ASCE 7-22 S29.3.1
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. COLUMN -->
+  <div class="sidebar-section" id="sec-col">
+    <div class="section-header" onclick="toggleSection('sec-col')">
+      <span class="label"><span class="dot" style="background:var(--dim)"></span> COLUMN <span class="cite">AISC 360-22 / ASTM A53</span></span>
+      <span class="toggle">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="field"><label>Shape</label>
+        <div class="radio-group" id="shapeGroup">
+          <div class="rbtn active" data-val="pipe" onclick="setRadio(this);calc()">Round Pipe</div>
+          <div class="rbtn" data-val="sq" onclick="setRadio(this);calc()">Sq Tube</div>
+          <div class="rbtn" data-val="hss" onclick="setRadio(this);calc()">HSS</div>
+          <div class="rbtn" data-val="W" onclick="setRadio(this);calc()">W-Shape</div>
+        </div>
+      </div>
+      <div class="field"><label>Steel</label>
+        <div class="radio-group" id="steelGroup">
+          <div class="rbtn active" data-val="new" onclick="setRadio(this);calc()">New (0.66Fy)</div>
+          <div class="rbtn" data-val="used" onclick="setRadio(this);calc()">Used (0.60Fy)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. FOUNDATION -->
+  <div class="sidebar-section" id="sec-found">
+    <div class="section-header" onclick="toggleSection('sec-found')">
+      <span class="label"><span class="dot" style="background:var(--purple)"></span> FOUNDATION <span class="cite">IBC 2021 S1807.3</span></span>
+      <span class="toggle">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="preset-bar">
+        <button class="preset" onclick="fpreset('sm_cais')">Sm Caisson</button>
+        <button class="preset" onclick="fpreset('med_cais')">Med Caisson</button>
+        <button class="preset" onclick="fpreset('lg_sq')">Lg Square</button>
+        <button class="preset" onclick="fpreset('spread')">Spread</button>
+      </div>
+      <div class="field"><label>Foundation Type</label>
+        <div class="radio-group" id="fTypeGroup">
+          <div class="rbtn active" data-val="circular" onclick="setRadio(this);calc()">Circular</div>
+          <div class="rbtn" data-val="square" onclick="setRadio(this);calc()">Square</div>
+          <div class="rbtn" data-val="rectangular" onclick="setRadio(this);calc()">Rect</div>
+        </div>
+      </div>
+      <div class="field" style="margin-top:8px"><label>Connection Type <span class="cite" style="font-size:8px;text-transform:none;letter-spacing:0">Affects anchor bolt check</span></label>
+        <div class="radio-group" id="connTypeGroup">
+          <div class="rbtn active" data-val="embedded" onclick="setRadio(this);calc()">Embedded Column</div>
+          <div class="rbtn" data-val="baseplate" onclick="setRadio(this);calc()">Base Plate + Bolts</div>
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field"><label>Width/Dia <span class="unit">(ft)</span></label>
+          <input type="number" id="fW" value="3" min="1" max="20" step="0.25" oninput="calc()"></div>
+        <div class="field"><label>Depth <span class="unit">(ft)</span></label>
+          <input type="number" id="fD" value="5" min="2" max="30" step="0.5" oninput="calc()"></div>
+      </div>
+      <div id="frostWarn" class="inline-warn error" style="display:none"></div>
+      <div class="field" style="margin-top:6px"><label>Design Method</label>
+        <div class="radio-group" id="foundMethodGroup">
+          <div class="rbtn active" data-val="simplified" onclick="setRadio(this);calc()">Simplified</div>
+          <div class="rbtn" data-val="ibc1807" onclick="setRadio(this);calc()">IBC Eq.18-1</div>
+          <div class="rbtn" data-val="ibc1807c" onclick="setRadio(this);calc()">IBC Eq.18-2</div>
+        </div>
+      </div>
+      <div class="field hidden" id="fRatioField"><label>W/L Ratio <span class="unit">(%)</span></label>
+        <input type="number" id="fRatio" value="50" min="30" max="100" step="5" oninput="calc()"></div>
+      <div class="field"><label>Dead Load <span class="unit">(lbs, sign+pole)</span></label>
+        <input type="number" id="DL" value="500" min="0" max="50000" step="50" oninput="calc()"></div>
+      <button class="find-min-btn" onclick="findMinFoundation()">Find Minimum Foundation</button>
+    </div>
+  </div>
+
+  <!-- 5. SOIL -->
+  <div class="sidebar-section" id="sec-soil">
+    <div class="section-header" onclick="toggleSection('sec-soil')">
+      <span class="label"><span class="dot" style="background:var(--orange)"></span> SOIL <span class="cite">IBC 2021 Tbl 1806.2</span></span>
+      <span class="toggle">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="field"><label>Soil Type</label>
+        <select id="soilType" onchange="setSoil();calc()">
+          <option value="clay">Clay (S1=100 psf/ft)</option>
+          <option value="sand" selected>Sand (S1=150 psf/ft)</option>
+          <option value="gravel">Gravel (S1=200 psf/ft)</option>
+          <option value="rock">Rock (S1=400 psf/ft)</option>
+          <option value="custom">Custom</option>
+        </select>
+      </div>
+      <div class="row2">
+        <div class="field"><label>Vertical <span class="unit">(PSF)</span></label>
+          <input type="number" id="Sv" value="1500" min="100" max="10000" step="50" oninput="calc()"></div>
+        <div class="field"><label>Lateral <span class="unit">(PSF/ft)</span></label>
+          <input type="number" id="Sl" value="150" min="50" max="2000" step="10" oninput="calc()"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. ANCHOR BOLTS -->
+  <div class="sidebar-section" id="sec-bolt">
+    <div class="section-header" onclick="toggleSection('sec-bolt')">
+      <span class="label"><span class="dot" style="background:var(--dim)"></span> ANCHOR BOLTS <span class="cite">ASTM F1554</span></span>
+      <span class="toggle">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="field"><label>Bolt Grade</label>
+        <select id="boltGrade" onchange="calc()">
+          <option value="A307">A307 (Fu=60, Ft=19.8 ksi)</option>
+          <option value="F1554_36">F1554 Gr.36 (Fu=58, Ft=21.75 ksi)</option>
+          <option value="F1554_55">F1554 Gr.55 (Fu=75, Ft=28.13 ksi)</option>
+          <option value="F1554_105">F1554 Gr.105 (Fu=125, Ft=46.88 ksi)</option>
+        </select>
+      </div>
+      <div class="field"><label>Bolt Diameter</label>
+        <select id="boltDia" onchange="calc()">
+          <option value="0">Auto (smallest OK)</option>
+          <option value="0.5">1/2"</option>
+          <option value="0.625">5/8"</option>
+          <option value="0.75" selected>3/4"</option>
+          <option value="0.875">7/8"</option>
+          <option value="1.0">1"</option>
+          <option value="1.25">1-1/4"</option>
+          <option value="1.5">1-1/2"</option>
+          <option value="1.75">1-3/4"</option>
+          <option value="2.0">2"</option>
+          <option value="2.5">2-1/2"</option>
+          <option value="3.0">3"</option>
+        </select>
+      </div>
+      <div class="row3">
+        <div class="field"><label>Bolts/Row</label>
+          <input type="number" id="bPerRow" value="2" min="1" max="8" step="1" oninput="calc()"></div>
+        <div class="field"><label>Rows</label>
+          <input type="number" id="bRows" value="2" min="1" max="8" step="1" oninput="calc()"></div>
+        <div class="field"><label>Spacing <span class="unit">(in)</span></label>
+          <input type="number" id="bSpace" value="6" min="2" max="36" step="0.5" oninput="calc()"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. CONCRETE -->
+  <div class="sidebar-section" id="sec-aci">
+    <div class="section-header" onclick="toggleSection('sec-aci')">
+      <span class="label"><span class="dot" style="background:var(--red)"></span> CONCRETE <span class="cite">ACI 318-19 S17.6</span></span>
+      <span class="toggle">&#9662;</span>
+    </div>
+    <div class="section-body">
+      <div class="row2">
+        <div class="field"><label>f'c <span class="unit">(psi)</span></label>
+          <input type="number" id="fc" value="3000" min="2000" max="10000" step="500" oninput="calc()"></div>
+        <div class="field"><label>h_ef <span class="unit">(in)</span></label>
+          <input type="number" id="hef" value="24" min="6" max="120" step="1" oninput="calc()"></div>
+      </div>
+      <div style="font-size:9px;color:var(--text2);margin-top:4px">Cast-in anchors, normal-weight concrete (lambda=1.0), phi=0.70 Condition B</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== CENTER DRAWING PANEL ===== -->
+<div class="drawing-panel">
+  <svg id="structuralDrawing" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"></svg>
+</div>
+
+<!-- ===== RIGHT RESULTS PANEL ===== -->
+<div class="results-panel" id="resultsPanel"></div>
+
+<!-- ===== FOOTER ===== -->
+<div class="footer-bar">
+  <span class="footer-brand">SIGNCALC</span>
+  <span class="footer-sep"></span>
+  <span>ASCE 7-22 / IBC 2021</span>
+  <span class="footer-sep"></span>
+  <span>ACI 318-19 §17.6.2</span>
+  <span class="footer-sep"></span>
+  <span>AISC 360-22 ASD</span>
+  <span class="footer-sep"></span>
+  <span>ASTM F1554 / A307 / A36</span>
+  <span style="margin-left:auto">Eagle Sign Co.</span>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+// ===================== DATA =====================
+// Material Fy constants — per AISC material specifications
+var FY = {
+  PIPE:  35000,  // A53 Gr B (Schedule 40 pipe)
+  SQ:    46000,  // A500 Gr C (square/rectangular HSS tube)
+  HSS:   46000,  // A500 Gr C (square HSS)
+  W:     50000,  // A992 (W-shapes)
+  PLATE: 36000   // A36 (base plates)
+};
+var PIPE = [
+  {nom:2,od:2.375,wall:0.154,sm:0.561,gLeg:1.000,gThk:0.375,weld:0.1875},
+  {nom:2.5,od:2.875,wall:0.203,sm:1.06,gLeg:1.000,gThk:0.500,weld:0.250},
+  {nom:3,od:3.500,wall:0.216,sm:1.72,gLeg:1.125,gThk:0.500,weld:0.250},
+  {nom:3.5,od:4.000,wall:0.226,sm:2.39,gLeg:1.125,gThk:0.500,weld:0.250},
+  {nom:4,od:4.500,wall:0.237,sm:3.21,gLeg:1.125,gThk:0.500,weld:0.250},
+  {nom:5,od:5.500,wall:0.258,sm:5.45,gLeg:1.125,gThk:0.500,weld:0.250},
+  {nom:6,od:6.625,wall:0.280,sm:8.50,gLeg:1.250,gThk:0.563,weld:0.281},
+  {nom:7,od:7.625,wall:0.301,sm:12.2,gLeg:1.500,gThk:0.625,weld:0.3125},
+  {nom:8,od:8.625,wall:0.322,sm:16.8,gLeg:1.625,gThk:0.625,weld:0.344},
+  {nom:10,od:10.75,wall:0.365,sm:29.9,gLeg:1.750,gThk:0.750,weld:0.375},
+  {nom:12,od:12.75,wall:0.375,sm:43.8,gLeg:2.375,gThk:0.750,weld:0.375},
+  {nom:14,od:14.00,wall:0.375,sm:53.25,gLeg:2.625,gThk:0.750,weld:0.375},
+  {nom:16,od:16.00,wall:0.375,sm:70.26,gLeg:2.875,gThk:0.750,weld:0.375},
+  {nom:18,od:18.00,wall:0.375,sm:89.62,gLeg:3.250,gThk:0.750,weld:0.375},
+  {nom:20,od:20.00,wall:0.375,sm:111.35,gLeg:3.500,gThk:0.750,weld:0.375},
+  {nom:22,od:22.00,wall:0.375,sm:135.42,gLeg:3.875,gThk:0.750,weld:0.375},
+  {nom:24,od:24.00,wall:0.375,sm:161.86,gLeg:4.125,gThk:1.000,weld:0.375},
+  {nom:26,od:26.00,wall:0.375,sm:190.3,gLeg:4.500,gThk:1.000,weld:0.375},
+  {nom:30,od:30.00,wall:0.375,sm:254.7,gLeg:4.625,gThk:1.000,weld:0.375},
+  {nom:34,od:34.00,wall:0.375,sm:328.8,gLeg:5.750,gThk:1.000,weld:0.375},
+  {nom:36,od:36.00,wall:0.375,sm:369.2,gLeg:6.125,gThk:1.000,weld:0.375}
+];
+
+var SQ = [
+  {side:2,wall:0.125,sm:0.51},{side:2.5,wall:0.188,sm:1.15},
+  {side:3,wall:0.188,sm:1.78},{side:3.5,wall:0.188,sm:2.56},
+  {side:4,wall:0.188,sm:3.52},{side:5,wall:0.250,sm:7.23},
+  {side:6,wall:0.250,sm:10.8},{side:8,wall:0.312,sm:24.1},
+  {side:10,wall:0.375,sm:44.7},{side:12,wall:0.375,sm:65.2}
+];
+
+var BOLT = [
+  {dia:0.5,At:0.142,lbl:'1/2"',Abrg:0.146},
+  {dia:0.625,At:0.226,lbl:'5/8"',Abrg:0.202},
+  {dia:0.75,At:0.334,lbl:'3/4"',Abrg:0.291},
+  {dia:0.875,At:0.462,lbl:'7/8"',Abrg:0.388},
+  {dia:1.0,At:0.606,lbl:'1"',Abrg:0.507},
+  {dia:1.25,At:0.969,lbl:'1-1/4"',Abrg:0.790},
+  {dia:1.5,At:1.405,lbl:'1-1/2"',Abrg:1.12},
+  {dia:1.75,At:1.90,lbl:'1-3/4"',Abrg:1.50},
+  {dia:2.0,At:2.50,lbl:'2"',Abrg:1.95},
+  {dia:2.5,At:3.25,lbl:'2-1/2"',Abrg:3.07},
+  {dia:3.0,At:5.03,lbl:'3"',Abrg:4.72}
+];
+
+var SOIL = {clay:{v:1000,l:100},sand:{v:1500,l:150},gravel:{v:2000,l:200},rock:{v:2000,l:400}};
+
+// W-shapes — ASTM A992, Fy=50 ksi (AISC 16th Ed. Table 1-1 + Table 3-2)
+// LTB fields added: Zx(in3), ry(in), rts(in), J(in4), ho=d-tf(in)
+// Used in AISC 360-22 §F2 lateral-torsional buckling calculation
+var WSEC = [
+  {des:'W6x9',  wt:9,  Sx:5.56,  Ix:16.4,  d:5.90,  bf:3.940, Zx:6.23,  ry:0.905, rts:1.01, J:0.0163, ho:5.69},
+  {des:'W6x12', wt:12, Sx:7.31,  Ix:22.1,  d:6.03,  bf:4.000, Zx:8.30,  ry:0.918, rts:1.03, J:0.0603, ho:5.73},
+  {des:'W6x15', wt:15, Sx:9.72,  Ix:29.1,  d:5.99,  bf:5.990, Zx:10.8,  ry:1.45,  rts:1.64, J:0.101,  ho:5.72},
+  {des:'W6x20', wt:20, Sx:13.4,  Ix:41.4,  d:6.20,  bf:6.018, Zx:14.9,  ry:1.50,  rts:1.70, J:0.213,  ho:5.87},
+  {des:'W8x10', wt:10, Sx:7.81,  Ix:30.8,  d:7.89,  bf:3.940, Zx:8.87,  ry:0.841, rts:0.940,J:0.0147, ho:7.68},
+  {des:'W8x13', wt:13, Sx:9.91,  Ix:39.6,  d:7.99,  bf:4.000, Zx:11.4,  ry:0.843, rts:0.943,J:0.0343, ho:7.73},
+  {des:'W8x18', wt:18, Sx:15.2,  Ix:61.9,  d:8.14,  bf:5.250, Zx:17.0,  ry:1.23,  rts:1.39, J:0.172,  ho:7.81},
+  {des:'W8x24', wt:24, Sx:20.9,  Ix:82.8,  d:7.93,  bf:6.500, Zx:23.1,  ry:1.61,  rts:1.83, J:0.346,  ho:7.53},
+  {des:'W8x31', wt:31, Sx:27.5,  Ix:110.0, d:8.00,  bf:7.995, Zx:30.4,  ry:2.02,  rts:2.30, J:0.536,  ho:7.56},
+  {des:'W10x12',wt:12, Sx:10.9,  Ix:53.8,  d:9.87,  bf:3.960, Zx:12.6,  ry:0.785, rts:0.876,J:0.0156, ho:9.67},
+  {des:'W10x17',wt:17, Sx:16.2,  Ix:81.9,  d:10.11, bf:4.010, Zx:18.7,  ry:0.845, rts:0.946,J:0.0457, ho:9.84},
+  {des:'W10x22',wt:22, Sx:23.2,  Ix:118.0, d:10.17, bf:5.750, Zx:26.0,  ry:1.33,  rts:1.53, J:0.239,  ho:9.81},
+  {des:'W10x26',wt:26, Sx:27.9,  Ix:144.0, d:10.33, bf:5.770, Zx:31.3,  ry:1.36,  rts:1.55, J:0.402,  ho:9.89},
+  {des:'W12x14',wt:14, Sx:14.9,  Ix:88.6,  d:11.91, bf:3.970, Zx:17.4,  ry:0.753, rts:0.840,J:0.0107, ho:11.7},
+  {des:'W12x16',wt:16, Sx:17.1,  Ix:103.0, d:11.99, bf:3.990, Zx:20.1,  ry:0.773, rts:0.862,J:0.0214, ho:11.7},
+  {des:'W12x19',wt:19, Sx:21.3,  Ix:130.0, d:12.16, bf:4.010, Zx:24.7,  ry:0.822, rts:0.917,J:0.0662, ho:11.8},
+  {des:'W12x26',wt:26, Sx:33.4,  Ix:204.0, d:12.22, bf:6.490, Zx:37.2,  ry:1.51,  rts:1.73, J:0.300,  ho:11.8},
+  {des:'W14x22',wt:22, Sx:29.0,  Ix:199.0, d:13.74, bf:5.000, Zx:33.2,  ry:1.04,  rts:1.15, J:0.208,  ho:13.4},
+  {des:'W14x26',wt:26, Sx:35.3,  Ix:245.0, d:13.91, bf:5.025, Zx:40.2,  ry:1.08,  rts:1.19, J:0.358,  ho:13.5},
+  {des:'W14x30',wt:30, Sx:42.0,  Ix:291.0, d:13.84, bf:6.730, Zx:47.3,  ry:1.49,  rts:1.69, J:0.380,  ho:13.5}
+];
+
+// HSS Square — ASTM A500 Gr C, Fy=46 ksi (AISC 16th Ed. Table 1-12)
+// Fields: des, side(in), wall(in), wt(plf), Sx(in3), Ix(in4)
+var HSS = [
+  {des:'HSS3x3x3/16',  side:3,  wall:0.174, wt:6.87,  Sx:1.91,  Ix:2.86},
+  {des:'HSS3x3x1/4',   side:3,  wall:0.233, wt:8.81,  Sx:2.34,  Ix:3.51},
+  {des:'HSS4x4x3/16',  side:4,  wall:0.174, wt:9.42,  Sx:2.68,  Ix:5.36},
+  {des:'HSS4x4x1/4',   side:4,  wall:0.233, wt:12.21, Sx:3.37,  Ix:6.73},
+  {des:'HSS5x5x3/16',  side:5,  wall:0.174, wt:12.02, Sx:4.48,  Ix:11.2},
+  {des:'HSS5x5x1/4',   side:5,  wall:0.233, wt:15.62, Sx:5.61,  Ix:14.0},
+  {des:'HSS6x6x3/16',  side:6,  wall:0.174, wt:14.53, Sx:6.53,  Ix:19.6},
+  {des:'HSS6x6x1/4',   side:6,  wall:0.233, wt:19.02, Sx:9.53,  Ix:28.6},
+  {des:'HSS6x6x3/8',   side:6,  wall:0.349, wt:27.48, Sx:13.1,  Ix:39.4},
+  {des:'HSS8x8x1/4',   side:8,  wall:0.233, wt:25.82, Sx:17.7,  Ix:70.7},
+  {des:'HSS8x8x3/8',   side:8,  wall:0.349, wt:37.69, Sx:24.9,  Ix:100.0},
+  {des:'HSS8x8x1/2',   side:8,  wall:0.465, wt:48.85, Sx:30.9,  Ix:124.0},
+  {des:'HSS10x10x5/16',side:10, wall:0.291, wt:39.43, Sx:38.2,  Ix:191.0},
+  {des:'HSS10x10x3/8', side:10, wall:0.349, wt:46.64, Sx:44.7,  Ix:224.0},
+  {des:'HSS12x12x3/8', side:12, wall:0.349, wt:56.34, Sx:66.3,  Ix:398.0}
+];
+
+// Ft = 0.375 * Fu per AISC 360-22 ASD (current). Note: 0.33*Fu is pre-9th-edition, outdated.
+var BOLT_GRADES = {
+  'A307':      { Fu: 60,  Ft: 19.8,  name: 'A307',         std: 'ASTM A307' },
+  'F1554_36':  { Fu: 58,  Ft: 21.75, name: 'F1554 Gr.36',  std: 'ASTM F1554' },
+  'F1554_55':  { Fu: 75,  Ft: 28.13, name: 'F1554 Gr.55',  std: 'ASTM F1554' },
+  'F1554_105': { Fu: 125, Ft: 46.88, name: 'F1554 Gr.105', std: 'ASTM F1554' }
+};
+
+// ASCE 7-22 Table 26.10-1 — Kz (exact code table, linearly interpolated)
+// Reference: ASCE 7-22 Table 26.10-1; heights below 15 ft use 15-ft value per footnote
+var _KZ_TABLE = {
+  B:{15:0.57,20:0.62,25:0.66,30:0.70,40:0.76,50:0.81,60:0.85,70:0.89,80:0.93,90:0.96,100:0.99,120:1.04,140:1.09,160:1.13,180:1.17,200:1.20,250:1.28,300:1.35,350:1.41,400:1.47,500:1.56},
+  C:{15:0.85,20:0.90,25:0.94,30:0.98,40:1.04,50:1.09,60:1.13,70:1.17,80:1.21,90:1.24,100:1.26,120:1.31,140:1.36,160:1.39,180:1.43,200:1.46,250:1.53,300:1.59,350:1.64,400:1.69,500:1.77},
+  D:{15:1.03,20:1.08,25:1.12,30:1.16,40:1.22,50:1.27,60:1.31,70:1.34,80:1.38,90:1.40,100:1.43,120:1.48,140:1.52,160:1.55,180:1.58,200:1.61,250:1.68,300:1.73,350:1.78,400:1.82,500:1.89}
+};
+function getKz(h, exp) {
+  var tbl = _KZ_TABLE[exp] || _KZ_TABLE['C'];
+  var z = Math.max(15, Math.min(h, 500));
+  var keys = Object.keys(tbl).map(Number).sort(function(a,b){return a-b;});
+  if (z <= keys[0]) return tbl[keys[0]];
+  if (z >= keys[keys.length-1]) return tbl[keys[keys.length-1]];
+  for (var i = 0; i < keys.length-1; i++) {
+    if (keys[i] <= z && z <= keys[i+1]) {
+      var t = (z-keys[i])/(keys[i+1]-keys[i]);
+      return tbl[keys[i]] + t*(tbl[keys[i+1]]-tbl[keys[i]]);
+    }
+  }
+  return tbl[keys[keys.length-1]];
+}
+
+// ===================== STATE =====================
+var curCode = 'asce722';
+var lastCalc = {};
+var lastFoundCalc = {};
+var lastBoltCalc = {};
+var lastACI = {};
+var lastPullout = {};
+var lastBearing = {};
+
+function val(id, fb) { var el=document.getElementById(id); if(!el) return fb; var n=parseFloat(el.value); return isNaN(n)?fb:n; }
+function rv(gid) { var g=document.getElementById(gid); if(!g) return ''; var a=g.querySelector('.rbtn.active'); return a?a.dataset.val:''; }
+
+// ===================== UI HELPERS =====================
+function setRadio(btn) {
+  btn.parentElement.querySelectorAll('.rbtn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  if(btn.parentElement.id==='fTypeGroup') {
+    document.getElementById('fRatioField').classList.toggle('hidden', btn.dataset.val!=='rectangular');
+  }
+  if(btn.parentElement.id==='connTypeGroup') {
+    syncConnTypeUI(btn.dataset.val);
+  }
+}
+
+function syncConnTypeUI(connType) {
+  var isEmbed = (connType || rv('connTypeGroup') || 'embedded') === 'embedded';
+  var sb = document.getElementById('sec-bolt');
+  var sa = document.getElementById('sec-aci');
+  var cb = document.getElementById('chipBolts');
+  if (sb) sb.style.display = isEmbed ? 'none' : '';
+  if (sa) sa.style.display = isEmbed ? 'none' : '';
+  if (cb) cb.style.display = isEmbed ? 'none' : '';
+}
+
+function toggleSection(id) { document.getElementById(id).classList.toggle('collapsed'); }
+
+function toggleCodeDropdown() { document.getElementById('codeDropdown').classList.toggle('open'); }
+
+function setCode(code) {
+  curCode = code;
+  document.querySelectorAll('.code-option').forEach(function(o){o.classList.toggle('active',o.dataset.code===code);});
+  var badge = document.getElementById('codeBadge');
+  var labels = {ubc97:'1997 UBC',asce710:'ASCE 7-10',asce716:'ASCE 7-16',asce722:'ASCE 7-22'};
+  badge.textContent = labels[code];
+  badge.className = 'badge-code ' + (code==='ubc97'?'ubc':'asce');
+  document.getElementById('windUBC').classList.toggle('hidden', code!=='ubc97');
+  document.getElementById('windASCE').classList.toggle('hidden', code==='ubc97');
+  document.getElementById('codeDropdown').classList.remove('open');
+  calc();
+}
+
+document.addEventListener('click', function(e) {
+  if(!e.target.closest('.code-picker')) document.getElementById('codeDropdown').classList.remove('open');
+});
+
+function scrollToCard(id) {
+  var el = document.getElementById(id);
+  if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ===================== PRESETS =====================
+function preset(name) {
+  var p = {
+    small:    {W:4,H:3,GC:3,PSF:20,N:1,Vmph:115},
+    medium:   {W:8,H:4,GC:8,PSF:20,N:1,Vmph:115},
+    monument: {W:10,H:6,GC:2,PSF:20,N:2,Vmph:115},
+    pole:     {W:10,H:5,GC:15,PSF:25,N:1,Vmph:120},
+    highway:  {W:20,H:8,GC:20,PSF:30,N:2,Vmph:130},
+    emc:      {W:12,H:8,GC:6,PSF:25,N:2,Vmph:120}
+  }[name]; if(!p) return;
+  Object.keys(p).forEach(function(k){var el=document.getElementById(k);if(el)el.value=p[k];});
+  calc();
+  // Auto-size foundation whenever a sign preset is applied
+  findMinFoundation();
+}
+
+function fpreset(name) {
+  var p = {
+    sm_cais:  {fType:'circular',fW:2,fD:4,DL:300,soilType:'sand'},
+    med_cais: {fType:'circular',fW:3,fD:6,DL:800,soilType:'sand'},
+    lg_sq:    {fType:'square',fW:5,fD:6,DL:2000,soilType:'gravel'},
+    spread:   {fType:'rectangular',fW:4,fD:5,DL:1200,soilType:'clay'}
+  }[name]; if(!p) return;
+  Object.keys(p).forEach(function(k){
+    if(k==='fType'){
+      document.querySelectorAll('#fTypeGroup .rbtn').forEach(function(b){b.classList.toggle('active',b.dataset.val===p[k]);});
+      document.getElementById('fRatioField').classList.toggle('hidden',p[k]!=='rectangular');
+    } else if(k==='soilType'){
+      document.getElementById('soilType').value=p[k]; setSoil();
+    } else {
+      var el=document.getElementById(k);if(el)el.value=p[k];
+    }
+  });
+  calc();
+}
+
+function setSoil() {
+  var t=document.getElementById('soilType').value;
+  if(SOIL[t]){document.getElementById('Sv').value=SOIL[t].v;document.getElementById('Sl').value=SOIL[t].l;}
+}
+
+// ===================== Cf — ASCE 7-22 FIG. 29.3-1 =====================
+// Force coefficient tables — exact from ASCE 7-22 Figure 29.3-1
+// Cases A & B: keyed by [B/s][s/h bracket]
+// B = sign width (ft), s = sign height (ft), h = height to top (GC+H)
+var _CF_AB = [
+  {bs:1,  le08:1.30, hi10:1.70},
+  {bs:2,  le08:1.30, hi10:1.70},
+  {bs:5,  le08:1.35, hi10:1.75},
+  {bs:10, le08:1.40, hi10:1.80},
+  {bs:20, le08:1.50, hi10:1.85},
+  {bs:30, le08:1.55, hi10:1.85}
+];
+// Case C: two-zone (near free edge, far zone) — only when B/s >= 2
+var _CF_C = [
+  {bs:2,  near:2.40, far:1.20},
+  {bs:5,  near:2.50, far:1.10},
+  {bs:10, near:2.55, far:1.05},
+  {bs:20, near:2.58, far:1.02},
+  {bs:30, near:2.60, far:1.00}
+];
+
+function _lerpRows(rows, bs, field) {
+  var bc = Math.max(rows[0].bs, Math.min(bs, rows[rows.length-1].bs));
+  for (var i = 0; i < rows.length-1; i++) {
+    if (rows[i].bs <= bc && rows[i+1].bs >= bc) {
+      var t = (bc - rows[i].bs) / (rows[i+1].bs - rows[i].bs);
+      return rows[i][field] + t * (rows[i+1][field] - rows[i][field]);
+    }
+  }
+  return rows[rows.length-1][field];
+}
+
+function getCfAB(bs_ratio, sh_ratio) {
+  // ASCE 7-22 Fig. 29.3-1, Cases A & B
+  var sh = Math.max(0, Math.min(sh_ratio, 1.0));
+  var cf_le08 = _lerpRows(_CF_AB, bs_ratio, 'le08');
+  var cf_hi10 = _lerpRows(_CF_AB, bs_ratio, 'hi10');
+  if (sh <= 0.8) return cf_le08;
+  var t = (sh - 0.8) / 0.2;
+  return cf_le08 + t * (cf_hi10 - cf_le08);
+}
+
+function getCfC(bs_ratio, zone) {
+  // ASCE 7-22 Fig. 29.3-1, Case C (B/s >= 2 only)
+  return _lerpRows(_CF_C, Math.max(2, bs_ratio), zone);
+}
+
+function autoCf(W_ft, H_ft) {
+  // Now uses proper ASCE 7-22 Fig. 29.3-1 with B/s and s/h
+  // Called with current GC from DOM for s/h; falls back to s/h=0 if GC unavailable
+  var GC_ = val('GC', 8);
+  var h_top = GC_ + H_ft;
+  var bs = W_ft / Math.max(H_ft, 0.1);
+  var sh = H_ft / Math.max(h_top, 0.1);
+  return Math.round(getCfAB(bs, sh) * 100) / 100;
+}
+
+function toggleCfAuto() {
+  var auto = document.getElementById('cfAuto').checked;
+  var cfInput = document.getElementById('Cf');
+  cfInput.readOnly = auto;
+  cfInput.style.color = auto ? 'var(--dim)' : '';
+  if (auto) cfInput.value = autoCf(parseFloat(document.getElementById('W').value), parseFloat(document.getElementById('H').value));
+}
+
+// ===================== AISC 360-22 §F2 LTB FOR W-SHAPES =====================
+// Cb=1.0 per AISC Commentary C-F1.2 (cantilever column — standard sign column assumption)
+// Lb = unbraced length of compression flange (= ground clearance GC, ft × 12 to inches)
+// Covers: plastic range (Lb≤Lp), inelastic LTB (Lp<Lb≤Lr), elastic LTB (Lb>Lr)
+function calcFb_W_ltb(sec, Lb_in) {
+  if (!sec || !sec.ry) return 0.66 * FY.W; // fallback if catalog missing LTB fields
+  var E  = 29000000; // psi (E for steel)
+  var Fy = FY.W;     // 50,000 psi (A992)
+  var Om = 1.67;     // ASD omega_b per AISC 360-22 §F1.2
+  var Mp = Fy * sec.Zx; // plastic moment capacity (in-lb)
+  // Lp — limiting unbraced length for plastic moment, Eq. F2-5
+  var Lp = 1.76 * sec.ry * Math.sqrt(E / Fy); // inches
+  if (Lb_in <= Lp) {
+    return Mp / (Om * sec.Sx); // plastic — no LTB penalty
+  }
+  // Lr — limiting length for inelastic LTB, Eq. F2-6
+  var xJ = sec.J / (sec.Sx * sec.ho); // J×c/(Sx×ho), c=1.0 doubly-symmetric
+  var xC = 6.76 * Math.pow(0.7 * Fy / E, 2);
+  var Lr = 1.95 * sec.rts * (E / (0.7 * Fy)) * Math.sqrt(xJ + Math.sqrt(xJ * xJ + xC));
+  if (Lb_in <= Lr) {
+    // Inelastic LTB, Eq. F2-2 (Cb=1.0)
+    var Mn = Mp - (Mp - 0.7 * Fy * sec.Sx) * (Lb_in - Lp) / (Lr - Lp);
+    return Math.min(Mn, Mp) / (Om * sec.Sx);
+  }
+  // Elastic LTB, Eq. F2-3 (Cb=1.0)
+  var LbR = Lb_in / sec.rts;
+  var Fcr = Math.PI * Math.PI * E / (LbR * LbR) *
+            Math.sqrt(1 + 0.078 * sec.J / (sec.Sx * sec.ho) * LbR * LbR);
+  return Math.min(Fcr, Fy) / Om;
+}
+
+// Find lightest W-shape satisfying demand mInLb (in-lb) at unbraced length Lb_in
+function findRecW(mInLb, Lb_in) {
+  var recW = null, Fb_W = 0, Sreq_W = 0;
+  for (var i = 0; i < WSEC.length; i++) {
+    var fb = calcFb_W_ltb(WSEC[i], Lb_in);
+    if (WSEC[i].Sx * fb >= mInLb) {
+      recW = WSEC[i]; Fb_W = fb; Sreq_W = mInLb / Math.max(fb, 1);
+      break;
+    }
+  }
+  if (!recW) { // demand exceeds catalog — return largest with actual Fb
+    recW = WSEC[WSEC.length - 1];
+    Fb_W = calcFb_W_ltb(recW, Lb_in);
+    Sreq_W = mInLb / Math.max(Fb_W, 1);
+  }
+  return { recW: recW, Fb_W: Fb_W, Sreq_W: Sreq_W };
+}
+
+// ===================== CORE CALCULATIONS =====================
+function calcWindPSF() {
+  if(curCode==='ubc97') return val('PSF',20);
+  var V=val('Vmph',115), Kd=val('Kd',0.85), Kzt_=val('Kzt',1.0), Ke_=val('Ke',1.0);
+  var G_=val('G',0.85), Cf_=val('Cf',1.2);
+  var exp=document.getElementById('exposure').value;
+  var W=val('W',8), H_=val('H',4), GC_=val('GC',8);
+  var centH = GC_ + H_/2;
+  var Kz = getKz(centH, exp);
+  var qz = 0.00256 * Kz * Kzt_ * Kd * Ke_ * V * V;
+  var psf = qz * G_ * Cf_;
+  var disp = document.getElementById('psfDisplay');
+  if (disp) disp.textContent = psf.toFixed(2) + ' PSF  (qz=' + qz.toFixed(2) + ', Kz=' + Kz.toFixed(3) + ')';
+  return psf;
+}
+
+function getBoltGrade() {
+  var boltGradeKey = document.getElementById('boltGrade') ? document.getElementById('boltGrade').value : 'A307';
+  return BOLT_GRADES[boltGradeKey] || BOLT_GRADES['A307'];
+}
+
+function calcShared() {
+  var W_=val('W',8), H_=val('H',4), GC_=val('GC',8), N_=val('N',1);
+  var st = rv('steelGroup');
+  var shape = rv('shapeGroup');
+
+  var solidPct = Math.min(100, Math.max(10, val('solidity', 100))) / 100;  // solidity ratio 0.10–1.00
+  var area = W_ * H_ * solidPct;     // effective exposed area (ASCE 7-22 — only solid portion creates wind force)
+  var areaGross = W_ * H_;           // gross face area for display
+  var centroid = GC_ + H_/2;        // height to sign centroid (ft)
+  var h_top = GC_ + H_;             // height to top of sign (ft)
+  var perimeter = 2*(W_+H_);
+  var Bs_ratio = W_ / Math.max(H_, 0.01);    // B/s — sign aspect ratio (based on gross dims)
+  var sh_ratio = H_ / Math.max(h_top, 0.01); // s/h
+
+  // --- Wind Cases A, B, C (ASCE 7-22 §29.3) ---
+  var G_ = val('G', 0.85);
+  var PSF_A; // design pressure for Case A (for display)
+  var F_A, F_B, F_C, M_A, M_B, M_C, e_B, e_C, T_B;
+  var Cf_A, Cf_C_near, Cf_C_far;
+  var caseB_ok, caseC_ok;
+
+  if (curCode === 'ubc97') {
+    // UBC 97: single pressure, no cases
+    PSF_A = val('PSF', 20);
+    F_A = PSF_A * area / N_;
+    M_A = F_A * centroid;
+    F_B = F_A; M_B = M_A; e_B = 0; T_B = 0;
+    F_C = 0; M_C = 0; e_C = 0;
+    caseB_ok = false; caseC_ok = false;
+    Cf_A = 1.0;
+  } else {
+    // ASCE 7: compute raw qz, then all three cases
+    var V_=val('Vmph',115), Kd_=val('Kd',0.85), Kzt_=val('Kzt',1.0), Ke_=val('Ke',1.0);
+    var exp_ = document.getElementById('exposure') ? document.getElementById('exposure').value : 'C';
+    var Kz_ = getKz(centroid, exp_);
+    var qz = 0.00256 * Kz_ * Kzt_ * Kd_ * Ke_ * V_ * V_;
+
+    // Cf for Case A/B — proper ASCE 7-22 Fig. 29.3-1 interpolation
+    var cfAuto = document.getElementById('cfAuto');
+    if (cfAuto && cfAuto.checked) {
+      Cf_A = getCfAB(Bs_ratio, sh_ratio);
+      var cfEl = document.getElementById('Cf');
+      if (cfEl) cfEl.value = Math.round(Cf_A * 100) / 100;
+    } else {
+      Cf_A = val('Cf', 1.2);
+    }
+
+    PSF_A = qz * G_ * Cf_A;
+    var disp = document.getElementById('psfDisplay');
+    if (disp) disp.textContent = PSF_A.toFixed(2) + ' PSF  (qz='+qz.toFixed(2)+', Kz='+Kz_.toFixed(3)+', Cf='+Cf_A.toFixed(2)+')';
+
+    // Case A: resultant at center, e=0
+    F_A = PSF_A * area / N_;
+    M_A = F_A * centroid;
+
+    // Case B: same force, resultant at 0.2B from center (applies when B/s ≤ 2)
+    caseB_ok = Bs_ratio <= 2.0;
+    F_B = F_A;
+    e_B = caseB_ok ? 0.2 * W_ : 0;    // eccentricity ft
+    T_B = caseB_ok ? F_B * e_B * 12 : 0;  // torsional moment in-lb
+    M_B = M_A;  // lateral overturning same as A
+
+    // Case C: two-zone loading (applies when B/s ≥ 2)
+    caseC_ok = Bs_ratio >= 2.0;
+    if (caseC_ok) {
+      Cf_C_near = getCfC(Bs_ratio, 'near');
+      Cf_C_far  = getCfC(Bs_ratio, 'far');
+      var A_zone = (W_ / 2) * H_;
+      var F_near = qz * G_ * Cf_C_near * A_zone;
+      var F_far  = qz * G_ * Cf_C_far  * A_zone;
+      F_C = (F_near + F_far) / N_;
+      // Resultant location from windward edge
+      var x_res = (F_near*(W_/4) + F_far*(3*W_/4)) / Math.max(F_near + F_far, 1);
+      e_C = Math.abs(x_res - W_/2);
+      M_C = F_C * centroid;
+    } else {
+      F_C = 0; M_C = 0; e_C = 0; Cf_C_near = null; Cf_C_far = null;
+    }
+  }
+
+  // Governing case: max overturning moment
+  var governing = 'A';
+  var govM = M_A, govF = F_A;
+  if (caseC_ok && M_C > govM) { governing='C'; govM=M_C; govF=F_C; }
+  // Case B = same lateral moment as A; only governs for torsion
+
+  var windForce   = govF * N_;       // total wind force (lbs)
+  var forcePerCol = govF;
+  var momentFtLb  = govM;
+  var momentInLb  = momentFtLb * 12;
+
+  // Per-material Allowable Bending Stress — AISC 360-22 ASD (Ω_b = 1.67)
+  // Round Pipe (§F8 compact):  Mn = Fy×Zp; Fb = Fy×(Z/S)/1.67 ≈ 0.76Fy (Z/S≈1.27 for Sch.40)
+  // Square/Rect HSS (§F7):    Mn = Fy×Zp; Fb = Fy×(Z/S)/1.67 ≈ 0.72Fy (Z/S≈1.20)
+  // W-Shapes (§F2): full LTB per AISC 360-22 §F2.2/F2.3 — Cb=1.0 (cantilever), Lb=GC
+  // Used steel: 0.60Fy (conservative per AISC 9th Ed ASD §F1.2 for indeterminate condition)
+  var Fb_pipe = (st === 'used' ? 0.60 : 0.76) * FY.PIPE;  // AISC 360-22 §F8 compact round
+  var Fb_sq   = (st === 'used' ? 0.60 : 0.72) * FY.SQ;    // AISC 360-22 §F7 compact sq HSS
+  var Fb_hss  = (st === 'used' ? 0.60 : 0.72) * FY.HSS;   // AISC 360-22 §F7 same as square HSS
+
+  var Sreq_pipe = momentInLb / Math.max(Fb_pipe, 1);
+  var Sreq_sq   = momentInLb / Math.max(Fb_sq,   1);
+  var Sreq_hss  = momentInLb / Math.max(Fb_hss,  1);
+
+  var recPipe = PIPE.find(function(p){return p.sm >= Sreq_pipe;});
+  var recSq   = SQ.find(function(s){return s.sm >= Sreq_sq;});
+  var recHSS  = HSS.find(function(h){return h.Sx >= Sreq_hss;});
+
+  // W-shape: §F2 LTB — unbraced length Lb = GC (sign frame braces compression flange at clearance height)
+  var Lb_W_in = Math.max(GC_ * 12, 12); // inches; at least 12" minimum
+  var _wR = (st === 'used') ? {recW:null,Fb_W:0.60*FY.W,Sreq_W:0} : findRecW(momentInLb, Lb_W_in);
+  if (st === 'used') { _wR.Sreq_W = momentInLb/Math.max(_wR.Fb_W,1); _wR.recW = WSEC.find(function(w){return w.Sx>=_wR.Sreq_W;})||WSEC[WSEC.length-1]; }
+  var recW = _wR.recW, Fb_W = _wR.Fb_W, Sreq_W = _wR.Sreq_W;
+  var pbf = windForce / perimeter;
+
+  // Governing Fy/Fb for current shape selection
+  var Fy_sel, Fb_sel, Sreq_sel, rec_sel;
+  if (shape === 'sq')  { Fy_sel=FY.SQ;   Fb_sel=Fb_sq;   Sreq_sel=Sreq_sq;   rec_sel=recSq;  }
+  else if (shape==='W'){ Fy_sel=FY.W;    Fb_sel=Fb_W;    Sreq_sel=Sreq_W;    rec_sel=recW;   }
+  else if (shape==='hss'){Fy_sel=FY.HSS; Fb_sel=Fb_hss;  Sreq_sel=Sreq_hss;  rec_sel=recHSS; }
+  else                 { Fy_sel=FY.PIPE; Fb_sel=Fb_pipe; Sreq_sel=Sreq_pipe; rec_sel=recPipe;}
+
+  // ── Column Slenderness Check (AISC 360-22 §E3, K=2.0 cantilever: fixed base, free top) ──
+  var slender = null;
+  (function(){
+    var E_st = 29000;  // ksi
+    var L_ft = h_top;  // unbraced length above grade (ft)
+    var K = 2.0;       // Table C-A-7.2: fixed-free cantilever (sign structures)
+    var KL_ft = K * L_ft;
+    var OD_c = 0, ID_c = 0, r_c = 0;
+    if      (shape==='pipe' && recPipe){ OD_c=recPipe.od; ID_c=OD_c-2*recPipe.wall; }
+    else if (shape==='sq'   && recSq)  { OD_c=recSq.side;  ID_c=OD_c-2*recSq.wall; }
+    else if (shape==='hss'  && recHSS) { OD_c=recHSS.side; ID_c=OD_c-2*recHSS.wall; }
+    else if (shape==='W'    && recW)   { OD_c=recW.d; }
+    if (OD_c > 0) {
+      if (shape==='W') {
+        r_c = 0.25 * recW.bf;  // approximate r_y for W-shapes (weak axis, governs cantilever LTB)
+      } else if (shape==='pipe') {
+        r_c = Math.sqrt((OD_c*OD_c + ID_c*ID_c) / 8);  // hollow round: r = sqrt((D^2+d^2)/8)
+      } else {
+        // Hollow square: r = sqrt(I/A); I=(b^4-(b-2t)^4)/12
+        var I_sq = (Math.pow(OD_c,4) - Math.pow(ID_c,4)) / 12;
+        var A_sq = OD_c*OD_c - ID_c*ID_c;
+        r_c = Math.sqrt(I_sq / Math.max(A_sq, 0.01));
+      }
+      if (r_c > 0) {
+        var KL_r = KL_ft * 12 / r_c;
+        var Fy_ksi = Fy_sel / 1000;
+        var Fe_ksi = Math.PI * Math.PI * E_st / (KL_r * KL_r);
+        var Fcr_ksi = (KL_r <= 4.71 * Math.sqrt(E_st / Fy_ksi))
+          ? Math.pow(0.658, Fy_ksi / Fe_ksi) * Fy_ksi
+          : 0.877 * Fe_ksi;
+        slender = { K:K, L_ft:L_ft, KL_ft:KL_ft, r_in:r_c,
+                    KL_r:KL_r, warn:KL_r>200, Fe_ksi:Fe_ksi, Fcr_ksi:Fcr_ksi };
+      }
+    }
+  })();
+
+  // ── Column Shaft Wind (ASCE 7-22 §29.4 — exposed column between grade and sign bottom) ──
+  // Only relevant when GC > 0 (sign elevated on exposed pole above grade)
+  var F_col_wind = 0, M_col_wind = 0, col_wind_od_in = 0;
+  if (curCode !== 'ubc97' && GC_ > 0 && PSF_A && Cf_A) {
+    var qzG_ = PSF_A / Math.max(Cf_A, 0.01);  // qz × G = PSF / Cf (back-solve from design pressure)
+    if      (shape==='pipe' && recPipe) col_wind_od_in = recPipe.od;
+    else if (shape==='sq'   && recSq)  col_wind_od_in = recSq.side;
+    else if (shape==='hss'  && recHSS) col_wind_od_in = recHSS.side;
+    else if (shape==='W'    && recW)   col_wind_od_in = recW.d;
+    else col_wind_od_in = 6.625;  // fallback: 6" pipe OD
+    var Cf_col = 0.7;  // ASCE 7-22 §29.4 round/smooth cylinder (sign industry standard)
+    F_col_wind = qzG_ * Cf_col * (col_wind_od_in / 12) * GC_;  // lbs (total, all columns)
+    M_col_wind = F_col_wind * GC_ / 2;  // base moment ft-lb (uniform pressure → resultant at GC/2)
+    F_col_wind = F_col_wind / N_;  // per column for display
+    M_col_wind = M_col_wind / N_;
+  }
+
+  // ── C-1 FIX: Fold column shaft wind into total demand for ALL downstream checks ──
+  // ASCE 7-22 §29.4 + §2.4: all simultaneous wind loads sum at the base.
+  // Section sizing, anchor design, base plate, and foundation overturning MUST see total moment.
+  var momentFtLb_sign = momentFtLb;  // sign-face only — for split display in Wind card
+  var windForce_sign  = windForce;
+  if (M_col_wind > 0) {
+    momentFtLb  += M_col_wind;       // ← total base moment now drives all checks
+    momentInLb   = momentFtLb * 12;
+    windForce   += F_col_wind * N_;  // ← total lateral (all columns) for foundation sliding
+    forcePerCol += F_col_wind;
+    // Re-size sections with corrected total moment (single iteration; OD shift <5%)
+    Sreq_pipe = momentInLb / Math.max(Fb_pipe, 1);
+    Sreq_sq   = momentInLb / Math.max(Fb_sq,   1);
+    Sreq_hss  = momentInLb / Math.max(Fb_hss,  1);
+    recPipe = PIPE.find(function(p){return p.sm >= Sreq_pipe;}) || recPipe;
+    recSq   = SQ.find(function(s){return s.sm >= Sreq_sq;})     || recSq;
+    recHSS  = HSS.find(function(h){return h.Sx >= Sreq_hss;})  || recHSS;
+    // W-shape re-size with updated moment — re-run LTB search (Lb unchanged)
+    var _wR2 = (st === 'used') ? null : findRecW(momentInLb, Lb_W_in);
+    if (_wR2) { recW = _wR2.recW || recW; Fb_W = _wR2.Fb_W; Sreq_W = _wR2.Sreq_W; }
+    else { Sreq_W = momentInLb / Math.max(Fb_W, 1); recW = WSEC.find(function(w){return w.Sx>=Sreq_W;})||recW; }
+    if      (shape==='sq')  { rec_sel=recSq;   Sreq_sel=Sreq_sq;   }
+    else if (shape==='W')   { rec_sel=recW;    Sreq_sel=Sreq_W;    }
+    else if (shape==='hss') { rec_sel=recHSS;  Sreq_sel=Sreq_hss;  }
+    else                    { rec_sel=recPipe;  Sreq_sel=Sreq_pipe; }
+  }
+
+  lastCalc = {
+    W:W_,H:H_,GC:GC_,N:N_,PSF:PSF_A,st:st,shape:shape,
+    solidPct:solidPct, areaGross:areaGross,
+    area:area,centroid:centroid,h_top:h_top,perimeter:perimeter,
+    Bs_ratio:Bs_ratio, sh_ratio:sh_ratio,
+    Cf_A:Cf_A, Cf_C_near:Cf_C_near, Cf_C_far:Cf_C_far,
+    F_A:F_A, F_B:F_B, F_C:F_C,
+    M_A:M_A, M_B:M_B, M_C:M_C,
+    e_B:e_B, T_B:T_B, e_C:e_C,
+    caseB_ok:caseB_ok, caseC_ok:caseC_ok, governing:governing,
+    windForce:windForce, forcePerCol:forcePerCol,
+    momentFtLb:momentFtLb, momentInLb:momentInLb,
+    Fy:Fy_sel, Fallow:Fb_sel, Sreq:Sreq_sel,
+    Fb_pipe:Fb_pipe, Fb_sq:Fb_sq, Fb_W:Fb_W, Fb_hss:Fb_hss, Lb_W_in:Lb_W_in,
+    Sreq_pipe:Sreq_pipe, Sreq_sq:Sreq_sq, Sreq_W:Sreq_W, Sreq_hss:Sreq_hss,
+    recPipe:recPipe, recSq:recSq, recW:recW, recHSS:recHSS,
+    rec_sel:rec_sel, pbf:pbf,
+    slender:slender, F_col_wind:F_col_wind, M_col_wind:M_col_wind, col_wind_od_in:col_wind_od_in,
+    momentFtLb_sign:momentFtLb_sign, windForce_sign:windForce_sign
+  };
+
+  // ── Tip Deflection Check (serviceability) ──────────────────────────────────
+  // δ_tip = P × a² × (3L − a) / (6EI) for point load P at height a, cantilever length L
+  // Limit: h_top/60 (AISC/ISA standard for sign structures)
+  (function(){
+    var E_def = 29000000; // psi
+    var a_in = centroid * 12;       // height to sign centroid (in) — point of wind application
+    var L_in = h_top    * 12;       // total column height above grade (in)
+    var P    = forcePerCol;         // lateral wind force per column (lb)
+    // Moment of inertia for selected section
+    var Ix_def = 1;
+    if      (shape==='pipe' && recPipe){ Ix_def = recPipe.sm * recPipe.od / 2; }
+    else if (shape==='sq'   && recSq)  { Ix_def = recSq.sm  * recSq.side / 2; }
+    else if (shape==='hss'  && recHSS) { Ix_def = recHSS.Ix; }
+    else if (shape==='W'    && recW)   { Ix_def = recW.Ix;   }
+    var delta_in = P * a_in * a_in * (3 * L_in - a_in) / (6 * E_def * Ix_def);
+    var delta_lim = L_in / 60.0;
+    lastCalc.defl = { delta_in:delta_in, delta_lim:delta_lim, Ix:Ix_def,
+                      ratio:delta_in/Math.max(delta_lim,0.001), ok:delta_in<=delta_lim };
+  })();
+
+  // Update unit hints
+  var hW = document.getElementById('hintW');
+  var hH = document.getElementById('hintH');
+  var hGC = document.getElementById('hintGC');
+  if(hW) hW.textContent = '= ' + (W_*12).toFixed(0) + '"';
+  if(hH) hH.textContent = '= ' + (H_*12).toFixed(0) + '"';
+  if(hGC) hGC.textContent = '= ' + (GC_*12).toFixed(0) + '"';
+
+  var ad = document.getElementById('areaDisplay');
+  if(ad) {
+    var areaStr = 'A = ' + W_ + ' x ' + H_ + ' = ' + areaGross.toFixed(1) + ' ft2';
+    if (solidPct < 1.0) areaStr += '  eff: ' + area.toFixed(1) + ' ft2 (' + (solidPct*100).toFixed(0) + '% solid)';
+    ad.textContent = areaStr;
+  }
+
+  return lastCalc;
+}
+
+// ===================== ACI 318-19 Ch.17 — FULL ANCHOR BOLT DESIGN =====================
+// φ factors per ACI 318-19 Table 17.5.3
+var _ACI_PHI_ST  = 0.75;  // steel ductile
+var _ACI_PHI_CT  = 0.70;  // concrete tension (breakout, pullout)
+var _ACI_PHI_CV  = 0.70;  // concrete shear breakout
+var _ACI_PHI_PO  = 0.70;  // pryout
+var _ACI_INT_EXP = 5.0/3.0; // interaction exponent §17.8.3
+// [dia_in, Ase_in2, Abrg_in2] — ASME B1.1 tensile stress areas, hex-head bearing areas
+var _ACI_BOLT_SZ = [
+  [0.500,0.1419,0.291],[0.625,0.2260,0.454],[0.750,0.3340,0.656],
+  [0.875,0.4620,0.893],[1.000,0.6060,1.159],[1.250,0.9690,1.813],[1.500,1.4050,2.612]
+];
+// Standard base plate thicknesses (in)
+var _STD_TP = [0.25,0.3125,0.375,0.4375,0.50,0.625,0.75,0.875,1.00,1.25,1.50,1.75,2.00];
+
+function _aci_steel_tension(Ase, futa, n) {
+  return _ACI_PHI_ST * n * Ase * futa; // §17.6.1
+}
+function _aci_conc_breakout_T(n, hef, fc, c_a1) {
+  // §17.6.2 — concrete breakout tension
+  var ANco = 9.0*hef*hef;           // Eq.17.6.2.1.3
+  var ANc  = Math.min(n*ANco, n*ANco);
+  var Nb   = 17.0*Math.sqrt(fc)*Math.pow(hef,1.5); // Eq.17.6.2.2b, kc=17 cracked concrete, λ=1.0 NW
+  var psi_ed = c_a1 >= 1.5*hef ? 1.0 : (0.7 + 0.3*c_a1/(1.5*hef)); // §17.6.2.4
+  var Ncbg = (ANc/ANco)*psi_ed*Nb;  // ψ_c=ψ_cp=1.0
+  return {phiNcbg: _ACI_PHI_CT*Ncbg, ANco:ANco, ANc:ANc, Nb:Nb, psi_ed:psi_ed};
+}
+function _aci_pullout(n, Abrg, fc) {
+  var Np = 8.0*Abrg*fc; // Eq.17.6.3.2.2 headed cast-in
+  return _ACI_PHI_CT * n * Np; // §17.6.3
+}
+function _aci_steel_shear(Ase, futa, n) {
+  return _ACI_PHI_ST * n * 0.6 * Ase * futa; // §17.7.1
+}
+function _aci_conc_breakout_V(n, dia, hef, fc, c_a1) {
+  // §17.7.2
+  var le = Math.min(8.0*dia, hef);
+  var Vb = Math.min(
+    7.0*Math.pow(le/dia,0.2)*Math.sqrt(dia)*Math.sqrt(fc)*Math.pow(c_a1,1.5),
+    9.0*Math.sqrt(fc)*Math.pow(c_a1,1.5)
+  );
+  var AVco = 4.5*c_a1*c_a1;
+  var Vcbg = (n*AVco/AVco)*Vb; // simplified interior group
+  return _ACI_PHI_CV * Vcbg;
+}
+function _aci_pryout(phiNcbg, hef) {
+  var kcp = hef < 2.5 ? 1.0 : 2.0; // §17.7.3.1
+  return _ACI_PHI_PO * kcp * (phiNcbg/_ACI_PHI_CT); // recover nominal then apply pryout φ
+}
+
+function designAnchorsACI318(F_lbf, M_inlb, P_lbf, fc_psi, boltGradeKey, n_bolts, hef_user, minBP_in) {
+  // Full ACI 318-19 Ch.17 anchor design — iterates bolt sizes until all DCR ≤ 1.0
+  var bg = BOLT_GRADES[boltGradeKey] || BOLT_GRADES['A307'];
+  var futa_psi = bg.Fu * 1000;
+  var n_t = Math.ceil(n_bolts/2);  // bolts in tension (tension side of moment)
+  var n_v = n_bolts;               // all bolts share shear
+  var N_plate = (minBP_in > 0) ? minBP_in : 10.0;  // base plate size (in)
+
+  for (var bi = 0; bi < _ACI_BOLT_SZ.length; bi++) {
+    var dia=_ACI_BOLT_SZ[bi][0], Ase=_ACI_BOLT_SZ[bi][1], Abrg=_ACI_BOLT_SZ[bi][2];
+    var hef  = hef_user > 0 ? hef_user : Math.max(12.0*dia, 6.0);
+    var c_a1 = Math.max(6.0*dia, 1.5*hef/2.0);
+    // Lever arm = dist from tension bolt centroid to compression plate edge (AISC DG1)
+    // = base_plate_size - edge_distance_from_plate_to_bolt
+    // More accurate than using bolt spacing alone (which underestimates z by 30-50% on larger plates)
+    var edge_bolt = Math.max(2.0*dia, 2.5);  // edge dist: plate edge to bolt CL (in)
+    var bsp = Math.max(N_plate - edge_bolt, 3.0*dia, 4.0);  // lever arm (in)
+
+    // Demands
+    var T_d = M_inlb/Math.max(bsp,0.01) + Math.max(-P_lbf,0)/Math.max(n_t,1);
+    var V_d = F_lbf;
+
+    // Capacities
+    var phiNsa  = _aci_steel_tension(Ase, futa_psi, n_t);
+    var brkT    = _aci_conc_breakout_T(n_t, hef, fc_psi, c_a1);
+    var phiNcbg = brkT.phiNcbg;
+    var phiNpn  = _aci_pullout(n_t, Abrg, fc_psi);
+    var phiVsa  = _aci_steel_shear(Ase, futa_psi, n_v);
+    var phiVcbg = _aci_conc_breakout_V(n_v, dia, hef, fc_psi, c_a1);
+    var phiVcp  = _aci_pryout(phiNcbg, hef);
+
+    var phiTn = Math.min(phiNsa, phiNcbg, phiNpn);
+    var phiVn = Math.min(phiVsa, phiVcbg, phiVcp);
+
+    // DCRs
+    var dcrs = [
+      T_d/Math.max(phiNsa,1),  T_d/Math.max(phiNcbg,1), T_d/Math.max(phiNpn,1),
+      V_d/Math.max(phiVsa,1),  V_d/Math.max(phiVcbg,1), V_d/Math.max(phiVcp,1)
+    ];
+    var tu = T_d/Math.max(phiTn,1), vu = V_d/Math.max(phiVn,1);
+    var int_dcr = tu<=0.2 ? vu : (vu<=0.2 ? tu : Math.pow(tu,_ACI_INT_EXP)+Math.pow(vu,_ACI_INT_EXP));
+    dcrs.push(int_dcr);
+
+    if (dcrs.every(function(d){return d<=1.0;})) {
+      var lbls={0.5:'1/2"',0.625:'5/8"',0.75:'3/4"',0.875:'7/8"',1.0:'1"',1.25:'1-1/4"',1.5:'1-1/2"'};
+      var modes=['steel_tension','breakout_tension','pullout','steel_shear','breakout_shear','pryout','interaction'];
+      var govDCR=Math.max.apply(null,dcrs);
+      return {
+        pass:true, dia_in:dia, dia_lbl:lbls[dia]||dia+'"',
+        n_bolts:n_bolts, hef_in:hef, bsp_in:bsp, c_a1_in:c_a1,
+        futa_psi:futa_psi, Ase_in2:Ase, Abrg_in2:Abrg,
+        T_demand:T_d, V_demand:V_d,
+        phiNsa:phiNsa, phiNcbg:phiNcbg, phiNpn:phiNpn,
+        phiVsa:phiVsa, phiVcbg:phiVcbg, phiVcp:phiVcp,
+        phiTn_gov:phiTn, phiVn_gov:phiVn,
+        dcr_st:dcrs[0], dcr_cbt:dcrs[1], dcr_pu:dcrs[2],
+        dcr_sv:dcrs[3], dcr_cbv:dcrs[4], dcr_pry:dcrs[5], dcr_int:int_dcr,
+        gov_dcr:govDCR, gov_mode:modes[dcrs.indexOf(govDCR)],
+        psi_ed:brkT.psi_ed, ANco:brkT.ANco, ANc:brkT.ANc, Nb:brkT.Nb
+      };
+    }
+  }
+  return {pass:false, dia_in:null, n_bolts:n_bolts};
+}
+
+// ===================== AISC DESIGN GUIDE 1 — BASE PLATE =====================
+function designBasePlateAISCDG1(P_lbf, M_inlb, col_od_in, fc_psi, n_bolts, bsp_in, edge_in) {
+  // AISC DG1 §3.1 — Rectangular base plate dimensions and thickness
+  var phi_b = 0.65;  // ACI 318-19 §22.8 bearing reduction
+  var Fy_pl = FY.PLATE;  // A36 base plate
+
+  var A1_req = P_lbf > 0 ? P_lbf/(phi_b*0.85*fc_psi) : 0;
+  var bp_min = bsp_in + 2*edge_in;
+  var N = Math.ceil(Math.max(col_od_in+6, bp_min, Math.sqrt(A1_req)) / 0.25) * 0.25;
+  var B = N;
+  var A1 = N * B;
+
+  var fp = P_lbf > 0 ? P_lbf/A1 : 0;
+  var m = (N - 0.95*col_od_in)/2;
+  var nn = (B - 0.80*col_od_in)/2;
+  var lam_n = 0.25*Math.sqrt(col_od_in*col_od_in);
+  var ell = Math.max(m, nn, lam_n);
+
+  var tp_req = fp > 0 ? ell*Math.sqrt(2*fp/(0.90*Fy_pl)) : 0.25;
+  var tp = _STD_TP[0];
+  for (var i=0;i<_STD_TP.length;i++){if(_STD_TP[i]>=tp_req-0.001){tp=_STD_TP[i];break;}}
+
+  return {
+    N_in:N, B_in:B, tp_in:tp, tp_req_in:tp_req,
+    fp_psi:fp, phi_fp_max:phi_b*0.85*fc_psi,
+    dcr_bearing: fp>0 ? fp/(phi_b*0.85*fc_psi) : 0,
+    A1_req:A1_req, A1_prov:A1, ell_in:ell
+  };
+}
+
+function calcBoltData() {
+  var c = lastCalc;
+  var bpr = val('bPerRow',2), br = val('bRows',2), bsp = val('bSpace',6);
+  var total = bpr * br;
+  var boltGradeKey = document.getElementById('boltGrade') ? document.getElementById('boltGrade').value : 'A307';
+  var fc_psi = val('fc', 3000);
+  var hef_user = val('hef', 0);  // 0 = auto-size
+
+  // Legacy simple check (for display continuity)
+  var boltGrade = getBoltGrade();
+  var Ft_psi = boltGrade.Ft * 1000;
+  var reqAt = c.momentInLb / Math.max(bpr * bsp * Ft_psi, 1);
+  var bolt = BOLT.find(function(b){return b.At>=reqAt;});
+  if(bolt && bolt.dia>3) bolt=null;
+  var minBP = null;
+  if(c.recPipe) minBP = c.recPipe.od + 2*(c.recPipe.gLeg + c.recPipe.weld);
+
+  // Full ACI 318-19 Ch.17 design
+  var aci = designAnchorsACI318(
+    c.forcePerCol,          // base shear (lbs)
+    c.momentInLb,           // base moment (in-lbs)
+    0,                       // axial (0 = wind only)
+    fc_psi,
+    boltGradeKey,
+    total,
+    hef_user,
+    minBP                   // base plate min size (in) — improves lever arm accuracy
+  );
+
+  // Base plate (using selected column OD or W-shape depth)
+  var col_od = 8.0; // default
+  if (c.recPipe) col_od = c.recPipe.od;
+  else if (c.recW) col_od = c.recW.d;
+  else if (c.recHSS) col_od = c.recHSS.side;
+  var bp = aci.pass ? designBasePlateAISCDG1(0, c.momentInLb, col_od, fc_psi, total, aci.bsp_in, aci.c_a1_in) : null;
+
+  lastBoltCalc = {
+    bpr:bpr, br:br, bsp:bsp, total:total, reqAt:reqAt, bolt:bolt, minBP:minBP,
+    aci:aci, bp:bp, boltGradeKey:boltGradeKey
+  };
+  return lastBoltCalc;
+}
+
+function calcFoundSized(fw, fd, fType, dl, Sv_, Sl_, ratio, c) {
+  var fArea, fVol, fLen;
+  if(fType==='circular') { fArea=Math.PI*(fw/2)*(fw/2); fVol=fArea*fd; fLen=fw; }
+  else if(fType==='square') { fArea=fw*fw; fVol=fArea*fd; fLen=fw; }
+  else { fLen=fw/ratio; fArea=fw*fLen; fVol=fArea*fd; }
+
+  var fWt = fVol * 150;
+  var totVert = dl + fWt;
+  var bearPSF = totVert / fArea;
+  var bearOK = bearPSF <= Sv_;
+
+  var otM = c.momentFtLb + c.forcePerCol * fd;
+  var rM_grav = totVert * (fw / 2);
+  // Moment of triangular passive about pier base: F_passive × (fd/3) = 0.5×Sl×fw×fd² × fd/3 = Sl×fw×fd³/6
+  var rM_soil = Sl_ * fw * fd * fd * fd / 6;
+  var rM = rM_grav + rM_soil;
+  var otSF = rM / Math.max(otM, 1);
+
+  var friction = totVert * 0.35;
+  // IBC 1806.3.2: triangular lateral bearing — pressure = Sl×z at depth z
+  // Total passive force = ∫₀ᶠᵈ Sl×z×fw dz = 0.5×Sl×fw×fd²
+  var passive = 0.5 * Sl_ * fw * fd * fd;
+  var latResist = friction + passive;
+  var latSF = latResist / Math.max(c.forcePerCol, 1);
+
+  var cuYd = fVol / 27;
+
+  return {fType:fType,fw:fw,fd:fd,dl:dl,Sv:Sv_,Sl:Sl_,ratio:ratio,fLen:fLen,fArea:fArea,fVol:fVol,fWt:fWt,totVert:totVert,
+    bearPSF:bearPSF,bearOK:bearOK,otM:otM,rM:rM,rM_grav:rM_grav,rM_soil:rM_soil,otSF:otSF,otOK:otSF>=1.5,
+    friction:friction,passive:passive,latResist:latResist,latSF:latSF,latOK:latSF>=1.5,cuYd:cuYd};
+}
+
+function calcFoundData() {
+  var c = lastCalc;
+  var fType = rv('fTypeGroup')||'circular';
+  var fw = val('fW',3), fd = val('fD',5), dl = val('DL',500);
+  var Sv_ = val('Sv',1500), Sl_ = val('Sl',150);
+  var ratio = val('fRatio',50)/100;
+  var f = calcFoundSized(fw, fd, fType, dl, Sv_, Sl_, ratio, c);
+  lastFoundCalc = f;
+  return f;
+}
+
+function calcFoundationIBC1807(P_lbs, h_ft, b_ft, S1_psf) {
+  var A = 2.34 * P_lbs / (S1_psf * b_ft);
+  var d = 0.5 * A * (1 + Math.sqrt(1 + (4.36 * h_ft / A)));
+  return { A: A, d: d };
+}
+
+function calcFoundationIBC1807Constrained(P_lbs, h_ft, b_ft, S3_psf) {
+  var d = Math.sqrt(4.25 * P_lbs * h_ft / (S3_psf * b_ft));
+  return { d: d };
+}
+
+function checkFrostLine() {
+  var fD = val('fD', 5);
+  var frostWarn = document.getElementById('frostWarn');
+  if (frostWarn) {
+    if (fD < 4.0) {
+      frostWarn.style.display = 'flex';
+      frostWarn.textContent = 'Below Iowa frost line (48" min) -- current: ' + (fD*12).toFixed(0) + '"';
+    } else {
+      frostWarn.style.display = 'none';
+    }
+  }
+}
+
+function calcACI318Breakout(Nu_lbs, hef_in, boltDia_in, fc_psi, edgeMin_in, nBolts) {
+  var ANco = 9 * hef_in * hef_in;
+  var ANc = Math.min(9 * hef_in * hef_in * nBolts, ANco * nBolts);
+  var lambda = 1.0; // ACI 318-19 §17.2.6: lambda=1.0 normal-weight, 0.75 lightweight
+  var Nb = 17 * lambda * Math.sqrt(fc_psi) * Math.pow(hef_in, 1.5); // kc=17 cracked concrete (ACI 318-19 §17.6.2.2b)
+  var psi_ec = 1.0;
+  var psi_ed = Math.min(1.0, 0.7 + 0.3 * edgeMin_in / (1.5 * hef_in));
+  var psi_c  = 1.0;
+  var psi_cp = 1.0;
+  var Ncbg = (ANc / ANco) * psi_ec * psi_ed * psi_c * psi_cp * Nb;
+  var phi = 0.70;
+  var phiNcbg = phi * Ncbg;
+  return { ANco: ANco, ANc: ANc, Nb: Nb, psi_ed: psi_ed, Ncbg: Ncbg, phiNcbg: phiNcbg };
+}
+
+function calcACI318Pullout(Nu_per_bolt, bearing_area_in2, fc_psi) {
+  var Np = 8 * bearing_area_in2 * fc_psi;
+  var phiNpn = 0.70 * Np;
+  return { Np: Np, phiNpn: phiNpn, pass: phiNpn >= Nu_per_bolt };
+}
+
+function calcBasePlateBearing(fc_psi, A1_in2, A2_in2) {
+  var Pp_raw = 0.85 * fc_psi * A1_in2 * Math.sqrt(A2_in2 / A1_in2);
+  var Pp_max = 1.7 * fc_psi * A1_in2;
+  var phi = 0.65;
+  var phiPp = phi * Math.min(Pp_raw, Pp_max);
+  return { phiPp: phiPp, Pp_raw: Pp_raw, Pp_max: Pp_max };
+}
+
+function autoSizeFound(c) {
+  var fType = rv('fTypeGroup')||'circular';
+  var dl = val('DL',500);
+  var Sv_ = val('Sv',1500), Sl_ = val('Sl',150);
+  var ratio = val('fRatio',50)/100;
+  var diams = [2, 2.5, 3, 3.5, 4, 4.5, 5, 6, 7, 8, 10, 12];
+  // Depths start at 4.0 ft — Iowa frost depth (IBC Table 1809.7). Never return sub-frost foundation.
+  var depths = [4, 4.5, 5, 5.5, 6, 7, 8, 10, 12];
+  for (var di = 0; di < diams.length; di++) {
+    for (var dj = 0; dj < depths.length; dj++) {
+      var f = calcFoundSized(diams[di], depths[dj], fType, dl, Sv_, Sl_, ratio, c);
+      if (f.bearOK && f.otSF >= 1.5 && f.latSF >= 1.5) {
+        return {fw: diams[di], fd: depths[dj]};
+      }
+    }
+  }
+  return null;
+}
+
+function findMinFoundation() {
+  var c = lastCalc;
+  var fType = rv('fTypeGroup')||'circular';
+  var dl = val('DL',500);
+  var Sv_ = val('Sv',1500), Sl_ = val('Sl',150);
+  var ratio = val('fRatio',50)/100;
+  // Iowa frost depth (IBC Table 1809.7) = 48" = 4.0 ft minimum.
+  // Never size a foundation shallower than the frost line — it would immediately fail its own check.
+  var FROST_MIN = 4.0;
+  for (var d = FROST_MIN; d <= 20; d += 0.5) {
+    for (var w = 1.5; w <= 10; w += 0.25) {
+      var f = calcFoundSized(w, d, fType, dl, Sv_, Sl_, ratio, c);
+      if (f.bearOK && f.otSF >= 1.5 && f.latSF >= 1.5) {
+        document.getElementById('fD').value = d.toFixed(1);
+        document.getElementById('fW').value = w.toFixed(2);
+        calc();
+        return;
+      }
+    }
+  }
+}
+
+// ===================== UTILITY =====================
+function toFrac(d) {
+  var f=[[1,'1'],[0.875,'7/8'],[0.75,'3/4'],[0.6875,'11/16'],[0.625,'5/8'],
+    [0.5625,'9/16'],[0.5,'1/2'],[0.4375,'7/16'],[0.375,'3/8'],[0.34375,'11/32'],
+    [0.3125,'5/16'],[0.28125,'9/32'],[0.25,'1/4'],[0.1875,'3/16'],[0.125,'1/8']];
+  for(var i=0;i<f.length;i++) if(Math.abs(d-f[i][0])<0.002) return f[i][1];
+  return d.toFixed(3);
+}
+
+function sfCls(v,t){return v>=t?'pass':v>=t*0.8?'warn':'fail';}
+function fmtN(n,d){return n.toLocaleString(undefined,{maximumFractionDigits:d===undefined?0:d});}
+
+// ===================== SVG STRUCTURAL DRAWING =====================
+// ANSI/GD&T standard SVG defs
+function getSVGDefs() {
+  return '<defs>' +
+    // ANSI31 — general section lines, 45 deg, thin (used for sign face hatching)
+    '<pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">' +
+      '<line x1="0" y1="0" x2="0" y2="8" stroke="rgba(0,0,0,0.10)" stroke-width="0.5"/>' +
+    '</pattern>' +
+    // AR-CONC — concrete aggregate pattern (AutoCAD standard)
+    // Angled base lines + irregular aggregate stones of varying sizes
+    '<pattern id="concreteHatch" width="24" height="24" patternUnits="userSpaceOnUse">' +
+      // 45-degree angled lines (base)
+      '<line x1="-2" y1="2"  x2="2"  y2="-2" stroke="rgba(0,0,0,0.22)" stroke-width="0.5"/>' +
+      '<line x1="4"  y1="8"  x2="8"  y2="4"  stroke="rgba(0,0,0,0.22)" stroke-width="0.5"/>' +
+      '<line x1="10" y1="14" x2="14" y2="10" stroke="rgba(0,0,0,0.22)" stroke-width="0.5"/>' +
+      '<line x1="16" y1="20" x2="20" y2="16" stroke="rgba(0,0,0,0.22)" stroke-width="0.5"/>' +
+      '<line x1="0"  y1="8"  x2="8"  y2="0"  stroke="rgba(0,0,0,0.22)" stroke-width="0.5"/>' +
+      '<line x1="6"  y1="14" x2="14" y2="6"  stroke="rgba(0,0,0,0.22)" stroke-width="0.5"/>' +
+      '<line x1="12" y1="20" x2="20" y2="12" stroke="rgba(0,0,0,0.22)" stroke-width="0.5"/>' +
+      '<line x1="0"  y1="16" x2="16" y2="0"  stroke="rgba(0,0,0,0.22)" stroke-width="0.5"/>' +
+      '<line x1="4"  y1="22" x2="22" y2="4"  stroke="rgba(0,0,0,0.22)" stroke-width="0.5"/>' +
+      '<line x1="0"  y1="24" x2="24" y2="0"  stroke="rgba(0,0,0,0.22)" stroke-width="0.5"/>' +
+      // Aggregate stones (irregular circles = coarse aggregate)
+      '<ellipse cx="5"  cy="5"  rx="2.2" ry="1.6" fill="rgba(0,0,0,0.16)" stroke="rgba(0,0,0,0.30)" stroke-width="0.5"/>' +
+      '<ellipse cx="16" cy="4"  rx="1.5" ry="2.0" fill="rgba(0,0,0,0.16)" stroke="rgba(0,0,0,0.30)" stroke-width="0.5"/>' +
+      '<ellipse cx="11" cy="11" rx="2.5" ry="1.8" fill="rgba(0,0,0,0.16)" stroke="rgba(0,0,0,0.30)" stroke-width="0.5"/>' +
+      '<ellipse cx="3"  cy="17" rx="1.8" ry="1.4" fill="rgba(0,0,0,0.16)" stroke="rgba(0,0,0,0.30)" stroke-width="0.5"/>' +
+      '<ellipse cx="20" cy="16" rx="2.0" ry="1.6" fill="rgba(0,0,0,0.16)" stroke="rgba(0,0,0,0.30)" stroke-width="0.5"/>' +
+      '<ellipse cx="8"  cy="20" rx="1.4" ry="2.0" fill="rgba(0,0,0,0.16)" stroke="rgba(0,0,0,0.30)" stroke-width="0.5"/>' +
+    '</pattern>' +
+    // ANSI Earth (ANSI38 pattern) — bold horizontal lines + dense diagonal downward ticks
+    // Darker and denser than before so the below-grade zone reads clearly as earth
+    '<pattern id="soilHatch" width="10" height="7" patternUnits="userSpaceOnUse">' +
+      '<line x1="0" y1="3" x2="10" y2="3" stroke="rgba(90,65,20,0.55)" stroke-width="0.9"/>' +
+      '<line x1="1"  y1="3" x2="0"  y2="6.5" stroke="rgba(90,65,20,0.45)" stroke-width="0.6"/>' +
+      '<line x1="3.5" y1="3" x2="2.5" y2="6.5" stroke="rgba(90,65,20,0.45)" stroke-width="0.6"/>' +
+      '<line x1="6"  y1="3" x2="5"  y2="6.5" stroke="rgba(90,65,20,0.45)" stroke-width="0.6"/>' +
+      '<line x1="8.5" y1="3" x2="7.5" y2="6.5" stroke="rgba(90,65,20,0.45)" stroke-width="0.6"/>' +
+      '<line x1="11"  y1="3" x2="10" y2="6.5" stroke="rgba(90,65,20,0.45)" stroke-width="0.6"/>' +
+    '</pattern>' +
+    // ANSI32 — steel: single-direction 45° parallel lines (NOT crosshatch — that is ANSI37 aluminum)
+    '<pattern id="steelHatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">' +
+      '<line x1="0" y1="0" x2="0" y2="5" stroke="rgba(0,0,0,0.32)" stroke-width="0.6"/>' +
+    '</pattern>' +
+    // Sign panel — ANSI31 thin 45° lines, visible weight (panel section fill)
+    '<pattern id="windHatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">' +
+      '<line x1="0" y1="0" x2="0" y2="10" stroke="rgba(0,0,0,0.15)" stroke-width="0.6"/>' +
+    '</pattern>' +
+    // GD&T filled arrowheads — 3:1 ratio per ASME Y14.5-2018
+    '<marker id="dimArrowR" markerWidth="9" markerHeight="4" refX="9" refY="2" orient="auto">' +
+      '<polygon points="0,0 9,2 0,4" fill="#1a1a1a"/>' +
+    '</marker>' +
+    '<marker id="dimArrowL" markerWidth="9" markerHeight="4" refX="0" refY="2" orient="auto-start-reverse">' +
+      '<polygon points="0,0 9,2 0,4" fill="#1a1a1a"/>' +
+    '</marker>' +
+    // Wind force arrow
+    '<marker id="arrowWind" markerWidth="8" markerHeight="7" refX="8" refY="3.5" orient="auto">' +
+      '<polygon points="0,0 8,3.5 0,7" fill="#b85c00"/>' +
+    '</marker>' +
+    '</defs>';
+}
+
+// GD&T-compliant dimension line per ASME Y14.5-2018
+// Extension lines: start with GAP from object, end OVERSHOOT past dim line
+// offset: distance from object edge to dim line (default 26; pass 52 for second tier, 78 for third)
+function buildDimLine(x1, y1, x2, y2, label, side, color, offset) {
+  color = color || '#333333';
+  var s = '';
+  var GAP      = 4;   // gap from measured edge to extension line start
+  var OVERSHOOT= 5;   // extension line protrusion past dim line
+  var OFFSET   = (offset !== undefined) ? offset : 26;  // dim line distance from object edge
+
+  if (y1 === y2) {
+    // ── Horizontal dimension ──
+    var dimY    = (side === 'above') ? y1 - OFFSET : y1 + OFFSET;
+    // Extension lines: run from (object ± GAP) through dim line to (dimY ∓ OVERSHOOT)
+    var objY    = (side === 'above') ? y1 - GAP    : y1 + GAP;
+    var pastY   = (side === 'above') ? dimY - OVERSHOOT : dimY + OVERSHOOT;
+    s += '<line x1="'+x1+'" y1="'+objY+'" x2="'+x1+'" y2="'+pastY+'" stroke="'+color+'" stroke-width="0.5"/>';
+    s += '<line x1="'+x2+'" y1="'+objY+'" x2="'+x2+'" y2="'+pastY+'" stroke="'+color+'" stroke-width="0.5"/>';
+    // Dimension line with filled arrowheads (GD&T closed/filled per ASME)
+    s += '<line x1="'+x1+'" y1="'+dimY+'" x2="'+x2+'" y2="'+dimY+'" stroke="'+color+'" stroke-width="0.8" marker-start="url(#dimArrowL)" marker-end="url(#dimArrowR)"/>';
+    // Text on paper mask background
+    var mx  = (x1 + x2) / 2;
+    var tw  = Math.max(label.length * 6.2 + 6, 28);
+    var ty  = (side === 'above') ? dimY - 4 : dimY + 11;
+    s += '<rect x="'+(mx-tw/2)+'" y="'+(ty-10)+'" width="'+tw+'" height="13" fill="#f5f0e6"/>';
+    s += '<text x="'+mx+'" y="'+ty+'" fill="'+color+'" font-size="9.5" text-anchor="middle" font-family="\'Courier New\',Courier,monospace" font-weight="700">'+label+'</text>';
+  } else {
+    // ── Vertical dimension ──
+    var dimX    = (side === 'left') ? x1 - OFFSET : x1 + OFFSET;
+    var objX    = (side === 'left') ? x1 - GAP    : x1 + GAP;
+    var pastX   = (side === 'left') ? dimX - OVERSHOOT : dimX + OVERSHOOT;
+    s += '<line x1="'+objX+'" y1="'+y1+'" x2="'+pastX+'" y2="'+y1+'" stroke="'+color+'" stroke-width="0.5"/>';
+    s += '<line x1="'+objX+'" y1="'+y2+'" x2="'+pastX+'" y2="'+y2+'" stroke="'+color+'" stroke-width="0.5"/>';
+    s += '<line x1="'+dimX+'" y1="'+y1+'" x2="'+dimX+'" y2="'+y2+'" stroke="'+color+'" stroke-width="0.8" marker-start="url(#dimArrowL)" marker-end="url(#dimArrowR)"/>';
+    // Rotated text — group handles both mask and text together
+    var my = (y1 + y2) / 2;
+    var tw = Math.max(label.length * 6.2 + 6, 28);
+    s += '<g transform="rotate(-90,'+dimX+','+my+')">';
+    s += '<rect x="'+(dimX-tw/2)+'" y="'+(my-10)+'" width="'+tw+'" height="13" fill="#f5f0e6"/>';
+    s += '<text x="'+dimX+'" y="'+my+'" fill="'+color+'" font-size="9.5" text-anchor="middle" dominant-baseline="middle" font-family="\'Courier New\',Courier,monospace" font-weight="700">'+label+'</text>';
+    s += '</g>';
+  }
+  return s;
+}
+
+// Status flag per GD&T callout style (ASME Y14.41)
+function buildStatusBubble(x, y, pass, label) {
+  var bg     = pass ? 'rgba(30,120,55,0.12)'  : 'rgba(190,25,25,0.12)';
+  var border = pass ? '#1e7a3c' : '#bb1111';
+  var icon   = pass ? '\u2713' : '\u2717';
+  var color  = pass ? '#1e5c2d' : '#9e0f0f';
+  var text   = icon + ' ' + label;
+  var bw     = text.length * 6.5 + 14;
+  return '<rect x="'+(x-bw/2)+'" y="'+(y-11)+'" width="'+bw+'" height="22" rx="2" fill="'+bg+'" stroke="'+border+'" stroke-width="0.8"/>' +
+    '<text x="'+x+'" y="'+(y+4)+'" fill="'+color+'" font-size="9.5" text-anchor="middle" font-family="\'Courier New\',Courier,monospace" font-weight="700">'+text+'</text>';
+}
+
+function updateDrawing() {
+  var c = lastCalc;
+  var f = lastFoundCalc;
+  var b = lastBoltCalc;
+  var svg = document.getElementById('structuralDrawing');
+  if (!svg || !c.W) return;
+  var W = svg.clientWidth || 500;
+  var H = svg.clientHeight || 600;
+  if (W < 50 || H < 50) return;
+
+  var fd = (f && f.fd) ? f.fd : 5;
+  var fw = (f && f.fw) ? f.fw : 3;
+  var fType = (f && f.fType) ? f.fType : 'circular';
+
+  // Title block and inset geometry — defined early so zone guards can reference them
+  var tbW = 220, tbH = 96;
+  var tbx = W - tbW - 18, tby = H - tbH - 18;
+  var ipW = 106, ipH = 90;
+  var ipx = 16, ipy = H - ipH - 16;
+
+  var aboveGradeFt = c.GC + c.H;        // focal zone: sign face + clearance above grade
+  var totalWft = Math.max(c.W + 8, 14);
+  // Drawing zone: leave 90px left (wind arrow + dim), 30px right, 90px top, 130px bottom
+  var drawW = W - 120;
+  var drawH = H - 220;
+
+  // Above-grade scale: sign face is focal point — targets 62% of draw height
+  var scale = Math.min((drawW * 0.68) / totalWft, (drawH * 0.62) / Math.max(aboveGradeFt, 2));
+  scale = Math.max(scale, 5);
+
+  // Below-grade: compressed into remaining ~38% — foundation doesn't dominate canvas
+  var belowBudgetPx = drawH * 0.38;
+  var scale_below = Math.min(belowBudgetPx / Math.max(fd + 0.5, 2), scale * 0.65);
+  scale_below = Math.max(scale_below, 3);
+
+  // Top margin = 78px — gives clearance for width dim line (at signTop-26) + text above it
+  var gradeY  = 78 + aboveGradeFt * scale;
+  var centerX = W / 2;
+
+  var signH_px = c.H  * scale;
+  var signW_px = c.W  * scale;
+  var gc_px    = c.GC * scale;
+  var fd_px    = fd   * scale_below;    // compressed below-grade scale — not focal
+  var fw_px    = fw   * scale;          // foundation WIDTH stays on horizontal (above-grade) scale
+
+  var signBot   = gradeY - gc_px;
+  var signTop   = signBot - signH_px;
+  var signLeft  = centerX - signW_px / 2;
+  var signRight = centerX + signW_px / 2;
+  var foundTop  = gradeY;
+  var foundBot  = gradeY + fd_px;
+  var foundLeft = centerX - fw_px / 2;
+  var foundRight= centerX + fw_px / 2;
+  var frostY    = gradeY + 4.0 * scale_below;  // frost depth uses below-grade compressed scale
+  var frostPass = fd >= 4.0;
+
+  // Line weights (ASME Y14.2)
+  var LW_VISIBLE = '1.4';
+  var LW_HIDDEN  = '0.7';
+  var LW_THIN    = '0.5';
+  var LW_CENTER  = '0.4';
+
+  var INK   = '#111111';
+  var INK2  = '#444444';
+  var INK3  = '#888888';
+  var PAPER = '#f5f0e6';
+
+  // ── Paper-masked text helper — every annotation gets a background rect
+  // so it punches cleanly through any hatch or line behind it.
+  // anchor: 'start'|'middle'|'end'  bold: true/false  fs: font-size px
+  function ptxt(x, y, content, fs, fill, anchor, bold) {
+    anchor = anchor || 'start';
+    var charW  = fs * 0.60;
+    var tw     = content.length * charW + 8;
+    var ax     = anchor === 'middle' ? x - tw/2 : (anchor === 'end' ? x - tw : x - 2);
+    var r = '<rect x="'+ax+'" y="'+(y - fs * 0.82)+'" width="'+tw+'" height="'+(fs + 3)+
+            '" fill="'+PAPER+'"/>';
+    r += '<text x="'+x+'" y="'+y+'" fill="'+fill+'" font-size="'+fs+
+         '" text-anchor="'+anchor+'" font-family="\'Courier New\',monospace"'+
+         (bold ? ' font-weight="700"' : '')+'>'+content+'</text>';
+    return r;
+  }
+
+  var s = getSVGDefs();
+
+  // ── Drawing border (ANSI Y14.1)
+  s += '<rect x="8" y="8" width="'+(W-16)+'" height="'+(H-16)+
+       '" fill="none" stroke="'+INK+'" stroke-width="1.5"/>';
+  s += '<rect x="14" y="14" width="'+(W-28)+'" height="'+(H-28)+
+       '" fill="none" stroke="'+INK+'" stroke-width="0.4"/>';
+
+  // ── Above-grade zone: clean off-white — clear visual split from earth below
+  s += '<rect x="15" y="15" width="'+(W-30)+'" height="'+(gradeY-15)+
+       '" fill="rgba(255,255,252,0.18)"/>';
+
+  // ── Soil zone (ANSI38 earth hatch below grade) — warm amber base + bold hatch
+  var soilLabel = (document.getElementById('soilType') ?
+                   document.getElementById('soilType').value : 'sand').toUpperCase();
+  var slVal = val('Sl', 150);
+  // Soil hatch limited to foundation depth + buffer — don't fill entire canvas bottom
+  var soilH = Math.min(fd_px + 80, H - gradeY - 15);
+  s += '<rect x="15" y="'+gradeY+'" width="'+(W-30)+'" height="'+soilH+
+       '" fill="rgba(185,148,82,0.22)"/>';
+  s += '<rect x="15" y="'+gradeY+'" width="'+(W-30)+'" height="'+soilH+
+       '" fill="url(#soilHatch)"/>';
+
+  // ── Foundation pier (AR-CONC concrete hatch)
+  var foundStroke = frostPass ? INK : '#cc2222';
+  var foundRx = fType === 'circular' ? Math.min(fw_px * 0.14, 8) : 0;
+  s += '<rect x="'+foundLeft+'" y="'+foundTop+'" width="'+fw_px+'" height="'+fd_px+
+       '" rx="'+foundRx+'" fill="rgba(220,215,205,0.65)" stroke="'+foundStroke+
+       '" stroke-width="'+LW_VISIBLE+'"/>';
+  s += '<rect x="'+foundLeft+'" y="'+foundTop+'" width="'+fw_px+'" height="'+fd_px+
+       '" rx="'+foundRx+'" fill="url(#concreteHatch)" stroke="none"/>';
+  // Foundation centerline (long-dash short-dash per ASME Y14.2)
+  s += '<line x1="'+centerX+'" y1="'+(foundTop-10)+'" x2="'+centerX+'" y2="'+(foundBot+10)+
+       '" stroke="'+INK2+'" stroke-width="'+LW_CENTER+'" stroke-dasharray="12,3,3,3"/>';
+
+  // ── Frost line (phantom line — long-dash short-short per ASME Y14.2)
+  var frostColor = frostPass ? '#b05800' : '#cc2222';
+  // Guard: only draw if it fits above inset and title block bottom zone
+  if (frostY < ipy - 20 && frostY < H - 40) {
+    s += '<line x1="20" y1="'+frostY+'" x2="'+(W-20)+'" y2="'+frostY+
+         '" stroke="'+frostColor+'" stroke-width="0.6" stroke-dasharray="14,3,3,3,3,3"/>';
+    // Label on LEFT side — clear of right-side dims and title block
+    s += ptxt(24, frostY + 3, 'FROST DEPTH \u2014 48" MIN', 7.5, frostColor, 'start', true);
+  }
+
+  // ── Grade line (break line per ASME Y14.2)
+  s += '<line x1="20" y1="'+gradeY+'" x2="'+(W-20)+'" y2="'+gradeY+
+       '" stroke="'+INK+'" stroke-width="'+LW_VISIBLE+'"/>';
+  for (var gi = 0; gi < 22; gi++) {
+    var gx = 20 + gi * ((W-40)/21);
+    s += '<line x1="'+gx+'" y1="'+gradeY+'" x2="'+(gx-8)+'" y2="'+(gradeY+8)+
+         '" stroke="'+INK+'" stroke-width="'+LW_THIN+'"/>';
+  }
+  // F.G. label — right of grade line, clears title block in x (grade line is well above tby in y)
+  s += ptxt(W - 22, gradeY - 3, 'F.G.', 8, INK2, 'end', true);
+
+  // ── Soil / bearing note — left side below grade, guarded to not overlap base plate inset
+  var soilNoteY = gradeY + 30;
+  if (soilNoteY < ipy - 12) {
+    s += ptxt(24, soilNoteY, 'SOIL: '+soilLabel+'   \u03C3\u2081='+slVal+' PSF/FT', 8.5, INK2, 'start', true);
+  }
+
+  // ── Columns (above grade: visible ANSI32 steel hatch; below grade: hidden dashed)
+  var colW_px  = Math.max(8, Math.min(signW_px * 0.06, 20));
+  var isSquare = (c.shape === 'sq' || c.shape === 'hss' || c.shape === 'W');
+  var colSpacing = c.N > 1 ? signW_px * 0.55 / (c.N - 1) : 0;
+  var colX0    = c.N > 1 ? centerX - (c.N-1) * colSpacing / 2 : centerX;
+
+  for (var ci = 0; ci < c.N; ci++) {
+    var cx = colX0 + ci * colSpacing;
+    if (isSquare) {
+      s += '<rect x="'+(cx-colW_px/2)+'" y="'+signBot+'" width="'+colW_px+'" height="'+gc_px+
+           '" fill="rgba(180,180,180,0.25)" stroke="'+INK+'" stroke-width="'+LW_VISIBLE+'"/>';
+      s += '<rect x="'+(cx-colW_px/2)+'" y="'+signBot+'" width="'+colW_px+'" height="'+gc_px+
+           '" fill="url(#steelHatch)" stroke="none"/>';
+    } else {
+      s += '<rect x="'+(cx-colW_px/2)+'" y="'+signBot+'" width="'+colW_px+'" height="'+gc_px+
+           '" fill="rgba(180,180,180,0.25)" stroke="'+INK+'" stroke-width="'+LW_VISIBLE+
+           '" rx="'+(colW_px/2)+'"/>';
+      s += '<rect x="'+(cx-colW_px/2)+'" y="'+signBot+'" width="'+colW_px+'" height="'+gc_px+
+           '" fill="url(#steelHatch)" stroke="none" rx="'+(colW_px/2)+'"/>';
+    }
+    // Below-grade: hidden line
+    s += '<rect x="'+(cx-colW_px/2)+'" y="'+gradeY+'" width="'+colW_px+'" height="'+fd_px+
+         '" fill="none" stroke="'+INK2+'" stroke-width="'+LW_HIDDEN+'" stroke-dasharray="5,3"/>';
+    // Column centerline
+    s += '<line x1="'+cx+'" y1="'+(signBot-14)+'" x2="'+cx+'" y2="'+(signBot+gc_px+14)+
+         '" stroke="'+INK2+'" stroke-width="'+LW_CENTER+'" stroke-dasharray="12,3,3,3"/>';
+  }
+
+  // ── Column size callout
+  // ASME leader: short angled leg (≈60°) from column body + horizontal shoulder + masked label.
+  // Leader goes RIGHT from rightmost column into the clear zone above the GC dim.
+  // If there is no GC (sign at grade), omit leader and place label inline beside column.
+  var colLabel = 'SIZE TBD';
+  if (c.shape==='pipe' && c.recPipe) colLabel = c.recPipe.nom+'" \u00D8 '+(c.recPipe.nom >= 12 ? 'Std Wt' : 'SCH40');
+  else if (c.shape==='sq'  && c.recSq)  colLabel = c.recSq.side+'" SQ TUBE';
+  else if (c.shape==='hss' && c.recHSS) colLabel = c.recHSS.des;
+  else if (c.shape==='W'   && c.recW)   colLabel = c.recW.des;
+  else if (c.recPipe) colLabel = c.recPipe.nom+'" \u00D8 '+(c.recPipe.nom >= 12 ? 'Std Wt' : 'SCH40');
+
+  var lastColRX = colX0 + (c.N-1)*colSpacing + colW_px/2;  // right edge of rightmost col
+  var lcObjX = lastColRX + 2;
+  var lcObjY = signBot + Math.max(gc_px * 0.5, 8);
+  // Shoulder end — stay left of where the right-side dim lines live (signRight+26 zone)
+  // and left of the title block lower zone
+  var lcShldrX = Math.min(lcObjX + 48, signRight - 4, tbx - 10);
+  var lcEndX   = lcShldrX - 20;
+  var lcEndY   = lcObjY - 12;
+
+  s += '<marker id="ldrA" markerWidth="6" markerHeight="3.5" refX="0" refY="1.75" orient="auto">' +
+       '<polygon points="6,0 0,1.75 6,3.5" fill="'+INK2+'"/></marker>';
+  s += '<line x1="'+lcObjX+'" y1="'+lcObjY+'" x2="'+lcEndX+'" y2="'+lcEndY+
+       '" stroke="'+INK2+'" stroke-width="'+LW_THIN+'" marker-start="url(#ldrA)"/>';
+  s += '<line x1="'+lcEndX+'" y1="'+lcEndY+'" x2="'+lcShldrX+'" y2="'+lcEndY+
+       '" stroke="'+INK2+'" stroke-width="'+LW_THIN+'"/>';
+  s += ptxt(lcShldrX + 3, lcEndY + 3, colLabel, 7.5, INK2, 'start', false);
+
+  // ── Base plate (solid blackened steel at grade)
+  var bpW = colW_px * 2.8;
+  for (var bpi = 0; bpi < c.N; bpi++) {
+    var bpx = c.N > 1 ? colX0 + bpi*colSpacing : centerX;
+    s += '<rect x="'+(bpx-bpW/2)+'" y="'+(gradeY-4)+'" width="'+bpW+'" height="8"' +
+         ' fill="rgba(50,50,50,0.75)" stroke="'+INK+'" stroke-width="'+LW_VISIBLE+'"/>';
+  }
+
+  // ── Sign panel (visible outline + ANSI31 section hatch)
+  s += '<rect x="'+signLeft+'" y="'+signTop+'" width="'+signW_px+'" height="'+signH_px+
+       '" fill="rgba(218,213,202,0.45)" stroke="'+INK+'" stroke-width="'+LW_VISIBLE+'"/>';
+  s += '<rect x="'+signLeft+'" y="'+signTop+'" width="'+signW_px+'" height="'+signH_px+
+       '" fill="url(#windHatch)" stroke="none"/>';
+
+  // Sign face annotations — only when sign is tall enough so text doesn't crowd status bubble.
+  // Text sits at 38% height; SECTION bubble is at 82% height — needs ≥80px gap between them.
+  if (signH_px >= 80) {
+    var sfTextY = signTop + signH_px * 0.36;
+    s += ptxt(centerX, sfTextY,      'SIGN FACE', 10, INK2, 'middle', true);
+    s += ptxt(centerX, sfTextY + 14,
+              c.W.toFixed(1)+'\' \u00D7 '+c.H.toFixed(1)+'\' ('+c.area.toFixed(0)+' SF)',
+              7.5, INK3, 'middle', false);
+    // When solidity < 100%, add a second info line
+    if (c.solidPct && c.solidPct < 1.0) {
+      s += ptxt(centerX, sfTextY + 26,
+                (c.solidPct*100).toFixed(0)+'% SOLID \u2014 EFF: '+c.area.toFixed(0)+' SF',
+                7, '#7a4400', 'middle', false);
+    }
+  }
+
+  // ── Dimension lines
+  // LAYOUT: Width above; Height RIGHT (tier 1); GC RIGHT (tier 2 at offset 52);
+  //         Foundation width below; Foundation depth LEFT of foundation.
+  // All dims use PAPER-masked text via buildDimLine so they punch through hatching.
+
+  // Sign width — above
+  s += buildDimLine(signLeft, signTop, signRight, signTop,
+                    c.W.toFixed(2)+'\u2019', 'above');
+  // Sign height — right, tier 1
+  s += buildDimLine(signRight, signTop, signRight, signBot,
+                    c.H.toFixed(2)+'\u2019', 'right');
+  // Ground clearance — right, tier 2 (only if GC > 0)
+  if (c.GC > 0.05) {
+    s += buildDimLine(signRight, signBot, signRight, gradeY,
+                      c.GC.toFixed(2)+'\u2019 CLR', 'right', '#333333', 52);
+  }
+  // Foundation width — below foundation (⌀ prefix for circular per ASME Y14.5)
+  var fwLabel = (fType==='circular' ? '\u2300 ' : '') + fw.toFixed(2)+'\u2019';
+  s += buildDimLine(foundLeft, foundBot, foundRight, foundBot, fwLabel, 'below');
+  // Foundation depth — LEFT side with qualifier label
+  s += buildDimLine(foundLeft, foundTop, foundLeft, foundBot,
+                    fd.toFixed(2)+'\u2019 EMBED', 'left');
+
+  // ── Wind load arrow — full left zone (no dim lines compete here now)
+  var windY      = signTop + signH_px / 2;
+  var arrowStart = Math.max(22, signLeft - 92);
+  s += '<line x1="'+arrowStart+'" y1="'+windY+'" x2="'+(signLeft-3)+'" y2="'+windY+
+       '" stroke="#b85c00" stroke-width="2.2" marker-end="url(#arrowWind)"/>';
+  // Force label ABOVE arrow centerline — clear of arrow line
+  s += ptxt(arrowStart, windY - 10, 'F = '+fmtN(c.windForce)+' lbs', 8, '#b85c00', 'start', true);
+  // Code reference BELOW arrow centerline
+  s += ptxt(arrowStart, windY + 17, 'ASCE 7-22 \u00A729.3.1', 7, INK3, 'start', false);
+
+  // ── Status callouts (pass/fail badges)
+  // Positions chosen so they never overlap sign face text (at 36% height)
+  // or each other: SECTION at 82%, BOLTS above grade, FND in foundation center.
+  var sectionPass = !!(c.recPipe || c.recSq);
+  s += buildStatusBubble(centerX, signTop + signH_px * 0.82,
+                         sectionPass, sectionPass ? 'SECTION OK' : 'SECTION NG');
+  if (b && (rv('connTypeGroup') || 'embedded') !== 'embedded') {
+    var boltPass = !!(b.bolt && b.bolt.At >= b.reqAt);
+    s += buildStatusBubble(centerX, gradeY - 18, boltPass, boltPass ? 'BOLTS OK' : 'BOLTS NG');
+  }
+  if (f) {
+    var foundOK = f.bearOK && f.otOK && f.latOK && frostPass;
+    var fndLabel = foundOK ? 'FND OK' :
+      (!frostPass ? 'FROST DEPTH NG' :
+       (!f.otOK  ? 'OVERTURN NG'  :
+        (!f.latOK ? 'SLIDING NG'  : 'BEARING NG')));
+    s += buildStatusBubble(centerX, foundTop + fd_px * 0.5, foundOK, fndLabel);
+  }
+
+  // ── ANSI Y14.1 title block (lower right corner)
+  var F_LABEL = '7.5', F_VALUE = '9.5', F_TITLE = '9', F_CO = '10';
+  s += '<rect x="'+tbx+'" y="'+tby+'" width="'+tbW+'" height="'+tbH+
+       '" fill="'+PAPER+'" stroke="'+INK+'" stroke-width="1.2"/>';
+  s += '<line x1="'+tbx+'" y1="'+(tby+26)+'" x2="'+(tbx+tbW)+'" y2="'+(tby+26)+
+       '" stroke="'+INK+'" stroke-width="0.7"/>';
+  s += '<line x1="'+tbx+'" y1="'+(tby+54)+'" x2="'+(tbx+tbW)+'" y2="'+(tby+54)+
+       '" stroke="'+INK+'" stroke-width="0.7"/>';
+  s += '<line x1="'+tbx+'" y1="'+(tby+72)+'" x2="'+(tbx+tbW)+'" y2="'+(tby+72)+
+       '" stroke="'+INK+'" stroke-width="0.5"/>';
+  s += '<line x1="'+(tbx+80)+'"  y1="'+(tby+54)+'" x2="'+(tbx+80)+'"  y2="'+(tby+tbH)+
+       '" stroke="'+INK+'" stroke-width="0.5"/>';
+  s += '<line x1="'+(tbx+148)+'" y1="'+(tby+54)+'" x2="'+(tbx+148)+'" y2="'+(tby+tbH)+
+       '" stroke="'+INK+'" stroke-width="0.5"/>';
+  s += '<line x1="'+(tbx+192)+'" y1="'+(tby+54)+'" x2="'+(tbx+192)+'" y2="'+(tby+tbH)+
+       '" stroke="'+INK+'" stroke-width="0.5"/>';
+  s += '<text x="'+(tbx+tbW/2)+'" y="'+(tby+12)+'" fill="'+INK+'" font-size="'+F_CO+
+       '" text-anchor="middle" font-family="\'Courier New\',monospace" font-weight="700">EAGLE SIGN CO.</text>';
+  s += '<text x="'+(tbx+tbW/2)+'" y="'+(tby+22)+'" fill="'+INK2+'" font-size="'+F_LABEL+
+       '" text-anchor="middle" font-family="\'Courier New\',monospace">605 SW 37TH ST, GRIMES, IA 50111   (515) 243-5663</text>';
+  s += '<text x="'+(tbx+tbW/2)+'" y="'+(tby+38)+'" fill="'+INK+'" font-size="'+F_TITLE+
+       '" text-anchor="middle" font-family="\'Courier New\',monospace" font-weight="700">SIGN STRUCTURAL ENGINEERING CALC</text>';
+  s += '<text x="'+(tbx+tbW/2)+'" y="'+(tby+50)+'" fill="'+INK2+'" font-size="'+F_LABEL+
+       '" text-anchor="middle" font-family="\'Courier New\',monospace">ASCE 7-22 / IBC 2021 / ACI 318-19 / AISC 360-22</text>';
+  s += '<text x="'+(tbx+4)+'"   y="'+(tby+62)+'" fill="'+INK3+'" font-size="'+F_LABEL+'" font-family="\'Courier New\',monospace">DRAWN BY</text>';
+  s += '<text x="'+(tbx+82)+'"  y="'+(tby+62)+'" fill="'+INK3+'" font-size="'+F_LABEL+'" font-family="\'Courier New\',monospace">DATE</text>';
+  s += '<text x="'+(tbx+150)+'" y="'+(tby+62)+'" fill="'+INK3+'" font-size="'+F_LABEL+'" font-family="\'Courier New\',monospace">SCALE</text>';
+  s += '<text x="'+(tbx+194)+'" y="'+(tby+62)+'" fill="'+INK3+'" font-size="'+F_LABEL+'" font-family="\'Courier New\',monospace">REV</text>';
+  var today = new Date().toISOString().slice(0,10);
+  s += '<text x="'+(tbx+4)+'"   y="'+(tby+70)+'" fill="'+INK+'" font-size="'+F_VALUE+'" font-family="\'Courier New\',monospace">SignCalc</text>';
+  s += '<text x="'+(tbx+82)+'"  y="'+(tby+70)+'" fill="'+INK+'" font-size="'+F_VALUE+'" font-family="\'Courier New\',monospace">'+today+'</text>';
+  s += '<text x="'+(tbx+150)+'" y="'+(tby+70)+'" fill="'+INK+'" font-size="'+F_VALUE+'" font-family="\'Courier New\',monospace">NTS</text>';
+  s += '<text x="'+(tbx+194)+'" y="'+(tby+70)+'" fill="'+INK+'" font-size="'+F_VALUE+'" font-family="\'Courier New\',monospace">-</text>';
+  s += '<text x="'+(tbx+4)+'"   y="'+(tby+80)+'" fill="'+INK3+'" font-size="'+F_LABEL+'" font-family="\'Courier New\',monospace">DWG NO.</text>';
+  s += '<text x="'+(tbx+4)+'"   y="'+(tby+91)+'" fill="'+INK+'"  font-size="'+F_VALUE+'" font-family="\'Courier New\',monospace">SC-'+new Date().getFullYear()+'-001</text>';
+  s += '<text x="'+(tbx+114)+'" y="'+(tby+80)+'" fill="'+INK3+'" font-size="'+F_LABEL+'" text-anchor="middle" font-family="\'Courier New\',monospace">SHEET</text>';
+  s += '<text x="'+(tbx+114)+'" y="'+(tby+91)+'" fill="'+INK+'"  font-size="'+F_VALUE+'" text-anchor="middle" font-family="\'Courier New\',monospace">1 OF 1</text>';
+
+  // ── Base plate plan inset (lower left corner)
+  if (b && b.bolt) {
+    s += '<rect x="'+ipx+'" y="'+ipy+'" width="'+ipW+'" height="'+ipH+
+         '" fill="'+PAPER+'" stroke="'+INK+'" stroke-width="1"/>';
+    s += '<line x1="'+ipx+'" y1="'+(ipy+15)+'" x2="'+(ipx+ipW)+'" y2="'+(ipy+15)+
+         '" stroke="'+INK+'" stroke-width="0.6"/>';
+    s += ptxt(ipx + ipW/2, ipy + 10, 'BASE PLATE PLAN', 7, INK, 'middle', true);
+
+    var bpSize  = b.minBP || 12;
+    var bpScale = Math.min((ipW-24)/bpSize, (ipH-34)/bpSize) * 0.75;
+    var bcx     = ipx + ipW/2;
+    var bcy     = ipy + 15 + (ipH - 26) / 2;
+    var bpPx    = bpSize * bpScale;
+    s += '<rect x="'+(bcx-bpPx/2)+'" y="'+(bcy-bpPx/2)+'" width="'+bpPx+'" height="'+bpPx+
+         '" fill="rgba(180,175,165,0.3)" stroke="'+INK+'" stroke-width="1"/>';
+
+    var bpr    = b.bpr, brows = b.br, bsp_in = b.bsp;
+    var bspPx  = bsp_in * bpScale;
+    for (var bri = 0; bri < brows; bri++) {
+      for (var bci = 0; bci < bpr; bci++) {
+        var bxx = bcx + (bci  - (bpr-1)/2)   * bspPx;
+        var byy = bcy + (bri  - (brows-1)/2) * bspPx;
+        s += '<circle cx="'+bxx+'" cy="'+byy+'" r="3"   fill="none" stroke="'+INK+'" stroke-width="0.8"/>';
+        s += '<circle cx="'+bxx+'" cy="'+byy+'" r="1.2" fill="'+INK+'"/>';
+      }
+    }
+    s += '<line x1="'+(bcx-bpPx/2-4)+'" y1="'+bcy+'" x2="'+(bcx+bpPx/2+4)+'" y2="'+bcy+
+         '" stroke="'+INK2+'" stroke-width="'+LW_CENTER+'" stroke-dasharray="8,2,2,2"/>';
+    s += '<line x1="'+bcx+'" y1="'+(bcy-bpPx/2-4)+'" x2="'+bcx+'" y2="'+(bcy+bpPx/2+4)+
+         '" stroke="'+INK2+'" stroke-width="'+LW_CENTER+'" stroke-dasharray="8,2,2,2"/>';
+    s += ptxt(ipx + ipW/2, ipy + ipH - 5,
+              bpr+' \u00D7 '+brows+' BOLTS @ '+bsp_in+'" O.C.', 7, INK2, 'middle', false);
+  }
+
+  svg.innerHTML = s;
+}
+
+// ===================== RESULT CARDS =====================
+function renderAllResults() {
+  var c = lastCalc;
+  var connType = rv('connTypeGroup') || 'embedded';
+  var isEmbedded = connType === 'embedded';
+  syncConnTypeUI(connType);
+
+  var b = isEmbedded ? { bpr:2, br:2, bsp:6, total:4, reqAt:0, bolt:null, minBP:10, aci:null, bp:null } : calcBoltData();
+  var f = calcFoundData();
+
+  var fc_ = val('fc', 3000);
+  var hef_ = val('hef', 24);
+  var bDia_ = (b.bolt ? b.bolt.dia : 0.75);
+  var nBolts_ = b.bpr * b.br;
+  var edgeMin_ = Math.max(3, (f.fw * 12 / 2) - (b.bsp / 2));
+  var uplift_ = c.windForce * c.centroid / (f.fw / 2);
+  var Nu_per = isEmbedded ? 0 : (uplift_ / Math.max(nBolts_, 1));
+
+  var aci, aciPass, pullout, bearing, bearingPass;
+  if (isEmbedded) {
+    aci = { phiNcbg: 1, ANco: 0, ANc: 0, Nb: 0, psi_ed: 1 }; lastACI = aci; aciPass = true;
+    pullout = { phiNp: 1 }; lastPullout = pullout;
+    bearing = { phiPp: 1 }; lastBearing = bearing; bearingPass = true;
+  } else {
+    aci = calcACI318Breakout(Nu_per, hef_, bDia_, fc_, edgeMin_, nBolts_);
+    lastACI = aci; aciPass = aci.phiNcbg >= Nu_per;
+    var boltAbrg = (b.bolt && b.bolt.Abrg) ? b.bolt.Abrg : 0.291;
+    pullout = calcACI318Pullout(Nu_per, boltAbrg, fc_); lastPullout = pullout;
+    var minBP_in = b.minBP || 10;
+    var A1 = minBP_in * minBP_in;
+    var fArea_in2 = f.fArea * 144;
+    bearing = calcBasePlateBearing(fc_, A1, fArea_in2);
+    // Demand = compression resultant from overturning: C = uplift_ + P_vert (sign DL)
+    // uplift_ = M_grade/(fw/2) = maximum bearing reaction under plate (AISC DG1 large eccentricity)
+    var C_demand = uplift_ + val('DL', 500);
+    bearingPass = bearing.phiPp >= C_demand;
+    bearing._C_demand = C_demand; // store for display
+    lastBearing = bearing;
+  }
+
+  // Foundation method
+  var foundMethod = rv('foundMethodGroup') || 'simplified';
+  var ibcRes = null, ibcConstrained = null;
+  if (foundMethod === 'ibc1807') {
+    ibcRes = calcFoundationIBC1807(c.forcePerCol, c.centroid, f.fw, f.Sl);
+  } else if (foundMethod === 'ibc1807c') {
+    var S3 = f.Sl * 2;
+    ibcConstrained = calcFoundationIBC1807Constrained(c.forcePerCol, c.centroid, f.fw, S3);
+  }
+
+  var frostPass = f.fd >= 4.0;
+  var foundAllPass = f.bearOK && f.otOK && f.latOK && frostPass;
+  if (ibcRes) foundAllPass = foundAllPass && (f.fd >= ibcRes.d);
+  if (ibcConstrained) foundAllPass = foundAllPass && (f.fd >= ibcConstrained.d);
+
+  var sectionPass = !!(c.recPipe || c.recSq);
+  var boltPass = isEmbedded ? true : !!(b.bolt && b.bolt.At >= b.reqAt);
+
+  // Update status chips
+  updateChip('chipWind', 'chipWindIcon', true);
+  updateChip('chipSection', 'chipSectionIcon', sectionPass);
+  updateChip('chipFoundation', 'chipFoundIcon', foundAllPass);
+  updateChip('chipBolts', 'chipBoltIcon', boltPass && aciPass);
+
+  var html = '';
+
+  // 1. WIND LOAD
+  var codeLabel = curCode==='ubc97'?'1997 UBC':'ASCE 7-22';
+  var exp = document.getElementById('exposure') ? document.getElementById('exposure').value : 'C';
+  var Kz = getKz(c.centroid, exp);
+  var govLbl = c.governing || 'A';
+  var govColor = govLbl==='C'?'var(--red)':'var(--gold)';
+  html += '<div class="result-card pass" id="card-wind">';
+  html += '<div class="card-header" onclick="this.nextElementSibling.classList.toggle(\'collapsed\')"><span class="card-icon" style="color:var(--gold)">&#10003;</span><span class="card-title">Wind Load</span><span class="cite">'+codeLabel+' §29.3</span><span class="card-status pass">PASS</span></div>';
+  html += '<div class="card-body">';
+  html += '<div class="step"><span class="l">Exposure / Kz (h='+c.centroid.toFixed(1)+'\')</span><span class="r">'+exp+' / '+Kz.toFixed(3)+'</span></div>';
+  html += '<div class="step"><span class="l">qz (vel. pressure)</span><span class="r">'+c.PSF.toFixed(2)+' psf</span></div>';
+  if (c.solidPct < 1.0) {
+    html += '<div class="step"><span class="l">Face Area ('+c.areaGross.toFixed(1)+'ft2 gross x '+(c.solidPct*100).toFixed(0)+'% solid)</span><span class="r">'+c.area.toFixed(1)+' ft2 eff</span></div>';
+  }
+  html += '<div class="step"><span class="l">Case A: F / M</span><span class="r">'+fmtN(c.F_A)+' lbs / '+fmtN(c.M_A)+' ft-lb'+(c.governing==='A'?' <b style="color:var(--gold)">[GOV]</b>':'')+'</span></div>';
+  if (c.caseC_ok) {
+    html += '<div class="step"><span class="l">Case C: F / M</span><span class="r">'+fmtN(c.F_C)+' lbs / '+fmtN(c.M_C)+' ft-lb'+(c.governing==='C'?' <b style="color:var(--red)">[GOV]</b>':'')+'</span></div>';
+  }
+  html += '<div class="step final"><span class="l">Design (Case '+govLbl+') — Sign Face</span><span class="r" style="color:'+govColor+'">'+fmtN(c.windForce)+' lbs / '+fmtN(c.momentFtLb)+' ft-lb</span></div>';
+  if (c.F_col_wind > 0) {
+    var colWindPct = (c.M_col_wind / Math.max(c.momentFtLb, 1) * 100).toFixed(0);
+    html += '<div class="step"><span class="l">+ Column Shaft (§29.4, Cf=0.7, '+c.col_wind_od_in.toFixed(1)+'" dia, GC='+c.GC+'\') </span><span class="r" style="color:var(--amber)">+'+fmtN(c.F_col_wind)+' lbs / +'+fmtN(c.M_col_wind)+' ft-lb</span></div>';
+    html += '<div class="step" style="border-top:1px solid var(--border2);margin-top:3px;padding-top:4px"><span class="l" style="font-weight:700">TOTAL Base Moment (sign + column shaft)</span><span class="r" style="color:var(--orange);font-weight:700">'+fmtN(c.momentFtLb + c.M_col_wind)+' ft-lb (+'+colWindPct+'%)</span></div>';
+    html += '<div style="color:var(--amber);font-size:9px;padding:3px 0 1px">NOTE: Column shaft wind adds '+colWindPct+'% to base moment. Verify selected section covers total moment.</div>';
+  }
+  html += '<div class="formula-box">F = qz x G x Cf x Af (§29.3) &nbsp;|&nbsp; Case '+govLbl+' governs &nbsp;|&nbsp; Column shaft per §29.4</div>';
+  html += '</div></div>';
+
+  // 2. COLUMN SIZING
+  var secStatus = sectionPass ? 'pass' : 'fail';
+  var secIcon = sectionPass ? '&#10003;' : '&#10007;';
+  var secLabel = sectionPass ? 'PASS' : 'FAIL';
+  html += '<div class="result-card '+secStatus+'" id="card-section">';
+  html += '<div class="card-header" onclick="this.nextElementSibling.classList.toggle(\'collapsed\')"><span class="card-icon" style="color:var(--'+(sectionPass?'gold':'red')+')">'+secIcon+'</span><span class="card-title">Column Sizing</span><span class="cite">AISC 360-22</span><span class="card-status '+secStatus+'">'+secLabel+'</span></div>';
+  var shapeFy = (c.Fy/1000).toFixed(0);
+  var shapeMat = c.shape==='W'?'A992':c.shape==='hss'?'A500 Gr C':c.shape==='sq'?'A500 Gr C':'A53 Gr B';
+  var fbRatio  = (c.Fallow / Math.max(c.Fy, 1)).toFixed(2);
+  var fbRef    = c.shape==='pipe'?(c.st==='used'?'0.60Fy':'0.76Fy §F8'):
+                 (c.shape==='sq'||c.shape==='hss')?(c.st==='used'?'0.60Fy':'0.72Fy §F7'):
+                 (c.st==='used'?'0.60Fy':'§F2 LTB (Cb=1, Lb='+c.GC+'ft)='+(c.Fallow/1000).toFixed(2)+'ksi');
+  html += '<div class="card-body">';
+  html += '<div class="step"><span class="l">Material ('+shapeMat+')</span><span class="r">Fy = '+shapeFy+' ksi</span></div>';
+  html += '<div class="step"><span class="l">Fb (AISC 360-22 ASD = '+fbRef+')</span><span class="r">'+(c.Fallow/1000).toFixed(2)+' ksi</span></div>';
+  html += '<div class="step final"><span class="l">S_req = M / Fb</span><span class="r">'+c.Sreq.toFixed(2)+' in3</span></div>';
+  var anySection = false;
+  if (c.recPipe) {
+    var isSelPipe = c.shape==='pipe';
+    html += '<div class="rrow"><span class="rlabel">Round Pipe'+(isSelPipe?' [SELECTED]':' (alt.)')+'</span><span class="rval '+(isSelPipe?'pass':'')+'">'+c.recPipe.nom+'" '+(c.recPipe.nom >= 12 ? 'Std Wt' : 'Sch40')+' (Fy=35ksi, S='+c.recPipe.sm+' in3, '+((c.recPipe.sm/c.Sreq_pipe)*100).toFixed(0)+'%)</span></div>';
+    anySection=true;
+  }
+  if (c.recSq) {
+    var isSelSq = c.shape==='sq';
+    html += '<div class="rrow"><span class="rlabel">Sq Tube A500'+(isSelSq?' [SELECTED]':' (alt.)')+'</span><span class="rval '+(isSelSq?'pass':'')+'">'+c.recSq.side+'"x'+c.recSq.side+'" (Fy=46ksi, S='+c.recSq.sm+' in3, '+((c.recSq.sm/c.Sreq_sq)*100).toFixed(0)+'%)</span></div>';
+    anySection=true;
+  }
+  if (c.recHSS) {
+    var isSelHSS = c.shape==='hss';
+    html += '<div class="rrow"><span class="rlabel">HSS A500'+(isSelHSS?' [SELECTED]':' (alt.)')+'</span><span class="rval '+(isSelHSS?'pass':'')+'">'+c.recHSS.des+' (Fy=46ksi, S='+c.recHSS.Sx+' in3, '+((c.recHSS.Sx/c.Sreq_hss)*100).toFixed(0)+'%)</span></div>';
+    anySection=true;
+  }
+  if (c.recW) {
+    var isSelW = c.shape==='W';
+    html += '<div class="rrow"><span class="rlabel">W-Shape A992'+(isSelW?' [SELECTED]':' (alt.)')+'</span><span class="rval '+(isSelW?'pass':'')+'">'+c.recW.des+' (Fy=50ksi, S='+c.recW.Sx+' in3, '+((c.recW.Sx/c.Sreq_W)*100).toFixed(0)+'%)</span></div>';
+    anySection=true;
+  }
+  if (!anySection) {
+    html += '<div style="color:var(--red);font-size:10px;padding:4px 0">Exceeds all standard sizes -- special engineering required</div>';
+  }
+  // Column slenderness check
+  if (c.slender) {
+    var sl = c.slender;
+    var slCls = sl.warn ? 'fail' : sl.KL_r > 150 ? 'warn' : 'pass';
+    var slNote = sl.warn ? ' [>200: EXCEEDS AISC LIMIT]' : sl.KL_r > 150 ? ' [>150: TALL COLUMN — VERIFY]' : '';
+    html += '<div class="rrow"><span class="rlabel">Slenderness KL/r (K=2.0 cantilever, L='+sl.L_ft.toFixed(0)+'\')</span><span class="rval '+slCls+'">'+sl.KL_r.toFixed(0)+slNote+'</span></div>';
+    html += '<div class="rrow"><span class="rlabel">Euler Fe / Critical Stress Fcr</span><span class="rval">'+sl.Fe_ksi.toFixed(1)+' ksi / '+sl.Fcr_ksi.toFixed(1)+' ksi</span></div>';
+    if (sl.warn) {
+      html += '<div style="color:var(--red);font-size:10px;padding:4px 0;font-weight:600">KL/r >200 exceeds AISC recommended limit. Increase column size or add intermediate bracing. PE review required.</div>';
+    }
+  }
+  // Tip deflection check
+  if (c.defl) {
+    var df = c.defl;
+    var dfCls = df.ok ? 'pass' : 'fail';
+    html += '<div class="rrow"><span class="rlabel">Tip Deflection &delta; (P×a²(3L-a)/6EI)</span><span class="rval '+dfCls+'">' +
+      df.delta_in.toFixed(2) + '" &le; H/60=' + df.delta_lim.toFixed(2) + '" &nbsp; DCR=' + df.ratio.toFixed(2) + (df.ok ? '' : ' <b style="color:var(--red)">EXCEEDS LIMIT</b>') + '</span></div>';
+  }
+  html += '<div class="formula-box">S_req = M/Fb &nbsp;|&nbsp; AISC 360-22 §F8(pipe) §F7(HSS) §F2+LTB(W) &nbsp;|&nbsp; KL/r per §E3 &nbsp;|&nbsp; &delta;&le;H/60</div>';
+  html += '</div></div>';
+
+  // 3. ANCHOR BOLTS — only for base plate + bolts connection type
+  if (!isEmbedded) {
+    var bStatus = boltPass ? 'pass' : 'fail';
+    var bIcon = boltPass ? '&#10003;' : '&#10007;';
+    var bLabel = boltPass ? 'PASS' : 'FAIL';
+    var bg = getBoltGrade();
+    html += '<div class="result-card '+bStatus+'" id="card-bolts">';
+    html += '<div class="card-header" onclick="this.nextElementSibling.classList.toggle(\'collapsed\')"><span class="card-icon" style="color:var(--'+(boltPass?'gold':'red')+')">'+bIcon+'</span><span class="card-title">Anchor Bolts</span><span class="cite">AISC 360 ASD / ASTM F1554</span><span class="card-status '+bStatus+'">'+bLabel+'</span></div>';
+    html += '<div class="card-body">';
+    html += '<div class="step"><span class="l">Grade</span><span class="r">'+bg.name+' (Ft='+bg.Ft+' ksi)</span></div>';
+    html += '<div class="step"><span class="l">T_req per bolt</span><span class="r">'+b.reqAt.toFixed(3)+' in2</span></div>';
+    if (b.bolt) {
+      html += '<div class="rrow"><span class="rlabel">Selected: '+b.bolt.lbl+'</span><span class="rval '+(boltPass?'pass':'fail')+'">At='+b.bolt.At+' in2 ('+((b.bolt.At/b.reqAt)*100).toFixed(0)+'%)</span></div>';
+    } else {
+      html += '<div style="color:var(--red);font-size:10px;padding:4px 0">No bolt &lt;=3" satisfies -- special eng. required</div>';
+    }
+    html += '<div class="formula-box">T_req = M / (n x s x Ft)</div>';
+    html += '</div></div>';
+  }
+
+  // 4. FOUNDATION
+  var fStatus = foundAllPass ? 'pass' : 'fail';
+  var fIcon = foundAllPass ? '&#10003;' : '&#10007;';
+  var fLabel = foundAllPass ? 'PASS' : 'FAIL';
+  var tLbl = f.fType.charAt(0).toUpperCase() + f.fType.slice(1);
+  html += '<div class="result-card '+fStatus+'" id="card-foundation">';
+  html += '<div class="card-header" onclick="this.nextElementSibling.classList.toggle(\'collapsed\')"><span class="card-icon" style="color:var(--'+(foundAllPass?'gold':'red')+')">'+fIcon+'</span><span class="card-title">Foundation</span><span class="cite">IBC 2021 S1807.3</span><span class="card-status '+fStatus+'">'+fLabel+'</span></div>';
+  html += '<div class="card-body">';
+  html += '<div class="step"><span class="l">Method</span><span class="r">'+(foundMethod==='ibc1807'?'IBC Eq.18-1':(foundMethod==='ibc1807c'?'IBC Eq.18-2':'Simplified'))+'</span></div>';
+
+  if (ibcRes) {
+    html += '<div class="step"><span class="l">A = 2.34P / (S1 b)</span><span class="r">'+ibcRes.A.toFixed(2)+'</span></div>';
+    html += '<div class="step final"><span class="l">d_req</span><span class="r">'+ibcRes.d.toFixed(2)+'\' ('+(ibcRes.d*12).toFixed(0)+'")</span></div>';
+    html += '<div class="rrow"><span class="rlabel">IBC depth check</span><span class="rval '+(f.fd>=ibcRes.d?'pass':'fail')+'">'+(f.fd>=ibcRes.d?'PASS':'FAIL')+' ('+f.fd+'\' vs '+ibcRes.d.toFixed(2)+'\')</span></div>';
+  }
+  if (ibcConstrained) {
+    html += '<div class="step"><span class="l">S3 = 2 x S1 (constrained)</span><span class="r">'+(f.Sl*2)+' psf</span></div>';
+    html += '<div class="step final"><span class="l">d_req = sqrt(4.25Ph/(S3 b))</span><span class="r">'+ibcConstrained.d.toFixed(2)+'\' ('+(ibcConstrained.d*12).toFixed(0)+'")</span></div>';
+    html += '<div class="rrow"><span class="rlabel">IBC depth check</span><span class="rval '+(f.fd>=ibcConstrained.d?'pass':'fail')+'">'+(f.fd>=ibcConstrained.d?'PASS':'FAIL')+'</span></div>';
+  }
+
+  html += '<div class="rrow"><span class="rlabel">Overturning SF (>=1.5)</span><span class="rval '+sfCls(f.otSF,1.5)+'">'+f.otSF.toFixed(2)+'</span></div>';
+  html += '<div class="rrow"><span class="rlabel">Sliding SF (>=1.5)</span><span class="rval '+sfCls(f.latSF,1.5)+'">'+f.latSF.toFixed(2)+'</span></div>';
+  html += '<div class="rrow"><span class="rlabel">Bearing ('+f.bearPSF.toFixed(0)+'/'+f.Sv+' psf)</span><span class="rval '+(f.bearOK?'pass':'fail')+'">'+(f.bearOK?'OK':'NG')+'</span></div>';
+  html += '<div class="rrow"><span class="rlabel">Iowa Frost Line (48" min)</span><span class="rval '+(frostPass?'pass':'fail')+'">'+(frostPass?'PASS: '+(f.fd*12).toFixed(0)+'">48"':'FAIL: '+(f.fd*12).toFixed(0)+'"<48"')+'</span></div>';
+
+  html += '<div class="formula-box">SF_ot = R_moment / O_moment >= 1.5</div>';
+  html += '</div></div>';
+
+  // 5. CONCRETE BREAKOUT — base plate only
+  if (!isEmbedded) {
+  var aciStatus = aciPass ? 'pass' : 'fail';
+  html += '<div class="result-card '+aciStatus+'" id="card-aci">';
+  html += '<div class="card-header" onclick="this.nextElementSibling.classList.toggle(\'collapsed\')"><span class="card-icon" style="color:var(--'+(aciPass?'gold':'red')+')">'+( aciPass?'&#10003;':'&#10007;')+'</span><span class="card-title">Concrete Breakout</span><span class="cite">ACI 318-19 S17.6.2</span><span class="card-status '+aciStatus+'">'+(aciPass?'PASS':'FAIL')+'</span></div>';
+  html += '<div class="card-body">';
+  html += '<div class="step"><span class="l">ANco = 9 hef2</span><span class="r">'+aci.ANco.toFixed(1)+' in2</span></div>';
+  html += '<div class="step"><span class="l">Nb (basic breakout)</span><span class="r">'+fmtN(aci.Nb)+' lbs</span></div>';
+  html += '<div class="step"><span class="l">Edge dist c_a1 (min 1.5×hef req)</span><span class="r">'+edgeMin_.toFixed(1)+'" (req '+((1.5*hef_).toFixed(1))+'") '+( edgeMin_ < 1.5*hef_ ? '<b style="color:var(--red)">REDUCED</b>' : 'OK')+'</span></div>';
+  html += '<div class="step"><span class="l">psi_ed (edge factor)</span><span class="r">'+aci.psi_ed.toFixed(3)+(aci.psi_ed < 1.0?' <b style="color:var(--red)">[EDGE SPALLING RISK]</b>':'')+'</span></div>';
+  html += '<div class="step final"><span class="l">phi Ncbg</span><span class="r">'+fmtN(aci.phiNcbg)+' lbs</span></div>';
+  html += '<div class="rrow"><span class="rlabel">Nu/anchor vs phi Ncbg</span><span class="rval '+(aciPass?'pass':'fail')+'">'+fmtN(Nu_per)+' vs '+fmtN(aci.phiNcbg)+' ('+(aci.phiNcbg/Math.max(Nu_per,1)).toFixed(2)+'x)</span></div>';
+  if (edgeMin_ < 1.5*hef_) {
+    html += '<div style="color:var(--red);font-size:10px;padding:4px 0;font-weight:600">WARNING: Edge dist '+edgeMin_.toFixed(1)+'" < 1.5×hef ('+((1.5*hef_).toFixed(1))+'") -- Spalling risk per ACI 318-19 §17.6.2.4. Increase footing size or reduce bolt circle.</div>';
+  }
+  html += '<div class="formula-box">Nb = 17 &lambda; &radic;f\'c &middot; hef^1.5 &nbsp; [ACI 318-19 §17.6.2.2b, kc=17 cracked, &lambda;=1.0 NW]</div>';
+  html += '</div></div>';
+
+  // 6. BASE PLATE BEARING — base plate only
+  var bpStatus = bearingPass ? 'pass' : 'fail';
+  html += '<div class="result-card '+bpStatus+'" id="card-bearing">';
+  html += '<div class="card-header" onclick="this.nextElementSibling.classList.toggle(\'collapsed\')"><span class="card-icon" style="color:var(--'+(bearingPass?'gold':'red')+')">'+( bearingPass?'&#10003;':'&#10007;')+'</span><span class="card-title">Base Plate Bearing</span><span class="cite">AISC 360-22 Eq.J8-2</span><span class="card-status '+bpStatus+'">'+(bearingPass?'PASS':'FAIL')+'</span></div>';
+  html += '<div class="card-body">';
+  html += '<div class="step"><span class="l">A1 (base plate)</span><span class="r">'+A1.toFixed(1)+' in2</span></div>';
+  html += '<div class="step"><span class="l">A2 (foundation)</span><span class="r">'+fArea_in2.toFixed(0)+' in2</span></div>';
+  html += '<div class="step final"><span class="l">phi Pp</span><span class="r">'+fmtN(bearing.phiPp)+' lbs</span></div>';
+  var _Cdem = bearing._C_demand || 0;
+  var _dlLoad = val('DL', 500);
+  html += '<div class="step"><span class="l">Bearing demand C = uplift + DL</span><span class="r">'+fmtN(uplift_)+' + '+fmtN(_dlLoad)+' = '+fmtN(_Cdem)+' lbs</span></div>';
+  html += '<div class="rrow"><span class="rlabel">C (demand) vs phi Pp</span><span class="rval '+(bearingPass?'pass':'fail')+'">'+fmtN(_Cdem)+' vs '+fmtN(bearing.phiPp)+' ('+(bearing.phiPp/Math.max(_Cdem,1)).toFixed(2)+'x)</span></div>';
+  html += '<div class="formula-box">phi Pp = 0.65 &times; 0.85 f\'c A1 &radic;(A2/A1) &nbsp;[AISC 360-22 §J8-2] &nbsp;| &nbsp;C = M<sub>grade</sub>/(fw/2) + P<sub>DL</sub> &nbsp;[AISC DG1]</div>';
+  html += '</div></div>';
+  } // end !isEmbedded for ACI + Base Plate sections
+
+  // 7. BOM
+  html += '<div class="result-card pass" id="card-bom">';
+  html += '<div class="card-header" onclick="this.nextElementSibling.classList.toggle(\'collapsed\')"><span class="card-icon" style="color:var(--gold)">&#9776;</span><span class="card-title">Bill of Materials</span><span class="card-status pass">BOM</span></div>';
+  html += '<div class="card-body">';
+
+  var colHt = c.GC + c.H + 2;
+  var colName = '--';
+  if (c.shape==='pipe' && c.recPipe) colName = c.recPipe.nom+'" '+(c.recPipe.nom >= 12 ? 'Std Wt' : 'Sch.40')+' Pipe A53 Gr B';
+  else if (c.shape==='sq' && c.recSq) colName = c.recSq.side+'"x'+c.recSq.side+'" Sq Tube A500 Gr C';
+  else if (c.shape==='hss' && c.recHSS) colName = c.recHSS.des+' A500 Gr C';
+  else if (c.shape==='W' && c.recW) colName = c.recW.des+' A992';
+  else if (c.recPipe) colName = c.recPipe.nom+'" '+(c.recPipe.nom >= 12 ? 'Std Wt' : 'Sch.40')+' Pipe A53 Gr B';
+  html += '<div class="bom-row"><span class="bom-desc">Column: '+colName+' x '+colHt+'\' (est.)</span><span class="bom-qty">'+c.N+' ea</span></div>';
+
+  if (!isEmbedded) {
+    var bpDim = b.aci && b.aci.pass ? b.aci.bsp_in : (b.minBP || 10);
+    var bpThk = c.recPipe ? toFrac(c.recPipe.gThk) : '1/2';
+    html += '<div class="bom-row"><span class="bom-desc">Base Plate: '+bpDim.toFixed(0)+'" x '+bpDim.toFixed(0)+'" x '+bpThk+'" PL A36</span><span class="bom-qty">'+c.N+' ea</span></div>';
+    if (b.bolt) {
+      var boltBg = getBoltGrade();
+      var totalBolts = b.total * c.N;
+      html += '<div class="bom-row"><span class="bom-desc">Anchor Bolts: '+b.bolt.lbl+' dia '+boltBg.std+'</span><span class="bom-qty">'+totalBolts+' ea</span></div>';
+    }
+  } else {
+    html += '<div class="bom-row"><span class="bom-desc">Column embed in concrete (no base plate / no anchor bolts)</span><span class="bom-qty">--</span></div>';
+  }
+
+  var fndLabel = f.fType === 'circular' ? f.fw+'\' dia' : f.fw+'\' sq';
+  html += '<div class="bom-row"><span class="bom-desc">Foundation: '+fndLabel+' x '+f.fd+'\' deep ('+f.cuYd.toFixed(2)+' CY)</span><span class="bom-qty">'+c.N+' ea</span></div>';
+
+  if (c.shape==='pipe' && c.recPipe) {
+    var gusQty = c.N * 4;
+    html += '<div class="bom-row"><span class="bom-desc">Gussets: '+c.recPipe.gLeg+'" x '+c.recPipe.gLeg+'" x '+toFrac(c.recPipe.gThk)+'" PL A36</span><span class="bom-qty">'+gusQty+' ea</span></div>';
+  }
+
+  html += '</div></div>';
+
+  document.getElementById('resultsPanel').innerHTML = html;
+}
+
+function updateChip(chipId, iconId, pass) {
+  var chip = document.getElementById(chipId);
+  var icon = document.getElementById(iconId);
+  if (!chip) return;
+  chip.className = 'status-chip ' + (pass ? 'pass' : 'fail');
+  if (icon) icon.innerHTML = pass ? '&#10003;' : '&#10007;';
+}
+
+// ===================== DRAWING ANALYSIS (AI-POWERED) =====================
+var _lastDrawingResult = null;
+
+function saveDrawApiKey() {
+  var k = document.getElementById('drawApiKey').value.trim();
+  if (k) try { localStorage.setItem('signcalc_apikey', k); } catch(e) {}
+}
+
+function getDrawApiKey() {
+  var el = document.getElementById('drawApiKey');
+  // Try DOM first, then localStorage
+  if (el && el.value.trim()) return el.value.trim();
+  try { return localStorage.getItem('signcalc_apikey') || ''; } catch(e) { return ''; }
+}
+
+function showDrawModal(content) {
+  document.getElementById('drawModalOverlay').classList.add('active');
+  if (content) document.getElementById('drawModalBody').innerHTML = content;
+  // Pre-fill API key if stored
+  var stored = '';
+  try { stored = localStorage.getItem('signcalc_apikey') || ''; } catch(e) {}
+  var keyEl = document.getElementById('drawApiKey');
+  if (keyEl && stored) keyEl.value = stored;
+}
+
+function closeDrawModal() {
+  document.getElementById('drawModalOverlay').classList.remove('active');
+}
+
+document.addEventListener('dragover', function(e) {
+  e.preventDefault();
+  document.getElementById('dropOverlay').classList.add('active');
+});
+document.addEventListener('dragleave', function(e) {
+  if (!e.relatedTarget || e.relatedTarget === document.documentElement) {
+    document.getElementById('dropOverlay').classList.remove('active');
+  }
+});
+document.addEventListener('drop', function(e) {
+  e.preventDefault();
+  document.getElementById('dropOverlay').classList.remove('active');
+  var files = e.dataTransfer.files;
+  if (files && files.length > 0) _processDrawingFile(files[0]);
+});
+
+function analyzeDrawing(input) {
+  var file = input.files[0];
+  if (!file) return;
+  _processDrawingFile(file);
+  input.value = '';
+}
+
+function _processDrawingFile(file) {
+  var apiKey = getDrawApiKey();
+  if (!apiKey) {
+    // Show modal with API key prompt
+    showDrawModal(_buildApiKeyPrompt());
+    return;
+  }
+  // Show spinner
+  showDrawModal('<div class="draw-spinner">&#9881; Analyzing drawing with Claude Vision...<br><span style="font-size:9px;color:var(--text3)">'+file.name+'</span></div>');
+
+  // Read file as base64
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var b64 = e.target.result.split(',')[1];
+    var mimeType = file.type || 'image/jpeg';
+    if (file.name.toLowerCase().endsWith('.pdf')) mimeType = 'application/pdf';
+    _callClaudeVision(apiKey, b64, mimeType, file.name);
+  };
+  reader.onerror = function() {
+    showDrawModal('<div class="draw-section fail"><h3>File Read Error</h3><div class="draw-issue">Could not read file: '+file.name+'</div></div>');
+  };
+  reader.readAsDataURL(file);
+}
+
+function _buildApiKeyPrompt() {
+  return '<div class="draw-section warn">' +
+    '<h3>Anthropic API Key Required</h3>' +
+    '<div style="font-size:10px;color:var(--text2);margin-bottom:6px;">Enter your key below. It is stored in browser localStorage only — never sent anywhere except Anthropic\'s API directly.</div>' +
+    '<input type="password" class="draw-apikey" id="drawApiKey" placeholder="sk-ant-..." oninput="saveDrawApiKey()" autocomplete="off">' +
+    '<div style="margin-top:10px;">' +
+    '<button class="draw-apply-btn" onclick="document.getElementById(\'drawingFileInput\').click()">Re-upload Drawing</button>' +
+    '</div></div>';
+}
+
+var _DRAWING_PROMPT = [
+  'You are a licensed structural sign engineer. Analyze this engineering drawing and extract ALL parameters needed for structural calculation of a freestanding sign structure.',
+  '',
+  'Return ONLY a JSON object (no markdown, no explanation) with this exact structure:',
+  '{',
+  '  "sign_width_ft": null,',
+  '  "sign_height_ft": null,',
+  '  "ground_clearance_ft": null,',
+  '  "num_columns": null,',
+  '  "column_type": null,',
+  '  "column_designation": null,',
+  '  "column_material": null,',
+  '  "foundation_type": null,',
+  '  "foundation_dia_ft": null,',
+  '  "foundation_depth_ft": null,',
+  '  "wind_speed_mph": null,',
+  '  "wind_exposure": null,',
+  '  "design_code": null,',
+  '  "location": null,',
+  '  "customer": null,',
+  '  "drawing_number": null,',
+  '  "drawing_date": null,',
+  '  "scale": null,',
+  '  "confidence": {',
+  '    "sign_width_ft": 0,',
+  '    "sign_height_ft": 0,',
+  '    "ground_clearance_ft": 0,',
+  '    "num_columns": 0,',
+  '    "column_designation": 0,',
+  '    "foundation_depth_ft": 0,',
+  '    "wind_speed_mph": 0',
+  '  },',
+  '  "issues": [],',
+  '  "missing": [],',
+  '  "sign_types_observed": [],',
+  '  "notes": ""',
+  '}',
+  '',
+  'Rules:',
+  '- confidence values: 0.0 (not found) to 1.0 (clearly stated)',
+  '- column_type: "pipe", "W", "HSS", "tube", "I-beam", "other"',
+  '- foundation_type: "caisson", "spread_footing", "direct_burial", "helical_pier"',
+  '- Issues to flag in "issues" array (be specific):',
+  '  * Scale not indicated or inconsistent',
+  '  * Material specifications missing or incomplete',
+  '  * Foundation depth not specified',
+  '  * Wind design criteria not shown',
+  '  * Conflicting or missing dimensions',
+  '  * Non-standard details or unusual conditions',
+  '  * Weld specifications missing',
+  '  * Base plate not detailed',
+  '  * Anchor bolt pattern not specified',
+  '  * Drawing appears to be architectural only (no structural)',
+  '- "missing" array: list critical fields that are completely absent',
+  '- "sign_types_observed": e.g. ["monument", "pole", "channel_letters", "cabinet", "EMC"]',
+  '- If scale IS shown, use it to verify stated dimensions',
+  '- If a field truly cannot be determined, use null'
+].join('\n');
+
+function _callClaudeVision(apiKey, b64, mimeType, filename) {
+  var payload = {
+    model: 'claude-opus-4-6',
+    max_tokens: 2048,
+    messages: [{
+      role: 'user',
+      content: [
+        {
+          type: 'image',
+          source: { type: 'base64', media_type: mimeType, data: b64 }
+        },
+        {
+          type: 'text',
+          text: _DRAWING_PROMPT
+        }
+      ]
+    }]
+  };
+
+  fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01',
+      'content-type': 'application/json',
+      'anthropic-dangerous-allow-browser': 'true'
+    },
+    body: JSON.stringify(payload)
+  })
+  .then(function(r) {
+    if (!r.ok) return r.json().then(function(e){ throw new Error(e.error ? e.error.message : r.status); });
+    return r.json();
+  })
+  .then(function(data) {
+    var text = data.content && data.content[0] ? data.content[0].text : '';
+    // Strip markdown code fences if present
+    text = text.replace(/^```[a-z]*\n?/,'').replace(/\n?```$/,'').trim();
+    try {
+      var result = JSON.parse(text);
+      _lastDrawingResult = result;
+      result._filename = filename;
+      showDrawModal(_buildDrawingReport(result));
+    } catch(ex) {
+      showDrawModal('<div class="draw-section fail"><h3>Parse Error</h3><div class="draw-issue">Could not parse AI response. Raw:<br><pre style="font-size:8px;white-space:pre-wrap;max-height:200px;overflow:auto;">'+text.slice(0,500)+'</pre></div></div>');
+    }
+  })
+  .catch(function(err) {
+    showDrawModal('<div class="draw-section fail"><h3>API Error</h3><div class="draw-issue">'+err.message+'</div>' +
+      '<div style="font-size:9px;color:var(--text2);margin-top:8px;">Check API key and network. Key must have claude-opus-4-6 access.</div></div>' +
+      _buildApiKeyPrompt());
+  });
+}
+
+function _conf(v) {
+  if (v === null || v === undefined) return '—';
+  if (v >= 0.9) return '<span style="color:var(--green)">HIGH</span>';
+  if (v >= 0.6) return '<span style="color:var(--orange)">MED</span>';
+  return '<span style="color:var(--red)">LOW</span>';
+}
+
+function _fmtVal(v, unit) {
+  if (v === null || v === undefined) return '<span style="color:var(--text3)">not found</span>';
+  return '<span class="val">' + v + (unit?' '+unit:'') + '</span>';
+}
+
+function _buildDrawingReport(r) {
+  var html = '';
+  var c = r.confidence || {};
+
+  // Header info
+  html += '<div class="draw-section ok">';
+  html += '<h3>Drawing Info</h3>';
+  if (r.customer) html += '<div class="draw-row"><span>Customer</span><span class="val">'+r.customer+'</span></div>';
+  if (r.drawing_number) html += '<div class="draw-row"><span>Drawing #</span><span class="val">'+r.drawing_number+'</span></div>';
+  if (r.drawing_date) html += '<div class="draw-row"><span>Date</span><span class="val">'+r.drawing_date+'</span></div>';
+  if (r.scale) html += '<div class="draw-row"><span>Scale</span><span class="val">'+r.scale+'</span></div>';
+  if (r.location) html += '<div class="draw-row"><span>Location</span><span class="val">'+r.location+'</span></div>';
+  if (r.sign_types_observed && r.sign_types_observed.length) html += '<div class="draw-row"><span>Sign Types</span><span class="val">'+r.sign_types_observed.join(', ')+'</span></div>';
+  html += '</div>';
+
+  // Extracted dimensions
+  html += '<div class="draw-section '+(r.sign_width_ft&&r.sign_height_ft?'ok':'warn')+'">';
+  html += '<h3>Sign Geometry</h3>';
+  html += '<div class="draw-row"><span>Width</span>'+_fmtVal(r.sign_width_ft,'ft')+'<span class="conf">'+_conf(c.sign_width_ft)+'</span></div>';
+  html += '<div class="draw-row"><span>Height</span>'+_fmtVal(r.sign_height_ft,'ft')+'<span class="conf">'+_conf(c.sign_height_ft)+'</span></div>';
+  html += '<div class="draw-row"><span>Ground Clearance</span>'+_fmtVal(r.ground_clearance_ft,'ft')+'<span class="conf">'+_conf(c.ground_clearance_ft)+'</span></div>';
+  html += '<div class="draw-row"><span>Columns</span>'+_fmtVal(r.num_columns,'')+'<span class="conf">'+_conf(c.num_columns)+'</span></div>';
+  html += '</div>';
+
+  // Structure
+  html += '<div class="draw-section '+(r.column_designation?'ok':'warn')+'">';
+  html += '<h3>Structure</h3>';
+  html += '<div class="draw-row"><span>Column Type</span>'+_fmtVal(r.column_type,'')+'</div>';
+  html += '<div class="draw-row"><span>Column Size</span>'+_fmtVal(r.column_designation,'')+'<span class="conf">'+_conf(c.column_designation)+'</span></div>';
+  html += '<div class="draw-row"><span>Material</span>'+_fmtVal(r.column_material,'')+'</div>';
+  html += '</div>';
+
+  // Foundation
+  html += '<div class="draw-section '+(r.foundation_depth_ft?'ok':'warn')+'">';
+  html += '<h3>Foundation</h3>';
+  html += '<div class="draw-row"><span>Type</span>'+_fmtVal(r.foundation_type,'')+'</div>';
+  html += '<div class="draw-row"><span>Diameter</span>'+_fmtVal(r.foundation_dia_ft,'ft')+'</div>';
+  html += '<div class="draw-row"><span>Depth</span>'+_fmtVal(r.foundation_depth_ft,'ft')+'<span class="conf">'+_conf(c.foundation_depth_ft)+'</span></div>';
+  html += '</div>';
+
+  // Wind
+  html += '<div class="draw-section '+(r.wind_speed_mph?'ok':'warn')+'">';
+  html += '<h3>Wind Design</h3>';
+  html += '<div class="draw-row"><span>Code</span>'+_fmtVal(r.design_code,'')+'</div>';
+  html += '<div class="draw-row"><span>Wind Speed</span>'+_fmtVal(r.wind_speed_mph,'mph')+'<span class="conf">'+_conf(c.wind_speed_mph)+'</span></div>';
+  html += '<div class="draw-row"><span>Exposure</span>'+_fmtVal(r.wind_exposure,'')+'</div>';
+  html += '</div>';
+
+  // Issues
+  if (r.issues && r.issues.length) {
+    html += '<div class="draw-section warn"><h3>&#9888; Issues Found ('+r.issues.length+')</h3>';
+    r.issues.forEach(function(iss){ html += '<div class="draw-issue">&#8226; '+iss+'</div>'; });
+    html += '</div>';
+  }
+
+  // Missing
+  if (r.missing && r.missing.length) {
+    html += '<div class="draw-section fail"><h3>&#9940; Missing Critical Data</h3>';
+    r.missing.forEach(function(m){ html += '<div class="draw-missing">&#8226; '+m+'</div>'; });
+    html += '</div>';
+  }
+
+  // Notes
+  if (r.notes) {
+    html += '<div class="draw-section"><h3>Notes</h3><div style="font-size:10px;color:var(--text);">'+r.notes+'</div></div>';
+  }
+
+  // Apply button
+  html += '<div style="display:flex;gap:8px;margin-top:16px;justify-content:flex-end;">';
+  html += '<button class="draw-close-btn" onclick="closeDrawModal()">Close</button>';
+  html += '<button class="draw-apply-btn" onclick="applyDrawingToCalc()">&#10003; Apply to Calculator</button>';
+  html += '</div>';
+
+  return html;
+}
+
+function applyDrawingToCalc() {
+  var r = _lastDrawingResult;
+  if (!r) return;
+  var applied = [];
+  var c = r.confidence || {};
+
+  function _set(id, v, minConf) {
+    if (v === null || v === undefined) return;
+    if (minConf && (c[Object.keys(r).find(function(k){return r[k]===v;})] || 0) < minConf) return;
+    var el = document.getElementById(id);
+    if (el) { el.value = v; applied.push(id); }
+  }
+
+  // Only apply values with confidence >= 0.5
+  if (r.sign_width_ft && (c.sign_width_ft||0)>=0.5)     { var el=document.getElementById('W');  if(el) el.value=r.sign_width_ft; applied.push('W'); }
+  if (r.sign_height_ft && (c.sign_height_ft||0)>=0.5)   { var el=document.getElementById('H');  if(el) el.value=r.sign_height_ft; applied.push('H'); }
+  if (r.ground_clearance_ft && (c.ground_clearance_ft||0)>=0.5){ var el=document.getElementById('GC'); if(el) el.value=r.ground_clearance_ft; applied.push('GC'); }
+  if (r.num_columns && (c.num_columns||0)>=0.5)          { var el=document.getElementById('N');  if(el) el.value=r.num_columns; applied.push('N'); }
+  if (r.wind_speed_mph && (c.wind_speed_mph||0)>=0.5)   { var el=document.getElementById('Vmph'); if(el) el.value=r.wind_speed_mph; applied.push('Vmph'); }
+  if (r.foundation_dia_ft && (c.foundation_depth_ft||0)>=0.5){ var el=document.getElementById('fW'); if(el) el.value=r.foundation_dia_ft; applied.push('fW'); }
+  if (r.foundation_depth_ft && (c.foundation_depth_ft||0)>=0.5){ var el=document.getElementById('fD'); if(el) el.value=r.foundation_depth_ft; applied.push('fD'); }
+  if (r.wind_exposure) {
+    var expEl = document.getElementById('exposure');
+    if (expEl) { expEl.value = r.wind_exposure; applied.push('exposure'); }
+  }
+
+  calc();
+  closeDrawModal();
+  if (applied.length) {
+    // Brief flash on applied fields
+    applied.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) { el.style.borderColor='var(--gold)'; setTimeout(function(){el.style.borderColor='';},2000); }
+    });
+  }
+}
+
+// ===================== PROJECT SAVE / LOAD =====================
+var currentProject = null;
+
+function showSaveModal() {
+  if (currentProject && currentProject.meta) {
+    document.getElementById('mProjName').value = currentProject.meta.name    || '';
+    document.getElementById('mEstimate').value = currentProject.meta.estimate || '';
+    document.getElementById('mCustomer').value = currentProject.meta.customer || '';
+    document.getElementById('mNotes').value    = currentProject.meta.notes    || '';
+  }
+  document.getElementById('projModalOverlay').classList.add('active');
+  setTimeout(function() { document.getElementById('mProjName').focus(); }, 50);
+}
+
+function closeSaveModal(e) {
+  if (e && e.target !== document.getElementById('projModalOverlay')) return;
+  document.getElementById('projModalOverlay').classList.remove('active');
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.getElementById('projModalOverlay').classList.remove('active');
+    document.getElementById('projPanelOverlay').classList.remove('active');
+  }
+});
+
+function gatherInputState() {
+  var inputs = {};
+  document.querySelectorAll('input[id], select[id]').forEach(function(el) {
+    inputs[el.id] = el.type === 'checkbox' ? el.checked : el.value;
+  });
+  ['steelGroup','shapeGroup','fTypeGroup','foundMethodGroup','connTypeGroup'].forEach(function(gid) {
+    inputs['_radio_'+gid] = rv(gid);
+  });
+  inputs['_code'] = curCode;
+  return inputs;
+}
+
+function confirmSaveProject() {
+  var name = document.getElementById('mProjName').value.trim() || ('Calc-' + new Date().toISOString().slice(0,10));
+  var meta = {
+    name:     name,
+    estimate: document.getElementById('mEstimate').value.trim(),
+    customer: document.getElementById('mCustomer').value.trim(),
+    notes:    document.getElementById('mNotes').value.trim(),
+    saved:    new Date().toISOString(),
+    version:  '4.0'
+  };
+
+  // Upsert in project list: update by id if re-saving existing project, else add new
+  var list = getProjList();
+  var existIdx = -1;
+  if (currentProject && currentProject.id) {
+    existIdx = list.findIndex(function(p) { return p.id === currentProject.id; });
+  }
+  var project = { id: (existIdx >= 0 ? currentProject.id : String(Date.now())), meta: meta, inputs: gatherInputState() };
+  if (existIdx >= 0) { list[existIdx] = project; } else { list.push(project); }
+  setProjList(list);
+
+  currentProject = project;
+  updateProjBadge(name);
+  updateProjCountBadge();
+
+  document.getElementById('projModalOverlay').classList.remove('active');
+  // Flash the SAVE button to confirm
+  var btn = document.getElementById('saveModalBtn');
+  if (btn) { var orig = btn.textContent; btn.textContent = 'Saved!'; setTimeout(function(){ btn.textContent = orig; }, 1400); }
+}
+
+function loadProject(input) {
+  var file = input.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      var project = JSON.parse(e.target.result);
+      if (!project || !project.inputs) throw new Error('Not a valid SignCalc project file.');
+      if (!project.id) project.id = String(Date.now()); // assign id if imported from older file
+      currentProject = project;
+
+      var inputs = project.inputs;
+      Object.entries(inputs).forEach(function(pair) {
+        var id = pair[0], v = pair[1];
+        if (id.startsWith('_radio_')) {
+          var gid = id.replace('_radio_', '');
+          var g = document.getElementById(gid);
+          if (g) g.querySelectorAll('.rbtn').forEach(function(b) { b.classList.toggle('active', b.dataset.val === v); });
+          if (gid === 'fTypeGroup') {
+            var frf = document.getElementById('fRatioField');
+            if (frf) frf.classList.toggle('hidden', v !== 'rectangular');
+          }
+          return;
+        }
+        if (id === '_code') { setCode(v); return; }
+        var el = document.getElementById(id);
+        if (!el) return;
+        if (el.type === 'checkbox') el.checked = v; else el.value = v;
+      });
+
+      calc();
+      var projName = (project.meta && project.meta.name) ? project.meta.name : file.name;
+      updateProjBadge(projName);
+    } catch(ex) {
+      alert('Error loading project: ' + ex.message);
+    }
+    input.value = '';
+  };
+  reader.readAsText(file);
+}
+
+function updateProjBadge(name) {
+  var badge = document.getElementById('projNameBadge');
+  if (!badge) return;
+  badge.textContent = name;
+  badge.style.display = 'block';
+  badge.title = name;
+}
+
+// ===================== PROJECTS PANEL =====================
+var PROJ_STORE = 'signcalc_projects';
+
+function getProjList() {
+  try { return JSON.parse(localStorage.getItem(PROJ_STORE) || '[]'); } catch(e) { return []; }
+}
+
+function setProjList(arr) {
+  try {
+    localStorage.setItem(PROJ_STORE, JSON.stringify(arr));
+  } catch(e) {
+    alert('Browser storage full. Export or delete some projects to free space.');
+  }
+}
+
+function updateProjCountBadge() {
+  var badge = document.getElementById('projCountBadge');
+  if (!badge) return;
+  var n = getProjList().length;
+  if (n > 0) { badge.textContent = n; badge.style.display = ''; }
+  else { badge.style.display = 'none'; }
+}
+
+function showProjectsPanel() {
+  renderProjectCards();
+  document.getElementById('projPanelOverlay').classList.add('active');
+}
+
+function closeProjectsPanel() {
+  document.getElementById('projPanelOverlay').classList.remove('active');
+}
+
+function closeProjPanel(e) {
+  if (e.target === document.getElementById('projPanelOverlay')) closeProjectsPanel();
+}
+
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function renderProjectCards() {
+  var body = document.getElementById('projPanelBody');
+  var list = getProjList();
+  if (!list.length) {
+    body.innerHTML = '<div class="proj-empty">No saved projects yet.<br><br>Click <strong>SAVE</strong> to cache the current calc.</div>';
+    return;
+  }
+  // Sort newest first
+  var sorted = list.slice().sort(function(a, b) {
+    return (b.meta && b.meta.saved || '') > (a.meta && a.meta.saved || '') ? 1 : -1;
+  });
+  body.innerHTML = sorted.map(function(p) {
+    var m = p.meta || {};
+    var date = m.saved ? new Date(m.saved).toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'}) : '';
+    var sub = [m.customer, m.estimate].filter(Boolean).join(' \u2014 ');
+    var isCurrent = currentProject && currentProject.id === p.id;
+    return '<div class="proj-card" style="' + (isCurrent ? 'border-color:var(--gold)' : '') + '" id="projcard-' + p.id + '">' +
+      '<div class="proj-card-name">' + (isCurrent ? '&#9654; ' : '') + escHtml(m.name || 'Unnamed') + '</div>' +
+      '<div class="proj-card-meta">' +
+        (sub ? escHtml(sub) + '<br>' : '') +
+        escHtml(date) +
+      '</div>' +
+      '<div class="proj-card-actions">' +
+        '<button class="proj-card-btn" onclick="projLoadFromList(\'' + p.id + '\')">LOAD</button>' +
+        '<button class="proj-card-btn" onclick="projGenPDF(\'' + p.id + '\')" title="Load project and generate PDF report">PDF</button>' +
+        '<button class="proj-card-btn" onclick="projDownloadFromList(\'' + p.id + '\')" title="Download as .signcalc backup file">BACKUP</button>' +
+        '<button class="proj-card-btn del" onclick="projDeleteFromList(\'' + p.id + '\')">DELETE</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function projLoadFromList(id) {
+  var list = getProjList();
+  var p = list.find(function(x) { return x.id === id; });
+  if (!p) { alert('Project not found.'); return; }
+  currentProject = p;
+  var inputs = p.inputs || {};
+  Object.entries(inputs).forEach(function(pair) {
+    var k = pair[0], v = pair[1];
+    if (k.startsWith('_radio_')) {
+      var gid = k.replace('_radio_', '');
+      var g = document.getElementById(gid);
+      if (g) g.querySelectorAll('.rbtn').forEach(function(b) { b.classList.toggle('active', b.dataset.val === v); });
+      if (gid === 'fTypeGroup') { var frf = document.getElementById('fRatioField'); if (frf) frf.classList.toggle('hidden', v !== 'rectangular'); }
+      return;
+    }
+    if (k === '_code') { setCode(v); return; }
+    var el = document.getElementById(k);
+    if (!el) return;
+    if (el.type === 'checkbox') el.checked = v; else el.value = v;
+  });
+  calc();
+  updateProjBadge(p.meta && p.meta.name ? p.meta.name : 'Unnamed');
+  closeProjectsPanel();
+}
+
+function projDeleteFromList(id) {
+  if (!confirm('Remove this project from browser storage?\n(Use EXPORT first to keep a file copy.)')) return;
+  setProjList(getProjList().filter(function(p) { return p.id !== id; }));
+  if (currentProject && currentProject.id === id) currentProject = null;
+  updateProjCountBadge();
+  renderProjectCards();
+}
+
+function projDownloadFromList(id) {
+  var list = getProjList();
+  var p = list.find(function(x) { return x.id === id; });
+  if (!p) return;
+  var json = JSON.stringify(p, null, 2);
+  var blob = new Blob([json], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  var fname = ((p.meta && p.meta.name) || 'project').replace(/[^a-zA-Z0-9_\-]/g, '_').replace(/_+/g, '_') + '.signcalc';
+  a.href = url; a.download = fname; a.click();
+  setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
+}
+
+function projGenPDF(id) {
+  // Load project silently then generate PDF
+  var list = getProjList();
+  var p = list.find(function(x) { return x.id === id; });
+  if (!p) return;
+  // Restore inputs without closing panel or updating badge display
+  var inputs = p.inputs || {};
+  Object.entries(inputs).forEach(function(pair) {
+    var k = pair[0], v = pair[1];
+    if (k.startsWith('_radio_')) {
+      var gid = k.replace('_radio_', '');
+      var g = document.getElementById(gid);
+      if (g) g.querySelectorAll('.rbtn').forEach(function(b) { b.classList.toggle('active', b.dataset.val === v); });
+      if (gid === 'fTypeGroup') { var frf = document.getElementById('fRatioField'); if (frf) frf.classList.toggle('hidden', v !== 'rectangular'); }
+      return;
+    }
+    if (k === '_code') { setCode(v); return; }
+    var el = document.getElementById(k);
+    if (!el) return;
+    if (el.type === 'checkbox') el.checked = v; else el.value = v;
+  });
+  currentProject = p;
+  calc();
+  syncConnTypeUI();
+  updateProjBadge(p.meta && p.meta.name ? p.meta.name : 'Unnamed');
+  closeProjectsPanel();
+  setTimeout(function() { generatePDF(); }, 80);
+}
+
+// ===================== LOCAL STORAGE =====================
+function saveToStorage() {
+  var inputs = {};
+  document.querySelectorAll('input[id], select[id]').forEach(function(el) {
+    inputs[el.id] = el.type === 'checkbox' ? el.checked : el.value;
+  });
+  // Save radio states
+  ['steelGroup','shapeGroup','fTypeGroup','foundMethodGroup','connTypeGroup'].forEach(function(gid) {
+    inputs['_radio_'+gid] = rv(gid);
+  });
+  inputs['_code'] = curCode;
+  try { localStorage.setItem('signcalc_v3', JSON.stringify(inputs)); } catch(e) {}
+}
+
+function loadFromStorage() {
+  var saved;
+  try { saved = localStorage.getItem('signcalc_v3'); } catch(e) { return; }
+  if (!saved) return;
+  var inputs = JSON.parse(saved);
+  Object.entries(inputs).forEach(function(pair) {
+    var id = pair[0], v = pair[1];
+    if (id.startsWith('_radio_')) {
+      var gid = id.replace('_radio_', '');
+      var g = document.getElementById(gid);
+      if (g) g.querySelectorAll('.rbtn').forEach(function(b) { b.classList.toggle('active', b.dataset.val === v); });
+      if (gid === 'fTypeGroup') document.getElementById('fRatioField').classList.toggle('hidden', v !== 'rectangular');
+      return;
+    }
+    if (id === '_code') { setCode(v); return; }
+    var el = document.getElementById(id);
+    if (!el) return;
+    if (el.type === 'checkbox') el.checked = v;
+    else el.value = v;
+  });
+}
+
+// ===================== PDF REPORT =====================
+function generatePDF() {
+  var jsPDF = window.jspdf.jsPDF;
+  var doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'letter' });
+  var margin = 20;
+  var pageW = 215.9;
+  var pageH = 279.4;
+  var y = margin;
+
+  function checkPage(need) { if (y + need > pageH - 20) { doc.addPage(); y = margin; } }
+  function addLine(label, value, indent) {
+    checkPage(6); indent = indent || 0;
+    doc.setFont('courier', 'normal'); doc.setFontSize(9); doc.setTextColor(80,80,80);
+    doc.text(label, margin + indent, y);
+    doc.setTextColor(0,0,0); doc.setFont('courier', 'bold');
+    doc.text(String(value), 160, y, { align: 'right' });
+    y += 5.5;
+  }
+  function addHeader(text) {
+    checkPage(14);
+    doc.setFillColor(17,17,17);
+    doc.rect(margin, y-4, pageW - 2*margin, 8, 'F');
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(255,215,0);
+    doc.text(text, margin + 3, y + 1);
+    doc.setTextColor(0,0,0); y += 10;
+  }
+  function addFormula(text) {
+    checkPage(6);
+    doc.setFont('courier', 'italic'); doc.setFontSize(8); doc.setTextColor(100,50,150);
+    doc.text('  ' + text, margin, y); doc.setTextColor(0,0,0); y += 5;
+  }
+  function hline() { doc.setDrawColor(200,200,200); doc.line(margin, y, pageW - margin, y); y += 3; }
+
+  var c = lastCalc;
+  var f = lastFoundCalc;
+  var b = lastBoltCalc;
+  var bg = getBoltGrade();
+  var now = new Date();
+  var dateStr = now.toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'});
+  var Vmph_ = val('Vmph',115), Kd_ = val('Kd',0.85), Kzt_ = val('Kzt',1.0), Ke_ = val('Ke',1.0);
+  var G_ = val('G',0.85), Cf_ = val('Cf',1.2);
+  var exposure_ = document.getElementById('exposure') ? document.getElementById('exposure').value : 'C';
+
+  // TITLE
+  var pm = (currentProject && currentProject.meta) ? currentProject.meta : {};
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(18); doc.setTextColor(17,17,17);
+  doc.text('SIGNCALC', margin, y);
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(100,100,100);
+  doc.text('STRUCTURAL CALCULATION REPORT', margin, y + 7);
+  doc.setFontSize(9);
+  doc.text('Eagle Sign Co.  |  Sign Engineering Calculator v4.0', margin, y + 13);
+  doc.text('Generated: ' + dateStr, margin, y + 19);
+  // Project metadata block (right column)
+  if (pm.name) {
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(10); doc.setTextColor(17,17,17);
+    doc.text(pm.name, pageW - margin, y, { align: 'right' });
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(8); doc.setTextColor(100,100,100);
+    if (pm.estimate) { doc.text('Est: ' + pm.estimate, pageW - margin, y + 6, { align: 'right' }); }
+    if (pm.customer) { doc.text(pm.customer, pageW - margin, y + 12, { align: 'right' }); }
+    if (pm.notes)    { doc.text(pm.notes.slice(0,60), pageW - margin, y + 18, { align: 'right' }); }
+  }
+  y += 28;
+  doc.setDrawColor(255,215,0); doc.setLineWidth(1.5);
+  doc.line(margin, y, pageW - margin, y); doc.setLineWidth(0.3); y += 8;
+
+  // SIGN
+  addHeader('SIGN INPUTS');
+  addLine('Sign Width (W)', c.W.toFixed(1) + ' ft');
+  addLine('Sign Height (H)', c.H.toFixed(1) + ' ft');
+  addLine('Ground Clearance (GC)', c.GC.toFixed(1) + ' ft');
+  addLine('Number of Columns (N)', c.N.toString());
+  if (c.solidPct < 1.0) {
+    addLine('Sign Area (gross W x H)', c.areaGross.toFixed(2) + ' ft2');
+    addLine('Solidity Ratio', (c.solidPct * 100).toFixed(0) + '% -- Eff. Area: ' + c.area.toFixed(2) + ' ft2');
+  } else {
+    addLine('Sign Area (A = W x H)', c.area.toFixed(2) + ' ft2');
+  }
+  hline();
+
+  // WIND
+  addHeader('WIND LOAD CALCULATION');
+  var codeStr = document.getElementById('codeBadge') ? document.getElementById('codeBadge').textContent : 'ASCE 7-22';
+  addLine('Design Code', codeStr);
+  if (curCode !== 'ubc97') {
+    addLine('Basic Wind Speed (V)', Vmph_ + ' mph');
+    addLine('Exposure Category', exposure_);
+    addLine('Kd / Kzt / Ke', Kd_ + ' / ' + Kzt_ + ' / ' + Ke_);
+    addLine('G (Gust) / Cf (Force)', G_ + ' / ' + Cf_);
+    var Kz = getKz(c.centroid, exposure_);
+    addFormula('qz = 0.00256 x Kz x Kzt x Kd x Ke x V^2');
+    addLine('Kz', Kz.toFixed(3));
+    addLine('Design Pressure', c.PSF.toFixed(2) + ' psf');
+  } else {
+    addLine('Direct Wind Pressure (UBC)', c.PSF.toFixed(1) + ' PSF');
+  }
+  addFormula('F = qz x G x Cf x Af  (ASCE 7-22 §29.3)');
+  addLine('Total Wind Force (F) — Sign Face', fmtN(c.windForce) + ' lbs');
+  addLine('Moment per Column — Sign Face', fmtN(c.momentFtLb) + ' ft-lb');
+  addLine('Governing Case', 'ASCE 7-22 Case ' + (c.governing||'A') +
+    (c.caseC_ok ? ' (Case C checked, M_C='+fmtN(c.M_C)+' ft-lb)' : ''));
+  if (c.F_col_wind > 0) {
+    addLine('Column Shaft Wind (§29.4, Cf=0.7)', fmtN(c.F_col_wind)+' lbs / '+fmtN(c.M_col_wind)+' ft-lb per col');
+    addLine('TOTAL Base Moment (sign+column shaft)', fmtN(c.momentFtLb + c.M_col_wind) + ' ft-lb per col');
+  }
+  hline();
+
+  // SECTION
+  addHeader('SECTION MODULUS (AISC 360-22 ASD)');
+  var pdfMat = c.shape==='W'?'A992':c.shape==='hss'?'A500 Gr C':c.shape==='sq'?'A500 Gr C':'A53 Gr B';
+  var pdfFbRef = c.shape==='pipe'?(c.st==='used'?'0.60Fy':'0.76Fy (§F8 compact round, Z/S=1.27)'):
+                 (c.shape==='sq'||c.shape==='hss')?(c.st==='used'?'0.60Fy':'0.72Fy (§F7 compact sq HSS)'):
+                 (c.st==='used'?'0.60Fy':'AISC 360-22 §F2 LTB (Cb=1.0, Lb='+c.GC+'ft) = '+(c.Fallow/1000).toFixed(2)+' ksi');
+  addLine('Steel Condition', c.st === 'new' ? 'New' : 'Used/Existing');
+  addLine('Allowable Bending Stress Fb', pdfFbRef);
+  addLine('Material / Fy', pdfMat + ' / ' + (c.Fy/1000).toFixed(0) + ' ksi');
+  addLine('Fb', (c.Fallow/1000).toFixed(2) + ' ksi');
+  addFormula('S_req = M / Fb');
+  addLine('S_req', c.Sreq.toFixed(3) + ' in3');
+  if (c.shape==='pipe' && c.recPipe) {
+    addLine('Column', c.recPipe.nom + '" ' + (c.recPipe.nom >= 12 ? 'Std Wt' : 'Sch40') + ' A53 Gr B (S=' + c.recPipe.sm + ' in3)');
+    addLine('Ratio', (c.recPipe.sm / c.Sreq).toFixed(2) + ' -- ' + (c.recPipe.sm >= c.Sreq ? 'PASS' : 'FAIL'));
+  } else if (c.shape==='sq' && c.recSq) {
+    addLine('Column', c.recSq.side + 'x' + c.recSq.side + '" Sq Tube A500 Gr C (S=' + c.recSq.sm + ' in3)');
+    addLine('Ratio', (c.recSq.sm / c.Sreq).toFixed(2) + ' -- PASS');
+  } else if (c.shape==='hss' && c.recHSS) {
+    addLine('Column', c.recHSS.des + ' A500 Gr C (S=' + c.recHSS.Sx + ' in3)');
+    addLine('Ratio', (c.recHSS.Sx / c.Sreq).toFixed(2) + ' -- PASS');
+  } else if (c.shape==='W' && c.recW) {
+    addLine('Column', c.recW.des + ' A992 (S=' + c.recW.Sx + ' in3)');
+    addLine('Ratio', (c.recW.Sx / c.Sreq).toFixed(2) + ' -- PASS');
+  }
+  if (c.slender) {
+    var sl_ = c.slender;
+    addFormula('Column Slenderness — AISC 360-22 §E3 (K=2.0 cantilever, fixed base / free top)');
+    addLine('Effective Length KL', 'K='+sl_.K.toFixed(1)+' x L='+sl_.L_ft.toFixed(0)+"' = "+sl_.KL_ft.toFixed(0)+"'");
+    addLine('Radius of Gyration r', sl_.r_in.toFixed(3) + ' in');
+    addLine('KL/r', sl_.KL_r.toFixed(0) + (sl_.warn ? ' *** EXCEEDS 200 LIMIT ***' : sl_.KL_r>150?' [>150 — verify]':''));
+    addLine('Euler Fe', sl_.Fe_ksi.toFixed(1) + ' ksi');
+    addLine('Critical Stress Fcr', sl_.Fcr_ksi.toFixed(1) + ' ksi');
+    if (sl_.warn) addLine('WARNING', 'KL/r >200 exceeds AISC limit — increase column size or add bracing');
+  }
+  hline();
+
+  // BOLTS
+  addHeader('ANCHOR BOLT CHECK');
+  addLine('Bolt Grade', bg.name + ' (Ft=' + bg.Ft + ' ksi)');
+  addLine('Layout', b.total + ' bolts (' + b.bpr + 'x' + b.br + ') @ ' + b.bsp + '"');
+  if (b.bolt) {
+    addLine('Selected', b.bolt.lbl + ' (At=' + b.bolt.At + ' in2)');
+    addLine('Required At', b.reqAt.toFixed(3) + ' in2');
+    addLine('Result', b.bolt.At >= b.reqAt ? 'PASS' : 'FAIL');
+  }
+  hline();
+
+  // FOUNDATION
+  addHeader('FOUNDATION');
+  addLine('Type', f.fType);
+  addLine('Size', f.fw + "' x " + f.fd + "'");
+  addLine('Soil', document.getElementById('soilType') ? document.getElementById('soilType').value : 'sand');
+  addLine('Bearing', f.bearPSF.toFixed(0) + '/' + f.Sv + ' psf -- ' + (f.bearOK?'OK':'NG'));
+  addLine('Overturning SF', f.otSF.toFixed(2) + ' -- ' + (f.otOK?'PASS':'FAIL'));
+  addLine('Sliding SF', f.latSF.toFixed(2) + ' -- ' + (f.latOK?'PASS':'FAIL'));
+  addLine('Frost Line (Iowa 48" min)', (f.fd*12).toFixed(0) + '" -- ' + (f.fd>=4.0?'PASS':'FAIL'));
+  hline();
+
+  // ACI
+  addHeader('ACI 318-19 CONCRETE BREAKOUT');
+  var fc_ = val('fc', 3000), hef_ = val('hef', 24);
+  addLine("f'c", fc_ + ' psi');
+  addLine('h_ef', hef_ + ' in');
+  if (lastACI.phiNcbg) {
+    addLine('phi Ncbg', fmtN(lastACI.phiNcbg) + ' lbs');
+    var edgeMin_ = Math.max(3, (f.fw * 12 / 2) - (b.bsp / 2));
+    var nBolts_ = b.bpr * b.br;
+    var uplift_ = c.windForce * c.centroid / (f.fw / 2);
+    var Nu_per = uplift_ / nBolts_;
+    addLine('Nu/anchor', fmtN(Nu_per) + ' lbs');
+    addLine('Result', lastACI.phiNcbg >= Nu_per ? 'PASS' : 'FAIL');
+  }
+
+  // BASE PLATE BEARING
+  if (lastBearing && lastBearing.phiPp && lastBearing._C_demand !== undefined) {
+    hline();
+    addHeader('BASE PLATE BEARING (AISC 360-22 §J8-2)');
+    addLine('phi Pp', fmtN(lastBearing.phiPp) + ' lbs');
+    addLine('C demand (uplift + DL)', fmtN(lastBearing._C_demand) + ' lbs');
+    addLine('Ratio phi Pp / C', (lastBearing.phiPp / Math.max(lastBearing._C_demand, 1)).toFixed(2) + 'x');
+    addLine('Result', lastBearing.phiPp >= lastBearing._C_demand ? 'PASS' : 'FAIL');
+  }
+
+  // FOOTER
+  var pageCount = doc.internal.getNumberOfPages();
+  for (var i = 1; i <= pageCount; i++) {
+    doc.setPage(i);
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(7); doc.setTextColor(150,150,150);
+    doc.text('SignCalc v4.0 -- Eagle Sign Co. -- Generated: ' + dateStr, margin, pageH - 8);
+    doc.text('Page ' + i + ' of ' + pageCount, pageW - margin, pageH - 8, { align: 'right' });
+    doc.setDrawColor(255,215,0); doc.setLineWidth(0.5);
+    doc.line(margin, pageH - 12, pageW - margin, pageH - 12);
+    doc.setLineWidth(0.3);
+  }
+
+  var pdfName = 'SignCalc-Report-' + now.toISOString().slice(0,10);
+  if (pm && pm.name) pdfName = pm.name.replace(/[^a-zA-Z0-9_\-]/g, '_').replace(/_+/g, '_') + '-' + now.toISOString().slice(0,10);
+  doc.save(pdfName + '.pdf');
+}
+
+// ===================== MAIN =====================
+function calc() {
+  // Auto Cf update if checked
+  if (document.getElementById('cfAuto') && document.getElementById('cfAuto').checked) {
+    var cfInput = document.getElementById('Cf');
+    cfInput.value = autoCf(val('W',8), val('H',4));
+  }
+  calcShared();
+  checkFrostLine();
+  renderAllResults();
+  updateDrawing();
+  saveToStorage();
+}
+
+// Init — auto-size foundation if defaults would fail
+loadFromStorage();
+syncConnTypeUI();
+calc();
+updateProjCountBadge();
+(function() {
+  var f = lastFoundCalc;
+  if (!f || !f.bearOK || !f.otOK || !f.latOK || f.fd < 3.5) {
+    findMinFoundation();
+  }
+})();
+
+// Resize handler
+window.addEventListener('resize', function() { updateDrawing(); });
+</script>
+</body>
+</html>

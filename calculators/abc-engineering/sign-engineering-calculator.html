@@ -433,7 +433,7 @@
   <div class="proj-modal">
     <h2>&#128190; Save Project</h2>
     <div class="mrow">
-      <label>Project Name *</label>
+      <label>Project Name</label>
       <input type="text" id="mProjName" placeholder="e.g. Main St Monument Sign">
     </div>
     <div class="mrow">
@@ -1723,9 +1723,7 @@ function gatherInputState() {
 }
 
 function confirmSaveProject() {
-  var name = document.getElementById('mProjName').value.trim();
-  if (!name) { document.getElementById('mProjName').style.borderColor='var(--red)'; document.getElementById('mProjName').focus(); return; }
-  document.getElementById('mProjName').style.borderColor = '';
+  var name = document.getElementById('mProjName').value.trim() || ('Calc-' + new Date().toISOString().slice(0,10));
 
   var meta = {
     name:     name,
