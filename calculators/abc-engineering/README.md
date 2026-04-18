@@ -1,50 +1,72 @@
-# Sign Engineering Calculator
+# SignCalc
 
-A single-file HTML application for structural engineering calculations for freestanding signs. Open `sign-engineering-calculator.html` in any browser — no server, no dependencies, no build step.
+Structural engineering calculator for sign permits at Eagle Sign Co.
+(subsidiary of Nagle Sign Co.).
 
-## Current Capabilities
+**Status:** v4.1.0-wip (Phase 1 - trust foundation in progress)
 
-### Calculations
-- **Wind Load**: ASCE 7-10/16/22 velocity pressure method (qz = 0.00256 * Kz * Kzt * Kd * Ke * V^2) and UBC 1997 legacy direct PSF
-- **Section Modulus**: Required S for column sizing, auto-selects from 21 Sch 40 pipe sizes (2"-36") and 10 square tube sizes (2"-12")
-- **Anchor Bolts**: A307 bolt sizing for moment resistance (11 sizes, 1/2" to 3"), auto-find smallest working bolt
-- **Foundation**: Overturning, sliding, and bearing checks for circular/square/rectangular piers, auto-find minimum passing size
-- **Gusset/Base Plate**: Pre-engineered gusset dimensions for all 21 pipe sizes, minimum base plate sizing
-- **Auto-Feasibility**: Section Modulus tab shows at-a-glance bolt, foundation, gusset, and weight estimates
+## Usage
 
-### Features
-- Real-time recalculation on every input change
-- 6 sign presets (Small, Medium, Monument, Pole Sign, Highway, EMC)
-- 4 foundation presets (Sm Caisson, Med Caisson, Lg Square, Spread)
-- Code selector: UBC 1997, ASCE 7-10, ASCE 7-16, ASCE 7-22 (default)
-- SVG diagrams for sign elevation and foundation cross-section
-- Copy-paste prompt summary for AI-assisted engineering
-- Summary strip header showing S_req, wind force, moment, pipe, bolt, foundation
+Open `SignCalc-v4.html` in a modern browser. No installation, no build
+step, no network dependencies for the calculation engine. Drawing
+analysis feature requires an Anthropic API key.
 
-### Engineering Standards
-- **Default code**: ASCE 7-22 / IBC 2024
-- **Steel**: A36 (Fy = 36 ksi), New (0.66Fy) and Used (0.60Fy) allowable stress
-- **Bolts**: A307 (Fb = 20 ksi allowable tensile stress)
-- **Soil**: UBC Table 18-I-A (Clay, Sand, Gravel, Rock)
-- **Iowa defaults**: 115 mph wind, 42" frost line, Exposure C
+## Scope
 
-## Repository Structure
+Internal estimate-prep and PE-prep tool. **Not a stamped engineering
+calculation.** Structures requiring a Professional Engineer stamp
+under Iowa Administrative Code 661 Chapter 112 require independent
+review and stamp by a licensed Professional Engineer prior to
+fabrication or installation.
 
-```
-sign-engineering-calculator.html   # The application (self-contained)
-CLAUDE.md                          # AI session context for Claude Code
-README.md                          # This file
-docs/
-  engineering-codes.md             # Gold standard code references
-  formulas.md                      # All engineering formulas used + needed
-  competitor-analysis.md           # Market research on competing tools
-  roadmap.md                       # Development priorities
-  session-handoff.md               # Complete session context for continuation
-  architecture.md                  # Code architecture and data flow
-  context.md                       # How the tool works (technical overview)
-  guide-simple-english.md          # Plain-language explanation of all calculations
-```
+## Reference codes
 
-## License
+- ASCE 7-22 (wind loads)
+- IBC 2024 (foundation design)
+- AISC 360-22 (steel design, 16th Edition section properties)
+- ACI 318-19 (concrete anchor design, Chapter 17)
+- Iowa IBC Table 1809.7 (48-inch frost depth minimum)
 
-Proprietary. Not for redistribution.
+## Materials (default)
+
+Steel:
+- A500 Gr C (HSS round / square tube): Fy = 46 ksi
+- A53 Gr B (Sch 40 pipe): Fy = 35 ksi
+- A992 (W-shapes): Fy = 50 ksi
+- A36 (plates, general): Fy = 36 ksi
+
+Concrete: f'c = 3000 psi (default), cracked concrete design per ACI 17.6
+
+Anchors: F1554 Gr 36 (default)
+
+## Repository structure
+.
+├── SignCalc-v4.html              # The application (canonical)
+├── AUDIT-EVIDENCE.md             # Engineering corrections audit trail
+├── knowledge/                    # Phase 1 scaffolding (project-guardian pattern)
+├── docs/                         # Development docs, roadmap, formulas
+│   └── audits/                   # Prior audit reports (historical)
+├── legacy/                       # Archived artifacts
+│   ├── sign-engineering-calculator-v3.html  # v3 snapshot
+│   ├── chm_help/                 # AbcENG CHM help (Phase 2 reference)
+│   ├── database/                 # AbcENG schema exports (structure only)
+│   └── signcalc.nsi              # v2.0 NSIS installer (historical)
+└── README.md                     # This file
+
+## Roadmap
+
+See `docs/roadmap.md` for phase planning. Current work is Phase 1
+(trust foundation - disclaimers, version control, regression tests).
+Phase 2 (AbcENG-replacement UX) and Phase 3 (PE-ready output +
+drawing analysis) queued in `knowledge/BACKLOG.md`.
+
+## Engineering changes
+
+All engineering changes logged in `knowledge/99-changelog.md` with
+code section, reason, and verification. `AUDIT-EVIDENCE.md` is the
+authoritative record of corrections made during the v3->v4 transition.
+
+## License / ownership
+
+Internal tool. Ownership / governance between Eagle Sign Co. and Nagle
+Sign Co. TBD - see `knowledge/BACKLOG.md` governance section.

@@ -20,3 +20,6 @@ Thumbs.db
 *.est
 *.rpt
 *.abc
+
+# AbcENG registry exports — contain license serials
+legacy/registry/

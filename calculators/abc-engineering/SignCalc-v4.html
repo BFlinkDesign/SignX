@@ -44,6 +44,9 @@
     border-bottom: 2px solid var(--border2);
     padding: 0 14px; display: flex; align-items: center; gap: 10px; height: 42px;
   }
+  .header-title-group { display: flex; flex-direction: column; gap: 2px; justify-content: center; }
+  .header-title-row   { display: flex; align-items: center; gap: 6px; }
+  .header-disclaimer  { font-size: 7px; color: var(--text2); font-style: italic; letter-spacing: 0.02em; white-space: nowrap; }
   .header h1 { font-size: 15px; font-weight: 700; white-space: nowrap; letter-spacing: 0.02em; }
   .header .badge {
     font-size: 8px; padding: 1px 5px; font-weight: 700; letter-spacing: 0.08em;
@@ -484,8 +487,13 @@
 
 <!-- ===== HEADER ===== -->
 <div class="header">
-  <h1><span style="color:#9A9A9A;font-family:'Barlow Condensed',sans-serif;font-weight:800;letter-spacing:0;font-size:20px">SIGN</span><span style="color:#FFD700;font-family:'Barlow Condensed',sans-serif;font-weight:800;letter-spacing:0;font-size:20px">CALC</span></h1>
-  <span class="badge">v4.0</span>
+  <div class="header-title-group">
+    <div class="header-title-row">
+      <h1><span style="color:#9A9A9A;font-family:'Barlow Condensed',sans-serif;font-weight:800;letter-spacing:0;font-size:20px">SIGN</span><span style="color:#FFD700;font-family:'Barlow Condensed',sans-serif;font-weight:800;letter-spacing:0;font-size:20px">CALC</span></h1>
+      <span class="badge" id="calcVersionBadge">v4.1.0</span>
+    </div>
+    <span class="header-disclaimer">Internal estimate-prep tool — not a stamped engineering calculation</span>
+  </div>
 
   <div class="header-sep"></div>
   <span class="proj-name-badge" id="projNameBadge"></span>
@@ -868,6 +876,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
+var CALC_VERSION = '4.1.0';
+
 // ===================== DATA =====================
 // Material Fy constants — per AISC material specifications
 var FY = {
@@ -1003,12 +1013,12 @@ function getKz(h, exp) {
 
 // ===================== STATE =====================
 var curCode = 'asce722';
-var lastCalc = {};
-var lastFoundCalc = {};
-var lastBoltCalc = {};
-var lastACI = {};
-var lastPullout = {};
-var lastBearing = {};
+var lastCalc = null;
+var lastFoundCalc = null;
+var lastBoltCalc = null;
+var lastACI = null;
+var lastPullout = null;
+var lastBearing = null;
 
 function val(id, fb) { var el=document.getElementById(id); if(!el) return fb; var n=parseFloat(el.value); return isNaN(n)?fb:n; }
 function rv(gid) { var g=document.getElementById(gid); if(!g) return ''; var a=g.querySelector('.rbtn.active'); return a?a.dataset.val:''; }
@@ -1645,6 +1655,7 @@ function designBasePlateAISCDG1(P_lbf, M_inlb, col_od_in, fc_psi, n_bolts, bsp_i
 
 function calcBoltData() {
   var c = lastCalc;
+  if (!c) return {};
   var bpr = val('bPerRow',2), br = val('bRows',2), bsp = val('bSpace',6);
   var total = bpr * br;
   var boltGradeKey = document.getElementById('boltGrade') ? document.getElementById('boltGrade').value : 'A307';
@@ -1720,6 +1731,7 @@ function calcFoundSized(fw, fd, fType, dl, Sv_, Sl_, ratio, c) {
 
 function calcFoundData() {
   var c = lastCalc;
+  if (!c) return {};
   var fType = rv('fTypeGroup')||'circular';
   var fw = val('fW',3), fd = val('fD',5), dl = val('DL',500);
   var Sv_ = val('Sv',1500), Sl_ = val('Sl',150);
@@ -1959,7 +1971,7 @@ function updateDrawing() {
   var f = lastFoundCalc;
   var b = lastBoltCalc;
   var svg = document.getElementById('structuralDrawing');
-  if (!svg || !c.W) return;
+  if (!svg || !c || !c.W) return;
   var W = svg.clientWidth || 500;
   var H = svg.clientHeight || 600;
   if (W < 50 || H < 50) return;
@@ -2315,12 +2327,13 @@ function updateDrawing() {
 // ===================== RESULT CARDS =====================
 function renderAllResults() {
   var c = lastCalc;
+  if (!c) return;
   var connType = rv('connTypeGroup') || 'embedded';
   var isEmbedded = connType === 'embedded';
   syncConnTypeUI(connType);
 
-  var b = isEmbedded ? { bpr:2, br:2, bsp:6, total:4, reqAt:0, bolt:null, minBP:10, aci:null, bp:null } : calcBoltData();
-  var f = calcFoundData();
+  var b = isEmbedded ? { bpr:2, br:2, bsp:6, total:4, reqAt:0, bolt:null, minBP:10, aci:null, bp:null } : (lastBoltCalc || {});
+  var f = lastFoundCalc || {};
 
   var fc_ = val('fc', 3000);
   var hef_ = val('hef', 24);
@@ -2744,6 +2757,7 @@ var _DRAWING_PROMPT = [
 ].join('\n');
 
 function _callClaudeVision(apiKey, b64, mimeType, filename) {
+  var isPdf = (mimeType === 'application/pdf');
   var payload = {
     model: 'claude-opus-4-6',
     max_tokens: 2048,
@@ -2751,7 +2765,7 @@ function _callClaudeVision(apiKey, b64, mimeType, filename) {
       role: 'user',
       content: [
         {
-          type: 'image',
+          type: isPdf ? 'document' : 'image',
           source: { type: 'base64', media_type: mimeType, data: b64 }
         },
         {
@@ -2762,14 +2776,17 @@ function _callClaudeVision(apiKey, b64, mimeType, filename) {
     }]
   };
 
+  var hdrs = {
+    'x-api-key': apiKey,
+    'anthropic-version': '2023-06-01',
+    'content-type': 'application/json',
+    'anthropic-dangerous-allow-browser': 'true'
+  };
+  if (isPdf) hdrs['anthropic-beta'] = 'pdfs-2024-09-25';
+
   fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
-    headers: {
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-      'content-type': 'application/json',
-      'anthropic-dangerous-allow-browser': 'true'
-    },
+    headers: hdrs,
     body: JSON.stringify(payload)
   })
   .then(function(r) {
@@ -3197,12 +3214,13 @@ function saveToStorage() {
     inputs['_radio_'+gid] = rv(gid);
   });
   inputs['_code'] = curCode;
-  try { localStorage.setItem('signcalc_v3', JSON.stringify(inputs)); } catch(e) {}
+  try { localStorage.setItem('signcalc_v4', JSON.stringify(inputs)); } catch(e) {}
 }
 
 function loadFromStorage() {
   var saved;
-  try { saved = localStorage.getItem('signcalc_v3'); } catch(e) { return; }
+  // v4 key first; fall back to v3 migration (v3 key retained until v4.2.0)
+  try { saved = localStorage.getItem('signcalc_v4') || localStorage.getItem('signcalc_v3'); } catch(e) { return; }
   if (!saved) return;
   var inputs = JSON.parse(saved);
   Object.entries(inputs).forEach(function(pair) {
@@ -3272,7 +3290,7 @@ function generatePDF() {
   doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(100,100,100);
   doc.text('STRUCTURAL CALCULATION REPORT', margin, y + 7);
   doc.setFontSize(9);
-  doc.text('Eagle Sign Co.  |  Sign Engineering Calculator v4.0', margin, y + 13);
+  doc.text('Eagle Sign Co.  |  Sign Engineering Calculator v' + CALC_VERSION, margin, y + 13);
   doc.text('Generated: ' + dateStr, margin, y + 19);
   // Project metadata block (right column)
   if (pm.name) {
@@ -3286,6 +3304,18 @@ function generatePDF() {
   y += 28;
   doc.setDrawColor(255,215,0); doc.setLineWidth(1.5);
   doc.line(margin, y, pageW - margin, y); doc.setLineWidth(0.3); y += 8;
+
+  // SCOPE & LIMITATIONS BOX
+  var bw = pageW - 2*margin, bh = 21;
+  doc.setFillColor(245,245,245); doc.setDrawColor(200,200,200); doc.setLineWidth(0.3);
+  doc.rect(margin, y, bw, bh, 'FD');
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(7); doc.setTextColor(180,120,0);
+  doc.text('SCOPE & LIMITATIONS', margin + 4, y + 5);
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(7); doc.setTextColor(80,80,80);
+  doc.text('\u2022 Internal estimate-prep tool only \u2014 NOT a licensed PE-stamped engineering calculation.', margin + 4, y + 10);
+  doc.text('\u2022 Owner/contractor shall obtain a licensed PE review and stamp for permit submission.', margin + 4, y + 15);
+  doc.text('\u2022 Design references: ASCE 7-22, ACI 318-19, AISC 360-22 per project inputs.', margin + 4, y + 20);
+  doc.setTextColor(0,0,0); y += bh + 5;
 
   // SIGN
   addHeader('SIGN INPUTS');
@@ -3392,7 +3422,7 @@ function generatePDF() {
   var fc_ = val('fc', 3000), hef_ = val('hef', 24);
   addLine("f'c", fc_ + ' psi');
   addLine('h_ef', hef_ + ' in');
-  if (lastACI.phiNcbg) {
+  if (lastACI && lastACI.phiNcbg) {
     addLine('phi Ncbg', fmtN(lastACI.phiNcbg) + ' lbs');
     var edgeMin_ = Math.max(3, (f.fw * 12 / 2) - (b.bsp / 2));
     var nBolts_ = b.bpr * b.br;
@@ -3417,8 +3447,10 @@ function generatePDF() {
   for (var i = 1; i <= pageCount; i++) {
     doc.setPage(i);
     doc.setFont('helvetica', 'normal'); doc.setFontSize(7); doc.setTextColor(150,150,150);
-    doc.text('SignCalc v4.0 -- Eagle Sign Co. -- Generated: ' + dateStr, margin, pageH - 8);
+    doc.text('SignCalc v' + CALC_VERSION + ' -- Eagle Sign Co. -- Generated: ' + dateStr, margin, pageH - 8);
     doc.text('Page ' + i + ' of ' + pageCount, pageW - margin, pageH - 8, { align: 'right' });
+    doc.setFont('helvetica', 'italic'); doc.setFontSize(6);
+    doc.text('Internal estimate-prep tool -- not a stamped engineering calculation. Not for permit submittal.', margin, pageH - 4);
     doc.setDrawColor(255,215,0); doc.setLineWidth(0.5);
     doc.line(margin, pageH - 12, pageW - margin, pageH - 12);
     doc.setLineWidth(0.3);
@@ -3437,6 +3469,8 @@ function calc() {
     cfInput.value = autoCf(val('W',8), val('H',4));
   }
   calcShared();
+  lastBoltCalc = calcBoltData();
+  lastFoundCalc = calcFoundData();
   checkFrostLine();
   renderAllResults();
   updateDrawing();
