@@ -1,0 +1,1182 @@
+{
+  "_meta": {
+    "source": "ABC Estimate v3.8 *.abc data files",
+    "extracted_at": "2026-05-01",
+    "license": "Internal Eagle Sign use only",
+    "notes": "Derived from binary ABC data files. Formulas are raw expressions in ABC's proprietary calc language; M<n>L<n> tokens are runtime variables resolved at calc time. SignX should treat formulas as documentation; recompute in Python using the same semantics where useful."
+  },
+  "departments": [
+    "Awnings",
+    "CAD / CAM Machine Time",
+    "Extrusions",
+    "Fabricated Letters",
+    "Finish",
+    "Illumination",
+    "Installation",
+    "Maintenance",
+    "Miscellaneous /Buy Out Items",
+    "Patterns / CAD",
+    "Plastic",
+    "Sheet Metal",
+    "Shop Wiring / Accessories",
+    "Woodwork"
+  ],
+  "frames": {
+    "conventional_frame": [
+      "12\" Conventional Frame",
+      "12\" Conventional Frame constant",
+      "Radius Corners for Conventional Frames"
+    ],
+    "hinge_frame": [
+      "12\" Radius Corner Kits for Hinge Frames",
+      "4\" Radius Corner Kits for Hinge Frames",
+      "6\" Radius Corner Kits for Hinge Frames",
+      "9\" Radius Corner Kits for Hinge Frames",
+      "ABC Double Hinge Frame",
+      "ABC Single Hinge Frame",
+      "Custom Large D/F Hinged Frame",
+      "Custom Large S/F Hinged Frame",
+      "Custom Small D/F Hinged Frame",
+      "Custom Small S/F Hinged Frame",
+      "Finish on Hinged Frames",
+      "Finish on Hinged Frames, Trico-Plex",
+      "Hinged Frame constant",
+      "Hinged Frames",
+      "Strut Bracket for Hinge frame"
+    ],
+    "retro_frame": [
+      "Curved Frame for retroframes",
+      "Finish on Retroframes",
+      "Finish on Retroframes, Trico-Plex",
+      "Retro Frames with S.M. Cabinets",
+      "Retroframe",
+      "Retroframe Constants",
+      "Retroframe w/ S. Met Cabinet Constants"
+    ],
+    "wide_fab_frame": [
+      "Finish on Wide Fabricated Frames",
+      "TDMWIDEFAB",
+      "Wide Fabricated Frame Constants"
+    ],
+    "access_frame": [
+      "Access Frame C-Iron Brackets"
+    ],
+    "type_i_frame": [
+      "10\" Radius Corner Type I Frame",
+      "8\" Radius Corner Type I Frame",
+      "9\" Radius Corner Type I Frame",
+      "Type I Frame",
+      "Type I Frame constant"
+    ],
+    "type_ii_frame": [
+      "Type II Frame",
+      "Type II Frame constant"
+    ],
+    "type_iii_frame": [
+      "10\" Radius Corner Type III Frame",
+      "6\" Radius Corner Type III Frame",
+      "8\" Radius Corner Type III Frame",
+      "Type III Frame"
+    ],
+    "type_iv_frame": [
+      "10\" Radius Corner Type IV Frame",
+      "6\" Radius Corner Type IV Frame",
+      "8\" Radius Corner Type IV Frame",
+      "Type IV Frame",
+      "Type IV Frame (Welded Construction)"
+    ],
+    "post_panel_frame": [
+      "Assembly Labor Post & Panel Signs",
+      "Constant to Crate Post & Panel Sign",
+      "Constant to Post & panel",
+      "Load Uncrated Post & Panel sign mat",
+      "Load uncrated Post & Panel Sign, No helpers",
+      "Load uncrated Post & Panel Sign, One helper",
+      "Load uncrated Post & Panel Sign, Two helpers",
+      "Load uncrated Post & Panel sign, constant",
+      "Paint Post & Panel assemblies",
+      "Post & Panel Corner Keys",
+      "Post & Panel End Frame",
+      "Post & Panel End Retainer",
+      "Post & Panel Installation mat.",
+      "Post & Panel Sign, ",
+      "Post & Panel assemblies painting mat",
+      "Post & Panel sign inst. constant",
+      "Post & Panel sign installation"
+    ],
+    "thrif_t_frame": [
+      "Thrif-T Frame",
+      "Thrif-T Frame  (Bronze Finish)",
+      "Thrif-T Frame  (Mill Finish)",
+      "Thrif-T Frame (Non-Welded Construction: Single Face Only)",
+      "Thrif-T Frame (Welded Construction: Single Face Only)",
+      "Thrif-T Retainer  (Bronze Finish)",
+      "Thrif-T Retainer (Mill Finish)",
+      "Types III, IV and Thrif-T Constants"
+    ],
+    "architectural_frame": [
+      "Architectural Edge-Frames"
+    ]
+  },
+  "channel_letter_returns": [
+    {
+      "depth_in": 3,
+      "name": "3\" Channelume",
+      "code": "3CHANNELUME"
+    },
+    {
+      "depth_in": 5,
+      "name": "5\" Channelume",
+      "code": "5CHANNELUME"
+    },
+    {
+      "depth_in": 8,
+      "name": "8\" Channelume",
+      "code": "8CHANNELUME"
+    },
+    {
+      "depth_in": null,
+      "name": "CHANNELUME",
+      "code": "CHANNELUME"
+    },
+    {
+      "depth_in": null,
+      "name": "CHANNELUME3",
+      "code": "CHANNELUME3"
+    },
+    {
+      "depth_in": null,
+      "name": "CHANNELUME5",
+      "code": "CHANNELUME5"
+    },
+    {
+      "depth_in": null,
+      "name": "CHANNELUME8",
+      "code": "CHANNELUME8"
+    },
+    {
+      "depth_in": null,
+      "name": "Channelume",
+      "code": "CHANNELUME"
+    }
+  ],
+  "retainers": [
+    {
+      "name": "Type I Flat Retainer",
+      "abc_type_code": "I",
+      "finish": "default",
+      "is_vhb": false,
+      "is_radius": false
+    },
+    {
+      "name": "Type IV Flat Retainer",
+      "abc_type_code": "I",
+      "finish": "default",
+      "is_vhb": false,
+      "is_radius": false
+    },
+    {
+      "name": "Type II Beveled Retainer",
+      "abc_type_code": "II",
+      "finish": "default",
+      "is_vhb": false,
+      "is_radius": false
+    },
+    {
+      "name": "Type III Flat Retainer",
+      "abc_type_code": "III",
+      "finish": "default",
+      "is_vhb": false,
+      "is_radius": false
+    },
+    {
+      "name": "Type III Retainer (Bronze Finish)",
+      "abc_type_code": "III",
+      "finish": "bronze",
+      "is_vhb": false,
+      "is_radius": false
+    },
+    {
+      "name": "Beveled Retainer",
+      "abc_type_code": null,
+      "finish": "default",
+      "is_vhb": false,
+      "is_radius": false
+    },
+    {
+      "name": "Bleedface Retainer",
+      "abc_type_code": null,
+      "finish": "default",
+      "is_vhb": false,
+      "is_radius": false
+    },
+    {
+      "name": "Coping Retainer",
+      "abc_type_code": null,
+      "finish": "default",
+      "is_vhb": false,
+      "is_radius": false
+    },
+    {
+      "name": "Custom Fabbed Retainer",
+      "abc_type_code": null,
+      "finish": "default",
+      "is_vhb": false,
+      "is_radius": false
+    },
+    {
+      "name": "Flat Retainer",
+      "abc_type_code": null,
+      "finish": "default",
+      "is_vhb": false,
+      "is_radius": false
+    },
+    {
+      "name": "Flat Retainer with VHB Tape",
+      "abc_type_code": null,
+      "finish": "default",
+      "is_vhb": true,
+      "is_radius": false
+    },
+    {
+      "name": "Large E-Z Retainer",
+      "abc_type_code": null,
+      "finish": "default",
+      "is_vhb": false,
+      "is_radius": false
+    },
+    {
+      "name": "Post & Panel End Retainer",
+      "abc_type_code": null,
+      "finish": "default",
+      "is_vhb": false,
+      "is_radius": false
+    },
+    {
+      "name": "Radius Retainer",
+      "abc_type_code": null,
+      "finish": "default",
+      "is_vhb": false,
+      "is_radius": true
+    },
+    {
+      "name": "Small E-Z Retainer",
+      "abc_type_code": null,
+      "finish": "default",
+      "is_vhb": false,
+      "is_radius": false
+    },
+    {
+      "name": "Thrif-T Retainer  (Bronze Finish)",
+      "abc_type_code": null,
+      "finish": "bronze",
+      "is_vhb": false,
+      "is_radius": false
+    },
+    {
+      "name": "Thrif-T Retainer (Mill Finish)",
+      "abc_type_code": null,
+      "finish": "mill",
+      "is_vhb": false,
+      "is_radius": false
+    }
+  ],
+  "raceways": [
+    " Raceway",
+    "Double Filler Raceway Cover",
+    "Finish on Deck Cabinet and Raceway",
+    "Finish on Deck Cabinet/Raceway, Constant",
+    "Incandescent Lamp Raceway Extrusion Assy",
+    "Raceway",
+    "Raceway Bottoms",
+    "Raceway Constant",
+    "X-Wide Filler Raceway Cover"
+  ],
+  "tubing": [
+    {
+      "name": "1 x .083 Alum Square Tube",
+      "nominal_size": "1",
+      "wall_thousandths": "083",
+      "material": "alum",
+      "shape": "squareuare"
+    },
+    {
+      "name": "1 x .083 Steel Square Tube",
+      "nominal_size": "1",
+      "wall_thousandths": "083",
+      "material": "steel",
+      "shape": "squareuare"
+    },
+    {
+      "name": "1 x .109 Alum Round Tube",
+      "nominal_size": "1",
+      "wall_thousandths": "109",
+      "material": "alum",
+      "shape": "round"
+    },
+    {
+      "name": "1 x .133 Steel Round Tube",
+      "nominal_size": "1",
+      "wall_thousandths": "133",
+      "material": "steel",
+      "shape": "round"
+    },
+    {
+      "name": "1.25 x .083 Steel Square Tube",
+      "nominal_size": "1.25",
+      "wall_thousandths": "083",
+      "material": "steel",
+      "shape": "squareuare"
+    },
+    {
+      "name": "1.25 x .109 Alum Round Tube",
+      "nominal_size": "1.25",
+      "wall_thousandths": "109",
+      "material": "alum",
+      "shape": "round"
+    },
+    {
+      "name": "1.25 x .120 Alum Square Tube",
+      "nominal_size": "1.25",
+      "wall_thousandths": "120",
+      "material": "alum",
+      "shape": "squareuare"
+    },
+    {
+      "name": "1.25 x .140 Steel Round Tube",
+      "nominal_size": "1.25",
+      "wall_thousandths": "140",
+      "material": "steel",
+      "shape": "round"
+    },
+    {
+      "name": "1.5 x .083 Steel Square Tube",
+      "nominal_size": "1.5",
+      "wall_thousandths": "083",
+      "material": "steel",
+      "shape": "squareuare"
+    },
+    {
+      "name": "1.5 x .109 Alum Round Tube",
+      "nominal_size": "1.5",
+      "wall_thousandths": "109",
+      "material": "alum",
+      "shape": "round"
+    },
+    {
+      "name": "1.5 x .120 Alum Square Tube",
+      "nominal_size": "1.5",
+      "wall_thousandths": "120",
+      "material": "alum",
+      "shape": "squareuare"
+    },
+    {
+      "name": "1.5 x .145 Steel Round Tube",
+      "nominal_size": "1.5",
+      "wall_thousandths": "145",
+      "material": "steel",
+      "shape": "round"
+    },
+    {
+      "name": "2 x .083 Steel Square Tube",
+      "nominal_size": "2",
+      "wall_thousandths": "083",
+      "material": "steel",
+      "shape": "squareuare"
+    },
+    {
+      "name": "2 x .109 Alum Round Tube",
+      "nominal_size": "2",
+      "wall_thousandths": "109",
+      "material": "alum",
+      "shape": "round"
+    },
+    {
+      "name": "2 x .120 Alum Sq Tube",
+      "nominal_size": "2",
+      "wall_thousandths": "120",
+      "material": "alum",
+      "shape": "square"
+    },
+    {
+      "name": "2 x .154 Steel Round Tube",
+      "nominal_size": "2",
+      "wall_thousandths": "154",
+      "material": "steel",
+      "shape": "round"
+    },
+    {
+      "name": "2.5 x .120 Alum Sq Tube",
+      "nominal_size": "2.5",
+      "wall_thousandths": "120",
+      "material": "alum",
+      "shape": "square"
+    },
+    {
+      "name": "2.5 x .141 Steel Square Tube",
+      "nominal_size": "2.5",
+      "wall_thousandths": "141",
+      "material": "steel",
+      "shape": "squareuare"
+    },
+    {
+      "name": "2.5 x .203 Steel Round Tube",
+      "nominal_size": "2.5",
+      "wall_thousandths": "203",
+      "material": "steel",
+      "shape": "round"
+    },
+    {
+      "name": "3 x .125 Alum Sq Tube",
+      "nominal_size": "3",
+      "wall_thousandths": "125",
+      "material": "alum",
+      "shape": "square"
+    },
+    {
+      "name": "3 x .188 Steel Square Tube",
+      "nominal_size": "3",
+      "wall_thousandths": "188",
+      "material": "steel",
+      "shape": "squareuare"
+    },
+    {
+      "name": "3/4 x .083 Alum Round Tube",
+      "nominal_size": "3/4",
+      "wall_thousandths": "083",
+      "material": "alum",
+      "shape": "round"
+    },
+    {
+      "name": "3/4 x .113 Stl Round Tube",
+      "nominal_size": "3/4",
+      "wall_thousandths": "113",
+      "material": "steel",
+      "shape": "round"
+    }
+  ],
+  "extrusion_labor_formulas": {
+    "Plastic Sign Frame Constants": {
+      "labor_id": "LABOR41",
+      "params": [],
+      "formula": "M7L5"
+    },
+    "Plastic Sign Frame": {
+      "labor_id": "LABOR46",
+      "params": [
+        "perim_ft",
+        "(sign_ht+sign_ln)/6"
+      ],
+      "formula": "M7L5*perim_ft"
+    },
+    "Raceway Constant": {
+      "labor_id": "LABOR49",
+      "params": [],
+      "formula": "M7L9"
+    },
+    "Raceway": {
+      "labor_id": "LABOR50",
+      "params": [],
+      "formula": "M7L9*M6L14"
+    },
+    "Retainer for Cut Out, Constant": {
+      "labor_id": "LABOR59",
+      "params": [],
+      "formula": "M8L16"
+    },
+    "Retainer for Cut Out": {
+      "labor_id": "LABOR60",
+      "params": [],
+      "formula": "M8L17*nfaces"
+    },
+    "Vertical Jack Struts": {
+      "labor_id": "LABOR145",
+      "params": [],
+      "formula": "M3L5*RM11L4*(M14L16==0)"
+    },
+    "Horizontal Jack Struts": {
+      "labor_id": "LABOR147",
+      "params": [],
+      "formula": "M3L5*RM11L11*(M14L16==0)"
+    },
+    "Large A/Flexframe constant": {
+      "labor_id": "LABOR85",
+      "params": [],
+      "formula": "(M15aL3+NM15aL18+NM15aaL11)*((area_ft>50)*(area_ft<200)*area_ft+(area_ft<=50)*50+(area_ft>=200)*200)"
+    },
+    "Single Face Small A/Flexframe constant": {
+      "labor_id": "LABOR86",
+      "params": [],
+      "formula": "(M15aL9+NM15aL19+NM15aaL12)*((area_ft>50)*(area_ft<150)*area_ft+(area_ft<=50)*50+(area_ft>=150)*150)"
+    },
+    "Large A/Bleedframe Constant": {
+      "labor_id": "LABOR86a",
+      "params": [],
+      "formula": "NM15aL16*((area_ft>50)*(area_ft<200)*area_ft+(area_ft<=50)*50+(area_ft>=200)*200)"
+    },
+    "Small A/Bleedframe Constant": {
+      "labor_id": "LABOR86b",
+      "params": [],
+      "formula": "NM15aL17*((area_ft>50)*(area_ft<150)*area_ft+(area_ft<=50)*50+(area_ft>=150)*150)"
+    },
+    "Hinged Frame constant": {
+      "labor_id": "LABOR87",
+      "params": [],
+      "formula": "(M15bL1+M15aaL5+M15bL7+M15bL10+M15aaL6+M15bL16)*((area_ft>40)*(area_ft<100)*area_ft+(area_ft<=40)*40+(area_ft>=100)*100)"
+    },
+    "12\" Conventional Frame constant": {
+      "labor_id": "LABOR88",
+      "params": [],
+      "formula": "M15cL1*((area_ft>31.25)*(area_ft<156.25)*area_ft+(area_ft<=31.25)*31.25+(area_ft>=156.25)*156.25)"
+    },
+    "Type I Frame constant": {
+      "labor_id": "LABOR89",
+      "params": [],
+      "formula": "(M15cL2+NM15aaL8)*((area_ft>50)*(area_ft<83)*area_ft+(area_ft<=50)*50+(area_ft>=83)*83)"
+    },
+    "Type II Frame constant": {
+      "labor_id": "LABOR90",
+      "params": [],
+      "formula": "(M15cL5+NM15aaL9)*((area_ft>50)*(area_ft<83)*area_ft+(area_ft<=50)*50+(area_ft>=83)*83)"
+    },
+    "Wide Fabricated Frame Constants": {
+      "labor_id": "LABOR91",
+      "params": [],
+      "formula": "M14L16*((area_ft>50)*(area_ft<300)*area_ft+(area_ft<=50)*50+(area_ft>=300)*300)"
+    },
+    "Types III, IV and Thrif-T Constants": {
+      "labor_id": "LABOR92",
+      "params": [],
+      "formula": "(M15cL8+M15cL11+NM15aaL10+M15cL21)"
+    },
+    "Small E-Z Unit Frame Constant": {
+      "labor_id": "LABOR93",
+      "params": [],
+      "formula": "M15cL12"
+    },
+    "Retroframe Constants": {
+      "labor_id": "LABOR94",
+      "params": [],
+      "formula": "M15dL3+M15dL6+M15dL9"
+    },
+    "Retroframe w/ S. Met Cabinet Constants": {
+      "labor_id": "LABOR95",
+      "params": [],
+      "formula": "M7aL3+M7aL6+M7aL9"
+    },
+    "Constant to Post & panel": {
+      "labor_id": "LABOR95a",
+      "params": [
+        "HT",
+        "(NM15hL9+NM15iL9+NM15jL7)>0)*((NM15hL9+N",
+        "15iL9+NM15jL7)<=12)*1+((NM15hL9+NM15iL9+NM15jL7)>12)*((NM15hL9+NM15iL9+NM15jL",
+        ")<=18)*1.5+((NM15hL9+NM15iL9+NM15jL7)>18)*((NM15hL9+NM1",
+        "iL9+NM15jL7)<=24)*2+((NM15hL9+NM15iL9+NM15jL7)>24)*((",
+        "LNTH",
+        "(NM15hL10+NM15iL10+NM15jL8)>0)*((NM15hL1",
+        "+NM15iL10+NM15jL8)<=12)*1+((NM15hL10+NM15iL10+NM",
+        "5jL8)>12)*((NM15hL10+NM15iL10+NM15jL8)<=18)*1.5+(",
+        "NM15hL10+NM15iL10+NM15jL8)>18)*((NM15hL1",
+        "+NM15iL10+NM15jL8)<=24)*2+((NM15hL10+NM15iL10+NM",
+        "5jL8)>24)*((NM15hL10+NM15iL10+NM15jL8)<=30)*2.5+(",
+        "NM15hL10+NM15iL10+NM15jL8)>30)*((NM15hL1",
+        "+NM15iL10+NM15jL8)<=36)*3+((NM15hL10+NM15iL10+NM",
+        "5jL8)>36)*((NM15hL10+NM15iL10+NM15jL8)<=48)*4+((N",
+        "15hL10+NM15iL10+NM15jL8)>48)*((NM15hL10+NM15iL10+NM15jL8)<=60)*5+((NM15hL10+N",
+        "15iL10+NM15jL8)>60)*((NM15hL10+NM15iL10+NM15jL8)<=72)*6+((NM15hL10+NM15iL10+N",
+        "P",
+        "HT*2+LNTH*2",
+        "post_panel_perim",
+        "P+(P>0)*(P<12)*0.75+(P>=12)*1",
+        "post_panel_area",
+        "HT*LNTH"
+      ],
+      "formula": "(((post_panel_perim)<14)*((NM15gL3+NM15gL6+NM15gL4+NM15gL7)*0.925+NM15gL5*0.750)+((post_panel_perim)>=14)*((NM15gL3+NM15gL6+NM15gL4+NM15gL7)*0.990+NM15gL5*0.875))*(1+(NM15gL4+NM15gL7)*0.15)*(1-NM14L19*0.5)"
+    },
+    "Assembly Labor Post & Panel Signs": {
+      "labor_id": "LABOR95b",
+      "params": [],
+      "formula": "NM14L18*post_panel_perim*(1+(NM15gL4+NM15gL7)*0.15)*(1-NM14L19*NM15gL5*0.5)"
+    },
+    "Frames except Types III & IV & Hinged": {
+      "labor_id": "LABOR96",
+      "params": [],
+      "formula": "(((M15aL3*(M15aL15==0))+(M15aL9*(M15aL15==0))+(NM15aaL7*(NM15aaL8+NM15aaL9+NM15aaL11+NM15aaL12))+M15cL1+M15cL2+M15cL5+M15L3*(M15L4==0)+M15L6*(M15L7==0)+M15L9+M15dL3+M15dL6)>0)*(M17L5+M17L6)*(perim_ft-M17L8/12)"
+    },
+    "Architectural Edge-Frames": {
+      "labor_id": "LABOR97",
+      "params": [],
+      "formula": "M15L12*(M17L5+M17L6)*(perim_ft-M17L8/12)"
+    },
+    "Mount Routed Face to Frame": {
+      "labor_id": "LABOR98",
+      "params": [],
+      "formula": "M15L12*RFACES_ROUTED*area_ft*nfaces"
+    },
+    "Hinged Frames": {
+      "labor_id": "LABOR99",
+      "params": [],
+      "formula": "(M15bL1+M15aaL5+M15bL7+M15bL10+M15aaL6+M15bL16)*(M17L5+M17L6)*perim_ft"
+    },
+    "Retro Frames with S.M. Cabinets": {
+      "labor_id": "LABOR100",
+      "params": [],
+      "formula": "((M7aL3+M7aL6)>0)*(METAL_RECTANGLE+METAL_TRAPEZOID+METAL_IRREGULAR+METAL_INTRICATE)*perim_ft"
+    },
+    "Saddle and Hinge Assemblies": {
+      "labor_id": "LABOR101",
+      "params": [],
+      "formula": "(M16bL5+M16bL6)*(perim_ft-M17L8/12)"
+    },
+    "Outer-Frame Struts": {
+      "labor_id": "LABOR102",
+      "params": [],
+      "formula": "M15abL4*nfaces"
+    },
+    "Hingeable Frame Prop Hardware": {
+      "labor_id": "LABOR103",
+      "params": [],
+      "formula": "M15abL8*nfaces+M15eL17*NM15eL27"
+    },
+    "Continuous Piano Hinge": {
+      "labor_id": "LABOR104",
+      "params": [],
+      "formula": "M15abL12*nfaces+M15eL4*(NM15eL19+NM15eL20+NM15eL21+NM15eL22)"
+    },
+    "Outside R-Hinge and Saddle": {
+      "labor_id": "LABOR106",
+      "params": [],
+      "formula": "M16bL7*(perim_ft-M17L8/12)"
+    },
+    "Inside R-Hinge and Saddle": {
+      "labor_id": "LABOR107",
+      "params": [],
+      "formula": "M16bL8*(perim_ft-M17L8/12)"
+    },
+    "Bleedface Frame Systems (Non-Hinging)": {
+      "labor_id": "LABOR108",
+      "params": [
+        "NM15aL16",
+        "NM15aL17",
+        "NM15aL18",
+        "NM15aL19"
+      ],
+      "formula": "(((NM15aL16+NM15aL17+NM15aL18+NM15aL19)*M15aL15+M15L4+M15L7)>0)*(M17L5+M17L6)*(perim_ft-M17L8/12)"
+    },
+    "Type III Uni-Frame": {
+      "labor_id": "LABOR109",
+      "params": [],
+      "formula": "M15cL8*(M15cL16*(perim_ft-sign_ht/12)+(M15cL14==0)*(M15cL16==0)*perim_ft)"
+    },
+    "Type IV Uni-Frame": {
+      "labor_id": "LABOR110",
+      "params": [],
+      "formula": "(M15cL11-NM15cL11a)*(M15cL16*(perim_ft-sign_ht/12)+(M15cL14==0)*(M15cL16==0)*perim_ft)"
+    },
+    "Small E-Z Unit Frame": {
+      "labor_id": "LABOR111",
+      "params": [],
+      "formula": "M15cL12*(M15cL16*(perim_ft-sign_ht/12)+(M15cL14==0)*(M15cL16==0)*perim_ft)"
+    },
+    "Type III End Frame": {
+      "labor_id": "LABOR112",
+      "params": [],
+      "formula": "M15cL8*(M15cL16*sign_ht/12+M15cL14*perim_ft)+NM15aaL7*(NM15aaL10*perim_ft)"
+    },
+    "Zero Clearance Saddle & Carrier Frame": {
+      "labor_id": "LABOR112a",
+      "params": [],
+      "formula": "NM15aaL7*perim_ft*(FACE1+FACE2*2)"
+    },
+    "Type IV End Frame": {
+      "labor_id": "LABOR113",
+      "params": [],
+      "formula": "(M15cL11-NM15cL11a)*(M15cL16*sign_ht/12+M15cL14*perim_ft)"
+    },
+    "Type IV End-Frame Non-Welded Construction": {
+      "labor_id": "LABOR113a",
+      "params": [],
+      "formula": "M15cL11*(NM15cL11a*(M15cL16*sign_ht/12+M15cL14*perim_ft))"
+    },
+    "Type IV Uni-Frame Non-Welded Construction": {
+      "labor_id": "LABOR113b",
+      "params": [],
+      "formula": "M15cL11*(NM15cL11a*(M15cL16*(perim_ft-sign_ht/12)+(M15cL14==0)*(M15cL16==0)*perim_ft))"
+    },
+    "Thrif-T Frame (Welded Construction: Single Face Only)": {
+      "labor_id": "LABOR113c",
+      "params": [],
+      "formula": "M15cL21*(M15cL22==0)*perim_ft"
+    },
+    "Thrif-T Frame (Non-Welded Construction: Single Face Only)": {
+      "labor_id": "LABOR113d",
+      "params": [],
+      "formula": "M15cL21*M15cL22*perim_ft"
+    },
+    "Small E-Z End Frame": {
+      "labor_id": "LABOR114",
+      "params": [],
+      "formula": "M15cL12*(M15cL16*sign_ht/12+M15cL14*perim_ft)"
+    },
+    "Curved Frame": {
+      "labor_id": "LABOR115",
+      "params": [],
+      "formula": "(((M15aL3*(M15aL15==0))+(M15aL9*(M15aL15==0))+M15cL1+M15cL2+M15cL5+M15cL8*(M15cL14==0)+M15L3+M15cL11*(M15cL14==0)+M15L6+M15L9+M15L12)>0)*M17L8/12"
+    },
+    "Curved Frame for End Frames": {
+      "labor_id": "LABOR116",
+      "params": [],
+      "formula": "(((M15cL8*M15cL14)+(M15cL11*M15cL14))>0)*M17L8/12*((M16L6+M16L12+M16L14+M16L15+M15cL8+M15cL11)>0)"
+    },
+    "Curved Frame for Bleedface": {
+      "labor_id": "LABOR117",
+      "params": [],
+      "formula": "M15aL15*(NM15aL16+NM15aL17+NM15aL18+NM15aL19)*M17L8/12"
+    },
+    "Curved Frame for retroframes": {
+      "labor_id": "LABOR118",
+      "params": [],
+      "formula": "(M15dL3+M15dL6)*M17L8/12*(M16L5+M16L6+M16L7+M16L8+M16L9+M16L10+M16L11+M16L11a+M16L12+M16L13+M16L14+M16L15+M16L16)"
+    },
+    "Curved F-Saddle and Hinge": {
+      "labor_id": "LABOR119",
+      "params": [],
+      "formula": "M16bL5*M17L8/12"
+    },
+    "Curved R-Saddle and Hinge": {
+      "labor_id": "LABOR120",
+      "params": [],
+      "formula": "M16bL6*M17L8/12"
+    },
+    "Curved Outside R-Hinge and saddle": {
+      "labor_id": "LABOR121",
+      "params": [],
+      "formula": "M16bL7*M17L8/12"
+    },
+    "Curved Inside R-Hinge and Saddle": {
+      "labor_id": "LABOR122",
+      "params": [],
+      "formula": "M16bL8*M17L8/12"
+    },
+    "Radius Corner Kits": {
+      "labor_id": "LABOR128",
+      "params": [],
+      "formula": "RM18aL13*(RM46L7==0)"
+    },
+    "Radius Corner Kits for flexible faces": {
+      "labor_id": "LABOR127",
+      "params": [],
+      "formula": "M18aL5*RM46L7"
+    },
+    "Radius Corner Kits for flexible face": {
+      "labor_id": "LABOR129",
+      "params": [],
+      "formula": "M18aL13*RM46L7"
+    },
+    "Non-standard Radius Corner": {
+      "labor_id": "LABOR130",
+      "params": [],
+      "formula": "M18aL15*(M18aL16<>0)"
+    },
+    "4\" Radius Corner Kits for Hinge Frames": {
+      "labor_id": "LABOR131",
+      "params": [
+        "temp",
+        "(M14L4==0)*(M14L10==0)*(M14L13==0)*(M14L16==0)"
+      ],
+      "formula": "M16aL4*temp"
+    },
+    "6\" Radius Corner Kits for Hinge Frames": {
+      "labor_id": "LABOR132",
+      "params": [],
+      "formula": "M16aL8*temp"
+    },
+    "9\" Radius Corner Kits for Hinge Frames": {
+      "labor_id": "LABOR133",
+      "params": [],
+      "formula": "M16aL12*temp"
+    },
+    "12\" Radius Corner Kits for Hinge Frames": {
+      "labor_id": "LABOR134",
+      "params": [],
+      "formula": "M16aL16*temp"
+    },
+    "Splice Frame": {
+      "labor_id": "LABOR135",
+      "params": [],
+      "formula": "M18L4+M17cL7"
+    },
+    "Vertical Jack Struts for Wide Frames": {
+      "labor_id": "LABOR146",
+      "params": [],
+      "formula": "M3L5*RM11L4*M14L16"
+    },
+    "Horizontal Jack Struts for Wide Frames": {
+      "labor_id": "LABOR148",
+      "params": [],
+      "formula": "M3L5*RM11L11*M14L16"
+    },
+    "Incandescent Lamp Raceway Extrusion Assy": {
+      "labor_id": "LABOR158",
+      "params": [],
+      "formula": "M19L4"
+    },
+    "Block Channelume Letter Const < 10\"": {
+      "labor_id": "LABOR188",
+      "params": [],
+      "formula": "RBLOCK*RM23L9*Rtemp"
+    },
+    "Serifed Channelume Letter Const < 10\"": {
+      "labor_id": "LABOR189",
+      "params": [],
+      "formula": "RSERIFED*RM23L9*Rtemp"
+    },
+    "Script Channelume Letter Const < 10\"": {
+      "labor_id": "LABOR190",
+      "params": [],
+      "formula": "RSCRIPT*RM23L9*Rtemp"
+    },
+    "Block Channelume Letter Const >=10\"": {
+      "labor_id": "LABOR191",
+      "params": [],
+      "formula": "RBLOCK*RM23L9*Rtemp2"
+    },
+    "Serifed Channelume Letter Const >=10\"": {
+      "labor_id": "LABOR192",
+      "params": [],
+      "formula": "RSERIFED*RM23L9*Rtemp2"
+    },
+    "Script Channelume Letter Const >=10\"": {
+      "labor_id": "LABOR193",
+      "params": [],
+      "formula": "RSCRIPT*RM23L9*Rtemp2"
+    },
+    "Block Let-R-Edge Letter Const < 10\"": {
+      "labor_id": "LABOR194",
+      "params": [],
+      "formula": "RBLOCK*RM23L10*Rtemp"
+    },
+    "Serifed Let-R-Edge Letter Const < 10\"": {
+      "labor_id": "LABOR195",
+      "params": [],
+      "formula": "RSERIFED*RM23L10*Rtemp"
+    },
+    "Script Let-R-Edge Letter Const < 10\"": {
+      "labor_id": "LABOR196",
+      "params": [],
+      "formula": "RSCRIPT*RM23L10*Rtemp"
+    },
+    "Block Let-R-Edge Letter Const >=10\"": {
+      "labor_id": "LABOR197",
+      "params": [],
+      "formula": "RBLOCK*RM23L10*Rtemp2"
+    },
+    "Serifed Let-R-Edge Letter Const >=10\"": {
+      "labor_id": "LABOR198",
+      "params": [],
+      "formula": "RSERIFED*RM23L10*Rtemp2"
+    },
+    "Script Let-R-Edge Letter Const >=10\"": {
+      "labor_id": "LABOR199",
+      "params": [],
+      "formula": "RSCRIPT*RM23L10*Rtemp2"
+    },
+    "< 12\" Channelume/Let-R-Edge Letters": {
+      "labor_id": "LABOR215",
+      "params": [
+        "Rtemp",
+        "(RM23L9+RM23L10+RM23L11)*Rletter_footage*(RM23bL9/100+1)"
+      ],
+      "formula": "(RLETTER_HEIGHT<12)*Rtemp"
+    },
+    "12\" to 18\" Channelume/Let-R-Edge Letters": {
+      "labor_id": "LABOR216",
+      "params": [],
+      "formula": "(RLETTER_HEIGHT>=12)*(RLETTER_HEIGHT<18)*Rtemp"
+    },
+    "19\" to 25\" Channelume/Let-R-Edge Letters": {
+      "labor_id": "LABOR217",
+      "params": [],
+      "formula": "(RLETTER_HEIGHT>=19)*(RLETTER_HEIGHT<26)*Rtemp"
+    },
+    "26\" to 32\" Channelume/Let-R-Edge Letters": {
+      "labor_id": "LABOR218",
+      "params": [],
+      "formula": "(RLETTER_HEIGHT>=26)*(RLETTER_HEIGHT<33)*Rtemp"
+    },
+    "33\" to 39\" Channelume/Let-R-Edge Letters": {
+      "labor_id": "LABOR219",
+      "params": [],
+      "formula": "(RLETTER_HEIGHT>=33)*(RLETTER_HEIGHT<40)*Rtemp"
+    },
+    "40\" to 46\" Channelume/Let-R-Edge Letters": {
+      "labor_id": "LABOR220",
+      "params": [],
+      "formula": "(RLETTER_HEIGHT>=40)*(RLETTER_HEIGHT<47)*Rtemp"
+    },
+    "47\" to 54\" Channelume/Let-R-Edge Letters": {
+      "labor_id": "LABOR221",
+      "params": [],
+      "formula": "(RLETTER_HEIGHT>=47)*(RLETTER_HEIGHT<55)*Rtemp"
+    },
+    "55\"-120\" Channelume/Let-R-Edge Letters": {
+      "labor_id": "LABOR222",
+      "params": [],
+      "formula": "(RLETTER_HEIGHT>=55)*Rtemp"
+    },
+    "Awning Framework Constant, <= 30 sq ft": {
+      "labor_id": "LABOR289",
+      "params": [
+        "temp",
+        "3.14159*(M74L8+M76L5+M77L7+M75L12)",
+        "temp1",
+        "tmpTrapezoid",
+        "((M75L16>M75L4)*(M75L16>(M75L3+M75L8)))*M75L16+((M75L16>M75L4)*(M75L16<=(M75L3+M75L8)))*M75L3+((M75L16<=M75L4)*(M75L4<=(M75L3+M75L8)))*M75L3+((M75L16<=M75L4)*(M75L4>(M75L3+M75L8)))*M75L4",
+        "tmpTrapezoidLen",
+        "(M75L5>M75L15)*M75L5+(M75L5<=M75L15)*M75L15",
+        "awning_area",
+        "((M",
+        "2L5*(((temp/2+M74L5-M74L8+M74L6-M74L8)*M74L7)+(M74L13*t",
+        "mp*M74L8/4+(M74L5-M74L8)*M74L8+(M74L6-M74L8)*M74L5)+(M74L14*temp/2*(M74L5+M74L6-M74L8)+(M74L5-M74L8)*",
+        "74L8)+2*(M74L5-M74L8)*(M74L6-M74L8))))+(M72L6*((M74L6*(temp+2*(M74L5-M74L8)))",
+        "(M74L13*temp*M74L8/2+(M74L5-M74L8)*M74L8)+(",
+        "74L14*temp/2*(M74L5+M74L6-M74L8)+(M74L5-M74L8)*(M74L6-M74L8))+(M74L15*temp*(M",
+        "4L5+M74L6-M74L8)+2*(M74L5-M74L8)*(M74L6-M74L8))))+(M75L",
+        "0*((M75L3>M75L4)*M75L3*M75L5+(M75L3<=M75L4)*M75L4",
+        "5*(M75L4-M75L12))+((2-M75L18)*(M75L12*M75L12*0.2146025+M75L8*M75L4+M75L12*(M",
+        "5L4-M75L12)))))+(M75L13*((M75L3>M75L4)*M75L3*M75L5+(M75",
+        "3<=M75L4)*M75L4*M75L5))+(M75L14*(tmpTrapezoid*tmpTrapezoidLen))+(M76L12*temp",
+        "2*temp1)+(M76L13*temp*temp1)+(M76L14*temp*1.5*t",
+        ")+(M76L15*temp*2*temp1)+(M77L4*(M77L5*M77L6*M77L9"
+      ],
+      "formula": "M3L10*(awning_area<=30)"
+    },
+    "Awning Framework Const, 31 to 100 sq ft": {
+      "labor_id": "LABOR290",
+      "params": [],
+      "formula": "M3L10*(awning_area>30)*(awning_area<=100)*awning_area"
+    },
+    "Awning Framework Const 101 to 200 sq ft": {
+      "labor_id": "LABOR291",
+      "params": [],
+      "formula": "M3L10*(awning_area>100)*(awning_area<=200)*awning_area"
+    },
+    "Awning Framework Constant, > 200 sq ft": {
+      "labor_id": "LABOR292",
+      "params": [],
+      "formula": "M3L10*(awning_area>200)"
+    },
+    "Awning/Canopy Extras - splice frame pcs": {
+      "labor_id": "LABOR319",
+      "params": [],
+      "formula": "M83L15*M83L16"
+    },
+    "Primer on Awning Frames": {
+      "labor_id": "LABOR326",
+      "params": [],
+      "formula": "(M73L7>0)*(M78L14+M78L15+M78L16+M78L17)*(M73L10==0)"
+    },
+    "Paint Awning Frames ": {
+      "labor_id": "LABOR327",
+      "params": [],
+      "formula": "(M73L10<>0)*(M78L14+M78L15+M78L16+M78L17)"
+    },
+    "Finish on Plastic Frames, Constant": {
+      "labor_id": "LABOR359",
+      "params": [],
+      "formula": "M30L15*(M3L5*(NM14L18==0)+M7L5)"
+    },
+    "Finish on Deck Cabinet/Raceway, Constant": {
+      "labor_id": "LABOR360",
+      "params": [],
+      "formula": "RM30L15*(M7L6+M7L9+NM6aL13*M6L13)"
+    },
+    "Finish on Plastic Sign Frame": {
+      "labor_id": "LABOR361",
+      "params": [],
+      "formula": "RM30L15*M7L5*perim_ft"
+    },
+    "Finish on Retroframes": {
+      "labor_id": "LABOR362",
+      "params": [],
+      "formula": "RM30L15*(M7aL3+M7aL6+M7aL9)*perim_ft"
+    },
+    "Finish on Retroframes, Trico-Plex": {
+      "labor_id": "LABOR362a",
+      "params": [],
+      "formula": "RM30L15*(M7aL3+M7aL6+M7aL9)*perim_ft*TRICOPLEX"
+    },
+    "Finish on Extruded Frames": {
+      "labor_id": "LABOR363",
+      "params": [],
+      "formula": "((M15aL3*(M15aL15==0)+(NM15aaL7*NM15aaL11))+(M15aL9*(M15aL15==0)+(NM15aaL7*NM15aaL12))+(NM15aaL7*(NM15aaL8+NM15aaL9+NM15aaL10))+M15cL1+M15cL2+M15cL5+M15cL8+M15cL11+M15cL12+M15dL3+M15dL6+M15dL9+M15cL21)*M30L15*perim_ft"
+    },
+    "Finish on Extruded Frames, Trico-Plex": {
+      "labor_id": "LABOR363a",
+      "params": [],
+      "formula": "((M15aL3*(M15aL15==0)+(NM15aaL7*NM15aaL11))+(M15aL9*(M15aL15==0)+(NM15aaL7*NM15aaL12))+(NM15aaL7*(NM15aaL8+NM15aaL9+NM15aaL10))+M15cL1+M15cL2+M15cL5+M15cL8+M15cL11+M15cL12+M15dL3+M15dL6+M15dL9+M15cL21)*M30L15*perim_ft*TRICOPLEX"
+    },
+    "Finish on Hinged Frames": {
+      "labor_id": "LABOR364",
+      "params": [
+        "NM15aaL7"
+      ],
+      "formula": "(M15bL1+M15aaL5+M15bL7+M15bL10+M15aaL6+M15bL16+(NM15aaL7*(FACE1+FACE2*2)))*M30L15*perim_ft"
+    },
+    "Finish on Hinged Frames, Trico-Plex": {
+      "labor_id": "LABOR364a",
+      "params": [
+        "NM15aaL7"
+      ],
+      "formula": "(M15bL1+M15aaL5+M15bL7+M15bL10+M15aaL6+M15bL16+(NM15aaL7*(FACE1+FACE2*2)))*M30L15*perim_ft*TRICOPLEX"
+    },
+    "Finish on Bleed Face Frames": {
+      "labor_id": "LABOR365",
+      "params": [],
+      "formula": "((M15aL15*(NM15aL16+NM15aL18))+(M15aL15*(NM15aL17+NM15aL19)))*M30L15*perim_ft"
+    },
+    "Finish on Bleed Face Frames, Trico-Plex": {
+      "labor_id": "LABOR365a",
+      "params": [],
+      "formula": "((M15aL15*(NM15aL16+NM15aL18))+(M15aL15*(NM15aL17+NM15aL19)))*M30L15*perim_ft*TRICOPLEX"
+    },
+    "Finish on Deck Cabinet and Raceway": {
+      "labor_id": "LABOR366a",
+      "params": [],
+      "formula": "TRICOPLEX*RM30L15*(M7L6+M7L9+NM6aL13)*M6L14"
+    },
+    "Finish on Wide Fabricated Frames": {
+      "labor_id": "LABOR373",
+      "params": [],
+      "formula": "M14L16*M15L16/12*perim_ft*M30L15"
+    },
+    "Finish on Jack Struts": {
+      "labor_id": "LABOR382",
+      "params": [],
+      "formula": "M30L15*(RM11L4*RM11L5+RM11L11*RM11L12)/12"
+    },
+    "Paint Post & Panel assemblies": {
+      "labor_id": "LABOR398b",
+      "params": [],
+      "formula": "NM14L18*M30L15*(NM15gL3*(post_panel_perim+(NM15hL3*2/12))+NM15gL4*(post_panel_perim+(NM15hL3*2/12)+LNTH*1.1)+NM15gL5*post_panel_perim+NM15gL6*(post_panel_perim+(NM15jL4*2/12))+NM15gL7*(post_panel_perim+(NM15jL4*2/12)+LNTH*1.1))"
+    },
+    "Dynapac H 16 w/Frame Rot. Unit, Const.": {
+      "labor_id": "LABOR446",
+      "params": [],
+      "formula": "M44L2"
+    },
+    "Dynapac H 16 wo/Frame Rot. Unit, Const.": {
+      "labor_id": "LABOR447",
+      "params": [],
+      "formula": "M44L3"
+    },
+    "Dynapac J 25 with Frame, Constant": {
+      "labor_id": "LABOR448",
+      "params": [],
+      "formula": "M44L4"
+    },
+    "Dynapac K 36 with Frame, Constant": {
+      "labor_id": "LABOR449",
+      "params": [],
+      "formula": "M44L5"
+    },
+    "Dynapac K 80 with Frame, Constant": {
+      "labor_id": "LABOR450",
+      "params": [],
+      "formula": "M44L6"
+    },
+    "Dynapac K 100 with Frame, Constant": {
+      "labor_id": "LABOR451",
+      "params": [],
+      "formula": "M44L7"
+    },
+    "Dynapac H 16 Rotating Unit with frame": {
+      "labor_id": "LABOR452",
+      "params": [],
+      "formula": "M44L2"
+    },
+    "Dynapac H 16 Rotating Unit without frame": {
+      "labor_id": "LABOR453",
+      "params": [],
+      "formula": "M44L3"
+    },
+    "Dynapac J 25 with Frame": {
+      "labor_id": "LABOR454",
+      "params": [],
+      "formula": "M44L4"
+    },
+    "Dynapac K 36 with Frame": {
+      "labor_id": "LABOR455",
+      "params": [],
+      "formula": "M44L5"
+    },
+    "Dynapac K 80 with Frame": {
+      "labor_id": "LABOR456",
+      "params": [],
+      "formula": "M44L6"
+    },
+    "Dynapac K 100 with Frame": {
+      "labor_id": "LABOR457",
+      "params": [],
+      "formula": "M44L7"
+    },
+    "Mold Making/curved extru.,Back. not tex.": {
+      "labor_id": "LABOR488",
+      "params": [],
+      "formula": "(M3L8*area_ft*M4bL4*(RM4bL3==0)*(RM51L15==0)*(RM51L11+RM51L12))/((MULTIPLE_SIGNS==0)+MULTIPLE_SIGNS)"
+    },
+    "Mold Making/curved extru.,Back. texture.": {
+      "labor_id": "LABOR489",
+      "params": [],
+      "formula": "(M3L8*area_ft*M4bL4*(RM4bL3==0)*RM51L15*(RM51L11+RM51L12))/((MULTIPLE_SIGNS==0)+MULTIPLE_SIGNS)"
+    },
+    "Cover Framework with Vinyl <= 100 sq ft": {
+      "labor_id": "LABOR581",
+      "params": [],
+      "formula": "M82L6"
+    },
+    "Cover Framework with Vinyl > 100 sq ft": {
+      "labor_id": "LABOR582",
+      "params": [],
+      "formula": "M82L7"
+    },
+    "Constant to Crate Post & Panel Sign": {
+      "labor_id": "LABOR699a",
+      "params": [],
+      "formula": "CRATE_SHIP_SIGN*((NM15gL3+NM15gL4+NM15gL6+NM15gL7)*((post_panel_perim<10)*0.67+(post_panel_perim>=10)*0.72)+(NM15gL5)*((post_panel_perim<10)*0.35+(post_panel_perim>=10)*0.43))"
+    },
+    "Load uncrated Post & Panel sign, constant": {
+      "labor_id": "LABOR699c",
+      "params": [],
+      "formula": "M2L16*NM14L18"
+    },
+    "Load uncrated Post & Panel Sign, No helpers": {
+      "labor_id": "LABOR699d",
+      "params": [],
+      "formula": "M2L16*((M2L17+M2L18)==0)*NM14L18*post_panel_perim"
+    },
+    "Load uncrated Post & Panel Sign, One helper": {
+      "labor_id": "LABOR699e",
+      "params": [],
+      "formula": "M2L16*M2L17*NM14L18*post_panel_perim"
+    },
+    "Load uncrated Post & Panel Sign, Two helpers": {
+      "labor_id": "LABOR699f",
+      "params": [],
+      "formula": "M2L16*M2L18*NM14L18*post_panel_perim"
+    },
+    "Post & Panel sign inst. constant": {
+      "labor_id": "LABOR724a",
+      "params": [
+        "temp",
+        "NM14L18*(M2L12+M2L13+M2L14)"
+      ],
+      "formula": "(CRATE_SHIP_SIGN==0)*(M2L16==0)*temp"
+    },
+    "Post & Panel sign installation": {
+      "labor_id": "LABOR724b",
+      "params": [],
+      "formula": "(CRATE_SHIP_SIGN==0)*(M2L16==0)*temp*post_panel_area"
+    }
+  }
+}
