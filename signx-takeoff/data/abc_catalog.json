@@ -1,8 +1,29 @@
 {
   "_meta": {
-    "source": "ABC Estimate v3.8 *.abc data files",
+    "source": "ABC Estimate v3.8.0.1 *.abc data files",
+    "source_published_date": "2010-09-XX",
+    "source_files_sha256_16": {
+      "invent_nm.abc": "4b6390876f041f07",
+      "bill_mat_nm.abc": "6b2684659fbf3be4",
+      "descript_nm.abc": "bfae4f51bfeb49f3",
+      "labor_nm.abc": "e40fd9078fc9d47a",
+      "dept_nm.abc": "c86da241f1d90162",
+      "scripts_nm.abc": "471ddb4836225fb4"
+    },
     "extracted_at": "2026-05-01",
+    "extracted_by": "_dev/_phase7_build_signx_catalog.py",
+    "currency": "USD",
+    "as_of_pricing": null,
     "license": "Internal Eagle Sign use only",
+    "data_quality": {
+      "confidence": "high_for_structure_low_for_coefficients",
+      "known_gaps": [
+        "Labor formulas reference M<n>L<n> tokens (master-table cells) that are NOT in this install \u2014 formulas are documentation only.",
+        "No pricing data (Estimate.exe.mdb is empty; rates were never entered).",
+        "Vendor catalog reflects ABC's 2010 product line; verify against current abcsignproducts.com catalog before quoting non-stocked items."
+      ],
+      "verification_command": "python _dev/_quality_check.py abc"
+    },
     "notes": "Derived from binary ABC data files. Formulas are raw expressions in ABC's proprietary calc language; M<n>L<n> tokens are runtime variables resolved at calc time. SignX should treat formulas as documentation; recompute in Python using the same semantics where useful."
   },
   "departments": [
@@ -122,54 +143,22 @@
     {
       "depth_in": 3,
       "name": "3\" Channelume",
-      "code": "3CHANNELUME"
+      "code": "CHANNELUME3"
     },
     {
       "depth_in": 5,
       "name": "5\" Channelume",
-      "code": "5CHANNELUME"
+      "code": "CHANNELUME5"
     },
     {
       "depth_in": 8,
       "name": "8\" Channelume",
-      "code": "8CHANNELUME"
-    },
-    {
-      "depth_in": null,
-      "name": "CHANNELUME",
-      "code": "CHANNELUME"
-    },
-    {
-      "depth_in": null,
-      "name": "CHANNELUME3",
-      "code": "CHANNELUME3"
-    },
-    {
-      "depth_in": null,
-      "name": "CHANNELUME5",
-      "code": "CHANNELUME5"
-    },
-    {
-      "depth_in": null,
-      "name": "CHANNELUME8",
       "code": "CHANNELUME8"
-    },
-    {
-      "depth_in": null,
-      "name": "Channelume",
-      "code": "CHANNELUME"
     }
   ],
   "retainers": [
     {
       "name": "Type I Flat Retainer",
-      "abc_type_code": "I",
-      "finish": "default",
-      "is_vhb": false,
-      "is_radius": false
-    },
-    {
-      "name": "Type IV Flat Retainer",
       "abc_type_code": "I",
       "finish": "default",
       "is_vhb": false,
@@ -193,6 +182,13 @@
       "name": "Type III Retainer (Bronze Finish)",
       "abc_type_code": "III",
       "finish": "bronze",
+      "is_vhb": false,
+      "is_radius": false
+    },
+    {
+      "name": "Type IV Flat Retainer",
+      "abc_type_code": "IV",
+      "finish": "default",
       "is_vhb": false,
       "is_radius": false
     },
@@ -298,14 +294,14 @@
       "nominal_size": "1",
       "wall_thousandths": "083",
       "material": "alum",
-      "shape": "squareuare"
+      "shape": "square"
     },
     {
       "name": "1 x .083 Steel Square Tube",
       "nominal_size": "1",
       "wall_thousandths": "083",
       "material": "steel",
-      "shape": "squareuare"
+      "shape": "square"
     },
     {
       "name": "1 x .109 Alum Round Tube",
@@ -326,7 +322,7 @@
       "nominal_size": "1.25",
       "wall_thousandths": "083",
       "material": "steel",
-      "shape": "squareuare"
+      "shape": "square"
     },
     {
       "name": "1.25 x .109 Alum Round Tube",
@@ -340,7 +336,7 @@
       "nominal_size": "1.25",
       "wall_thousandths": "120",
       "material": "alum",
-      "shape": "squareuare"
+      "shape": "square"
     },
     {
       "name": "1.25 x .140 Steel Round Tube",
@@ -354,7 +350,7 @@
       "nominal_size": "1.5",
       "wall_thousandths": "083",
       "material": "steel",
-      "shape": "squareuare"
+      "shape": "square"
     },
     {
       "name": "1.5 x .109 Alum Round Tube",
@@ -368,7 +364,7 @@
       "nominal_size": "1.5",
       "wall_thousandths": "120",
       "material": "alum",
-      "shape": "squareuare"
+      "shape": "square"
     },
     {
       "name": "1.5 x .145 Steel Round Tube",
@@ -382,7 +378,7 @@
       "nominal_size": "2",
       "wall_thousandths": "083",
       "material": "steel",
-      "shape": "squareuare"
+      "shape": "square"
     },
     {
       "name": "2 x .109 Alum Round Tube",
@@ -417,7 +413,7 @@
       "nominal_size": "2.5",
       "wall_thousandths": "141",
       "material": "steel",
-      "shape": "squareuare"
+      "shape": "square"
     },
     {
       "name": "2.5 x .203 Steel Round Tube",
@@ -438,7 +434,7 @@
       "nominal_size": "3",
       "wall_thousandths": "188",
       "material": "steel",
-      "shape": "squareuare"
+      "shape": "square"
     },
     {
       "name": "3/4 x .083 Alum Round Tube",
@@ -459,7 +455,8 @@
     "Plastic Sign Frame Constants": {
       "labor_id": "LABOR41",
       "params": [],
-      "formula": "M7L5"
+      "formula": "M7L5",
+      "formula_status": "documentation"
     },
     "Plastic Sign Frame": {
       "labor_id": "LABOR46",
@@ -467,123 +464,131 @@
         "perim_ft",
         "(sign_ht+sign_ln)/6"
       ],
-      "formula": "M7L5*perim_ft"
+      "formula": "M7L5*perim_ft",
+      "formula_status": "documentation"
     },
     "Raceway Constant": {
       "labor_id": "LABOR49",
       "params": [],
-      "formula": "M7L9"
+      "formula": "M7L9",
+      "formula_status": "documentation"
     },
     "Raceway": {
       "labor_id": "LABOR50",
       "params": [],
-      "formula": "M7L9*M6L14"
+      "formula": "M7L9*M6L14",
+      "formula_status": "documentation"
     },
     "Retainer for Cut Out, Constant": {
       "labor_id": "LABOR59",
       "params": [],
-      "formula": "M8L16"
+      "formula": "M8L16",
+      "formula_status": "documentation"
     },
     "Retainer for Cut Out": {
       "labor_id": "LABOR60",
       "params": [],
-      "formula": "M8L17*nfaces"
+      "formula": "M8L17*nfaces",
+      "formula_status": "documentation"
     },
     "Vertical Jack Struts": {
       "labor_id": "LABOR145",
       "params": [],
-      "formula": "M3L5*RM11L4*(M14L16==0)"
+      "formula": "M3L5*RM11L4*(M14L16==0)",
+      "formula_status": "documentation"
     },
     "Horizontal Jack Struts": {
       "labor_id": "LABOR147",
       "params": [],
-      "formula": "M3L5*RM11L11*(M14L16==0)"
+      "formula": "M3L5*RM11L11*(M14L16==0)",
+      "formula_status": "documentation"
     },
     "Large A/Flexframe constant": {
       "labor_id": "LABOR85",
       "params": [],
-      "formula": "(M15aL3+NM15aL18+NM15aaL11)*((area_ft>50)*(area_ft<200)*area_ft+(area_ft<=50)*50+(area_ft>=200)*200)"
+      "formula": "(M15aL3+NM15aL18+NM15aaL11)*((area_ft>50)*(area_ft<200)*area_ft+(area_ft<=50)*50+(area_ft>=200)*200)",
+      "formula_status": "documentation"
     },
     "Single Face Small A/Flexframe constant": {
       "labor_id": "LABOR86",
       "params": [],
-      "formula": "(M15aL9+NM15aL19+NM15aaL12)*((area_ft>50)*(area_ft<150)*area_ft+(area_ft<=50)*50+(area_ft>=150)*150)"
+      "formula": "(M15aL9+NM15aL19+NM15aaL12)*((area_ft>50)*(area_ft<150)*area_ft+(area_ft<=50)*50+(area_ft>=150)*150)",
+      "formula_status": "documentation"
     },
     "Large A/Bleedframe Constant": {
       "labor_id": "LABOR86a",
       "params": [],
-      "formula": "NM15aL16*((area_ft>50)*(area_ft<200)*area_ft+(area_ft<=50)*50+(area_ft>=200)*200)"
+      "formula": "NM15aL16*((area_ft>50)*(area_ft<200)*area_ft+(area_ft<=50)*50+(area_ft>=200)*200)",
+      "formula_status": "documentation"
     },
     "Small A/Bleedframe Constant": {
       "labor_id": "LABOR86b",
       "params": [],
-      "formula": "NM15aL17*((area_ft>50)*(area_ft<150)*area_ft+(area_ft<=50)*50+(area_ft>=150)*150)"
+      "formula": "NM15aL17*((area_ft>50)*(area_ft<150)*area_ft+(area_ft<=50)*50+(area_ft>=150)*150)",
+      "formula_status": "documentation"
     },
     "Hinged Frame constant": {
       "labor_id": "LABOR87",
       "params": [],
-      "formula": "(M15bL1+M15aaL5+M15bL7+M15bL10+M15aaL6+M15bL16)*((area_ft>40)*(area_ft<100)*area_ft+(area_ft<=40)*40+(area_ft>=100)*100)"
+      "formula": "(M15bL1+M15aaL5+M15bL7+M15bL10+M15aaL6+M15bL16)*((area_ft>40)*(area_ft<100)*area_ft+(area_ft<=40)*40+(area_ft>=100)*100)",
+      "formula_status": "documentation"
     },
     "12\" Conventional Frame constant": {
       "labor_id": "LABOR88",
       "params": [],
-      "formula": "M15cL1*((area_ft>31.25)*(area_ft<156.25)*area_ft+(area_ft<=31.25)*31.25+(area_ft>=156.25)*156.25)"
+      "formula": "M15cL1*((area_ft>31.25)*(area_ft<156.25)*area_ft+(area_ft<=31.25)*31.25+(area_ft>=156.25)*156.25)",
+      "formula_status": "documentation"
     },
     "Type I Frame constant": {
       "labor_id": "LABOR89",
       "params": [],
-      "formula": "(M15cL2+NM15aaL8)*((area_ft>50)*(area_ft<83)*area_ft+(area_ft<=50)*50+(area_ft>=83)*83)"
+      "formula": "(M15cL2+NM15aaL8)*((area_ft>50)*(area_ft<83)*area_ft+(area_ft<=50)*50+(area_ft>=83)*83)",
+      "formula_status": "documentation"
     },
     "Type II Frame constant": {
       "labor_id": "LABOR90",
       "params": [],
-      "formula": "(M15cL5+NM15aaL9)*((area_ft>50)*(area_ft<83)*area_ft+(area_ft<=50)*50+(area_ft>=83)*83)"
+      "formula": "(M15cL5+NM15aaL9)*((area_ft>50)*(area_ft<83)*area_ft+(area_ft<=50)*50+(area_ft>=83)*83)",
+      "formula_status": "documentation"
     },
     "Wide Fabricated Frame Constants": {
       "labor_id": "LABOR91",
       "params": [],
-      "formula": "M14L16*((area_ft>50)*(area_ft<300)*area_ft+(area_ft<=50)*50+(area_ft>=300)*300)"
+      "formula": "M14L16*((area_ft>50)*(area_ft<300)*area_ft+(area_ft<=50)*50+(area_ft>=300)*300)",
+      "formula_status": "documentation"
     },
     "Types III, IV and Thrif-T Constants": {
       "labor_id": "LABOR92",
       "params": [],
-      "formula": "(M15cL8+M15cL11+NM15aaL10+M15cL21)"
+      "formula": "(M15cL8+M15cL11+NM15aaL10+M15cL21)",
+      "formula_status": "documentation"
     },
     "Small E-Z Unit Frame Constant": {
       "labor_id": "LABOR93",
       "params": [],
-      "formula": "M15cL12"
+      "formula": "M15cL12",
+      "formula_status": "documentation"
     },
     "Retroframe Constants": {
       "labor_id": "LABOR94",
       "params": [],
-      "formula": "M15dL3+M15dL6+M15dL9"
+      "formula": "M15dL3+M15dL6+M15dL9",
+      "formula_status": "documentation"
     },
     "Retroframe w/ S. Met Cabinet Constants": {
       "labor_id": "LABOR95",
       "params": [],
-      "formula": "M7aL3+M7aL6+M7aL9"
+      "formula": "M7aL3+M7aL6+M7aL9",
+      "formula_status": "documentation"
     },
     "Constant to Post & panel": {
       "labor_id": "LABOR95a",
       "params": [
         "HT",
-        "(NM15hL9+NM15iL9+NM15jL7)>0)*((NM15hL9+N",
-        "15iL9+NM15jL7)<=12)*1+((NM15hL9+NM15iL9+NM15jL7)>12)*((NM15hL9+NM15iL9+NM15jL",
-        ")<=18)*1.5+((NM15hL9+NM15iL9+NM15jL7)>18)*((NM15hL9+NM1",
         "iL9+NM15jL7)<=24)*2+((NM15hL9+NM15iL9+NM15jL7)>24)*((",
         "LNTH",
-        "(NM15hL10+NM15iL10+NM15jL8)>0)*((NM15hL1",
-        "+NM15iL10+NM15jL8)<=12)*1+((NM15hL10+NM15iL10+NM",
-        "5jL8)>12)*((NM15hL10+NM15iL10+NM15jL8)<=18)*1.5+(",
         "NM15hL10+NM15iL10+NM15jL8)>18)*((NM15hL1",
-        "+NM15iL10+NM15jL8)<=24)*2+((NM15hL10+NM15iL10+NM",
-        "5jL8)>24)*((NM15hL10+NM15iL10+NM15jL8)<=30)*2.5+(",
         "NM15hL10+NM15iL10+NM15jL8)>30)*((NM15hL1",
-        "+NM15iL10+NM15jL8)<=36)*3+((NM15hL10+NM15iL10+NM",
-        "5jL8)>36)*((NM15hL10+NM15iL10+NM15jL8)<=48)*4+((N",
-        "15hL10+NM15iL10+NM15jL8)>48)*((NM15hL10+NM15iL10+NM15jL8)<=60)*5+((NM15hL10+N",
-        "15iL10+NM15jL8)>60)*((NM15hL10+NM15iL10+NM15jL8)<=72)*6+((NM15hL10+NM15iL10+N",
         "P",
         "HT*2+LNTH*2",
         "post_panel_perim",
@@ -591,67 +596,80 @@
         "post_panel_area",
         "HT*LNTH"
       ],
-      "formula": "(((post_panel_perim)<14)*((NM15gL3+NM15gL6+NM15gL4+NM15gL7)*0.925+NM15gL5*0.750)+((post_panel_perim)>=14)*((NM15gL3+NM15gL6+NM15gL4+NM15gL7)*0.990+NM15gL5*0.875))*(1+(NM15gL4+NM15gL7)*0.15)*(1-NM14L19*0.5)"
+      "formula": "(((post_panel_perim)<14)*((NM15gL3+NM15gL6+NM15gL4+NM15gL7)*0.925+NM15gL5*0.750)+((post_panel_perim)>=14)*((NM15gL3+NM15gL6+NM15gL4+NM15gL7)*0.990+NM15gL5*0.875))*(1+(NM15gL4+NM15gL7)*0.15)*(1-NM14L19*0.5)",
+      "formula_status": "documentation"
     },
     "Assembly Labor Post & Panel Signs": {
       "labor_id": "LABOR95b",
       "params": [],
-      "formula": "NM14L18*post_panel_perim*(1+(NM15gL4+NM15gL7)*0.15)*(1-NM14L19*NM15gL5*0.5)"
+      "formula": "NM14L18*post_panel_perim*(1+(NM15gL4+NM15gL7)*0.15)*(1-NM14L19*NM15gL5*0.5)",
+      "formula_status": "documentation"
     },
     "Frames except Types III & IV & Hinged": {
       "labor_id": "LABOR96",
       "params": [],
-      "formula": "(((M15aL3*(M15aL15==0))+(M15aL9*(M15aL15==0))+(NM15aaL7*(NM15aaL8+NM15aaL9+NM15aaL11+NM15aaL12))+M15cL1+M15cL2+M15cL5+M15L3*(M15L4==0)+M15L6*(M15L7==0)+M15L9+M15dL3+M15dL6)>0)*(M17L5+M17L6)*(perim_ft-M17L8/12)"
+      "formula": "(((M15aL3*(M15aL15==0))+(M15aL9*(M15aL15==0))+(NM15aaL7*(NM15aaL8+NM15aaL9+NM15aaL11+NM15aaL12))+M15cL1+M15cL2+M15cL5+M15L3*(M15L4==0)+M15L6*(M15L7==0)+M15L9+M15dL3+M15dL6)>0)*(M17L5+M17L6)*(perim_ft-M17L8/12)",
+      "formula_status": "documentation"
     },
     "Architectural Edge-Frames": {
       "labor_id": "LABOR97",
       "params": [],
-      "formula": "M15L12*(M17L5+M17L6)*(perim_ft-M17L8/12)"
+      "formula": "M15L12*(M17L5+M17L6)*(perim_ft-M17L8/12)",
+      "formula_status": "documentation"
     },
     "Mount Routed Face to Frame": {
       "labor_id": "LABOR98",
       "params": [],
-      "formula": "M15L12*RFACES_ROUTED*area_ft*nfaces"
+      "formula": "M15L12*RFACES_ROUTED*area_ft*nfaces",
+      "formula_status": "documentation"
     },
     "Hinged Frames": {
       "labor_id": "LABOR99",
       "params": [],
-      "formula": "(M15bL1+M15aaL5+M15bL7+M15bL10+M15aaL6+M15bL16)*(M17L5+M17L6)*perim_ft"
+      "formula": "(M15bL1+M15aaL5+M15bL7+M15bL10+M15aaL6+M15bL16)*(M17L5+M17L6)*perim_ft",
+      "formula_status": "documentation"
     },
     "Retro Frames with S.M. Cabinets": {
       "labor_id": "LABOR100",
       "params": [],
-      "formula": "((M7aL3+M7aL6)>0)*(METAL_RECTANGLE+METAL_TRAPEZOID+METAL_IRREGULAR+METAL_INTRICATE)*perim_ft"
+      "formula": "((M7aL3+M7aL6)>0)*(METAL_RECTANGLE+METAL_TRAPEZOID+METAL_IRREGULAR+METAL_INTRICATE)*perim_ft",
+      "formula_status": "documentation"
     },
     "Saddle and Hinge Assemblies": {
       "labor_id": "LABOR101",
       "params": [],
-      "formula": "(M16bL5+M16bL6)*(perim_ft-M17L8/12)"
+      "formula": "(M16bL5+M16bL6)*(perim_ft-M17L8/12)",
+      "formula_status": "documentation"
     },
     "Outer-Frame Struts": {
       "labor_id": "LABOR102",
       "params": [],
-      "formula": "M15abL4*nfaces"
+      "formula": "M15abL4*nfaces",
+      "formula_status": "documentation"
     },
     "Hingeable Frame Prop Hardware": {
       "labor_id": "LABOR103",
       "params": [],
-      "formula": "M15abL8*nfaces+M15eL17*NM15eL27"
+      "formula": "M15abL8*nfaces+M15eL17*NM15eL27",
+      "formula_status": "documentation"
     },
     "Continuous Piano Hinge": {
       "labor_id": "LABOR104",
       "params": [],
-      "formula": "M15abL12*nfaces+M15eL4*(NM15eL19+NM15eL20+NM15eL21+NM15eL22)"
+      "formula": "M15abL12*nfaces+M15eL4*(NM15eL19+NM15eL20+NM15eL21+NM15eL22)",
+      "formula_status": "documentation"
     },
     "Outside R-Hinge and Saddle": {
       "labor_id": "LABOR106",
       "params": [],
-      "formula": "M16bL7*(perim_ft-M17L8/12)"
+      "formula": "M16bL7*(perim_ft-M17L8/12)",
+      "formula_status": "documentation"
     },
     "Inside R-Hinge and Saddle": {
       "labor_id": "LABOR107",
       "params": [],
-      "formula": "M16bL8*(perim_ft-M17L8/12)"
+      "formula": "M16bL8*(perim_ft-M17L8/12)",
+      "formula_status": "documentation"
     },
     "Bleedface Frame Systems (Non-Hinging)": {
       "labor_id": "LABOR108",
@@ -661,122 +679,146 @@
         "NM15aL18",
         "NM15aL19"
       ],
-      "formula": "(((NM15aL16+NM15aL17+NM15aL18+NM15aL19)*M15aL15+M15L4+M15L7)>0)*(M17L5+M17L6)*(perim_ft-M17L8/12)"
+      "formula": "(((NM15aL16+NM15aL17+NM15aL18+NM15aL19)*M15aL15+M15L4+M15L7)>0)*(M17L5+M17L6)*(perim_ft-M17L8/12)",
+      "formula_status": "documentation"
     },
     "Type III Uni-Frame": {
       "labor_id": "LABOR109",
       "params": [],
-      "formula": "M15cL8*(M15cL16*(perim_ft-sign_ht/12)+(M15cL14==0)*(M15cL16==0)*perim_ft)"
+      "formula": "M15cL8*(M15cL16*(perim_ft-sign_ht/12)+(M15cL14==0)*(M15cL16==0)*perim_ft)",
+      "formula_status": "documentation"
     },
     "Type IV Uni-Frame": {
       "labor_id": "LABOR110",
       "params": [],
-      "formula": "(M15cL11-NM15cL11a)*(M15cL16*(perim_ft-sign_ht/12)+(M15cL14==0)*(M15cL16==0)*perim_ft)"
+      "formula": "(M15cL11-NM15cL11a)*(M15cL16*(perim_ft-sign_ht/12)+(M15cL14==0)*(M15cL16==0)*perim_ft)",
+      "formula_status": "documentation"
     },
     "Small E-Z Unit Frame": {
       "labor_id": "LABOR111",
       "params": [],
-      "formula": "M15cL12*(M15cL16*(perim_ft-sign_ht/12)+(M15cL14==0)*(M15cL16==0)*perim_ft)"
+      "formula": "M15cL12*(M15cL16*(perim_ft-sign_ht/12)+(M15cL14==0)*(M15cL16==0)*perim_ft)",
+      "formula_status": "documentation"
     },
     "Type III End Frame": {
       "labor_id": "LABOR112",
       "params": [],
-      "formula": "M15cL8*(M15cL16*sign_ht/12+M15cL14*perim_ft)+NM15aaL7*(NM15aaL10*perim_ft)"
+      "formula": "M15cL8*(M15cL16*sign_ht/12+M15cL14*perim_ft)+NM15aaL7*(NM15aaL10*perim_ft)",
+      "formula_status": "documentation"
     },
     "Zero Clearance Saddle & Carrier Frame": {
       "labor_id": "LABOR112a",
       "params": [],
-      "formula": "NM15aaL7*perim_ft*(FACE1+FACE2*2)"
+      "formula": "NM15aaL7*perim_ft*(FACE1+FACE2*2)",
+      "formula_status": "documentation"
     },
     "Type IV End Frame": {
       "labor_id": "LABOR113",
       "params": [],
-      "formula": "(M15cL11-NM15cL11a)*(M15cL16*sign_ht/12+M15cL14*perim_ft)"
+      "formula": "(M15cL11-NM15cL11a)*(M15cL16*sign_ht/12+M15cL14*perim_ft)",
+      "formula_status": "documentation"
     },
     "Type IV End-Frame Non-Welded Construction": {
       "labor_id": "LABOR113a",
       "params": [],
-      "formula": "M15cL11*(NM15cL11a*(M15cL16*sign_ht/12+M15cL14*perim_ft))"
+      "formula": "M15cL11*(NM15cL11a*(M15cL16*sign_ht/12+M15cL14*perim_ft))",
+      "formula_status": "documentation"
     },
     "Type IV Uni-Frame Non-Welded Construction": {
       "labor_id": "LABOR113b",
       "params": [],
-      "formula": "M15cL11*(NM15cL11a*(M15cL16*(perim_ft-sign_ht/12)+(M15cL14==0)*(M15cL16==0)*perim_ft))"
+      "formula": "M15cL11*(NM15cL11a*(M15cL16*(perim_ft-sign_ht/12)+(M15cL14==0)*(M15cL16==0)*perim_ft))",
+      "formula_status": "documentation"
     },
     "Thrif-T Frame (Welded Construction: Single Face Only)": {
       "labor_id": "LABOR113c",
       "params": [],
-      "formula": "M15cL21*(M15cL22==0)*perim_ft"
+      "formula": "M15cL21*(M15cL22==0)*perim_ft",
+      "formula_status": "documentation"
     },
     "Thrif-T Frame (Non-Welded Construction: Single Face Only)": {
       "labor_id": "LABOR113d",
       "params": [],
-      "formula": "M15cL21*M15cL22*perim_ft"
+      "formula": "M15cL21*M15cL22*perim_ft",
+      "formula_status": "documentation"
     },
     "Small E-Z End Frame": {
       "labor_id": "LABOR114",
       "params": [],
-      "formula": "M15cL12*(M15cL16*sign_ht/12+M15cL14*perim_ft)"
+      "formula": "M15cL12*(M15cL16*sign_ht/12+M15cL14*perim_ft)",
+      "formula_status": "documentation"
     },
     "Curved Frame": {
       "labor_id": "LABOR115",
       "params": [],
-      "formula": "(((M15aL3*(M15aL15==0))+(M15aL9*(M15aL15==0))+M15cL1+M15cL2+M15cL5+M15cL8*(M15cL14==0)+M15L3+M15cL11*(M15cL14==0)+M15L6+M15L9+M15L12)>0)*M17L8/12"
+      "formula": "(((M15aL3*(M15aL15==0))+(M15aL9*(M15aL15==0))+M15cL1+M15cL2+M15cL5+M15cL8*(M15cL14==0)+M15L3+M15cL11*(M15cL14==0)+M15L6+M15L9+M15L12)>0)*M17L8/12",
+      "formula_status": "documentation"
     },
     "Curved Frame for End Frames": {
       "labor_id": "LABOR116",
       "params": [],
-      "formula": "(((M15cL8*M15cL14)+(M15cL11*M15cL14))>0)*M17L8/12*((M16L6+M16L12+M16L14+M16L15+M15cL8+M15cL11)>0)"
+      "formula": "(((M15cL8*M15cL14)+(M15cL11*M15cL14))>0)*M17L8/12*((M16L6+M16L12+M16L14+M16L15+M15cL8+M15cL11)>0)",
+      "formula_status": "documentation"
     },
     "Curved Frame for Bleedface": {
       "labor_id": "LABOR117",
       "params": [],
-      "formula": "M15aL15*(NM15aL16+NM15aL17+NM15aL18+NM15aL19)*M17L8/12"
+      "formula": "M15aL15*(NM15aL16+NM15aL17+NM15aL18+NM15aL19)*M17L8/12",
+      "formula_status": "documentation"
     },
     "Curved Frame for retroframes": {
       "labor_id": "LABOR118",
       "params": [],
-      "formula": "(M15dL3+M15dL6)*M17L8/12*(M16L5+M16L6+M16L7+M16L8+M16L9+M16L10+M16L11+M16L11a+M16L12+M16L13+M16L14+M16L15+M16L16)"
+      "formula": "(M15dL3+M15dL6)*M17L8/12*(M16L5+M16L6+M16L7+M16L8+M16L9+M16L10+M16L11+M16L11a+M16L12+M16L13+M16L14+M16L15+M16L16)",
+      "formula_status": "documentation"
     },
     "Curved F-Saddle and Hinge": {
       "labor_id": "LABOR119",
       "params": [],
-      "formula": "M16bL5*M17L8/12"
+      "formula": "M16bL5*M17L8/12",
+      "formula_status": "documentation"
     },
     "Curved R-Saddle and Hinge": {
       "labor_id": "LABOR120",
       "params": [],
-      "formula": "M16bL6*M17L8/12"
+      "formula": "M16bL6*M17L8/12",
+      "formula_status": "documentation"
     },
     "Curved Outside R-Hinge and saddle": {
       "labor_id": "LABOR121",
       "params": [],
-      "formula": "M16bL7*M17L8/12"
+      "formula": "M16bL7*M17L8/12",
+      "formula_status": "documentation"
     },
     "Curved Inside R-Hinge and Saddle": {
       "labor_id": "LABOR122",
       "params": [],
-      "formula": "M16bL8*M17L8/12"
+      "formula": "M16bL8*M17L8/12",
+      "formula_status": "documentation"
     },
     "Radius Corner Kits": {
       "labor_id": "LABOR128",
       "params": [],
-      "formula": "RM18aL13*(RM46L7==0)"
+      "formula": "RM18aL13*(RM46L7==0)",
+      "formula_status": "executable"
     },
     "Radius Corner Kits for flexible faces": {
       "labor_id": "LABOR127",
       "params": [],
-      "formula": "M18aL5*RM46L7"
+      "formula": "M18aL5*RM46L7",
+      "formula_status": "documentation"
     },
     "Radius Corner Kits for flexible face": {
       "labor_id": "LABOR129",
       "params": [],
-      "formula": "M18aL13*RM46L7"
+      "formula": "M18aL13*RM46L7",
+      "formula_status": "documentation"
     },
     "Non-standard Radius Corner": {
       "labor_id": "LABOR130",
       "params": [],
-      "formula": "M18aL15*(M18aL16<>0)"
+      "formula": "M18aL15*(M18aL16<>0)",
+      "formula_status": "documentation"
     },
     "4\" Radius Corner Kits for Hinge Frames": {
       "labor_id": "LABOR131",
@@ -784,102 +826,122 @@
         "temp",
         "(M14L4==0)*(M14L10==0)*(M14L13==0)*(M14L16==0)"
       ],
-      "formula": "M16aL4*temp"
+      "formula": "M16aL4*temp",
+      "formula_status": "documentation"
     },
     "6\" Radius Corner Kits for Hinge Frames": {
       "labor_id": "LABOR132",
       "params": [],
-      "formula": "M16aL8*temp"
+      "formula": "M16aL8*temp",
+      "formula_status": "documentation"
     },
     "9\" Radius Corner Kits for Hinge Frames": {
       "labor_id": "LABOR133",
       "params": [],
-      "formula": "M16aL12*temp"
+      "formula": "M16aL12*temp",
+      "formula_status": "documentation"
     },
     "12\" Radius Corner Kits for Hinge Frames": {
       "labor_id": "LABOR134",
       "params": [],
-      "formula": "M16aL16*temp"
+      "formula": "M16aL16*temp",
+      "formula_status": "documentation"
     },
     "Splice Frame": {
       "labor_id": "LABOR135",
       "params": [],
-      "formula": "M18L4+M17cL7"
+      "formula": "M18L4+M17cL7",
+      "formula_status": "documentation"
     },
     "Vertical Jack Struts for Wide Frames": {
       "labor_id": "LABOR146",
       "params": [],
-      "formula": "M3L5*RM11L4*M14L16"
+      "formula": "M3L5*RM11L4*M14L16",
+      "formula_status": "documentation"
     },
     "Horizontal Jack Struts for Wide Frames": {
       "labor_id": "LABOR148",
       "params": [],
-      "formula": "M3L5*RM11L11*M14L16"
+      "formula": "M3L5*RM11L11*M14L16",
+      "formula_status": "documentation"
     },
     "Incandescent Lamp Raceway Extrusion Assy": {
       "labor_id": "LABOR158",
       "params": [],
-      "formula": "M19L4"
+      "formula": "M19L4",
+      "formula_status": "documentation"
     },
     "Block Channelume Letter Const < 10\"": {
       "labor_id": "LABOR188",
       "params": [],
-      "formula": "RBLOCK*RM23L9*Rtemp"
+      "formula": "RBLOCK*RM23L9*Rtemp",
+      "formula_status": "executable"
     },
     "Serifed Channelume Letter Const < 10\"": {
       "labor_id": "LABOR189",
       "params": [],
-      "formula": "RSERIFED*RM23L9*Rtemp"
+      "formula": "RSERIFED*RM23L9*Rtemp",
+      "formula_status": "executable"
     },
     "Script Channelume Letter Const < 10\"": {
       "labor_id": "LABOR190",
       "params": [],
-      "formula": "RSCRIPT*RM23L9*Rtemp"
+      "formula": "RSCRIPT*RM23L9*Rtemp",
+      "formula_status": "executable"
     },
     "Block Channelume Letter Const >=10\"": {
       "labor_id": "LABOR191",
       "params": [],
-      "formula": "RBLOCK*RM23L9*Rtemp2"
+      "formula": "RBLOCK*RM23L9*Rtemp2",
+      "formula_status": "executable"
     },
     "Serifed Channelume Letter Const >=10\"": {
       "labor_id": "LABOR192",
       "params": [],
-      "formula": "RSERIFED*RM23L9*Rtemp2"
+      "formula": "RSERIFED*RM23L9*Rtemp2",
+      "formula_status": "executable"
     },
     "Script Channelume Letter Const >=10\"": {
       "labor_id": "LABOR193",
       "params": [],
-      "formula": "RSCRIPT*RM23L9*Rtemp2"
+      "formula": "RSCRIPT*RM23L9*Rtemp2",
+      "formula_status": "executable"
     },
     "Block Let-R-Edge Letter Const < 10\"": {
       "labor_id": "LABOR194",
       "params": [],
-      "formula": "RBLOCK*RM23L10*Rtemp"
+      "formula": "RBLOCK*RM23L10*Rtemp",
+      "formula_status": "executable"
     },
     "Serifed Let-R-Edge Letter Const < 10\"": {
       "labor_id": "LABOR195",
       "params": [],
-      "formula": "RSERIFED*RM23L10*Rtemp"
+      "formula": "RSERIFED*RM23L10*Rtemp",
+      "formula_status": "executable"
     },
     "Script Let-R-Edge Letter Const < 10\"": {
       "labor_id": "LABOR196",
       "params": [],
-      "formula": "RSCRIPT*RM23L10*Rtemp"
+      "formula": "RSCRIPT*RM23L10*Rtemp",
+      "formula_status": "executable"
     },
     "Block Let-R-Edge Letter Const >=10\"": {
       "labor_id": "LABOR197",
       "params": [],
-      "formula": "RBLOCK*RM23L10*Rtemp2"
+      "formula": "RBLOCK*RM23L10*Rtemp2",
+      "formula_status": "executable"
     },
     "Serifed Let-R-Edge Letter Const >=10\"": {
       "labor_id": "LABOR198",
       "params": [],
-      "formula": "RSERIFED*RM23L10*Rtemp2"
+      "formula": "RSERIFED*RM23L10*Rtemp2",
+      "formula_status": "executable"
     },
     "Script Let-R-Edge Letter Const >=10\"": {
       "labor_id": "LABOR199",
       "params": [],
-      "formula": "RSCRIPT*RM23L10*Rtemp2"
+      "formula": "RSCRIPT*RM23L10*Rtemp2",
+      "formula_status": "executable"
     },
     "< 12\" Channelume/Let-R-Edge Letters": {
       "labor_id": "LABOR215",
@@ -887,283 +949,321 @@
         "Rtemp",
         "(RM23L9+RM23L10+RM23L11)*Rletter_footage*(RM23bL9/100+1)"
       ],
-      "formula": "(RLETTER_HEIGHT<12)*Rtemp"
+      "formula": "(RLETTER_HEIGHT<12)*Rtemp",
+      "formula_status": "executable"
     },
     "12\" to 18\" Channelume/Let-R-Edge Letters": {
       "labor_id": "LABOR216",
       "params": [],
-      "formula": "(RLETTER_HEIGHT>=12)*(RLETTER_HEIGHT<18)*Rtemp"
+      "formula": "(RLETTER_HEIGHT>=12)*(RLETTER_HEIGHT<18)*Rtemp",
+      "formula_status": "executable"
     },
     "19\" to 25\" Channelume/Let-R-Edge Letters": {
       "labor_id": "LABOR217",
       "params": [],
-      "formula": "(RLETTER_HEIGHT>=19)*(RLETTER_HEIGHT<26)*Rtemp"
+      "formula": "(RLETTER_HEIGHT>=19)*(RLETTER_HEIGHT<26)*Rtemp",
+      "formula_status": "executable"
     },
     "26\" to 32\" Channelume/Let-R-Edge Letters": {
       "labor_id": "LABOR218",
       "params": [],
-      "formula": "(RLETTER_HEIGHT>=26)*(RLETTER_HEIGHT<33)*Rtemp"
+      "formula": "(RLETTER_HEIGHT>=26)*(RLETTER_HEIGHT<33)*Rtemp",
+      "formula_status": "executable"
     },
     "33\" to 39\" Channelume/Let-R-Edge Letters": {
       "labor_id": "LABOR219",
       "params": [],
-      "formula": "(RLETTER_HEIGHT>=33)*(RLETTER_HEIGHT<40)*Rtemp"
+      "formula": "(RLETTER_HEIGHT>=33)*(RLETTER_HEIGHT<40)*Rtemp",
+      "formula_status": "executable"
     },
     "40\" to 46\" Channelume/Let-R-Edge Letters": {
       "labor_id": "LABOR220",
       "params": [],
-      "formula": "(RLETTER_HEIGHT>=40)*(RLETTER_HEIGHT<47)*Rtemp"
+      "formula": "(RLETTER_HEIGHT>=40)*(RLETTER_HEIGHT<47)*Rtemp",
+      "formula_status": "executable"
     },
     "47\" to 54\" Channelume/Let-R-Edge Letters": {
       "labor_id": "LABOR221",
       "params": [],
-      "formula": "(RLETTER_HEIGHT>=47)*(RLETTER_HEIGHT<55)*Rtemp"
+      "formula": "(RLETTER_HEIGHT>=47)*(RLETTER_HEIGHT<55)*Rtemp",
+      "formula_status": "executable"
     },
     "55\"-120\" Channelume/Let-R-Edge Letters": {
       "labor_id": "LABOR222",
       "params": [],
-      "formula": "(RLETTER_HEIGHT>=55)*Rtemp"
+      "formula": "(RLETTER_HEIGHT>=55)*Rtemp",
+      "formula_status": "executable"
     },
     "Awning Framework Constant, <= 30 sq ft": {
       "labor_id": "LABOR289",
       "params": [
         "temp",
-        "3.14159*(M74L8+M76L5+M77L7+M75L12)",
         "temp1",
         "tmpTrapezoid",
         "((M75L16>M75L4)*(M75L16>(M75L3+M75L8)))*M75L16+((M75L16>M75L4)*(M75L16<=(M75L3+M75L8)))*M75L3+((M75L16<=M75L4)*(M75L4<=(M75L3+M75L8)))*M75L3+((M75L16<=M75L4)*(M75L4>(M75L3+M75L8)))*M75L4",
         "tmpTrapezoidLen",
         "(M75L5>M75L15)*M75L5+(M75L5<=M75L15)*M75L15",
         "awning_area",
-        "((M",
-        "2L5*(((temp/2+M74L5-M74L8+M74L6-M74L8)*M74L7)+(M74L13*t",
-        "mp*M74L8/4+(M74L5-M74L8)*M74L8+(M74L6-M74L8)*M74L5)+(M74L14*temp/2*(M74L5+M74L6-M74L8)+(M74L5-M74L8)*",
-        "74L8)+2*(M74L5-M74L8)*(M74L6-M74L8))))+(M72L6*((M74L6*(temp+2*(M74L5-M74L8)))",
-        "(M74L13*temp*M74L8/2+(M74L5-M74L8)*M74L8)+(",
-        "74L14*temp/2*(M74L5+M74L6-M74L8)+(M74L5-M74L8)*(M74L6-M74L8))+(M74L15*temp*(M",
-        "4L5+M74L6-M74L8)+2*(M74L5-M74L8)*(M74L6-M74L8))))+(M75L",
-        "0*((M75L3>M75L4)*M75L3*M75L5+(M75L3<=M75L4)*M75L4",
-        "5*(M75L4-M75L12))+((2-M75L18)*(M75L12*M75L12*0.2146025+M75L8*M75L4+M75L12*(M",
-        "5L4-M75L12)))))+(M75L13*((M75L3>M75L4)*M75L3*M75L5+(M75",
-        "3<=M75L4)*M75L4*M75L5))+(M75L14*(tmpTrapezoid*tmpTrapezoidLen))+(M76L12*temp",
-        "2*temp1)+(M76L13*temp*temp1)+(M76L14*temp*1.5*t",
-        ")+(M76L15*temp*2*temp1)+(M77L4*(M77L5*M77L6*M77L9"
+        "mp*M74L8/4+(M74L5-M74L8)*M74L8+(M74L6-M74L8)*M74L5)+(M74L14*temp/2*(M74L5+M74L6-M74L8)+(M74L5-M74L8)*"
       ],
-      "formula": "M3L10*(awning_area<=30)"
+      "formula": "M3L10*(awning_area<=30)",
+      "formula_status": "documentation"
     },
     "Awning Framework Const, 31 to 100 sq ft": {
       "labor_id": "LABOR290",
       "params": [],
-      "formula": "M3L10*(awning_area>30)*(awning_area<=100)*awning_area"
+      "formula": "M3L10*(awning_area>30)*(awning_area<=100)*awning_area",
+      "formula_status": "documentation"
     },
     "Awning Framework Const 101 to 200 sq ft": {
       "labor_id": "LABOR291",
       "params": [],
-      "formula": "M3L10*(awning_area>100)*(awning_area<=200)*awning_area"
+      "formula": "M3L10*(awning_area>100)*(awning_area<=200)*awning_area",
+      "formula_status": "documentation"
     },
     "Awning Framework Constant, > 200 sq ft": {
       "labor_id": "LABOR292",
       "params": [],
-      "formula": "M3L10*(awning_area>200)"
+      "formula": "M3L10*(awning_area>200)",
+      "formula_status": "documentation"
     },
     "Awning/Canopy Extras - splice frame pcs": {
       "labor_id": "LABOR319",
       "params": [],
-      "formula": "M83L15*M83L16"
+      "formula": "M83L15*M83L16",
+      "formula_status": "documentation"
     },
     "Primer on Awning Frames": {
       "labor_id": "LABOR326",
       "params": [],
-      "formula": "(M73L7>0)*(M78L14+M78L15+M78L16+M78L17)*(M73L10==0)"
+      "formula": "(M73L7>0)*(M78L14+M78L15+M78L16+M78L17)*(M73L10==0)",
+      "formula_status": "documentation"
     },
     "Paint Awning Frames ": {
       "labor_id": "LABOR327",
       "params": [],
-      "formula": "(M73L10<>0)*(M78L14+M78L15+M78L16+M78L17)"
+      "formula": "(M73L10<>0)*(M78L14+M78L15+M78L16+M78L17)",
+      "formula_status": "documentation"
     },
     "Finish on Plastic Frames, Constant": {
       "labor_id": "LABOR359",
       "params": [],
-      "formula": "M30L15*(M3L5*(NM14L18==0)+M7L5)"
+      "formula": "M30L15*(M3L5*(NM14L18==0)+M7L5)",
+      "formula_status": "documentation"
     },
     "Finish on Deck Cabinet/Raceway, Constant": {
       "labor_id": "LABOR360",
       "params": [],
-      "formula": "RM30L15*(M7L6+M7L9+NM6aL13*M6L13)"
+      "formula": "RM30L15*(M7L6+M7L9+NM6aL13*M6L13)",
+      "formula_status": "documentation"
     },
     "Finish on Plastic Sign Frame": {
       "labor_id": "LABOR361",
       "params": [],
-      "formula": "RM30L15*M7L5*perim_ft"
+      "formula": "RM30L15*M7L5*perim_ft",
+      "formula_status": "documentation"
     },
     "Finish on Retroframes": {
       "labor_id": "LABOR362",
       "params": [],
-      "formula": "RM30L15*(M7aL3+M7aL6+M7aL9)*perim_ft"
+      "formula": "RM30L15*(M7aL3+M7aL6+M7aL9)*perim_ft",
+      "formula_status": "documentation"
     },
     "Finish on Retroframes, Trico-Plex": {
       "labor_id": "LABOR362a",
       "params": [],
-      "formula": "RM30L15*(M7aL3+M7aL6+M7aL9)*perim_ft*TRICOPLEX"
+      "formula": "RM30L15*(M7aL3+M7aL6+M7aL9)*perim_ft*TRICOPLEX",
+      "formula_status": "documentation"
     },
     "Finish on Extruded Frames": {
       "labor_id": "LABOR363",
       "params": [],
-      "formula": "((M15aL3*(M15aL15==0)+(NM15aaL7*NM15aaL11))+(M15aL9*(M15aL15==0)+(NM15aaL7*NM15aaL12))+(NM15aaL7*(NM15aaL8+NM15aaL9+NM15aaL10))+M15cL1+M15cL2+M15cL5+M15cL8+M15cL11+M15cL12+M15dL3+M15dL6+M15dL9+M15cL21)*M30L15*perim_ft"
+      "formula": "((M15aL3*(M15aL15==0)+(NM15aaL7*NM15aaL11))+(M15aL9*(M15aL15==0)+(NM15aaL7*NM15aaL12))+(NM15aaL7*(NM15aaL8+NM15aaL9+NM15aaL10))+M15cL1+M15cL2+M15cL5+M15cL8+M15cL11+M15cL12+M15dL3+M15dL6+M15dL9+M15cL21)*M30L15*perim_ft",
+      "formula_status": "documentation"
     },
     "Finish on Extruded Frames, Trico-Plex": {
       "labor_id": "LABOR363a",
       "params": [],
-      "formula": "((M15aL3*(M15aL15==0)+(NM15aaL7*NM15aaL11))+(M15aL9*(M15aL15==0)+(NM15aaL7*NM15aaL12))+(NM15aaL7*(NM15aaL8+NM15aaL9+NM15aaL10))+M15cL1+M15cL2+M15cL5+M15cL8+M15cL11+M15cL12+M15dL3+M15dL6+M15dL9+M15cL21)*M30L15*perim_ft*TRICOPLEX"
+      "formula": "((M15aL3*(M15aL15==0)+(NM15aaL7*NM15aaL11))+(M15aL9*(M15aL15==0)+(NM15aaL7*NM15aaL12))+(NM15aaL7*(NM15aaL8+NM15aaL9+NM15aaL10))+M15cL1+M15cL2+M15cL5+M15cL8+M15cL11+M15cL12+M15dL3+M15dL6+M15dL9+M15cL21)*M30L15*perim_ft*TRICOPLEX",
+      "formula_status": "documentation"
     },
     "Finish on Hinged Frames": {
       "labor_id": "LABOR364",
       "params": [
         "NM15aaL7"
       ],
-      "formula": "(M15bL1+M15aaL5+M15bL7+M15bL10+M15aaL6+M15bL16+(NM15aaL7*(FACE1+FACE2*2)))*M30L15*perim_ft"
+      "formula": "(M15bL1+M15aaL5+M15bL7+M15bL10+M15aaL6+M15bL16+(NM15aaL7*(FACE1+FACE2*2)))*M30L15*perim_ft",
+      "formula_status": "documentation"
     },
     "Finish on Hinged Frames, Trico-Plex": {
       "labor_id": "LABOR364a",
       "params": [
         "NM15aaL7"
       ],
-      "formula": "(M15bL1+M15aaL5+M15bL7+M15bL10+M15aaL6+M15bL16+(NM15aaL7*(FACE1+FACE2*2)))*M30L15*perim_ft*TRICOPLEX"
+      "formula": "(M15bL1+M15aaL5+M15bL7+M15bL10+M15aaL6+M15bL16+(NM15aaL7*(FACE1+FACE2*2)))*M30L15*perim_ft*TRICOPLEX",
+      "formula_status": "documentation"
     },
     "Finish on Bleed Face Frames": {
       "labor_id": "LABOR365",
       "params": [],
-      "formula": "((M15aL15*(NM15aL16+NM15aL18))+(M15aL15*(NM15aL17+NM15aL19)))*M30L15*perim_ft"
+      "formula": "((M15aL15*(NM15aL16+NM15aL18))+(M15aL15*(NM15aL17+NM15aL19)))*M30L15*perim_ft",
+      "formula_status": "documentation"
     },
     "Finish on Bleed Face Frames, Trico-Plex": {
       "labor_id": "LABOR365a",
       "params": [],
-      "formula": "((M15aL15*(NM15aL16+NM15aL18))+(M15aL15*(NM15aL17+NM15aL19)))*M30L15*perim_ft*TRICOPLEX"
+      "formula": "((M15aL15*(NM15aL16+NM15aL18))+(M15aL15*(NM15aL17+NM15aL19)))*M30L15*perim_ft*TRICOPLEX",
+      "formula_status": "documentation"
     },
     "Finish on Deck Cabinet and Raceway": {
       "labor_id": "LABOR366a",
       "params": [],
-      "formula": "TRICOPLEX*RM30L15*(M7L6+M7L9+NM6aL13)*M6L14"
+      "formula": "TRICOPLEX*RM30L15*(M7L6+M7L9+NM6aL13)*M6L14",
+      "formula_status": "documentation"
     },
     "Finish on Wide Fabricated Frames": {
       "labor_id": "LABOR373",
       "params": [],
-      "formula": "M14L16*M15L16/12*perim_ft*M30L15"
+      "formula": "M14L16*M15L16/12*perim_ft*M30L15",
+      "formula_status": "documentation"
     },
     "Finish on Jack Struts": {
       "labor_id": "LABOR382",
       "params": [],
-      "formula": "M30L15*(RM11L4*RM11L5+RM11L11*RM11L12)/12"
+      "formula": "M30L15*(RM11L4*RM11L5+RM11L11*RM11L12)/12",
+      "formula_status": "documentation"
     },
     "Paint Post & Panel assemblies": {
       "labor_id": "LABOR398b",
       "params": [],
-      "formula": "NM14L18*M30L15*(NM15gL3*(post_panel_perim+(NM15hL3*2/12))+NM15gL4*(post_panel_perim+(NM15hL3*2/12)+LNTH*1.1)+NM15gL5*post_panel_perim+NM15gL6*(post_panel_perim+(NM15jL4*2/12))+NM15gL7*(post_panel_perim+(NM15jL4*2/12)+LNTH*1.1))"
+      "formula": "NM14L18*M30L15*(NM15gL3*(post_panel_perim+(NM15hL3*2/12))+NM15gL4*(post_panel_perim+(NM15hL3*2/12)+LNTH*1.1)+NM15gL5*post_panel_perim+NM15gL6*(post_panel_perim+(NM15jL4*2/12))+NM15gL7*(post_panel_perim+(NM15jL4*2/12)+LNTH*1.1))",
+      "formula_status": "documentation"
     },
     "Dynapac H 16 w/Frame Rot. Unit, Const.": {
       "labor_id": "LABOR446",
       "params": [],
-      "formula": "M44L2"
+      "formula": "M44L2",
+      "formula_status": "documentation"
     },
     "Dynapac H 16 wo/Frame Rot. Unit, Const.": {
       "labor_id": "LABOR447",
       "params": [],
-      "formula": "M44L3"
+      "formula": "M44L3",
+      "formula_status": "documentation"
     },
     "Dynapac J 25 with Frame, Constant": {
       "labor_id": "LABOR448",
       "params": [],
-      "formula": "M44L4"
+      "formula": "M44L4",
+      "formula_status": "documentation"
     },
     "Dynapac K 36 with Frame, Constant": {
       "labor_id": "LABOR449",
       "params": [],
-      "formula": "M44L5"
+      "formula": "M44L5",
+      "formula_status": "documentation"
     },
     "Dynapac K 80 with Frame, Constant": {
       "labor_id": "LABOR450",
       "params": [],
-      "formula": "M44L6"
+      "formula": "M44L6",
+      "formula_status": "documentation"
     },
     "Dynapac K 100 with Frame, Constant": {
       "labor_id": "LABOR451",
       "params": [],
-      "formula": "M44L7"
+      "formula": "M44L7",
+      "formula_status": "documentation"
     },
     "Dynapac H 16 Rotating Unit with frame": {
       "labor_id": "LABOR452",
       "params": [],
-      "formula": "M44L2"
+      "formula": "M44L2",
+      "formula_status": "documentation"
     },
     "Dynapac H 16 Rotating Unit without frame": {
       "labor_id": "LABOR453",
       "params": [],
-      "formula": "M44L3"
+      "formula": "M44L3",
+      "formula_status": "documentation"
     },
     "Dynapac J 25 with Frame": {
       "labor_id": "LABOR454",
       "params": [],
-      "formula": "M44L4"
+      "formula": "M44L4",
+      "formula_status": "documentation"
     },
     "Dynapac K 36 with Frame": {
       "labor_id": "LABOR455",
       "params": [],
-      "formula": "M44L5"
+      "formula": "M44L5",
+      "formula_status": "documentation"
     },
     "Dynapac K 80 with Frame": {
       "labor_id": "LABOR456",
       "params": [],
-      "formula": "M44L6"
+      "formula": "M44L6",
+      "formula_status": "documentation"
     },
     "Dynapac K 100 with Frame": {
       "labor_id": "LABOR457",
       "params": [],
-      "formula": "M44L7"
+      "formula": "M44L7",
+      "formula_status": "documentation"
     },
     "Mold Making/curved extru.,Back. not tex.": {
       "labor_id": "LABOR488",
       "params": [],
-      "formula": "(M3L8*area_ft*M4bL4*(RM4bL3==0)*(RM51L15==0)*(RM51L11+RM51L12))/((MULTIPLE_SIGNS==0)+MULTIPLE_SIGNS)"
+      "formula": "(M3L8*area_ft*M4bL4*(RM4bL3==0)*(RM51L15==0)*(RM51L11+RM51L12))/((MULTIPLE_SIGNS==0)+MULTIPLE_SIGNS)",
+      "formula_status": "documentation"
     },
     "Mold Making/curved extru.,Back. texture.": {
       "labor_id": "LABOR489",
       "params": [],
-      "formula": "(M3L8*area_ft*M4bL4*(RM4bL3==0)*RM51L15*(RM51L11+RM51L12))/((MULTIPLE_SIGNS==0)+MULTIPLE_SIGNS)"
+      "formula": "(M3L8*area_ft*M4bL4*(RM4bL3==0)*RM51L15*(RM51L11+RM51L12))/((MULTIPLE_SIGNS==0)+MULTIPLE_SIGNS)",
+      "formula_status": "documentation"
     },
     "Cover Framework with Vinyl <= 100 sq ft": {
       "labor_id": "LABOR581",
       "params": [],
-      "formula": "M82L6"
+      "formula": "M82L6",
+      "formula_status": "documentation"
     },
     "Cover Framework with Vinyl > 100 sq ft": {
       "labor_id": "LABOR582",
       "params": [],
-      "formula": "M82L7"
+      "formula": "M82L7",
+      "formula_status": "documentation"
     },
     "Constant to Crate Post & Panel Sign": {
       "labor_id": "LABOR699a",
       "params": [],
-      "formula": "CRATE_SHIP_SIGN*((NM15gL3+NM15gL4+NM15gL6+NM15gL7)*((post_panel_perim<10)*0.67+(post_panel_perim>=10)*0.72)+(NM15gL5)*((post_panel_perim<10)*0.35+(post_panel_perim>=10)*0.43))"
+      "formula": "CRATE_SHIP_SIGN*((NM15gL3+NM15gL4+NM15gL6+NM15gL7)*((post_panel_perim<10)*0.67+(post_panel_perim>=10)*0.72)+(NM15gL5)*((post_panel_perim<10)*0.35+(post_panel_perim>=10)*0.43))",
+      "formula_status": "documentation"
     },
     "Load uncrated Post & Panel sign, constant": {
       "labor_id": "LABOR699c",
       "params": [],
-      "formula": "M2L16*NM14L18"
+      "formula": "M2L16*NM14L18",
+      "formula_status": "documentation"
     },
     "Load uncrated Post & Panel Sign, No helpers": {
       "labor_id": "LABOR699d",
       "params": [],
-      "formula": "M2L16*((M2L17+M2L18)==0)*NM14L18*post_panel_perim"
+      "formula": "M2L16*((M2L17+M2L18)==0)*NM14L18*post_panel_perim",
+      "formula_status": "documentation"
     },
     "Load uncrated Post & Panel Sign, One helper": {
       "labor_id": "LABOR699e",
       "params": [],
-      "formula": "M2L16*M2L17*NM14L18*post_panel_perim"
+      "formula": "M2L16*M2L17*NM14L18*post_panel_perim",
+      "formula_status": "documentation"
     },
     "Load uncrated Post & Panel Sign, Two helpers": {
       "labor_id": "LABOR699f",
       "params": [],
-      "formula": "M2L16*M2L18*NM14L18*post_panel_perim"
+      "formula": "M2L16*M2L18*NM14L18*post_panel_perim",
+      "formula_status": "documentation"
     },
     "Post & Panel sign inst. constant": {
       "labor_id": "LABOR724a",
@@ -1171,12 +1271,14 @@
         "temp",
         "NM14L18*(M2L12+M2L13+M2L14)"
       ],
-      "formula": "(CRATE_SHIP_SIGN==0)*(M2L16==0)*temp"
+      "formula": "(CRATE_SHIP_SIGN==0)*(M2L16==0)*temp",
+      "formula_status": "documentation"
     },
     "Post & Panel sign installation": {
       "labor_id": "LABOR724b",
       "params": [],
-      "formula": "(CRATE_SHIP_SIGN==0)*(M2L16==0)*temp*post_panel_area"
+      "formula": "(CRATE_SHIP_SIGN==0)*(M2L16==0)*temp*post_panel_area",
+      "formula_status": "documentation"
     }
   }
 }

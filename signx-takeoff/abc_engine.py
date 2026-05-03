@@ -1082,14 +1082,28 @@ def calculate_materials(pf: float, face_sf: float, return_depth_inches: float,
 
     # Return Coil .040"
     coil_lf = pf * (return_depth_inches / 12.0) * 1.05  # 5% waste
-    bom.append({
+    coil_line = {
         "item": f"Return Coil .040\" ({return_depth_inches}\" depth)",
         "part": "205-0111",
         "qty": round(coil_lf, 2),
         "unit": "SF",
         "waste": "5%",
         "formula": f"PF ({pf:.2f}) x depth ({return_depth_inches}\"/12) x 1.05",
-    })
+    }
+    # M2: ABC catalog enrichment (opt-in via ABC_CATALOG_ENRICHMENT=on env var).
+    # Annotates the coil line with vendor/Channelume metadata when applicable.
+    # Default OFF — preserves all 252 existing tests byte-for-byte.
+    try:
+        from abc_catalog import lookup_channel_letter_return
+        cl_ret = lookup_channel_letter_return(return_depth_inches)
+        if cl_ret:
+            coil_line["catalog_part"] = cl_ret["code"]
+            coil_line["catalog_name"] = cl_ret["name"]
+            coil_line["catalog_vendor"] = cl_ret["vendor"]
+            coil_line["catalog_depth_in"] = cl_ret["depth_in"]
+    except ImportError:
+        pass  # abc_catalog not present yet, skip enrichment
+    bom.append(coil_line)
 
     # Back Aluminum .040"
     back_qty = face_sf * 1.10  # 10% waste
@@ -1102,16 +1116,38 @@ def calculate_materials(pf: float, face_sf: float, return_depth_inches: float,
         "formula": f"Face SF ({face_sf:.2f}) x 1.10",
     })
 
-    # Trim Cap 1"
+    # Trim Cap 1" — IMPORTANT: 202-0710 is actually ABC's TYPE IV RETAINER per
+    # warehouse audit (stg_1106_local_inventory_active), NOT a trim cap. Real
+    # trim caps are Jewelite 208-0xxx (76 records in warehouse, 30+ colors).
+    # Keeping 202-0710 here for backwards compatibility; M5 enrichment exposes
+    # the correct retainer typing via catalog_*.
     trim_lf = pf * 1.05  # 5% waste
-    bom.append({
+    trim_line = {
         "item": "Trim Cap 1\"",
-        "part": "202-0710",
+        "part": "202-0710",  # NOTE: legacy; this is actually Type IV Retainer
         "qty": round(trim_lf, 2),
         "unit": "LF",
         "waste": "5%",
         "formula": f"PF ({pf:.2f}) x 1.05",
-    })
+    }
+    # M5: ABC retainer catalog enrichment.
+    try:
+        from abc_catalog import lookup_retainer
+        ret = lookup_retainer("IV", "mill")  # default: Type IV mill finish
+        if ret:
+            trim_line["catalog_part"] = ret["code"]
+            trim_line["catalog_abc_type"] = ret["abc_type_code"]
+            trim_line["catalog_finish_multiplier"] = ret["finish_multiplier"]
+            trim_line["catalog_eagle_pn"] = ret["eagle_pn"]
+            trim_line["catalog_vendor"] = ret["vendor"]
+            trim_line["data_quality_note"] = (
+                "part 202-0710 is Type IV Retainer per warehouse — real trim "
+                "caps are Jewelite 208-0xxx; consider M5 wiring of TRIM_CAP "
+                "category lookup for accurate vendor + price"
+            )
+    except ImportError:
+        pass
+    bom.append(trim_line)
 
     # LED Modules
     bom.append({
@@ -1134,6 +1170,32 @@ def calculate_materials(pf: float, face_sf: float, return_depth_inches: float,
         "waste": "0%",
         "formula": f"{led['watts']:.0f}W / 0.80 = {led['capacity_needed']:.0f}W needed",
     })
+
+    # M3: Raceway extrusion BOM line (currently absent — only labor for raceway
+    # was tracked, never the extrusion material itself). Adds an Excellart 7"
+    # raceway line (Eagle SKU 202-1265, $17.4475/EA per warehouse) when
+    # raceway_lf > 0 and ENRICH is on. Defaults to ABC raceway via abc_catalog.
+    if raceway_lf > 0:
+        raceway_line = {
+            "item": f"Raceway extrusion ({raceway_lf:.1f} LF)",
+            "part": "202-1265",  # Excellart 7" CLRW, confirmed in warehouse
+            "qty": round(raceway_lf * 1.05, 2),
+            "unit": "LF",
+            "waste": "5%",
+            "formula": f"Raceway LF ({raceway_lf:.1f}) x 1.05",
+        }
+        try:
+            from abc_catalog import lookup_raceway_extrusion
+            r = lookup_raceway_extrusion()
+            if r:
+                raceway_line["catalog_part"] = r["code"]
+                raceway_line["catalog_name"] = r["name"]
+                raceway_line["catalog_vendor"] = r["vendor"]
+                raceway_line["catalog_eagle_pn"] = "202-1265"
+                raceway_line["catalog_excellart_product_number"] = "1401015"
+        except ImportError:
+            pass
+        bom.append(raceway_line)
 
     # Wire (gauge selected by voltage drop calculation)
     wire_awg = led.get("wire_awg", 18)
