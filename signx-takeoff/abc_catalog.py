@@ -29,7 +29,16 @@ from functools import lru_cache
 from pathlib import Path
 
 # Opt-in flag — set ABC_CATALOG_ENRICHMENT=on to activate. Default OFF.
-ENRICH: bool = os.environ.get("ABC_CATALOG_ENRICHMENT", "off").lower() == "on"
+# `is_enrichment_enabled()` is the single source of truth; checked at CALL time
+# so monkeypatch.setenv works without re-importing the module. The legacy
+# `ENRICH` constant is retained as a deprecated module-level alias for any
+# external callers; new code should use the function.
+def is_enrichment_enabled() -> bool:
+    return os.environ.get("ABC_CATALOG_ENRICHMENT", "off").lower() == "on"
+
+
+# Deprecated alias kept for backward compat. Reads at import time only.
+ENRICH: bool = is_enrichment_enabled()
 
 # Catalog sits next to abc_engine.py at signx-takeoff/data/abc_catalog.json
 _CATALOG_PATH = Path(__file__).resolve().parent / "data" / "abc_catalog.json"
@@ -62,7 +71,7 @@ def lookup_channel_letter_return(depth_in: float | None) -> dict | None:
               "eagle_pn": None}
     or None if depth is too small for an extruded return (use coil aluminum instead).
     """
-    if not ENRICH or depth_in is None:
+    if not is_enrichment_enabled() or depth_in is None:
         return None
     if depth_in < 3.5:
         return None  # use coil aluminum (205-0111) — too shallow for Channelume
@@ -105,7 +114,7 @@ def lookup_raceway_extrusion(profile: str | None = None) -> dict | None:
     For Excellart 7\" raceways, abc_engine should call out to bridge's vendor catalog
     via /catalog/parts/{vendor}/{sku} — this helper is the ABC fallback.
     """
-    if not ENRICH:
+    if not is_enrichment_enabled():
         return None
     raceways = _catalog().get("raceways", [])
     if not raceways:
@@ -147,7 +156,7 @@ def lookup_retainer(
               "finish_multiplier": 1.0, "eagle_pn": "202-0710",
               "vendor": "abc"}
     """
-    if not ENRICH:
+    if not is_enrichment_enabled():
         return None
     retainers = _catalog().get("retainers", [])
     if not retainers:
@@ -204,7 +213,7 @@ def lookup_tubing(
               "wall_thousandths": "141", "material": "steel", "shape": "square",
               "vendor": "abc"}
     """
-    if not ENRICH:
+    if not is_enrichment_enabled():
         return None
     tubing = _catalog().get("tubing", [])
     if not tubing:
@@ -250,7 +259,7 @@ def complexity_multiplier(
     formulas already). This helper composes the EXTERNAL multiplier added on
     top for: many materials + many colors + radius corners.
     """
-    if not ENRICH:
+    if not is_enrichment_enabled():
         return 1.0
     mult = 1.0
     if material_count >= 5:
@@ -292,7 +301,7 @@ def lookup_trim_cap(
     Matching is best-effort: if the requested color isn't stocked, falls
     back to black (most common). Size is matched as a string ("1", "2").
     """
-    if not ENRICH:
+    if not is_enrichment_enabled():
         return None
     trim_caps = _catalog().get("trim_caps", [])
     if not trim_caps:
@@ -342,6 +351,7 @@ __all__ = [
     "ENRICH",
     "FINISH_MULTIPLIER",
     "complexity_multiplier",
+    "is_enrichment_enabled",
     "lookup_channel_letter_return",
     "lookup_raceway_extrusion",
     "lookup_retainer",

@@ -108,6 +108,11 @@ from typing import Any, Optional
 
 from sign_types import find_warehouse_db
 
+# Module-level latches so each warning fires at most once per process,
+# not on every calculate_materials call.
+_TRIM_CAP_LEGACY_WARNED: bool = False        # 202-0710 mislabel (Task 1)
+_TRIM_COLOR_DEFAULT_WARNED: bool = False     # trim_color unset under ENRICH (Task 3)
+
 from led_catalog import (
     select_module as _select_led_module,
     get_module_by_sku as _get_led_module,
@@ -1064,8 +1069,18 @@ def calculate_led(
 def calculate_materials(pf: float, face_sf: float, return_depth_inches: float,
                         raceway_lf: float,
                         construction: ConstructionType,
-                        letter_height_inches: float = 12.0) -> list[dict]:
-    """Calculate material BOM with part numbers and quantities."""
+                        letter_height_inches: float = 12.0,
+                        trim_color: str | None = None) -> list[dict]:
+    """Calculate material BOM with part numbers and quantities.
+
+    trim_color: optional color name (e.g. "black", "bronze", "red") used by the
+    M5 trim cap lookup when ENRICH is on. If None, defaults to "black" with a
+    UserWarning prompting the takeoff layer to thread the actual color through.
+    """
+    # TODO(takeoff): the takeoff layer (estimate_channel_letters / app.py
+    # /api/estimate handler) should extract trim_color from the customer's
+    # spec / RFQ and pass it through. Hardcoding black is a regression on the
+    # original ABC data model, which carried per-letter color metadata.
     led = calculate_led(pf, construction, letter_height_inches=letter_height_inches)
     bom = []
 
@@ -1124,13 +1139,31 @@ def calculate_materials(pf: float, face_sf: float, return_depth_inches: float,
     # SKU. When ENRICH=off, we keep 202-0710 for backward compat but emit a
     # one-time DeprecationWarning so consumers know it's wrong.
     trim_lf = pf * 1.05  # 5% waste
-    trim_color = (led.get("trim_color") if isinstance(led, dict) else None) or "black"
     trim_size = "1"  # historic default; matches the legacy "Trim Cap 1\"" item
 
+    # Resolve effective color: explicit param > led-spec hint > "black" fallback.
+    # If ENRICH=on and caller didn't specify, warn (once) about defaulting.
+    _effective_color = trim_color or (
+        led.get("trim_color") if isinstance(led, dict) else None
+    )
     real_trim = None
     try:
+        from abc_catalog import is_enrichment_enabled as _abc_enabled
         from abc_catalog import lookup_trim_cap
-        real_trim = lookup_trim_cap(color=trim_color, size_in=trim_size)
+        if _abc_enabled() and _effective_color is None:
+            global _TRIM_COLOR_DEFAULT_WARNED
+            if not _TRIM_COLOR_DEFAULT_WARNED:
+                import warnings as _w
+                _w.warn(
+                    "calculate_materials called without trim_color; defaulting "
+                    "to black. Thread the actual color from the takeoff layer "
+                    "(see TODO above).",
+                    UserWarning,
+                    stacklevel=2,
+                )
+                _TRIM_COLOR_DEFAULT_WARNED = True
+            _effective_color = "black"
+        real_trim = lookup_trim_cap(color=_effective_color or "black", size_in=trim_size)
     except ImportError:
         pass
 
@@ -1149,16 +1182,20 @@ def calculate_materials(pf: float, face_sf: float, return_depth_inches: float,
             "catalog_vendor": real_trim["vendor"],
         }
     else:
-        # ENRICH=off — preserve byte-identical legacy output, but warn once.
-        import warnings as _w
-        _w.warn(
-            "abc_engine.calculate_materials emits part 202-0710 for Trim Cap "
-            "but warehouse confirms 202-0710 is the Type IV Retainer. Set "
-            "ABC_CATALOG_ENRICHMENT=on to substitute the real Jewelite "
-            "208-0xxx SKU.",
-            DeprecationWarning,
-            stacklevel=2,
-        )
+        # ENRICH=off — preserve byte-identical legacy output, warn once per
+        # process. Module-level flag avoids the 66-warnings-per-test-run spam.
+        global _TRIM_CAP_LEGACY_WARNED
+        if not _TRIM_CAP_LEGACY_WARNED:
+            import warnings as _w
+            _w.warn(
+                "abc_engine.calculate_materials emits part 202-0710 for Trim Cap "
+                "but warehouse confirms 202-0710 is the Type IV Retainer. Set "
+                "ABC_CATALOG_ENRICHMENT=on to substitute the real Jewelite "
+                "208-0xxx SKU.",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+            _TRIM_CAP_LEGACY_WARNED = True
         trim_line = {
             "item": "Trim Cap 1\"",
             "part": "202-0710",  # legacy: actually Type IV Retainer
@@ -1198,7 +1235,13 @@ def calculate_materials(pf: float, face_sf: float, return_depth_inches: float,
     # byte-identical legacy BOM shape; production caller at line ~1657 always
     # passes raceway_lf > 0, so an unconditional add would silently change the
     # output of every channel-letter quote.
-    _enrich_on = os.environ.get("ABC_CATALOG_ENRICHMENT", "off").lower() == "on"
+    # M3 reads the same call-time helper as M2/M5 in abc_catalog.py — single
+    # source of truth so monkeypatch.setenv flips work consistently.
+    try:
+        from abc_catalog import is_enrichment_enabled as _abc_enabled
+        _enrich_on = _abc_enabled()
+    except ImportError:
+        _enrich_on = os.environ.get("ABC_CATALOG_ENRICHMENT", "off").lower() == "on"
     if raceway_lf > 0 and _enrich_on:
         raceway_line = {
             "item": f"Raceway extrusion ({raceway_lf:.1f} LF)",

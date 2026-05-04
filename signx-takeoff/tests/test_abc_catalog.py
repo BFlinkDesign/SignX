@@ -1,8 +1,6 @@
 """Tests for signx-takeoff/abc_catalog.py — pure helpers used by abc_engine."""
 from __future__ import annotations
 
-import importlib
-import os
 import sys
 from pathlib import Path
 
@@ -10,28 +8,21 @@ import pytest
 
 
 @pytest.fixture(scope="function")
-def enriched():
-    """Load abc_catalog with ENRICH=on, regardless of test runner env."""
+def enriched(monkeypatch):
+    """ABC_CATALOG_ENRICHMENT=on via monkeypatch — call-time helper reads env on each lookup."""
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-    os.environ["ABC_CATALOG_ENRICHMENT"] = "on"
-    if "abc_catalog" in sys.modules:
-        del sys.modules["abc_catalog"]
+    monkeypatch.setenv("ABC_CATALOG_ENRICHMENT", "on")
     import abc_catalog
-    importlib.reload(abc_catalog)
-    yield abc_catalog
-    os.environ.pop("ABC_CATALOG_ENRICHMENT", None)
+    return abc_catalog
 
 
 @pytest.fixture(scope="function")
-def disabled():
-    """Load abc_catalog with ENRICH off (default — preserves all 252 existing tests)."""
+def disabled(monkeypatch):
+    """ABC_CATALOG_ENRICHMENT=off via monkeypatch — see enriched fixture for rationale."""
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-    os.environ["ABC_CATALOG_ENRICHMENT"] = "off"
-    if "abc_catalog" in sys.modules:
-        del sys.modules["abc_catalog"]
+    monkeypatch.setenv("ABC_CATALOG_ENRICHMENT", "off")
     import abc_catalog
-    importlib.reload(abc_catalog)
-    yield abc_catalog
+    return abc_catalog
 
 
 # ---- ENRICH off (must be byte-identical to "no catalog at all") ----------
@@ -178,10 +169,8 @@ class TestCalculateMaterialsCompat:
     its pre-catalog behavior. We don't import abc_engine here (heavy), but
     verify the helper module has zero side effects on import."""
 
-    def test_import_with_enrich_off_is_safe(self):
-        os.environ["ABC_CATALOG_ENRICHMENT"] = "off"
-        if "abc_catalog" in sys.modules:
-            del sys.modules["abc_catalog"]
+    def test_import_with_enrich_off_is_safe(self, monkeypatch):
+        monkeypatch.setenv("ABC_CATALOG_ENRICHMENT", "off")
         sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
         import abc_catalog
         # All helpers callable, all return None when disabled

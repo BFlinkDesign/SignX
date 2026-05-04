@@ -8,8 +8,6 @@ Verifies:
 """
 from __future__ import annotations
 
-import importlib
-import os
 import sys
 from pathlib import Path
 
@@ -21,28 +19,20 @@ sys.path.insert(0, str(ROOT))
 
 
 @pytest.fixture
-def abc_engine_disabled():
-    """Reload abc_engine.py with ABC_CATALOG_ENRICHMENT off (default)."""
-    os.environ["ABC_CATALOG_ENRICHMENT"] = "off"
-    for mod in ("abc_engine", "abc_catalog"):
-        if mod in sys.modules:
-            del sys.modules[mod]
+def abc_engine_disabled(monkeypatch):
+    """ABC_CATALOG_ENRICHMENT=off via monkeypatch — no module reload needed
+    now that abc_catalog.is_enrichment_enabled() reads the env at call time."""
+    monkeypatch.setenv("ABC_CATALOG_ENRICHMENT", "off")
     import abc_engine
-    importlib.reload(abc_engine)
-    yield abc_engine
+    return abc_engine
 
 
 @pytest.fixture
-def abc_engine_enriched():
-    """Reload abc_engine.py with ABC_CATALOG_ENRICHMENT on."""
-    os.environ["ABC_CATALOG_ENRICHMENT"] = "on"
-    for mod in ("abc_engine", "abc_catalog"):
-        if mod in sys.modules:
-            del sys.modules[mod]
+def abc_engine_enriched(monkeypatch):
+    """ABC_CATALOG_ENRICHMENT=on via monkeypatch — see disabled fixture for rationale."""
+    monkeypatch.setenv("ABC_CATALOG_ENRICHMENT", "on")
     import abc_engine
-    importlib.reload(abc_engine)
-    yield abc_engine
-    os.environ.pop("ABC_CATALOG_ENRICHMENT", None)
+    return abc_engine
 
 
 # ---- M2: channel letter return ------------------------------------------
@@ -190,22 +180,96 @@ class TestTrimCapDisabled:
     def test_trim_cap_keeps_legacy_part_when_disabled(self, abc_engine_disabled):
         import warnings
         m = abc_engine_disabled
+        # Reset the module latch so this test gets to observe the warning.
+        m._TRIM_CAP_LEGACY_WARNED = False
+        with warnings.catch_warnings(record=True) as captured:
+            warnings.simplefilter("always")
+            # Call N times — the warning latch should fire AT LEAST once
+            # across all calls, not once per call.
+            for _ in range(3):
+                bom = m.calculate_materials(
+                    pf=20.0, face_sf=10.0, return_depth_inches=5.0,
+                    raceway_lf=0.0,
+                    construction=m.ConstructionType.FACE_LIT,
+                )
+        trim = next(b for b in bom if "Trim Cap" in b["item"])
+        assert trim["part"] == "202-0710"  # legacy preserved
+        assert trim["item"] == "Trim Cap 1\""
+        # No catalog_* fields when disabled
+        assert "catalog_vendor" not in trim
+        # DeprecationWarning was emitted at least once across the repeated calls.
+        deprecations = [w for w in captured if issubclass(w.category, DeprecationWarning)
+                        and "202-0710" in str(w.message)]
+        assert len(deprecations) >= 1, (
+            f"expected DeprecationWarning about 202-0710; got "
+            f"{[str(w.message) for w in captured]}"
+        )
+
+
+# ---- Task 3: trim_color parameter ----------------------------------------
+
+class TestTrimColorParameter:
+    """trim_color is now an explicit parameter, not hardcoded to 'black'.
+    When ENRICH=on, lookup picks the matching Jewelite SKU per color.
+    When unset under ENRICH=on, defaults to black + emits UserWarning.
+    When ENRICH=off, parameter is ignored entirely (legacy 202-0710 path)."""
+
+    def test_explicit_bronze_returns_bronze_sku(self, abc_engine_enriched):
+        m = abc_engine_enriched
+        bom = m.calculate_materials(
+            pf=20.0, face_sf=10.0, return_depth_inches=5.0,
+            raceway_lf=0.0,
+            construction=m.ConstructionType.FACE_LIT,
+            trim_color="bronze",
+        )
+        trim = next(b for b in bom if "Trim Cap" in b["item"])
+        assert trim["part"].startswith("208-"), trim["part"]
+        assert trim.get("catalog_color") == "bronze", trim
+
+    def test_unset_defaults_to_black_with_warning(self, abc_engine_enriched):
+        import warnings
+        m = abc_engine_enriched
+        # Reset the latch so we observe the warning fresh.
+        m._TRIM_COLOR_DEFAULT_WARNED = False
         with warnings.catch_warnings(record=True) as captured:
             warnings.simplefilter("always")
             bom = m.calculate_materials(
                 pf=20.0, face_sf=10.0, return_depth_inches=5.0,
                 raceway_lf=0.0,
                 construction=m.ConstructionType.FACE_LIT,
+                # trim_color omitted on purpose
             )
         trim = next(b for b in bom if "Trim Cap" in b["item"])
-        assert trim["part"] == "202-0710"  # legacy preserved
-        assert trim["item"] == "Trim Cap 1\""
-        # No catalog_* fields when disabled
-        assert "catalog_vendor" not in trim
-        # DeprecationWarning was emitted
-        deprecations = [w for w in captured if issubclass(w.category, DeprecationWarning)
-                        and "202-0710" in str(w.message)]
-        assert len(deprecations) >= 1, (
-            f"expected DeprecationWarning about 202-0710; got "
+        assert trim.get("catalog_color") == "black"
+        user_warnings = [w for w in captured if issubclass(w.category, UserWarning)
+                         and "trim_color" in str(w.message)]
+        assert len(user_warnings) >= 1, (
+            f"expected UserWarning about trim_color default; got "
             f"{[str(w.message) for w in captured]}"
+        )
+
+    def test_disabled_ignores_trim_color(self, abc_engine_disabled):
+        """When ENRICH=off, trim_color is ignored — output is byte-identical
+        legacy 202-0710 regardless of what color was passed."""
+        import warnings
+        m = abc_engine_disabled
+        m._TRIM_CAP_LEGACY_WARNED = True   # silence the 202-0710 warning
+        m._TRIM_COLOR_DEFAULT_WARNED = False
+        with warnings.catch_warnings(record=True) as captured:
+            warnings.simplefilter("always")
+            bom = m.calculate_materials(
+                pf=20.0, face_sf=10.0, return_depth_inches=5.0,
+                raceway_lf=0.0,
+                construction=m.ConstructionType.FACE_LIT,
+                trim_color="red",  # should be ignored when ENRICH=off
+            )
+        trim = next(b for b in bom if "Trim Cap" in b["item"])
+        assert trim["part"] == "202-0710"
+        assert "catalog_color" not in trim
+        # No trim_color UserWarning when ENRICH=off — parameter doesn't apply.
+        color_warns = [w for w in captured if issubclass(w.category, UserWarning)
+                       and "trim_color" in str(w.message)]
+        assert len(color_warns) == 0, (
+            f"trim_color UserWarning should not fire under ENRICH=off; got "
+            f"{[str(w.message) for w in color_warns]}"
         )
