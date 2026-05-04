@@ -267,6 +267,74 @@ def complexity_multiplier(
 
 
 # =============================================================================
+#  Trim cap lookup (Task 3 — fixes the 202-0710 mislabel)
+# =============================================================================
+#
+# Background: abc_engine.py historically emitted part 202-0710 with the name
+# "Trim Cap 1\"" — but the warehouse confirms 202-0710 is actually ABC's
+# Type IV Retainer. Real trim caps are Jewelite 208-0xxx. The trim_caps
+# section of abc_catalog.json is built from the warehouse by
+# `_dev/_phase7b_add_trim_caps.py` and contains 21 rows: 16 size 1", 4 size 2"
+# spread across 11 colors (black, blue, bronze, brown, gold, green,
+# light blue, milliken, orange, purple, red).
+
+def lookup_trim_cap(
+    color: str | None = "black",
+    size_in: str | float | None = "1",
+) -> dict | None:
+    """Pick the right Jewelite trim cap part by color + size.
+
+    Returns: {"eagle_pn": "208-0101", "description": "1\" BLACK JEWELITE...",
+              "color": "black", "size_in": "1", "vendor": "jewelite",
+              "unit": "LF"}
+    or None if ENRICH is off, no match found, or catalog has no trim_caps.
+
+    Matching is best-effort: if the requested color isn't stocked, falls
+    back to black (most common). Size is matched as a string ("1", "2").
+    """
+    if not ENRICH:
+        return None
+    trim_caps = _catalog().get("trim_caps", [])
+    if not trim_caps:
+        return None
+
+    color_norm = (color or "black").lower().strip()
+    size_norm: str | None
+    if size_in is None:
+        size_norm = None
+    elif isinstance(size_in, (int, float)):
+        size_norm = str(int(size_in)) if float(size_in).is_integer() else str(size_in)
+    else:
+        size_norm = str(size_in).strip().rstrip('"').strip()
+
+    def _match(t: dict, want_color: str) -> bool:
+        if size_norm and t.get("size_in") != size_norm:
+            return False
+        return (t.get("color") or "") == want_color
+
+    # Prefer Jewelite vendor (208-* parts) over the Milliken awning outlier.
+    candidates = sorted(
+        trim_caps,
+        key=lambda t: (0 if t.get("vendor") == "jewelite" else 1,
+                       t.get("eagle_pn") or ""),
+    )
+
+    # Try the requested color first, then fall back to black if missing.
+    for try_color in (color_norm, "black"):
+        for t in candidates:
+            if _match(t, try_color):
+                return {
+                    "eagle_pn": t["eagle_pn"],
+                    "description": t["description"],
+                    "color": t.get("color"),
+                    "size_in": t.get("size_in"),
+                    "vendor": t.get("vendor", "jewelite"),
+                    "unit": t.get("unit") or "LF",
+                }
+    return None
+
+
+# =============================================================================
 #  Public API exposed to abc_engine.py
 # =============================================================================
 
@@ -277,5 +345,6 @@ __all__ = [
     "lookup_channel_letter_return",
     "lookup_raceway_extrusion",
     "lookup_retainer",
+    "lookup_trim_cap",
     "lookup_tubing",
 ]

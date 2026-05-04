@@ -24,7 +24,8 @@
       ],
       "verification_command": "python _dev/_quality_check.py abc"
     },
-    "notes": "Derived from binary ABC data files. Formulas are raw expressions in ABC's proprietary calc language; M<n>L<n> tokens are runtime variables resolved at calc time. SignX should treat formulas as documentation; recompute in Python using the same semantics where useful."
+    "notes": "Derived from binary ABC data files. Formulas are raw expressions in ABC's proprietary calc language; M<n>L<n> tokens are runtime variables resolved at calc time. SignX should treat formulas as documentation; recompute in Python using the same semantics where useful.",
+    "trim_caps_source": "warehouse: stg_1106_local_inventory_active WHERE part_number LIKE '208-%%' OR description LIKE '%%trim cap%%'"
   },
   "departments": [
     "Awnings",
@@ -1280,5 +1281,217 @@
       "formula": "(CRATE_SHIP_SIGN==0)*(M2L16==0)*temp*post_panel_area",
       "formula_status": "documentation"
     }
-  }
+  },
+  "trim_caps": [
+    {
+      "eagle_pn": "202-1110",
+      "description": "AWNING TRIM CAP - MILLIKEN 350' per box",
+      "size_in": null,
+      "color": "milliken",
+      "vendor": "milliken",
+      "unit": "FT",
+      "unit_price_usd": 1.421,
+      "acctg_cost_usd": 0.53866
+    },
+    {
+      "eagle_pn": "208-0101",
+      "description": "1\" BLACK JEWELITE TRIMCAP - 150'/RL",
+      "size_in": "1",
+      "color": "black",
+      "vendor": "jewelite",
+      "unit": "LF",
+      "unit_price_usd": 0.58333,
+      "acctg_cost_usd": 0.33333
+    },
+    {
+      "eagle_pn": "208-0110",
+      "description": "2\" BLACK JEWELITE TRIMCAP - 10'",
+      "size_in": "2",
+      "color": "black",
+      "vendor": "jewelite",
+      "unit": "LF",
+      "unit_price_usd": 1.491,
+      "acctg_cost_usd": 0.852
+    },
+    {
+      "eagle_pn": "208-0120",
+      "description": "1\" BLUE JEWELITE TRIMCAP - 10'",
+      "size_in": "1",
+      "color": "blue",
+      "vendor": "jewelite",
+      "unit": "LF",
+      "unit_price_usd": 0.57,
+      "acctg_cost_usd": 0.3276
+    },
+    {
+      "eagle_pn": "208-0121",
+      "description": "1\" BLUE JEWELITE TRIMCAP - 150'",
+      "size_in": "1",
+      "color": "blue",
+      "vendor": "jewelite",
+      "unit": "LF",
+      "unit_price_usd": 0.82005,
+      "acctg_cost_usd": 0.4686
+    },
+    {
+      "eagle_pn": "208-0125",
+      "description": "1\" LIGHT BLUE JEWELITE TRIMCAP - 10'",
+      "size_in": "1",
+      "color": "light blue",
+      "vendor": "jewelite",
+      "unit": "FT",
+      "unit_price_usd": 0.5733,
+      "acctg_cost_usd": 0.3276
+    },
+    {
+      "eagle_pn": "208-0130",
+      "description": "2\" BLUE JEWELITE TRIMCAP - 10'",
+      "size_in": "2",
+      "color": "blue",
+      "vendor": "jewelite",
+      "unit": "LF",
+      "unit_price_usd": 1.33,
+      "acctg_cost_usd": 0.6048
+    },
+    {
+      "eagle_pn": "208-0141",
+      "description": "1\" BRONZE JEWELITE TRIMCAP - 150'/RL",
+      "size_in": "1",
+      "color": "bronze",
+      "vendor": "jewelite",
+      "unit": "LF",
+      "unit_price_usd": 0.94255,
+      "acctg_cost_usd": 0.5386
+    },
+    {
+      "eagle_pn": "208-0150",
+      "description": "2\" BRONZE JEWELITE TRIMCAP 100' roll",
+      "size_in": "2",
+      "color": "bronze",
+      "vendor": "jewelite",
+      "unit": "LF",
+      "unit_price_usd": 1.43,
+      "acctg_cost_usd": 0.8169
+    },
+    {
+      "eagle_pn": "208-0161",
+      "description": "1\" BROWN JEWELITE TRIMCAP - 150'/RL",
+      "size_in": "1",
+      "color": "brown",
+      "vendor": "jewelite",
+      "unit": "LF",
+      "unit_price_usd": 1.02,
+      "acctg_cost_usd": 0.4122
+    },
+    {
+      "eagle_pn": "208-0181",
+      "description": "1\" DARK BRONZE JEWELITE TRIMCAP - 150'/RL",
+      "size_in": "1",
+      "color": "bronze",
+      "vendor": "jewelite",
+      "unit": "LF",
+      "unit_price_usd": 0.7588,
+      "acctg_cost_usd": 0.4336
+    },
+    {
+      "eagle_pn": "208-0185",
+      "description": "1\" CHROME JEWELITE TRIMCAP - 150'/RL",
+      "size_in": "1",
+      "color": null,
+      "vendor": "jewelite",
+      "unit": "LF",
+      "unit_price_usd": 0.6697,
+      "acctg_cost_usd": 0.38267
+    },
+    {
+      "eagle_pn": "208-0191",
+      "description": "1\" BRUSHED CHROME JEWELITE TRIMCAP - 150'/RL",
+      "size_in": "1",
+      "color": null,
+      "vendor": "jewelite",
+      "unit": "LF",
+      "unit_price_usd": 0.812,
+      "acctg_cost_usd": 0.464
+    },
+    {
+      "eagle_pn": "208-0211",
+      "description": "1\" GOLD JEWELITE TRIMCAP - 150'/RL",
+      "size_in": "1",
+      "color": "gold",
+      "vendor": "jewelite",
+      "unit": "LF",
+      "unit_price_usd": 0.78808,
+      "acctg_cost_usd": 0.45033
+    },
+    {
+      "eagle_pn": "208-0220",
+      "description": "2\" GOLD JEWELITE TRIMCAP - 10'",
+      "size_in": "2",
+      "color": "gold",
+      "vendor": "jewelite",
+      "unit": "LF",
+      "unit_price_usd": 0.99,
+      "acctg_cost_usd": 0.6174
+    },
+    {
+      "eagle_pn": "208-0231",
+      "description": "1\" GREEN JEWELITE TRIMCAP - 150'/RL",
+      "size_in": "1",
+      "color": "green",
+      "vendor": "jewelite",
+      "unit": "LF",
+      "unit_price_usd": 0.77,
+      "acctg_cost_usd": 0.44
+    },
+    {
+      "eagle_pn": "208-0235",
+      "description": "1\" HUNTER GREEN #2162 GEMTRIM TRIMCAP - 150'/RL",
+      "size_in": "1",
+      "color": "green",
+      "vendor": "jewelite",
+      "unit": "LF",
+      "unit_price_usd": 0.86361,
+      "acctg_cost_usd": 0.49349
+    },
+    {
+      "eagle_pn": "208-0251",
+      "description": "1\" IVORY JEWELITE TRIMCAP - 150'/RL",
+      "size_in": "1",
+      "color": null,
+      "vendor": "jewelite",
+      "unit": "LF",
+      "unit_price_usd": 0.62,
+      "acctg_cost_usd": 0.3528
+    },
+    {
+      "eagle_pn": "208-0261",
+      "description": "1\" ORANGE JEWELITE TRIMCAP - 150'/RL",
+      "size_in": "1",
+      "color": "orange",
+      "vendor": "jewelite",
+      "unit": "LF",
+      "unit_price_usd": 0.29,
+      "acctg_cost_usd": 0.1667
+    },
+    {
+      "eagle_pn": "208-0265",
+      "description": "1\" PURPLE #2287 GEMTRIM TRIMCAP - 150'/RL",
+      "size_in": "1",
+      "color": "purple",
+      "vendor": "jewelite",
+      "unit": "FT",
+      "unit_price_usd": 0.546,
+      "acctg_cost_usd": 0.312
+    },
+    {
+      "eagle_pn": "208-0271",
+      "description": "1\" RED JEWELITE TRIMCAP - 150'/RL",
+      "size_in": "1",
+      "color": "red",
+      "vendor": "jewelite",
+      "unit": "LF",
+      "unit_price_usd": 0.77,
+      "acctg_cost_usd": 0.44
+    }
+  ]
 }

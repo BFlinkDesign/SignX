@@ -146,10 +146,11 @@ class TestM3RacewayBOM:
 
 
 class TestM3RacewayDisabled:
-    def test_raceway_line_still_appears_when_disabled(self, abc_engine_disabled):
-        """The raceway BOM addition is not gated on ENRICH — it's a real bug fix
-        (raceway material was being silently omitted before). Material line
-        should appear regardless of the ENRICH flag."""
+    def test_raceway_line_absent_when_disabled(self, abc_engine_disabled):
+        """When ENRICH is off (default), the raceway material line is NOT
+        added — the BOM keeps its byte-identical legacy shape. Production
+        callers always pass raceway_lf > 0, so an unconditional add would
+        silently change the output of every channel-letter quote."""
         m = abc_engine_disabled
         bom = m.calculate_materials(
             pf=20.0, face_sf=10.0, return_depth_inches=5.0,
@@ -157,6 +158,54 @@ class TestM3RacewayDisabled:
             construction=m.ConstructionType.FACE_LIT,
         )
         raceway_lines = [b for b in bom if "Raceway extrusion" in b["item"]]
-        assert len(raceway_lines) == 1
-        # Without ENRICH, no catalog_* fields are present (legacy shape)
-        assert "catalog_part" not in raceway_lines[0]
+        assert len(raceway_lines) == 0  # gated behind ABC_CATALOG_ENRICHMENT
+
+
+# ---- Task 3: Trim Cap real fix ------------------------------------------
+
+class TestTrimCapEnabled:
+    """When ENRICH=on, the trim cap line is rewritten with the real
+    Jewelite part number from the warehouse (208-0xxx)."""
+
+    def test_trim_cap_uses_real_jewelite_sku(self, abc_engine_enriched):
+        m = abc_engine_enriched
+        bom = m.calculate_materials(
+            pf=20.0, face_sf=10.0, return_depth_inches=5.0,
+            raceway_lf=0.0,
+            construction=m.ConstructionType.FACE_LIT,
+        )
+        trim = next(b for b in bom if "Trim Cap" in b["item"])
+        # Real Jewelite SKU starts with 208-, not 202-0710.
+        assert trim["part"].startswith("208-"), (
+            f"expected 208-* Jewelite SKU, got {trim['part']}"
+        )
+        assert trim.get("catalog_vendor") == "jewelite"
+        assert trim.get("catalog_color")  # color resolved
+
+
+class TestTrimCapDisabled:
+    """When ENRICH=off, the trim cap line keeps the legacy 202-0710 part
+    for byte-identical output, but emits a DeprecationWarning."""
+
+    def test_trim_cap_keeps_legacy_part_when_disabled(self, abc_engine_disabled):
+        import warnings
+        m = abc_engine_disabled
+        with warnings.catch_warnings(record=True) as captured:
+            warnings.simplefilter("always")
+            bom = m.calculate_materials(
+                pf=20.0, face_sf=10.0, return_depth_inches=5.0,
+                raceway_lf=0.0,
+                construction=m.ConstructionType.FACE_LIT,
+            )
+        trim = next(b for b in bom if "Trim Cap" in b["item"])
+        assert trim["part"] == "202-0710"  # legacy preserved
+        assert trim["item"] == "Trim Cap 1\""
+        # No catalog_* fields when disabled
+        assert "catalog_vendor" not in trim
+        # DeprecationWarning was emitted
+        deprecations = [w for w in captured if issubclass(w.category, DeprecationWarning)
+                        and "202-0710" in str(w.message)]
+        assert len(deprecations) >= 1, (
+            f"expected DeprecationWarning about 202-0710; got "
+            f"{[str(w.message) for w in captured]}"
+        )

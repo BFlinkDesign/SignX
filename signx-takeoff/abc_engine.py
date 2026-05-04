@@ -1116,37 +1116,57 @@ def calculate_materials(pf: float, face_sf: float, return_depth_inches: float,
         "formula": f"Face SF ({face_sf:.2f}) x 1.10",
     })
 
-    # Trim Cap 1" — IMPORTANT: 202-0710 is actually ABC's TYPE IV RETAINER per
-    # warehouse audit (stg_1106_local_inventory_active), NOT a trim cap. Real
-    # trim caps are Jewelite 208-0xxx (76 records in warehouse, 30+ colors).
-    # Keeping 202-0710 here for backwards compatibility; M5 enrichment exposes
-    # the correct retainer typing via catalog_*.
+    # Trim Cap 1" — Task 3 of Brady's audit: real fix.
+    # The legacy emit was part 202-0710 with name "Trim Cap 1\"", but the
+    # warehouse confirms 202-0710 is actually ABC's Type IV Retainer. Real
+    # Jewelite trim caps are in the 208-0xxx range (21 rows in warehouse,
+    # 11 colors). When ENRICH=on, lookup_trim_cap() picks the actual Jewelite
+    # SKU. When ENRICH=off, we keep 202-0710 for backward compat but emit a
+    # one-time DeprecationWarning so consumers know it's wrong.
     trim_lf = pf * 1.05  # 5% waste
-    trim_line = {
-        "item": "Trim Cap 1\"",
-        "part": "202-0710",  # NOTE: legacy; this is actually Type IV Retainer
-        "qty": round(trim_lf, 2),
-        "unit": "LF",
-        "waste": "5%",
-        "formula": f"PF ({pf:.2f}) x 1.05",
-    }
-    # M5: ABC retainer catalog enrichment.
+    trim_color = (led.get("trim_color") if isinstance(led, dict) else None) or "black"
+    trim_size = "1"  # historic default; matches the legacy "Trim Cap 1\"" item
+
+    real_trim = None
     try:
-        from abc_catalog import lookup_retainer
-        ret = lookup_retainer("IV", "mill")  # default: Type IV mill finish
-        if ret:
-            trim_line["catalog_part"] = ret["code"]
-            trim_line["catalog_abc_type"] = ret["abc_type_code"]
-            trim_line["catalog_finish_multiplier"] = ret["finish_multiplier"]
-            trim_line["catalog_eagle_pn"] = ret["eagle_pn"]
-            trim_line["catalog_vendor"] = ret["vendor"]
-            trim_line["data_quality_note"] = (
-                "part 202-0710 is Type IV Retainer per warehouse — real trim "
-                "caps are Jewelite 208-0xxx; consider M5 wiring of TRIM_CAP "
-                "category lookup for accurate vendor + price"
-            )
+        from abc_catalog import lookup_trim_cap
+        real_trim = lookup_trim_cap(color=trim_color, size_in=trim_size)
     except ImportError:
         pass
+
+    if real_trim:
+        # ENRICH=on AND a Jewelite match was found → use real part number.
+        trim_line = {
+            "item": f"Trim Cap {trim_size}\" ({real_trim['color']})",
+            "part": real_trim["eagle_pn"],
+            "qty": round(trim_lf, 2),
+            "unit": real_trim["unit"],
+            "waste": "5%",
+            "formula": f"PF ({pf:.2f}) x 1.05",
+            "catalog_part": real_trim["eagle_pn"],
+            "catalog_description": real_trim["description"],
+            "catalog_color": real_trim["color"],
+            "catalog_vendor": real_trim["vendor"],
+        }
+    else:
+        # ENRICH=off — preserve byte-identical legacy output, but warn once.
+        import warnings as _w
+        _w.warn(
+            "abc_engine.calculate_materials emits part 202-0710 for Trim Cap "
+            "but warehouse confirms 202-0710 is the Type IV Retainer. Set "
+            "ABC_CATALOG_ENRICHMENT=on to substitute the real Jewelite "
+            "208-0xxx SKU.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        trim_line = {
+            "item": "Trim Cap 1\"",
+            "part": "202-0710",  # legacy: actually Type IV Retainer
+            "qty": round(trim_lf, 2),
+            "unit": "LF",
+            "waste": "5%",
+            "formula": f"PF ({pf:.2f}) x 1.05",
+        }
     bom.append(trim_line)
 
     # LED Modules
@@ -1174,8 +1194,12 @@ def calculate_materials(pf: float, face_sf: float, return_depth_inches: float,
     # M3: Raceway extrusion BOM line (currently absent — only labor for raceway
     # was tracked, never the extrusion material itself). Adds an Excellart 7"
     # raceway line (Eagle SKU 202-1265, $17.4475/EA per warehouse) when
-    # raceway_lf > 0 and ENRICH is on. Defaults to ABC raceway via abc_catalog.
-    if raceway_lf > 0:
+    # raceway_lf > 0 AND ABC_CATALOG_ENRICHMENT=on. Default off preserves the
+    # byte-identical legacy BOM shape; production caller at line ~1657 always
+    # passes raceway_lf > 0, so an unconditional add would silently change the
+    # output of every channel-letter quote.
+    _enrich_on = os.environ.get("ABC_CATALOG_ENRICHMENT", "off").lower() == "on"
+    if raceway_lf > 0 and _enrich_on:
         raceway_line = {
             "item": f"Raceway extrusion ({raceway_lf:.1f} LF)",
             "part": "202-1265",  # Excellart 7" CLRW, confirmed in warehouse
