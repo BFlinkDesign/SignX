@@ -1,5 +1,5 @@
 # Python 3.12+
-python-dotenv==1.0.1
+python-dotenv==1.2.2
 
 # ============================================
 # API & Web Framework
@@ -27,8 +27,8 @@ pytesseract==0.3.13
 Pillow>=12.1.1
 
 # LLM fallback for complex PDFs
-langchain==0.3.0
-langchain-openai==0.2.0
+langchain==0.3.30
+langchain-openai==1.1.14
 langchain-anthropic==0.2.0
 
 # ============================================
@@ -59,17 +59,17 @@ fastparquet==2024.11.0
 # ============================================
 httpx==0.27.0
 redis==5.0.8
-python-multipart>=0.0.18
+python-multipart>=0.0.28
 passlib[bcrypt]==1.7.4
 minio==7.2.0
 
 # ============================================
 # Development & Testing
 # ============================================
-pytest==8.3.0
+pytest==9.0.3
 pytest-asyncio==0.24.0
 pytest-cov==5.0.0
-black==24.8.0
+black==26.3.1
 ruff==0.6.0
 mypy==1.11.0
 
