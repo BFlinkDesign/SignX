@@ -523,4 +523,39 @@ Result: 0 passed, 4 collection errors [VERIFIED]
 
 ---
 
-*End of audit. 84 findings enumerated. No fixes proposed — that is a separate task.*
+## ADDENDUM — Second Pass (2026-05-18, deeper verification)
+
+### Additional Conflict: Docstring Work Code Count vs Runtime
+
+| Source | Tier | Claims |
+|--------|------|--------|
+| `abc_engine.py:22` (docstring) | Tier 4 | "WORK_CODES (51 codes)" |
+| `abc_engine.py:621-663` (code, runtime) | Tier 1 | 41 entries in WORK_CODES dict |
+
+**Winner:** Code (Tier 1). Docstring overstates by 10 codes. [VERIFIED]
+
+### Additional Conflict: Docstring Estimator Count vs Actual Functions
+
+| Source | Tier | Claims |
+|--------|------|--------|
+| `abc_engine.py:3-8` (docstring) | Tier 4 | "6 estimators" |
+| `abc_engine.py` (function definitions) | Tier 1 | 9 estimator functions: `estimate`, `estimate_monument`, `estimate_removal`, `estimate_awning`, `estimate_pylon`, `estimate_cabinet`, `estimate_directional`, `estimate_dimensional`, `estimate_flatpanel` |
+
+**Winner:** Code (Tier 1). Docstring was written before directional/dimensional/flatpanel were added. [VERIFIED]
+
+### Additional Runtime Verification
+
+85. [VERIFIED] `abc_engine.py:22` docstring says "51 codes" but `WORK_CODES` dict contains exactly 41 entries at runtime.
+86. [VERIFIED] `abc_engine.py:3-8` docstring says "6 estimators" but 9 estimator functions exist in the module.
+87. [VERIFIED] `bid_model.py` trains a logistic regression model on module import. When no warehouse data is available (Linux/CI), training fails with `"Expected 2D array, got 1D array"` and falls back to returning fixed scores. This error fires every time `app.py` imports.
+88. [VERIFIED] `abc_engine.py` has zero `assert` or `raise` statements in any estimator function — all inputs accepted without validation. Negative SF, negative letter counts, etc. would produce nonsense output silently.
+89. [VERIFIED] `wind_asce7.py` DOES validate inputs: raises `ValueError` for invalid exposure, non-positive dimensions, non-positive wind speed. Signcalc has input validation; signx-takeoff does not.
+90. [VERIFIED] `foundation_embed.py` DOES validate inputs: raises `ValueError` for non-positive dimensions and degenerate cases.
+91. [VERIFIED] `app.py` has no CORS middleware — no `CORSMiddleware` import or configuration. Cross-origin browser requests would be blocked.
+92. [VERIFIED] `app.py:43` — `"Authorization": f"Bearer {NOTION_TOKEN}"` is for outbound Notion API calls. No inbound authentication exists on any of the 49 endpoints.
+93. [VERIFIED] `app.py` reports 54 routes total (includes built-in FastAPI routes like `/docs`, `/openapi.json`).
+94. [VERIFIED] SignType enum has 18 members, but only 9 have dedicated estimator functions. The remaining 9 types (CLNON, MONSF, POLLIT, BLDILL, BLDNON, GEMINI, LED, ALULIT, ALUNON) are handled by the generic `estimate()` function or by `estimate_pylon()` (POLNON) — actual dispatch logic would need further tracing to confirm coverage.
+
+---
+
+*End of audit. 94 findings enumerated. No fixes proposed — that is a separate task.*
