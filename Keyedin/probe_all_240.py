@@ -24,7 +24,7 @@ from pathlib import Path
 # ---------------------------------------------------------------------------
 
 USERNAME = os.environ.get("KEYEDIN_USERNAME", "")
-PASSWORD = os.environ.get("KEYEDIN_PASSWORD", os.environ.get("KEYEDIN_PASSWORD", ""))
+PASSWORD = os.environ.get("KEYEDIN_PASSWORD", "")
 CDP_URL = os.environ.get("CDP_URL", "http://localhost:29229")
 
 ERP_BASE = "https://eaglesign.keyedinsign.com"

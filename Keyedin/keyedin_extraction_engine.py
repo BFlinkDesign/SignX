@@ -1221,7 +1221,8 @@ class KeyedInBrowser:
         # First check if Informer port is accessible
         informer_url = f"{INFORMER_BASE}/Informer.html?locale=en_US"
 
-        for report_id in INFORMER_REPORT_IDS:
+        all_report_ids = INFORMER_REPORT_IDS + INFORMER_GAP_IDS
+        for report_id in all_report_ids:
             item_key = f"informer_export_{report_id}"
             if self.checkpoint.is_completed(item_key):
                 continue
