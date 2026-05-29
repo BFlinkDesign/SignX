@@ -9,13 +9,15 @@ Results are written to ./probe_results/ as JSON + markdown.
 Phases covered:
   0. Network verification (DNS, TLS, ports)
   1. REST API & Swagger doc discovery
-  2. Direct REST auth (local login, HTTP Basic)
-  3. All 30 report IDs + 16 gap IDs via REST export
-  4. SSO-based GWT-RPC probe (lookupReportAndSample per report)
-  5. SecurityRPCService role query
-  6. Untested RPC service enumeration
-  7. authToken persistence test
+  1b. Direct REST auth (local login, HTTP Basic, ERP form, SSO)
+  2. All 30 report IDs + 16 gap IDs via REST export
+  3. SecurityRPCService role query
+  4. Untested RPC service enumeration
+  5. authToken persistence test
+  6. Full Informer report extraction via GWT-RPC (30 reports)
+  7. CGI function scraping (175+ ERP functions)
   8. Nagle Signs & GraphicFX tenant probes
+  9. Warehouse data integrity verification
 
 Usage:
     # Full probe (needs credentials for auth-dependent phases):
@@ -40,9 +42,7 @@ import os
 import re
 import socket
 import ssl
-import sys
 import time
-import traceback
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -635,9 +635,9 @@ def phase_2_enumerate_reports(
 
     # Generate markdown summary
     md_lines = [
-        f"# Phase 2: Report Enumeration\n",
+        "# Phase 2: Report Enumeration\n",
         f"**Date:** {ts()}\n",
-        f"## Summary",
+        "## Summary",
         f"- Accessible: {results['summary']['accessible']}",
         f"- Denied: {results['summary']['denied']}",
         f"- Errors: {results['summary']['error']}",
@@ -772,7 +772,6 @@ def phase_4_rpc_services(session: requests.Session) -> dict:
             results["service_references"] = {}
             for svc in service_names:
                 # Find all method signatures near this service name
-                pattern = rf'"{svc}"'
                 occurrences = [
                     m.start() for m in re.finditer(re.escape(svc), cache_content)
                 ]
@@ -864,6 +863,480 @@ def phase_5_token_persistence(
     )
 
     save_json("phase5_token_persistence.json", results)
+    return results
+
+
+# =========================================================================
+# GWT-RPC AUTHENTICATION HELPER
+# =========================================================================
+
+
+GWT_HEADERS = {
+    "Content-Type": "text/x-gwt-rpc; charset=utf-8",
+    "X-GWT-Permutation": "02039603C43E026297DD31EE646FCF8D",
+}
+
+
+def _build_gwt_payload(strings: list[str], refs: list[int]) -> str:
+    """Build a GWT-RPC serialized payload."""
+    parts = ["7", "0", str(len(strings))]
+    parts.extend(strings)
+    parts.extend(str(r) for r in refs)
+    return "|".join(parts) + "|"
+
+
+def gwt_rpc_authenticate(
+    session: requests.Session, username: str, password: str
+) -> tuple[str, str]:
+    """Full GWT-RPC authentication flow: ERP login → SSO → Informer login.
+
+    Returns (auth_token, client_id).
+    Raises RuntimeError on failure.
+    """
+    module_base = f"{INFORMER_URL}/"
+
+    # Step 1: ERP login
+    session.get("http://eaglesign.keyedinsign.com/", timeout=30)
+    session.post(
+        "http://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/LOGIN.START",
+        data={"USERNAME": username, "PASSWORD": password, "SECURE": ""},
+        allow_redirects=True,
+        timeout=30,
+    )
+
+    # Step 2: SSO handoff
+    session.get(
+        f"{SSO_URL}?u={username}",
+        timeout=30,
+        verify=False,
+        allow_redirects=True,
+    )
+
+    # Step 3: GWT-RPC login (password FIRST, then username)
+    headers = {**GWT_HEADERS, "X-GWT-Module-Base": module_base}
+    login_payload = _build_gwt_payload(
+        strings=[
+            module_base,
+            KNOWN_POLICY_KEYS["auth"],
+            "com.entrinsik.informer.core.client.service.AuthenticationRPCService",
+            "login",
+            "com.entrinsik.informer.core.domain.security.InformerAuthentication",
+            "com.entrinsik.informer.core.domain.security."
+            "UsernamePasswordAuthentication/2411241149",
+            "Z",
+            password,
+            username.upper(),
+        ],
+        refs=[1, 2, 3, 4, 2, 5, 7, 6, 8, 9, 0],
+    )
+
+    r = session.post(
+        f"{INFORMER_URL}/rpc/AuthenticationRPCService",
+        data=login_payload,
+        headers=headers,
+        timeout=30,
+        verify=False,
+    )
+    if not r.text.startswith("//OK"):
+        raise RuntimeError(f"GWT-RPC login failed: {r.text[:200]}")
+
+    all_strs = re.findall(r'"([^"]*)"', r.text)
+    uuids = [
+        s for s in all_strs
+        if re.match(r"^[0-9a-f]{8}-[0-9a-f]{4}-", s)
+    ]
+    if len(uuids) < 2:
+        raise RuntimeError(f"Login response had {len(uuids)} UUIDs, expected ≥2")
+
+    auth_token = uuids[-1]
+    client_id = uuids[1]
+    log.info("  GWT-RPC auth OK: token=%s...", auth_token[:12])
+    return auth_token, client_id
+
+
+# =========================================================================
+# PHASE 6: FULL INFORMER REPORT EXTRACTION (GWT-RPC)
+# =========================================================================
+
+
+def phase_6_report_extraction(
+    session: requests.Session,
+    auth_token: str | None,
+    client_id: str | None,
+) -> dict:
+    """Extract all 30 report metadata + sample data via GWT-RPC."""
+    log.info("=" * 70)
+    log.info("PHASE 6: REPORT DATA EXTRACTION (GWT-RPC)")
+    log.info("=" * 70)
+
+    results = {
+        "phase": 6,
+        "name": "report_extraction",
+        "timestamp": ts(),
+        "reports": {},
+    }
+
+    if not auth_token or not client_id:
+        results["skipped"] = True
+        results["reason"] = "No auth token — run with credentials"
+        log.info("  SKIPPED — no auth token")
+        save_json("phase6_extraction.json", results)
+        return results
+
+    module_base = f"{INFORMER_URL}/"
+    headers = {**GWT_HEADERS, "X-GWT-Module-Base": module_base}
+    rpc_url = (
+        f"{INFORMER_URL}/rpc/protected/ReportRPCService"
+        f"?authToken={auth_token}&clientId={client_id}"
+    )
+
+    reports_dir = RESULTS_PATH / "reports"
+    reports_dir.mkdir(parents=True, exist_ok=True)
+    csv_dir = RESULTS_PATH / "extracted_csv"
+    csv_dir.mkdir(parents=True, exist_ok=True)
+
+    ok_count = 0
+    for i, rid in enumerate(REPORT_IDS):
+        payload = _build_gwt_payload(
+            strings=[
+                module_base,
+                KNOWN_POLICY_KEYS["report"],
+                "com.entrinsik.informer.core.client.service.ReportRPCService",
+                "lookupReportAndSample",
+                "I",
+                "Z",
+                "Z",
+            ],
+            refs=[1, 2, 3, 4, 3, 5, 6, 7, rid, 1, 1],
+        )
+
+        try:
+            r = session.post(
+                rpc_url, data=payload, headers=headers, timeout=60, verify=False
+            )
+            r.close()
+        except Exception as exc:
+            results["reports"][str(rid)] = {"status": "ERROR", "error": str(exc)}
+            log.warning("  [%d/30] %d: ERROR — %s", i + 1, rid, exc)
+            continue
+
+        if r.text.startswith("//OK"):
+            # Save raw response
+            raw_path = reports_dir / f"report_{rid}_raw.txt"
+            raw_path.write_text(r.text, encoding="utf-8")
+
+            # Parse string table
+            rstrings = re.findall(r'"([^"]*)"', r.text)
+
+            # Extract column names (UPPER_CASE with dots, 2-25 chars)
+            skip = {
+                "BRADYF", "ADMIN", "ACCOUNTING", "MANAGEMENT",
+                "EVERYONE", "LLC", "ALL", "OPEN", "CLOSED",
+            }
+            columns = [
+                s for s in rstrings
+                if re.match(r"^[A-Z][A-Z0-9._]+$", s)
+                and 2 <= len(s) <= 25
+                and s not in skip
+                and not s.startswith("com.")
+            ]
+
+            # Parse data values for numeric content
+            data_section = r.text[4:]
+            str_start = data_section.rfind(",[")
+            if str_start > 0:
+                raw_vals = data_section[:str_start].strip("[]").split(",")
+                numerics = []
+                for v in raw_vals:
+                    v = v.strip()
+                    try:
+                        fv = float(v)
+                        if fv != 0 and abs(fv) < 1e9:
+                            numerics.append(fv)
+                    except ValueError:
+                        pass
+            else:
+                numerics = []
+
+            results["reports"][str(rid)] = {
+                "status": "OK",
+                "size": len(r.text),
+                "num_strings": len(rstrings),
+                "columns": columns[:20],
+                "numeric_values_count": len(numerics),
+                "name": REPORT_NAMES.get(rid, "Unknown"),
+            }
+            ok_count += 1
+
+            # Save extracted data
+            extraction = {
+                "report_id": rid,
+                "name": REPORT_NAMES.get(rid, "Unknown"),
+                "columns": columns,
+                "numeric_sample": numerics[:100],
+                "total_strings": len(rstrings),
+            }
+            (csv_dir / f"report_{rid}_extracted.json").write_text(
+                json.dumps(extraction, indent=2), encoding="utf-8"
+            )
+
+            log.info(
+                "  [%d/30] %d: OK (%d bytes, %d cols) — %s",
+                i + 1, rid, len(r.text), len(columns),
+                REPORT_NAMES.get(rid, "?")[:30],
+            )
+        else:
+            error_strs = re.findall(r'"([^"]*)"', r.text)
+            results["reports"][str(rid)] = {
+                "status": "FAIL",
+                "error": error_strs[:3] if error_strs else r.text[:200],
+            }
+            log.warning("  [%d/30] %d: FAIL", i + 1, rid)
+
+        time.sleep(0.5)
+
+    results["summary"] = {
+        "total": len(REPORT_IDS),
+        "ok": ok_count,
+        "failed": len(REPORT_IDS) - ok_count,
+    }
+
+    save_json("phase6_extraction.json", results)
+    log.info("  Phase 6 complete: %d/%d reports extracted", ok_count, len(REPORT_IDS))
+    return results
+
+
+# =========================================================================
+# PHASE 7: CGI FUNCTION SCRAPING
+# =========================================================================
+
+
+def phase_7_cgi_functions(
+    session: requests.Session,
+    username: str | None,
+    password: str | None,
+) -> dict:
+    """Scrape all known CGI functions from the ERP."""
+    log.info("=" * 70)
+    log.info("PHASE 7: CGI FUNCTION SCRAPING")
+    log.info("=" * 70)
+
+    results = {"phase": 7, "name": "cgi_functions", "timestamp": ts(), "functions": {}}
+
+    if not username or not password:
+        results["skipped"] = True
+        results["reason"] = "No credentials — run with --username/--password"
+        log.info("  SKIPPED — no credentials")
+        save_json("phase7_cgi.json", results)
+        return results
+
+    # Login to ERP
+    erp = requests.Session()
+    erp.verify = False
+    try:
+        erp.get("http://eaglesign.keyedinsign.com/", timeout=30)
+        r = erp.post(
+            "http://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/LOGIN.START",
+            data={
+                "USERNAME": username,
+                "PASSWORD": password,
+                "SECURE": "",
+                "btnLogin": "Login",
+            },
+            allow_redirects=True,
+            timeout=30,
+        )
+        if len(r.text) < 5000:
+            results["erp_login"] = "FAILED"
+            log.warning("  ERP login failed — dashboard not returned")
+            save_json("phase7_cgi.json", results)
+            return results
+        log.info("  ERP login OK")
+    except Exception as exc:
+        results["erp_login_error"] = str(exc)
+        save_json("phase7_cgi.json", results)
+        return results
+
+    # Load function codes from keyedin-mcp data if available
+    func_codes_file = Path(
+        os.environ.get("KEYEDIN_MCP_DIR", "/home/ubuntu/keyedin-mcp")
+    ) / "data" / "keyedin_complete_network_analysis.json"
+
+    test_codes: list[dict] = []
+    if func_codes_file.exists():
+        try:
+            with open(func_codes_file) as f:
+                network = json.load(f)
+            by_cat = network.get("all_functions", {}).get("by_category", {})
+            for cat_name, funcs in by_cat.items():
+                for func in funcs:
+                    test_codes.append({
+                        "code": func.get("code", ""),
+                        "name": func.get("name", ""),
+                        "is_bi": func.get("is_bi", False),
+                        "category": cat_name,
+                    })
+            log.info("  Loaded %d function codes from network analysis", len(test_codes))
+        except Exception as exc:
+            log.warning("  Could not load function codes: %s", exc)
+
+    if not test_codes:
+        log.info("  No function codes file — using built-in set")
+        for code in [
+            "MY.PROFILE.MAINT", "CHANGE.PASSWORD", "REPORT.VIEW.INDEX",
+            "USER.LOGOFF",
+        ]:
+            test_codes.append({"code": code, "name": code, "is_bi": False, "category": "BUILT_IN"})
+
+    cgi_dir = RESULTS_PATH / "cgi_functions"
+    cgi_dir.mkdir(parents=True, exist_ok=True)
+
+    accessible = 0
+    unauthorized = 0
+    frontend_only = 0
+
+    for i, func in enumerate(test_codes):
+        code = func["code"]
+
+        if code.startswith("#"):
+            results["functions"][code] = {
+                "status": "FRONTEND_ONLY",
+                "name": func["name"],
+            }
+            frontend_only += 1
+            continue
+
+        url = f"http://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/{code}"
+        try:
+            r = erp.get(url, timeout=15)
+            r.close()
+            size = len(r.text)
+            is_unauth = "NOT AUTHORIZED" in r.text.upper()
+            has_content = size > 100 and not is_unauth
+
+            if has_content:
+                status = "ACCESSIBLE"
+                accessible += 1
+                (cgi_dir / f"{code.replace('.', '_')}.html").write_text(
+                    r.text, encoding="utf-8"
+                )
+            elif is_unauth:
+                status = "UNAUTHORIZED"
+                unauthorized += 1
+            else:
+                status = "EMPTY"
+
+            results["functions"][code] = {
+                "status": status,
+                "name": func["name"],
+                "is_bi": func["is_bi"],
+                "size": size,
+            }
+        except Exception as exc:
+            results["functions"][code] = {
+                "status": "ERROR",
+                "error": str(exc),
+            }
+
+        if (i + 1) % 50 == 0:
+            log.info("  [%d/%d] processed", i + 1, len(test_codes))
+        time.sleep(0.3)
+
+    results["summary"] = {
+        "total": len(test_codes),
+        "accessible": accessible,
+        "unauthorized": unauthorized,
+        "frontend_only": frontend_only,
+    }
+
+    save_json("phase7_cgi.json", results)
+    log.info(
+        "  Phase 7 complete: %d accessible, %d unauthorized, %d frontend-only",
+        accessible, unauthorized, frontend_only,
+    )
+    return results
+
+
+# =========================================================================
+# PHASE 9: WAREHOUSE DATA INTEGRITY VERIFICATION
+# =========================================================================
+
+
+def phase_9_warehouse_verify() -> dict:
+    """Inventory and verify existing warehouse data files."""
+    log.info("=" * 70)
+    log.info("PHASE 9: WAREHOUSE DATA INTEGRITY VERIFICATION")
+    log.info("=" * 70)
+
+    results = {"phase": 9, "name": "warehouse_verify", "timestamp": ts()}
+
+    warehouse_dir = SCRIPT_DIR / "warehouse" / "warehouse"
+    if not warehouse_dir.exists():
+        results["skipped"] = True
+        results["reason"] = f"Warehouse directory not found: {warehouse_dir}"
+        log.info("  SKIPPED — warehouse directory not found")
+        save_json("phase9_warehouse.json", results)
+        return results
+
+    total_size = 0
+    file_count = 0
+    dirs: dict[str, list[dict]] = {}
+
+    for root, _subdirs, files in os.walk(warehouse_dir):
+        for fname in files:
+            fpath = os.path.join(root, fname)
+            rel = os.path.relpath(fpath, warehouse_dir)
+            size = os.path.getsize(fpath)
+            total_size += size
+            file_count += 1
+
+            subdir = os.path.dirname(rel) or "root"
+            dirs.setdefault(subdir, []).append({
+                "file": fname,
+                "size": size,
+                "path": rel,
+            })
+
+    results["total_size_bytes"] = total_size
+    results["total_size_mb"] = round(total_size / 1024 / 1024, 1)
+    results["file_count"] = file_count
+    results["directory_count"] = len(dirs)
+    results["directories"] = {k: len(v) for k, v in dirs.items()}
+
+    # Check CSV file integrity
+    data_files = []
+    for subdir, files in dirs.items():
+        for finfo in files:
+            if finfo["file"].endswith((".csv", ".tsv", ".txt")):
+                fpath = warehouse_dir / finfo["path"]
+                try:
+                    with open(fpath, encoding="utf-8", errors="replace") as fh:
+                        lines = fh.readlines()
+                    header = lines[0].strip() if lines else ""
+                    data_files.append({
+                        "file": finfo["path"],
+                        "rows": len(lines) - 1,
+                        "header_preview": header[:100],
+                        "size": finfo["size"],
+                    })
+                except Exception as exc:
+                    data_files.append({
+                        "file": finfo["path"],
+                        "error": str(exc),
+                    })
+
+    results["data_files"] = data_files
+    results["data_file_count"] = len(data_files)
+
+    log.info(
+        "  Warehouse: %.1f MB, %d files, %d dirs, %d data files",
+        results["total_size_mb"],
+        file_count,
+        len(dirs),
+        len(data_files),
+    )
+
+    save_json("phase9_warehouse.json", results)
     return results
 
 
@@ -1011,7 +1484,7 @@ def main() -> None:
     all_results = {}
 
     phases_to_run = (
-        [args.phase] if args.phase is not None else [0, 1, 2, 3, 4, 5, 8]
+        [args.phase] if args.phase is not None else [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     )
 
     # Phase 0: Network (always safe, no creds)
@@ -1056,9 +1529,39 @@ def main() -> None:
             session, auth_token, client_id
         )
 
+    # GWT-RPC auth for phases 6+ (if not already authenticated)
+    if (
+        not auth_token
+        and args.username
+        and args.password
+        and any(p in phases_to_run for p in [6, 7])
+    ):
+        try:
+            auth_token, client_id = gwt_rpc_authenticate(
+                session, args.username, args.password
+            )
+        except RuntimeError as exc:
+            log.error("  GWT-RPC auth failed: %s", exc)
+
+    # Phase 6: Full report extraction (GWT-RPC)
+    if 6 in phases_to_run:
+        all_results["phase_6"] = phase_6_report_extraction(
+            session, auth_token, client_id
+        )
+
+    # Phase 7: CGI function scraping
+    if 7 in phases_to_run:
+        all_results["phase_7"] = phase_7_cgi_functions(
+            session, args.username, args.password
+        )
+
     # Phase 8: Tenant probes (no creds needed for basic probing)
     if 8 in phases_to_run:
         all_results["phase_8"] = phase_8_tenants(session)
+
+    # Phase 9: Warehouse data integrity verification
+    if 9 in phases_to_run:
+        all_results["phase_9"] = phase_9_warehouse_verify()
 
     # Save combined results
     save_json("ALL_PROBE_RESULTS.json", all_results)
@@ -1092,6 +1595,22 @@ def main() -> None:
             s.get("gap_found", 0),
         )
 
+    if "phase_6" in all_results:
+        s = all_results["phase_6"].get("summary", {})
+        log.info(
+            "  Report extraction: %d/%d OK",
+            s.get("ok", 0),
+            s.get("total", 0),
+        )
+
+    if "phase_7" in all_results:
+        s = all_results["phase_7"].get("summary", {})
+        log.info(
+            "  CGI functions: %d accessible, %d unauthorized",
+            s.get("accessible", 0),
+            s.get("unauthorized", 0),
+        )
+
     if "phase_8" in all_results:
         tenants = all_results["phase_8"].get("tenants", {})
         for t, data in tenants.items():
@@ -1101,6 +1620,13 @@ def main() -> None:
                 t,
                 inf.get("status", inf.get("error", "?")),
             )
+
+    if "phase_9" in all_results:
+        log.info(
+            "  Warehouse: %.1f MB, %d files",
+            all_results["phase_9"].get("total_size_mb", 0),
+            all_results["phase_9"].get("file_count", 0),
+        )
 
 
 if __name__ == "__main__":
