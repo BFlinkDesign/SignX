@@ -472,7 +472,7 @@ def wind_force_on_sign(
     Kd_val = KD_SIGNS
     G_val = G_RIGID
 
-    qz_val = velocity_pressure(V_mph, Kz_val, Kzt, Ke_val)
+    qz_val = velocity_pressure(V_mph, Kz_val, Kzt, Kd_val, Ke_val)
 
     # ------------------------------------------------------------------
     # 3. Force Coefficients — Case A
@@ -485,7 +485,7 @@ def wind_force_on_sign(
     # F = qz * G * Cf * A  (ASCE 7-22 Eq. 29.3-1)
     # M_base = F * h_centroid
     # ------------------------------------------------------------------
-    F_A = qz_val * G_val * Cf_A * A * Kd_val
+    F_A = qz_val * G_val * Cf_A * A
     e_A = 0.0
     arm_A = h_centroid
     M_A = F_A * arm_A
