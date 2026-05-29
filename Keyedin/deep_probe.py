@@ -257,7 +257,7 @@ def authenticate(session):
 
     # Step 2: SSO
     r2 = session.get(
-        f"{INFORMER_BASE}/eaglesign/sso?u={USERNAME}",
+        f"{INFORMER_BASE}/eaglesign/sso?u={USERNAME.upper()}",
         timeout=30, allow_redirects=True, verify=False,
     )
     print(f"  SSO: {r2.status_code}, JSESSIONID={session.cookies.get('JSESSIONID') is not None}")
@@ -1176,7 +1176,7 @@ def main():
             try:
                 r = probe_report_lookup_and_getdata(session, auth_token, client_id, rid)
                 report_results[str(rid)] = r
-                vt = r.get("view_token", "none")
+                vt = r.get("view_token")
                 gd = r.get("getdata", {})
                 print(f"  Name: {r.get('name', '?')}")
                 print(f"  ViewToken: {vt[:20] if vt else 'NONE'}...")
