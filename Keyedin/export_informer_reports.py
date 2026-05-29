@@ -144,8 +144,12 @@ async def export_one_report(page, report_id, output_dir):
     dialog_text = await page.evaluate("() => document.body.innerText")
 
     if "Comma-Separated Values" in dialog_text and "Output Filename" not in dialog_text:
-        # Format selection page → click CSV via mouse click
-        await page.mouse.click(265, 205)
+        # Format selection page → click CSV option by text locator
+        csv_option = page.locator('text="Comma-Separated Values"')
+        try:
+            await csv_option.first.click(timeout=5000)
+        except Exception:
+            await page.mouse.click(265, 205)
         await asyncio.sleep(3)
 
     # Verify on CSV settings page
@@ -181,7 +185,7 @@ async def export_one_report(page, report_id, output_dir):
         dst = os.path.join(output_dir, f"report_{report_id}_{safe_name}.csv")
         shutil.copy2(newest, dst)
         size = os.path.getsize(dst)
-        with open(dst) as f:
+        with open(dst, encoding="utf-8", errors="replace") as f:
             lines = sum(1 for _ in f)
         return {
             "status": "success",
