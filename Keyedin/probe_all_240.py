@@ -281,9 +281,38 @@ async def probe_all_cgi(page, checkpoint: Checkpoint, resume: bool = False):
                 rtype = classify_response(content, code)
 
             if rtype == "license_quota":
-                print(f"{progress} {code}: LICENSE QUOTA — waiting 30s...")
+                print(f"{progress} {code}: LICENSE QUOTA — waiting 30s then retrying...")
                 await asyncio.sleep(30)
-                continue
+                # Retry same function (up to 3 attempts)
+                for retry in range(3):
+                    try:
+                        await page.goto(url, wait_until="domcontentloaded", timeout=20000)
+                    except Exception:
+                        pass
+                    await asyncio.sleep(1.5)
+                    all_parts = []
+                    try:
+                        main = await page.content()
+                        all_parts.append(main)
+                    except Exception:
+                        pass
+                    for frame in page.frames:
+                        try:
+                            fc = await frame.content()
+                            all_parts.append(fc)
+                        except Exception:
+                            pass
+                    content = "\n<!-- FRAME -->\n".join(all_parts) if all_parts else ""
+                    rtype = classify_response(content, code)
+                    if rtype != "license_quota":
+                        break
+                    print(f"{progress} {code}: still quota-blocked, retry {retry+1}/3...")
+                    await asyncio.sleep(30)
+                if rtype == "license_quota":
+                    checkpoint.mark(ck, {"status": "license_quota", "timestamp": datetime.now(timezone.utc).isoformat()})
+                    results[code] = {"status": "license_quota"}
+                    print(f"{progress} {code}: FAILED after 3 retries (license quota)")
+                    continue
 
             # Save HTML
             safe_name = code.replace("#", "HASH_")

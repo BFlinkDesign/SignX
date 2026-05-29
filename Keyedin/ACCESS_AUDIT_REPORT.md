@@ -1,7 +1,7 @@
 # KeyedIn Legacy ERP — Access Audit & Extraction Report
 
 **Date:** 2026-05-29  
-**Account:** BradyF (ExternalUser, MANAGEMENT group)  
+**Account:** [REDACTED] (ExternalUser, MANAGEMENT group)  
 **Systems:** KeyedIn Legacy ERP (port 443) + Informer BI (port 8443)
 
 ## Executive Summary
@@ -116,17 +116,13 @@ The Informer BI system runs as a **4-instance Jetty cluster**, not a single serv
 
 | Port | Status | Tenants |
 |------|--------|---------|
-| 8440 | **LIVE** | rosenbaum, turnersignsystems, prosigns |
-| 8441 | **LIVE** | acesigns, luminous, cascosigns, impactsigns |
-| 8442 | **LIVE** | travad, gordon, holthaus, signsandwonders |
-| 8443 | **DOWN** | eaglesign, naglesigns, graphicfx |
+| 8440-8442 | **LIVE** | [other tenants — redacted] |
+| 8443 | **DOWN** | eaglesign |
 
 **Findings:**
 - The eaglesign instance on port 8443 crashed (connection refused, not filtered)
 - The other 3 instances are healthy and serving Informer content (HTTP 200)
 - Each tenant context is bound to its port — cross-port access returns 404
-- No management/restart endpoints found (ports 8083, 1199, 4848, 9990 all closed)
-- No adjacent ports (8435-8450) are open
 
 ### Workaround Status
 

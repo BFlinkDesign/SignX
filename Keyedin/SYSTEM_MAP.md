@@ -5,25 +5,18 @@
 ```
 ┌──────────────────────────────────────────────────────┐
 │              eaglesign.keyedinsign.com                │
-│                   (3.91.142.75)                       │
 │                                                       │
 │  Port 443 (HTTPS) ─── KeyedIn Legacy ERP             │
 │  │  CGI: /cgi-bin/mvi.exe/{FUNCTION_CODE}            │
 │  │  Auth: Form-based (USERNAME/PASSWORD cookies)      │
-│  │  DB: U2/UniVerse at d:\datasign_accts\eaglesign   │
+│  │  DB: U2/UniVerse (MultiValue NoSQL)                │
 │  │  UI: HTML framesets with nested iframes            │
 │  │                                                    │
-│  Port 8440 (HTTPS) ── Informer BI Instance 1 (LIVE)  │
-│  │  Tenants: rosenbaum, turnersignsystems, prosigns   │
+│  Ports 8440-8442 ──── Informer BI (3 instances LIVE) │
+│  │  Multi-tenant Jetty cluster                        │
 │  │                                                    │
-│  Port 8441 (HTTPS) ── Informer BI Instance 2 (LIVE)  │
-│  │  Tenants: acesigns, luminous, cascosigns, impact   │
-│  │                                                    │
-│  Port 8442 (HTTPS) ── Informer BI Instance 3 (LIVE)  │
-│  │  Tenants: travad, gordon, holthaus, signsandwonders│
-│  │                                                    │
-│  Port 8443 (HTTPS) ── Informer BI Instance 4 (DOWN)  │
-│     Tenants: eaglesign, naglesigns, graphicfx         │
+│  Port 8443 (HTTPS) ── Informer BI Instance (DOWN)    │
+│     Tenants: eaglesign                                │
 │     Engine: Entrinsik Informer 5 (GWT-RPC)            │
 │     30 reports configured                             │
 └──────────────────────────────────────────────────────┘

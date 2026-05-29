@@ -7,6 +7,7 @@ Each report has a form with parameters → "Run Report" → BI_OUTPUT iframe wit
 """
 
 import asyncio
+import csv as csv_mod
 import json
 import os
 import re
@@ -340,11 +341,12 @@ async def main():
             # Save CSV for each table
             for ti, table in enumerate(result["tables"]):
                 csv_file = OUTPUT_DIR / f"{code}_table{ti}.csv"
-                with open(csv_file, "w") as f:
+                with open(csv_file, "w", newline="") as f:
+                    writer = csv_mod.writer(f)
                     if table["headers"]:
-                        f.write(",".join(f'"{h}"' for h in table["headers"]) + "\n")
+                        writer.writerow(table["headers"])
                     for row in table["rows"]:
-                        f.write(",".join(f'"{c}"' for c in row) + "\n")
+                        writer.writerow(row)
 
             # Save pre content
             if result["pre_content"]:
@@ -386,11 +388,12 @@ async def main():
             # Save CSV for each table
             for ti, table in enumerate(result["tables"]):
                 csv_file = OUTPUT_DIR / f"{code}_table{ti}.csv"
-                with open(csv_file, "w") as f:
+                with open(csv_file, "w", newline="") as f:
+                    writer = csv_mod.writer(f)
                     if table["headers"]:
-                        f.write(",".join(f'"{h}"' for h in table["headers"]) + "\n")
+                        writer.writerow(table["headers"])
                     for row in table["rows"]:
-                        f.write(",".join(f'"{c}"' for c in row) + "\n")
+                        writer.writerow(row)
 
             print(f"[{i+1}/{len(LISTING_FUNCTIONS)}] 📊 {code}: "
                   f"{total_tables} tables, {total_rows} rows")
