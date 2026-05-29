@@ -342,8 +342,11 @@ async def main():
         try:
             try:
                 await page.goto(url, wait_until="domcontentloaded", timeout=20000)
-            except Exception:
-                pass
+            except Exception as nav_err:
+                if "ERR_ABORTED" in str(nav_err):
+                    pass  # framesets often abort
+                else:
+                    raise
             await asyncio.sleep(1.5)
 
             # Check for session loss
@@ -360,8 +363,11 @@ async def main():
                     break
                 try:
                     await page.goto(url, wait_until="domcontentloaded", timeout=20000)
-                except Exception:
-                    pass
+                except Exception as nav_err:
+                    if "ERR_ABORTED" in str(nav_err):
+                        pass
+                    else:
+                        raise
                 await asyncio.sleep(1.5)
 
             # Extract data from all frames

@@ -225,8 +225,11 @@ async def probe_all_cgi(page, checkpoint: Checkpoint, resume: bool = False):
             # Navigate
             try:
                 await page.goto(url, wait_until="domcontentloaded", timeout=20000)
-            except Exception:
-                pass  # framesets often abort
+            except Exception as nav_err:
+                if "ERR_ABORTED" in str(nav_err):
+                    pass  # framesets often abort
+                else:
+                    raise
 
             await asyncio.sleep(1.5)
 
@@ -260,8 +263,9 @@ async def probe_all_cgi(page, checkpoint: Checkpoint, resume: bool = False):
                 # Retry this function
                 try:
                     await page.goto(url, wait_until="domcontentloaded", timeout=20000)
-                except Exception:
-                    pass
+                except Exception as nav_err:
+                    if "ERR_ABORTED" not in str(nav_err):
+                        raise
                 await asyncio.sleep(1.5)
                 all_parts = []
                 try:
@@ -285,8 +289,9 @@ async def probe_all_cgi(page, checkpoint: Checkpoint, resume: bool = False):
                 for retry in range(3):
                     try:
                         await page.goto(url, wait_until="domcontentloaded", timeout=20000)
-                    except Exception:
-                        pass
+                    except Exception as nav_err:
+                        if "ERR_ABORTED" not in str(nav_err):
+                            raise
                     await asyncio.sleep(1.5)
                     all_parts = []
                     try:

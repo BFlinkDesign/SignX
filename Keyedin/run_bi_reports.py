@@ -166,8 +166,9 @@ async def run_bi_report(page, code: str) -> dict:
     
     try:
         await page.goto(url, wait_until="domcontentloaded", timeout=20000)
-    except Exception:
-        pass
+    except Exception as nav_err:
+        if "ERR_ABORTED" not in str(nav_err):
+            raise
     await asyncio.sleep(2)
 
     # Look for and click "Run Report" button
@@ -213,8 +214,9 @@ async def extract_listing(page, code: str) -> dict:
 
     try:
         await page.goto(url, wait_until="domcontentloaded", timeout=20000)
-    except Exception:
-        pass
+    except Exception as nav_err:
+        if "ERR_ABORTED" not in str(nav_err):
+            raise
     await asyncio.sleep(2)
 
     tables = await extract_table_data(page, code)
