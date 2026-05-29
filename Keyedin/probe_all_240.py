@@ -23,7 +23,7 @@ from pathlib import Path
 # Config
 # ---------------------------------------------------------------------------
 
-USERNAME = os.environ.get("KEYEDIN_USERNAME", "BradyF")
+USERNAME = os.environ.get("KEYEDIN_USERNAME", "")
 PASSWORD = os.environ.get("KEYEDIN_PASSWORD", os.environ.get("KEYEDIN_PASSWORD", ""))
 CDP_URL = os.environ.get("CDP_URL", "http://localhost:29229")
 

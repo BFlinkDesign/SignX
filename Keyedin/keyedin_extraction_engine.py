@@ -43,7 +43,7 @@ from typing import Any
 # Configuration
 # ---------------------------------------------------------------------------
 
-USERNAME = os.environ.get("KEYEDIN_USERNAME", "BradyF")
+USERNAME = os.environ.get("KEYEDIN_USERNAME", "")
 PASSWORD = os.environ.get("KEYEDIN_PASSWORD", "")
 CDP_URL = os.environ.get("CDP_URL", "http://localhost:29229")
 
@@ -1252,18 +1252,24 @@ class KeyedInBrowser:
                 )
 
                 if await export_btn.count() > 0:
-                    # Set up download handler
-                    async with self.page.expect_download(timeout=30000) as download_info:
-                        await export_btn.first.click()
-                        await asyncio.sleep(1)
+                    # Click export button first (may open dropdown)
+                    await export_btn.first.click()
+                    await asyncio.sleep(1)
 
-                        # Look for CSV option
-                        csv_option = self.page.locator(
-                            'a:has-text("CSV"), button:has-text("CSV"), '
-                            '[data-format="csv"]'
-                        )
-                        if await csv_option.count() > 0:
+                    # Look for CSV option in dropdown
+                    csv_option = self.page.locator(
+                        'a:has-text("CSV"), button:has-text("CSV"), '
+                        '[data-format="csv"]'
+                    )
+
+                    if await csv_option.count() > 0:
+                        # CSV option found — wrap only the download-triggering click
+                        async with self.page.expect_download(timeout=30000) as download_info:
                             await csv_option.first.click()
+                    else:
+                        # No CSV option — export button may have triggered direct download
+                        log.warning("Report %d: no CSV option found after Export click", report_id)
+                        continue
 
                     download = await download_info.value
                     save_path = INFORMER_DIR / f"report_{report_id}.csv"
@@ -1271,7 +1277,7 @@ class KeyedInBrowser:
 
                     file_size = save_path.stat().st_size
                     with open(save_path, encoding="utf-8", errors="replace") as f:
-                        row_count = sum(1 for _ in f) - 1  # minus header
+                        row_count = max(0, sum(1 for _ in f) - 1)  # minus header
 
                     self.manifest.add_entry(
                         save_path,

@@ -308,6 +308,10 @@ async def main():
 
     pw = await async_playwright().start()
     browser = await pw.chromium.connect_over_cdp(CDP_URL)
+    if not browser.contexts:
+        print("ERROR: No browser contexts found — is Chrome running?")
+        await pw.stop()
+        sys.exit(1)
     ctx = browser.contexts[0]
     page = await ctx.new_page()
     print("Connected to Chrome via CDP")

@@ -3,10 +3,8 @@
 Informer Port 8443 Watchdog — monitors for recovery and auto-extracts.
 
 Discovery: The KeyedIn Informer BI system runs a multi-tenant Jetty cluster:
-  Port 8440 (LIVE): rosenbaum, turnersignsystems, prosigns
-  Port 8441 (LIVE): acesigns, luminous, cascosigns, impactsigns
-  Port 8442 (LIVE): travad, gordon, holthaus, signsandwonders
-  Port 8443 (DOWN):  eaglesign, naglesigns, graphicfx
+  Ports 8440-8442 (LIVE): [other tenants — redacted]
+  Port 8443 (DOWN): eaglesign
 
 The eaglesign instance on port 8443 crashed. This script:
 1. Polls port 8443 every 30 seconds
@@ -23,7 +21,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 CDP_URL = os.environ.get("CDP_URL", "http://localhost:29229")
-USERNAME = os.environ.get("KEYEDIN_USERNAME", "BradyF")
+USERNAME = os.environ.get("KEYEDIN_USERNAME", "")
 PASSWORD = os.environ.get("KEYEDIN_PASSWORD", "")
 BASE = "https://eaglesign.keyedinsign.com"
 INFORMER_URL = f"{BASE}:8443/eaglesign/informer/"
@@ -112,9 +110,7 @@ async def main():
 
     if not args.extract_now:
         print(f"Monitoring port 8443 every {args.check_interval}s...")
-        print(f"Live ports: 8440 (rosenbaum/turner/prosigns), "
-              f"8441 (ace/luminous/casco/impact), "
-              f"8442 (travad/gordon/holthaus/signsandwonders)")
+        print("Live ports: 8440-8442 (other tenants — redacted)")
         print()
 
         checks = 0
@@ -148,6 +144,10 @@ async def main():
     from playwright.async_api import async_playwright
     pw = await async_playwright().start()
     browser = await pw.chromium.connect_over_cdp(CDP_URL)
+    if not browser.contexts:
+        print("ERROR: No browser contexts found — is Chrome running?")
+        await pw.stop()
+        return
     ctx = browser.contexts[0]
     page = await ctx.new_page()
 

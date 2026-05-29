@@ -16,7 +16,7 @@ from pathlib import Path
 
 CGI_BASE = "https://eaglesign.keyedinsign.com/cgi-bin/mvi.exe"
 CDP_URL = os.environ.get("CDP_URL", "http://localhost:29229")
-USERNAME = os.environ.get("KEYEDIN_USERNAME", "BradyF")
+USERNAME = os.environ.get("KEYEDIN_USERNAME", "")
 PASSWORD = os.environ.get("KEYEDIN_PASSWORD", "")
 
 OUTPUT_DIR = Path(__file__).parent / "extraction_output" / "cgi_tables"
@@ -301,6 +301,10 @@ async def main():
     from playwright.async_api import async_playwright
     pw = await async_playwright().start()
     browser = await pw.chromium.connect_over_cdp(CDP_URL)
+    if not browser.contexts:
+        print("ERROR: No browser contexts found — is Chrome running?")
+        await pw.stop()
+        sys.exit(1)
     ctx = browser.contexts[0]
     page = await ctx.new_page()
     print("Connected to Chrome via CDP")
