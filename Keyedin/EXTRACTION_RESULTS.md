@@ -74,8 +74,8 @@
 2. **MVI_KEY**: Dynamically generated per APPLOAD request, required for form submissions
 3. **Report generation**: Asynchronous — VIEW.LOG tracks progress, REPORT.VIEW stores output
 4. **License quota**: 10 concurrent users, occasionally blocks login
-5. **Database**: U2/UniVerse at `d:\datasign_accts\eaglesign` (Windows server on AWS)
-6. **BI service account**: BITool_App_User2
+5. **Database**: U2/UniVerse (path and hosting details redacted)
+6. **BI service account**: `<REDACTED — see env vars>`
 
 ## Remaining Work
 

@@ -279,9 +279,9 @@ def authenticate(session):
     )
     if not r3.text.startswith("//OK"):
         print(f"  AUTH FAILED: {r3.text[:300]}")
-        print(f"  DEBUG: Cookies={dict(session.cookies)}")
-        print(f"  DEBUG: Payload len={len(payload)}, first 100={payload[:100]}")
-        print(f"  DEBUG: Headers={dict(r3.request.headers)}")
+        print(f"  DEBUG: Cookies={list(session.cookies.keys())}")
+        print(f"  DEBUG: Payload len={len(payload)}")
+        print(f"  DEBUG: Response headers={dict(r3.headers)}")
         return None, None
 
     uuids = parse_uuids(r3.text)
@@ -477,7 +477,7 @@ def probe_export_urls(session, auth_token, client_id, view_token, report_id):
                 "preview": r.text[:200] if r.status_code == 200 and len(r.content) < 5000 else "",
             })
         except Exception as e:
-            results.append({"url": url[:80], "error": str(e)})
+            results.append({"url": url.replace(auth_token, "TOKEN").replace(client_id, "CID")[:80], "error": str(e)})
     return results
 
 
