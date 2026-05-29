@@ -271,11 +271,23 @@ def phase_0_network() -> dict:
     except Exception as exc:
         results["informer_dir"] = {"error": str(exc)}
 
-    # VPN verdict
-    results["vpn_required"] = False
-    results["vpn_verdict"] = (
-        "VPN NOT REQUIRED — all endpoints publicly accessible"
+    # VPN verdict — derive from actual check results
+    dns_failed = results.get("dns_verdict") == "FAILED"
+    is_private = results.get("is_private_ip", False)
+    ports_closed = any(
+        "CLOSED" in results.get(f"port_{p}", "")
+        for p in [443, 8443]
     )
+    if dns_failed or is_private or ports_closed:
+        results["vpn_required"] = True
+        results["vpn_verdict"] = (
+            "VPN LIKELY REQUIRED — private IP or unreachable ports detected"
+        )
+    else:
+        results["vpn_required"] = False
+        results["vpn_verdict"] = (
+            "VPN NOT REQUIRED — all endpoints publicly accessible"
+        )
 
     save_json("phase0_network.json", results)
 
@@ -577,6 +589,7 @@ def phase_2_enumerate_reports(
                 content_length = int(r.headers.get("Content-Length", 0))
                 # Read up to 1MB
                 body = r.raw.read(1024 * 1024)
+                r.close()
 
                 export_result = {
                     "status": r.status_code,
