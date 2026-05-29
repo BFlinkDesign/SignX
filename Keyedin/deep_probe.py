@@ -8,6 +8,7 @@ Probes BOTH systems:
 
 Usage:
   python deep_probe.py [--phase informer|erp|all] [--report-id ID]
+  python deep_probe.py informer   # shorthand positional
 """
 
 import json
@@ -249,7 +250,7 @@ def authenticate(session):
         data={"USERNAME": USERNAME, "PASSWORD": PASSWORD, "SECURE": "TRUE"},
         allow_redirects=True, timeout=30, verify=False,
     )
-    if "LICENSE QUOTA" in r.text.upper() and r.status_code != 200:
+    if "LICENSE QUOTA" in r.text.upper():
         print("  ERROR: License quota exceeded")
         return None, None
     print(f"  ERP login: {r.status_code} (quota_warning={'QUOTA' in r.text.upper()})")
@@ -284,6 +285,9 @@ def authenticate(session):
         return None, None
 
     uuids = parse_uuids(r3.text)
+    if not uuids:
+        print("  AUTH FAILED: no UUIDs in response")
+        return None, None
     if len(uuids) < 3:
         print(f"  WARNING: only {len(uuids)} UUIDs found")
     auth_token = uuids[-1]
@@ -1123,7 +1127,14 @@ def probe_erp_deep(session):
 
 
 def main():
-    phase = sys.argv[1] if len(sys.argv) > 1 else "all"
+    import argparse
+    parser = argparse.ArgumentParser(description="Deep probe KeyedIn ERP + Informer")
+    parser.add_argument("--phase", default="all", choices=["informer", "erp", "all"])
+    parser.add_argument("--report-id", type=int, default=None)
+    parser.add_argument("positional_phase", nargs="?", default=None,
+                        help="positional shorthand for --phase")
+    args = parser.parse_args()
+    phase = args.positional_phase or args.phase
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     session = requests.Session()

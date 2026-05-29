@@ -181,7 +181,8 @@ async def export_one_report(page, report_id, output_dir):
         dst = os.path.join(output_dir, f"report_{report_id}_{safe_name}.csv")
         shutil.copy2(newest, dst)
         size = os.path.getsize(dst)
-        lines = sum(1 for _ in open(dst))
+        with open(dst) as f:
+            lines = sum(1 for _ in f)
         return {
             "status": "success",
             "name": report_name,
