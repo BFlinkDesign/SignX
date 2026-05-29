@@ -880,7 +880,8 @@ GWT_HEADERS = {
 def _build_gwt_payload(strings: list[str], refs: list[int]) -> str:
     """Build a GWT-RPC serialized payload."""
     parts = ["7", "0", str(len(strings))]
-    parts.extend(strings)
+    # GWT-RPC escapes: \ -> \\, | -> \!
+    parts.extend(s.replace("\\", "\\\\").replace("|", "\\!") for s in strings)
     parts.extend(str(r) for r in refs)
     return "|".join(parts) + "|"
 
@@ -896,10 +897,10 @@ def gwt_rpc_authenticate(
     module_base = f"{INFORMER_URL}/"
 
     # Step 1: ERP login
-    session.get("http://eaglesign.keyedinsign.com/", timeout=30)
+    session.get(f"{ERP_BASE}/", timeout=30)
     session.post(
-        "http://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/LOGIN.START",
-        data={"USERNAME": username, "PASSWORD": password, "SECURE": ""},
+        f"{CGI_BASE}/LOGIN.START",
+        data={"USERNAME": username, "PASSWORD": password, "SECURE": "TRUE"},
         allow_redirects=True,
         timeout=30,
     )
@@ -945,8 +946,8 @@ def gwt_rpc_authenticate(
         s for s in all_strs
         if re.match(r"^[0-9a-f]{8}-[0-9a-f]{4}-", s)
     ]
-    if len(uuids) < 2:
-        raise RuntimeError(f"Login response had {len(uuids)} UUIDs, expected ≥2")
+    if len(uuids) < 3:
+        raise RuntimeError(f"Login response had {len(uuids)} UUIDs, expected ≥3")
 
     auth_token = uuids[-1]
     client_id = uuids[1]
@@ -1134,9 +1135,9 @@ def phase_7_cgi_functions(
     erp = requests.Session()
     erp.verify = False
     try:
-        erp.get("http://eaglesign.keyedinsign.com/", timeout=30)
+        erp.get(f"{ERP_BASE}/", timeout=30)
         r = erp.post(
-            "http://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/LOGIN.START",
+            f"{CGI_BASE}/LOGIN.START",
             data={
                 "USERNAME": username,
                 "PASSWORD": password,
@@ -1206,7 +1207,7 @@ def phase_7_cgi_functions(
             frontend_only += 1
             continue
 
-        url = f"http://eaglesign.keyedinsign.com/cgi-bin/mvi.exe/{code}"
+        url = f"{CGI_BASE}/{code}"
         try:
             r = erp.get(url, timeout=15)
             r.close()
@@ -1454,7 +1455,7 @@ def main() -> None:
         "--phase",
         type=int,
         default=None,
-        help="Run only this phase (0-8). Default: run all.",
+        help="Run only this phase (0-9). Default: run all.",
     )
     parser.add_argument(
         "--token",
