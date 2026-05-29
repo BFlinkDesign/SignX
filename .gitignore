@@ -164,6 +164,9 @@ supabase_*.csv
 # Probe results contain infrastructure IPs, policy keys, and recon data
 Keyedin/probe_results/
 
+# Extraction output data (large, contains real business data)
+Keyedin/extraction_output/
+
 
 # Accidentally committed site-packages
 tools/vba-macros/
