@@ -291,7 +291,7 @@ def authenticate(session):
     if len(uuids) < 3:
         print(f"  WARNING: only {len(uuids)} UUIDs found")
     auth_token = uuids[-1]
-    client_id = uuids[1] if len(uuids) > 1 else uuids[0]
+    client_id = uuids[1] if len(uuids) > 2 else uuids[0]
     print(f"  AUTH OK: token={auth_token[:20]}... client={client_id[:20]}...")
     return auth_token, client_id
 
@@ -1132,6 +1132,7 @@ def main():
     parser.add_argument("--phase", default="all", choices=["informer", "erp", "all"])
     parser.add_argument("--report-id", type=int, default=None)
     parser.add_argument("positional_phase", nargs="?", default=None,
+                        choices=["informer", "erp", "all"],
                         help="positional shorthand for --phase")
     args = parser.parse_args()
     phase = args.positional_phase or args.phase
