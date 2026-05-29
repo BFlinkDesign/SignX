@@ -15,8 +15,6 @@ The eaglesign instance on port 8443 crashed. This script:
 
 import asyncio
 import os
-import sys
-import time
 from datetime import datetime, timezone
 from pathlib import Path
 

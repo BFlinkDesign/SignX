@@ -425,7 +425,7 @@ async def main():
     total_files = sum(1 for f in OUTPUT_DIR.glob("*") if f.is_file())
     total_bytes = sum(f.stat().st_size for f in OUTPUT_DIR.glob("*") if f.is_file())
     print(f"\n{'='*60}")
-    print(f"EXTRACTION COMPLETE")
+    print("EXTRACTION COMPLETE")
     print(f"{'='*60}")
     print(f"Files: {total_files}")
     print(f"Total data: {total_bytes:,} bytes ({total_bytes/1024/1024:.1f} MB)")

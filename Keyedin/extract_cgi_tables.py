@@ -6,7 +6,6 @@ Uses Playwright frame-level evaluation to access data inside framesets.
 
 import asyncio
 import csv
-import io
 import json
 import os
 import re

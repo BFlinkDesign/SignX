@@ -747,7 +747,7 @@ class KeyedInBrowser:
             url = f"{CGI_BASE}/APPLOAD?APP={function_code}"
 
         try:
-            response = await self.page.goto(url, wait_until="domcontentloaded", timeout=30000)
+            await self.page.goto(url, wait_until="domcontentloaded", timeout=30000)
         except Exception as nav_err:
             # ERR_ABORTED often means a redirect or non-navigable response;
             # the page may still have useful content in the current DOM
@@ -797,8 +797,6 @@ class KeyedInBrowser:
     async def extract_report_iframe(self, function_code: str) -> str | None:
         """Extract content from REPORT.IFRAME for BI report functions."""
         try:
-            content = await self.page.content()
-
             # Look for REPORT.IFRAME
             for frame in self.page.frames:
                 frame_url = frame.url
@@ -959,6 +957,27 @@ class KeyedInBrowser:
                     # Classify the response
                     response_type = classify_response(content, func_code)
 
+                    # Session loss detection — re-authenticate and retry
+                    if response_type in ("login_redirect", "license_quota"):
+                        log.warning(
+                            "Spider %s: %s — re-authenticating...",
+                            func_code, response_type,
+                        )
+                        if await self.authenticate():
+                            content = await retry_async(
+                                self.navigate_to_function,
+                                func_code,
+                                operation_name=f"retry_spider_{func_code}",
+                                max_retries=2,
+                            )
+                            response_type = classify_response(content, func_code)
+                        if response_type in ("login_redirect", "license_quota"):
+                            self.checkpoint.mark_failed(
+                                item_key, f"session lost: {response_type}",
+                            )
+                            module_results[func_code] = {"error": response_type}
+                            continue
+
                     # Extract any sub-links/submenus from the page
                     sub_links = await self.page.evaluate("""
                         () => {
@@ -1087,8 +1106,12 @@ class KeyedInBrowser:
                             )
                             continue
 
+                    # Sanitize func_code for safe filenames (# starts
+                    # a comment in bash, : is invalid on Windows)
+                    safe_code = func_code.replace("#", "HASH_").replace(":", "_")
+
                     # Save the full HTML content
-                    html_file = CGI_DIR / f"{func_code}_full.html"
+                    html_file = CGI_DIR / f"{safe_code}_full.html"
                     html_file.write_text(content, encoding="utf-8")
 
                     # For BI reports, also try to extract REPORT.IFRAME data
@@ -1096,7 +1119,7 @@ class KeyedInBrowser:
                     if func_code in BI_FUNCTIONS or response_type == "bi_report":
                         report_data = await self.extract_report_iframe(func_code)
                         if report_data:
-                            txt_file = CGI_DIR / f"{func_code}_report.txt"
+                            txt_file = CGI_DIR / f"{safe_code}_report.txt"
                             txt_file.write_text(report_data, encoding="utf-8")
                             self.manifest.add_entry(
                                 txt_file,
@@ -1109,7 +1132,7 @@ class KeyedInBrowser:
                     # Extract text content (no HTML tags)
                     text_content = extract_text_from_html(content)
                     if text_content.strip():
-                        txt_file = CGI_DIR / f"{func_code}_text.txt"
+                        txt_file = CGI_DIR / f"{safe_code}_text.txt"
                         txt_file.write_text(text_content, encoding="utf-8")
 
                     self.manifest.add_entry(

@@ -10,12 +10,10 @@ Usage:
 """
 
 import asyncio
-import hashlib
 import json
 import os
 import re
 import sys
-import time
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -163,8 +161,8 @@ def extract_text(html: str) -> str:
     text = text.replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">")
     text = text.replace("&nbsp;", " ").replace("&quot;", '"')
     text = re.sub(r"<[^>]+>", " ", text)
-    lines = [re.sub(r"[ \t]+", " ", l).strip() for l in text.split("\n")]
-    return "\n".join(l for l in lines if l)
+    lines = [re.sub(r"[ \t]+", " ", line).strip() for line in text.split("\n")]
+    return "\n".join(line for line in lines if line)
 
 
 # ---------------------------------------------------------------------------
@@ -644,7 +642,7 @@ async def main():
         sys.exit(1)
     context = contexts[0]
     page = await context.new_page()
-    print(f"Connected to Chrome via CDP")
+    print("Connected to Chrome via CDP")
 
     checkpoint = Checkpoint(CHECKPOINT_FILE)
 
