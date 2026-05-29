@@ -12,7 +12,7 @@ Flow:
 
 Prerequisites:
   - .env file with KEYEDIN_USERNAME and KEYEDIN_PASSWORD
-  - Network access to eaglesign.keyedinsign.com (VPN if needed)
+  - Network access to eaglesign.keyedinsign.com (cloud-hosted, no VPN needed)
 
 Usage:
   python scrape_informer.py [--report REPORT_ID] [--list]
@@ -45,11 +45,24 @@ from gwt_parser import (
 # Configuration
 # ---------------------------------------------------------------------------
 
-ENV_FILE = Path(r"C:\Scripts\keyedin-capture\.env")
-OUTPUT_DIR = Path(r"C:\Scripts\signx-warehouse\warehouse\raw")
-SESSION_FILE = Path(r"C:\Scripts\signx-warehouse\warehouse\raw\informer_session.json")
+# Paths are configurable via env vars, with sensible defaults relative to this script
+_SCRIPT_DIR = Path(__file__).resolve().parent
+_PROJECT_ROOT = _SCRIPT_DIR.parent  # warehouse/
+
+ENV_FILE = Path(
+    os.environ.get("KEYEDIN_ENV_FILE", str(_PROJECT_ROOT / ".env"))
+)
+OUTPUT_DIR = Path(
+    os.environ.get("KEYEDIN_OUTPUT_DIR", str(_PROJECT_ROOT / "warehouse" / "raw"))
+)
+SESSION_FILE = Path(
+    os.environ.get("KEYEDIN_SESSION_FILE", str(OUTPUT_DIR / "informer_session.json"))
+)
 GETDATA_TEMPLATE_FILE = Path(
-    r"C:\Scripts\keyedin-capture\reports\report_data_page2_req118_request.txt"
+    os.environ.get(
+        "KEYEDIN_GETDATA_TEMPLATE",
+        str(_SCRIPT_DIR / "reports" / "report_data_page2_req118_request.txt"),
+    )
 )
 
 # KeyedIn ERP
