@@ -1141,7 +1141,7 @@ def phase_7_cgi_functions(
             data={
                 "USERNAME": username,
                 "PASSWORD": password,
-                "SECURE": "",
+                "SECURE": "TRUE",
                 "btnLogin": "Login",
             },
             allow_redirects=True,
