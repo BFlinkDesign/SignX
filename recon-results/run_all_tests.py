@@ -1,7 +1,8 @@
 """
 KeyedIn Legacy ERP — Automated Recon Test Suite
 ================================================
-Run this on Brady's machine while connected to Eagle Sign VPN.
+Run from ANY internet-connected machine. VPN is NOT required.
+(eaglesign.keyedinsign.com is cloud-hosted on AWS, publicly accessible.)
 
 Usage:
     python run_all_tests.py --username BRADYF --password <password>
@@ -90,8 +91,8 @@ def test_1_network():
             results["verdict"] = "ON-PREM / PRIVATE NETWORK"
         else:
             print(f"  PUBLIC IP: {ip}")
-            print("  VERDICT: HOSTED (publicly routable)")
-            results["verdict"] = "HOSTED / PUBLIC"
+            print("  VERDICT: HOSTED — cloud-accessible, no VPN needed")
+            results["verdict"] = "HOSTED / PUBLIC (NO VPN REQUIRED)"
 
     except socket.gaierror as e:
         results["error"] = str(e)
@@ -656,7 +657,9 @@ def main():
     # Test 6: Write plan (documentation)
     all_results["write_plan"] = test_6_write_plan(all_results.get("quote_read", {}))
 
-    # Save combined results
+    # Test 7: REST API probes
+    all_results["rest_api"] = test_7_rest_api(opener)
+
     save_json("ALL_RESULTS.json", all_results)
 
     # Print summary
@@ -668,8 +671,82 @@ def main():
     print(f"  Exports:  {len([e for e in all_results['exports'].get('endpoints', []) if e.get('status') == 200])} / 6 accessible")
     print(f"  Informer: {all_results['informer'].get('informer_auth', 'N/A')}")
     print(f"  Quote:    {all_results['quote_read'].get('form_status', 'N/A')}")
+    print(f"  REST API: {all_results['rest_api'].get('verdict', 'N/A')}")
     print(f"\nAll results saved to: {OUTPUT_DIR}")
     print("Share the test_output/ folder for analysis.")
+
+
+# ==========================================================================
+# TEST 7: REST API PROBES (Informer 5 standard REST endpoints)
+# ==========================================================================
+def test_7_rest_api(opener):
+    """Probe Informer 5 REST API endpoints that have never been tested."""
+    print("\n" + "=" * 70)
+    print("TEST 7: REST API PROBES (Informer 5)")
+    print("=" * 70)
+
+    results = {"test": "rest_api", "timestamp": datetime.now().isoformat(), "endpoints": []}
+
+    rest_paths = [
+        ("GET", f"{INFORMER_BASE}/documentation", "Swagger/API docs"),
+        ("GET", f"{INFORMER_BASE}/api/datasets", "Datasets listing"),
+        ("GET", f"{INFORMER_BASE}/api/reports", "Reports listing"),
+        ("GET", f"{INFORMER_BASE}/api/queries", "Queries listing"),
+        ("GET", f"{INFORMER_BASE}/api/session", "Current session"),
+        ("GET", f"{INFORMER_BASE}/api/users/current", "Current user"),
+        ("GET", f"{INFORMER_BASE}/rest", "REST root"),
+        ("GET", f"{INFORMER_BASE}/swagger", "Swagger UI"),
+        ("GET", f"{INFORMER_BASE}/swagger.json", "Swagger JSON"),
+        ("GET", f"{INFORMER_BASE}/v2/api-docs", "OpenAPI v2"),
+        ("GET", f"{INFORMER_BASE}/v3/api-docs", "OpenAPI v3"),
+    ]
+
+    for method, url, description in rest_paths:
+        endpoint_result = {"method": method, "url": url, "description": description}
+        print(f"\n  [{method}] {description}")
+        print(f"    URL: {url}")
+
+        try:
+            req = urllib.request.Request(url)
+            resp = opener.open(req, timeout=15)
+            body = resp.read().decode("utf-8", errors="replace")
+            endpoint_result["status"] = resp.status
+            endpoint_result["content_type"] = resp.headers.get("Content-Type", "")
+            endpoint_result["size"] = len(body)
+            endpoint_result["snippet"] = body[:500]
+            print(f"    Status: {resp.status}, Size: {len(body)} bytes")
+
+            if resp.status == 200 and len(body) > 100:
+                slug = url.split("/")[-1] or "root"
+                save_result(f"07_rest_{slug}.txt", body[:5000])
+
+        except urllib.error.HTTPError as e:
+            endpoint_result["status"] = e.code
+            try:
+                body = e.read().decode("utf-8", errors="replace")
+                endpoint_result["error_body"] = body[:500]
+            except Exception:
+                pass
+            print(f"    HTTP {e.code}")
+        except Exception as e:
+            endpoint_result["error"] = str(e)
+            print(f"    ERROR: {e}")
+
+        results["endpoints"].append(endpoint_result)
+        time.sleep(0.3)
+
+    # Determine verdict
+    successes = [
+        e for e in results["endpoints"]
+        if e.get("status") == 200 and e.get("size", 0) > 100
+    ]
+    if successes:
+        results["verdict"] = f"REST API FOUND — {len(successes)} endpoints responsive"
+    else:
+        results["verdict"] = "REST API NOT AVAILABLE — all endpoints returned errors"
+
+    save_json("07_rest_api_tests.json", results)
+    return results
 
 
 if __name__ == "__main__":
