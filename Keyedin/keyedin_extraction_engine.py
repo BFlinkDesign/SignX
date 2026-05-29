@@ -594,6 +594,9 @@ class KeyedInBrowser:
 
     async def disconnect(self):
         """Cleanly disconnect from browser."""
+        if self.page:
+            await self.page.close()
+            self.page = None
         if self._playwright:
             await self._playwright.stop()
             self._playwright = None
@@ -868,7 +871,10 @@ class KeyedInBrowser:
         await self.rate_limiter.wait()
 
         url = f"{CGI_BASE}/APPLOAD?APP=REPORT.VIEW.INDEX"
-        await self.page.goto(url, wait_until="networkidle", timeout=30000)
+        try:
+            await self.page.goto(url, wait_until="domcontentloaded", timeout=30000)
+        except Exception:
+            pass  # framesets often ERR_ABORTED or timeout
         await asyncio.sleep(2)
 
         # Extract report list from the page
@@ -1055,6 +1061,31 @@ class KeyedInBrowser:
                     )
 
                     response_type = classify_response(content, func_code)
+
+                    # Session loss detection — re-authenticate and retry
+                    if response_type in ("login_redirect", "license_quota"):
+                        log.warning(
+                            "%s returned %s — re-authenticating...",
+                            func_code, response_type,
+                        )
+                        if await self.authenticate():
+                            content = await retry_async(
+                                self.navigate_to_function,
+                                func_code,
+                                operation_name=f"retry_{func_code}",
+                                max_retries=2,
+                            )
+                            response_type = classify_response(content, func_code)
+                        if response_type in ("login_redirect", "license_quota"):
+                            self.checkpoint.mark_failed(
+                                item_key, f"session lost: {response_type}",
+                            )
+                            results[func_code] = {"error": response_type}
+                            log.error(
+                                "%s still %s after re-auth — skipping",
+                                func_code, response_type,
+                            )
+                            continue
 
                     # Save the full HTML content
                     html_file = CGI_DIR / f"{func_code}_full.html"
