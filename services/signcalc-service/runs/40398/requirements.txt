@@ -1,0 +1,9 @@
+# runs/40398/ pinned dependencies - Python 3.13.4 on CNC-1 (Windows 11)
+# Snapshot of working environment 2026-05-21.
+
+ezdxf==1.4.3            # DXF emit - used by make_drawing_40398.py
+pytest==9.0.2           # test harness - used by test_calc_40398.py
+pywin32==311            # CorelDRAW COM - used by extract_cdr_geometry.py (Windows only, optional after cdr_geometry_raw.json is cached)
+
+# Stdlib only otherwise: math, re, subprocess, sys, json, time, pathlib
+# Install:  C:\Python313\python.exe -m pip install -r requirements.txt
