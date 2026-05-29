@@ -1172,7 +1172,8 @@ def main():
         print("=" * 60)
 
         report_results = {}
-        for rid in REPORT_IDS[:5]:
+        target_ids = [args.report_id] if args.report_id else REPORT_IDS[:5]
+        for rid in target_ids:
             print(f"\n--- Report {rid} ---")
             try:
                 r = probe_report_lookup_and_getdata(session, auth_token, client_id, rid)

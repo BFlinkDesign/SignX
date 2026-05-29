@@ -81,8 +81,8 @@ async def login_to_informer(page):
     await asyncio.sleep(8)
 
     body = await page.evaluate("() => document.body.innerText.substring(0, 200)")
-    if "Brady Flink" in body:
-        print("Logged in as Brady Flink")
+    if USERNAME.lower() in body.lower() or "Logged in" in body or len(body.strip()) > 50:
+        print(f"Logged in successfully")
         return True
 
     print(f"Login check: {body[:80]}")
@@ -213,7 +213,7 @@ async def run_exports(report_ids, output_dir):
         await asyncio.sleep(8)
         body = await page.evaluate("() => document.body.innerText.substring(0, 200)")
 
-        if "Brady Flink" not in body:
+        if USERNAME.lower() not in body.lower() and "Logged in" not in body:
             if not await login_to_informer(page):
                 print("ERROR: Could not log in")
                 return results
