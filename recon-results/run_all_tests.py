@@ -685,6 +685,11 @@ def test_7_rest_api(opener):
     print("TEST 7: REST API PROBES (Informer 5)")
     print("=" * 70)
 
+    if opener is None:
+        print("  SKIPPED - no authenticated session")
+        save_result("07_rest_api_tests.md", "# TEST 7: SKIPPED - no authenticated session\n")
+        return {"test": "rest_api", "verdict": "SKIPPED"}
+
     results = {"test": "rest_api", "timestamp": datetime.now().isoformat(), "endpoints": []}
 
     rest_paths = [
