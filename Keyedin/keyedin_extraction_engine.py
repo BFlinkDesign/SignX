@@ -1359,8 +1359,8 @@ class KeyedInBrowser:
         return results
 
     async def check_admin_access(self) -> dict[str, Any]:
-        """Check BradyF's access level by probing restricted functions."""
-        log.info("Checking BradyF admin access level...")
+        """Check current user's access level by probing restricted functions."""
+        log.info("Checking %s admin access level...", USERNAME)
 
         admin_functions = [
             "USER.ADMIN", "SYSTEM.ADMIN", "REPORT.ADMIN",

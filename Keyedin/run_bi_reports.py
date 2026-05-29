@@ -228,7 +228,7 @@ async def extract_listing(page, code: str) -> dict:
 
 async def authenticate(page) -> bool:
     """Authenticate to KeyedIn ERP."""
-    USERNAME = os.environ.get("KEYEDIN_USERNAME", "BradyF")
+    USERNAME = os.environ.get("KEYEDIN_USERNAME", "")
     PASSWORD = os.environ.get("KEYEDIN_PASSWORD", "")
 
     # Check if already authenticated by navigating to a known page
