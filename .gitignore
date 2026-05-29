@@ -161,6 +161,9 @@ site/
 # Large data exports - don't commit to public repos
 supabase_*.csv
 
+# Probe results contain infrastructure IPs, policy keys, and recon data
+Keyedin/probe_results/
+
 
 # Accidentally committed site-packages
 tools/vba-macros/
